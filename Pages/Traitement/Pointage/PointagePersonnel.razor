@@ -1,0 +1,6 @@
+﻿@page "/pointage-personnel"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction, Responsable RH")]
+
+<Card_1 Title="POINTAGE DES PERSONNELS">
+	<PointageView IsMateriel="false" IsPersonnel="true" type="0"></PointageView>
+</Card_1>

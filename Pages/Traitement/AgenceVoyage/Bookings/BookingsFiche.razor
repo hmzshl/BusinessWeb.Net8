@@ -1,0 +1,653 @@
+﻿
+<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-refresh" OnClick="Calculer">Recalculer</SfButton>
+            </Template>
+        </ToolbarItem>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
+            </Template>
+        </ToolbarItem>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit(true))">Enregistrer</SfButton>
+            </Template>
+        </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+<div>
+    <GridRow>
+        <GridCol Xs="24" Md="24">
+            <EditForm @ref=form Model="@row" Context="EditContext">
+                <FluentValidationValidator TValidator="AV_BookingValidator" />
+                <div class="validation-group">
+                    <ValidationSummary />
+                </div>
+                <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="10" Context="FormContext">
+                    <GridRow>
+                        <GridCol Xs="24" Md="6">
+                            <Card>
+
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Hotel" LabelColSpan="4">
+                                    <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="int" TItem="F_COMPTET" DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 1).OrderBy(a => a.CT_Intitule))" @bind-Value="@row.Fournisseur">
+                                        <DropDownListEvents TValue="int" TItem="F_COMPTET" />
+                                        <DropDownListFieldSettings Text="CT_Intitule" Value="cbMarq" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Client" LabelColSpan="4">
+                                    <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="int" TItem="F_COMPTET" DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0).OrderBy(a => a.CT_Intitule))" @bind-Value="@row.Client">
+                                        <DropDownListEvents TValue="int" TItem="F_COMPTET" />
+                                        <DropDownListFieldSettings Text="CT_Intitule" Value="cbMarq" />
+                                    </SfDropDownList>
+                                </FormItem>
+                            </Card>
+                        </GridCol>
+                        <GridCol Xs="24" Md="4">
+                            <Card>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Saisie" LabelColSpan="10">
+                                    <SfDatePicker Readonly TValue="DateTime?" @bind-Value="@row.Date" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro" LabelColSpan="10">
+                                    <SfTextBox @bind-Value="@row.Piece" Readonly />
+                                </FormItem>
+
+                            </Card>
+                        </GridCol>
+                        <GridCol Xs="24" Md="4">
+                            <Card>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Vente" LabelColSpan="10">
+                                    <SfDatePicker TValue="DateTime?" @bind-Value="@row.SellingDateStart" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Ref" LabelColSpan="10">
+                                    <SfTextBox @bind-Value="@row.Reference" />
+                                </FormItem>
+                            </Card>
+                        </GridCol>
+                        <GridCol Xs="24" Md="4">
+                            <Card>
+
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Arrivé" LabelColSpan="10">
+                                    <SfDatePicker TValue="DateTime?" @bind-Value="@row.ArrivalDateStart" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Départ" LabelColSpan="10">
+                                    <SfDatePicker TValue="DateTime?" @bind-Value="@row.ArrivalDateEnd" />
+                                </FormItem>
+                            </Card>
+                        </GridCol>
+                        <GridCol Xs="24" Md="3">
+                            <Card>
+
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Pax" LabelColSpan="10">
+                                    <SfNumericTextBox Value="@(row.NbrPaxInfant+row.NbrPaxChild+row.NbrPaxAdult)" ShowSpinButton="false" Format="N0" Decimals="0" Readonly />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Adults" LabelColSpan="10">
+                                    <SfNumericTextBox @bind-Value="@row.NbrPaxAdult" ShowSpinButton="false" Format="N0" Decimals="0" />
+                                </FormItem>
+                            </Card>
+                        </GridCol>
+                        <GridCol Xs="24" Md="3">
+                            <Card>
+
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Infants" LabelColSpan="10">
+                                    <SfNumericTextBox @bind-Value="@row.NbrPaxInfant" ShowSpinButton="false" Format="N0" Decimals="0" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Childs" LabelColSpan="10">
+                                    <SfNumericTextBox @bind-Value="@row.NbrPaxChild" ShowSpinButton="false" Format="N0" Decimals="0" />
+                                </FormItem>
+                            </Card>
+                        </GridCol>
+
+                    </GridRow>
+                </Form>
+            </EditForm>
+
+        </GridCol>
+
+        
+        <GridCol Xs="24" Md="3">
+            <Card>
+                <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="NIGHTS" Value="@((row.ArrivalDateEnd - row.ArrivalDateStart)?.Days.ToString("### ### ### ##0"))" Suffix="NIGHTS" Precision="0" GroupSeparator=" " />
+            </Card>
+        </GridCol>
+        <GridCol Xs="24" Md="3">
+            <Card>
+                <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="PAX" Value="@((row.NbrPaxAdult + row.NbrPaxChild + row.NbrPaxInfant).ToString("### ### ### ##0"))" Suffix="PAX" Precision="0" GroupSeparator=" " />
+            </Card>
+        </GridCol>
+                      <GridCol Xs="24" Md="3">
+                    <Card>
+                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="TOTAL" Value="@((0).ToString("### ### ##0.00;-### ### ##0.00;#"))" Suffix="@fn.getDevise(db)" Precision="2" GroupSeparator=" " />
+                    </Card>
+              </GridCol>
+                <GridCol Xs="24" Md="3">
+                    <Card>
+                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="REMISE" Value="@((0).ToString("### ### ##0.00;-### ### ##0.00;#"))" Suffix="@fn.getDevise(db)" Precision="2" GroupSeparator=" " />
+                    </Card>
+                </GridCol>
+                <GridCol Xs="24" Md="3">
+                    <Card Class="stat stat-blue">
+                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="TOTAL NET" Value="@((0).ToString("### ### ##0.00;-### ### ##0.00;#"))" Suffix="@fn.getDevise(db)" Precision="2" GroupSeparator=" " />
+                    </Card>
+                </GridCol>
+                <Divider></Divider>
+        <GridCol Xs="24" Md="6">
+           <Card Title="ITEMS">
+                <div style="height: 45vh;">
+                    <SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
+                        <GridEvents TValue="API_T_AgenceBookingDetail" OnActionBegin="OnActionBeginDetail"></GridEvents>
+                        <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
+                        <GridEditSettings AllowAdding AllowDeleting ShowDeleteConfirmDialog AllowEditing Mode="Syncfusion.Blazor.Grids.EditMode.Normal" AllowNextRowEdit>
+                            <HeaderTemplate>
+
+                            </HeaderTemplate>
+                        </GridEditSettings>
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <Empty></Empty>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                        <GridColumns>
+                            <GridColumn AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBookingDetail.id)" HeaderText="#" Visible="false" IsPrimaryKey="true" />
+                            <GridColumn AllowFiltering="false" Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBookingDetail.Libelle)" HeaderText="Libelle">
+                                <Template>
+                                    @{
+                                        <div>@(db.API_T_AgenceArticle.Where(a => a.id == (context as API_T_AgenceBookingDetail).Article).SingleOrDefault()?.Designation)</div>
+                                    }
+                                </Template>
+                                <EditTemplate>
+                                    @{
+                                        string q1 = @"SELECT 
+                                                        a.*
+                                                        FROM API_T_AgenceArticle a
+                                                        WHERE a.id in 
+                                                        (
+                                                        SELECT a.Article FROM API_T_AgenceContratDetail a
+                                                        INNER JOIN API_T_AgenceContrat b ON a.Contrat = b.id
+                                    WHERE b.Tiers = {0}
+                                                        )
+                                                        ";
+
+                                    }
+                                    <SfDropDownList DataSource="@(db.API_T_AgenceArticle.FromSqlRaw(q1,row.Fournisseur))" TValue="int" TItem="API_T_AgenceArticle" @bind-Value="@((context as API_T_AgenceBookingDetail).Article)">
+                                        <DropDownListEvents TValue="int" TItem="API_T_AgenceArticle" />
+                                        <DropDownListFieldSettings Text="Designation" Value="id" />
+                                    </SfDropDownList>
+                                </EditTemplate>
+                            </GridColumn>
+                        </GridColumns>
+
+
+                    </SfGrid>
+                </div>
+           </Card>
+        </GridCol>
+        <GridCol Xs="24" Md="6">
+            <Card Title="PAX">
+                <div style="height: 45vh;">
+                    <SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@pax">
+                        <GridEvents OnActionBegin="OnActionBeginSPO" TValue="API_T_AgenceBookingPax"></GridEvents>
+                        <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
+                        <GridEditSettings AllowAdding AllowDeleting ShowDeleteConfirmDialog AllowEditing Mode="Syncfusion.Blazor.Grids.EditMode.Normal" AllowNextRowEdit>
+                            <HeaderTemplate>
+
+                            </HeaderTemplate>
+                        </GridEditSettings>
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <Empty></Empty>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                        <GridColumns>
+                            <GridColumn AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBookingPax.id)" HeaderText="#" Visible="false" IsPrimaryKey="true" />
+                            <GridColumn AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBookingPax.Nom)" HeaderText="Nom" />
+                            <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBookingPax.Pays)" HeaderText="Pays" />
+                        </GridColumns>
+
+
+                    </SfGrid>
+                </div>
+
+            </Card>
+        </GridCol>
+        <GridCol Xs="24" Md="12">
+            <SfTab CssClass="e-fill">
+                <TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/><TabItems>
+                    <TabItem>
+                        <ChildContent>
+                            <TabHeader Text="TARIF FOURNISSEUR"></TabHeader>
+                        </ChildContent>
+                        <ContentTemplate>
+                           <GridRow>
+                               <GridCol Xs="24" Md="14">
+                                  <Card Title="Prix Calculés">
+                                        <div style="height: 41vh;">
+                                            <SfGrid Height="100%" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
+                                                <GridEvents TValue="API_T_AgenceBookingDetail" OnActionBegin="OnActionBeginDetail"></GridEvents>
+                                                <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
+                                                <GridEditSettings ShowDeleteConfirmDialog Mode="Syncfusion.Blazor.Grids.EditMode.Normal" AllowNextRowEdit>
+                                                    <HeaderTemplate>
+
+                                                    </HeaderTemplate>
+                                                </GridEditSettings>
+                                                <GridTemplates>
+                                                    <EmptyRecordTemplate>
+                                                        <Empty></Empty>
+                                                    </EmptyRecordTemplate>
+                                                </GridTemplates>
+                                                <GridColumns>
+                                                    <GridColumn AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBookingDetail.id)" HeaderText="#" Visible="false" IsPrimaryKey="true" />
+                                                    <GridColumn AllowFiltering="false" Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBookingDetail.Libelle)" HeaderText="Libelle">
+                                                        <Template>
+                                                            @{
+                                                                <div>@(db.API_T_AgenceArticle.Where(a => a.id == (context as API_T_AgenceBookingDetail).Article).SingleOrDefault()?.Designation)</div>
+                                                            }
+                                                        </Template>
+                                                        <EditTemplate>
+                                                            @{
+                                                                string q1 = @"SELECT
+                                                            a.*
+                                                            FROM API_T_AgenceArticle a
+                                                            WHERE a.id in
+                                                            (
+                                                            SELECT a.Article FROM API_T_AgenceContratDetail a
+                                                            INNER JOIN API_T_AgenceContrat b ON a.Contrat = b.id
+                                                            WHERE b.Tiers = {0}
+                                                            )
+                                                            ";
+
+                                                            }
+                                                            <SfDropDownList Placeholder="Libellé" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(db.API_T_AgenceArticle.FromSqlRaw(q1,row.Fournisseur))" TValue="int" TItem="API_T_AgenceArticle" @bind-Value="@((context as API_T_AgenceBookingDetail).Article)">
+                                                                <DropDownListEvents TValue="int" TItem="API_T_AgenceArticle" />
+                                                                <DropDownListFieldSettings Text="Designation" Value="id" />
+                                                            </SfDropDownList>
+                                                        </EditTemplate>
+                                                    </GridColumn>
+                                                    <GridColumn AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBookingDetail.PU_FR)" HeaderText="PU" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                </GridColumns>
+
+
+                                            </SfGrid>
+                                        </div>
+                                  </Card>
+                               </GridCol>
+                                <GridCol Xs="24" Md="10">
+                                    <Card Title="SPO Appliqués">
+                                        <div style="height: 41vh;">
+                                            <SfGrid Height="100%" @ref=@MainGrid AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@offres">
+                                                <GridEvents OnActionBegin="OnActionBegin" QueryCellInfo="CustomizeCell" TValue="API_T_AgenceBookingOffre"></GridEvents>
+                                                <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
+                                                <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Normal" AllowNextRowEdit>
+                                                    <HeaderTemplate>
+
+                                                    </HeaderTemplate>
+                                                </GridEditSettings>
+                                                <GridTemplates>
+                                                    <EmptyRecordTemplate>
+                                                        <Empty></Empty>
+                                                    </EmptyRecordTemplate>
+                                                </GridTemplates>
+                                                <GridColumns>
+                                                    <GridColumn AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBookingOffre.id)" HeaderText="#" Visible="false" IsPrimaryKey="true" />
+                                                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Libelle">
+                                                        <Template>
+                                                            @{
+                                                                var dt = (fn.AV_TypeOffre().Where(a => a.Id == (context as API_T_AgenceBookingOffre).Offre));
+                                                            }
+                                                            @if (dt.Count() != 0)
+                                                            {
+                                                                <div>@dt.First().Name</div>
+                                                            }
+                                                        </Template>
+                                                        <EditTemplate>
+                                                            <SfDropDownList Placeholder="Libellé" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.AV_TypeOffre())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_AgenceBookingOffre).Offre)">
+                                                                <DropDownListEvents TValue="int" TItem="Items" />
+                                                                <DropDownListFieldSettings Text="Name" Value="Id" />
+                                                            </SfDropDownList>
+                                                        </EditTemplate>
+                                                    </GridColumn>
+                                                    <GridColumn Width="40" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBookingOffre.Remise)" HeaderText="REMISE %" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                </GridColumns>
+
+
+                                            </SfGrid>
+                                        </div>
+
+                                    </Card>
+
+                                </GridCol>
+                           </GridRow>
+                        </ContentTemplate>
+                    </TabItem>
+                    <TabItem>
+                        <ChildContent>
+                            <TabHeader Text="TARIF CLIENT"></TabHeader>
+                        </ChildContent>
+                        <ContentTemplate>
+
+                        </ContentTemplate>
+                    </TabItem>
+                </TabItems>
+            </SfTab>
+        </GridCol>
+        
+    </GridRow>
+</div>
+
+
+
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    [Parameter] public int id { get; set; }
+    [Parameter] public int cbMarq { get; set; }
+    DB db = new DB();
+    public API_T_AgenceBooking row = new API_T_AgenceBooking();
+    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
+    NumericEditCellParams parameters0 = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 0, Format = "N0" } };
+    SfGrid<API_T_AgenceBookingOffre> MainGrid;
+
+    List<F_COMPTET> tiers = new List<F_COMPTET>();
+    List<API_T_AgenceBookingDetail> lignes = new List<API_T_AgenceBookingDetail>();
+    List<API_T_AgenceBookingOffre> offres = new List<API_T_AgenceBookingOffre>();
+    List<API_T_AgenceBookingPax> pax = new List<API_T_AgenceBookingPax>();
+    bool loading = true;
+    double index = 0;
+    string ct_num = "";
+    EditForm form = new EditForm();
+    private async Task UpdateLignes()
+    {
+        lignes = db.API_T_AgenceBookingDetail.Where(a => a.Entete == id).OrderBy(a => a.id).ToList();
+        offres = db.API_T_AgenceBookingOffre.Where(a => a.Entete == id).OrderBy(a => a.id).ToList();
+        pax = db.API_T_AgenceBookingPax.Where(a => a.Entete == id).OrderBy(a => a.id).ToList();
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        var zn = db.API_T_Site_User.Where(a => a.User == sc.User.Id).Select(a => a.Site);
+        if (zn.Count() != 0)
+        {
+            var pr = db.API_T_Projet.Where(a => zn.Contains(a.Site)).Select(a => a.CT_Num).ToList();
+            if (pr.Count() != 0)
+            {
+                tiers = db.F_COMPTET.Where(a => a.CT_Type == 0 && (pr.Contains((a.CT_Num ?? "")))).OrderBy(a => a.CT_Intitule).ToList();
+            }
+
+        }
+        if (id == 0)
+        {
+            row = new API_T_AgenceBooking();
+            var dt = db.API_T_AgenceBooking.Where(a => a.Piece.StartsWith("BKCS")).ToList();
+            if (dt.Count != 0)
+            {
+                row.Piece = fn.getNextCode(dt.Max(a => a.Piece));
+            }
+            else
+            {
+                row.Piece = "BKCS0000001";
+            }
+
+            row.Date = DateTime.Today.Date;
+        }
+        else
+        {
+            row = db.API_T_AgenceBooking.Where(a => a.id == id).SingleOrDefault();
+            await UpdateLignes();
+        }
+    }
+    private async Task Print()
+    {
+        List<JSReportParameter> parameters = new List<JSReportParameter>();
+
+        /*parameters.Add(new JSReportParameter { Name = "id", Values = new List<string>() { this.cbMarq.ToString() } });
+        await DialogService.OpenAsync<ReportViewer>(row.DO_Piece,
+        new Dictionary<string, object>() { { "ReportName", "reports\\projets\\ConsommationChantier" }, { "parameters", parameters } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });*/
+
+
+    }
+    private async Task PrestationChanged(ChangeEventArgs<int, API_T_AgenceContratLigne> args)
+    {
+        if(args.Value != 0)
+        {
+            var dt = db.API_T_AgenceContratLigne.Where(a => a.id == args.Value).SingleOrDefault();
+            row.Taux = dt.Taux;
+            row.PU = dt.PU;
+            row.PUDevise = dt.PUDevise;
+            row.Devise = dt.Devise;
+        }
+    }
+    private async Task Submit(bool close)
+    {
+        if (form.EditContext.Validate())
+        {
+            try
+            {
+                if (id == 0)
+                {
+                    db.API_T_AgenceBooking.Add(row);
+                    db.SaveChanges();
+                    this.id = row.id;
+                }
+                else
+                {
+                    db.SaveChanges();
+                }
+                if (close == true)
+                {
+                    DialogService.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Message.Warning(ex.ToString());
+            }
+        }
+
+    }
+    public void CustomizeCell(Syncfusion.Blazor.Grids.QueryCellInfoEventArgs<API_T_AgenceBookingOffre> args)
+    {
+        /*try
+        {
+        var dt = args.Data;
+        if (dt.AR_Ref == null && args.Column.Field == "DL_Design")
+            {
+            args.Cell.AddClass(new string[] { "td-bold" });
+    }
+    }
+    catch (Exception ex)
+        {
+        Message.Error(ex.ToString());
+            }
+            */
+
+    }
+    private async Task Calculer()
+    {
+        bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment recalculer?", "Recalcul");
+        if (isConfirm)
+        {
+            string q1 = @"SELECT
+                        dt.*
+                        FROM API_T_AgenceContratLigne dl
+                        INNER JOIN API_T_AgenceContrat do ON dl.Entete = do.id
+                        INNER JOIN API_T_AgenceContratDetail dt ON dl.id = dt.Ligne
+                        INNER JOIN API_T_AgenceContratDate jr ON dt.Periode = jr.id
+                        WHERE {0} BETWEEN jr.DateDebut AND jr.DateFin AND dl.Article = {1} AND do.Tiers = {2}";
+            string q2 = @"SELECT
+                        a.*
+                        FROM API_T_AgenceOffre a
+                        INNER JOIN API_T_AgenceContrat b ON a.Entete = b.id
+
+
+                        WHERE b.Tiers = {0}
+                        AND {1} BETWEEN a.ArrivalDateStart AND a.ArrivalDateEnd
+                        AND {2} BETWEEN a.SellingDateStart AND a.SellingDateEnd";
+
+            foreach(API_T_AgenceBookingDetail item in lignes)
+            {
+                {
+                    var dt = db.API_T_AgenceContratDetail.FromSqlRaw(q1, row.SellingDateStart, item.Article, row.Fournisseur);
+                    if (dt.Count() != 0)
+                    {
+                        item.PU_FR = dt.First().PU;
+                        item.PUDevise_FR = dt.First().PUDevise;
+                    }
+                }
+            }
+            {
+                db.Database.ExecuteSqlRaw("DELETE FROM API_T_AgenceBookingOffre WHERE Entete = {0}", row.id);
+                var dt = db.API_T_AgenceOffre.FromSqlRaw(q2, row.Fournisseur, row.ArrivalDateStart, row.SellingDateStart);
+                foreach (API_T_AgenceOffre itm in dt)
+                {
+                    var ln = new API_T_AgenceBookingOffre();
+                    ln.Offre = itm.Offre;
+                    ln.Remise = itm.Remise;
+                    ln.Entete = row.id;
+                    db.Add(ln);       
+                }
+            }
+            db.SaveChanges();
+            await UpdateLignes();
+        }
+    }
+    private async Task OnActionBeginDetail(ActionEventArgs<API_T_AgenceBookingDetail> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            if (!form.EditContext.Validate())
+            {
+                args.Cancel = true;
+            }
+
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+            args.Data.NbtNuit = ((row.ArrivalDateEnd - row.ArrivalDateStart)?.Days)??0;
+            args.Data.NbrAdult = (int)row.NbrPaxAdult;
+            args.Data.NbrChild = (int)row.NbrPaxChild;
+            args.Data.NbrInfant = (int)row.NbrPaxInfant;
+            args.Data.NbrPax = (int)row.NbrPaxAdult + (int)row.NbrPaxChild + (int)row.NbrPaxInfant;
+            if (args.Action == "Add")
+            {
+                if (id == 0)
+                {
+                    await Submit(false);
+                }
+                args.Data.Entete = this.id;
+                db.Add(args.Data);
+                db.SaveChanges();
+            }
+            else
+            {
+                var local = db.Set<API_T_AgenceBookingDetail>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                if (local != null)
+                {
+                    db.Entry(local).State = EntityState.Detached;
+                }
+                db.Entry(args.Data).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            var local = db.Set<API_T_AgenceBookingDetail>().Local.FirstOrDefault(a => a.id == args.Data.id);
+            if (local != null)
+            {
+                db.Entry(local).State = EntityState.Detached;
+            }
+            db.Entry(args.Data).State = EntityState.Deleted;
+            db.SaveChanges();
+        }
+    }
+    private async Task OnActionBegin(ActionEventArgs<API_T_AgenceBookingOffre> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            if (!form.EditContext.Validate())
+            {
+                args.Cancel = true;
+            }
+
+        }
+        if(args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+            if (args.Action == "Add")
+            {
+                if (id == 0)
+                {
+                    await Submit(false);
+                }
+                args.Data.Entete = this.id;
+                db.Add(args.Data);
+                db.SaveChanges();
+            }
+            else
+            {
+                var local = db.Set<API_T_AgenceBookingOffre>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                if (local != null)
+                {
+                    db.Entry(local).State = EntityState.Detached;
+                }
+                db.Entry(args.Data).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            var local = db.Set<API_T_AgenceBookingOffre>().Local.FirstOrDefault(a => a.id == args.Data.id);
+            if (local != null)
+            {
+                db.Entry(local).State = EntityState.Detached;
+            }
+            db.Entry(args.Data).State = EntityState.Deleted;
+            db.SaveChanges();
+        }
+    }
+    private async Task OnActionBeginSPO(ActionEventArgs<API_T_AgenceBookingPax> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            if (!form.EditContext.Validate())
+            {
+                args.Cancel = true;
+            }
+
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+                            if (args.Action == "Add")
+                {
+                    if (id == 0)
+                    {
+                        await Submit(false);
+                    }
+                    args.Data.Entete = this.id;
+                    db.Add(args.Data);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    var local = db.Set<API_T_AgenceBookingPax>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                    if (local != null)
+                    {
+                        db.Entry(local).State = EntityState.Detached;
+                    }
+                    db.Entry(args.Data).State = EntityState.Modified;
+                    db.SaveChanges();
+                }            
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            var local = db.Set<API_T_AgenceBookingPax>().Local.FirstOrDefault(a => a.id == args.Data.id);
+            if (local != null)
+            {
+                db.Entry(local).State = EntityState.Detached;
+            }
+            db.Entry(args.Data).State = EntityState.Deleted;
+            db.SaveChanges();
+        }
+    }
+}

@@ -1,0 +1,27 @@
+﻿@page "/tr-fournisseur"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction")]
+
+
+
+@if (IsLoaded)
+{
+    <Card_1 Title="TRACABILITE DES FOURNISSEURS">
+        <Tiers CT_Type="1"/>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+@code {
+    bool IsLoaded = false;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        IsLoaded = true;
+    }
+}

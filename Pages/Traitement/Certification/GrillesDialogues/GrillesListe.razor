@@ -1,0 +1,181 @@
+@page "/cr-grille-dialogue"
+@attribute [Authorize]
+@if (IsLoaded)
+{
+    <Card_1 Title="GRILLES DE DIALOGUE">
+        <RadzenContent Container="main">
+            <div class="grid-90">
+                <SfGrid Height="100%" AllowFiltering RowRenderingMode="RowDirection.Horizontal" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="@(sc.IsInRole("Admin"))" AllowExcelExport="@(sc.IsInRole("Admin"))" AllowPaging="true" DataSource="@items"
+                        Toolbar="@(new List<object>() {  "ExcelExport","Add", "Delete","Search"
+                            ,new ToolbarItem() { Type = ItemType.Input,Template = Date1, Id = "date1", TooltipText = "Date Début", Align = ItemAlign.Right}
+                    ,new ToolbarItem() { Type = ItemType.Input,Template = Date2, Id = "date2", TooltipText = "Date Fin", Align = ItemAlign.Right}})">
+                    <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+
+                    </GridEditSettings>
+                    <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_T_CertifGrilleDialogue"></GridEvents>
+                    <GridPageSettings PageSize="100"></GridPageSettings>
+                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                    <GridTemplates>
+                        <EmptyRecordTemplate>
+                            <Empty></Empty>
+                        </EmptyRecordTemplate>
+                    </GridTemplates>
+                    <GridColumns>
+
+                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifGrilleDialogue.Date)" HeaderText="Date" Format="d"></GridColumn>
+                        <GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifGrilleDialogue.Numero)" HeaderText="N° Enregis."></GridColumn>
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifGrilleDialogue.RaisonSocial)" HeaderText="Raison Social"></GridColumn>
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifGrilleDialogue.Adresse)" HeaderText="Adresse"></GridColumn>
+                        <GridColumn Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifGrilleDialogue.Interlocuteur)" HeaderText="Interlocuteur"></GridColumn>
+                        <GridColumn Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifGrilleDialogue.Telephone)" HeaderText="Telephone/Fax"></GridColumn>
+                        <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut">
+                            <Template>
+                                @{
+                                    var dt = (context as API_T_CertifGrilleDialogue);
+                                    if (dt.Statut == 0)
+                                    {
+                                        <div style="text-align: left;">
+                                            <span class="statustxt e-inactivecolor">Saisi</span>
+                                        </div>
+                                    }
+                                    else if (dt.Statut == 1)
+                                    {
+                                        <div style="text-align: left;">
+                                            <span class="statustxt e-activecolor">Transféré</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div style="text-align: left;">
+                                            <span class="statustxt e-infocolor">Archivé</span>
+                                        </div>
+                                    }
+
+                                }
+                            </Template>
+                        </GridColumn>
+                    </GridColumns>
+                    <SfSpinner @bind-Visible="@loading">
+                    </SfSpinner>
+                </SfGrid>
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter] public int type { get; set; }
+    [Parameter] public bool IsList { get; set; } = true;
+    [Parameter] public string Title { get; set; } = "";
+    string grid_height = "80vh";
+    //Components
+    private SfGrid<API_T_CertifGrilleDialogue> DefaultGrid;
+
+    //End components
+
+    private IEnumerable<API_T_CertifGrilleDialogue> items;
+    List<API_T_CertifGrilleDialogue> rows = new List<API_T_CertifGrilleDialogue>();
+    string activekey = "0";
+    bool loading = false;
+    bool IsLoaded = false;
+    int caisse = 0;
+    DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
+    DateTime? date2 = new DateTime(DateTime.Today.Year, 12, 31);
+    IList<API_T_CertifGrilleDialogue> selecteditems;
+
+    private RenderFragment Date1 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date1" Width="130px" Placeholder="Date Début" TValue="DateTime?">
+        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+    </SfDatePicker>;
+    private RenderFragment Date2 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date2" Width="130px" Placeholder="Date Fin" TValue="DateTime?">
+        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+    </SfDatePicker>
+    ;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        db = session.db;
+        await UpdateGrid();
+        IsLoaded = true;
+    }
+    private async Task UpdateGrid()
+    {
+        loading = true;
+        await Task.Delay(1);
+        items = session.db.API_T_CertifGrilleDialogue.Where(a => a.Date >= (date1 ?? new DateTime(1900, 1, 1)) && a.Date <= (date2 ?? new DateTime(2900, 12, 31))).OrderBy(a => a.Date).ToList();
+        loading = false;
+        await Task.Delay(1);
+    }
+
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.ExcelExport();
+        }
+        if (args.Item.Id == "Grid_pdfexport")  //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.PdfExport();
+        }
+
+    }
+    private async Task OnActionBegin(ActionEventArgs<API_T_CertifGrilleDialogue> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await Add();
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_CertifGrilleDialogueModif WHERE Dialogue = {0}", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_CertifGrilleDialogueExigence WHERE Dialogue = {0}", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_CertifGrilleDialogue WHERE id = {0}", args.Data.id);
+            db.SaveChanges();
+            await UpdateGrid();
+        }
+    }
+    private string getTiers()
+    {
+        string rs = "Client";
+        if (type != 0)
+        {
+            rs = "Fournisseur";
+        }
+        return rs;
+    }
+    protected async Task Edit(RecordDoubleClickEventArgs<API_T_CertifGrilleDialogue> args)
+    {
+        await DialogService.OpenAsync<GrillesFiche>(args.RowData.Numero,
+        new Dictionary<string, object>() { { "id", args.RowData.id } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = false, Width = "1024px", Height = "98%" });
+        await UpdateGrid();
+    }
+    private async Task Add()
+    {
+        await DialogService.OpenAsync<GrillesFiche>("Ajouter un élément",
+        new Dictionary<string, object>() { { "id", 0 } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = false, Width = "1024px", Height = "98%" });
+        await UpdateGrid();
+    }
+
+}

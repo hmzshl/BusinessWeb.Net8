@@ -1,0 +1,383 @@
+﻿<RadzenContent Container="main">
+    <SfToolbar>
+        <ToolbarItems>
+            <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                <Template>
+                    <div style="padding-left: 15px;">
+                        <SfMultiSelect Width="230px" @bind-Value=@types ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161")) && a.RG_Type == 0).OrderBy(a => a.R_Intitule).Select(a => a.R_Intitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                             <MultiSelectFieldSettings Text="R_Intitule" Value="R_Intitule"></MultiSelectFieldSettings>
+                             <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                         </SfMultiSelect>
+                     </div>
+                 </Template>
+             </ToolbarItem>
+             <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                 <Template>
+                     <div style="padding-left: 15px;">
+                         <SfMultiSelect Width="150px" @bind-Value=@statut ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161")) && a.RG_Type == 0).OrderBy(a => a.Echeance).Select(a => a.Echeance).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                             <MultiSelectFieldSettings Text="Echeance" Value="Echeance"></MultiSelectFieldSettings>
+                             <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                         </SfMultiSelect>
+                     </div>
+                 </Template>
+
+
+             </ToolbarItem>
+             <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                 <Template>
+                     <div style="padding-left: 15px;">
+                         <SfMultiSelect Width="230px" @bind-Value=@journaux ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161")) && a.RG_Type == 0).OrderBy(a => a.JO_Intitule).Select(a => a.JO_Intitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                             <MultiSelectFieldSettings Text="JO_Intitule" Value="JO_Intitule"></MultiSelectFieldSettings>
+                             <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                         </SfMultiSelect>
+                     </div>
+                 </Template>
+
+
+             </ToolbarItem>
+             <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                 <Template>
+                     <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
+                        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+                    </SfDatePicker>
+                </Template>
+            </ToolbarItem>
+            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                <Template>
+                    <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
+                        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+                    </SfDatePicker>
+                </Template>
+            </ToolbarItem>
+
+        </ToolbarItems>
+    </SfToolbar>
+    <div class="no-border grid-84">
+        <SfGrid Height="100%" AllowSelection EnableHover DataSource="@(items)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowPaging>
+            <GridPageSettings PageSize="100"/>
+             <GridAggregates>
+                 <GridAggregate>
+                     <GridAggregateColumns>
+                         <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.RG_Montant)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                             <FooterTemplate>
+                                 @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                        </GridAggregateColumn>
+                    </GridAggregateColumns>
+                </GridAggregate>
+            </GridAggregates>
+            <GridColumns>
+                <GridColumn Format="d" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Date)" HeaderText="Date" />
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Piece)" HeaderText="Pièce" />
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.R_Intitule)" HeaderText="Type" />
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Num)" HeaderText="Numéro" Visible="@(CT_Num == null)" />
+                <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Intitule)" HeaderText="@(getTiers())" Visible="@(CT_Num == null)" />
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.JO_Num)" HeaderText="N° Jo." Visible="@(JO_Num == null)" />
+                <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.JO_Intitule)" HeaderText="Journal" Visible="@(JO_Num == null)" />
+                <GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Libelle)" HeaderText="Libellé" />
+                <GridColumn Width="105" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Montant)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Format="d" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_DateEcheance)" HeaderText="Ech" />
+
+                <GridColumn Width="105" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut" Visible="@(IsMettreEnBanque)">
+                    <Template>
+                        @{
+                            var dt = (context as API_V_CREGLEMENT);
+                            if(dt.Depose??false)
+                            {
+                                <div>
+                                    <span class="statustxt e-activecolor">En Banque</span>
+                                </div>
+                            }
+                            else
+                            {
+
+                                <RadzenButton Click=@(args => MettreEnbanque(dt)) Text="Mettre en banque" Shade="@Shade.Dark" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Text" Size="Radzen.ButtonSize.ExtraSmall" />
+                            }
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn Format="d" Width="105" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.DateDepot)" HeaderText="Dépot" Visible="@(IsMettreEnBanque)">
+                    <Template>
+                        @{
+                            var dt = (context as API_V_CREGLEMENT);
+                            <div style="padding-left: 2px;padding-right: 2px;padding-top: 1px;padding-bottom: 1px;">
+                                <DatePicker ValueChanged=@(args => DateDepot(dt,args.Value)) Disabled=@(!(dt.Depose??false)) TValue="DateTime?" Size="@DatePickerSize.Small" Value="@dt.DateDepot" AllowClear="false" />
+                            </div> 
+                        }
+                        
+                    </Template>
+                </GridColumn>
+
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Payer" Visible=@(IsEnBanque || IsPaye)>
+                    <Template>
+                        @{
+                            var dt = (context as API_V_CREGLEMENT);
+                            if (dt.Rappro ?? false)
+                            {
+                                <div>
+                                    <span class="statustxt e-activecolor">Payé</span>
+                                </div>
+                            }
+                            else
+                            {
+
+                                <RadzenButton Click=@(args => Payer(dt)) Text="Payer" Shade="@Shade.Dark" ButtonStyle="ButtonStyle.Success" Variant="Variant.Text" Size="Radzen.ButtonSize.ExtraSmall" />
+                            }
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Impayer" Visible=@(IsEnBanque)>
+                    <Template>
+                        @{
+                            var dt = (context as API_V_CREGLEMENT);
+                            if (dt.Rappro ?? false)
+                            {
+                                
+                            }
+                            else
+                            {
+
+                                <RadzenButton Click=@(args => ImPayer(dt)) Text="Impayer" Shade="@Shade.Dark" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Text" Size="Radzen.ButtonSize.ExtraSmall" />
+                            }
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn Format="d" Width="105" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.DatePaie)" HeaderText="Paiement" Visible=@(IsEnBanque)>
+                    <Template>
+                        @{
+                            var dt = (context as API_V_CREGLEMENT);
+                            <div style="padding-left: 2px;padding-right: 2px;padding-top: 1px;padding-bottom: 1px;">
+                                <DatePicker ValueChanged=@(args => DatePaiement(dt,args.Value)) Disabled=@(!(dt.Rappro??false)) TValue="DateTime?" Size="@DatePickerSize.Small" Value="@dt.DatePaie" AllowClear="false" />
+                            </div>
+                        }
+
+                    </Template>
+                </GridColumn>
+                <GridColumn Width="105" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut" Visible="@(IsImpaye)">
+                    <Template>
+                        @{
+                            var dt = (context as API_V_CREGLEMENT);
+                            if (dt.Impaye ?? false)
+                            {
+                                <RadzenButton Click=@(args => Redeposer(dt)) Text="Redéposer" Shade="@Shade.Dark" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Text" Size="Radzen.ButtonSize.ExtraSmall" />
+                            }
+                            else
+                            {
+
+                                
+                            }
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.Remarque)" HeaderText="Remarque" />
+
+            </GridColumns>
+
+        </SfGrid>
+</div>
+</RadzenContent>
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    bool IsLoaded = false;
+    [Parameter] public int Type { get; set; }
+    [Parameter] public bool IsPaye { get; set; } = false;
+    [Parameter] public bool IsMettreEnBanque { get; set; } = false;
+    [Parameter] public bool IsEnBanque { get; set; } = false;
+    [Parameter] public bool IsImpaye { get; set; } = false;
+    [Parameter] public bool IsLivraison { get; set; } = true;
+    [Parameter] public int DO_Domaine { get; set; }
+    [Parameter] public int DO_Type { get; set; }
+    [Parameter] public string CA_Num { get; set; }
+    [Parameter] public string DO_Piece { get; set; }
+    [Parameter] public string CT_Num { get; set; }
+    [Parameter] public string JO_Num { get; set; }
+    [Parameter] public string Statut { get; set; }
+    [Parameter] public int CO_No { get; set; }
+    [Parameter] public int DE_No { get; set; }
+    [Parameter] public string Height { get; set; }
+
+    DateTime? date1;
+    DateTime? date2;
+    int domaine = 0;
+    int type = 0;
+    private List<API_V_CREGLEMENT> data = new List<API_V_CREGLEMENT>();
+    List<string> types = new List<string>();
+    List<string> statut = new List<string>();
+    List<string> journaux = new List<string>();
+    private List<API_V_CREGLEMENT> items = new List<API_V_CREGLEMENT>();
+
+    private Func<double, string> _fortmat1 = (p) => $"{(p / 100).ToString("### ### ##0 %")}";
+    protected override async Task OnInitializedAsync()
+    {
+
+        db = session.db;
+        types = db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161"))).OrderBy(a => a.R_Intitule).Select(a => a.R_Intitule).Distinct().ToList();
+        statut = db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161"))).OrderBy(a => a.Echeance).Select(a => a.Echeance).Distinct().ToList();
+        journaux = db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161"))).OrderBy(a => a.JO_Intitule).Select(a => a.JO_Intitule).Distinct().ToList();
+        await UpdateGrid();
+
+    }
+    private async Task UpdateGrid()
+    {
+        if(IsMettreEnBanque)
+        {
+            items = db.API_V_CREGLEMENT.Where(a =>
+      ((a.JO_Num == JO_Num && JO_Num != null) || (JO_Num == null))
+      && ((a.CT_Num == CT_Num && CT_Num != null) || (CT_Num == null))
+      && ((date1 != null && a.RG_Date >= date1) || date1 == null)
+      && ((date2 != null && a.RG_Date <= date2) || date2 == null)
+      && ((types != null && types.Contains(a.R_Intitule)))
+      && ((statut != null && statut.Contains(a.Echeance)))
+      && ((journaux != null && journaux.Contains(a.JO_Intitule)))
+      && (!(a.Impaye??false))
+      && (!a.CG_Num.StartsWith("5161"))
+      && a.RG_Type == 0
+      ).OrderByDescending(a => a.RG_Date)
+      .ToList();
+        }
+        if (IsEnBanque)
+        {
+            items = db.API_V_CREGLEMENT.Where(a =>
+      ((a.JO_Num == JO_Num && JO_Num != null) || (JO_Num == null))
+      && ((a.CT_Num == CT_Num && CT_Num != null) || (CT_Num == null))
+      && ((date1 != null && a.RG_Date >= date1) || date1 == null)
+      && ((date2 != null && a.RG_Date <= date2) || date2 == null)
+      && ((types != null && types.Contains(a.R_Intitule)))
+      && ((statut != null && statut.Contains(a.Echeance)))
+      && ((journaux != null && journaux.Contains(a.JO_Intitule)))
+      && ((a.Depose ?? false))
+      && (!(a.Impaye ?? false))
+      && (!(a.Rappro ?? false))
+      && (!a.CG_Num.StartsWith("5161"))
+      && a.RG_Type == 0
+      ).OrderByDescending(a => a.RG_Date)
+      .ToList();
+        }
+        if (IsImpaye)
+        {
+            items = db.API_V_CREGLEMENT.Where(a =>
+      ((a.JO_Num == JO_Num && JO_Num != null) || (JO_Num == null))
+      && ((a.CT_Num == CT_Num && CT_Num != null) || (CT_Num == null))
+      && ((date1 != null && a.RG_Date >= date1) || date1 == null)
+      && ((date2 != null && a.RG_Date <= date2) || date2 == null)
+      && ((types != null && types.Contains(a.R_Intitule)))
+      && ((statut != null && statut.Contains(a.Echeance)))
+      && ((journaux != null && journaux.Contains(a.JO_Intitule)))
+      && ((a.Impaye ?? false))
+      && (!a.CG_Num.StartsWith("5161"))
+      && a.RG_Type == 0
+      ).OrderByDescending(a => a.RG_Date)
+      .ToList();
+        }
+        if (IsPaye)
+        {
+            items = db.API_V_CREGLEMENT.Where(a =>
+      ((a.JO_Num == JO_Num && JO_Num != null) || (JO_Num == null))
+      && ((a.CT_Num == CT_Num && CT_Num != null) || (CT_Num == null))
+      && ((date1 != null && a.RG_Date >= date1) || date1 == null)
+      && ((date2 != null && a.RG_Date <= date2) || date2 == null)
+      && ((types != null && types.Contains(a.R_Intitule)))
+      && ((statut != null && statut.Contains(a.Echeance)))
+      && ((journaux != null && journaux.Contains(a.JO_Intitule)))
+      && ((a.Rappro ?? false))
+      && (!a.CG_Num.StartsWith("5161"))
+      && a.RG_Type == 0
+      ).OrderByDescending(a => a.RG_Date)
+      .ToList();
+        }
+
+    }
+    private string getTiers()
+    {
+        string rs = "Tiers";
+        if (DO_Domaine == 0)
+        {
+            rs = "Client";
+        }
+        if (DO_Domaine == 1)
+        {
+            rs = "Fournisseur";
+        }
+
+        return rs;
+    }
+    private async Task MettreEnbanque(API_V_CREGLEMENT args)
+    {
+        bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment mettre en banque cet élément?", "METTRE EN BANQUE");
+        if (isConfirm)
+        {
+            var ln = db.F_CREGLEMENT.Where(a => a.cbMarq == args.cbMarq).SingleOrDefault();
+            ln.Depose = true;
+            db.SaveChanges();
+            await UpdateGrid();
+        }
+    }
+    private async Task DateDepot(API_V_CREGLEMENT args,DateTime? value)
+    {
+        var ln = db.F_CREGLEMENT.Where(a => a.cbMarq == args.cbMarq).SingleOrDefault();
+        ln.DateDepot = value;
+        ln.Remarque = "Déposé";
+        db.SaveChanges();
+        await UpdateGrid();
+    }
+    private async Task Payer(API_V_CREGLEMENT args)
+    {
+        bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment marquer cet élément comme payé?", "PAIEMENT");
+        if (isConfirm)
+        {
+            var ln = db.F_CREGLEMENT.Where(a => a.cbMarq == args.cbMarq).SingleOrDefault();
+            ln.Rappro = true;
+            ln.Remarque = "Payé";
+            db.SaveChanges();
+            await UpdateGrid();
+        }
+    }
+    private async Task DatePaiement(API_V_CREGLEMENT args, DateTime? value)
+    {
+        var ln = db.F_CREGLEMENT.Where(a => a.cbMarq == args.cbMarq).SingleOrDefault();
+        ln.DatePaie = value;
+        db.SaveChanges();
+        await UpdateGrid();
+    }
+    private async Task ImPayer(API_V_CREGLEMENT args)
+    {
+        bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment marquer cet élément comme impayé?", "PAIEMENT");
+        if (isConfirm)
+        {
+            var ln = db.F_CREGLEMENT.Where(a => a.cbMarq == args.cbMarq).SingleOrDefault();
+            ln.Impaye = true;
+            ln.Remarque = "Impayé";
+            db.SaveChanges();
+            await UpdateGrid();
+        }
+    }
+    private async Task DateImpayer(API_V_CREGLEMENT args, DateTime? value)
+    {
+        var ln = db.F_CREGLEMENT.Where(a => a.cbMarq == args.cbMarq).SingleOrDefault();
+        ln.RG_Impaye = value;
+        db.SaveChanges();
+        await UpdateGrid();
+    }
+    private async Task Redeposer(API_V_CREGLEMENT args)
+    {
+        bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment redéposer cet élément?", "REDEPOSER");
+        if (isConfirm)
+        {
+            var ln = db.F_CREGLEMENT.Where(a => a.cbMarq == args.cbMarq).SingleOrDefault();
+            ln.Impaye = false;
+            ln.Rappro = false;
+            ln.Depose = false;
+            ln.Remarque = "Impayé à redéposer";
+            db.SaveChanges();
+            await UpdateGrid();
+        }
+    }
+}

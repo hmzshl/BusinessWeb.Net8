@@ -1,0 +1,26 @@
+﻿@page "/attachements"
+
+
+
+ @if (IsLoaded)
+{
+	<Card_1 Title="LISTE DES ATTACHEMENTS">
+		<AttachementsListe IsList IsAttachement="true"></AttachementsListe>
+	</Card_1>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+
+@code {
+	bool IsLoaded = false;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(100);
+		IsLoaded = true;
+	}
+}

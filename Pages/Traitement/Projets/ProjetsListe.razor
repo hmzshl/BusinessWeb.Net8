@@ -1,0 +1,176 @@
+﻿<RadzenContent Container="main">
+    <div class="grid-90">
+        <SfGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                Toolbar="@(new List<object>() { "Search", "Print","Add", "Delete",new ToolbarItem() { Template = Sites, Id = "site", TooltipText = "Site", Align = ItemAlign.Right}})">
+            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(IsAppelOffre)" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+            <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_V_PROJET"></GridEvents>
+            <GridPageSettings PageSize="100"></GridPageSettings>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridTemplates>
+                <EmptyRecordTemplate>
+                    <Empty></Empty>
+                </EmptyRecordTemplate>
+            </GridTemplates>
+            <GridColumns>
+
+                <GridColumn AllowSorting="false" AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"  Field="@nameof(API_V_PROJET.CA_Num)" HeaderText="Affaire"></GridColumn>
+                <GridColumn AllowSorting="false" AllowFiltering="false" Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"  Field="@nameof(API_V_PROJET.NumeroMarche)" HeaderText="N°.Marche" Visible=@(!IsAppelOffre)></GridColumn>
+                <GridColumn AllowSorting="false" AllowFiltering="false" MinWidth="450" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PROJET.Objet)" HeaderText="Objet"></GridColumn>
+                <GridColumn AllowSorting="false" AllowFiltering="false" Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PROJET.CT_Intitule)" HeaderText="Maitre d'ouvrage">
+                </GridColumn>
+                <GridColumn AllowSorting="false" AllowFiltering="false" Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Zone" Field="@nameof(API_V_PROJET.ZoneIntitule)">
+                </GridColumn>
+                    @if(!IsAppelOffre) 
+                    {
+                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="d" Field="@nameof(API_V_PROJET.DateOrdreService)" HeaderText="Ord.Ser"></GridColumn>
+                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="d" Field="@nameof(API_V_PROJET.DateEnregistrement)" HeaderText="Enregi."></GridColumn>
+                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="d" Field="@nameof(API_V_PROJET.DateOrdreNotification)" HeaderText="Ord.Noti"></GridColumn>
+                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PROJET.TypeMarcheIntitule)" HeaderText="Type">
+                    </GridColumn>
+                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="85" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"  Field="@nameof(API_V_PROJET.SituationMarcheIntitule)" HeaderText="Situation">
+                    </GridColumn>
+                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="85" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"  Field="@nameof(API_V_PROJET.PhaseMarcheIntitule)" HeaderText="Phase">
+                    </GridColumn> 
+                    <GridColumn AllowSorting="false" AllowFiltering="false" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="TotalMarcheTTC" HeaderText="Montant" Format="N2"></GridColumn>
+                    }
+                else
+                {
+                                      <GridColumn AllowSorting="false" AllowFiltering="false" Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PROJET.NumeroAppelOffre)" HeaderText="N°AP.Offre"></GridColumn>
+                                                          <GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="d" Field="@nameof(API_V_PROJET.DatePublication)" HeaderText="Publication"></GridColumn>
+                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="d" Field="@nameof(API_V_PROJET.DateOuverturePils)" HeaderText="Ouver. Pils"></GridColumn>
+                }
+            </GridColumns>
+            <SfSpinner @bind-Visible="@loading">
+            </SfSpinner>
+        </SfGrid>
+    </div>
+
+</RadzenContent>
+
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    //Parameters
+    [Parameter]
+    public bool IsAppelOffre { get; set; } = true;
+    [Parameter] public IEnumerable<API_V_PROJET> data { get; set; }
+    //End Parameters
+
+    //Components
+    private SfGrid<API_V_PROJET> DefaultGrid;
+    private IEnumerable<API_V_PROJET> items;
+
+    bool loading = true;
+    Helpers helpers = new Helpers();
+
+    private SfDropDownList<int, API_T_Site> SiteDrop;
+    private RenderFragment Sites =>
+        @<SfDropDownList @ref=@SiteDrop TValue="int" TItem="API_T_Site" Placeholder="Site" DataSource=@(session.db.API_T_Site) Width="250" ShowClearButton>
+            <DropDownListFieldSettings Text="Intitule" Value="id"> </DropDownListFieldSettings>
+            <DropDownListEvents TValue="int" TItem="API_T_Site"> </DropDownListEvents>
+        </SfDropDownList>
+    ;
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await UpdateGrid();
+    }
+    private async Task UpdateGrid()
+    {
+        loading = true;
+        await Task.Delay(1);
+        items = session.db.API_V_PROJET.Where(a => a.IsAppelOffre == IsAppelOffre).AsNoTracking().ToList().OrderByDescending(a => a.id);
+        loading = false;
+        await Task.Delay(1);
+    }
+
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
+        {
+            ExcelExportProperties exportProperties = new ExcelExportProperties();
+            exportProperties.IncludeTemplateColumn = true;
+            await this.DefaultGrid.ExportToExcelAsync(exportProperties);
+        }
+        if (args.Item.Id == "Grid_pdfexport")  //Id is combination of Grid's ID and itemname
+        {
+
+            await this.DefaultGrid.PdfExport();
+        }
+    }
+    protected async Task Edit(RecordDoubleClickEventArgs<API_V_PROJET> args)
+    {
+        if(IsAppelOffre)
+        {
+            await DialogService.OpenAsync<ProjetsFiche>(args.RowData.CA_Intitule,
+  new Dictionary<string, object>() { { "id", args.RowData.id } },
+  new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "98%" });
+        }
+        else
+        {
+            await DialogService.OpenAsync<ProjetsFiche>(args.RowData.CA_Intitule,
+    new Dictionary<string, object>() { { "id", args.RowData.id } },
+    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "98%" });
+        }
+
+        await UpdateGrid();
+    }
+
+    private async Task Add()
+    {
+        await DialogService.OpenAsync<ProjetsFiche>($"Ajouter un élément",
+        new Dictionary<string, object>() { { "id", 0 } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "98%" });
+
+        await UpdateGrid();
+    }
+    private async Task OnActionBegin(ActionEventArgs<API_V_PROJET> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await Add();
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_PROJETPlanningDecompte WHERE Projet = {0}", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_PROJETReception WHERE Projet = {0}", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_PROJETAvenant WHERE Projet = {0}", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_PROJETDate WHERE Projet = {0}", args.Data.id);
+            
+            //Bordereau
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_AttachementDetail WHERE Ligne IN ( SELECT id FROM API_T_BordereauDetail WHERE Bordereau in (SELECT id FROM API_T_Bordereau WHERE Projet = {0}))", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_BordereauDetail WHERE Bordereau in (SELECT id FROM API_T_Bordereau WHERE Projet = {0})", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_Bordereau WHERE Projet = {0}", args.Data.id);
+            
+            //Attachement
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_AttachementDetail WHERE Attachement in (SELECT id FROM API_T_Attachement WHERE Projet = {0})", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_AttachementHorsBD WHERE Attachement in (SELECT id FROM API_T_Attachement WHERE Projet = {0})", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_Attachement WHERE Projet = {0}", args.Data.id);
+
+            //Autre
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_Caution WHERE Projet = {0}", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_Assurance WHERE Projet = {0}", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_AVANCEMENTDETAIL WHERE Projet = {0}", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_POINTAGEDETAIL WHERE Projet = {0}", args.Data.id);
+
+
+
+
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_PROJET WHERE id = {0}", args.Data.id);
+            db.SaveChanges();
+            await UpdateGrid();
+        }
+    }
+}

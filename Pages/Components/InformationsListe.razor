@@ -1,0 +1,75 @@
+﻿<div style="height: 65vh;">
+    <SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Edit", "Delete" })" DataSource="@(items)">
+        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+        <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+            <HeaderTemplate>
+                <span>@((context as API_T_Information).Valeur)</span>
+            </HeaderTemplate>
+        </GridEditSettings>
+        <GridEvents OnActionBegin="UpdateListe" TValue="API_T_Information"></GridEvents>
+        <GridTemplates>
+            <EmptyRecordTemplate>
+                <Empty></Empty>
+            </EmptyRecordTemplate>
+        </GridTemplates>
+        <GridColumns>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Information.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Information.Valeur) HeaderText="Libellé"></GridColumn>
+        </GridColumns>
+    </SfGrid>
+</div>
+
+
+
+@code
+{
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    [Parameter] public int Tab { get; set; } = 0;
+    DB db = new DB();
+    private List<API_T_Information> items = new List<API_T_Information>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        items = session.db.API_T_Information.Where(a => a.Tab == Tab).ToList();
+    }
+    public void UpdateListe(ActionEventArgs<API_T_Information> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+
+            if (args.Action == "Add")
+            {
+                API_T_Information item = args.Data;
+                item.Tab = Tab;
+                db.API_T_Information.Add(item);
+                db.SaveChanges();
+
+            }
+            if (args.Action != "Add")
+            {
+                var local = db.Set<API_T_Information>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                if (local != null)
+                {
+                    db.Entry(local).State = EntityState.Detached;
+                }
+                db.Entry(args.Data).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+        }
+
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            var local = db.Set<API_T_Information>().Local.FirstOrDefault(a => a.id == args.Data.id);
+            if (local != null)
+            {
+                db.Entry(local).State = EntityState.Detached;
+            }
+            db.Entry(args.Data).State = EntityState.Deleted;
+            db.SaveChanges();
+        }
+    }
+
+
+}

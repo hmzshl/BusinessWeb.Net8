@@ -1,0 +1,85 @@
+﻿<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+                <Template>
+                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="Save"></SfButton>
+                </Template>
+            </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+@if (@row == null)
+{
+             <div class="spin-center">
+                <Spin size="large" />
+    </div>
+}
+else
+{
+    
+}
+
+
+
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter] public int id { get; set; } = 0;
+    public API_T_CentreCharge row { get; set; }
+
+
+
+    private async Task LoadData()
+    {
+
+
+    }
+
+    protected override void OnInitialized()
+    {
+        db = session.db;
+        if (id != 0)
+        {
+            row = db.API_T_CentreCharge.Where(a => a.id == id).SingleOrDefault();
+            LoadData();
+        }
+        else
+        {
+            row = new API_T_CentreCharge();
+            
+        }
+
+    }
+    private void Save() {
+        Submit();
+        Message.Success("Les données sont enregistrées avec succès");
+        DialogService.Close();
+
+    }
+    private void Submit()
+    {
+        try
+        {
+            if (id == 0)
+            {
+                db.API_T_CentreCharge.Add(row);          
+            }
+            db.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            Message.Warning(ex.ToString());
+        }
+    }
+    private async Task Add()
+    {
+        if (id != 0) 
+        {
+            Submit();
+        }
+        await DialogService.OpenAsync<AddAttribute>($"Ajouter un élément",
+        new Dictionary<string, object>() { { "ParentID", row.id }, { "TableName", "API_T_CentreCharge" } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true });
+        await LoadData();
+    }
+}

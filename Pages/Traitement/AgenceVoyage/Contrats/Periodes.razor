@@ -1,0 +1,64 @@
+﻿@attribute [Authorize]
+<div style="height: 50vh">
+    <SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete"})" DataSource="@(items)">
+        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+        <GridPageSettings PageSize="40"></GridPageSettings>
+        <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting  Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+            <HeaderTemplate>
+            </HeaderTemplate>
+        </GridEditSettings>
+        <GridEvents OnActionBegin="UpdateListe" TValue="API_T_AgenceContratDate"></GridEvents>
+        <GridTemplates>
+            <EmptyRecordTemplate>
+                <Empty></Empty>
+            </EmptyRecordTemplate>
+        </GridTemplates>
+        <GridColumns>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AgenceContratDate.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+            <GridColumn Format="d" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AgenceContratDate.DateDebut) HeaderText="Date Début" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+            <GridColumn Format="d" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AgenceContratDate.DateFin) HeaderText="Date Fin" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+        </GridColumns>
+    </SfGrid>
+</div>
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter]
+    public int contrat { get; set; }
+    List<API_T_AgenceContratDate> items = new List<API_T_AgenceContratDate>();
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        items = db.API_T_AgenceContratDate.Where(a => a.Contrat == contrat).OrderBy(a => a.DateFin).ToList();
+    }
+    public async Task UpdateListe(ActionEventArgs<API_T_AgenceContratDate> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+|| args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+|| args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await DialogService.OpenAsync<AddPeriode>($"Ajouter une periode",
+new Dictionary<string, object>() { { "contrat", contrat } },
+new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "320px", Height = "250px" });
+            items = db.API_T_AgenceContratDate.Where(a => a.Contrat == contrat).OrderBy(a => a.DateFin).ToList();
+        }
+
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            string q1 = @"DELETE FROM API_T_AgenceContratDetail WHERE Periode = {0}";
+            string q2 = @"DELETE FROM API_T_AgenceContratDate WHERE id = {0}";
+            db.Database.ExecuteSqlRaw(q1,args.Data.id);
+            db.Database.ExecuteSqlRaw(q2, args.Data.id);
+        }
+    }
+
+
+}

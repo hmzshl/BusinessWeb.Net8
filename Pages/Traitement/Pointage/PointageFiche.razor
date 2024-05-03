@@ -1,0 +1,288 @@
+﻿
+<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
+            </Template>
+        </ToolbarItem>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => DialogService.Close())">Enregistrer</SfButton>
+            </Template>
+        </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+<div >
+    <GridRow>
+        <GridCol Xs="24" Md="24">
+            <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="row">
+                <SfTab CssClass="e-fill">
+                    <TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/><TabItems>
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Identification"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <GridRow>
+                                    <GridCol Xs="24" Md="24">
+                                    </GridCol>
+                                    
+                                    <GridCol Xs="24" Md="24">
+                                        <div style="height: 75vh;">
+                                            <SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(lignes)">
+                                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                                <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                                                    <HeaderTemplate>
+                                                        <span>@("")</span>
+                                                    </HeaderTemplate>
+                                                </GridEditSettings>
+                                                <GridEvents OnActionBegin="EditGrid" TValue="API_T_PointageDetail"></GridEvents>
+                                                <GridTemplates>
+                                                    <EmptyRecordTemplate>
+                                                        <Empty></Empty>
+                                                    </EmptyRecordTemplate>
+                                                </GridTemplates>
+                                                <GridAggregates>
+                                                    <GridAggregate>
+                                                        <GridAggregateColumns>
+                                                            <GridAggregateColumn Field="Montant" Type="AggregateType.Sum" Format="N2">
+                                                                <FooterTemplate>
+                                                                    @{
+                                                                        var SumValue = (context as AggregateTemplateContext);
+                                                                        <div>
+                                                                            @SumValue.Sum
+                                                                        </div>
+                                                                    }
+                                                                </FooterTemplate>
+
+                                                            </GridAggregateColumn>
+                                                        </GridAggregateColumns>
+                                                    </GridAggregate>
+                                                </GridAggregates>
+                                                <GridColumns>
+                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_PointageDetail.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                                    @if (IsPersonnel)
+                                                    {
+                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Nom">
+                                                            <Template>
+                                                                @{
+                                                                    var dt = (db.API_T_Personnel.Where(a => a.id == (context as API_T_PointageDetail).Personnel));
+                                                                }
+                                                                @if (dt.Count() != 0)
+                                                                {
+                                                                    <div>@dt.First().Nom</div>
+                                                                }
+                                                            </Template>
+                                                            <EditTemplate>
+                                                                <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering Placeholder="Nom" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(db.API_T_Personnel.FromSqlRaw("SELECT a.* FROM API_T_Personnel a WHERE a.id NOT IN (SELECT Personnel FROM API_T_PointageDetail WHERE Journee = {0})",journee).OrderBy(a => a.Nom))" TValue="int" TItem="API_T_Personnel" @bind-Value="@((context as API_T_PointageDetail).Personnel)">
+                                                                    <DropDownListEvents TValue="int" TItem="API_T_Personnel" />
+                                                                    <DropDownListFieldSettings Text="Nom" Value="id" />
+                                                                </SfDropDownList>
+                                                            </EditTemplate>
+                                                        </GridColumn>
+                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_PointageDetail.Personnel) HeaderText="CIN">
+                                                            <Template>
+                                                                @{
+                                                                    var dt = (db.API_T_Personnel.Where(a => a.id == (context as API_T_PointageDetail).Personnel));
+                                                                }
+                                                                @if (dt.Count() != 0)
+                                                                {
+                                                                    <div>@dt.First().CIN</div>
+                                                                }
+                                                            </Template>
+                                                            <EditTemplate>
+                                                                <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering Placeholder="CIN" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(db.API_T_Personnel.FromSqlRaw("SELECT a.* FROM API_T_Personnel a WHERE a.id NOT IN (SELECT Personnel FROM API_T_PointageDetail WHERE Journee = {0})",journee).OrderBy(a => a.CIN))" TValue="int" TItem="API_T_Personnel" @bind-Value="@((context as API_T_PointageDetail).Personnel)">
+                                                                    <DropDownListEvents TValue="int" TItem="API_T_Personnel" />
+                                                                    <DropDownListFieldSettings Text="CIN" Value="id" />
+                                                                </SfDropDownList>
+                                                            </EditTemplate>
+                                                        </GridColumn>
+                                                    }
+                                                    @if (IsMateriel)
+                                                    {
+                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Intitulé">
+                                                            <Template>
+                                                                @{
+                                                                    var dt = (db.API_T_Materiel.Where(a => a.id == (context as API_T_PointageDetail).Materiel));
+                                                                }
+                                                                @if (dt.Count() != 0)
+                                                                {
+                                                                    <div>@dt.First().Intitule</div>
+                                                                }
+                                                            </Template>
+                                                            <EditTemplate>
+                                                                <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering Placeholder="Intitulé" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(db.API_T_Materiel.FromSqlRaw("SELECT a.* FROM API_T_Materiel a WHERE a.id NOT IN (SELECT Materiel FROM API_T_PointageDetail WHERE Journee = {0})",journee).OrderBy(a => a.Intitule))" TValue="int" TItem="API_T_Materiel" @bind-Value="@((context as API_T_PointageDetail).Materiel)">
+                                                                    <DropDownListEvents TValue="int" TItem="API_T_Materiel" />
+                                                                    <DropDownListFieldSettings Text="Intitule" Value="id" />
+                                                                </SfDropDownList>
+                                                            </EditTemplate>
+                                                        </GridColumn>
+                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Immatricule">
+                                                            <Template>
+                                                                @{
+                                                                    var dt = (db.API_T_Materiel.Where(a => a.id == (context as API_T_PointageDetail).Materiel));
+                                                                }
+                                                                @if (dt.Count() != 0)
+                                                                {
+                                                                    <div>@dt.First().Immatricule</div>
+                                                                }
+                                                            </Template>
+                                                            <EditTemplate>
+                                                                <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering Placeholder="Immatricule" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(db.API_T_Materiel.FromSqlRaw("SELECT a.* FROM API_T_Materiel a WHERE a.id NOT IN (SELECT Materiel FROM API_T_PointageDetail WHERE Journee = {0})",journee).OrderBy(a => a.Intitule))" TValue="int" TItem="API_T_Materiel" @bind-Value="@((context as API_T_PointageDetail).Materiel)">
+                                                                    <DropDownListEvents TValue="int" TItem="API_T_Materiel" />
+                                                                    <DropDownListFieldSettings Text="Immatricule" Value="id" />
+                                                                </SfDropDownList>
+                                                            </EditTemplate>
+                                                        </GridColumn>
+                                                    }
+
+                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_PointageDetail.NbrHeure) HeaderText="Nbr Heure" Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                                    <GridColumn AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_PointageDetail.PU) HeaderText="Cout U" Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                                        <EditTemplate>
+
+                                                        </EditTemplate>
+                                                    </GridColumn>
+                                                    <GridColumn AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_PointageDetail.Montant) HeaderText="Cout" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" EditorSettings="@(parameters)">
+                                                        <EditTemplate>
+
+                                                        </EditTemplate>
+                                                    </GridColumn>
+                                                </GridColumns>
+                                            </SfGrid>
+                                        </div>
+
+                                    </GridCol>
+                                </GridRow>
+                            </ContentTemplate>
+                        </TabItem>
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Frais"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <Card Style="height: 100%;">
+
+                                </Card>
+                            </ContentTemplate>
+                        </TabItem>
+                    </TabItems>
+                </SfTab>
+            </Form>
+        </GridCol>
+
+    </GridRow>
+</div>
+
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; }
+    DB db = new DB();
+    [Parameter] public bool IsMateriel { get; set; } = false;
+    [Parameter] public bool IsPersonnel { get; set; } = true;
+    [Parameter] public int type { get; set; } = 0;
+    EditForm form = new EditForm();
+    [Parameter] public int id { get; set; } = 0;
+    [Parameter] public string operation { get; set; }
+    private API_T_Projet row { get; set; }
+    List<API_T_PointageDetail> lignes = new List<API_T_PointageDetail>();
+
+    [Parameter] public bool detail { get; set; } = false;
+    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2", ShowSpinButton = false } };
+    [Parameter] public bool IsList { get; set; } = true;
+    [Parameter] public int Projet { get; set; } = 0;
+    [Parameter] public int Materiel { get; set; } = 0;
+    [Parameter] public int Personnel { get; set; } = 0;
+    [Parameter] public int Tiers { get; set; } = 0;
+    [Parameter] public int journee { get; set; } = 0;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+
+        if (id == 0)
+        {
+            row = new API_T_Projet();
+            //row.Journee = journee;
+        }
+        else
+        {
+            row = db.API_T_Projet.Where(a => a.id == id).SingleOrDefault();
+            await UpdateGrid();
+        }
+
+    }
+    private async Task UpdateGrid()
+    {
+        lignes = db.API_T_PointageDetail.Where(a => a.Projet == id && a.Journee == journee && a.Type == type).ToList();
+    }
+    public void EditGrid(ActionEventArgs<API_T_PointageDetail> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+
+            if (args.Action == "Add")
+            {
+                API_T_PointageDetail item = args.Data;
+                item.Projet = id;
+                //item.Responsable = SelectedResponsable;
+                item.Journee = journee;
+                item.Type = type;
+                var per = db.API_T_Personnel.Where(a => a.id == item.Personnel);
+                if (per.Count() != 0)
+                {
+                    item.PU = per.First().SalaireBaseHoraire;
+                }
+                item.Montant = item.PU * item.NbrHeure;
+                db.Add(item);
+                db.SaveChanges();
+            }
+            if (args.Action != "Add")
+            {
+                var local = db.Set<API_T_PointageDetail>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                if (local != null)
+                {
+                    db.Entry(local).State = EntityState.Detached;
+                }
+                db.Entry(args.Data).State = EntityState.Modified;
+                db.SaveChanges();
+
+            }
+
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            var local = db.Set<API_T_PointageDetail>().Local.FirstOrDefault(a => a.id == args.Data.id);
+            if (local != null)
+            {
+                db.Entry(local).State = EntityState.Detached;
+            }
+            db.Entry(args.Data).State = EntityState.Deleted;
+            db.SaveChanges();
+        }
+
+    }
+    private async Task OnFileOpen(FileOpenEventArgs<FileManagerDirectoryContent> args)
+    {
+        if (args.FileDetails.Name.ToUpper().EndsWith(".PDF"))
+        {
+            await DialogService.OpenAsync<PdfViewer>(args.FileDetails.Name,
+       new Dictionary<string, object>() { { "DocumentPath", fn.getPath(session.Societe.id.ToString(), "Projet", this.id.ToString()) + "/" + args.FileDetails.Name } },
+       new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        }
+        if (args.FileDetails.Name.ToUpper().EndsWith(".DOC") || args.FileDetails.Name.ToUpper().EndsWith(".DOCX") || args.FileDetails.Name.ToUpper().EndsWith(".TXT"))
+        {
+            await DialogService.OpenAsync<WordViewer>(args.FileDetails.Name,
+       new Dictionary<string, object>() { { "DocumentPath", fn.getPath(session.Societe.id.ToString(), "Projet", this.id.ToString()) + "/" + args.FileDetails.Name } },
+       new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        }
+
+    }
+    private async Task Print()
+    {
+        
+    }
+
+}
+

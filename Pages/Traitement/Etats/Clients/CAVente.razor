@@ -1,0 +1,23 @@
+﻿@page "/et-ca-vente"
+@attribute [Authorize]
+
+@if (IsLoaded)
+{
+    <BusinessWeb.Pages.Traitement.Etats.Tiers.CA></BusinessWeb.Pages.Traitement.Etats.Tiers.CA>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+@code {
+    bool IsLoaded = false;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        IsLoaded = true;
+    }
+}

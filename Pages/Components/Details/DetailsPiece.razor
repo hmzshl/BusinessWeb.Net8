@@ -1,0 +1,315 @@
+﻿
+@if (IsLoaded)
+{
+    <div>
+        <GridRow>
+            <GridCol Xs="24" Md="24">
+                <EditForm @ref=form Model="@row" Context="EditContext">
+                    <FluentValidationValidator TValidator="ConsommationChantierValidator" />
+                    <div class="validation-group">
+                        <ValidationSummary />
+                    </div>
+                    <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="FormContext">
+                        <SfTab CssClass="e-fill">
+                            <TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/><TabItems>
+                                <TabItem>
+                                    <ChildContent>
+                                        <TabHeader Text="Entéte"></TabHeader>
+                                    </ChildContent>
+                                    <ContentTemplate>
+                                        <GridRow>
+                                            <GridCol Xs="24" Md="6">
+                                                <Card>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
+                                                        <SfDatePicker Readonly TValue="DateTime?" @bind-Value="@row.DO_Date" />
+                                                     </FormItem>
+                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numero" LabelColSpan="8">
+                                                         <SfTextBox @bind-Value="@row.DO_Piece" Readonly />
+                                                     </FormItem>
+                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Statut" LabelColSpan="8">
+                                                         <SfDropDownList TValue="short?" TItem="Items" DataSource="@fn.GetDocumentStatut(row.DO_Type??0).Distinct()" @bind-Value="@row.DO_Statut" Readonly>
+                                                         <DropDownListEvents TValue="short?" TItem="Items" />
+                                                         <DropDownListFieldSettings Text="Name" Value="ShortId" />
+                                                     </SfDropDownList>
+                                                 </FormItem>
+                                             </Card>
+                                         </GridCol>
+                                         <GridCol Xs="24" Md="10">
+                                             <Card>
+                                                 @if (getDomaine() <= 1)
+                                                    {
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="@(getTiers())" LabelColSpan="6">
+                                                            <SfTextBox @bind-Value="@row.CT_Intitule" Readonly />
+                                                     </FormItem>
+                                                    }
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Entete 1" LabelColSpan="6">
+                                                        <SfTextBox @bind-Value="@row.DO_Coord01" Readonly />
+                                                     </FormItem>
+                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Entete 2" LabelColSpan="6">
+                                                         <SfTextBox @bind-Value="@row.DO_Coord02" Readonly />
+                                                     </FormItem>
+                                                 </Card>
+                                             </GridCol>
+                                             <GridCol Xs="24" Md="8">
+                                                 <Card>
+                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Dépot" LabelColSpan="7">
+                                                         <SfTextBox @bind-Value="@row.DE_Intitule" Readonly />
+                                                     </FormItem>
+                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Affaire" LabelColSpan="7">
+                                                         <SfTextBox @bind-Value="@row.CA_Intitule" Readonly />
+                                                     </FormItem>
+                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Reference" LabelColSpan="7">
+                                                         <SfTextBox @bind-Value="@row.DO_Ref" Readonly />
+                                                     </FormItem>
+                                                 </Card>
+                                             </GridCol>
+                                         </GridRow>
+                                     </ContentTemplate>
+                                 </TabItem>
+                                 <TabItem>
+                                     <ChildContent>
+                                         <TabHeader Text="Informations"></TabHeader>
+                                     </ChildContent>
+                                     <ContentTemplate>
+                                         <GridRow>
+                                             <GridCol Xs="24" Md="7">
+                                                 <Card>
+                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Categorie Tarifaire" LabelColSpan="10">
+                                                         <SfDropDownList Readonly AllowFiltering TValue="short?" TItem="P_CATTARIF" DataSource="@(db.P_CATTARIF.Where(a => a.CT_Intitule != ""))" @bind-Value="@row.DO_Tarif">
+                                                             <DropDownListEvents TValue="short?" TItem="P_CATTARIF" />
+                                                             <DropDownListFieldSettings Text="CT_Intitule" Value="cbIndice" />
+                                                         </SfDropDownList>
+                                                     </FormItem>
+                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Devise" LabelColSpan="10">
+                                                         <SfDropDownList Readonly AllowFiltering TValue="short?" TItem="P_DEVISE" DataSource="@(db.P_DEVISE.Where(a => a.D_Intitule != ""))" @bind-Value="@row.DO_Devise">
+                                                             <DropDownListEvents TValue="short?" TItem="P_DEVISE" />
+                                                             <DropDownListFieldSettings Text="D_Intitule" Value="cbIndice" />
+                                                         </SfDropDownList>
+                                                     </FormItem>
+                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Cours" LabelColSpan="10">
+                                                         <SfNumericTextBox Readonly @bind-Value="@(row.DO_Cours)" ShowSpinButton="false" Decimals="4" Format="N4" />
+                                                     </FormItem>
+                                                 </Card>
+                                             </GridCol>
+                                             <GridCol Xs="24" Md="10">
+                                                 <Card>
+                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Categorie comptable" LabelColSpan="10">
+                                                         <SfDropDownList Readonly AllowFiltering TValue="short?" TItem="P_CATTARIF" DataSource="@(db.P_CATTARIF.Where(a => a.CT_Intitule != ""))" @bind-Value="@row.DO_Tarif">
+                                                             <DropDownListEvents TValue="short?" TItem="P_CATTARIF" />
+                                                             <DropDownListFieldSettings Text="CT_Intitule" Value="cbIndice" />
+                                                         </SfDropDownList>
+                                                     </FormItem>
+                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Compte général" LabelColSpan="10">
+                                                         <SfDropDownList AllowFiltering TValue="string" TItem="F_COMPTEG" DataSource="@(db.F_COMPTEG.OrderBy(a => a.CG_Num))" @bind-Value="@row.CG_Num" Readonly>
+                                                         <DropDownListEvents TValue="string" TItem="F_COMPTEG" />
+                                                         <DropDownListFieldSettings Text="CG_Intitule" Value="CG_Num" />
+                                                     </SfDropDownList>
+                                                 </FormItem>
+                                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Tiers payeur" LabelColSpan="10">
+                                                     <SfDropDownList AllowFiltering TValue="string" TItem="F_COMPTET" DataSource="@(tiers)" @bind-Value="@row.CT_NumPayeur" Readonly>
+                                                         <DropDownListEvents TValue="string" TItem="F_COMPTET" />
+                                                         <DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+                                                     </SfDropDownList>
+                                                 </FormItem>
+                                             </Card>
+                                         </GridCol>
+                                         <GridCol Xs="24" Md="7">
+                                             <Card>
+                                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Collaborateur" LabelColSpan="10">
+                                                     <SfTextBox @bind-Value="@row.CO_Nom" Readonly />
+                                                     </FormItem>
+                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Lieu de livraison" LabelColSpan="10">
+                                                         <SfDropDownList AllowFiltering TValue="int?" TItem="F_LIVRAISON" DataSource="@(db.F_LIVRAISON.Where(a => a.CT_Num == row.DO_Tiers))" @bind-Value="@row.LI_No" Readonly>
+                                                         <DropDownListEvents TValue="int?" TItem="F_LIVRAISON" />
+                                                         <DropDownListFieldSettings Text="LI_Intitule" Value="LI_No" />
+                                                     </SfDropDownList>
+                                                 </FormItem>
+                                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Mode d'expédition'" LabelColSpan="10">
+                                                     <SfDropDownList AllowFiltering TValue="short?" TItem="P_EXPEDITION" DataSource="@(db.P_EXPEDITION.Where(a => a.E_Intitule != ""))" @bind-Value="@row.DO_Expedit" Readonly>
+                                                         <DropDownListEvents TValue="short?" TItem="P_EXPEDITION" />
+                                                         <DropDownListFieldSettings Text="E_Intitule" Value="cbIndice" />
+                                                     </SfDropDownList>
+                                                 </FormItem>
+                                             </Card>
+                                         </GridCol>
+                                     </GridRow>
+                                 </ContentTemplate>
+                             </TabItem>
+
+                         </TabItems>
+                     </SfTab>
+                 </Form>
+             </EditForm>
+
+         </GridCol>
+         
+         <GridCol Xs="24" Md="24">
+             <Card>
+                 <div class="grid-50">
+                     <SfGrid Height="100%" @ref=@MainGrid AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
+                             <GridEvents QueryCellInfo="CustomizeCell" TValue="API_V_DOCLIGNE"></GridEvents>
+                             <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
+                             <GridEditSettings ShowDeleteConfirmDialog Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" AllowNextRowEdit>
+                         </GridEditSettings>
+                         <GridTemplates>
+                             <EmptyRecordTemplate>
+                                 <Empty></Empty>
+                             </EmptyRecordTemplate>
+                         </GridTemplates>
+                         <GridColumns>
+                             <GridColumn AllowEditing="false" Width="10" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="cbMarq" HeaderText="#" Visible="false" IsPrimaryKey="true" />
+                             <GridColumn AllowEditing="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_Ref" HeaderText="Référence" />
+                             <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Design" HeaderText="Désignation" />
+                             <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.EU_Enumere)" HeaderText="Unité">
+                             </GridColumn>
+
+                             <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Dépot" Field="@nameof(API_V_DOCLIGNE.DE_Intitule)">
+                             </GridColumn>
+                             <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affaire" Field="@nameof(API_V_DOCLIGNE.CA_Intitule)">
+                             </GridColumn>
+                             <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Collaborateur" EditType="EditType.DropDownEdit" Field="@nameof(API_V_DOCLIGNE.CO_Nom)">
+                             </GridColumn>
+                             <GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Qte" HeaderText="Qté" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                             <GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PrixUnitaire" HeaderText="PU" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                             <GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_CodeTaxe1" HeaderText="Taxe">
+                             </GridColumn>
+                             <GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PUTTC" HeaderText="PU TTC" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                             <GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Remise01REM_Valeur" HeaderText="Remise" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                             <GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="PU Net" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Field="@nameof(API_V_DOCLIGNE.PUNet)">
+                             </GridColumn>
+                             <GridColumn AllowEditing="false" Width="70" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT" HeaderText="HT" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                             <GridColumn AllowEditing="false" Width="70" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC" HeaderText="TTC" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                         </GridColumns>
+
+
+                     </SfGrid>
+                 </div>
+
+             </Card>
+
+         </GridCol>
+         <Divider></Divider>
+         <GridCol Xs="12" Md="15">
+
+         </GridCol>
+         <GridCol Xs="12" Md="3">
+             <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="Montant HT" Value="@((row.DL_MontantHT).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600 ;" Suffix="@fn.getDevise(db)" />
+         </GridCol>
+         <GridCol Xs="12" Md="3">
+             <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="Montant TVA" Value="@(((row.DL_MontantTVA??0)).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+         </GridCol>
+         <GridCol Xs="12" Md="3">
+             <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-green" Title="Montant TTC" Value="@((row.DL_MontantTTC).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" Precision="0" Suffix="@fn.getDevise(db)" />
+         </GridCol>
+     </GridRow>
+ </div>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    [Parameter] public int cbMarq { get; set; }
+    [Parameter] public string DO_Piece { get; set; } = "";
+    [Parameter] public short? DO_Type { get; set; } = 0; 
+    [Parameter] public DB db2 { get; set; }
+    DB db = new DB();
+    bool IsLoaded = false;
+    public API_V_DOCENTETE row = new API_V_DOCENTETE();
+    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
+    SfGrid<API_V_DOCLIGNE> MainGrid;
+    List<F_COMPTET> tiers = new List<F_COMPTET>();
+    List<F_COMPTEA> affaires = new List<F_COMPTEA>();
+    List<API_V_DOCLIGNE> lignes = new List<API_V_DOCLIGNE>();
+    bool loading = true;
+    double index = 0;
+    EditForm form = new EditForm();
+    [Parameter] public bool IsConsommation { get; set; } = false;
+    private async Task UpdateLignes()
+    {
+        lignes = db.API_V_DOCLIGNE.Where(a => a.DO_Type == row.DO_Type && a.DO_Piece == row.DO_Piece).OrderBy(a => a.cbMarq).ToList();
+    }
+    private void UpdateRecap()
+    {
+
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(100);
+        if(db2 != null) 
+        {
+            db = db2;
+        }
+        else 
+        {
+         db = session.db;
+        }
+        row = db.API_V_DOCENTETE.Where(a =>  a.DO_Type == DO_Type && a.DO_Piece == DO_Piece).SingleOrDefault();
+        await UpdateLignes();
+        IsLoaded = true;
+
+    }
+
+    private int getTaxeSense()
+    {
+        if (row.DO_Domaine == 0)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    private int getDomaine()
+    {
+        if (DO_Type <= 7)
+        {
+            return 0;
+        }
+        else if (DO_Type <= 17)
+        {
+            return 1;
+        }
+        else if (DO_Type <= 23)
+        {
+            return 2;
+        }
+        else return 4;
+    }
+    private string getTiers()
+    {
+        if (getDomaine() == 0)
+        {
+            return "Client";
+        }
+        else if (getDomaine() == 1)
+        {
+            return "Fournisseur";
+        }
+        else return "";
+    }
+    public void CustomizeCell(Syncfusion.Blazor.Grids.QueryCellInfoEventArgs<API_V_DOCLIGNE> args)
+    {
+        try
+        {
+            var dt = args.Data;
+            if (dt.AR_Ref == null && args.Column.Field == "DL_Design")
+            {
+                args.Cell.AddClass(new string[] { "td-bold" });
+            }
+        }
+        catch (Exception ex)
+        {
+            Message.Error(ex.ToString());
+        }
+
+
+    }
+}

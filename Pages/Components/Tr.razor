@@ -1,0 +1,18 @@
+﻿<tr>
+    <th class="@TitleClass" style="width: @TitleWidth">@Title</th>
+    <td class="@ContentClass" style="width: 100%;text-align: @Align">
+        @ChildContent
+        </td>
+</tr>
+
+@code 
+{
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string Content { get; set; }
+    [Parameter] public string TitleWidth { get; set; } = "80px";
+    [Parameter] public string Align { get; set; } = "left";
+    [Parameter] public string TitleClass { get; set; }
+    [Parameter] public string ContentClass { get; set; }
+}

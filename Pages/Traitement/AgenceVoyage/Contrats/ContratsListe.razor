@@ -1,0 +1,182 @@
+﻿<RadzenContent Container="main">
+    <div style="height: @getHeight();">
+        <SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete"})">
+            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+            <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="RowDoubleClicked" TValue="API_V_AGENCECONTRAT"></GridEvents>
+            <GridPageSettings PageSize="100"></GridPageSettings>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridTemplates>
+                <EmptyRecordTemplate>
+                    <Empty></Empty>
+                </EmptyRecordTemplate>
+            </GridTemplates>
+            <GridColumns>
+                <GridColumn AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AGENCECONTRAT.Date)" HeaderText="Date" Format="d"></GridColumn>
+                <GridColumn AllowFiltering="false" Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AGENCECONTRAT.Piece)" HeaderText="Pièce" />
+                <GridColumn AllowFiltering="false" Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AGENCECONTRAT.Reference)" HeaderText="Réference" />
+                @if (cbMarq == 0)
+                {
+                    <GridColumn AllowFiltering="false" Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AGENCECONTRAT.CT_Num)" HeaderText="@("N° "+getTiers())"></GridColumn>
+                    <GridColumn AllowSorting="false" AllowFiltering="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AGENCECONTRAT.CT_Intitule)" HeaderText="@getTiers()" />
+                }
+                <GridColumn AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AGENCECONTRAT.DateDebut)" HeaderText="Date Début" Format="d"></GridColumn>
+                <GridColumn AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AGENCECONTRAT.DateFin)" HeaderText="Date Fin" Format="d"></GridColumn>
+                <GridColumn AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Validité">
+                    <Template>
+                        @{
+                            var dt = (context as API_V_AGENCECONTRAT);
+                            if (dt.DateDebut != null && dt.DateFin != null)
+                            {
+                                <div style="text-align: center;">
+                                    <span class="statustxt e-infocolor">@(((dt.DateFin - dt.DateDebut).Value.Days) + 1) Jrs</span>
+                                </div>
+                            }
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AGENCECONTRAT.D_Intitule)" HeaderText="Devise" />
+                <GridColumn AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AGENCECONTRAT.Taux)" HeaderText="Cours" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                <GridColumn AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut">
+                    <Template>
+                        @{
+                            var statut = (context as API_V_AGENCECONTRAT).Statut;
+                            var dt = fn.AV_StatutContrat().Where(a => a.Id == statut).SingleOrDefault();
+                            if (statut == 1)
+                            {
+                                <div style="text-align: center;">
+                                    <span class="statustxt e-activecolor">@dt?.Name</span>
+                                </div>
+                            }
+                            else if (statut == 2)
+                            {
+                                <div style="text-align: center;">
+                                    <span class="statustxt e-inactivecolor">@dt?.Name</span>
+                                </div>
+                            }
+                            else if (statut == 3)
+                            {
+                                <div style="text-align: center;">
+                                    <span class="statustxt e-alertcolor">@dt?.Name</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="text-align: center;">
+                                    <span class="statustxt e-infocolor">@dt?.Name</span>
+                                </div>
+                            }
+
+                        }
+                    </Template>
+                </GridColumn>
+            </GridColumns>
+            <SfSpinner @bind-Visible="@loading">
+            </SfSpinner>
+        </SfGrid>
+    </div>
+
+</RadzenContent>
+
+
+@code
+{
+
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    [Parameter] public int Type { get; set; } = 0;
+    [Parameter] public int cbMarq { get; set; } = 0;
+    private SfGrid<API_V_AGENCECONTRAT> DefaultGrid;
+    private ICollection<API_V_AGENCECONTRAT> items;
+    bool loading = true;
+    bool IsLoaded = false;
+
+    private string getTiers()
+    {
+        if(Type == 1)
+        {
+            return "Fournisseur";
+        }
+        else
+        {
+            return "Client";  
+        }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await Task.Run(UpdateGrid);
+    }
+    private async Task UpdateGrid()
+    {
+        loading = true;
+        await Task.Delay(1);
+        items = session.db.API_V_AGENCECONTRAT.AsNoTracking().Where(a => (a.Type == Type && cbMarq == 0) || (cbMarq != 0 && a.Tiers == cbMarq)).OrderBy(a => a.Date).ToList();
+        loading = false;
+        await Task.Delay(1);
+    }
+
+    protected async Task RowDoubleClicked(RecordDoubleClickEventArgs<API_V_AGENCECONTRAT> args)
+    {
+        await DialogService.OpenAsync<ContratsFiche>(args.RowData.Piece,
+        new Dictionary<string, object>() { { "id", args.RowData.id }, { "Type", Type }, { "cbMarq", cbMarq } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        await UpdateGrid();
+    }
+    protected async Task AddClick()
+    {
+        await DialogService.OpenAsync<ContratsFiche>($"Ajouter une élément",
+        new Dictionary<string, object>() { { "id", 0 }, { "Type", Type }, { "cbMarq", cbMarq } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        await UpdateGrid();
+    }
+
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.ExcelExport();
+        }
+        if (args.Item.Id == "Grid_pdfexport")  //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.PdfExport();
+        }
+    }
+    private async Task OnActionBegin(ActionEventArgs<API_V_AGENCECONTRAT> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+        else if (args.RequestType == Syncfusion.Blazor.Grids.Action.Delete)
+        {
+            string q1 = @"DELETE FROM API_T_AgenceOffre WHERE Entete = {0}";
+            string q2 = @"DELETE FROM API_T_AgenceContratLigne WHERE Entete = {0}";
+            string q3 = @"DELETE FROM API_T_AgenceContrat WHERE id = {0}";
+            db.Database.ExecuteSqlRaw(q1, args.RowData.id);
+            db.Database.ExecuteSqlRaw(q2, args.RowData.id);
+            db.Database.ExecuteSqlRaw(q3, args.RowData.id);
+            await UpdateGrid();
+        }
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await AddClick();
+        }
+
+    }
+    private string getHeight()
+    {
+        if(cbMarq != 0)
+        {
+            return "70vh";
+        }
+        else
+        {
+            return "88vh"; 
+        }
+    }
+}

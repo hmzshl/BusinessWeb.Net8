@@ -1,0 +1,25 @@
+﻿@page "/consommations-chantiers"
+
+
+
+@if (IsLoaded)
+{
+	<BusinessWeb.Pages.Traitement.Projets.Documents.DocumentsListe IsConsommation="true" DO_Type=@DO_Type DO_Domaine="4" Title="LISTE DES CONSOMMATIONS CHANTIERS" />
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+@code {
+	bool IsLoaded = false;
+	    [Parameter] public int DO_Type { get; set; }
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(100);
+		IsLoaded = true;
+	}
+}
+

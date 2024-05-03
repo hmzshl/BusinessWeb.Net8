@@ -1,0 +1,20 @@
+﻿<div class="card-6" style="background: @Color;">
+	<p class="content-text" style="text-align: center;"><span>@ChildContent</span><span class="devise-text">@Devise</span></p>
+	<p class="title-text" style="text-align: center;">@Title</p>
+</div>
+
+
+@code {
+	[Parameter]
+	public RenderFragment ChildContent { get; set; }
+	[Parameter]
+	public string Title { get; set; }
+	[Parameter]
+	public string Devise { get; set; }
+	[Parameter]
+	public string Height { get; set; }
+	[Parameter]
+	public string Width { get; set; }
+	[Parameter]
+	public string Color { get; set; } = "linear-gradient(to right, rgb(20, 30, 48), rgb(36, 59, 85))";
+}

@@ -1,0 +1,166 @@
+﻿<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="Submit">Enregistrer</SfButton>
+            </Template>
+        </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+<div>
+    <GridRow>
+        <GridCol Xs="24" Md="24">
+            <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6">
+                <GridRow>
+                    <GridCol Xs="24" Md="24">
+                        <Card Title="Identification">
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Intitulé" LabelColSpan="8">
+                                <SfTextBox @bind-Value="@row.C_Nom" />
+                            </FormItem>
+
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Initial" LabelColSpan="8">
+                                <SfDatePicker TValue="DateTime" @bind-Value="@row.C_DateInitial" />
+                            </FormItem>
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Solde Initial" LabelColSpan="8">
+                                <SfNumericTextBox @bind-Value="@row.C_SoldeInitial" ShowSpinButton="false" Format="N2" Decimals="2" />
+                            </FormItem>
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Journal" LabelColSpan="8">
+                                <SfDropDownList AllowFiltering TValue="string" TItem="F_JOURNAUX" DataSource="@(db.F_JOURNAUX.Where(a => a.CG_Num.StartsWith("5161")))" @bind-Value="@row.JO_Num">
+                                    <DropDownListEvents TValue="string" TItem="F_JOURNAUX" />
+                                    <DropDownListFieldSettings Text="JO_Intitule" Value="JO_Num" />
+                                </SfDropDownList>
+                            </FormItem>
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Description" LabelColSpan="8">
+                                <SfTextBox @bind-Value="@row.C_Remarque" />
+                            </FormItem>
+                        </Card>
+                    </GridCol>
+                    <GridCol Xs="24" Md="24">
+                        <Card Title="Utilisateurs">
+                            <div style="height: 30vh;">
+                                 <SfGrid Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(users)">
+                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                     <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog"></GridEditSettings>
+                                     <GridEvents OnActionBegin="UpdateUsers" TValue="API_T_Caisse_User"></GridEvents>
+                                     <GridTemplates Context="EmptyContext">
+                                         <EmptyRecordTemplate>
+                                             <Empty></Empty>
+                                         </EmptyRecordTemplate>
+                                     </GridTemplates>
+                                     <GridColumns>
+                                         <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Caisse_User.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                         <GridColumn AllowSorting="false" AllowFiltering="false" Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Utilisateurs">
+                                             <Template Context="TemplateContext">
+                                                 @{
+                                                    var dt = (EtendueService.GetAspNetUserById((TemplateContext as API_T_Caisse_User).User).Result);
+                                                }
+                                                @if (dt != null)
+                                                {
+                                                    <div>@dt.UserName</div>
+                                                }
+                                            </Template>
+                                            <EditTemplate Context="EditContext">
+                                                <SfDropDownList Placeholder="Utilisateur" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(EtendueService.GetAspNetUsers().Result.Where(a => !users.Select(a => a.User).Contains(a.Id)))" TValue="string" TItem="AspNetUser" @bind-Value="@((EditContext as API_T_Caisse_User).User)">
+                                                    <DropDownListEvents TValue="string" TItem="AspNetUser" />
+                                                    <DropDownListFieldSettings Text="UserName" Value="Id" />
+                                                </SfDropDownList>
+                                            </EditTemplate>
+                                        </GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+            </Form>
+
+        </GridCol>
+
+    </GridRow>
+</div>
+
+
+
+
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter] public int id { get; set; } = 0;
+    public API_T_Caisse row { get; set; }
+    private List<API_T_Caisse_User> users = new List<API_T_Caisse_User>();
+    private void LoadData()
+    {
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        if (id == 0)
+        {
+            row = new API_T_Caisse();
+
+        }
+        else
+        {
+            row = db.API_T_Caisse.Where(a => a.id == id).SingleOrDefault();
+        }
+        LoadData();
+        users = db.API_T_Caisse_User.Where(a => a.Caisse == id).ToList();
+    }
+    private async Task Submit()
+    {
+        try
+        {
+            if (id == 0)
+            {
+                db.API_T_Caisse.Add(row);
+                db.SaveChanges();
+            }
+            else
+            {
+                db.Update(row);
+                db.SaveChanges();
+            }
+            DialogService.Close();
+        }
+        catch (Exception ex)
+        {
+            await Message.Warning(ex.ToString());
+        }
+    }
+    public void UpdateUsers(ActionEventArgs<API_T_Caisse_User> args)
+    {
+        if (id == 0)
+        {
+            try
+            {
+                db.API_T_Caisse.Add(row);
+                db.SaveChanges();
+                this.id = row.id;
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+
+            if (args.Action == "Add")
+            {
+                API_T_Caisse_User item = args.Data;
+                item.Caisse = this.id;
+                db.Add(item);
+                db.SaveChanges();
+            }
+        }
+
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            db.Remove(args.Data);
+            db.SaveChanges();
+        }
+    }
+}

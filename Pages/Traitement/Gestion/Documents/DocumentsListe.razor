@@ -1,0 +1,297 @@
+﻿@if(!IsProjet && !IsConsommation)
+{
+    <h1>@TypeIntitule(Int16.Parse(type))</h1>
+    <Divider></Divider>
+}
+@if (IsConsommation)
+{
+    <h1>@("CONSOMMATIONS CHANTIERS")</h1>
+    <Divider></Divider>
+}
+<RadzenContent Container="main">
+    <div class="grid-80">
+        <SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete"})">
+            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(!IsProjet)" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+            <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_DOCENTETE"></GridEvents>
+            <GridPageSettings PageSize="100"></GridPageSettings>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridTemplates>
+                <EmptyRecordTemplate>
+                    <Empty></Empty>
+                </EmptyRecordTemplate>
+            </GridTemplates>
+            <GridColumns>
+                @if(IsConsommation)
+                {
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Date" HeaderText="Date" Visible="@(DODate)" Format="d"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Piece" HeaderText="Pièce" Visible="@(DOPiece)"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Tiers" HeaderText="Numéro" Visible="@(DOTiers)"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Intitule" HeaderText="Maitre D'ouvrage" Width="150" Visible="@(CTIntitule)"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CA_Num" HeaderText="Affaire" Visible="@(CANum)"></GridColumn>
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° Marché" Field="@nameof(API_V_DOCENTETE.NumeroMarche)">
+                    </GridColumn>
+                    <GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Objet" Field="@nameof(API_V_DOCENTETE.Objet)">
+                    </GridColumn>
+                    
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT" HeaderText="Montant HT" Visible="@(DLMontantHT)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DE_Intitule" HeaderText="Dépot" Visible="@(DEIntitule)"></GridColumn>
+                }
+                else
+                {
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Date" HeaderText="Date" Visible="@(DODate)" Format="d"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Piece" HeaderText="Pièce" Visible="@(DOPiece)"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Tiers" HeaderText="Numéro" Visible="@(DOTiers)"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Intitule" HeaderText="Intitulé" Width="150" Visible="@(CTIntitule)"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CA_Num" HeaderText="Affaire" Visible="@(CANum)"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CA_Intitule" HeaderText="Affaire Intitulé" Width="150" Visible="@(CAIntitule)"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT" HeaderText="Montant HT" Visible="@(DLMontantHT)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC" HeaderText="Montant TTC" Visible="@(DLMontantTTC)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTVA" HeaderText="Montant TVA" Visible="@(DLMontantTVA)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DE_Intitule" HeaderText="Dépot" Visible="@(DEIntitule)"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CO_Nom" HeaderText="Collaborateur" Visible="@(CONom)"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="RC_Montant" HeaderText="Montant Réglé" Visible="@(RCMontant)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Reste" HeaderText="Montant Du" Visible="@(Reste)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="EtatReglement" HeaderText="Etat" Visible="@(EtatReglement)" />
+                }
+
+            </GridColumns>
+            <SfSpinner @bind-Visible="@_loading">
+            </SfSpinner>
+
+
+        </SfGrid>
+    </div>
+    
+</RadzenContent>
+                        
+<style>
+    #components-layout-demo-responsive .logo {
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: 16px;
+    }
+
+    .site-layout-sub-header-background {
+        background: #fff;
+    }
+
+    .site-layout-background {
+        background: #fff;
+    }
+</style>
+
+
+@code {
+    //Parameters
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    [Parameter] public bool CTNum { get; set; } = true;
+    [Parameter] public bool CTIntitule { get; set; } = true;
+    [Parameter] public bool DODate { get; set; } = true;
+    [Parameter] public bool DOPiece { get; set; } = true;
+    [Parameter] public bool DEIntitule { get; set; } = true;
+    [Parameter] public bool DLMontantTVA { get; set; } = true;
+    [Parameter] public bool DLMontantHT { get; set; } = true;
+    [Parameter] public bool DLMontantTTC { get; set; } = true;
+    [Parameter] public bool EtatReglement { get; set; } = true;
+    [Parameter] public bool Reste { get; set; } = true;
+    [Parameter] public bool RCMontant { get; set; } = true;
+    [Parameter] public bool CAIntitule { get; set; } = false;
+    [Parameter] public bool CONom { get; set; } = true;
+    [Parameter] public bool DOTiers { get; set; } = true;
+    [Parameter] public bool CANum { get; set; } = true;
+    [Parameter] public int CT_Type { get; set; } = 0;
+    [Parameter] public int DO_Domaine { get; set; } = 0;
+    [Parameter] public string Title { get; set; } = "";
+    [Parameter] public string type { get; set; }
+    [Parameter] public bool IsProjet { get; set; } = false;
+    [Parameter] public bool IsConsommation { get; set; } = false;
+    [Parameter] public string CA_Num { get; set; }
+    //End Parameters
+
+    bool sidebar1Expanded = true;
+    bool collapsed;
+    string vl_text;
+    short? vl_solde = 0;
+    short? vl_sommeil = 0;
+    private IEnumerable<API_V_DOCENTETE> items;
+    List<API_V_DOCENTETE> rows = new List<API_V_DOCENTETE>();
+    IList<API_V_DOCENTETE> selecteditems;
+
+    bool _loading = false;
+    string activekey = "0";
+
+
+    private SfGrid<API_V_DOCENTETE> DefaultGrid;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await InitCol();
+        if(IsProjet)
+        {
+            await LoadDataAsync(-1);
+        }
+        if(IsConsommation)
+        {
+            var dt = session.db.P_INTERNE.Where(a => a.D_Intitule == "Consommation chantiers");
+            if(dt.Count() != 0)
+            {
+                int index = dt.First().cbMarq;
+                this.type = (39 + index).ToString();
+                await LoadDataAsync(39 + index);
+            }
+        }
+    }
+    protected override async Task OnParametersSetAsync() 
+    {
+        if(!IsProjet && !IsConsommation)
+        {
+            await LoadDataAsync(Int16.Parse(type));
+        }
+
+        activekey = "0";
+    }
+    private async Task LoadDataAsync(int index)
+    {
+        if(IsProjet)
+        {
+            items = session.db.API_V_DOCENTETE.Where(a => a.CA_Num == CA_Num && a.DO_Domaine == DO_Domaine).ToList();
+        }
+        else
+        {
+            items = session.db.API_V_DOCENTETE.Where(a => a.DO_Type == Int16.Parse(type)).ToList();
+        }
+
+    }
+
+    protected async Task Edit(RecordDoubleClickEventArgs<API_V_DOCENTETE> args)
+    {
+        if(IsConsommation) {
+                    await DialogService.OpenAsync<DocumentsFiche>(args.RowData.DO_Piece,
+    new Dictionary<string, object>() { { "cbMarq", args.RowData.cbMarq }, { "DO_Type", Int32.Parse(type) }, { "IsConsommation", IsConsommation } },
+    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "950px", Height = "95%" });
+        }
+        else {
+            await DialogService.OpenAsync<DocumentsFiche>(args.RowData.DO_Piece,
+new Dictionary<string, object>() { { "cbMarq", args.RowData.cbMarq }, { "DO_Type", Int32.Parse(type) }, { "IsConsommation", IsConsommation } },
+new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        }
+
+
+        await LoadDataAsync(Int16.Parse(type));
+    }
+
+    private async Task Add()
+    {
+        if(IsConsommation)
+        {
+                  await DialogService.OpenAsync<DocumentsFiche>($"Ajouter un élément",
+        new Dictionary<string, object>() { { "cbMarq", 0 }, { "DO_Type", Int32.Parse(type) }, { "IsConsommation", IsConsommation } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "950px", Height = "95%" });
+        }
+        else
+        {
+            await DialogService.OpenAsync<DocumentsFiche>($"Ajouter un élément",
+     new Dictionary<string, object>() { { "cbMarq", 0 }, { "DO_Type", Int32.Parse(type) }, { "IsConsommation", IsConsommation } },
+     new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        }
+
+
+        await LoadDataAsync(Int16.Parse(type));
+    }
+    private string TypeIntitule(int index) 
+    {
+        string rs = "Devis";
+        if (index == 0) { rs = "Devis"; }
+        if (index == 1) { rs = "Bons de commande vente"; }
+        if (index == 2) { rs = "Préparations de vente"; }
+        if (index == 3) { rs = "Bons de livraison vente"; }
+        if(index == 4) { rs = "Bons de retour vente"; }
+        if (index == 5) { rs = "Bons de retour vente"; }
+        if (index == 6) { rs = "Factures vente"; }
+        if (index == 7) { rs = "Factures comptabilisées vente"; }
+        if(index == 10) { rs = "Demandes d'achat"; }
+        if(index == 11) { rs = "Préparations de commande achat"; }
+        if(index == 12) { rs = "Bons de commande achat"; }
+        if(index == 13) { rs = "Bons de livraison achat"; }
+        if (index == 14) { rs = "Bons de retour achat"; }
+        if (index == 15) { rs = "Bons de retour achat"; }
+        if(index == 16) { rs = "Factures achat"; }
+        if(index == 17) { rs = "Factures comptabilisées achat"; }
+        if(index == 20) { rs = "Mouvements d'entrée"; }
+        if(index == 21) { rs = "Mouvements de sortie"; }
+        if (index == 23) { rs = "Mouvments de transfert"; }
+
+        return rs;
+    }
+    private async Task InitCol() 
+    {
+        if(session.IsMobile) 
+        {
+
+             DEIntitule  = false;
+             DLMontantTVA  = false;
+             DLMontantHT  = false;
+             EtatReglement  = false;
+             Reste  = false;
+             RCMontant  = false;
+             CAIntitule  = false;
+             CONom  = false;
+             DOTiers  = false;
+             CANum  = false;
+
+        }
+    }
+    private async Task OnActionBegin(ActionEventArgs<API_V_DOCENTETE> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Delete
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await Add();
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

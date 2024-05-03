@@ -1,0 +1,115 @@
+﻿
+@if (IsLoaded)
+{
+    <div style="height: @Height; padding: 8px;" class="small-grid">
+        <SfGrid Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowPaging Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting AllowFiltering>
+             <GridPageSettings PageSize="100" />
+         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+             <GridAggregates>
+                 <GridAggregate>
+                     <GridAggregateColumns>
+                         <GridAggregateColumn Field="@nameof(API_V_DOCLIGNE.DL_MontantHT)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                             <FooterTemplate>
+                                 @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_DOCLIGNE.DL_MontantTTC)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                        </GridAggregateColumn>
+                    </GridAggregateColumns>
+                </GridAggregate>
+            </GridAggregates>
+            <GridColumns>
+                <GridColumn Format="d" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DO_Date)" HeaderText="Date" />
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DO_Piece)" HeaderText="Pièce" />
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.TypeIntitule)" HeaderText="Type" />
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.CT_Num)" HeaderText="Numéro" Visible="@(CT_Num == null)" />
+                <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.CT_Intitule)" HeaderText="@(getTiers())" Visible="@(CT_Num == null)" />
+                <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DE_Intitule)" HeaderText="Dépot" />
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.CA_Num)" HeaderText="N° Affaire" Visible="@(CA_Num == null)" />
+                <GridColumn Width="190" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.CA_Intitule)" HeaderText="Affaire" Visible="@(CA_Num == null)" />
+                <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.AR_Ref)" HeaderText="Référence" Visible="@(AR_Ref == null)" />
+                <GridColumn Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_Design)" HeaderText="Désignation" Visible="@(AR_Ref == null)" />
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.EU_Enumere)" HeaderText="Unité" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_Qte)" HeaderText="Qté" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_PrixUnitaire)" HeaderText="PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_CodeTaxe1)" HeaderText="Taxe" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_PUTTC)" HeaderText="PU TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_Remise01REM_Valeur)" HeaderText="Remise" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.PUNet)" HeaderText="PU Net" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_MontantHT)" HeaderText="MNT HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_MontantTTC)" HeaderText="MNT TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+            </GridColumns>
+
+        </SfGrid>
+    </div>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+@code 
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter] public bool IsLivraison { get; set; } = true;
+    [Parameter] public int DO_Domaine { get; set; }
+    [Parameter] public int DO_Type { get; set; }
+    [Parameter] public string CA_Num { get; set; }
+    [Parameter] public string DO_Piece { get; set; }
+    [Parameter] public string CT_Num { get; set; }
+    [Parameter] public string AR_Ref { get; set; }
+    [Parameter] public int CO_No { get; set; }
+    [Parameter] public int DE_No { get; set; }
+    [Parameter] public string Height { get; set; }
+    bool IsLoaded = false;
+    private List<API_V_DOCLIGNE> items = new List<API_V_DOCLIGNE>();
+
+    private Func<double, string> _fortmat1 = (p) => $"{(p / 100).ToString("### ### ##0 %")}";
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(100);
+        db = session.db;
+        await UpdateGrid();
+        IsLoaded = true;
+    }
+
+    private async Task UpdateGrid()
+    {
+        items = db.API_V_DOCLIGNE.Where(a => a.DO_Domaine == DO_Domaine
+            && ((a.CA_Num == CA_Num && CA_Num != null) || (CA_Num == null))
+            && ((a.AR_Ref == AR_Ref && AR_Ref != null) || (AR_Ref == null))
+        
+        )
+            .OrderBy(a => a.DO_Date).ToList();
+    }
+    private string getTiers()
+    {
+        string rs = "Tiers";
+        if(DO_Domaine == 0) 
+        {
+            rs = "Client";
+        }
+        if(DO_Domaine == 1)
+        {
+            rs = "Fournisseur";
+        }
+
+        return rs;
+    }
+}

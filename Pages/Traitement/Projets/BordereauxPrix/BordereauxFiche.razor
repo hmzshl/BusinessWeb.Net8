@@ -1,0 +1,512 @@
+﻿@if(!IsDetail) 
+{
+    <SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit(true))">Enregistrer</SfButton>
+            </Template>
+        </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+}
+
+<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="8" Context="FormContext">
+    <Card>
+        <GridRow>
+            <GridCol Xs="24" Md="2">
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Pièce" LabelColSpan="10">
+                    <RadzenBadge Text="@row.Piece" />
+                </FormItem>
+            </GridCol>
+            <GridCol Xs="24" Md="2">
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="10">
+                    <RadzenBadge Text="@row.Date?.ToShortDateString()" BadgeStyle="BadgeStyle.Secondary" />
+                </FormItem>
+            </GridCol>
+            <GridCol Xs="24" Md="8">
+                <FormItem LabelColSpan="3" LabelAlign="AntLabelAlignType.Left" Label="Objet">
+                    <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Projet" DataSource="@(projets)" @bind-Value="@row.Projet" Readonly="@IsDetail">
+                         <DropDownListEvents TValue="int" TItem="API_T_Projet" />
+                         <DropDownListFieldSettings Text="Objet" Value="id" />
+                     </SfDropDownList>
+                 </FormItem>
+             </GridCol>
+             <GridCol Xs="24" Md="4">
+                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Marché" LabelColSpan="8">
+                     <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Projet" DataSource="@(projets)" @bind-Value="@row.Projet" Readonly="@IsDetail">
+                         <DropDownListEvents TValue="int" TItem="API_T_Projet" />
+                         <DropDownListFieldSettings Text="NumeroMarche" Value="id" />
+                     </SfDropDownList>
+                 </FormItem>
+             </GridCol>
+             <GridCol Xs="24" Md="3">
+                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Affaire">
+                     <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Projet" DataSource="@(projets)" @bind-Value="@row.Projet" Readonly="@IsDetail">
+                         <DropDownListEvents TValue="int" TItem="API_T_Projet" />
+                         <DropDownListFieldSettings Text="CA_Num" Value="id" />
+                     </SfDropDownList>
+                 </FormItem>
+             </GridCol>
+             <GridCol Xs="24" Md="2">
+                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="% Rb" LabelColSpan="12">
+                     <SfNumericTextBox @bind-Value="@row.Rabais" ShowSpinButton="false" />
+                 </FormItem>
+             </GridCol>
+             <GridCol Xs="24" Md="3">
+                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="12">
+                     <RadzenBadge Text="@(row.MontantTTC?.ToString("### ### ##0.00"))" />
+                 </FormItem>
+             </GridCol>
+         </GridRow>
+    </Card>
+
+     <GridRow>
+         <GridCol Xs="24" Md="24">
+             <div style="height: 72vh;" class="small-grid">
+                 <SfGrid Height="100%" @ref=MainGrid AllowRowDragAndDrop="true" Toolbar="@(new List<object>() { "Print","Add", "Delete",
+                     new ToolbarItem() {Id = "integrer", TooltipText = "Intégrer un fichier", Align = ItemAlign.Left,PrefixIcon = "e-icons e-upload-1" },
+                                                           #pragma warning disable BL0005
+                                                           new ToolbarItem() { Template = Articles, Id = "articles", TooltipText = "Références systéme", Align = ItemAlign.Right},
+                                                           new ToolbarItem() {Type = ItemType.Separator, Align = ItemAlign.Right},
+                                                                new ToolbarItem() { Template = Marge, Id = "marge", TooltipText = "Marge", Align = ItemAlign.Right},
+                                                                new ToolbarItem() {Type = ItemType.Separator, Align = ItemAlign.Right},
+                                                                new ToolbarItem() { Template = Avancements, Id = "avancement", TooltipText = "Avancement", Align = ItemAlign.Right}
+                                                            })" DataSource="@(lignes)">
+                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                     <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+                     </GridEditSettings>
+                     <GridEvents OnToolbarClick="ToolbarClickHandler" QueryCellInfo="CustomizeCell" RowDropped="RowDropHandler" OnActionBegin="UpdateListe" TValue="API_T_BordereauDetail"></GridEvents>
+                     <GridTemplates>
+                         <EmptyRecordTemplate>
+                             <Empty></Empty>
+                         </EmptyRecordTemplate>
+                     </GridTemplates>
+                     <GridAggregates>
+                         <GridAggregate>
+                             <GridAggregateColumns>
+                                 <GridAggregateColumn Field="Montant" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                     <FooterTemplate>
+                                         @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="@nameof(API_T_BordereauDetail.MontantTTC)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                    <FooterTemplate>
+                                        @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="MontantMarche" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                    <FooterTemplate>
+                                        @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="CoutTotal" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                    <FooterTemplate>
+                                        @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="MargeTotale" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                    <FooterTemplate>
+                                        @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="MargeP" Type="AggregateType.Average" Format="P2">
+                                    <FooterTemplate>
+                                        @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Average
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                            </GridAggregateColumns>
+                        </GridAggregate>
+                    </GridAggregates>
+                    <GridColumns>
+                        <GridColumn Type="ColumnType.CheckBox" Width="30" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.NumeroPrix) HeaderText="Code Prix"/>
+                        <GridColumn Width="400" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.Libelle) HeaderText="Libellé"></GridColumn>
+                        <GridColumn AllowEditing="true" AllowAdding="true" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.Unite) HeaderText="Unité">
+                        </GridColumn>
+                        <GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.Consistance) HeaderText="Consis">
+                        </GridColumn>
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Marché">
+                            <GridColumns>
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.QteMarche) HeaderText="Qté" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.PU) HeaderText="PU" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+
+                                <GridColumn Width="80" AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.Montant) HeaderText="HT" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.Taxe) HeaderText="Taxe" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                <GridColumn Width="80" AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.MontantTTC) HeaderText="TTC" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            </GridColumns>
+                        </GridColumn>
+
+                        @if (articles)
+                        {
+                             <GridColumn AllowEditing="true" AllowAdding="false" Width="330" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Désignation">
+                                         <Template>
+                                    @{
+                                        var dt = (db.F_ARTICLE.Where(a => a.AR_Ref == (context as API_T_BordereauDetail).AR_Ref))?.SingleOrDefault();
+                                        @if(dt != null)
+                                        {
+                                            <div>@dt?.AR_Design (@dt?.AR_Ref)</div>
+                                        }
+                                        
+                                            }
+                                        </Template>
+                                        <EditTemplate>
+                                    <SfDropDownList AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" DataSource="@(articles_list)" TValue="string" TItem="F_ARTICLE" @bind-Value="@((context as API_T_BordereauDetail).AR_Ref)">
+                                                 <DropDownListEvents TValue="string" TItem="F_ARTICLE" />
+                                                 <DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
+                                             </SfDropDownList>
+                                         </EditTemplate>
+                                     </GridColumn>                            
+                        }
+
+                        @if (marge)
+                        {
+                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Marge">
+                                <GridColumns>
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.CoutU) HeaderText="Cout.U" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                    <GridColumn Width="80" AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.CoutTotal) HeaderText="Cout.T" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                    <GridColumn Width="80" AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.MargeU) HeaderText="Marge.U" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                    <GridColumn Width="80" AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.MargeTotale) HeaderText="Marge.T" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                    <GridColumn Width="80" AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.MargeP) HeaderText="%" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="P2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                </GridColumns>
+                            </GridColumn>
+                        }
+                        @if (avancements)
+                        {
+                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Attachement">
+                                <GridColumns>
+                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80" HeaderText="Qté" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                        <Template>
+                                            @{
+                                                var dt = (context as API_T_BordereauDetail);
+                                                Decimal? bl = (db.API_T_AttachementDetail.Where(a => a.Ligne == dt.id).Sum(a => a.Qte));
+                                            }
+                                            <div>
+                                                @((bl ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))
+                                            </div>
+
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="250" HeaderText="Avancement">
+                                        <Template>
+                                            @{
+                                                var dt = (context as API_T_BordereauDetail);
+                                                Decimal? bl = (db.API_T_AttachementDetail.Where(a => a.Ligne == dt.id).Sum(a => a.Qte));
+                                                Decimal? av = 0;
+                                                if (dt.QteMarche != 0)
+                                                {
+                                                    av = ((bl ?? 0) / dt.QteMarche);
+                                                }
+                                            }
+                                            <!--<Progress Percent=@((Convert.ToDouble((av)) * 100)) Format="_fortmat1"/>-->
+                                            <RadzenProgressBar ProgressBarStyle="ProgressBarStyle.Primary" Value="@(Math.Round((Convert.ToDouble((av)) * 100),2))" ShowValue Style="height: 16px; font-size: 80%;" />
+                                         </Template>
+
+                                     </GridColumn>
+                                 </GridColumns>
+                             </GridColumn>
+
+                        }
+
+                    </GridColumns>
+                </SfGrid>
+            </div>
+
+        </GridCol>
+    </GridRow>
+</Form>
+
+
+
+
+@code {
+    SfGrid<API_T_BordereauDetail> MainGrid;
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    [Parameter] public int id { get; set; } = 0;
+    [Parameter] public int type { get; set; } = 0;
+    [Parameter] public bool detail { get; set; } = false;
+    [Parameter] public bool IsDetail { get; set; } = false;
+    DB db = new DB();
+    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "### ### ##0.00;-### ### ##0.00;#" } };
+    private Func<double, string> _fortmat1 = (p) => $"{(p / 100).ToString("### ### ##0 %")}";
+    private API_T_Bordereau row { get; set; }
+    private List<API_T_BordereauDetail> lignes = new List<API_T_BordereauDetail>();
+    bool loading = false;
+    bool marge = false;
+    bool articles = false;
+    bool avancements = true;
+
+    List<API_T_Projet> projets = new List<API_T_Projet>();
+    List<F_ARTICLE> articles_list = new List<F_ARTICLE>();
+    private RenderFragment Marge =>@<SfCheckBox style="margin-left: 5px; margin-right: 5px;" @bind-Checked="@marge">Afficher la marge   </SfCheckBox>;
+    private RenderFragment Articles =>@<SfCheckBox style="margin-left: 5px; margin-right: 5px;" @bind-Checked="@articles">Afficher les références système   </SfCheckBox>;
+    private RenderFragment Avancements =>@<SfCheckBox style="margin-left: 5px; margin-right: 5px;" @bind-Checked="@avancements">Afficher l'avancement   </SfCheckBox>;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        projets = db.API_T_Projet.ToList();
+        articles_list = db.F_ARTICLE.Select(a => new F_ARTICLE { AR_Ref = a.AR_Ref, AR_Design = a.AR_Design + " (" + a.AR_Ref + ")" }).OrderBy(a => a.AR_Design).ToList();
+        if (id != 0)
+        {
+            row = db.API_T_Bordereau.Where(a => a.id == id).SingleOrDefault();
+            await UpdateGrid();
+        }
+        else
+        {
+            row = new API_T_Bordereau();
+            row.Date = DateTime.Today;
+            string piece = "BDR0000001";
+
+            var dt = db.API_T_Bordereau.Where(a => a.Piece.StartsWith("BDR")).ToList();
+            if (dt.Count != 0)
+            {
+                piece = fn.getNextCode(dt.Max(a => a.Piece));
+            }
+            row.Piece = piece;
+        }
+    }
+    private async Task Submit(bool close)
+    {
+        try
+        {
+            if (id == 0)
+            {
+                db.API_T_Bordereau.Add(row);
+            }
+            db.SaveChanges();
+            id = row.id;
+            if (close)
+            {
+                DialogService.Close();
+            }
+
+        }
+        catch (Exception ex)
+        {
+            await Message.Error(ex.Message);
+        }
+    }
+    private async Task UpdateTotal()
+    {
+        if (id != 0)
+        {
+            row.Montant = db.API_T_BordereauDetail.Where(a => a.Bordereau == row.id).ToList().Sum(a => a.Montant)??0;
+            row.MontantMarche = db.API_T_BordereauDetail.Where(a => a.Bordereau == row.id).ToList().Sum(a => a.MontantMarche)??0;
+            row.Marge = db.API_T_BordereauDetail.Where(a => a.Bordereau == row.id).ToList().Sum(a => a.MargeTotale)??0;
+            row.CoutTotale = db.API_T_BordereauDetail.Where(a => a.Bordereau == row.id).ToList().Sum(a => a.CoutTotal)??0;
+            row.MontantTTC = db.API_T_BordereauDetail.Where(a => a.Bordereau == row.id).ToList().Sum(a => a.MontantTTC) ?? 0;
+            if (db.API_T_BordereauDetail.Where(a => a.Bordereau == row.id).ToList().Sum(a => a.Montant) != 0)
+            {
+                row.MargeP = (db.API_T_BordereauDetail.Where(a => a.Bordereau == row.id).ToList().Sum(a => a.MargeTotale) / db.API_T_BordereauDetail.Where(a => a.Bordereau == row.id).ToList().Sum(a => a.Montant))??0;
+            }
+            else
+            {
+                row.MargeP = 0;
+            }
+
+            db.API_T_Bordereau.Update(row);
+            db.SaveChanges();
+        }
+
+    }
+    private async Task UpdateListe(ActionEventArgs<API_T_BordereauDetail> args)
+    {
+        if (id == 0)
+        {
+            await Submit(false);
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+            if (args.Data.AR_Ref != null)
+            {
+                var ar = db.F_ARTICLE.Where(a => a.AR_Ref == args.Data.AR_Ref).SingleOrDefault();
+                if (ar != null)
+                {
+                    //args.Data.Unite = ar.AR_UniteVen??0;
+                    if ((args.Data.Libelle ?? "") == "")
+                    {
+                        args.Data.Libelle = ar.AR_Design;
+                    }
+                    if (args.Data.CoutU == 0)
+                    {
+                        args.Data.CoutU = (ar.AR_PrixAch ?? 0);
+                    }
+
+                }
+
+            }
+
+            args.Data.MontantMarche = args.Data.QteMarche * args.Data.PUMarche;
+            args.Data.Montant = args.Data.QteMarche * args.Data.PU;
+            args.Data.CoutTotal = args.Data.QteMarche * args.Data.CoutU;
+            args.Data.MargeTotale = args.Data.Montant - args.Data.CoutTotal;
+            args.Data.MargeU = args.Data.PU - args.Data.CoutU;
+            args.Data.PUTTC = args.Data.PU * (1 + (args.Data.Taxe / 100));
+            args.Data.MontantTTC = args.Data.PUTTC * args.Data.QteMarche;
+            if (args.Data.Montant != 0)
+            {
+                args.Data.MargeP = args.Data.MargeTotale / args.Data.Montant;
+            }
+            if (args.Action == "Add")
+            {
+
+                if (id == 0)
+                {
+                    await Submit(false);
+                }
+                API_T_BordereauDetail item = args.Data;
+                item.Bordereau = this.id;
+                item.Taxe = 20;
+                item.PUTTC = item.PU * (1 + (item.Taxe / 100));
+                item.MontantTTC = item.PUTTC * item.QteMarche;
+                db.API_T_BordereauDetail.Add(item);
+                db.SaveChanges();
+
+            }
+            if (args.Action != "Add")
+            {
+                var local = db.Set<API_T_BordereauDetail>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                if (local != null)
+                {
+                    db.Entry(local).State = EntityState.Detached;
+                }
+                db.Entry(args.Data).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+        }
+
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            foreach(API_T_BordereauDetail item in MainGrid.GetSelectedRecordsAsync().Result)
+            {
+                db.Database.ExecuteSqlRaw("DELETE FROM API_T_BordereauDetail WHERE id = {0}", item.id);
+            }
+
+        }
+        await UpdateTotal();
+    }
+    private async Task UpdateGrid()
+    {
+        lignes = db.API_T_BordereauDetail.Where(a => a.Bordereau == this.id).OrderBy(a => a.Ordre).ToList();
+    }
+    private async Task ImportBD()
+    {
+        if (id == 0)
+        {
+            await Submit(false);
+        }
+        await DialogService.OpenAsync<BordereauxImport>(row.Piece,
+        new Dictionary<string, object>() { { "id", id } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "600px", Height = "300px" });
+        await UpdateGrid();
+        await UpdateTotal();
+
+    }
+    public void CustomizeCell(Syncfusion.Blazor.Grids.QueryCellInfoEventArgs<API_T_BordereauDetail> args)
+    {
+        try
+        {
+            var dt = args.Data;
+            if (dt.QteMarche == 0)
+            {
+                args.Cell.AddClass(new string[] { "td-bold" });
+            }
+        }
+        catch (Exception ex)
+        {
+            Message.Error(ex.Message);
+        }
+
+
+    }
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
+        {
+            await this.MainGrid.ExcelExport();
+        }
+        if (args.Item.Id == "Grid_pdfexport")  //Id is combination of Grid's ID and itemname
+        {
+            await this.MainGrid.PdfExport();
+        }
+        if (args.Item.Id == "integrer")
+        {
+            await ImportBD();
+        }
+
+    }
+    private async Task RowDropHandler(RowDroppedEventArgs<API_T_BordereauDetail> args)
+    {
+        try
+        {
+            loading = true;
+            await Task.Delay(1);
+
+
+            foreach (API_T_BordereauDetail dt in MainGrid.GetCurrentViewRecordsAsync().Result)
+            {
+                double index = MainGrid.GetRowIndexByPrimaryKeyAsync(dt.id).Result;
+                string q1 = "UPDATE API_T_BordereauDetail SET Ordre = {0} WHERE id = {1}";
+                db.Database.ExecuteSqlRaw(q1, (index + 1), dt.id);
+            }
+
+
+            loading = false;
+            await Task.Delay(1);
+        }
+        catch (Exception ex)
+        {
+            await Message.Error(ex.Message);
+        }
+
+    }
+
+
+}
+
+<style>
+    .td-bold {
+        font-weight: 700 !important;
+        color: #0319E5 !important;
+    }
+</style>

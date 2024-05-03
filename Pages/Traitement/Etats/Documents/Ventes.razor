@@ -1,0 +1,15 @@
+﻿@page "/releve-ventes"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction")]
+
+
+
+<Documents domaine="0" title="RELEVE DOCUMENTS VENTES" />
+
+@code {
+    bool IsLoaded = false;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        IsLoaded = true;
+    }
+}

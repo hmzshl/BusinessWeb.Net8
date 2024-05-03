@@ -1,0 +1,414 @@
+﻿
+<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+                <Template>
+                    <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit())">Enregistrer</SfButton>
+                </Template>
+            </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="8">
+    <SfTab CssClass="e-fill">
+        <TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/>
+            <TabItems>
+                <TabItem>
+                <ChildContent>
+                    <TabHeader Text="Informations"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                     <GridRow>
+                        <GridCol Xs="24" Md="24">
+                            <Card>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Intitulé" LabelColSpan="4">
+                                    <SfTextBox @bind-Value="@row.Intitule" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Forme Jur." LabelColSpan="4">
+                                    <SfDropDownList TValue="int" TItem="Items" DataSource="@fn.TypeSociete()" @bind-Value="@row.FormeJuridique">
+                                        <DropDownListEvents TValue="int" TItem="Items" />
+                                        <DropDownListFieldSettings Text="Name" Value="Id" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Ville" LabelColSpan="4">
+                                    <SfTextBox @bind-Value="@row.Ville" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse" LabelColSpan="4">
+                                    <SfTextBox @bind-Value="@row.Adresse" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Capital" LabelColSpan="4">
+                                    <SfNumericTextBox ShowSpinButton="false" @bind-Value="@row.Capital" Format="N2" Decimals="2" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Téléphone" LabelColSpan="4">
+                                    <SfTextBox @bind-Value="@row.Telephone" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Email" LabelColSpan="4">
+                                    <SfTextBox @bind-Value="@row.Email" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="I.F" LabelColSpan="4">
+                                    <SfTextBox @bind-Value="@row.IdF" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="ICE" LabelColSpan="4">
+                                    <SfTextBox @bind-Value="@row.ICE" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="CNSS" LabelColSpan="4">
+                                    <SfTextBox @bind-Value="@row.CNSS" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="RC" LabelColSpan="4">
+                                    <SfTextBox @bind-Value="@row.RC" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Patente" LabelColSpan="4">
+                                    <SfTextBox @bind-Value="@row.Patente" />
+                                </FormItem>
+                            </Card>
+
+                        </GridCol>
+                     </GridRow>
+                </ContentTemplate>
+                </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="Base de données"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <GridRow>
+                        <GridCol Xs="24" Md="24">
+                            <Card>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Serveur" LabelColSpan="8">
+                                    <SfTextBox @bind-Value="@row.Serveur" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Base données" LabelColSpan="8">
+                                    <SfTextBox @bind-Value="@row.Base" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Utilisateur" LabelColSpan="8">
+                                    <SfTextBox @bind-Value="@row.Web" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Mot de passe" LabelColSpan="8">
+                                    <SfTextBox Type="InputType.Password" @bind-Value="@row.Passe" />
+                                </FormItem>
+                            </Card>
+
+                        </GridCol>
+                    </GridRow>
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="Configurations"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <GridRow>
+
+                        <GridCol Xs="24" Md="24">
+                            <Card>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Version Sage" LabelColSpan="16">
+                                    <SfDropDownList TValue="int?" TItem="Items" DataSource="@fn.VersionsSage()" @bind-Value="@row.VersionSage" Width="200px">
+                                        <DropDownListEvents TValue="int?" TItem="Items" />
+                                        <DropDownListFieldSettings Text="Name" Value="Id" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Traçabilité" LabelColSpan="16">
+                                    <SfSwitch @bind-Checked="row.Tracabilite" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Historique de connexions" LabelColSpan="16">
+                                    <SfSwitch @bind-Checked="@row.HistoriqueConnexion"></SfSwitch>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Relevés: Inclure les BL" LabelColSpan="16">
+                                    <SfSwitch @bind-Checked="@config.BL_Releve"></SfSwitch>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Chiffre d'affaire: Inclure les BL" LabelColSpan="16">
+                                    <SfSwitch @bind-Checked="@config.BL_Marge"></SfSwitch>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Balance Agée clients: Inclure les BL" LabelColSpan="16">
+                                    <SfSwitch @bind-Checked="@config.BL_BalanceClient"></SfSwitch>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Balance Agée fournisseurs: Inclure les BL" LabelColSpan="16">
+                                    <SfSwitch @bind-Checked="@config.BL_BalanceFournisseur"></SfSwitch>
+                                </FormItem>
+                            </Card>
+                        </GridCol>
+                    </GridRow>
+                </ContentTemplate>
+            </TabItem>
+
+            </TabItems>
+    </SfTab>
+    <GridRow>
+
+
+
+    </GridRow>
+</Form>
+
+@code 
+{
+    [Parameter] public int id { get; set; } = 0;
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    DB db = new DB();
+    private TSociete row = new TSociete();
+    private API_T_Config config = new API_T_Config();
+    private P_DOSSIER dossier = new P_DOSSIER();
+    protected string error;
+    protected bool errorVisible;
+    private ICollection<TSocieteUser> items;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+
+        if (id != 0)
+        {
+            row = sdb.TSocietes.Where(a => a.id == id).SingleOrDefault();
+            db = fn.getDb(row);
+            try
+            {
+                var dt = db.API_T_Config;
+                if (dt.Count() != 0)
+                {
+                    config = dt.First();
+                }
+                else
+                {
+                    var item = new API_T_Config();
+                    db.Add(item);
+                    db.SaveChanges();
+                    config = item;
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+    }
+    protected async Task Submit()
+    {
+
+        if (id == 0)
+        {
+            try
+            {
+                sdb.Add(row);
+                sdb.SaveChanges();
+                db = fn.getDb(row);
+                try
+                {
+                    var dt = db.API_T_Config;
+                    if (dt.Count() != 0)
+                    {
+                        config = dt.First();
+                    }
+                    else
+                    {
+                        var item = new API_T_Config();
+                        db.Add(item);
+                        db.SaveChanges();
+                        config = item;
+                    }
+
+                    if (row.Tracabilite)
+                    {
+                        await DeleteTracabiliteTriggers();
+                        await CreateTracabiliteTriggers();
+                    }
+
+                    else
+                    {
+                        await DeleteTracabiliteTriggers();
+                    }
+                    if ((row.HistoriqueConnexion) ?? false)
+                    {
+                        await DeleteHistoriqueTriggers();
+                        await CreateHistoriqueTriggers();
+                    }
+                    else
+                    {
+                        await DeleteHistoriqueTriggers();
+                    }
+                }
+                catch(Exception ex)
+                {
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+        else
+        {
+            try 
+            {
+                sdb.SaveChanges();
+                db.SaveChanges();
+                if (row.Tracabilite)
+                {
+                    await DeleteTracabiliteTriggers();
+                    await CreateTracabiliteTriggers();
+                }
+
+                else
+                {
+                    await DeleteTracabiliteTriggers();
+                }
+                if ((row.HistoriqueConnexion) ?? false)
+                {
+                    await DeleteHistoriqueTriggers();
+                    await CreateHistoriqueTriggers();
+                }
+                else
+                {
+                    await DeleteHistoriqueTriggers();
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+        }
+
+        try
+        {
+           db.Database.ExecuteSqlRaw(getAddQuery("API_ICE"));
+            db.Database.ExecuteSqlRaw(getAddQuery("API_Patente"));
+            db.Database.ExecuteSqlRaw(getAddQuery("API_IdF"));
+            db.Database.ExecuteSqlRaw(getAddQuery("API_RC"));
+
+            db.Database.ExecuteSqlRaw(getAddQuery("API_Telephone"));
+            db.Database.ExecuteSqlRaw(getAddQuery("API_Email"));
+            db.Database.ExecuteSqlRaw(getAddQuery("API_Web"));
+            db.Database.ExecuteSqlRaw(getAddQuery("API_Adresse"));
+            db.Database.ExecuteSqlRaw(getAddQuery("API_Ville"));
+
+            db.Database.ExecuteSqlRaw(getUpdateQuery("API_ICE", row.ICE ?? ""));
+            db.Database.ExecuteSqlRaw(getUpdateQuery("API_Patente", row.Patente??""));
+            db.Database.ExecuteSqlRaw(getUpdateQuery("API_IdF",row.IdF??""));
+            db.Database.ExecuteSqlRaw(getUpdateQuery("API_RC", row.RC ?? ""));
+
+            db.Database.ExecuteSqlRaw(getUpdateQuery("API_Telephone", row.Telephone ?? ""));
+            db.Database.ExecuteSqlRaw(getUpdateQuery("API_Email",row.Email ?? ""));
+            db.Database.ExecuteSqlRaw(getUpdateQuery("API_Web",""));
+            db.Database.ExecuteSqlRaw(getUpdateQuery("API_Adresse", row.Adresse ?? "")); 
+            db.Database.ExecuteSqlRaw(getUpdateQuery("API_Ville", row.Ville ?? ""));
+        }
+        catch(Exception ex)
+        {
+            
+        }
+
+
+
+
+        DialogService.Close();
+
+    }
+    private string getAddQuery(string col)
+    {
+        string rs = @"IF NOT EXISTS (SELECT 1
+                                        FROM INFORMATION_SCHEMA.COLUMNS
+                                        WHERE upper(TABLE_NAME) = 'P_DOSSIER'
+                                        AND upper(COLUMN_NAME) = '"+col+"')"
+                                +@"BEGIN
+                                    ALTER TABLE dbo.P_DOSSIER ADD "+col+" VARCHAR(100);"
+                                +"END";
+        return rs;
+    }
+    private string getUpdateQuery(string col, string value)
+    {
+        string rs = @"UPDATE P_DOSSIER SET "+col+" = '"+value+"'";
+        return rs;
+    }
+    protected async Task AddUser() 
+    {
+        await DialogService.OpenAsync<AddUtilisateur>($"Ajouter un utilisateur",
+        new Dictionary<string, object>() { { "SocieteID", id } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "170px" });
+    }
+    protected async Task DeleteUser()
+    {
+
+    }
+    private async Task DeleteTracabiliteTriggers()
+    {
+        DB db = fn.getDb(row);
+        //F_COMPTET
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_DEL_F_COMPTET"));
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_INS_F_COMPTET"));
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_UPD_F_COMPTET"));
+
+        //F_CREGLEMENT
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_DEL_F_CREGLEMENT"));
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_INS_F_CREGLEMENT"));
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_UPD_F_CREGLEMENT"));
+
+        //F_DOCENTETE
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_DEL_F_DOCENTETE"));
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_INS_F_DOCENTETE"));
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_UPD_F_DOCENTETE"));
+
+        //F_DOCLIGNE
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_DEL_F_DOCLIGNE"));
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_INS_F_DOCLIGNE"));
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_UPD_F_DOCLIGNE"));
+
+        //F_ECRITUREC
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_DEL_F_ECRITUREC"));
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_INS_F_ECRITUREC"));
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_UPD_F_ECRITUREC"));
+
+        //F_REGLECH
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_DEL_F_REGLECH"));
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_INS_F_REGLECH"));
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_UPD_F_REGLECH"));
+    }
+    private async Task CreateTracabiliteTriggers()
+    {
+        DB db = fn.getDb(row);
+        //F_COMPTET
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_DEL_F_COMPTET]  ON [dbo].[F_COMPTET]  AFTER DELETE  AS  BEGIN    INSERT INTO API_T_Audit_F_COMPTET    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[CT_Num]        ,[CT_Intitule]        ,[CT_Type]        ,[CG_NumPrinc]        ,[CT_Qualite]        ,[CT_Classement]        ,[CT_Contact]        ,[CT_Adresse]        ,[CT_Complement]        ,[CT_CodePostal]        ,[CT_Ville]        ,[CT_CodeRegion]        ,[CT_Pays]        ,[CT_Raccourci]        ,[BT_Num]        ,[N_Devise]        ,[CT_Ape]        ,[CT_Identifiant]        ,[CT_Siret]        ,[CT_Statistique01]        ,[CT_Statistique02]        ,[CT_Statistique03]        ,[CT_Statistique04]        ,[CT_Statistique05]        ,[CT_Statistique06]        ,[CT_Statistique07]        ,[CT_Statistique08]        ,[CT_Statistique09]        ,[CT_Statistique10]        ,[CT_Commentaire]        ,[CT_Encours]        ,[CT_Assurance]        ,[CT_NumPayeur]        ,[N_Risque]        ,[CO_No]        ,[N_CatTarif]        ,[CT_Taux01]        ,[CT_Taux02]        ,[CT_Taux03]        ,[CT_Taux04]        ,[N_CatCompta]        ,[N_Period]        ,[CT_Facture]        ,[CT_BLFact]        ,[CT_Langue]        ,[N_Expedition]        ,[N_Condition]        ,[CT_Saut]        ,[CT_Lettrage]        ,[CT_ValidEch]        ,[CT_Sommeil]        ,[DE_No]        ,[CT_ControlEnc]        ,[CT_NotRappel]        ,[N_Analytique]        ,[CA_Num]        ,[CT_Telephone]        ,[CT_Telecopie]        ,[CT_EMail]        ,[CT_Site]        ,[CT_Coface]        ,[CT_Surveillance]        ,[CT_SvFormeJuri]        ,[CT_SvEffectif]        ,[CT_SvCA]        ,[CT_SvResultat]        ,[CT_SvIncident]        ,[CT_SvPrivil]        ,[CT_SvRegul]        ,[CT_SvCotation]        ,[CT_SvObjetMaj]        ,[N_AnalytiqueIFRS]        ,[CA_NumIFRS]        ,[CT_PrioriteLivr]        ,[CT_LivrPartielle]        ,[MR_No]        ,[CT_NotPenal]        ,[EB_No]        ,[CT_NumCentrale]        ,[CT_FactureElec]        ,[CT_TypeNIF]        ,[CT_RepresentInt]        ,[CT_RepresentNIF]        ,[CT_EdiCodeType]        ,[CT_EdiCode]        ,[CT_EdiCodeSage]        ,[CT_ProfilSoc]        ,[CT_StatutContrat]        ,[CT_EchangeRappro]        ,[CT_EchangeCR]        ,[PI_NoEchange]        ,[CT_BonAPayer]        ,[CT_DelaiTransport]        ,[CT_DelaiAppro]        ,[CT_LangueISO2]        ,[CT_AnnulationCR]    )      SELECT            'Suppression'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[CT_Num]        ,[CT_Intitule]        ,[CT_Type]        ,[CG_NumPrinc]        ,[CT_Qualite]        ,[CT_Classement]        ,[CT_Contact]        ,[CT_Adresse]        ,[CT_Complement]        ,[CT_CodePostal]        ,[CT_Ville]        ,[CT_CodeRegion]        ,[CT_Pays]        ,[CT_Raccourci]        ,[BT_Num]        ,[N_Devise]        ,[CT_Ape]        ,[CT_Identifiant]        ,[CT_Siret]        ,[CT_Statistique01]        ,[CT_Statistique02]        ,[CT_Statistique03]        ,[CT_Statistique04]        ,[CT_Statistique05]        ,[CT_Statistique06]        ,[CT_Statistique07]        ,[CT_Statistique08]        ,[CT_Statistique09]        ,[CT_Statistique10]        ,[CT_Commentaire]        ,[CT_Encours]        ,[CT_Assurance]        ,[CT_NumPayeur]        ,[N_Risque]        ,[CO_No]        ,[N_CatTarif]        ,[CT_Taux01]        ,[CT_Taux02]        ,[CT_Taux03]        ,[CT_Taux04]        ,[N_CatCompta]        ,[N_Period]        ,[CT_Facture]        ,[CT_BLFact]        ,[CT_Langue]        ,[N_Expedition]        ,[N_Condition]        ,[CT_Saut]        ,[CT_Lettrage]        ,[CT_ValidEch]        ,[CT_Sommeil]        ,[DE_No]        ,[CT_ControlEnc]        ,[CT_NotRappel]        ,[N_Analytique]        ,[CA_Num]        ,[CT_Telephone]        ,[CT_Telecopie]        ,[CT_EMail]        ,[CT_Site]        ,[CT_Coface]        ,[CT_Surveillance]        ,[CT_SvFormeJuri]        ,[CT_SvEffectif]        ,[CT_SvCA]        ,[CT_SvResultat]        ,[CT_SvIncident]        ,[CT_SvPrivil]        ,[CT_SvRegul]        ,[CT_SvCotation]        ,[CT_SvObjetMaj]        ,[N_AnalytiqueIFRS]        ,[CA_NumIFRS]        ,[CT_PrioriteLivr]        ,[CT_LivrPartielle]        ,[MR_No]        ,[CT_NotPenal]        ,[EB_No]        ,[CT_NumCentrale]        ,[CT_FactureElec]        ,[CT_TypeNIF]        ,[CT_RepresentInt]        ,[CT_RepresentNIF]        ,[CT_EdiCodeType]        ,[CT_EdiCode]        ,[CT_EdiCodeSage]        ,[CT_ProfilSoc]        ,[CT_StatutContrat]        ,[CT_EchangeRappro]        ,[CT_EchangeCR]        ,[PI_NoEchange]        ,[CT_BonAPayer]        ,[CT_DelaiTransport]        ,[CT_DelaiAppro]        ,[CT_LangueISO2]        ,[CT_AnnulationCR] FROM DELETED    END   ");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_INS_F_COMPTET]  ON [dbo].[F_COMPTET]  AFTER INSERT  AS  BEGIN    INSERT INTO API_T_Audit_F_COMPTET    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[CT_Num]        ,[CT_Intitule]        ,[CT_Type]        ,[CG_NumPrinc]        ,[CT_Qualite]        ,[CT_Classement]        ,[CT_Contact]        ,[CT_Adresse]        ,[CT_Complement]        ,[CT_CodePostal]        ,[CT_Ville]        ,[CT_CodeRegion]        ,[CT_Pays]        ,[CT_Raccourci]        ,[BT_Num]        ,[N_Devise]        ,[CT_Ape]        ,[CT_Identifiant]        ,[CT_Siret]        ,[CT_Statistique01]        ,[CT_Statistique02]        ,[CT_Statistique03]        ,[CT_Statistique04]        ,[CT_Statistique05]        ,[CT_Statistique06]        ,[CT_Statistique07]        ,[CT_Statistique08]        ,[CT_Statistique09]        ,[CT_Statistique10]        ,[CT_Commentaire]        ,[CT_Encours]        ,[CT_Assurance]        ,[CT_NumPayeur]        ,[N_Risque]        ,[CO_No]        ,[N_CatTarif]        ,[CT_Taux01]        ,[CT_Taux02]        ,[CT_Taux03]        ,[CT_Taux04]        ,[N_CatCompta]        ,[N_Period]        ,[CT_Facture]        ,[CT_BLFact]        ,[CT_Langue]        ,[N_Expedition]        ,[N_Condition]        ,[CT_Saut]        ,[CT_Lettrage]        ,[CT_ValidEch]        ,[CT_Sommeil]        ,[DE_No]        ,[CT_ControlEnc]        ,[CT_NotRappel]        ,[N_Analytique]        ,[CA_Num]        ,[CT_Telephone]        ,[CT_Telecopie]        ,[CT_EMail]        ,[CT_Site]        ,[CT_Coface]        ,[CT_Surveillance]        ,[CT_SvFormeJuri]        ,[CT_SvEffectif]        ,[CT_SvCA]        ,[CT_SvResultat]        ,[CT_SvIncident]        ,[CT_SvPrivil]        ,[CT_SvRegul]        ,[CT_SvCotation]        ,[CT_SvObjetMaj]        ,[N_AnalytiqueIFRS]        ,[CA_NumIFRS]        ,[CT_PrioriteLivr]        ,[CT_LivrPartielle]        ,[MR_No]        ,[CT_NotPenal]        ,[EB_No]        ,[CT_NumCentrale]        ,[CT_FactureElec]        ,[CT_TypeNIF]        ,[CT_RepresentInt]        ,[CT_RepresentNIF]        ,[CT_EdiCodeType]        ,[CT_EdiCode]        ,[CT_EdiCodeSage]        ,[CT_ProfilSoc]        ,[CT_StatutContrat]        ,[CT_EchangeRappro]        ,[CT_EchangeCR]        ,[PI_NoEchange]        ,[CT_BonAPayer]        ,[CT_DelaiTransport]        ,[CT_DelaiAppro]        ,[CT_LangueISO2]        ,[CT_AnnulationCR]    )      SELECT            'Insertion'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[CT_Num]        ,[CT_Intitule]        ,[CT_Type]        ,[CG_NumPrinc]        ,[CT_Qualite]        ,[CT_Classement]        ,[CT_Contact]        ,[CT_Adresse]        ,[CT_Complement]        ,[CT_CodePostal]        ,[CT_Ville]        ,[CT_CodeRegion]        ,[CT_Pays]        ,[CT_Raccourci]        ,[BT_Num]        ,[N_Devise]        ,[CT_Ape]        ,[CT_Identifiant]        ,[CT_Siret]        ,[CT_Statistique01]        ,[CT_Statistique02]        ,[CT_Statistique03]        ,[CT_Statistique04]        ,[CT_Statistique05]        ,[CT_Statistique06]        ,[CT_Statistique07]        ,[CT_Statistique08]        ,[CT_Statistique09]        ,[CT_Statistique10]        ,[CT_Commentaire]        ,[CT_Encours]        ,[CT_Assurance]        ,[CT_NumPayeur]        ,[N_Risque]        ,[CO_No]        ,[N_CatTarif]        ,[CT_Taux01]        ,[CT_Taux02]        ,[CT_Taux03]        ,[CT_Taux04]        ,[N_CatCompta]        ,[N_Period]        ,[CT_Facture]        ,[CT_BLFact]        ,[CT_Langue]        ,[N_Expedition]        ,[N_Condition]        ,[CT_Saut]        ,[CT_Lettrage]        ,[CT_ValidEch]        ,[CT_Sommeil]        ,[DE_No]        ,[CT_ControlEnc]        ,[CT_NotRappel]        ,[N_Analytique]        ,[CA_Num]        ,[CT_Telephone]        ,[CT_Telecopie]        ,[CT_EMail]        ,[CT_Site]        ,[CT_Coface]        ,[CT_Surveillance]        ,[CT_SvFormeJuri]        ,[CT_SvEffectif]        ,[CT_SvCA]        ,[CT_SvResultat]        ,[CT_SvIncident]        ,[CT_SvPrivil]        ,[CT_SvRegul]        ,[CT_SvCotation]        ,[CT_SvObjetMaj]        ,[N_AnalytiqueIFRS]        ,[CA_NumIFRS]        ,[CT_PrioriteLivr]        ,[CT_LivrPartielle]        ,[MR_No]        ,[CT_NotPenal]        ,[EB_No]        ,[CT_NumCentrale]        ,[CT_FactureElec]        ,[CT_TypeNIF]        ,[CT_RepresentInt]        ,[CT_RepresentNIF]        ,[CT_EdiCodeType]        ,[CT_EdiCode]        ,[CT_EdiCodeSage]        ,[CT_ProfilSoc]        ,[CT_StatutContrat]        ,[CT_EchangeRappro]        ,[CT_EchangeCR]        ,[PI_NoEchange]        ,[CT_BonAPayer]        ,[CT_DelaiTransport]        ,[CT_DelaiAppro]        ,[CT_LangueISO2]        ,[CT_AnnulationCR] FROM INSERTED    END   ");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_UPD_F_COMPTET]  ON [dbo].[F_COMPTET]  AFTER UPDATE  AS  BEGIN    INSERT INTO API_T_Audit_F_COMPTET    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[CT_Num]        ,[CT_Intitule]        ,[CT_Type]        ,[CG_NumPrinc]        ,[CT_Qualite]        ,[CT_Classement]        ,[CT_Contact]        ,[CT_Adresse]        ,[CT_Complement]        ,[CT_CodePostal]        ,[CT_Ville]        ,[CT_CodeRegion]        ,[CT_Pays]        ,[CT_Raccourci]        ,[BT_Num]        ,[N_Devise]        ,[CT_Ape]        ,[CT_Identifiant]        ,[CT_Siret]        ,[CT_Statistique01]        ,[CT_Statistique02]        ,[CT_Statistique03]        ,[CT_Statistique04]        ,[CT_Statistique05]        ,[CT_Statistique06]        ,[CT_Statistique07]        ,[CT_Statistique08]        ,[CT_Statistique09]        ,[CT_Statistique10]        ,[CT_Commentaire]        ,[CT_Encours]        ,[CT_Assurance]        ,[CT_NumPayeur]        ,[N_Risque]        ,[CO_No]        ,[N_CatTarif]        ,[CT_Taux01]        ,[CT_Taux02]        ,[CT_Taux03]        ,[CT_Taux04]        ,[N_CatCompta]        ,[N_Period]        ,[CT_Facture]        ,[CT_BLFact]        ,[CT_Langue]        ,[N_Expedition]        ,[N_Condition]        ,[CT_Saut]        ,[CT_Lettrage]        ,[CT_ValidEch]        ,[CT_Sommeil]        ,[DE_No]        ,[CT_ControlEnc]        ,[CT_NotRappel]        ,[N_Analytique]        ,[CA_Num]        ,[CT_Telephone]        ,[CT_Telecopie]        ,[CT_EMail]        ,[CT_Site]        ,[CT_Coface]        ,[CT_Surveillance]        ,[CT_SvFormeJuri]        ,[CT_SvEffectif]        ,[CT_SvCA]        ,[CT_SvResultat]        ,[CT_SvIncident]        ,[CT_SvPrivil]        ,[CT_SvRegul]        ,[CT_SvCotation]        ,[CT_SvObjetMaj]        ,[N_AnalytiqueIFRS]        ,[CA_NumIFRS]        ,[CT_PrioriteLivr]        ,[CT_LivrPartielle]        ,[MR_No]        ,[CT_NotPenal]        ,[EB_No]        ,[CT_NumCentrale]        ,[CT_FactureElec]        ,[CT_TypeNIF]        ,[CT_RepresentInt]        ,[CT_RepresentNIF]        ,[CT_EdiCodeType]        ,[CT_EdiCode]        ,[CT_EdiCodeSage]        ,[CT_ProfilSoc]        ,[CT_StatutContrat]        ,[CT_EchangeRappro]        ,[CT_EchangeCR]        ,[PI_NoEchange]        ,[CT_BonAPayer]        ,[CT_DelaiTransport]        ,[CT_DelaiAppro]        ,[CT_LangueISO2]        ,[CT_AnnulationCR]    )      SELECT            'Modification'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[CT_Num]        ,[CT_Intitule]        ,[CT_Type]        ,[CG_NumPrinc]        ,[CT_Qualite]        ,[CT_Classement]        ,[CT_Contact]        ,[CT_Adresse]        ,[CT_Complement]        ,[CT_CodePostal]        ,[CT_Ville]        ,[CT_CodeRegion]        ,[CT_Pays]        ,[CT_Raccourci]        ,[BT_Num]        ,[N_Devise]        ,[CT_Ape]        ,[CT_Identifiant]        ,[CT_Siret]        ,[CT_Statistique01]        ,[CT_Statistique02]        ,[CT_Statistique03]        ,[CT_Statistique04]        ,[CT_Statistique05]        ,[CT_Statistique06]        ,[CT_Statistique07]        ,[CT_Statistique08]        ,[CT_Statistique09]        ,[CT_Statistique10]        ,[CT_Commentaire]        ,[CT_Encours]        ,[CT_Assurance]        ,[CT_NumPayeur]        ,[N_Risque]        ,[CO_No]        ,[N_CatTarif]        ,[CT_Taux01]        ,[CT_Taux02]        ,[CT_Taux03]        ,[CT_Taux04]        ,[N_CatCompta]        ,[N_Period]        ,[CT_Facture]        ,[CT_BLFact]        ,[CT_Langue]        ,[N_Expedition]        ,[N_Condition]        ,[CT_Saut]        ,[CT_Lettrage]        ,[CT_ValidEch]        ,[CT_Sommeil]        ,[DE_No]        ,[CT_ControlEnc]        ,[CT_NotRappel]        ,[N_Analytique]        ,[CA_Num]        ,[CT_Telephone]        ,[CT_Telecopie]        ,[CT_EMail]        ,[CT_Site]        ,[CT_Coface]        ,[CT_Surveillance]        ,[CT_SvFormeJuri]        ,[CT_SvEffectif]        ,[CT_SvCA]        ,[CT_SvResultat]        ,[CT_SvIncident]        ,[CT_SvPrivil]        ,[CT_SvRegul]        ,[CT_SvCotation]        ,[CT_SvObjetMaj]        ,[N_AnalytiqueIFRS]        ,[CA_NumIFRS]        ,[CT_PrioriteLivr]        ,[CT_LivrPartielle]        ,[MR_No]        ,[CT_NotPenal]        ,[EB_No]        ,[CT_NumCentrale]        ,[CT_FactureElec]        ,[CT_TypeNIF]        ,[CT_RepresentInt]        ,[CT_RepresentNIF]        ,[CT_EdiCodeType]        ,[CT_EdiCode]        ,[CT_EdiCodeSage]        ,[CT_ProfilSoc]        ,[CT_StatutContrat]        ,[CT_EchangeRappro]        ,[CT_EchangeCR]        ,[PI_NoEchange]        ,[CT_BonAPayer]        ,[CT_DelaiTransport]        ,[CT_DelaiAppro]        ,[CT_LangueISO2]        ,[CT_AnnulationCR] FROM INSERTED    END ");
+
+        //F_CREGLEMENT
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_DEL_F_CREGLEMENT]  ON [dbo].[F_CREGLEMENT]  AFTER DELETE  AS  BEGIN    INSERT INTO API_T_Audit_F_CREGLEMENT    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[RG_No]        ,[CT_NumPayeur]        ,[RG_Date]        ,[RG_Reference]        ,[RG_Libelle]        ,[RG_Montant]        ,[RG_MontantDev]        ,[N_Reglement]        ,[RG_Impute]        ,[RG_Compta]        ,[EC_No]        ,[RG_Type]        ,[RG_Cours]        ,[N_Devise]        ,[JO_Num]        ,[CG_NumCont]        ,[RG_Impaye]        ,[CG_Num]        ,[RG_TypeReg]        ,[RG_Heure]        ,[RG_Piece]        ,[CA_No]        ,[CO_NoCaissier]        ,[RG_Banque]        ,[RG_Transfere]        ,[RG_Cloture]        ,[RG_Ticket]        ,[RG_Souche]        ,[CT_NumPayeurOrig]        ,[RG_DateEchCont]        ,[CG_NumEcart]        ,[JO_NumEcart]        ,[RG_MontantEcart]        ,[RG_NoBonAchat]    )      SELECT            'Suppression'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[RG_No]        ,[CT_NumPayeur]        ,[RG_Date]        ,[RG_Reference]        ,[RG_Libelle]        ,[RG_Montant]        ,[RG_MontantDev]        ,[N_Reglement]        ,[RG_Impute]        ,[RG_Compta]        ,[EC_No]        ,[RG_Type]        ,[RG_Cours]        ,[N_Devise]        ,[JO_Num]        ,[CG_NumCont]        ,[RG_Impaye]        ,[CG_Num]        ,[RG_TypeReg]        ,[RG_Heure]        ,[RG_Piece]        ,[CA_No]        ,[CO_NoCaissier]        ,[RG_Banque]        ,[RG_Transfere]        ,[RG_Cloture]        ,[RG_Ticket]        ,[RG_Souche]        ,[CT_NumPayeurOrig]        ,[RG_DateEchCont]        ,[CG_NumEcart]        ,[JO_NumEcart]        ,[RG_MontantEcart]        ,[RG_NoBonAchat] FROM DELETED    END ");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_INS_F_CREGLEMENT]  ON [dbo].[F_CREGLEMENT]  AFTER INSERT  AS  BEGIN    INSERT INTO API_T_Audit_F_CREGLEMENT    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[RG_No]        ,[CT_NumPayeur]        ,[RG_Date]        ,[RG_Reference]        ,[RG_Libelle]        ,[RG_Montant]        ,[RG_MontantDev]        ,[N_Reglement]        ,[RG_Impute]        ,[RG_Compta]        ,[EC_No]        ,[RG_Type]        ,[RG_Cours]        ,[N_Devise]        ,[JO_Num]        ,[CG_NumCont]        ,[RG_Impaye]        ,[CG_Num]        ,[RG_TypeReg]        ,[RG_Heure]        ,[RG_Piece]        ,[CA_No]        ,[CO_NoCaissier]        ,[RG_Banque]        ,[RG_Transfere]        ,[RG_Cloture]        ,[RG_Ticket]        ,[RG_Souche]        ,[CT_NumPayeurOrig]        ,[RG_DateEchCont]        ,[CG_NumEcart]        ,[JO_NumEcart]        ,[RG_MontantEcart]        ,[RG_NoBonAchat]    )      SELECT            'Insertion'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[RG_No]        ,[CT_NumPayeur]        ,[RG_Date]        ,[RG_Reference]        ,[RG_Libelle]        ,[RG_Montant]        ,[RG_MontantDev]        ,[N_Reglement]        ,[RG_Impute]        ,[RG_Compta]        ,[EC_No]        ,[RG_Type]        ,[RG_Cours]        ,[N_Devise]        ,[JO_Num]        ,[CG_NumCont]        ,[RG_Impaye]        ,[CG_Num]        ,[RG_TypeReg]        ,[RG_Heure]        ,[RG_Piece]        ,[CA_No]        ,[CO_NoCaissier]        ,[RG_Banque]        ,[RG_Transfere]        ,[RG_Cloture]        ,[RG_Ticket]        ,[RG_Souche]        ,[CT_NumPayeurOrig]        ,[RG_DateEchCont]        ,[CG_NumEcart]        ,[JO_NumEcart]        ,[RG_MontantEcart]        ,[RG_NoBonAchat] FROM INSERTED    END ");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_UPD_F_CREGLEMENT]  ON [dbo].[F_CREGLEMENT]  AFTER UPDATE  AS  BEGIN    INSERT INTO API_T_Audit_F_CREGLEMENT    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[RG_No]        ,[CT_NumPayeur]        ,[RG_Date]        ,[RG_Reference]        ,[RG_Libelle]        ,[RG_Montant]        ,[RG_MontantDev]        ,[N_Reglement]        ,[RG_Impute]        ,[RG_Compta]        ,[EC_No]        ,[RG_Type]        ,[RG_Cours]        ,[N_Devise]        ,[JO_Num]        ,[CG_NumCont]        ,[RG_Impaye]        ,[CG_Num]        ,[RG_TypeReg]        ,[RG_Heure]        ,[RG_Piece]        ,[CA_No]        ,[CO_NoCaissier]        ,[RG_Banque]        ,[RG_Transfere]        ,[RG_Cloture]        ,[RG_Ticket]        ,[RG_Souche]        ,[CT_NumPayeurOrig]        ,[RG_DateEchCont]        ,[CG_NumEcart]        ,[JO_NumEcart]        ,[RG_MontantEcart]        ,[RG_NoBonAchat]    )      SELECT            'Modification'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[RG_No]        ,[CT_NumPayeur]        ,[RG_Date]        ,[RG_Reference]        ,[RG_Libelle]        ,[RG_Montant]        ,[RG_MontantDev]        ,[N_Reglement]        ,[RG_Impute]        ,[RG_Compta]        ,[EC_No]        ,[RG_Type]        ,[RG_Cours]        ,[N_Devise]        ,[JO_Num]        ,[CG_NumCont]        ,[RG_Impaye]        ,[CG_Num]        ,[RG_TypeReg]        ,[RG_Heure]        ,[RG_Piece]        ,[CA_No]        ,[CO_NoCaissier]        ,[RG_Banque]        ,[RG_Transfere]        ,[RG_Cloture]        ,[RG_Ticket]        ,[RG_Souche]        ,[CT_NumPayeurOrig]        ,[RG_DateEchCont]        ,[CG_NumEcart]        ,[JO_NumEcart]        ,[RG_MontantEcart]        ,[RG_NoBonAchat] FROM INSERTED    END ");
+
+        //F_DOCENTETE
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_DEL_F_DOCENTETE]  ON [dbo].[F_DOCENTETE]  AFTER DELETE  AS  BEGIN    INSERT INTO API_T_Audit_F_DOCENTETE    (        [Operation]        ,[timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[DO_Piece]        ,[DO_Date]        ,[DO_Ref]        ,[DO_Tiers]        ,[CO_No]        ,[DO_Period]        ,[DO_Devise]        ,[DO_Cours]        ,[DE_No]        ,[LI_No]        ,[CT_NumPayeur]        ,[DO_Expedit]        ,[DO_NbFacture]        ,[DO_BLFact]        ,[DO_TxEscompte]        ,[DO_Reliquat]        ,[DO_Imprim]        ,[CA_Num]        ,[DO_Coord01]        ,[DO_Coord02]        ,[DO_Coord03]        ,[DO_Coord04]        ,[DO_Souche]        ,[DO_DateLivr]        ,[DO_Condition]        ,[DO_Tarif]        ,[DO_Colisage]        ,[DO_TypeColis]        ,[DO_Transaction]        ,[DO_Langue]        ,[DO_Ecart]        ,[DO_Regime]        ,[N_CatCompta]        ,[DO_Ventile]        ,[AB_No]        ,[DO_DebutAbo]        ,[DO_FinAbo]        ,[DO_DebutPeriod]        ,[DO_FinPeriod]        ,[CG_Num]        ,[DO_Statut]        ,[DO_Heure]        ,[CA_No]        ,[CO_NoCaissier]        ,[DO_Transfere]        ,[DO_Cloture]        ,[DO_NoWeb]        ,[DO_Attente]        ,[DO_Provenance]        ,[CA_NumIFRS]        ,[MR_No]        ,[DO_TypeFrais]        ,[DO_ValFrais]        ,[DO_TypeLigneFrais]        ,[DO_TypeFranco]        ,[DO_ValFranco]        ,[DO_TypeLigneFranco]        ,[DO_Taxe1]        ,[DO_TypeTaux1]        ,[DO_TypeTaxe1]        ,[DO_Taxe2]        ,[DO_TypeTaux2]        ,[DO_TypeTaxe2]        ,[DO_Taxe3]        ,[DO_TypeTaux3]        ,[DO_TypeTaxe3]        ,[DO_MajCpta]        ,[DO_Motif]        ,[CT_NumCentrale]        ,[DO_Contact]        ,[DO_FactureElec]        ,[DO_TypeTransac]        ,[DO_DateLivrRealisee]        ,[DO_DateExpedition]        ,[DO_FactureFrs]        ,[DO_PieceOrig]        ,[DO_GUID]        ,[DO_EStatut]        ,[DO_DemandeRegul]        ,[ET_No]        ,[DO_Valide]        ,[DO_Coffre]        ,[DO_CodeTaxe1]        ,[DO_CodeTaxe2]        ,[DO_CodeTaxe3]        ,[DO_TotalHT]        ,[DO_StatutBAP]    )      SELECT          'Suppression'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[DO_Piece]        ,[DO_Date]        ,[DO_Ref]        ,[DO_Tiers]        ,[CO_No]        ,[DO_Period]        ,[DO_Devise]        ,[DO_Cours]        ,[DE_No]        ,[LI_No]        ,[CT_NumPayeur]        ,[DO_Expedit]        ,[DO_NbFacture]        ,[DO_BLFact]        ,[DO_TxEscompte]        ,[DO_Reliquat]        ,[DO_Imprim]        ,[CA_Num]        ,[DO_Coord01]        ,[DO_Coord02]        ,[DO_Coord03]        ,[DO_Coord04]        ,[DO_Souche]        ,[DO_DateLivr]        ,[DO_Condition]        ,[DO_Tarif]        ,[DO_Colisage]        ,[DO_TypeColis]        ,[DO_Transaction]        ,[DO_Langue]        ,[DO_Ecart]        ,[DO_Regime]        ,[N_CatCompta]        ,[DO_Ventile]        ,[AB_No]        ,[DO_DebutAbo]        ,[DO_FinAbo]        ,[DO_DebutPeriod]        ,[DO_FinPeriod]        ,[CG_Num]        ,[DO_Statut]        ,[DO_Heure]        ,[CA_No]        ,[CO_NoCaissier]        ,[DO_Transfere]        ,[DO_Cloture]        ,[DO_NoWeb]        ,[DO_Attente]        ,[DO_Provenance]        ,[CA_NumIFRS]        ,[MR_No]        ,[DO_TypeFrais]        ,[DO_ValFrais]        ,[DO_TypeLigneFrais]        ,[DO_TypeFranco]        ,[DO_ValFranco]        ,[DO_TypeLigneFranco]        ,[DO_Taxe1]        ,[DO_TypeTaux1]        ,[DO_TypeTaxe1]        ,[DO_Taxe2]        ,[DO_TypeTaux2]        ,[DO_TypeTaxe2]        ,[DO_Taxe3]        ,[DO_TypeTaux3]        ,[DO_TypeTaxe3]        ,[DO_MajCpta]        ,[DO_Motif]        ,[CT_NumCentrale]        ,[DO_Contact]        ,[DO_FactureElec]        ,[DO_TypeTransac]        ,[DO_DateLivrRealisee]        ,[DO_DateExpedition]        ,[DO_FactureFrs]        ,[DO_PieceOrig]        ,[DO_GUID]        ,[DO_EStatut]        ,[DO_DemandeRegul]        ,[ET_No]        ,[DO_Valide]        ,[DO_Coffre]        ,[DO_CodeTaxe1]        ,[DO_CodeTaxe2]        ,[DO_CodeTaxe3]        ,[DO_TotalHT]        ,[DO_StatutBAP] FROM DELETED    END  ");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_INS_F_DOCENTETE]  ON [dbo].[F_DOCENTETE]  AFTER INSERT  AS  BEGIN    INSERT INTO API_T_Audit_F_DOCENTETE    (          [Operation]        ,[timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[DO_Piece]        ,[DO_Date]        ,[DO_Ref]        ,[DO_Tiers]        ,[CO_No]        ,[DO_Period]        ,[DO_Devise]        ,[DO_Cours]        ,[DE_No]        ,[LI_No]        ,[CT_NumPayeur]        ,[DO_Expedit]        ,[DO_NbFacture]        ,[DO_BLFact]        ,[DO_TxEscompte]        ,[DO_Reliquat]        ,[DO_Imprim]        ,[CA_Num]        ,[DO_Coord01]        ,[DO_Coord02]        ,[DO_Coord03]        ,[DO_Coord04]        ,[DO_Souche]        ,[DO_DateLivr]        ,[DO_Condition]        ,[DO_Tarif]        ,[DO_Colisage]        ,[DO_TypeColis]        ,[DO_Transaction]        ,[DO_Langue]        ,[DO_Ecart]        ,[DO_Regime]        ,[N_CatCompta]        ,[DO_Ventile]        ,[AB_No]        ,[DO_DebutAbo]        ,[DO_FinAbo]        ,[DO_DebutPeriod]        ,[DO_FinPeriod]        ,[CG_Num]        ,[DO_Statut]        ,[DO_Heure]        ,[CA_No]        ,[CO_NoCaissier]        ,[DO_Transfere]        ,[DO_Cloture]        ,[DO_NoWeb]        ,[DO_Attente]        ,[DO_Provenance]        ,[CA_NumIFRS]        ,[MR_No]        ,[DO_TypeFrais]        ,[DO_ValFrais]        ,[DO_TypeLigneFrais]        ,[DO_TypeFranco]        ,[DO_ValFranco]        ,[DO_TypeLigneFranco]        ,[DO_Taxe1]        ,[DO_TypeTaux1]        ,[DO_TypeTaxe1]        ,[DO_Taxe2]        ,[DO_TypeTaux2]        ,[DO_TypeTaxe2]        ,[DO_Taxe3]        ,[DO_TypeTaux3]        ,[DO_TypeTaxe3]        ,[DO_MajCpta]        ,[DO_Motif]        ,[CT_NumCentrale]        ,[DO_Contact]        ,[DO_FactureElec]        ,[DO_TypeTransac]        ,[DO_DateLivrRealisee]        ,[DO_DateExpedition]        ,[DO_FactureFrs]        ,[DO_PieceOrig]        ,[DO_GUID]        ,[DO_EStatut]        ,[DO_DemandeRegul]        ,[ET_No]        ,[DO_Valide]        ,[DO_Coffre]        ,[DO_CodeTaxe1]        ,[DO_CodeTaxe2]        ,[DO_CodeTaxe3]        ,[DO_TotalHT]        ,[DO_StatutBAP]    )      SELECT            'Insertion'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[DO_Piece]        ,[DO_Date]        ,[DO_Ref]        ,[DO_Tiers]        ,[CO_No]        ,[DO_Period]        ,[DO_Devise]        ,[DO_Cours]        ,[DE_No]        ,[LI_No]        ,[CT_NumPayeur]        ,[DO_Expedit]        ,[DO_NbFacture]        ,[DO_BLFact]        ,[DO_TxEscompte]        ,[DO_Reliquat]        ,[DO_Imprim]        ,[CA_Num]        ,[DO_Coord01]        ,[DO_Coord02]        ,[DO_Coord03]        ,[DO_Coord04]        ,[DO_Souche]        ,[DO_DateLivr]        ,[DO_Condition]        ,[DO_Tarif]        ,[DO_Colisage]        ,[DO_TypeColis]        ,[DO_Transaction]        ,[DO_Langue]        ,[DO_Ecart]        ,[DO_Regime]        ,[N_CatCompta]        ,[DO_Ventile]        ,[AB_No]        ,[DO_DebutAbo]        ,[DO_FinAbo]        ,[DO_DebutPeriod]        ,[DO_FinPeriod]        ,[CG_Num]        ,[DO_Statut]        ,[DO_Heure]        ,[CA_No]        ,[CO_NoCaissier]        ,[DO_Transfere]        ,[DO_Cloture]        ,[DO_NoWeb]        ,[DO_Attente]        ,[DO_Provenance]        ,[CA_NumIFRS]        ,[MR_No]        ,[DO_TypeFrais]        ,[DO_ValFrais]        ,[DO_TypeLigneFrais]        ,[DO_TypeFranco]        ,[DO_ValFranco]        ,[DO_TypeLigneFranco]        ,[DO_Taxe1]        ,[DO_TypeTaux1]        ,[DO_TypeTaxe1]        ,[DO_Taxe2]        ,[DO_TypeTaux2]        ,[DO_TypeTaxe2]        ,[DO_Taxe3]        ,[DO_TypeTaux3]        ,[DO_TypeTaxe3]        ,[DO_MajCpta]        ,[DO_Motif]        ,[CT_NumCentrale]        ,[DO_Contact]        ,[DO_FactureElec]        ,[DO_TypeTransac]        ,[DO_DateLivrRealisee]        ,[DO_DateExpedition]        ,[DO_FactureFrs]        ,[DO_PieceOrig]        ,[DO_GUID]        ,[DO_EStatut]        ,[DO_DemandeRegul]        ,[ET_No]        ,[DO_Valide]        ,[DO_Coffre]        ,[DO_CodeTaxe1]        ,[DO_CodeTaxe2]        ,[DO_CodeTaxe3]        ,[DO_TotalHT]        ,[DO_StatutBAP] FROM INSERTED    END  ");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_UPD_F_DOCENTETE]  ON [dbo].[F_DOCENTETE]  FOR UPDATE  AS  BEGIN    INSERT INTO API_T_Audit_F_DOCENTETE    (        [Operation]        ,[timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[DO_Piece]        ,[DO_Date]        ,[DO_Ref]        ,[DO_Tiers]        ,[CO_No]        ,[DO_Period]        ,[DO_Devise]        ,[DO_Cours]        ,[DE_No]        ,[LI_No]        ,[CT_NumPayeur]        ,[DO_Expedit]        ,[DO_NbFacture]        ,[DO_BLFact]        ,[DO_TxEscompte]        ,[DO_Reliquat]        ,[DO_Imprim]        ,[CA_Num]        ,[DO_Coord01]        ,[DO_Coord02]        ,[DO_Coord03]        ,[DO_Coord04]        ,[DO_Souche]        ,[DO_DateLivr]        ,[DO_Condition]        ,[DO_Tarif]        ,[DO_Colisage]        ,[DO_TypeColis]        ,[DO_Transaction]        ,[DO_Langue]        ,[DO_Ecart]        ,[DO_Regime]        ,[N_CatCompta]        ,[DO_Ventile]        ,[AB_No]        ,[DO_DebutAbo]        ,[DO_FinAbo]        ,[DO_DebutPeriod]        ,[DO_FinPeriod]        ,[CG_Num]        ,[DO_Statut]        ,[DO_Heure]        ,[CA_No]        ,[CO_NoCaissier]        ,[DO_Transfere]        ,[DO_Cloture]        ,[DO_NoWeb]        ,[DO_Attente]        ,[DO_Provenance]        ,[CA_NumIFRS]        ,[MR_No]        ,[DO_TypeFrais]        ,[DO_ValFrais]        ,[DO_TypeLigneFrais]        ,[DO_TypeFranco]        ,[DO_ValFranco]        ,[DO_TypeLigneFranco]        ,[DO_Taxe1]        ,[DO_TypeTaux1]        ,[DO_TypeTaxe1]        ,[DO_Taxe2]        ,[DO_TypeTaux2]        ,[DO_TypeTaxe2]        ,[DO_Taxe3]        ,[DO_TypeTaux3]        ,[DO_TypeTaxe3]        ,[DO_MajCpta]        ,[DO_Motif]        ,[CT_NumCentrale]        ,[DO_Contact]        ,[DO_FactureElec]        ,[DO_TypeTransac]        ,[DO_DateLivrRealisee]        ,[DO_DateExpedition]        ,[DO_FactureFrs]        ,[DO_PieceOrig]        ,[DO_GUID]        ,[DO_EStatut]        ,[DO_DemandeRegul]        ,[ET_No]        ,[DO_Valide]        ,[DO_Coffre]        ,[DO_CodeTaxe1]        ,[DO_CodeTaxe2]        ,[DO_CodeTaxe3]        ,[DO_TotalHT]        ,[DO_StatutBAP]    )      SELECT          'Modification'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[DO_Piece]        ,[DO_Date]        ,[DO_Ref]        ,[DO_Tiers]        ,[CO_No]        ,[DO_Period]        ,[DO_Devise]        ,[DO_Cours]        ,[DE_No]        ,[LI_No]        ,[CT_NumPayeur]        ,[DO_Expedit]        ,[DO_NbFacture]        ,[DO_BLFact]        ,[DO_TxEscompte]        ,[DO_Reliquat]        ,[DO_Imprim]        ,[CA_Num]        ,[DO_Coord01]        ,[DO_Coord02]        ,[DO_Coord03]        ,[DO_Coord04]        ,[DO_Souche]        ,[DO_DateLivr]        ,[DO_Condition]        ,[DO_Tarif]        ,[DO_Colisage]        ,[DO_TypeColis]        ,[DO_Transaction]        ,[DO_Langue]        ,[DO_Ecart]        ,[DO_Regime]        ,[N_CatCompta]        ,[DO_Ventile]        ,[AB_No]        ,[DO_DebutAbo]        ,[DO_FinAbo]        ,[DO_DebutPeriod]        ,[DO_FinPeriod]        ,[CG_Num]        ,[DO_Statut]        ,[DO_Heure]        ,[CA_No]        ,[CO_NoCaissier]        ,[DO_Transfere]        ,[DO_Cloture]        ,[DO_NoWeb]        ,[DO_Attente]        ,[DO_Provenance]        ,[CA_NumIFRS]        ,[MR_No]        ,[DO_TypeFrais]        ,[DO_ValFrais]        ,[DO_TypeLigneFrais]        ,[DO_TypeFranco]        ,[DO_ValFranco]        ,[DO_TypeLigneFranco]        ,[DO_Taxe1]        ,[DO_TypeTaux1]        ,[DO_TypeTaxe1]        ,[DO_Taxe2]        ,[DO_TypeTaux2]        ,[DO_TypeTaxe2]        ,[DO_Taxe3]        ,[DO_TypeTaux3]        ,[DO_TypeTaxe3]        ,[DO_MajCpta]        ,[DO_Motif]        ,[CT_NumCentrale]        ,[DO_Contact]        ,[DO_FactureElec]        ,[DO_TypeTransac]        ,[DO_DateLivrRealisee]        ,[DO_DateExpedition]        ,[DO_FactureFrs]        ,[DO_PieceOrig]        ,[DO_GUID]        ,[DO_EStatut]        ,[DO_DemandeRegul]        ,[ET_No]        ,[DO_Valide]        ,[DO_Coffre]        ,[DO_CodeTaxe1]        ,[DO_CodeTaxe2]        ,[DO_CodeTaxe3]        ,[DO_TotalHT]        ,[DO_StatutBAP] FROM INSERTED    END");
+
+        //F_DOCLIGNE
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_DEL_F_DOCLIGNE]  ON [dbo].[F_DOCLIGNE]  AFTER DELETE  AS  BEGIN    INSERT INTO API_T_Audit_F_DOCLIGNE    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[DT_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation]    )      SELECT            'Suppression'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[DT_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation] FROM DELETED    END");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_INS_F_DOCLIGNE]  ON [dbo].[F_DOCLIGNE]  AFTER INSERT  AS  BEGIN    INSERT INTO API_T_Audit_F_DOCLIGNE    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[DT_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation]    )      SELECT            'Insertion'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[DT_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation] FROM INSERTED    END");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_UPD_F_DOCLIGNE]  ON [dbo].[F_DOCLIGNE]  AFTER UPDATE  AS  BEGIN    INSERT INTO API_T_Audit_F_DOCLIGNE    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[DT_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation]    )      SELECT  TOP 1          'Modification'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[DT_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation] FROM INSERTED a ORDER BY a.cbMarq END");
+
+        //F_ECRITUREC
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_DEL_F_ECRITUREC]  ON [dbo].[F_ECRITUREC]  AFTER DELETE  AS  BEGIN    INSERT INTO API_T_Audit_F_ECRITUREC    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[JO_Num]        ,[EC_No]        ,[EC_NoLink]        ,[JM_Date]        ,[EC_Jour]        ,[EC_Date]        ,[EC_Piece]        ,[EC_RefPiece]        ,[EC_TresoPiece]        ,[CG_Num]        ,[CG_NumCont]        ,[CT_Num]        ,[EC_Intitule]        ,[N_Reglement]        ,[EC_Echeance]        ,[EC_Parite]        ,[EC_Quantite]        ,[N_Devise]        ,[EC_Sens]        ,[EC_Montant]        ,[EC_Lettre]        ,[EC_Lettrage]        ,[EC_Point]        ,[EC_Pointage]        ,[EC_Impression]        ,[EC_Cloture]        ,[EC_CType]        ,[EC_Rappel]        ,[CT_NumCont]        ,[EC_LettreQ]        ,[EC_LettrageQ]        ,[EC_ANType]        ,[EC_RType]        ,[EC_Devise]        ,[EC_Remise]        ,[EC_ExportExpert]        ,[TA_Code]        ,[EC_Norme]        ,[TA_Provenance]        ,[EC_PenalType]        ,[EC_DatePenal]        ,[EC_DateRelance]        ,[EC_DateRappro]        ,[EC_Reference]        ,[EC_StatusRegle]        ,[EC_MontantRegle]        ,[EC_DateRegle]        ,[EC_RIB]        ,[EC_DateOp]        ,[EC_NoCloture]        ,[EC_ExportRappro]        ,[EC_FactureGUID]        ,[EC_DateCloture]    )      SELECT            'Suppression'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[JO_Num]        ,[EC_No]        ,[EC_NoLink]        ,[JM_Date]        ,[EC_Jour]        ,[EC_Date]        ,[EC_Piece]        ,[EC_RefPiece]        ,[EC_TresoPiece]        ,[CG_Num]        ,[CG_NumCont]        ,[CT_Num]        ,[EC_Intitule]        ,[N_Reglement]        ,[EC_Echeance]        ,[EC_Parite]        ,[EC_Quantite]        ,[N_Devise]        ,[EC_Sens]        ,[EC_Montant]        ,[EC_Lettre]        ,[EC_Lettrage]        ,[EC_Point]        ,[EC_Pointage]        ,[EC_Impression]        ,[EC_Cloture]        ,[EC_CType]        ,[EC_Rappel]        ,[CT_NumCont]        ,[EC_LettreQ]        ,[EC_LettrageQ]        ,[EC_ANType]        ,[EC_RType]        ,[EC_Devise]        ,[EC_Remise]        ,[EC_ExportExpert]        ,[TA_Code]        ,[EC_Norme]        ,[TA_Provenance]        ,[EC_PenalType]        ,[EC_DatePenal]        ,[EC_DateRelance]        ,[EC_DateRappro]        ,[EC_Reference]        ,[EC_StatusRegle]        ,[EC_MontantRegle]        ,[EC_DateRegle]        ,[EC_RIB]        ,[EC_DateOp]        ,[EC_NoCloture]        ,[EC_ExportRappro]        ,[EC_FactureGUID]        ,[EC_DateCloture] FROM DELETED    END");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_INS_F_ECRITUREC]  ON [dbo].[F_ECRITUREC]  AFTER INSERT  AS  BEGIN    INSERT INTO API_T_Audit_F_ECRITUREC    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[JO_Num]        ,[EC_No]        ,[EC_NoLink]        ,[JM_Date]        ,[EC_Jour]        ,[EC_Date]        ,[EC_Piece]        ,[EC_RefPiece]        ,[EC_TresoPiece]        ,[CG_Num]        ,[CG_NumCont]        ,[CT_Num]        ,[EC_Intitule]        ,[N_Reglement]        ,[EC_Echeance]        ,[EC_Parite]        ,[EC_Quantite]        ,[N_Devise]        ,[EC_Sens]        ,[EC_Montant]        ,[EC_Lettre]        ,[EC_Lettrage]        ,[EC_Point]        ,[EC_Pointage]        ,[EC_Impression]        ,[EC_Cloture]        ,[EC_CType]        ,[EC_Rappel]        ,[CT_NumCont]        ,[EC_LettreQ]        ,[EC_LettrageQ]        ,[EC_ANType]        ,[EC_RType]        ,[EC_Devise]        ,[EC_Remise]        ,[EC_ExportExpert]        ,[TA_Code]        ,[EC_Norme]        ,[TA_Provenance]        ,[EC_PenalType]        ,[EC_DatePenal]        ,[EC_DateRelance]        ,[EC_DateRappro]        ,[EC_Reference]        ,[EC_StatusRegle]        ,[EC_MontantRegle]        ,[EC_DateRegle]        ,[EC_RIB]        ,[EC_DateOp]        ,[EC_NoCloture]        ,[EC_ExportRappro]        ,[EC_FactureGUID]        ,[EC_DateCloture]    )      SELECT            'Insertion'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[JO_Num]        ,[EC_No]        ,[EC_NoLink]        ,[JM_Date]        ,[EC_Jour]        ,[EC_Date]        ,[EC_Piece]        ,[EC_RefPiece]        ,[EC_TresoPiece]        ,[CG_Num]        ,[CG_NumCont]        ,[CT_Num]        ,[EC_Intitule]        ,[N_Reglement]        ,[EC_Echeance]        ,[EC_Parite]        ,[EC_Quantite]        ,[N_Devise]        ,[EC_Sens]        ,[EC_Montant]        ,[EC_Lettre]        ,[EC_Lettrage]        ,[EC_Point]        ,[EC_Pointage]        ,[EC_Impression]        ,[EC_Cloture]        ,[EC_CType]        ,[EC_Rappel]        ,[CT_NumCont]        ,[EC_LettreQ]        ,[EC_LettrageQ]        ,[EC_ANType]        ,[EC_RType]        ,[EC_Devise]        ,[EC_Remise]        ,[EC_ExportExpert]        ,[TA_Code]        ,[EC_Norme]        ,[TA_Provenance]        ,[EC_PenalType]        ,[EC_DatePenal]        ,[EC_DateRelance]        ,[EC_DateRappro]        ,[EC_Reference]        ,[EC_StatusRegle]        ,[EC_MontantRegle]        ,[EC_DateRegle]        ,[EC_RIB]        ,[EC_DateOp]        ,[EC_NoCloture]        ,[EC_ExportRappro]        ,[EC_FactureGUID]        ,[EC_DateCloture] FROM INSERTED    END ");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_UPD_F_ECRITUREC]  ON [dbo].[F_ECRITUREC]  AFTER UPDATE  AS  BEGIN    INSERT INTO API_T_Audit_F_ECRITUREC    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[JO_Num]        ,[EC_No]        ,[EC_NoLink]        ,[JM_Date]        ,[EC_Jour]        ,[EC_Date]        ,[EC_Piece]        ,[EC_RefPiece]        ,[EC_TresoPiece]        ,[CG_Num]        ,[CG_NumCont]        ,[CT_Num]        ,[EC_Intitule]        ,[N_Reglement]        ,[EC_Echeance]        ,[EC_Parite]        ,[EC_Quantite]        ,[N_Devise]        ,[EC_Sens]        ,[EC_Montant]        ,[EC_Lettre]        ,[EC_Lettrage]        ,[EC_Point]        ,[EC_Pointage]        ,[EC_Impression]        ,[EC_Cloture]        ,[EC_CType]        ,[EC_Rappel]        ,[CT_NumCont]        ,[EC_LettreQ]        ,[EC_LettrageQ]        ,[EC_ANType]        ,[EC_RType]        ,[EC_Devise]        ,[EC_Remise]        ,[EC_ExportExpert]        ,[TA_Code]        ,[EC_Norme]        ,[TA_Provenance]        ,[EC_PenalType]        ,[EC_DatePenal]        ,[EC_DateRelance]        ,[EC_DateRappro]        ,[EC_Reference]        ,[EC_StatusRegle]        ,[EC_MontantRegle]        ,[EC_DateRegle]        ,[EC_RIB]        ,[EC_DateOp]        ,[EC_NoCloture]        ,[EC_ExportRappro]        ,[EC_FactureGUID]        ,[EC_DateCloture]    )      SELECT            'Modification'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[JO_Num]        ,[EC_No]        ,[EC_NoLink]        ,[JM_Date]        ,[EC_Jour]        ,[EC_Date]        ,[EC_Piece]        ,[EC_RefPiece]        ,[EC_TresoPiece]        ,[CG_Num]        ,[CG_NumCont]        ,[CT_Num]        ,[EC_Intitule]        ,[N_Reglement]        ,[EC_Echeance]        ,[EC_Parite]        ,[EC_Quantite]        ,[N_Devise]        ,[EC_Sens]        ,[EC_Montant]        ,[EC_Lettre]        ,[EC_Lettrage]        ,[EC_Point]        ,[EC_Pointage]        ,[EC_Impression]        ,[EC_Cloture]        ,[EC_CType]        ,[EC_Rappel]        ,[CT_NumCont]        ,[EC_LettreQ]        ,[EC_LettrageQ]        ,[EC_ANType]        ,[EC_RType]        ,[EC_Devise]        ,[EC_Remise]        ,[EC_ExportExpert]        ,[TA_Code]        ,[EC_Norme]        ,[TA_Provenance]        ,[EC_PenalType]        ,[EC_DatePenal]        ,[EC_DateRelance]        ,[EC_DateRappro]        ,[EC_Reference]        ,[EC_StatusRegle]        ,[EC_MontantRegle]        ,[EC_DateRegle]        ,[EC_RIB]        ,[EC_DateOp]        ,[EC_NoCloture]        ,[EC_ExportRappro]        ,[EC_FactureGUID]        ,[EC_DateCloture] FROM INSERTED    END");
+
+        //F_REGLECH
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_DEL_F_REGLECH]  ON [dbo].[F_REGLECH]  AFTER DELETE  AS  BEGIN    INSERT INTO API_T_Audit_F_REGLECH    (        [Operation]        ,[timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[RG_No]        ,[DR_No]        ,[DO_Domaine]        ,[DO_Type]        ,[DO_Piece]        ,[RC_Montant]        ,[RG_TypeReg]    )      SELECT          'Suppression'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[RG_No]        ,[DR_No]        ,[DO_Domaine]        ,[DO_Type]        ,[DO_Piece]        ,[RC_Montant]        ,[RG_TypeReg] FROM DELETED    END");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_INS_F_REGLECH]  ON [dbo].[F_REGLECH]  AFTER INSERT  AS  BEGIN    INSERT INTO API_T_Audit_F_REGLECH     (        [Operation]        ,[timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[RG_No]        ,[DR_No]        ,[DO_Domaine]        ,[DO_Type]        ,[DO_Piece]        ,[RC_Montant]        ,[RG_TypeReg]    )      SELECT          'Insertion'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[RG_No]        ,[DR_No]        ,[DO_Domaine]        ,[DO_Type]        ,[DO_Piece]        ,[RC_Montant]        ,[RG_TypeReg] FROM INSERTED    END");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_UPD_F_REGLECH]  ON [dbo].[F_REGLECH]  AFTER UPDATE  AS  BEGIN    INSERT INTO API_T_Audit_F_REGLECH    (        [Operation]        ,[timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[RG_No]        ,[DR_No]        ,[DO_Domaine]        ,[DO_Type]        ,[DO_Piece]        ,[RC_Montant]        ,[RG_TypeReg]    )      SELECT          'Modification'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[RG_No]        ,[DR_No]        ,[DO_Domaine]        ,[DO_Type]        ,[DO_Piece]        ,[RC_Montant]        ,[RG_TypeReg] FROM INSERTED    END");
+    }
+    private async Task DeleteHistoriqueTriggers()
+    {
+        DB db = fn.getDb(row);
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_DEL_HistoriqueConnexion"));
+        await db.Database.ExecuteSqlRawAsync(fn.DeleteTrigger("TG_Audit_UPD_HistoriqueConnexion"));
+    }
+    private async Task CreateHistoriqueTriggers()
+    {
+        DB db = fn.getDb(row);
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_DEL_HistoriqueConnexion] ON [dbo].[cbUserSession] FOR DELETE AS BEGIN INSERT INTO API_T_HistoriqueConnexion ( [Utilisateur],[Computer],[SessionWindows],[DateOP],[TypeOP],[CB_Type] ) SELECT a.cbUserName,Host_Name(),Suser_Name(),GETDATE(),'Déconnexion',a.CB_Type FROM deleted a WHERE a.cbUserName IS NOT NULL AND a.cbUserName IS NOT NULL END");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_UPD_HistoriqueConnexion] ON [dbo].[cbUserSession] FOR UPDATE AS BEGIN INSERT INTO API_T_HistoriqueConnexion ( [Utilisateur],[Computer],[SessionWindows],[DateOP],[TypeOP],[CB_Type] ) SELECT TOP 1 a.cbUserName,Host_Name(),Suser_Name(),GETDATE(),'Connexion',a.CB_Type FROM inserted a WHERE a.cbUserName IS NOT NULL AND Suser_Name() != 'APPL_CBASE' AND a.cbUserName IS NOT NULL END");
+    }
+}

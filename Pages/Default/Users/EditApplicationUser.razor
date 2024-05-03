@@ -1,0 +1,109 @@
+@attribute [Authorize]
+<div class="dg-parent">
+    <div class="row" style="margin-top: 40px;">
+        <div class="col-md-12">
+            <RadzenTemplateForm TItem="BusinessWeb.Models.ApplicationUser" Data="@user" Visible="@(user != null)" Submit="@FormSubmit">
+                <RadzenAlert Title="Impossible de modifier l'utilisateur'" Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@error</RadzenAlert>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-3">
+                        <RadzenLabel Component="UserName" style="width: 100%" Text="Nom" />
+                    </div>
+                    <div class="col-md-9">
+                        <RadzenTextBox Disabled="true" style="width: 100%" @bind-Value="@(user.UserName)"
+                                       Name="UserName" />
+                    </div>
+                </div>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-3">
+                        <RadzenLabel Component="Email" style="width: 100%" Text="Email" />
+                    </div>
+                    <div class="col-md-9">
+                        <RadzenTextBox style="width: 100%" @bind-Value="@(user.Email)" Name="Email" />
+                    </div>
+                </div>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-3">
+                        <RadzenLabel Component="Intitule" style="width: 100%" Text="Intitulé" />
+                    </div>
+                    <div class="col-md-9">
+                        <RadzenTextBox style="display: block; width: 100%" @bind-Value="@(row.Intitule)" Name="Intitule" />
+                    </div>
+                </div>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-3">
+                        <RadzenLabel Component="RoleNames" style="width: 100%" Text="Roles" />
+                    </div>
+                    <div class="col-md-9">
+                        <RadzenDropDown Data="@roles" Multiple="true" style="width: 100%" TextProperty="Name"
+                                        @bind-Value="@(userRoles)" ValueProperty="Id" Name="Roles" />
+                    </div>
+                </div>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-3">
+                        <RadzenLabel Component="Password" style="width: 100%" Text="Mot de passe" />
+                    </div>
+                    <div class="col-md-9">
+                        <RadzenPassword style="width: 100%" @bind-Value="@(user.Password)" Name="Password" />
+                    </div>
+                </div>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-3">
+                        <RadzenLabel Component="ConfirmPassword" style="width: 100%" Text="Confirmer le mot de passe" />
+                    </div>
+                    <div class="col-md-9">
+                        <RadzenPassword style="width: 100%" @bind-Value="@(user.ConfirmPassword)"
+                                        Name="ConfirmPassword" />
+                        <RadzenCompareValidator Text="Passwords must match" Component="ConfirmPassword" Value="@user.Password" />
+                    </div>
+                </div>
+            </RadzenTemplateForm>
+        </div>
+    </div>
+    <div class="btns-end">
+        <SfButton OnClick="@(args => FormSubmit(user))" IsPrimary="true">Enregistrer</SfButton>
+        <SfButton OnClick="CancelClick">Annuler</SfButton>
+    </div>
+</div>
+
+@code {
+    protected IEnumerable<BusinessWeb.Models.ApplicationRole> roles;
+    protected BusinessWeb.Models.ApplicationUser user;
+    protected AspNetUser row;
+    protected IEnumerable<string> userRoles;
+    protected string error;
+    protected bool errorVisible;
+    [Parameter]
+    public string Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await sc.GetUserById($"{Id}");
+        row = await EtendueService.GetAspNetUserById($"{Id}");
+        userRoles = user.Roles.Select(role => role.Id);
+
+        roles = await sc.GetRoles();
+    }
+
+    protected async Task FormSubmit(BusinessWeb.Models.ApplicationUser user)
+    {
+        try
+        {
+
+            user.Roles = roles.Where(role => userRoles.Contains(role.Id)).ToList();
+            await sc.UpdateUser($"{Id}", user);
+            await EtendueService.UpdateAspNetUser($"{Id}", row);
+
+            DialogService.Close(null);
+            }
+            catch (Exception ex)
+            {
+                errorVisible = true;
+                error = ex.Message;
+            }
+        }
+
+        protected async Task CancelClick()
+        {
+            DialogService.Close(null);
+        }
+}

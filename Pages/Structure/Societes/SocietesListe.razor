@@ -1,0 +1,90 @@
+﻿@page "/societes"
+@attribute [Authorize(Roles = "Super Admin,Admin")]
+
+<RadzenContent Container="main">
+    <div class="grid-80">
+        <SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPaging="true" DataSource="@items"
+                Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete"})">
+            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+            <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="RowDoubleClick" TValue="TSociete"></GridEvents>
+            <GridPageSettings PageSize="100"></GridPageSettings>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridTemplates>
+                <EmptyRecordTemplate>
+                    <Empty></Empty>
+                </EmptyRecordTemplate>
+            </GridTemplates>
+            <GridColumns>
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Intitule" HeaderText="Intitulé"></GridColumn>
+                <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Ville" HeaderText="Ville"></GridColumn>
+                <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Telephone" HeaderText="Téléphone"></GridColumn>
+                <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Email" HeaderText="Email"></GridColumn>
+            </GridColumns>
+
+        </SfGrid>
+    </div>
+</RadzenContent>
+
+
+
+@code
+{
+
+    //Components
+    private SfGrid<TSociete> DefaultGrid;
+
+    //End components
+
+    private IEnumerable<TSociete> items;
+    bool loading = true;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+    private async Task LoadData()
+    {
+        items = sdb.TSocietes.AsNoTracking().Where(a => 1 == 1).ToList();
+    }
+
+    protected async Task RowDoubleClick(RecordDoubleClickEventArgs<TSociete> args)
+    {
+        await DialogService.OpenAsync<SocietesFiche>($"{args.RowData.Intitule}",
+        new Dictionary<string, object>() { { "id", args.RowData.id } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "800px", Height = "80%" });
+        await LoadData();
+
+    }
+
+    protected async Task AddClick() 
+    {
+        await DialogService.OpenAsync<SocietesFiche>($"Ajouter une société",
+        new Dictionary<string, object>() { { "id", 0 } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "800px", Height = "80%" });
+        await LoadData();
+    }
+    private async Task OnActionBegin(ActionEventArgs<TSociete> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Delete
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await AddClick();
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            sdb.Database.ExecuteSqlRaw("DELETE FROM T_Societe WHERE id = {0}", args.Data.id);
+            await LoadData();
+        }
+
+    }
+
+
+}

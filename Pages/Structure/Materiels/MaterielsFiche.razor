@@ -1,0 +1,306 @@
+﻿@using BusinessWeb.Pages.Traitement.Entretien;
+<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfDropDownButton IconCss="e-icons e-justify" Content="Traitement" @ref="DropDownButton">
+                    <DropDownButtonEvents ItemSelected="ShowTraitement" ></DropDownButtonEvents>
+                    <DropDownMenuItems>
+                        <DropDownMenuItem Text="CONSOMMATION GASOIL" Id="0"></DropDownMenuItem>
+                        <DropDownMenuItem Text="ASSURANCE" Id="1"></DropDownMenuItem>
+                        <DropDownMenuItem Text="VIGNETTE" Id="2"></DropDownMenuItem>
+                        <DropDownMenuItem Text="VISITE TECHNIQUE" Id="3"></DropDownMenuItem>
+                        <DropDownMenuItem Text="CARNET DE CIRCULATION" Id="10"></DropDownMenuItem>
+                        <DropDownMenuItem Text="TAXE SUR TONNAGE" Id="12"></DropDownMenuItem>
+                        <DropDownMenuItem Text="CARNET DU DISQUE" Id="11"></DropDownMenuItem>
+                        <DropDownMenuItem Text="MAINTENANCE DES EXTINCTEURS" Id="13"></DropDownMenuItem>
+                        <DropDownMenuItem Text="VIDANGE" Id="6"></DropDownMenuItem>
+                        <DropDownMenuItem Text="ENTRETIEN ET REPARATION" Id="7"></DropDownMenuItem>
+                    </DropDownMenuItems>
+                </SfDropDownButton>
+            </Template>
+        </ToolbarItem>
+        <ToolbarItem Align="ItemAlign.Right">
+                <Template>
+                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="Submit">Enregistrer</SfButton>
+                </Template>
+            </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+@if (@row == null)
+{
+         <div class="spin-center">
+            <Spin size="large" />
+        </div>
+}
+else
+{
+        <div>
+            <GridRow>
+                <GridCol Xs="24" Md="24">
+                    <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="10" Context="FormContext">
+                        <SfTab CssClass="e-fill">
+                            <TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/><TabItems>
+                                <TabItem>
+                                    <ChildContent>
+                                        <TabHeader Text="Infos"></TabHeader>
+                                    </ChildContent>
+                                    <ContentTemplate>
+                                        <GridRow>
+                                        <GridCol Xs="24" Md="12">
+                                            <Card Title="Identification" Style="height: 180px">
+                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Intitulé" LabelColSpan="8">
+                                                    <SfTextBox @bind-Value="@row.Intitule"/>
+                                                </FormItem>
+
+                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Marque" LabelColSpan="8">
+                                                    <div class="ls-parent">
+                                                        <div class="ls-child-left">
+                                                            <SfDropDownList AllowFiltering TValue="int?" TItem="API_T_Information" DataSource="@marques" @bind-Value="@row.Marque">
+                                                            <DropDownListEvents TValue="int?" TItem="API_T_Information" />
+                                                            <DropDownListFieldSettings Text="Valeur" Value="id" />
+                                                            </SfDropDownList>
+                                                        </div>
+                                                        <div class="ls-child-right">
+                                                            <RadzenButton Icon="reorder" Click="@(args => Informations(10))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                        </div>
+                                                    </div>
+                                                </FormItem>
+                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Type" LabelColSpan="8">
+                                                    <SfDropDownList TValue="int" TItem="Items" DataSource="@helpers.TypeMateriel()" @bind-Value="@row.Type">
+                                                        <DropDownListEvents TValue="int" TItem="Items" />
+                                                        <DropDownListFieldSettings Text="Name" Value="Id" />
+                                                    </SfDropDownList>
+                                                </FormItem>
+                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Immatricule" LabelColSpan="8">
+                                                    <SfTextBox @bind-Value="@row.Immatricule" />
+                                                </FormItem>
+                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Zone" LabelColSpan="8">
+                                                    <SfDropDownList TValue="int" TItem="API_T_Site" DataSource="@db.API_T_Site" @bind-Value="@row.Site">
+                                                        <DropDownListEvents TValue="int" TItem="API_T_Site" />
+                                                        <DropDownListFieldSettings Text="Intitule" Value="id" />
+                                                    </SfDropDownList>
+                                                </FormItem>
+
+                                            </Card>
+                                                    <Card Title="Infomations Techniques" Style="height: 350px">
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Modéle" LabelColSpan="8">
+                                                    <SfTextBox @bind-Value="@row.Modele" />
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Puissance Fisc." LabelColSpan="8">
+                                                    <SfTextBox @bind-Value="@row.Puissance" />
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro Chassis" LabelColSpan="8">
+                                                    <SfTextBox @bind-Value="@row.Chassis" />
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Carburant" LabelColSpan="8">
+                                                    <SfDropDownList TValue="int" TItem="Items" DataSource="@helpers.ListeCarburant()" @bind-Value="@row.Carburant">
+                                                    <DropDownListEvents TValue="int" TItem="Items" />
+                                                    <DropDownListFieldSettings Text="Name" Value="Id" />
+                                                    </SfDropDownList>
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Consommation" LabelColSpan="8">
+                                                    <SfNumericTextBox @bind-Value="@(row.Consommation)" ShowSpinButton="false" Decimals="2" Format="# ### ##0.00 L/100KM" />
+                                                    </FormItem>
+                                                    </Card>
+                                                    
+                                        </GridCol>
+                                        <GridCol Xs="24" Md="12">
+                                                    <Card Title="Conducteur" Style="height: 180px">
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Nom" LabelColSpan="8">
+                                                    <SfDropDownList TValue="int" TItem="API_T_Personnel" DataSource="@db.API_T_Personnel" @bind-Value="@row.Conducteur">
+                                                    <DropDownListEvents TValue="int" TItem="API_T_Personnel" ValueChange="@(args => GetCond(args.Value))"/>
+                                                    <DropDownListFieldSettings Text="Nom" Value="id" />
+                                                    </SfDropDownList>
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Type Permis" LabelColSpan="8">
+                                                    <SfTextBox Value="@((cond??new API_T_Personnel()).PermisType)" Readonly/>
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Num Permis" LabelColSpan="8">
+                                                    <SfTextBox Value="@((cond??new API_T_Personnel()).PermisNum)" Readonly/>
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Début" LabelColSpan="8">
+                                                    <SfDatePicker TValue="DateTime?" Value="@((cond??new API_T_Personnel()).PermisDateDebut)" Readonly/>
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Fin" LabelColSpan="8">
+                                                    <SfDatePicker TValue="DateTime?" Value="@((cond??new API_T_Personnel()).PermisDateFin)" Readonly />
+                                                    </FormItem>
+                                                    </Card>
+                                            <Card Title="Achat" Style="height: 350px">
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Type" LabelColSpan="8">
+                                                    <SfDropDownList TValue="int" TItem="Items" DataSource="@helpers.AchatMateriel()" @bind-Value="@row.TypeAchat">
+                                                    <DropDownListEvents TValue="int" TItem="Items" />
+                                                    <DropDownListFieldSettings Text="Name" Value="Id" />
+                                                    </SfDropDownList>
+                                                    </FormItem>
+                                                    @if(row.TypeAchat == 0) 
+                                                    {
+                                                                                                          <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Achat" LabelColSpan="8">
+                                                    <SfDatePicker @bind-Value="@row.DateAchat" />
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Fournisseur" LabelColSpan="8">
+                                                    <SfTextBox @bind-Value="@row.Fournisseur" />
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Valeur Achat" LabelColSpan="8">
+                                                    <SfNumericTextBox @bind-Value="@(row.ValeurAchat)" ShowSpinButton="false" Decimals="2" Format="N2" />
+                                                    </FormItem>
+                                                    }
+                                                     @if(row.TypeAchat == 2) 
+                                                    {
+                                                      <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Location" LabelColSpan="8">
+                                                    <SfDatePicker @bind-Value="@row.DateLocation" />
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Fournisseur" LabelColSpan="8">
+                                                    <SfTextBox @bind-Value="@row.Fournisseur" />
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Valeur Journalier" LabelColSpan="8">
+                                                    <SfNumericTextBox @bind-Value="@(row.ValeurLocation)" ShowSpinButton="false" Decimals="2" Format="N2" />
+                                                    </FormItem>
+                                                    }
+                                                     @if(row.TypeAchat == 1) 
+                                                    {
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Fournisseur" LabelColSpan="8">
+                                                    <SfTextBox @bind-Value="@row.Fournisseur" />
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Leasing Mensuel" LabelColSpan="8">
+                                                    <SfNumericTextBox @bind-Value="@(row.ValeurLeasing)" ShowSpinButton="false" Decimals="2" Format="N2" />
+                                                    </FormItem>
+                                                    }
+
+                                                    </Card>
+                                                    
+                                        </GridCol>
+                                    </GridRow>
+                                    </ContentTemplate>
+                                </TabItem>
+                            <TabItem>
+                                <ChildContent>
+                                    <TabHeader Text="Matrice de pointage"></TabHeader>
+                                </ChildContent>
+                                <ContentTemplate>
+                                    <Calendar Style="width: 100%" DateCellRender="DateCellRender" />
+                                </ContentTemplate>
+                            </TabItem>
+                            <TabItem>
+                                <ChildContent>
+                                    <TabHeader Text="Documents"></TabHeader>
+                                </ChildContent>
+                                <ContentTemplate>
+                                    <FilesManager table="Materiel" id="@id" societe="@session.Societe.id.ToString()"></FilesManager>
+                                </ContentTemplate>
+                            </TabItem>
+                            </TabItems>
+                        </SfTab>
+                    </Form>
+
+                </GridCol>
+
+            </GridRow>
+        </div>
+}
+
+
+
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter] public int id { get; set; } = 0;
+    public API_T_Materiel row { get; set; }
+    private List<API_T_CentreCharge> charges = new List<API_T_CentreCharge>();
+    private List<API_T_Attribute> attributes = new List<API_T_Attribute>();
+    private List<API_T_AttributeDetail> details = new List<API_T_AttributeDetail>();
+    private API_T_Personnel cond = new API_T_Personnel();
+    Helpers helpers = new Helpers();
+    private SfDropDownButton DropDownButton;
+    private void LoadData()
+    {
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await UpdateData();
+        if (id != 0)
+        {
+            row = db.API_T_Materiel.Where(a => a.id == id).SingleOrDefault();
+            cond = db.API_T_Personnel.Where(a => a.id == row.Conducteur).SingleOrDefault();
+        }
+        else
+        {
+            row = new API_T_Materiel();
+        }
+        LoadData();
+    }
+    private async Task GetCond(int id)
+    {
+        cond = db.API_T_Personnel.Where(a => a.id == id).SingleOrDefault();
+    }
+    private void Submit()
+    {
+        try
+        {
+            if (id == 0)
+            {
+                db.API_T_Materiel.Add(row);
+            }
+            db.SaveChanges();
+            /*Message.Success("Les données sont enregistrées avec succès");
+            if (id == 0) { DialogService.Close(); }*/
+            DialogService.Close();
+        }
+        catch (Exception ex)
+        {
+            Message.Error(ex.Message);
+        }
+    }
+    private RenderFragment DateCellRender(DateTime value)
+    {
+        RenderFragment rs = @<Template>
+        <div />
+    </Template>;
+        var jr = db.API_T_PointageJournee.Where(a => a.Date == value);
+        if (jr.Count() != 0)
+        {
+            var ln = db.API_T_PointageDetail.Where(a => a.Journee == jr.First().id && a.Materiel == this.id && a.Type == 1);
+            if (ln.Count() != 0)
+            {
+                var pr = db.API_T_Projet.Where(a => a.id == ln.First().Projet);
+                if (pr.Count() != 0)
+                {
+                    rs = @<Template>
+        <div>@pr.First().NumeroMarche</div>
+        <div>@pr.First().CA_Num</div>
+        <div><span class="statustxt e-activecolor">@ln.First().NbrHeure.ToString("N0") H</span></div>
+    </Template>
+    ;
+
+                }
+
+            }
+        }
+        return rs;
+    }
+    protected async Task Informations(int Tab)
+    {
+        await DialogService.OpenAsync<InformationsListe>(fn.GetInformation().Where(a => a.Id == Tab).SingleOrDefault().Name,
+      new Dictionary<string, object>() { { "Tab", Tab } },
+      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "90%" });
+        await UpdateData();
+    }
+
+    List<API_T_Information> marques = new List<API_T_Information>();
+    protected async Task UpdateData()
+    {
+        marques = db.API_T_Information.Where(a => a.Tab == 10).OrderBy(a => a.Valeur).ToList();
+    }
+    protected async Task ShowTraitement(MenuEventArgs args)
+    {
+        DropDownButton.Toggle();
+        await DialogService.OpenAsync<EntretiensListe>(fn.TypeEntretien().Where(a => a.Id == Int16.Parse(args.Item.Id)).SingleOrDefault().Name,
+      new Dictionary<string, object>() { { "IsList", false }, { "Materiel", @id }, { "type", args.Item.Id }, { "IsDetail", true } },
+      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "750px", Height = "90%" });
+        DropDownButton.Toggle();
+    }
+}

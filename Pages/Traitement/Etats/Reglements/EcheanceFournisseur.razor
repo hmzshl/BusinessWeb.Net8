@@ -1,0 +1,29 @@
+﻿@page "/et-echeances-fournisseurs"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction,Commercial")]
+
+
+
+@if (IsLoaded)
+{
+    <Card_1 Title="ECHEANCES FOURNISSEURS">
+        <div class="grid-container no-border">
+            <DetailsEcheance IsFournisseurs="true" Height="80vh" DO_Domaine="1"></DetailsEcheance>
+        </div>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+@code {
+    bool IsLoaded = false;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        IsLoaded = true;
+    }
+}

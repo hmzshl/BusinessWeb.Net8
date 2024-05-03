@@ -1,0 +1,740 @@
+﻿@if (IsLoaded) 
+{
+
+    <Card_1 Title="@title">
+        <RadzenContent Container="main">
+            <div class="grid-90">
+                <SfToolbar>
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                            <Template>
+                                <SfDropDownList Width="200" TItem="TSociete" TValue="TSociete" Placeholder="Base de données" @bind-Value="@ste2" DataSource="@(societes)" >
+                                    <DropDownListEvents TItem="TSociete" TValue="TSociete" />
+                                    <DropDownListFieldSettings Text="Intitule" Value="id" />
+                                </SfDropDownList>
+                            </Template>
+
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator"/>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDropDownList Width="260px"  Placeholder="Type document" TValue="short?" TItem="TypeIntitule" DataSource="@types.Where(a => a.DO_Domaine == row.do_domaine)" @bind-Value="@row.do_type">
+                                    <DropDownListEvents TValue="short?" TItem="TypeIntitule" />
+                                    <DropDownListFieldSettings Text="Intitule" Value="DO_Type" />
+                                </SfDropDownList>
+                            </Template>
+                        </ToolbarItem>
+                        
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDatePicker Width="140px" ShowClearButton ShowTodayButton Placeholder="Date Début" TValue="DateTime?" @bind-Value="@row.do_date1" />
+                            </Template>
+
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDatePicker Width="140px" ShowClearButton ShowTodayButton Placeholder="Date Fin" TValue="DateTime?" @bind-Value="@row.do_date2" />
+                            </Template>
+
+                        </ToolbarItem>
+                        
+                        <ToolbarItem Align="ItemAlign.Right">
+                            <Template>
+                                <SfButton IconCss="e-icons e-sorting-1"  OnClick="Compare">Comparer</SfButton>
+                            </Template>
+                        </ToolbarItem>
+                         <ToolbarItem Align="ItemAlign.Right">
+                             <Template>
+                                 <SfButton IconCss="e-icons e-arrow-down" IsPrimary OnClick="Transferer">Transferer</SfButton>
+                             </Template>
+                         </ToolbarItem>
+
+                    </ToolbarItems>
+                </SfToolbar>
+                <div class="grid-84">
+                     <SfGrid @ref=@DefaultGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
+
+                         <GridEvents TValue="RAPPRO_DOCENTETE"></GridEvents>
+                         <GridPageSettings PageSize="100"></GridPageSettings>
+                         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Excel"></GridFilterSettings>
+                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"/>
+                         <GridTemplates>
+                             <EmptyRecordTemplate>
+                                 <Empty></Empty>
+                             </EmptyRecordTemplate>
+                         </GridTemplates>
+                         <GridColumns>
+                             <GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Type">
+                                 <Template>
+                                     <div>@(GetTypeIntitule(row.do_type))</div>
+                                </Template>
+                            </GridColumn>
+                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Piece" HeaderText="Pièce">
+                                <Template>
+                                    @{
+                                        var item = (context as RAPPRO_DOCENTETE);
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowPiece(null,item.DO_Piece, item.DO_Type))" Shade="Shade.Darker" Variant="Variant.Text" Text="@(item.DO_Piece)" ButtonStyle="ButtonStyle.Info" />
+                                    }
+                                </Template>
+                            </GridColumn>
+
+                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="@((ste1??new TSociete()).Intitule)">
+                                <GridColumns>
+
+
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Date" Format="d" HeaderText="Date"></GridColumn>
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Tiers" HeaderText="Numéro"></GridColumn>
+                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Tiers" HeaderText="Tiers" Width="250">
+                                        <Template>
+                                            @{
+                                                var dt = (db1.F_COMPTET.Where(a => a.CT_Num == (context as RAPPRO_DOCENTETE).DO_Tiers)).SingleOrDefault();
+                                                <div>@dt?.CT_Intitule</div>
+                                            }
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DE_No" HeaderText="Dépot">
+                                        <Template>
+                                            @{
+                                                var dt = (db1.F_DEPOT.Where(a => a.DE_No == (context as RAPPRO_DOCENTETE).DE_No)).SingleOrDefault();
+                                                <div>@dt?.DE_Intitule</div>
+                                            }
+                                        </Template>
+                                    </GridColumn>
+
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalHT" Format="N2" HeaderText="Montant HT" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                </GridColumns>
+                            </GridColumn>
+
+                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="@((ste2??new TSociete()).Intitule)">
+                                <GridColumns>
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Piece" HeaderText="Pièce">
+                                        <Template>
+                                            @{
+                                                var item = (context as RAPPRO_DOCENTETE);
+                                                if(item.Statut != 0)
+                                                {
+                                                    <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowPiece(db2,item.DO_Piece, item.DO_Type))" Shade="Shade.Darker" Variant="Variant.Text" Text="@(item.DO_Piece)" ButtonStyle="ButtonStyle.Info" />
+                                                }
+                                               
+                                            }
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Date2" Format="d" HeaderText="Date"></GridColumn>
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Tiers2" HeaderText="Numéro"></GridColumn>
+                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Tiers2" HeaderText="Tiers" Width="250">
+                                        <Template>
+                                            @{
+                                                var dt = (db2.F_COMPTET.Where(a => a.CT_Num == (context as RAPPRO_DOCENTETE).DO_Tiers2)).SingleOrDefault();
+                                                <div>@dt?.CT_Intitule</div>
+                                            }
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DE_No" HeaderText="Dépot">
+                                        <Template>
+                                            @{
+                                                var dt = (db2.F_DEPOT.Where(a => a.DE_No == (context as RAPPRO_DOCENTETE).DE_No2)).SingleOrDefault();
+                                                <div>@dt?.DE_Intitule</div>
+                                            }
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalHT2" Format="N2" HeaderText="Montant HT" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+
+
+                                </GridColumns>
+                            </GridColumn>
+                            <GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                <Template>
+                                    @{
+                                        var dt = (context as RAPPRO_DOCENTETE);
+                                        if (dt.Statut == 0)
+                                        {
+                                            <div style="text-align: center;">
+                                                <span class="statustxt e-inactivecolor">A Ajouter</span>
+                                            </div>
+                                        }
+                                        else if (dt.Statut == 1)
+                                        {
+                                            <div style="text-align: center;">
+                                                <span class="statustxt e-infocolor">A Modifier</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div style="text-align: center;">
+                                                <span class="statustxt e-activecolor">Identique</span>
+                                            </div>
+                                        }
+
+                                    }
+                                </Template>
+                            </GridColumn>
+                        </GridColumns>
+                        <SfSpinner @bind-Visible="@loading" Label="Veuillez patientez s'il vous plait...">
+                        </SfSpinner>
+                    </SfGrid>
+                </div>
+            </div>
+        </RadzenContent>
+    </Card_1>
+
+
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+
+@code 
+{
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter] public short? domaine { get; set; } = 0;
+    [Parameter] public string title { get; set; } = "";
+    bool loading = false;
+    bool transfering = false;
+    List<RAPPRO_DOCENTETE> items = new List<RAPPRO_DOCENTETE>();
+    List<TSociete> societes = new List<TSociete>();
+
+    TSociete ste1 = new TSociete();
+    TSociete ste2 = new TSociete();
+    DB db1;
+    DB db2;
+    bool IsLoaded = false;
+    List<DomaineIntitule> domaines = new List<DomaineIntitule>();
+    List<TypeIntitule> types = new List<TypeIntitule>();
+    data row = new data();
+
+    SfGrid<RAPPRO_DOCENTETE> DefaultGrid;
+
+    protected override async Task OnInitializedAsync() 
+    {
+        await Task.Delay(100);
+
+        db = session.db;
+        ste1 = session.Societe;
+        societes = sdb.TSocietes.Where(a => a.id != (ste1 ?? (new TSociete())).id).ToList();
+        if(societes.Count() != 0)
+        {
+            ste2 = societes.First();
+        }
+        domaines.Add(new DomaineIntitule { DO_Domaine = 0, Intitule = "Ventes" });
+        domaines.Add(new DomaineIntitule { DO_Domaine = 1, Intitule = "Achats" });
+        domaines.Add(new DomaineIntitule { DO_Domaine = 2, Intitule = "Mouvements Stock" });
+        domaines.Add(new DomaineIntitule { DO_Domaine = 4, Intitule = "Documents Internes" });
+
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 0 });
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 1 });
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 2 });
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 3 });
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 4 });
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 5 });
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 6 });
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 7 });
+
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 10 });
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 11 });
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 12 });
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 13 });
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 14 });
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 15 });
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 16 });
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 17 });
+
+        types.Add(new TypeIntitule { DO_Domaine = 2, DO_Type = 20 });
+        types.Add(new TypeIntitule { DO_Domaine = 2, DO_Type = 21 });
+        types.Add(new TypeIntitule { DO_Domaine = 2, DO_Type = 22 });
+
+        row.do_domaine = domaine;
+
+        IsLoaded = true;
+
+    }
+    private async Task Compare() 
+    {
+        if(ste1 != null && ste2 != null) 
+        {
+            if(ste1.id != 0 && ste2.id != 0)
+            {
+                row.do_date1 = (row.do_date1) ?? (DateTime.Today);
+                row.do_date2 = (row.do_date2) ?? (DateTime.Today);
+                loading = true;
+                await Task.Delay(1);
+
+                db1 = fn.getDb(ste1 ?? new TSociete());
+                db2 = fn.getDb(ste2 ?? new TSociete());
+                List<F_DOCENTETE> ListA = db1.F_DOCENTETE.Where(a => a.DO_Domaine == row.do_domaine && a.DO_Type == row.do_type && a.DO_Date >= row.do_date1 && a.DO_Date <= row.do_date2).ToList();
+                List<F_DOCENTETE> ListB = db2.F_DOCENTETE.Where(a => a.DO_Domaine == row.do_domaine && a.DO_Type == row.do_type && a.DO_Date >= row.do_date1 && a.DO_Date <= row.do_date2).ToList();
+
+
+
+
+
+                var fullJoin = (from a in ListA
+                                join b in ListB on a.DO_Piece equals b.DO_Piece into temp
+                                from lb in temp.DefaultIfEmpty()
+                                select new RAPPRO_DOCENTETE
+                                    {
+                                        DO_Piece = a.DO_Piece,
+                                        DO_Type = a.DO_Type,
+                                        DO_Date = a.DO_Date,
+                                        DO_TotalHT = a.DO_TotalHT,
+                                        DE_No = a.DE_No,
+                                        DO_Ref = a.DO_Ref,
+                                        DO_Tiers = a.DO_Tiers,
+
+                                        DO_Type2 = lb?.DO_Type,
+                                        DO_Date2 = lb?.DO_Date,
+                                        DO_TotalHT2 = lb?.DO_TotalHT,
+                                        DE_No2 = lb?.DE_No,
+                                        DO_Ref2 = lb?.DO_Ref,
+                                        DO_Tiers2 = lb?.DO_Tiers,
+
+                                        Statut = Statut(lb?.DO_Piece, a.DO_Type, lb?.DO_Type, a.DO_Date, lb?.DO_Date, a.DO_TotalHT, lb?.DO_TotalHT)//getStatut(a.DO_Type == lb?.DO_Type && a.DO_Date == lb?.DO_Date && a.DO_TotalHT == lb?.DO_TotalHT)
+                                    })
+                              .Union(from b in ListB
+                                     join a in ListA on b.DO_Piece equals a.DO_Piece into temp
+                                     from la in temp.DefaultIfEmpty()
+                                     where la == null
+                                     select new RAPPRO_DOCENTETE
+                                         {
+                                             DO_Piece = b.DO_Piece,
+                                             DO_Type = la?.DO_Type,
+                                             DO_Date = la?.DO_Date,
+                                             DO_TotalHT = la?.DO_TotalHT,
+                                             DE_No = la?.DE_No,
+                                             DO_Ref = la?.DO_Ref,
+                                             DO_Tiers = la?.DO_Tiers,
+
+                                             DO_Type2 = b.DO_Type,
+                                             DO_Date2 = b.DO_Date,
+                                             DO_TotalHT2 = b.DO_TotalHT,
+                                             DE_No2 = b.DE_No,
+                                             DO_Ref2 = b.DO_Ref,
+                                             DO_Tiers2 = b.DO_Tiers,
+
+                                             Statut = Statut(b.DO_Piece, la?.DO_Type, b.DO_Type, la?.DO_Date, b.DO_Date, la?.DO_TotalHT, b.DO_TotalHT) //getStatut(b.DO_Type == la?.DO_Type && b.DO_Date == la?.DO_Date && b.DO_TotalHT == la?.DO_TotalHT)
+                                         });
+
+                items = fullJoin.OrderBy(a => a.DO_Piece).ToList();
+
+                loading = false;
+                await Task.Delay(1);
+            }
+        }
+
+
+
+    }
+    private int Statut(string piece, short? type1, short? type2, DateTime? date1, DateTime? date2, Decimal? ht1, Decimal? ht2)
+    {
+        int rs = 0;
+        if(piece != null)
+        {
+            if(type1 == type2 && date1 == date2 && ht1 == ht2) 
+            {
+                rs = 2;
+            } 
+            else
+            {
+                rs = 1;
+            }
+        }
+
+        return rs;
+    }
+    public static string GetTypeIntitule(short? index)
+    {
+        string rs = "Autre document";
+        if (index == 0) { rs = "Devis"; }
+        if (index == 1) { rs = "Bons de commande vente"; }
+        if (index == 2) { rs = "Préparations de vente"; }
+        if (index == 3) { rs = "Bons de livraison vente"; }
+        if (index == 4) { rs = "Bons de retour vente"; }
+        if (index == 5) { rs = "Bons de retour vente"; }
+        if (index == 6) { rs = "Factures vente"; }
+        if (index == 7) { rs = "Factures comptabilisées vente"; }
+        if (index == 10) { rs = "Demandes d'achat"; }
+        if (index == 11) { rs = "Préparations de commande achat"; }
+        if (index == 12) { rs = "Bons de commande achat"; }
+        if (index == 13) { rs = "Bons de livraison achat"; }
+        if (index == 14) { rs = "Bons de retour achat"; }
+        if (index == 15) { rs = "Bons de retour achat"; }
+        if (index == 16) { rs = "Factures achat"; }
+        if (index == 17) { rs = "Factures comptabilisées achat"; }
+        if (index == 20) { rs = "Mouvements d'entrée"; }
+        if (index == 21) { rs = "Mouvements de sortie"; }
+        if (index == 23) { rs = "Mouvments de transfert"; }
+
+        return rs;
+    }
+    private class TypeIntitule
+    {
+        public short? DO_Type { get; set; }
+        public short? DO_Domaine { get; set; }
+        public string Intitule
+        {
+            get
+            {
+                return GetTypeIntitule(this.DO_Type ?? 0);
+            }
+            set
+            {
+
+            }
+        }
+    }
+    private class DomaineIntitule
+    {
+        public short? DO_Domaine { get; set; }
+        public string Intitule { get; set; }
+    }
+    private async Task Transferer()
+    {
+        bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment transferer les éléments selectionnés?");
+        if(isConfirm)
+        {
+            transfering = true;
+            await Task.Delay(100);
+            await TransferTask();
+
+
+            transfering = false;
+            await Task.Delay(100);
+            await Compare();
+        }
+    }
+    private async Task TransferTask()
+    {
+
+
+
+        List<F_COMPTEG> comptes = new List<F_COMPTEG>();
+        List<F_COMPTET> tiers = new List<F_COMPTET>();
+        List<F_MODELER> mr = new List<F_MODELER>();
+        List<F_TAXE> taxes = new List<F_TAXE>();
+        List<F_DEPOT> depots = new List<F_DEPOT>();
+        List<F_COMPTEA> affaires = new List<F_COMPTEA>();
+        List<F_LIVRAISON> livraisons = new List<F_LIVRAISON>();
+        List<F_COLLABORATEUR> collaborateurs = new List<F_COLLABORATEUR>();
+        List<F_DOCREGL> docregls = new List<F_DOCREGL>();
+        List<F_DOCENTETE> entetes = new List<F_DOCENTETE>();
+        List<F_FAMILLE> familles = new List<F_FAMILLE>();
+        List<F_CATALOGUE> catalogues = new List<F_CATALOGUE>();
+        List<F_ARTICLE> articles = new List<F_ARTICLE>();
+        List<F_DOCLIGNE> lignes = new List<F_DOCLIGNE>();
+
+        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+        foreach (RAPPRO_DOCENTETE itm in dt)
+        {
+            if (itm.DO_Piece != null)
+            {
+                entetes.Add(db1.F_DOCENTETE.AsNoTracking().Where(a => a.DO_Type == itm.DO_Type && a.DO_Piece == itm.DO_Piece).SingleOrDefault());
+                lignes.AddRange(db1.F_DOCLIGNE.AsNoTracking().Where(a => a.DO_Type == itm.DO_Type && a.DO_Piece == itm.DO_Piece));
+                docregls.AddRange(db1.F_DOCREGL.AsNoTracking().Where(a => a.DO_Type == itm.DO_Type && a.DO_Piece == itm.DO_Piece));
+                db2.Database.ExecuteSqlRaw("DELETE FROM F_DOCLIGNE WHERE DO_Piece = {0} AND DO_Type = {1}", itm.DO_Piece, itm.DO_Type);
+            }
+
+        }
+        tiers = db1.F_COMPTET.AsNoTracking().Where(a => (entetes.Select(b => b.DO_Tiers).Contains(a.CT_Num))).ToList();
+        mr = db1.F_MODELER.AsNoTracking().Where(a => (tiers.Select(b => b.MR_No).Contains(a.MR_No))).ToList();
+        affaires = db1.F_COMPTEA.AsNoTracking().Where(a => (entetes.Select(b => b.CA_Num).Contains(a.CA_Num)) || (lignes.Select(b => b.CA_Num).Contains(a.CA_Num))).ToList();
+        depots = db1.F_DEPOT.AsNoTracking().Where(a => (entetes.Select(b => b.DE_No).Contains(a.DE_No)) || (lignes.Select(b => b.DE_No).Contains(a.DE_No))).ToList();
+        livraisons = db1.F_LIVRAISON.AsNoTracking().Where(a => (entetes.Select(b => b.LI_No).Contains(a.LI_No))).ToList();
+        articles = db1.F_ARTICLE.AsNoTracking().Where(a => (lignes.Select(b => b.AR_Ref).Contains(a.AR_Ref))).ToList();
+        familles = db1.F_FAMILLE.AsNoTracking().Where(a => (articles.Select(b => b.FA_CodeFamille).Contains(a.FA_CodeFamille))).ToList();
+        catalogues = db1.F_CATALOGUE.AsNoTracking().Where(a => (articles.Select(b => b.CL_No1).Contains(a.CL_No) || articles.Select(b => b.CL_No2).Contains(a.CL_No) || articles.Select(b => b.CL_No3).Contains(a.CL_No) || articles.Select(b => b.CL_No4).Contains(a.CL_No)
+        || familles.Select(b => b.CL_No1).Contains(a.CL_No) || familles.Select(b => b.CL_No2).Contains(a.CL_No) || familles.Select(b => b.CL_No3).Contains(a.CL_No) || familles.Select(b => b.CL_No4).Contains(a.CL_No))).ToList();
+
+        collaborateurs = db1.F_COLLABORATEUR.AsNoTracking().Where(a => (entetes.Select(b => b.CO_No).Contains(a.CO_No)) || (lignes.Select(b => b.CO_No).Contains(a.CO_No)) || (tiers.Select(b => b.CO_No).Contains(a.CO_No))).ToList();
+        taxes = db1.F_TAXE.AsNoTracking().Where(a => (entetes.Select(b => b.DO_CodeTaxe1).Contains(a.TA_Code)) || (lignes.Select(b => b.DL_CodeTaxe1).Contains(a.TA_Code))).ToList();
+        comptes = db1.F_COMPTEG.AsNoTracking().ToList();
+
+        fn.DisableTriggers(db2, "F_COMPTEG", "INS");
+        fn.DisableTriggers(db2, "F_COMPTEA", "INS");
+        fn.DisableTriggers(db2, "F_COMPTET", "INS");
+        fn.DisableTriggers(db2, "F_TAXE", "INS");
+        fn.DisableTriggers(db2, "F_DEPOT", "INS");
+        fn.DisableTriggers(db2, "F_LIVRAISON", "INS");
+        fn.DisableTriggers(db2, "F_FAMILLE", "INS");
+        fn.DisableTriggers(db2, "F_ARTICLE", "INS");
+        fn.DisableTriggers(db2, "F_DOCLIGNE", "INS");
+        fn.DisableTriggers(db2, "F_DOCREGL", "INS");
+        fn.DisableTriggers(db2, "F_DOCENTETE", "INS");
+        fn.DisableTriggers(db2, "F_ARTSTOCK", "INS");
+
+        fn.DisableTriggers(db2, "F_DOCENTETE", "UPD");
+        fn.DisableTriggers(db2, "F_ARTSTOCK", "UPD");
+
+
+        foreach (F_COMPTEG ln in comptes)
+        {
+            if ((db2.F_COMPTEG.AsNoTracking().Where(a => a.CG_Num == ln.CG_Num).Count() == 0))
+            {
+
+                var item = new F_COMPTEG();
+                fn.CopyData(ln, item);
+                item.TA_Code = null;
+                db2.F_COMPTEG.Add(item);
+                db2.SaveChanges();
+
+            }
+
+        }
+        foreach (F_MODELER ln in mr)
+        {
+            if (!(db2.F_MODELER.AsNoTracking().Where(a => a.MR_No == ln.MR_No).Count() != 0))
+            {
+                var item = new F_MODELER();
+                fn.CopyData(ln, item);
+                db2.F_MODELER.Add(item);
+                db2.SaveChanges();
+
+            }
+
+
+        }
+        foreach (F_COLLABORATEUR ln in collaborateurs)
+        {
+            if (!(db2.F_COLLABORATEUR.AsNoTracking().Where(a => a.CO_No == ln.CO_No || a.CO_Nom == ln.CO_Nom).Count() != 0))
+            {
+                var item = new F_COLLABORATEUR();
+                fn.CopyData(ln, item);
+                db2.F_COLLABORATEUR.Add(item);
+                db2.SaveChanges();
+
+            }
+        }
+        foreach (F_COMPTET ln in tiers)
+        {
+            if (!(db2.F_COMPTET.AsNoTracking().Where(a => a.CT_Num == ln.CT_Num).Count() != 0))
+            {
+                var item = new F_COMPTET();
+                fn.CopyData(ln, item);
+                item.CA_Num = null;
+                item.MR_No = null;
+                db2.F_COMPTET.Add(item);
+                db2.SaveChanges();
+
+            }
+
+
+        }
+
+        foreach (F_TAXE ln in taxes)
+        {
+            if (!(db2.F_TAXE.AsNoTracking().Where(a => a.TA_Code == ln.TA_Code).Count() != 0))
+            {
+                int TA_No = db2.F_TAXE.Max(a => a.TA_No) + 1;
+                var item = new F_TAXE();
+                fn.CopyData(ln, item);
+                item.TA_No = TA_No;
+                db2.F_TAXE.Add(item);
+                db2.SaveChanges();
+
+            }
+
+        }
+
+        foreach (F_DEPOT ln in depots)
+        {
+            if (!(db2.F_DEPOT.AsNoTracking().Where(a => a.DE_No == ln.DE_No).Count() != 0))
+            {
+                var item = new F_DEPOT();
+                fn.CopyData(ln, item);
+                db2.F_DEPOT.Add(item);
+                db2.SaveChanges();
+
+            }
+
+
+        }
+
+        foreach (F_COMPTEA ln in affaires)
+        {
+            if (!(db2.F_COMPTEA.AsNoTracking().Where(a => a.CA_Num == ln.CA_Num).Count() != 0))
+            {
+                var item = new F_COMPTEA();
+                fn.CopyData(ln, item);
+                db2.F_COMPTEA.Add(item);
+                db2.SaveChanges();
+
+            }
+
+        }
+
+        foreach (F_LIVRAISON ln in livraisons)
+        {
+            if (!(db2.F_LIVRAISON.AsNoTracking().Where(a => a.LI_No == ln.LI_No).Count() != 0))
+            {
+                var item = new F_LIVRAISON();
+                fn.CopyData(ln, item);
+                db2.F_LIVRAISON.Add(item);
+                db2.SaveChanges();
+
+            }
+        }
+
+
+        
+        foreach (F_DOCENTETE ln in entetes)
+        {
+            if (!(db2.F_DOCENTETE.AsNoTracking().Where(a => a.DO_Piece == ln.DO_Piece && a.DO_Type == ln.DO_Type).Count() != 0))
+            {
+                var item = new F_DOCENTETE();
+                fn.CopyData(ln, item);
+                item.DO_CodeTaxe1 = null;
+                item.DO_CodeTaxe2 = null;
+                item.DO_CodeTaxe3 = null;
+                db2.F_DOCENTETE.Add(item);
+
+                db2.SaveChanges();
+            }
+
+        }
+        foreach (F_CATALOGUE ln in catalogues)
+        {
+            if (!(db2.F_CATALOGUE.AsNoTracking().Where(a => a.CL_No == ln.CL_No).Count() != 0))
+            {
+                var item = new F_CATALOGUE();
+                fn.CopyData(ln, item);
+                db2.F_CATALOGUE.Add(item);
+                db2.SaveChanges();
+
+            }
+        }
+        foreach (F_FAMILLE ln in familles)
+        {
+            if (!(db2.F_FAMILLE.AsNoTracking().Where(a => a.FA_CodeFamille == ln.FA_CodeFamille).Count() != 0))
+            {
+                var item = new F_FAMILLE();
+                fn.CopyData(ln, item);
+                db2.F_FAMILLE.Add(item);
+                db2.SaveChanges();
+
+            }
+        }
+
+        foreach (F_ARTICLE ln in articles)
+        {
+            if (!(db2.F_ARTICLE.AsNoTracking().Where(a => a.AR_Ref == ln.AR_Ref).Count() != 0))
+            {
+                var item = new F_ARTICLE();
+                fn.CopyData(ln, item);
+                db2.F_ARTICLE.Add(item);
+                db2.SaveChanges();
+
+
+            }
+        }
+
+        foreach (F_DOCLIGNE ln in lignes)
+        {
+            var item = new F_DOCLIGNE();
+            fn.CopyData(ln, item);
+            item.DL_No = (db2.F_DOCLIGNE.Max(a => a.DL_No) + 1)??1;
+            db2.F_DOCLIGNE.Add(item);
+            db2.SaveChanges();
+
+        }
+        foreach (F_DOCENTETE ln in entetes)
+        {
+            string q0 = @"UPDATE a SET a.DO_TotalTTC = ISNULL(b.TTC,0), a.DO_NetAPayer = ISNULL(b.TTC,0), a.DO_TotalHTNet = ISNULL(b.HT,0), a.DO_TotalHT = ISNULL(b.HT,0)
+                    FROM F_DOCENTETE a
+                    LEFT JOIN (SELECT a.DO_Type, a.DO_Piece, SUM(a.DL_MontantHT) HT, SUM(a.DL_MontantTTC) TTC FROM F_DOCLIGNE a WHERE a.DL_Valorise = 1 GROUP BY a.DO_Type, a.DO_Piece) b ON a.DO_Type = b.DO_Type AND a.DO_Piece = b.DO_Piece
+
+
+                    WHERE a.DO_Piece = {0} AND a.DO_Type = {1}";
+            db2.Database.ExecuteSqlRaw(q0, ln.DO_Piece, ln.DO_Type);
+        }
+        foreach (F_ARTICLE ln in articles)
+        {
+            string q0 = @"INSERT INTO F_ARTSTOCK ([AR_Ref]
+                              ,[DE_No]
+                              ,[AS_QteMini]
+                              ,[AS_QteMaxi]
+                              ,[AS_MontSto]
+                              ,[AS_QteSto]
+                              ,[AS_QteRes]
+                              ,[AS_QteCom]
+                              ,[AS_QteResCM]
+                              ,[AS_QteComCM]
+                              ,[AS_QtePrepa]
+                              ,[DP_NoControle]
+                              ,[AS_QteAControler]
+                              ,[cbProt])
+
+
+                        SELECT
+                        a.AR_Ref,
+                        b.DE_No,
+                        0,0,0,0,0,0,0,0,0,0,0,0
+                        FROM F_ARTICLE a
+                        INNER JOIN F_DEPOT b ON 1 = 1
+                        LEFT JOIN F_ARTSTOCK st ON a.AR_Ref = st.AR_Ref AND b.DE_No = st.DE_No
+                        WHERE st.AR_Ref IS NULL AND a.AR_Ref = {0}";
+            string q1 = @"UPDATE a SET a.AS_QteSto = ISNULL(b.Qte,0), a.AS_MontSto = ISNULL(c.PU,0) * ISNULL(b.Qte,0)
+
+						FROM F_ARTSTOCK a
+						LEFT JOIN
+						(SELECT
+						a.DE_No,
+						a.AR_Ref,
+						SUM(CASE WHEN a.DL_MvtStock = 1 THEN a.DL_Qte ELSE -a.DL_Qte END) Qte
+						FROM F_DOCLIGNE a
+						WHERE a.DL_MvtStock IN (1,3)
+						GROUP BY
+						a.DE_No,
+						a.AR_Ref) b ON a.DE_No = b.DE_No AND a.AR_Ref = b.AR_Ref
+
+						LEFT JOIN
+						(
+						(SELECT
+						a.DE_No,
+						a.AR_Ref,
+						CASE WHEN SUM(a.DL_Qte) != 0 THEN SUM(a.DL_MontantHT)/SUM(a.DL_Qte) ELSE 0 END PU
+						FROM F_DOCLIGNE a
+						WHERE a.DL_MvtStock = 1
+						GROUP BY a.AR_Ref,
+						a.DE_No)
+						) c ON a.DE_No = c.DE_No AND a.AR_Ref = c.AR_Ref
+                        WHERE a.AR_Ref = {0}" ;
+           db2.Database.ExecuteSqlRaw(q0,ln.AR_Ref);
+            db2.Database.ExecuteSqlRaw(q1, ln.AR_Ref);
+
+        }
+        
+        
+
+        fn.EnableTriggers(db2, "F_COMPTEG", "INS");
+        fn.EnableTriggers(db2, "F_COMPTEA", "INS");
+        fn.EnableTriggers(db2, "F_COMPTET", "INS");
+        fn.EnableTriggers(db2, "F_TAXE", "INS");
+        fn.EnableTriggers(db2, "F_DEPOT", "INS");
+        fn.EnableTriggers(db2, "F_LIVRAISON", "INS");
+        fn.EnableTriggers(db2, "F_DOCENTETE", "INS");
+        fn.EnableTriggers(db2, "F_FAMILLE", "INS");
+        fn.EnableTriggers(db2, "F_ARTICLE", "INS");
+        fn.EnableTriggers(db2, "F_DOCLIGNE", "INS");
+        fn.EnableTriggers(db2, "F_DOCREGL", "INS");
+        fn.EnableTriggers(db2, "F_ARTSTOCK", "INS");
+
+        fn.EnableTriggers(db2, "F_DOCENTETE", "UPD");
+        fn.EnableTriggers(db2, "F_ARTSTOCK", "UPD");
+
+
+
+        
+
+    }
+    private async Task ShowPiece(DB db2, string DO_Piece, short? DO_Type)
+    {
+        await DialogService.OpenAsync<DetailsPiece>(DO_Piece,
+     new Dictionary<string, object>() { { "DO_Piece", DO_Piece }, { "DO_Type", DO_Type }, { "db2", db2 } },
+     new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+    }
+
+}

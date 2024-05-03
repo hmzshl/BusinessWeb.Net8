@@ -1,0 +1,227 @@
+﻿@if (IsLoaded)
+{
+
+	<div style="height: @Height;">
+		<SfToolbar CssClass="btns">
+			<ToolbarItems>
+				<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+					<Template>
+						<SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
+							<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+						</SfDatePicker>
+					</Template>
+				</ToolbarItem>
+				<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+					<Template>
+						<SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
+							<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+						</SfDatePicker>
+					</Template>
+				</ToolbarItem>
+				
+				<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+					<Template>
+						<SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+					</Template>
+				</ToolbarItem>
+				<ToolbarItem OnClick=@(()=>{ _visible = true; }) TooltipText="Filtrer" Text="Filtrer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-filter"></ToolbarItem>
+				<ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+				<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+			</ToolbarItems>
+		</SfToolbar>
+		<SfGrid Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowPaging @ref=DefaultGrid AllowSorting AllowFiltering AllowExcelExport>
+			<GridPageSettings PageSize="100" />
+			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+			<GridAggregates>
+				<GridAggregate>
+					<GridAggregateColumns>
+						<GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.RG_Montant)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+							<FooterTemplate>
+								@{
+									var value = (context as AggregateTemplateContext);
+									<div>
+										@value.Sum
+									</div>
+								}
+							</FooterTemplate>
+						</GridAggregateColumn>
+					</GridAggregateColumns>
+				</GridAggregate>
+			</GridAggregates>
+			<GridColumns>
+				<GridColumn Format="d" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Date)" HeaderText="Date" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Piece)" HeaderText="Pièce" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.R_Intitule)" HeaderText="Type" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Num)" HeaderText="Numéro" Visible="@(CT_Num == null)" />
+				<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Intitule)" HeaderText="@(getTiers())" Visible="@(CT_Num == null)" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.JO_Num)" HeaderText="N° Jo." Visible="@(JO_Num == null)" />
+				<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.JO_Intitule)" HeaderText="Journal" Visible="@(JO_Num == null)" />
+				<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Libelle)" HeaderText="Libellé" />
+				<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Montant)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+				<GridColumn Format="d" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_DateEcheance)" HeaderText="Ech" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.Echeance)" HeaderText="Statut">
+					<Template>
+						@{
+							var dt = (context as API_V_CREGLEMENT);
+							if (dt.Echeance == "Echu")
+							{
+								<div style="text-align: left;">
+									<span class="statustxt e-activecolor">@dt.Echeance</span>
+								</div>
+
+							}
+							else
+							{
+								<div style="text-align: left;">
+									<span class="statustxt e-infocolor">@dt.Echeance</span>
+								</div>
+							}
+						}
+					</Template>
+				</GridColumn>
+				<GridColumn Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.EtatReglement)" HeaderText="Statut">
+					<Template>
+						@{
+							var dt = (context as API_V_CREGLEMENT);
+							if (dt.EtatReglement == "Affécté")
+							{
+								<div style="text-align: left;">
+									<span class="statustxt e-activecolor">Affécté</span>
+								</div>
+
+							}
+							else if (dt.EtatReglement == "Aff. Parciel")
+							{
+								<div style="text-align: left;">
+									<span class="statustxt e-infocolor">Aff. Parciel</span>
+								</div>
+							}
+							else
+							{
+								<div style="text-align: left;">
+									<span class="statustxt e-inactivecolor">Non Affecté</span>
+								</div>
+
+							}
+						}
+					</Template>
+				</GridColumn>
+			</GridColumns>
+
+		</SfGrid>
+
+	</div>
+	<SfDialog Target="#target" Width="600px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@_visible" CloseOnEscape>
+		<DialogTemplates>
+			<Header>
+				Filtrer
+			</Header>
+			<Content>
+				<RadzenStack Orientation="Radzen.Orientation.Vertical" AlignItems="Radzen.AlignItems.Start" Wrap="Radzen.FlexWrap.Wrap" Gap="10px" Style="padding: 20px; padding-bottom: 30px;">
+					<SfMultiSelect FloatLabelType="FloatLabelType.Always" Placeholder="Mode de paiement" @bind-Value=@types ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.OrderBy(a => a.R_Intitule).Select(a => a.R_Intitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+						<MultiSelectFieldSettings Text="R_Intitule" Value="R_Intitule"></MultiSelectFieldSettings>
+						<MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+					</SfMultiSelect>
+					<SfMultiSelect FloatLabelType="FloatLabelType.Always" Placeholder="Echéance" @bind-Value=@statut ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.OrderBy(a => a.Echeance).Select(a => a.Echeance).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+						<MultiSelectFieldSettings Text="Echeance" Value="Echeance"></MultiSelectFieldSettings>
+						<MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+					</SfMultiSelect>
+					<SfMultiSelect FloatLabelType="FloatLabelType.Always" Placeholder="Affectation" @bind-Value=@affectation ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.OrderBy(a => a.EtatReglement).Select(a => a.EtatReglement).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+						<MultiSelectFieldSettings Text="EtatReglement" Value="EtatReglement"></MultiSelectFieldSettings>
+						<MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+					</SfMultiSelect>
+					<SfMultiSelect FloatLabelType="FloatLabelType.Always" Placeholder="Journal" @bind-Value=@journaux ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.OrderBy(a => a.JO_Intitule).Select(a => a.JO_Intitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+						<MultiSelectFieldSettings Text="JO_Intitule" Value="JO_Intitule"></MultiSelectFieldSettings>
+						<MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+					</SfMultiSelect>
+				</RadzenStack>
+			</Content>
+		</DialogTemplates>
+		<DialogPositionData Y="160"></DialogPositionData>
+		<DialogButtons>
+			<DialogButton Content="Daccord" IsPrimary="true" OnClick="@(args => _visible = false)"></DialogButton>
+		</DialogButtons>
+	</SfDialog>
+
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+@code
+{
+	[CascadingParameter]
+	public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	bool IsLoaded = false;
+	[Parameter] public bool IsClients { get; set; } = false;
+	[Parameter] public bool IsFournisseurs { get; set; } = false;
+	[Parameter] public bool IsReleve { get; set; } = false;
+	[Parameter] public bool IsLivraison { get; set; } = true;
+	[Parameter] public int DO_Domaine { get; set; }
+	[Parameter] public int DO_Type { get; set; }
+	[Parameter] public string CA_Num { get; set; }
+	[Parameter] public string DO_Piece { get; set; }
+	[Parameter] public string CT_Num { get; set; }
+	[Parameter] public string JO_Num { get; set; }
+	[Parameter] public string Statut { get; set; }
+	[Parameter] public int CO_No { get; set; }
+	[Parameter] public int DE_No { get; set; }
+	[Parameter] public string Height { get; set; }
+	bool _visible = false;
+	SfGrid<API_V_CREGLEMENT> DefaultGrid;
+	DateTime? date1;
+	DateTime? date2;
+	int domaine = 0;
+	int type = 0;
+	private List<API_V_CREGLEMENT> data = new List<API_V_CREGLEMENT>();
+	List<string> types = new List<string>();
+	List<string> statut = new List<string>();
+	List<string> journaux = new List<string>();
+	List<string> affectation = new List<string>();
+	private List<API_V_CREGLEMENT> items = new List<API_V_CREGLEMENT>();
+
+	private Func<double, string> _fortmat1 = (p) => $"{(p / 100).ToString("### ### ##0 %")}";
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(100);
+		db = session.db;
+		types = db.API_V_CREGLEMENT.OrderBy(a => a.R_Intitule).Select(a => a.R_Intitule).Distinct().ToList();
+		statut = db.API_V_CREGLEMENT.OrderBy(a => a.Echeance).Select(a => a.Echeance).Distinct().ToList();
+		affectation = db.API_V_CREGLEMENT.OrderBy(a => a.EtatReglement).Select(a => a.EtatReglement).Distinct().ToList();
+		journaux = db.API_V_CREGLEMENT.OrderBy(a => a.JO_Intitule).Select(a => a.JO_Intitule).Distinct().ToList();
+		await UpdateGrid();
+		IsLoaded = true;
+	}
+	private async Task UpdateGrid()
+	{
+		items = db.API_V_CREGLEMENT.Where(a =>
+			((a.JO_Num == JO_Num && JO_Num != null) || (JO_Num == null))
+			&& ((a.CT_Num == CT_Num && CT_Num != null) || (CT_Num == null))
+			&& ((date1 != null && a.RG_Date >= date1) || date1 == null)
+			&& ((date2 != null && a.RG_Date <= date2) || date2 == null)
+			&& ((types != null && types.Contains(a.R_Intitule)))
+			&& ((statut != null && statut.Contains(a.Echeance)))
+						&& ((affectation != null && affectation.Contains(a.EtatReglement)))
+			&& ((journaux != null && journaux.Contains(a.JO_Intitule)))
+			&& a.RG_Type == DO_Domaine
+			).OrderByDescending(a => a.RG_Date)
+			.ToList();
+	}
+	private string getTiers()
+	{
+		string rs = "Tiers";
+		if (DO_Domaine == 0)
+		{
+			rs = "Client";
+		}
+		if (DO_Domaine == 1)
+		{
+			rs = "Fournisseur";
+		}
+
+		return rs;
+	}
+}

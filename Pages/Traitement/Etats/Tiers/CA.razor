@@ -1,0 +1,110 @@
+﻿<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+            <Template>
+                <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
+                    <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+                </SfDatePicker>
+            </Template>
+        </ToolbarItem>
+        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+            <Template>
+                <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
+                    <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+                </SfDatePicker>
+            </Template>
+        </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+<RadzenContent>
+   <GridRow> 
+       <GridCol Xs="24" Md="12">
+          <Card Title="CA Mensuels">
+              
+                  @{
+                        var dt_mois = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).GroupBy(a => new { a.MoisAnnee })
+                            .Select(a => new
+                            {
+                                MoisAnnee = a.Key.MoisAnnee,
+                                DL_MontantHT = a.Sum(a => a.DL_MontantHT),
+                                DL_MontantTTC = a.Sum(a => a.DL_MontantTTC),
+                                CMUPCoutTotal = a.Sum(a => a.CMUPCoutTotal),
+                                CMUPMarge = a.Sum(a => a.CMUPMarge)
+                            }).OrderByDescending(a => a.MoisAnnee);
+                    }
+                  <GridRow>
+
+                      <GridCol Xs="24" Md="12">
+                        <div style="height: 35vh;">
+                            <SfGrid Height="100%" DataSource="@(dt_mois)">
+                                <GridColumns>
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.MoisAnnee)" HeaderText="Mois" />
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_MontantHT)" HeaderText="CA HT" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_MontantTTC)" HeaderText="CA TTC" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUPCoutTotal)" HeaderText="Cout" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUPMarge)" HeaderText="Marge" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                </GridColumns>
+
+                            </SfGrid>
+                        </div>
+                    </GridCol>
+                    <GridCol Xs="24" Md="12">
+                        <RadzenChart style="height: 35vh">
+                            <RadzenBarSeries Data="@dt_mois" CategoryProperty="MoisAnnee" Title="Mois" LineType="Radzen.Blazor.LineType.Dashed" ValueProperty="DL_MontantTTC">
+                                <RadzenSeriesDataLabels Visible="true"/>
+                            </RadzenBarSeries>
+                            <RadzenValueAxis Formatter="@FormatAsUSD" >
+                                <RadzenGridLines Visible="false" />
+                                <RadzenAxisTitle Text="CA par mois" />
+                            </RadzenValueAxis>
+                            <RadzenBarOptions Radius="0"/>
+                        </RadzenChart>
+                    </GridCol>
+                  </GridRow>
+
+          </Card>
+       </GridCol>
+        <GridCol Xs="24" Md="12">
+            <Card Title="TOP Articles">
+                <div style="height: 35vh;">
+                </div>
+            </Card>
+        </GridCol>
+        <GridCol Xs="24" Md="12">
+            <Card Title="TOP Clients">
+                <div style="height: 35vh;">
+                </div>
+            </Card>
+        </GridCol>
+        <GridCol Xs="24" Md="12">
+            <Card Title="CA Commerciaux">
+                <div style="height: 35vh;">
+                </div>
+            </Card>
+        </GridCol>
+    </GridRow>
+</RadzenContent>
+
+@code 
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    private List<API_V_MARGE> items = new List<API_V_MARGE>();
+    DateTime? date1;
+    DateTime? date2;
+    string FormatAsUSD(object value)
+    {
+        return ((double)value).ToString("N0");
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await UpdateGrid();
+    }
+    private async Task UpdateGrid()
+    {
+        items = db.API_V_MARGE.Take(100).ToList();
+    }
+
+}

@@ -1,0 +1,184 @@
+﻿@page "/av-tableau-bord"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction,Agence Voyage")]
+
+
+<Card_1 Title="Tableau de bord">
+    <RadzenContent Container="main">
+        <div class="grid-90">
+            <RadzenStack Gap="1rem" Style="position: relative">
+                <RadzenRow>
+                    <RadzenColumn Size="12" SizeMD="4" SizeLG="4">
+                        <RadzenCard Style="position: relative; height: 300px;">
+                            <GridRow>
+                                <GridCol Xs="16" Md="16" Style="text-align: left;">
+                                    <h3 style="font-size: 20px;">Contrats actives</h3>
+                                </GridCol>
+                                <GridCol Xs="8" Md="8">
+                                    <h3 class="tb-badge tb-badge-green">30</h3>
+                                </GridCol>
+                            </GridRow>
+                            <div style="height: 215px">
+                                <SfGrid DataSource="contrats" Height="100%">
+                                    <GridColumns>
+                                        <GridColumn AllowSorting="false" AllowFiltering="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Tiers">
+                                            <Template>
+                                                @{
+                                                    var dt = (db.F_COMPTET.AsNoTracking().Where(a => a.CT_Num == (context as API_T_AgenceContrat).CT_Num));
+                                                }
+                                                @if (dt.Count() != 0)
+                                                {
+                                                    <div>@dt.First().CT_Intitule</div>
+                                                }
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContrat.Piece)" HeaderText="Numéro" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContrat.Reference)" HeaderText="Référence" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContrat.DateDebut)" HeaderText="Date Début" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContrat.DateFin)" HeaderText="Date Fin" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+
+                        </RadzenCard>
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="4" SizeLG="4">
+                        <RadzenCard Style="position: relative; height: 300px;">
+                            <GridRow>
+                                <GridCol Xs="16" Md="16" Style="text-align: left;">
+                                    <h3 style="font-size: 20px;">Expirent bientôt</h3>
+                                </GridCol>
+                                <GridCol Xs="8" Md="8">
+                                    <h3 class="tb-badge tb-badge-yellow">30</h3>
+                                </GridCol>
+                            </GridRow>
+                            <div style="height: 215px">
+                                <SfGrid DataSource="contrats" Height="100%">
+                                    <GridColumns>
+                                        <GridColumn AllowSorting="false" AllowFiltering="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Tiers">
+                                            <Template>
+                                                @{
+                                                    var dt = (db.F_COMPTET.AsNoTracking().Where(a => a.CT_Num == (context as API_T_AgenceContrat).CT_Num));
+                                                }
+                                                @if (dt.Count() != 0)
+                                                {
+                                                    <div>@dt.First().CT_Intitule</div>
+                                                }
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContrat.Piece)" HeaderText="Numéro" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContrat.Reference)" HeaderText="Référence" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContrat.DateDebut)" HeaderText="Date Début" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContrat.DateFin)" HeaderText="Date Fin" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+
+                        </RadzenCard>
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="4" SizeLG="4">
+                        <RadzenCard Style="position: relative; height: 300px;">
+                            <GridRow>
+                                <GridCol Xs="16" Md="16" Style="text-align: left;">
+                                    <h3 style="font-size: 20px;">Expirent bientôt</h3>
+                                </GridCol>
+                                <GridCol Xs="8" Md="8">
+                                    <h3 class="tb-badge tb-badge-red">30</h3>
+                                </GridCol>
+                            </GridRow>
+                            <div style="height: 215px">
+                                <SfGrid DataSource="contrats" Height="100%">
+                                    <GridColumns>
+                                        <GridColumn AllowSorting="false" AllowFiltering="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Tiers">
+                                            <Template>
+                                                @{
+                                                    var dt = (db.F_COMPTET.AsNoTracking().Where(a => a.CT_Num == (context as API_T_AgenceContrat).CT_Num));
+                                                }
+                                                @if (dt.Count() != 0)
+                                                {
+                                                    <div>@dt.First().CT_Intitule</div>
+                                                }
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContrat.Piece)" HeaderText="Numéro" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContrat.Reference)" HeaderText="Référence" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContrat.DateDebut)" HeaderText="Date Début" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContrat.DateFin)" HeaderText="Date Fin" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+
+                        </RadzenCard>
+                    </RadzenColumn>
+                </RadzenRow>
+                <RadzenRow>
+                    <RadzenColumn Size="12" SizeMD="6" SizeLG="4">
+                        <RadzenCard Style="height: 330px">
+                            <GridRow>
+                                <GridCol Xs="16" Md="16" Style="text-align: left;">
+                                    <h3 style="font-size: 20px;">Top 10 clients</h3>
+                                </GridCol>
+                            </GridRow>
+                            <div style="height: 245px">
+                                <SfGrid DataSource="@db.F_COMPTET.Where(a => a.CT_Type == 0).Take(10)" Height="100%">
+                                    <GridColumns>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Num)" HeaderText="Numéro" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                                        <GridColumn AllowFiltering="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Intitule)" HeaderText="Intitulé"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="CA"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Nuits"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Personnes"></GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </RadzenCard>
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="6" SizeLG="4">
+                        <RadzenCard Style="height: 330px">
+                            <GridRow>
+                                <GridCol Xs="16" Md="16" Style="text-align: left;">
+                                    <h3 style="font-size: 20px;">Top 10 fournisseurs</h3>
+                                </GridCol>
+                            </GridRow>
+                            <div style="height: 245px">
+                                <SfGrid DataSource="@db.F_COMPTET.Where(a => a.CT_Type == 1).Take(10)" Height="100%">
+                                    <GridColumns>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Num)" HeaderText="Numéro"></GridColumn>
+                                        <GridColumn AllowFiltering="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Intitule)" HeaderText="Intitulé"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="CA"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Nuits"></GridColumn>
+                                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Personnes"></GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </RadzenCard>
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="6" SizeLG="4">
+                        <RadzenCard Style="height: 330px">
+                            <GridRow>
+                                <GridCol Xs="16" Md="16" Style="text-align: left;">
+                                    <h3 style="font-size: 20px;">10 dernières réservations</h3>
+                                </GridCol>
+                            </GridRow>
+                        </RadzenCard>
+                    </RadzenColumn>
+                </RadzenRow>
+            </RadzenStack>
+        </div>
+    </RadzenContent>
+</Card_1>
+
+
+
+@code {
+
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    private List<API_T_AgenceContrat> contrats = new List<API_T_AgenceContrat>();
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        contrats = db.API_T_AgenceContrat.ToList();
+    }
+}
+

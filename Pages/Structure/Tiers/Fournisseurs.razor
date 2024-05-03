@@ -1,0 +1,29 @@
+﻿@page "/fournisseurs"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction,Acheteur")]
+
+
+
+@if (IsLoaded)
+{
+    <Card_1 Title="LISTE DES FOURNISSEURS">
+        <RadzenContent Container="main">
+            <TiersListe CT_Type="1" Title="Fournisseurs" />
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+@code {
+    bool IsLoaded = false;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        IsLoaded = true;
+    }
+}

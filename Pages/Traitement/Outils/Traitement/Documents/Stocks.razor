@@ -1,0 +1,15 @@
+﻿@page "/ot-stocks"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction")]
+
+
+
+<Documents domaine="2" title="DOCUMENTS STOCK" />
+
+@code {
+    bool IsLoaded = false;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        IsLoaded = true;
+    }
+}

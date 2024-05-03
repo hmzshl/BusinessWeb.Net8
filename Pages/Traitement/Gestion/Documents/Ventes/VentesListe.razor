@@ -1,0 +1,8 @@
+﻿@page "/ventes/{type}"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction,Commercial")]
+<DocumentsListe type=@type DO_Domaine="0" Title="LISTE DES VENTES" />
+
+
+@code {
+    [Parameter] public string type { get; set; }
+}

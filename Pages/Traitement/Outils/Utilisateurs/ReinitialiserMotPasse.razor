@@ -1,0 +1,150 @@
+﻿@page "/reinitialiser-passe"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction")]
+
+@if (IsLoaded)
+{
+    <Card_1 Title="REINITIALISER UN MOT DE PASSE">
+        <RadzenContent Container="main">
+            <div class="grid-90">
+                <GridRow>
+                    <GridCol Xs="24" Md="12">
+                        <Card Title="Gestion commercial">
+                            <div style="height: 77vh;">
+                                <SfGrid Height="100%" AllowResizing AllowSorting AllowSelection ShowColumnChooser="true" ID="Grid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@commercial">
+                                     <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                     <GridTemplates>
+                                         <EmptyRecordTemplate>
+                                             <Empty></Empty>
+                                         </EmptyRecordTemplate>
+                                     </GridTemplates>
+                                     <GridColumns>
+                                         <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_PROTECTIONCIAL.PROT_User)" HeaderText="Utilisateur"></GridColumn>
+                                         <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                             <Template>
+                                                 @{
+                                                    var dt = (context as F_PROTECTIONCIAL);
+                                                    <RadzenButton Click=@(args => InitCommercial(dt)) Shade="@Shade.Dark" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="Radzen.ButtonSize.ExtraSmall" Icon="lock_open" />
+                                                }
+                                            </Template>
+                                        </GridColumn>
+                                    </GridColumns>
+                                    <SfSpinner @bind-Visible="@loading">
+                                    </SfSpinner>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+                    <GridCol Xs="24" Md="12">
+                        <Card Title="Comptabilité">
+                            <div style="height: 77vh;">
+                                <SfGrid Height="100%" AllowResizing AllowSorting AllowSelection ShowColumnChooser="true" ID="Grid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@compta">
+                                     <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                     <GridTemplates>
+                                         <EmptyRecordTemplate>
+                                             <Empty></Empty>
+                                         </EmptyRecordTemplate>
+                                     </GridTemplates>
+                                     <GridColumns>
+                                         <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_PROTECTIONCPTA.PROT_User)" HeaderText="Utilisateur"></GridColumn>
+                                         <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                             <Template>
+                                                 @{
+                                                    var dt = (context as F_PROTECTIONCPTA);
+                                                    <RadzenButton Click=@(args => InitCompta(dt)) Shade="@Shade.Dark" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Size="Radzen.ButtonSize.ExtraSmall" Icon="lock_open" />
+                                                }
+                                            </Template>
+                                        </GridColumn>
+                                    </GridColumns>
+                                    <SfSpinner @bind-Visible="@loading">
+                                    </SfSpinner>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+            </div>
+            
+
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+
+
+
+@code
+{
+
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    bool IsLoaded = false;
+
+    private List<F_PROTECTIONCIAL> commercial = new List<F_PROTECTIONCIAL>();
+    private List<F_PROTECTIONCPTA> compta = new List<F_PROTECTIONCPTA>();
+    bool loading = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        db = session.db;
+        await UpdateGrid();
+        IsLoaded = true;
+
+    }
+    private async Task UpdateGrid()
+    {
+        commercial = session.db.F_PROTECTIONCIAL.ToList();
+        compta = session.db.F_PROTECTIONCPTA.ToList();
+    }
+    private async Task InitCommercial(F_PROTECTIONCIAL args)
+    {
+        bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment réinitialiser le mot de passe pour cet utilisateur");
+        if (isConfirm)
+        {
+            if(session.Societe.VersionSage == 0)
+            {
+                string q1 = @"UPDATE a
+                            SET a.PROT_Guid = b.PROT_Guid, a.PROT_Hash = b.PROT_Hash
+                            FROM F_PROTECTIONCIAL a
+                            INNER JOIN BIJOU.dbo.F_PROTECTIONCIAL b ON b.PROT_User = '<Administrateur>'
+                            WHERE a.cbMarq = {0}";
+                db.Database.ExecuteSqlRaw(q1, args.cbMarq);
+                await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Mot de passe réinitialisé!", Duration = 4000 });
+            }
+
+        }
+    }
+    private async Task InitCompta(F_PROTECTIONCPTA args)
+    {
+        bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment réinitialiser le mot de passe pour cet utilisateur");
+        if (isConfirm)
+        {
+            if (session.Societe.VersionSage == 0)
+            {
+                string q1 = @"UPDATE a
+                            SET a.PROT_Guid = b.PROT_Guid, a.PROT_Hash = b.PROT_Hash
+                            FROM F_PROTECTIONCPTA a
+                            INNER JOIN BIJOU.dbo.F_PROTECTIONCPTA b ON b.PROT_User = '<Administrateur>'
+                            WHERE a.cbMarq = {0}";
+                db.Database.ExecuteSqlRaw(q1, args.cbMarq);
+                await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Mot de passe réinitialisé!", Duration = 4000 });
+            }
+        }
+    }
+    private async Task ShowNotification(NotificationMessage message)
+    {
+        NotificationService.Notify(message);
+    }
+
+
+}

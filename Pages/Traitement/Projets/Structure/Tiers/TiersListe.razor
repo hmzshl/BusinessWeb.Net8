@@ -1,0 +1,108 @@
+﻿<RadzenContent Container="main">
+    <div class="grid-90">
+        <SfGrid Height="100%" AllowResizing AllowSorting AllowReordering AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                Toolbar="@(new List<object>() { "Search", "ExcelExport","Add", "Delete"})">
+            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+            <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="RowDoubleClicked" TValue="F_COMPTET"></GridEvents>
+            <GridPageSettings PageSize="100"></GridPageSettings>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridTemplates>
+                <EmptyRecordTemplate>
+                    <Empty></Empty>
+                </EmptyRecordTemplate>
+            </GridTemplates>
+            <GridColumns>
+                <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Num)" HeaderText="Numéro" />
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Intitule)" HeaderText="Intitule" Width="300"></GridColumn>
+                <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Ville)" HeaderText="Ville"></GridColumn>
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Adresse)" HeaderText="Adresse"></GridColumn>
+                <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Telephone)" HeaderText="Téléphone"></GridColumn>
+                <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_EMail)" HeaderText="Email"></GridColumn>
+                 <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Chiffre d'affaire">
+                   <GridColumns>
+                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="CA Réalisé"></GridColumn>
+                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="%"></GridColumn>
+                   </GridColumns>
+                 </GridColumn>
+            </GridColumns>
+            <SfSpinner @bind-Visible="@loading">
+            </SfSpinner>
+        </SfGrid>
+    </div>
+
+</RadzenContent>
+
+
+
+@code
+{
+
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    [Parameter] public int CT_Type { get; set; } = 0;
+
+    private SfGrid<F_COMPTET> DefaultGrid;
+    private ICollection<F_COMPTET> items;
+    bool loading = true;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await Task.Run(UpdateGrid);
+    }
+    private async Task UpdateGrid()
+    {
+        loading = true;
+        await Task.Delay(1);
+        items = session.db.F_COMPTET.AsNoTracking().Where(a => a.CT_Type == CT_Type).OrderBy(a => a.CT_Intitule).ToList();
+        loading = false;
+        await Task.Delay(1);
+    }
+
+    protected async Task RowDoubleClicked(RecordDoubleClickEventArgs<F_COMPTET> args)
+    {
+        await DialogService.OpenAsync<TiersFiche>(args.RowData.CT_Intitule,
+        new Dictionary<string, object>() { { "cbMarq", args.RowData.cbMarq }, { "Type", CT_Type } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
+        await UpdateGrid();
+    }
+    protected async Task AddClick()
+    {
+        await DialogService.OpenAsync<TiersFiche>($"Ajouter une élément",
+        new Dictionary<string, object>() { { "cbMarq", 0 }, { "Type", CT_Type } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
+        await UpdateGrid();
+    }
+
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.ExcelExport();
+        }
+        if (args.Item.Id == "Grid_pdfexport")  //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.PdfExport();
+        }
+    }
+    private async Task OnActionBegin(ActionEventArgs<F_COMPTET> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Delete
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await AddClick();
+        }
+
+    }
+}

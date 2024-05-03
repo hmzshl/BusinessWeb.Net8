@@ -1,0 +1,219 @@
+﻿@using System;
+@using System.IO;
+@using Syncfusion.Blazor;
+@using Syncfusion.Blazor.Inputs;
+@using Syncfusion.Blazor.Buttons;
+@using Syncfusion.Blazor.DropDowns;
+<SfUploader @ref=sfUploader AutoUpload="false" AllowedExtensions=".pdf, .docx, .doc" MaxFileSize="30000000">
+    <UploaderEvents ValueChange="Import"></UploaderEvents>
+</SfUploader>
+<div>Integrer un document...</div>
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    DB db = new DB();
+    [Parameter] public string Table { get; set; } = "";
+    [Parameter] public string Col { get; set; } = "";
+    [Parameter] public int id { get; set; } = 0;
+    [Parameter] public bool IsProjet { get; set; } = false;
+    SfUploader sfUploader;
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+    }
+    private async Task Import(Syncfusion.Blazor.Inputs.UploadChangeEventArgs args)
+    {
+
+        if (args.Files != null)
+        {
+
+            try
+            {
+                var file = args.Files.First();
+                System.IO.Directory.CreateDirectory(Path.Combine(sg.GetRoot(), "data" + "\\" + Table + "\\" + id.ToString("000000000000") + "\\Files"));
+                var path = Path.Combine(sg.GetRoot(), "data" + "\\" + Table + "\\" + id.ToString("000000000000") + "\\Files" + "\\" + file.FileInfo.Name);
+                FileStream filestream = new FileStream(path, FileMode.Create, FileAccess.Write);
+                var dt = file.File.OpenReadStream(2560000);
+                await dt.CopyToAsync(filestream);
+                //file.Stream.WriteTo(filestream);
+                filestream.Close();
+                dt.Close();
+                //file.Stream.Close();
+                if (Table == "Caution")
+                {
+                    var item = db.API_T_Caution.Where(a => a.id == id).FirstOrDefault(a => a.id == id);
+                    item.Fichier = path.ToString();
+                    if (item != null)
+                    {
+                        var local = db.Set<API_T_Caution>().Local.FirstOrDefault(a => a.id == id);
+                        if (local != null)
+                        {
+                            db.Entry(local).State = EntityState.Detached;
+                        }
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                    }
+
+
+                }
+                if (Table == "Assurance")
+                {
+                    var item = db.API_T_Assurance.Where(a => a.id == id).FirstOrDefault(a => a.id == id);
+                    item.Fichier = path.ToString();
+                    if (item != null)
+                    {
+                        var local = db.Set<API_T_Assurance>().Local.FirstOrDefault(a => a.id == id);
+                        if (local != null)
+                        {
+                            db.Entry(local).State = EntityState.Detached;
+                        }
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                    }
+
+
+                }
+                if (Table == "Entretien")
+                {
+                    var item = db.API_T_MaterielEntretien.Where(a => a.id == id).FirstOrDefault(a => a.id == id);
+                    item.Fichier = path.ToString();
+                    if (item != null)
+                    {
+                        var local = db.Set<API_T_MaterielEntretien>().Local.FirstOrDefault(a => a.id == id);
+                        if (local != null)
+                        {
+                            db.Entry(local).State = EntityState.Detached;
+                        }
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                    }
+
+
+                }
+                if (Table == "ProjetAvenant")
+                {
+                    var item = db.API_T_ProjetAvenant.Where(a => a.id == id).FirstOrDefault(a => a.id == id);
+                    item.Fichier = path.ToString();
+                    if (item != null)
+                    {
+                        var local = db.Set<API_T_ProjetAvenant>().Local.FirstOrDefault(a => a.id == id);
+                        if (local != null)
+                        {
+                            db.Entry(local).State = EntityState.Detached;
+                        }
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                    }
+
+
+                }
+                if (Table == "ProjetDate")
+                {
+                    var item = db.API_T_ProjetDate.Where(a => a.id == id).FirstOrDefault(a => a.id == id);
+                    item.Fichier = path.ToString();
+                    if (item != null)
+                    {
+                        var local = db.Set<API_T_ProjetDate>().Local.FirstOrDefault(a => a.id == id);
+                        if (local != null)
+                        {
+                            db.Entry(local).State = EntityState.Detached;
+                        }
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                    }
+
+
+                }
+                if (Table == "ProjetPlanningDecompte")
+                {
+                    var item = db.API_T_ProjetPlanningDecompte.Where(a => a.id == id).FirstOrDefault(a => a.id == id);
+                    item.Fichier = path.ToString();
+                    if (item != null)
+                    {
+                        var local = db.Set<API_T_ProjetPlanningDecompte>().Local.FirstOrDefault(a => a.id == id);
+                        if (local != null)
+                        {
+                            db.Entry(local).State = EntityState.Detached;
+                        }
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                    }
+
+
+                }
+                if (Table == "ProjetReception")
+                {
+                    var item = db.API_T_ProjetReception.Where(a => a.id == id).FirstOrDefault(a => a.id == id);
+                    item.Fichier = path.ToString();
+                    if (item != null)
+                    {
+                        var local = db.Set<API_T_ProjetReception>().Local.FirstOrDefault(a => a.id == id);
+                        if (local != null)
+                        {
+                            db.Entry(local).State = EntityState.Detached;
+                        }
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                    }
+
+
+                }
+                if (Table == "Projet")
+                {
+                    if (Col == "ResultatMarchePV")
+                    {
+                        var item = db.API_T_Projet.Where(a => a.id == id).FirstOrDefault(a => a.id == id);
+                        item.ResultatMarchePV = path.ToString();
+                        if (item != null)
+                        {
+                            var local = db.Set<API_T_Projet>().Local.FirstOrDefault(a => a.id == id);
+                            if (local != null)
+                            {
+                                db.Entry(local).State = EntityState.Detached;
+                            }
+                            db.Entry(item).State = EntityState.Modified;
+                            db.SaveChanges();
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowNotification(ex);
+                //message.Error(ex.ToString());
+            }
+
+
+        }
+
+        DialogService.Close();
+
+    }
+    void ShowNotification(Exception ex)
+    {
+        string key = $"open{DateTime.Now}";
+        RenderFragment btn =
+    @<Button Type="@AntDesign.ButtonType.Primary" OnClick="() => { _notice.Close(key); }">
+        OK
+    </Button>;
+        _ = _notice.Error(new()
+            {
+                Message = ex.Message,
+                Duration = 0,
+                Description = ex.StackTrace,
+                Placement = NotificationPlacement.BottomRight,
+                Btn = btn,
+                Key = key
+            });
+
+        //errorBoundary.Recover();
+    }
+}

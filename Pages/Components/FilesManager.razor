@@ -1,0 +1,53 @@
+﻿<div style="height: @height">
+    <SfFileManager View="ViewType.Details" TValue="FileManagerDirectoryContent" AllowMultiSelection="false" Height="100%">
+        <FileManagerNavigationPaneSettings Visible="false"></FileManagerNavigationPaneSettings>
+        @{
+            string url = "/api/Files/FileOperations/" + societe + "/" + table + "/" + id.ToString();
+            string down = "/api/Files/Download/" + societe + "/" + table + "/" + id.ToString();
+            string up = "/api/Files/Upload/" + societe + "/" + table + "/" + id.ToString();
+            string img = "/api/Files/GetImage/" + societe + "/" + table + "/" + id.ToString();
+        }
+        <FileManagerAjaxSettings Url="@url" DownloadUrl="@down" UploadUrl="@up" GetImageUrl="@img" />
+        <FileManagerEvents TValue="FileManagerDirectoryContent" OnFileOpen="OnFileOpen"></FileManagerEvents>
+    </SfFileManager>
+</div>
+
+
+
+@code 
+{
+    [Parameter]
+    public string height { get; set; } = "70vh";
+    [Parameter]
+    public string societe { get; set; }
+    [Parameter]
+    public int id { get; set; }
+    [Parameter]
+    public string table { get; set; }
+    Helpers helpers = new Helpers();
+        private void OnFileOpen(FileOpenEventArgs<FileManagerDirectoryContent> args)
+    {
+        if(args.FileDetails.Name.ToUpper().EndsWith(".PDF")) 
+        {
+                    DialogService.OpenAsync<PdfViewer>(args.FileDetails.Name,
+               new Dictionary<string, object>() { { "DocumentPath", helpers.getPath(societe,table, this.id.ToString()) + "/" + args.FileDetails.Name } },
+               new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "800px", Height = "95%" });
+        }
+        if(args.FileDetails.Name.ToUpper().EndsWith(".DOC") || args.FileDetails.Name.ToUpper().EndsWith(".DOCX") || args.FileDetails.Name.ToUpper().EndsWith(".TXT")) 
+        {
+                    DialogService.OpenAsync<WordViewer>(args.FileDetails.Name,
+               new Dictionary<string, object>() { { "DocumentPath", helpers.getPath(societe,table, this.id.ToString()) + "/" + args.FileDetails.Name } },
+               new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "800px", Height = "95%" });
+        }
+
+    }
+
+    /*private void OnMenuClick(MenuClickEventArgs<FileManagerDirectoryContent> args) 
+    { 
+        
+        if (args.Item.Text == "Ouvert") 
+        { 
+
+        } 
+    } */
+}

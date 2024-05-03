@@ -1,0 +1,346 @@
+﻿<div>
+        <GridRow>
+            <GridCol Xs="24" Md="24">
+                <Form Model="@context" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="context">
+                    <SfTab CssClass="e-fill">
+                        <TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/><TabItems>
+                            <TabItem>
+                                <ChildContent>
+                                    <TabHeader Text="Identification"></TabHeader>
+                                </ChildContent>
+                                    <ContentTemplate>
+                                       <GridRow>
+                                    <GridCol Xs="24" Md="24">
+                                        <Card>
+                                           <FormItem LabelAlign="AntLabelAlignType.Left" Label="Designation" LabelColSpan="3">
+                                                <SfTextBox @bind-Value="@context.AR_Design" />
+                                                </FormItem>
+                                        </Card>
+                                        </GridCol>
+                                                <GridCol Xs="24" Md="8">
+                                                <Card>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Référence">
+                                                    <SfTextBox @bind-Value="@context.AR_Ref" Enabled="@(cbMarq == 0)"/>
+                                                    </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Famille">
+                                                    <SfDropDownList TValue="string" TItem="F_FAMILLE" DataSource="@familles" @bind-Value="@context.FA_CodeFamille">
+                                                        <DropDownListEvents OnValueSelect="@(args => UpdateRef(args.ItemData.FA_CodeFamille))" TValue="string" TItem="F_FAMILLE" />
+                                                        <DropDownListFieldSettings Text="FA_Intitule" Value="FA_CodeFamille" />
+                                                        </SfDropDownList>
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Unite">
+                                                    <SfDropDownList TValue="short?" TItem="P_UNITE" DataSource="@unites" @bind-Value="@context.AR_UniteVen">
+                                                            <DropDownListEvents TValue="short?" TItem="P_UNITE" />
+                                                        <DropDownListFieldSettings Text="U_Intitule" Value="cbMarq" />
+                                                        </SfDropDownList>
+
+                                                    </FormItem>
+                                                    </Card>
+                                            </GridCol>
+                                                <GridCol Xs="24" Md="8">
+                                                <Card>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Prix d'achat">
+                                                            <SfNumericTextBox @bind-Value="@context.AR_PrixAch" ShowSpinButton="false" Decimals="2" Format="N2"/>
+                                                        </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Prix de vente">
+                                                            <SfNumericTextBox @bind-Value="@context.AR_PrixVen"  ShowSpinButton="false" Decimals="2" Format="N2"/>
+                                                        </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Cout standard">
+                                                <SfNumericTextBox @bind-Value="@context.AR_CoutStd" ShowSpinButton="false" Decimals="2" Format="N2" />
+                                                        </FormItem>
+                                                    </Card>
+
+                                                </GridCol>
+                                                <GridCol Xs="24" Md="8">
+                                                    <Card>
+                                                       <FormItem LabelAlign="AntLabelAlignType.Left" Label="Type">
+                                                    <SfDropDownList TValue="short?" TItem="Items" DataSource="@types" @bind-Value="@context.AR_Type" Enabled="@(cbMarq == 0)">
+                                                            <DropDownListEvents TValue="short?" TItem="Items" />
+                                                    <DropDownListFieldSettings Text="Name" Value="ShortId" />
+                                                        </SfDropDownList>
+                                                        </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Nomenclature">
+
+                                                        <SfDropDownList TValue="short?" TItem="Items" DataSource="@nomencalures" @bind-Value="@context.AR_Nomencl">
+                                                            <DropDownListEvents TValue="short?" TItem="Items" />
+                                                    <DropDownListFieldSettings Text="Name" Value="ShortId" />
+                                                        </SfDropDownList>
+                                                        </FormItem>
+                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Suivi de stock">
+
+                                                   <SfDropDownList Enabled="@(cbMarq == 0)" TValue="short?" TItem="Items" DataSource="@suivistock" @bind-Value="@context.AR_SuiviStock">
+                                                           <DropDownListEvents TValue="short?" TItem="Items" />
+                                                        <DropDownListFieldSettings Text="Name" Value="ShortId" />
+                                                        </SfDropDownList>
+                                                        </FormItem>
+                                                    </Card>
+                                                </GridCol>
+                                                <Divider/>
+                                                <GridCol Xs="24" Md="8">
+                                                    <Card Title="Catégories tarifaires">
+                                                <SfGrid DataSource="@tarifs">
+                                                            <GridEvents TValue="F_ARTCLIENT"></GridEvents>
+
+                                                            <GridColumns>
+                                                                <GridColumn Width="50" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="cbMarq" HeaderText="#"></GridColumn>
+                                                            </GridColumns>
+                                                        </SfGrid>
+                                                    </Card>
+                                               </GridCol>
+                                                <GridCol Xs="24" Md="8">
+                                                   <Card Title="Tarifaires clients">
+                                                <SfGrid DataSource="@tarifs">
+                                                            <GridEvents TValue="F_ARTCLIENT"></GridEvents>    
+
+                                                            <GridColumns>
+                                                                <GridColumn Width="50" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="cbMarq" HeaderText="#"></GridColumn>
+                                                            </GridColumns>
+                                                        </SfGrid>
+                                                    </Card>
+                                                </GridCol>
+                                                <GridCol Xs="24" Md="8">
+                                                    <Card Title="Tarifaires fournisseurs">
+                                                <SfGrid DataSource="@tarifs">
+                                                    <GridEvents TValue="F_ARTCLIENT"></GridEvents>
+
+                                                            <GridColumns>
+                                                                <GridColumn Width="50" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="cbMarq" HeaderText="#"></GridColumn>
+                                                            </GridColumns>
+                                                        </SfGrid>
+                                                    </Card>
+                                                </GridCol>
+                                        </GridRow>
+                                       </ContentTemplate>
+                            </TabItem>
+                            <TabItem>
+                                <ChildContent>
+                                    <TabHeader Text="Statistiques"/>
+                                </ChildContent>
+                                <ContentTemplate>
+                                    <GridRow>
+                                        <GridCol Xs="24" Md="24">
+                                            <Card>
+                                                 <GridRow>
+                                                       <GridCol Xs="24" Md="3">
+                                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Etat de stock" Value="@((det.EtatStock ?? ""))" ValueStyle="color: #3f8600;"/>
+                                                    </GridCol>
+                                                    <GridCol Xs="12" Md="3">
+                                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Quantitee de stock" Value="@((det.AS_QteSto ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" Suffix="@det.U_Intitule" />
+                                                    </GridCol>
+                                                     <GridCol Xs="12" Md="3">
+                                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Montant du stock" Value="@((det.AS_MontSto ?? 0).ToString ("### ### ### ##0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+                                                    </GridCol>
+                                                </GridRow>
+                                            </Card>
+                                        </GridCol>
+                                        <GridCol Xs="24" Md="24">
+                                            <GridRow>
+                                                 <GridCol Xs="24" Md="12">
+                                                     <Card Title="Achats">
+                                                         <GridRow>
+                                                            <GridCol Xs="24" Md="6">
+                                                                <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Dernier prix d'achat" Value="@((det.DL_PU_Achat ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" />
+                                                            </GridCol>
+                                                            <GridCol Xs="24" Md="6">
+                                                                <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Dernier quantitee achetée" Value="@((det.DL_Dernier_Qte_Achat ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" />
+                                                            </GridCol>
+
+                                                            <GridCol Xs="24" Md="12">
+                                                                <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Dernier fourisseur" Value="@(det.FR_Intitule??"")" ValueStyle="color: #3f8600;" />
+                                                            </GridCol>
+                                                            <Divider/>
+                                                             <GridCol Xs="24" Md="6">
+                                                                <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Total quantitée achetée" Value="@((det.DL_Qte_Achat ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" Suffix="@det.U_Intitule"/>
+                                                            </GridCol>
+                                                            <GridCol Xs="24" Md="6">
+                                                                <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="CA Achats HT" Value="@((det.DL_MontantHT_Achat ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+                                                            </GridCol>
+                                                             <GridCol Xs="24" Md="6">
+                                                                <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="CA Achats TTC" Value="@((det.DL_MontantTTC_Achat ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+                                                            </GridCol>
+                                                            <Divider/>
+                                                            <GridCol Xs="24" Md="24">
+
+                                                    <Card title="Top 10 fournisseurs">
+
+                                                                   </Card>
+
+                                                                </GridCol>
+                                                         </GridRow>
+
+                                                     </Card>
+                                                </GridCol>
+                                                <GridCol Xs="24" Md="12">
+                                                     <Card Title="Ventes">
+                                                         <GridRow>
+                                                                <GridCol Xs="24" Md="6">
+                                                                <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Dernier prix de vente" Value="@((det.DL_PU_Vente ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" />
+                                                                </GridCol>
+                                                                <GridCol Xs="24" Md="6">
+                                                                    <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Dernier quantitée vendue" Value="@((det.DL_Dernier_Qte_Vente ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" />
+                                                                </GridCol>
+                                                                <GridCol Xs="24" Md="12">
+                                                                <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Dernier client" Value="@(det.CL_Intitule??"")" ValueStyle="color: #3f8600;" />
+                                                                </GridCol>
+                                                                <Divider/>
+                                                                <GridCol Xs="24" Md="6">
+                                                                <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Total quantitée vendue" Value="@((det.DL_Qte_Vente ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" Suffix="@det.U_Intitule" />
+                                                                </GridCol>
+                                                                <GridCol Xs="24" Md="6">
+                                                                    <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="CA Ventes HT" Value="@((det.DL_MontantHT_Vente ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+                                                                </GridCol>
+                                                                 <GridCol Xs="24" Md="6">
+                                                                    <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="CA Ventes TTC" Value="@((det.DL_MontantTTC_Vente ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+                                                                </GridCol>
+                                                                <Divider/>
+                                                  <GridCol Xs="24" Md="24">
+                                                    <Card title="Top 10 clients">
+
+                                                    </Card>
+
+                                                </GridCol>
+                                                         </GridRow>
+                                                     </Card>
+                                                </GridCol>
+                                            </GridRow>
+                                        </GridCol>                                             
+                                        </GridRow>
+                                </ContentTemplate>
+                            </TabItem>
+                            <TabItem>
+                                <ChildContent>
+                                    <TabHeader Text="Stock"></TabHeader>
+                                </ChildContent>
+                            </TabItem>
+                            <TabItem>
+                                <ChildContent>
+                                    <TabHeader Text="Achats"></TabHeader>
+                                </ChildContent>
+                            </TabItem>
+                            <TabItem>
+                                <ChildContent>
+                                    <TabHeader Text="Ventes"></TabHeader>
+                                </ChildContent>
+                            </TabItem>
+                        </TabItems>
+                    </SfTab>
+                </Form>
+
+            </GridCol>
+
+        </GridRow>
+    </div>
+
+
+
+
+@code {
+    [CascadingParameter] 
+    public SessionDT session { get; set; }
+    DB db = new DB();
+    [Parameter] 
+    public int cbMarq { get; set; }
+
+    F_ARTICLE context = new F_ARTICLE();
+
+
+    private API_V_ARTICLE det { get; set; } = new API_V_ARTICLE();
+    IEnumerable<P_UNITE> unites;
+    List<F_ARTCLIENT> tarifs_clients = new List<F_ARTCLIENT>();
+    List<F_ARTFOURNISS> tarifs_fournisseurs = new List<F_ARTFOURNISS>();
+    List<F_ARTCLIENT> tarifs = new List<F_ARTCLIENT>();
+    List<Items> suivistock = new List<Items>();
+    List<Items> types = new List<Items>();
+    List<Items> nomencalures = new List<Items>();
+    IEnumerable<F_FAMILLE> familles;
+    IEnumerable<F_DOCLIGNE> achats;
+    IEnumerable<F_DOCLIGNE> ventes;
+    Helpers helpers = new Helpers();
+
+
+
+    private async Task LoadData()
+    {
+
+        unites = db.P_UNITE.Where(a => (a.U_Intitule??"") != "").ToList();
+        familles = db.F_FAMILLE.ToList();
+
+        suivistock.Add(new Items { ShortId = 0, Name = "AUCUN" });
+        suivistock.Add(new Items { ShortId = 1, Name = "SERIE" });
+        suivistock.Add(new Items { ShortId = 2, Name = "CMUP" });
+        suivistock.Add(new Items { ShortId = 3, Name = "FIFO" });
+        suivistock.Add(new Items { ShortId = 4, Name = "LIFO" });
+        suivistock.Add(new Items { ShortId = 5, Name = "LOT" });
+
+        types.Add(new Items { ShortId = 0, Name = "STANDARD" });
+        types.Add(new Items { ShortId = 1, Name = "GAMME" });
+        types.Add(new Items { ShortId = 2, Name = "RESSOURCE UNITAIRE" });
+        types.Add(new Items { ShortId = 3, Name = "RESSOURCE MULTIPLE" });
+
+        nomencalures.Add(new Items { ShortId = 0, Name = "AUCUNE" });
+        nomencalures.Add(new Items { ShortId = 1, Name = "FABRICATION" });
+        nomencalures.Add(new Items { ShortId = 2, Name = "COMPOSE" });
+        nomencalures.Add(new Items { ShortId = 3, Name = "COMPOSANT" });
+        nomencalures.Add(new Items { ShortId = 4, Name = "ARTICLE LIE" });
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        LoadData();
+
+        if(cbMarq == 0) 
+        {
+            context = new F_ARTICLE();
+            helpers.FillAR(context);
+            context.AR_UniteVen = 1;
+            context.AR_Ref = helpers.getArticleRef("",(session??new SessionDT()));
+        }
+        else 
+        {
+            context = db.F_ARTICLE.Where(a => a.cbMarq == cbMarq).SingleOrDefault();
+            det = db.API_V_ARTICLE.Where(a => a.cbMarq == cbMarq).SingleOrDefault();
+        }
+
+    }
+    private async Task UpdateRef(string FA_CodeFamille)
+    {
+        if(cbMarq == 0) 
+        {
+            context.AR_Ref = helpers.getArticleRef(FA_CodeFamille,session);
+        }
+
+    }
+    private async Task Submit(bool close)
+    {
+        try
+        {
+            if (cbMarq == 0)
+            {
+                db.F_ARTICLE.Add(context);
+                helpers.DisableTriggers(db, "F_ARTICLE", "INS");
+                db.SaveChanges();
+                helpers.EnableTriggers(db, "F_ARTICLE", "INS");
+            }
+            else 
+            {
+
+                db.F_ARTICLE.Update(context);
+                helpers.DisableTriggers(db,"F_ARTICLE","UPD");
+                db.SaveChanges();
+                helpers.EnableTriggers(db, "F_ARTICLE", "UPD");
+            }
+            if (close) 
+            { 
+                DialogService.Close(); 
+            }
+
+             //Message.Success("Les données sont enregistrées avec succès");
+        }
+        catch (Exception ex)
+        {
+             Message.Warning(ex.ToString());
+        }
+    }
+}

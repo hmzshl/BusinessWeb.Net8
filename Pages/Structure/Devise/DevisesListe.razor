@@ -1,0 +1,91 @@
+﻿@page "/devises"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction,Agence Voyage")]
+
+
+<Card_1 Title="LISTE DES DEVISES">
+         <RadzenContent Container="main">
+        <div class="grid-84">
+            <SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)" AllowPaging>
+                <GridPageSettings PageSize="100"></GridPageSettings>
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                    <HeaderTemplate>
+                        <span>@((context as P_DEVISE).D_Intitule)</span>
+                    </HeaderTemplate>
+                </GridEditSettings>
+                <GridEvents OnActionBegin="UpdateListe" TValue="P_DEVISE"></GridEvents>
+                <GridTemplates>
+                    <EmptyRecordTemplate>
+                        <Empty></Empty>
+                    </EmptyRecordTemplate>
+                </GridTemplates>
+                <GridColumns>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(P_DEVISE.cbMarq) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(P_DEVISE.D_Intitule) HeaderText="Intitulé"></GridColumn>
+                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(P_DEVISE.D_CodeISO) HeaderText="Code ISO"></GridColumn>
+                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(P_DEVISE.D_Sigle) HeaderText="Code"></GridColumn>
+                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(P_DEVISE.D_Monnaie) HeaderText="Monnaie"></GridColumn>
+                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(P_DEVISE.D_SousMonnaie) HeaderText="Sous Monnaie"></GridColumn>
+                    <GridColumn Width="120" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(P_DEVISE.D_Cours)" HeaderText="Cours" Format="N6" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                </GridColumns>
+            </SfGrid>
+        </div>
+         </RadzenContent>
+</Card_1>
+
+
+
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    List<P_DEVISE> items = new List<P_DEVISE>();
+    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        items = session.db.P_DEVISE.Where(a=> (a.D_Intitule??"") != "").ToList();
+    }
+    public void UpdateListe(ActionEventArgs<P_DEVISE> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+
+            if (args.Action == "Add")
+            {
+                P_DEVISE item = args.Data;
+                item.cbIndice = (short)item.cbMarq;
+                db.P_DEVISE.Add(item);
+                db.SaveChanges();
+
+            }
+            if (args.Action != "Add")
+            {
+                var local = db.Set<P_DEVISE>().Local.FirstOrDefault(a => a.cbMarq == args.Data.cbMarq);
+                if (local != null)
+                {
+                    db.Entry(local).State = EntityState.Detached;
+                }
+                db.Entry(args.Data).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+        }
+
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            var local = db.Set<P_DEVISE>().Local.FirstOrDefault(a => a.cbMarq == args.Data.cbMarq);
+            if (local != null)
+            {
+                db.Entry(local).State = EntityState.Detached;
+            }
+            db.Entry(args.Data).State = EntityState.Deleted;
+            db.SaveChanges();
+        }
+    }
+
+
+}

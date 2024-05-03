@@ -1,0 +1,479 @@
+﻿<SfToolbar CssClass="btns">
+	<ToolbarItems>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton IconCss="e-icons e-print">Imprimer</SfButton>
+			</Template>
+		</ToolbarItem>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit(true))">Enregistrer</SfButton>
+			</Template>
+		</ToolbarItem>
+	</ToolbarItems>
+</SfToolbar>
+@if (@row == null)
+{
+	<div class="spin-center">
+		<Spin size="large" />
+	</div>
+}
+else
+{
+	<div>
+		<GridRow>
+			<GridCol Xs="24" Md="24">
+				<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="FormContext">
+					<Card>
+						<GridRow>
+							<GridCol Xs="24" Md="2">
+								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Pièce" LabelColSpan="10">
+									<RadzenBadge Text="@row.Piece" />
+								</FormItem>
+							</GridCol>
+							<GridCol Xs="24" Md="2">
+								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="10">
+									<RadzenBadge Text="@row.Date?.ToShortDateString()" BadgeStyle="BadgeStyle.Secondary" />
+								</FormItem>
+							</GridCol>
+							<GridCol Xs="24" Md="8">
+								<FormItem LabelColSpan="3" LabelAlign="AntLabelAlignType.Left" Label="Objet">
+									<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Projet" DataSource="@(projets)" @bind-Value="@row.Projet" Readonly="@(id != 0)">
+											<DropDownListEvents TValue="int" TItem="API_T_Projet" />
+											<DropDownListFieldSettings Text="Objet" Value="id" />
+										</SfDropDownList>
+									</FormItem>
+								</GridCol>
+								<GridCol Xs="24" Md="4">
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Marché" LabelColSpan="8">
+										<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Projet" DataSource="@(projets)" @bind-Value="@row.Projet" Readonly="@(id != 0)">
+											<DropDownListEvents TValue="int" TItem="API_T_Projet" />
+											<DropDownListFieldSettings Text="NumeroMarche" Value="id" />
+										</SfDropDownList>
+									</FormItem>
+								</GridCol>
+								<GridCol Xs="24" Md="3">
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Affaire" LabelColSpan="10">
+										<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Projet" DataSource="@(projets)" @bind-Value="@row.Projet" Readonly="@(id != 0)">
+											<DropDownListEvents TValue="int" TItem="API_T_Projet" />
+											<DropDownListFieldSettings Text="CA_Num" Value="id" />
+										</SfDropDownList>
+									</FormItem>
+								</GridCol>
+								<GridCol Xs="24" Md="2">
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="% Rb" LabelColSpan="12">
+										<SfNumericTextBox @bind-Value="@row.TauxRabais" ShowSpinButton="false" />
+									</FormItem>
+								</GridCol>
+								<GridCol Xs="24" Md="3">
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="12">
+										<RadzenBadge Text="@(row.Montant.ToString("### ### ##0.00"))" />
+									</FormItem>
+								</GridCol>
+							</GridRow>
+						</Card>
+					<GridRow>
+									<GridCol Xs="24" Md="24">
+									<SfTab CssClass="e-fill">
+									<TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/><TabItems>
+									<TabItem>
+									<ChildContent>
+										<TabHeader Text="Attachement"></TabHeader>
+									</ChildContent>
+									<ContentTemplate>
+										<div style="height: 65vh;">
+											<SfGrid Height="100%" class="small-grid no-border" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(lignes)">
+												<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(db.API_T_Attachement.Where(a => a.Projet == row.Projet && a.id > this.id).Count() == 0 && IsAttachement)" AllowDeleting="@(db.API_T_Attachement.Where(a => a.Projet == row.Projet && a.id > this.id).Count() == 0 && IsAttachement)" AllowEditing="@(db.API_T_Attachement.Where(a => a.Projet == row.Projet && a.id > this.id).Count() == 0 && IsAttachement)" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+												</GridEditSettings>
+												<GridEvents OnActionBegin="UpdateListe" TValue="API_T_AttachementDetail"></GridEvents>
+												<GridTemplates>
+													<EmptyRecordTemplate>
+														<Empty></Empty>
+													</EmptyRecordTemplate>
+												</GridTemplates>
+												<GridAggregates>
+													<GridAggregate>
+														<GridAggregateColumns>
+																	<GridAggregateColumn Field="@nameof(API_T_AttachementDetail.Montant)" Type="AggregateType.Sum" Format="N2">
+																<FooterTemplate>
+																	@{
+																			var SumValue = (context as AggregateTemplateContext);
+																			<div>
+																				@SumValue.Sum
+																			</div>
+																		}
+																	</FooterTemplate>
+
+																</GridAggregateColumn>
+																<GridAggregateColumn Field="@nameof(API_T_AttachementDetail.MontantTTC)" Type="AggregateType.Sum" Format="N2">
+																<FooterTemplate>
+																	@{
+																			var SumValue = (context as AggregateTemplateContext);
+																			<div>
+																				@SumValue.Sum
+																			</div>
+																		}
+																	</FooterTemplate>
+
+																</GridAggregateColumn>
+															</GridAggregateColumns>
+														</GridAggregate>
+													</GridAggregates>
+													<GridColumns>
+														<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementDetail.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+														<GridColumn MinWidth="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Libellé">
+															<Template>
+																@{
+																	var dt = (db.API_T_BordereauDetail.Where(a => a.id == ((context as API_T_AttachementDetail).Ligne)));
+																}
+																@if (dt.Count() != 0)
+																{
+																	<div>@dt.First().Libelle</div>
+																}
+															</Template>
+															<EditTemplate>
+																<SfDropDownList AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" DataSource="@(db.API_T_BordereauDetail.FromSqlRaw("SELECT * FROM API_T_BordereauDetail WHERE Bordereau in (SELECT id FROM API_T_Bordereau WHERE Projet = {0})",row.Projet))" TValue="int" TItem="API_T_BordereauDetail" @bind-Value="@((context as API_T_AttachementDetail).Ligne)">
+																<DropDownListEvents TValue="int" TItem="API_T_BordereauDetail" />
+																<DropDownListFieldSettings Text="Libelle" Value="id" />
+																</SfDropDownList>
+															</EditTemplate>
+															</GridColumn>
+															<GridColumn AllowEditing="false" AllowAdding="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_BordereauDetail.Unite) HeaderText="Unité">
+															</GridColumn>
+															<GridColumn AllowEditing="false" AllowAdding="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Consis" Field=@nameof(API_T_BordereauDetail.Consistance)>
+															</GridColumn>
+															<GridColumn AllowEditing="false" AllowAdding="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementDetail.QteMarche) HeaderText="Qté CPS" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+															<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementDetail.QtePrec) AllowEditing="false" AllowAdding="false" HeaderText="Qté Préc" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+															<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementDetail.Qte) HeaderText="Qté Attachée" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+															<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementDetail.QteCumul) AllowEditing="false" AllowAdding="false" HeaderText="Qté Cumul" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+															@if(IsDecompte)
+														{
+															<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementDetail.PU) AllowEditing="false" AllowAdding="false" HeaderText="PU" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+															<GridColumn Width="100" AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementDetail.Montant) HeaderText="MNT.HT" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+
+															<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementDetail.Taxe) AllowEditing="false" AllowAdding="false" HeaderText="Taxe" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+															<GridColumn Width="100" AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementDetail.MontantTTC) HeaderText="MNT.TTC" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+
+															<GridColumn AllowEditing="false" AllowAdding="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementDetail.QteReste) HeaderText="Reste" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+														}
+
+															<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementDetail.DateExecution) HeaderText="Date Exec" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+
+															</GridColumns>
+															</SfGrid>
+										</div>
+										
+													</ContentTemplate>
+													</TabItem>
+													<TabItem>
+													<ChildContent>
+														<TabHeader Text="Travaux hors BDS"></TabHeader>
+													</ChildContent>
+													<ContentTemplate>
+														<div style="height: 65vh;">
+															<SfGrid Height="100%" class="small-grid no-border" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(hors_bds)">
+															<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+															</GridEditSettings>
+															<GridEvents OnActionBegin="UpdateHorsBDS" TValue="API_T_AttachementHorsBD"></GridEvents>
+															<GridTemplates>
+															<EmptyRecordTemplate>
+																<Empty></Empty>
+															</EmptyRecordTemplate>
+															</GridTemplates>
+															<GridAggregates>
+															<GridAggregate>
+															<GridAggregateColumns>
+															<GridAggregateColumn Field="Montant" Type="AggregateType.Sum" Format="N2">
+																<FooterTemplate>
+																	@{
+																			var SumValue = (context as AggregateTemplateContext);
+																			<div>
+																				@SumValue.Sum
+																			</div>
+																		}
+																	</FooterTemplate>
+
+																</GridAggregateColumn>
+															</GridAggregateColumns>
+														</GridAggregate>
+													</GridAggregates>
+													<GridColumns>
+														<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementHorsBD.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+														<GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Article">
+															<Template>
+																@{
+																	var dt = (db.F_ARTICLE.Where(a => a.AR_Ref == ((context as API_T_AttachementHorsBD).AR_Ref ?? "")));
+																}
+																@if (dt.Count() != 0)
+																{
+																	<div>@dt.First().AR_Design</div>
+																}
+															</Template>
+															<EditTemplate>
+																<SfDropDownList AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" DataSource="@(db.F_ARTICLE)" TValue="string" TItem="F_ARTICLE" @bind-Value="@((context as API_T_AttachementHorsBD).AR_Ref)">
+																<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
+																<DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
+																</SfDropDownList>
+															</EditTemplate>
+															</GridColumn>
+															<GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementHorsBD.Libelle) HeaderText="Libelle">
+															</GridColumn>
+															<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementHorsBD.Unite) HeaderText="Unité">
+															</GridColumn>
+															<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementHorsBD.Consistance) HeaderText="Consistance">
+															</GridColumn>
+															<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementHorsBD.Qte) HeaderText="Qté" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+															<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementHorsBD.PU) HeaderText="PU" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+															<GridColumn Width="100" AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementHorsBD.Montant) HeaderText="Montant" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+															<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AttachementHorsBD.DateExecution) HeaderText="Date Exec" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+
+															</GridColumns>
+															</SfGrid>
+														</div>
+														
+													</ContentTemplate>
+													</TabItem>
+													</TabItems>
+													</SfTab>
+													</GridCol>
+
+													</GridRow>
+													</Form>
+
+													</GridCol>
+
+													</GridRow>
+												</div>
+}
+
+
+
+
+@code {
+	[Parameter] public bool IsDecompte { get; set; } = false;
+	[Parameter] public bool IsAttachement { get; set; } = false;
+	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+	[Parameter] public int id { get; set; } = 0;
+	[Parameter] public int type { get; set; } = 0;
+	[Parameter] public bool detail { get; set; } = false;
+	DB db = new DB();
+	[Parameter] public int Projet { get; set; } = 0;
+	[Parameter] public bool IsList { get; set; } = true;
+	NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
+	private API_T_Attachement row { get; set; }
+	private List<API_T_AttachementDetail> lignes = new List<API_T_AttachementDetail>();
+	private List<API_T_AttachementHorsBD> hors_bds = new List<API_T_AttachementHorsBD>();
+	List<API_T_Projet> projets = new List<API_T_Projet>();
+	protected override void OnInitialized()
+	{
+		db = session.db;
+		projets = db.API_T_Projet.ToList();
+		if (id != 0)
+		{
+
+			row = db.API_T_Attachement.Where(a => a.id == id).SingleOrDefault();
+			lignes = db.API_T_AttachementDetail.Where(a => a.Attachement == this.id).ToList();
+			hors_bds = db.API_T_AttachementHorsBD.Where(a => a.Attachement == this.id).ToList();
+		}
+		else
+		{
+			row = new API_T_Attachement();
+			row.Date = DateTime.Today;
+			string piece = "AT0000001";
+
+			var dt = db.API_T_Attachement.Where(a => a.Piece.StartsWith("AT")).ToList();
+			if (dt.Count != 0)
+			{
+				piece = fn.getNextCode(dt.Max(a => a.Piece));
+			}
+			row.Piece = piece;
+			if(Projet > 0)
+			{
+				row.Projet = Projet;
+			}
+		}
+	}
+	private void Submit(bool close)
+	{
+		try
+		{
+			if (row.Projet == 0)
+			{
+				Message.Error("Merci de remplir le projet!");
+			}
+			else
+			{
+				if (id == 0)
+				{
+					var bd = db.API_T_Bordereau.Where(a => a.Projet == row.Projet);
+					if(bd.Count() != 0)
+					{
+						row.TauxRabais = bd.First().Rabais;
+					}
+					db.API_T_Attachement.Add(row);
+				}
+				db.SaveChanges();
+				id = row.id;
+				if (close)
+				{
+					DialogService.Close();
+				}
+			}
+
+		}
+		catch (Exception ex)
+		{
+			Message.Error(ex.Message);
+		}
+	}
+	private void UpdateTotal()
+	{
+		if (id != 0)
+		{
+			row.Montant = db.API_T_AttachementDetail.Where(a => a.Attachement == row.id).ToList().Sum(a => a.MontantTTC) ?? 0;
+			row.MontantCumul = db.API_T_AttachementDetail.Where(a => a.Attachement == row.id).ToList().Sum(a => a.MontantCumul) ?? 0;
+			row.MontantReste = db.API_T_AttachementDetail.Where(a => a.Attachement == row.id).ToList().Sum(a => a.MontantReste) ?? 0;
+			row.MontantMarche = db.API_T_AttachementDetail.Where(a => a.Attachement == row.id).ToList().Sum(a => a.MontantMarche) ?? 0;
+			db.API_T_Attachement.Update(row);
+			db.SaveChanges();
+		}
+
+	}
+	public void UpdateListe(ActionEventArgs<API_T_AttachementDetail> args)
+	{
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+
+			var ln = db.API_T_BordereauDetail.Where(a => a.id == args.Data.Ligne).SingleOrDefault();
+			if(ln != null)
+			{
+				args.Data.AR_Ref = ln.AR_Ref;
+				args.Data.Unite = ln.Unite;
+				args.Data.Consistance = ln.Consistance;
+				args.Data.QteMarche = ln.QteMarche;
+				args.Data.PU = ln.PU;
+				args.Data.Taxe = ln.Taxe;
+				args.Data.PUTTC = args.Data.PU * (1 + (args.Data.Taxe / 100));
+				Decimal prec = db.API_T_AttachementDetail.Where(a => a.Ligne == args.Data.Ligne && a.id != args.Data.id).Sum(a => a.Qte) ?? 0;
+				args.Data.QtePrec = prec;
+				args.Data.QteCumul = args.Data.Qte + prec;
+				
+				
+				
+				if ((args.Data.QteMarche??0) - (args.Data.QteCumul??0) > 0)
+				{
+					args.Data.QteReste = args.Data.QteMarche - args.Data.QteCumul;
+				}
+				else
+				{
+					args.Data.QteReste = 0;
+				}
+
+				args.Data.Montant = args.Data.Qte * args.Data.PU;
+				args.Data.MontantTTC = args.Data.PUTTC * args.Data.Qte;
+				args.Data.MontantCumul = args.Data.QteCumul * args.Data.PUTTC;
+				args.Data.MontantMarche = ln.MontantMarche;
+				args.Data.MontantReste = args.Data.QteReste * ln.PUTTC;
+				ln.QteCumul = args.Data.QteCumul;
+				ln.QteReste = args.Data.QteReste;
+				ln.MontantReste = args.Data.QteReste;
+				ln.MontantCumul = ln.QteCumul * ln.PUTTC;
+				ln.MontantReste = ln.QteReste * ln.PUTTC;
+
+				if (args.Action == "Add")
+				{
+					if (id == 0)
+					{
+						Submit(false);
+					}
+					API_T_AttachementDetail item = args.Data;
+					item.Attachement = this.id;
+					db.API_T_AttachementDetail.Add(item);
+					db.SaveChanges();
+
+				}
+				if (args.Action != "Add")
+				{
+					var local = db.Set<API_T_AttachementDetail>().Local.FirstOrDefault(a => a.id == args.Data.id);
+					if (local != null)
+					{
+						db.Entry(local).State = EntityState.Detached;
+					}
+					db.Entry(args.Data).State = EntityState.Modified;
+					db.SaveChanges();
+				}
+			}
+			else
+			{
+				Message.Error("Merci de choisir un article..",8);
+			}
+
+
+		}
+
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			var local = db.Set<API_T_AttachementDetail>().Local.FirstOrDefault(a => a.id == args.Data.id);
+			if (local != null)
+			{
+				db.Entry(local).State = EntityState.Detached;
+			}
+			db.Entry(args.Data).State = EntityState.Deleted;
+			db.SaveChanges();
+		}
+		UpdateTotal();
+	}
+	public void UpdateHorsBDS(ActionEventArgs<API_T_AttachementHorsBD> args)
+	{
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+			var ar = db.F_ARTICLE.Where(a => a.AR_Ref == args.Data.AR_Ref).SingleOrDefault();
+			if (ar != null)
+			{
+				args.Data.Montant = args.Data.Qte * args.Data.PU;
+				if ((args.Data.Libelle ?? "") == "")
+				{
+					args.Data.Libelle = ar.AR_Design;
+				}
+			}
+			
+
+
+			if (args.Action == "Add")
+			{
+				if (id == 0)
+				{
+					Submit(false);
+				}
+				API_T_AttachementHorsBD item = args.Data;
+				item.Attachement = this.id;
+				db.API_T_AttachementHorsBD.Add(item);
+				db.SaveChanges();
+
+			}
+			if (args.Action != "Add")
+			{
+				var local = db.Set<API_T_AttachementHorsBD>().Local.FirstOrDefault(a => a.id == args.Data.id);
+				if (local != null)
+				{
+					db.Entry(local).State = EntityState.Detached;
+				}
+				db.Entry(args.Data).State = EntityState.Modified;
+				db.SaveChanges();
+			}
+
+		}
+
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			var local = db.Set<API_T_AttachementHorsBD>().Local.FirstOrDefault(a => a.id == args.Data.id);
+			if (local != null)
+			{
+				db.Entry(local).State = EntityState.Detached;
+			}
+			db.Entry(args.Data).State = EntityState.Deleted;
+			db.SaveChanges();
+		}
+		UpdateTotal();
+	}
+}

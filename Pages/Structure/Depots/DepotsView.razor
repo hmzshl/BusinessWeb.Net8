@@ -1,0 +1,93 @@
+﻿@page "/depots"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction,Commercial,Magasinier,Acheteur")]
+
+<Card_1 Title="LISTE DES DEPOTS">
+    <RadzenContent Container="main">
+        <div class="grid-90">
+            <SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                    Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete"})">
+                <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="false" AllowDeleting="false" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="F_DEPOT"></GridEvents>
+                <GridPageSettings PageSize="100"></GridPageSettings>
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                <GridTemplates>
+                    <EmptyRecordTemplate>
+                        <Empty></Empty>
+                    </EmptyRecordTemplate>
+                </GridTemplates>
+                <GridColumns>
+                    <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_DEPOT.DE_Intitule)" HeaderText="Intitulé"></GridColumn>
+                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_DEPOT.DE_Ville)" HeaderText="Ville"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_DEPOT.DE_Adresse)" HeaderText="Adresse"></GridColumn>
+                </GridColumns>
+                <SfSpinner @bind-Visible="@loading">
+                </SfSpinner>
+            </SfGrid>
+        </div>
+
+    </RadzenContent>
+ </Card_1>
+
+
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+
+    //Components
+    private SfGrid<F_DEPOT> DefaultGrid;
+    //End components
+
+    private List<F_DEPOT> items = new List<F_DEPOT>();
+    bool loading = false;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(LoadData);
+
+    }
+    private async Task LoadData()
+    {
+        loading = true;
+        await Task.Delay(1);
+        items = session.db.F_DEPOT.ToList();
+        loading = false;
+        await Task.Delay(1);
+
+    }
+
+    protected async Task Edit(RecordDoubleClickEventArgs<F_DEPOT> args)
+    {
+        await DialogService.OpenAsync<DepotsFiche>($"{args.RowData.DE_Intitule}",
+        new Dictionary<string, object>() { { "id", args.RowData.cbMarq } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "700px" });
+        await LoadData();
+    }
+    private async Task Add()
+    {
+        await DialogService.OpenAsync<DepotsFiche>($"Ajouter un élément",
+        new Dictionary<string, object>() { { "id", 0 } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "700px" });
+        await LoadData();
+    }
+    private async Task OnActionBegin(ActionEventArgs<F_DEPOT> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Delete
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await Add();
+        }
+
+    }
+
+}

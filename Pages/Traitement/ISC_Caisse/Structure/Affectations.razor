@@ -1,0 +1,77 @@
+﻿@attribute [Authorize]
+<RadzenContent Container="main">
+    <div style="height: 70vh" class="no-border">
+        <SfGrid Height="100%" AllowPaging Toolbar="@(new List<string>() { "Add", "Delete"})" DataSource="@(items)">
+             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+             <GridPageSettings PageSize="40"></GridPageSettings>
+             <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting AllowEditing Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                 <HeaderTemplate>
+                     <span>@((context as API_T_Affectation).Intitule)</span>
+                </HeaderTemplate>
+            </GridEditSettings>
+            <GridEvents OnActionBegin="UpdateListe" TValue="API_T_Affectation"></GridEvents>
+            <GridTemplates>
+                <EmptyRecordTemplate>
+                    <Empty></Empty>
+                </EmptyRecordTemplate>
+            </GridTemplates>
+            <GridColumns>
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Affectation.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Affectation.Intitule) HeaderText="Nom"></GridColumn>
+            </GridColumns>
+        </SfGrid>
+    </div>
+</RadzenContent>
+
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    List<API_T_Affectation> items = new List<API_T_Affectation>();
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        items = db.API_T_Affectation.OrderBy(a => a.Intitule).ToList();
+    }
+    public void UpdateListe(ActionEventArgs<API_T_Affectation> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+
+            if (args.Action == "Add")
+            {
+                API_T_Affectation item = args.Data;
+                db.API_T_Affectation.Add(item);
+                db.SaveChanges();
+
+            }
+            if (args.Action != "Add")
+            {
+                var local = db.Set<API_T_Affectation>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                if (local != null)
+                {
+                    db.Entry(local).State = EntityState.Detached;
+                }
+                db.Entry(args.Data).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+        }
+
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            var local = db.Set<API_T_Affectation>().Local.FirstOrDefault(a => a.id == args.Data.id);
+            if (local != null)
+            {
+                db.Entry(local).State = EntityState.Detached;
+            }
+            db.Entry(args.Data).State = EntityState.Deleted;
+            db.SaveChanges();
+        }
+    }
+
+
+}

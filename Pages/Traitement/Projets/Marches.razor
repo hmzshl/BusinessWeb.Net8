@@ -1,0 +1,25 @@
+﻿@page "/marches"
+
+
+ @if (IsLoaded)
+{
+	<Card_1 Title="MARCHéS">
+		<ProjetsListe IsAppelOffre="false"></ProjetsListe>
+	</Card_1>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+
+@code {
+	bool IsLoaded = false;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(100);
+		IsLoaded = true;
+	}
+}

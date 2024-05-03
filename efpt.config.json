@@ -1,0 +1,1517 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "DB",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "Data",
+   "OutputPath": "Models\/DB",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "BusinessWeb",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[API_T_Affectation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AgenceArticle]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AgenceBooking]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AgenceBookingDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AgenceBookingOffre]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AgenceBookingPax]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AgenceContrat]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AgenceContratDate]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AgenceContratDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AgenceContratLigne]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AgenceOffre]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Assurance]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Attachement]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AttachementDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AttachementHorsBD]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Attribute]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AttributeDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AttributeTable]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Audit_F_COMPTEA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Audit_F_COMPTEG]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Audit_F_COMPTET]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Audit_F_CREGLEMENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Audit_F_DOCENTETE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Audit_F_DOCLIGNE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Audit_F_ECRITUREC]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Audit_F_REGLECH]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AuditLog]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Authorize]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AvancementDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_AvancementHorsBD]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Bordereau]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_BordereauDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Caisse]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Caisse_User]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_CaisseEntete]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_CaisseLigne]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_CarteDisque]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Caution]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_CentreCharge]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_CentreChargeDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_CertifDocument]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_CertifEntete]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_CertifFiche]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_CertifGrilleDialogue]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_CertifGrilleDialogueExigence]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_CertifGrilleDialogueModif]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_CertifLigne]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_CertifMission]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_CertifOuvertureDossier]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Config]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Depot_User]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_DocumentEntete]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_DocumentLigne]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_DroitConstate]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_FraisEntete]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_FraisLigne]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_HistoriqueConnexion]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_HistoriquePiece]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_ImportLog]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Information]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Materiel]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_MaterielEntretien]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_MaterielEntretienDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Nantissement]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Personnel]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_PersonnelEquipe]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_PersonnelMateriel]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Pointage]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_PointageAnnee]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_PointageDetail]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_PointageJournee]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_PointageLigne]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_PointageMois]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_PointageProjet]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Projet]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_ProjetAvenant]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_ProjetDate]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_ProjetPlanningDecompte]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_ProjetReception]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Remarque]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_RevisionPrix]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Site]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Site_User]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_TaxeTonnage]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_Ville]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[cbUserSession]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ABOENTETE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ABOENTETEINFOS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ABOLIGNE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ABOLIGNEINFOS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ABONNEMENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ABOPERIODE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ABOREGLEMENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_AFFICHEUR]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_AFFICHEURCAISSE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_AGENDA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_AGENDADET]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTCLIENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTCOMPO]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTCOMPTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTENUMREF]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTFOURNISS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTGAMME]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTGLOSS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTICLE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTICLEMEDIA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTICLERESSOURCE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTMODELE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTPRIX]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTSTOCK]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ARTSTOCKEMPL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_BILLETPIECE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_BONAPAYERHISTO]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_BONAPAYERHISTOCIAL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_BUDGET]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CAISSE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CAISSECAISSIER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CALENDRIER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CATALOGUE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CLAVIER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CMLIEN]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COLLABORATEUR]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMMPLANIFIE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTEA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTEABUDGET]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTEABUDGETG]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTEAMEDIA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTEG]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTEGA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTEGBUDGET]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTEGBUDGETA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTEGNOTE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTET]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTETG]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTETINFOS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTETMEDIA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTETMODELE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_COMPTETRAPPEL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CONDITION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CONTACTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CONTACTB]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CONTACTD]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CONTACTR]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CONTACTT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CREGLEMENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CYCLECONS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_CYCLEOBS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DEPOT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DEPOTCONTACT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DEPOTEMPL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DOCCURRENTPIECE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DOCENTETE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DOCENTETEINFOS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DOCENTETETEXT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DOCLIGNE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DOCLIGNEEMPL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DOCLIGNEINFOS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DOCLIGNETEXT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DOCREGL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DRECOUVREMENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DRECOUVREMENTEC]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_DRECOUVREMENTIV]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_EBUDGET]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ECALENDRIER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ECRITUREA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ECRITUREC]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ECRITURECMEDIA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ECRITUREF]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ECRITURER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_EMODELEA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_EMODELEG]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_EMODELER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ENUMCOND]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ENUMGAMME]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ENUMLIBRECIAL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ENUMLIBRECPTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ENUMSTAT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ENUMSTATART]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_EPROTECTIONCIAL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_EPROTECTIONCPTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ESCENARIO]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ETABLEAU]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_ETAXE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_FAMCLIENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_FAMCOMPTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_FAMFOURNISS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_FAMILLE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_FAMMODELE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_FAMTARIF]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_FAMTARIFQTE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_FOURCHETTERESULTAT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_GAMSTOCK]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_GAMSTOCKEMPL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_GLOSSAIRE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_INTERBANCAIRE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_JMOUV]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_JOURNAUX]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_JOURNAUXA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_LIBELLE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_LIENRECTIF]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_LIGNEARCHIVE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_LIVRAISON]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_LOTFIFO]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_LOTSERIE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_MANDAT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_MODELE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_MODELEA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_MODELEG]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_MODELER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_NOMENCLAT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PAYS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PIECE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PIECEA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PIECEG]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PREVISION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PROJETFABRICATION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PROJETHISTO]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PROJETLIGNE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PROJETPLANNING]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PROTECTIONCIAL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_PROTECTIONCPTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_RECTIFICATIONMOTIF]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_REGLEARCHIVE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_REGLECH]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_REGLEMENTT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_REGREVISION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_REGTAXE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_REPCOM]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_RESSCENTRE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_RESSOURCEPROD]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_SCENARIO]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_TARIF]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_TARIFCOND]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_TARIFGAM]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_TARIFQTE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_TARIFREMISE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_TARIFSELECT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_TAXE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[F_TICKETARCHIVE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_ABOCLI]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_ABOFOUR]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_ABOINT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_AFFAIRE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_AGENDAS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_ARRONDI]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_AVANCEMENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_BONAPAYER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_CATCOMPTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_CATTARIF]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_CMDALIVRER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_CMDARTICLES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_CMDDETAIL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_COLONNCPTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_COLREGLEMENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_COMMUNICATION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_COMPTOIR]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_CONDITIONNEMENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_CONDLIVR]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_CONTACT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_CONTREMARQUECOM]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_CONTREMARQUELIV]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_CONVEUROCIAL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_CONVEUROCPTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_CRISQUE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_DEVISE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_DOCAFFAIRE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_DOSSIER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_DOSSIERCIAL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_ECHANGECIAL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_EXPEDITION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_FACTUREAFF]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_FILTREREV]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_FISCAL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_GAMME]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_GENAUTO]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_INTERNE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_INTERROCAISSE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_INTERROCOMPTERESS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_INTERRODOCREPRES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_INTERRONOMENCL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_INTERROREPRES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_INTERRORESS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_INTERROSTO]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_INTERROSTONOMENCL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_INTERROTAR]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_INTERROTARNOMENCL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_INTSTATART]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_LETTRAGE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_LITIGE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_NATURE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_ORGAACH]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_ORGAART]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_ORGASTO]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_ORGATIERS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_ORGAVEN]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_PARAMETRECIAL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_PARAMETRELIVR]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_PERIOD]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_PREFERENCES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_PROJETAFF]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_PROJETFAB]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_RAPPEL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_REAPPRO]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_RECHDOC]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_RECHLIG]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_RECOUVREMENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_REGISTRE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_REGLEMENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_REGULINV]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_REGULR]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_REJET]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_RESILIATION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_RESOLUTION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_RESULTAT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_SCDCLAVIER]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_SCDREGLEMENT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_SECURITYSTRATEGYCIAL]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_SECURITYSTRATEGYCPTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_SERVICECPTA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_SOUCHEACHAT]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_SOUCHEINTERNE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_SOUCHEVENTE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_STATISTIQUE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_TIERS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_TRACABILITE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_UNITE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_VALIDPLGLOBALE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[P_VALIDPLUNITAIRE]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_V_ACHAT]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_AFFAIRE]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_AFFAIREAVANCEMENT]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_AGENCEBOOKING]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_AGENCECONTRAT]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_ARTCLIENT]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_ARTCOMPTA]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_ARTFOURNISS]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_ARTICLE]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_ARTICLEMVT]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_ARTICLESTOCK]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_ATTACHEMENT]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_AUDIT_F_COMPTET]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_AUDIT_F_CREGLEMENT]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_AUDIT_F_DOCENTETE]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_AUDIT_F_DOCLIGNE]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_AUDIT_F_ECRITUREC]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_BALANCEAGEECLIENT]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_BALANCEAGEEFOURNISSEUR]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_BORDEREAU]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_CAISSEENTETE]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_CBSESSION]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_CERTIFENTETE]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_COLLABORATEUR]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_COMPTET]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_CREGLEMENT]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_DOCENTETE]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_DOCLIGNE]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_ECRITUREC]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_FRAISENTETE]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_HISTORIQUECONNEXION]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_MARGE]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_MATERIEL]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_MATERIELENTRETIEN]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_PERSONNEL]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_POINTAGEDETAIL]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_PROJET]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_REGLECH]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_REGLEMENTT]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_RELEVE]",
+         "ObjectType": 3
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

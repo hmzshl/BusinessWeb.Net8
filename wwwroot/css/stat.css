@@ -1,0 +1,70 @@
+﻿.st {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 0px !important;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.st-title-white .ant-statistic-title {
+    color: white !important;
+}
+
+.st-title-black .ant-statistic-title {
+    color: black !important;
+}
+
+.st-content-white .ant-statistic-content {
+    color: white !important;
+}
+
+.st-content-black .ant-statistic-content {
+    color: black !important;
+}
+
+.st-dark-1 {
+    background-image: linear-gradient(-20deg,#2b5876 0%,#4e4376 100%) !important;
+}
+
+.st-red-1 {
+    background-image: linear-gradient(to top,#ff0844 0%,#ffb199 100%) !important;
+}
+
+.st-green-1 {
+    background-image: linear-gradient(to top,#0ba360 0%,#3cba92 100%) !important;
+}
+
+.st-blue-1 {
+    background-image: radial-gradient(circle 248px at center,#16d9e3 0%,#30c7ec 47%,#46aef7 100%) !important;
+}
+
+.st-grey-1 {
+    background-image: radial-gradient(circle 248px at center,#cfcdca 0%,#cfcdca 47%,#ebedec 100%) !important;
+}
+.st-white-1 {
+    background-image: radial-gradient(circle 248px at center,white 0%,white 47%,white 100%) !important;
+}
+.st .ant-statistic-title, .st .ant-statistic-content {
+    color: inherit !important;
+}
+
+.st-blue {
+    background: #b2cef9;
+    color: #063c8d;
+}
+.st-green {
+    background: #dfefe4;
+    color: #3a6159;
+}
+.st-red {
+    background: #ede0e9;
+    color: #85031d;
+}
+.st-orange {
+    background: #ffd8be;
+    color: #873e01;
+}
+.st-white {
+    background: white;
+    color: black;
+}

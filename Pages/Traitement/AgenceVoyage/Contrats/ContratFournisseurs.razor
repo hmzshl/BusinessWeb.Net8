@@ -1,0 +1,26 @@
+﻿@page "/av-contrats-fournisseurs"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction,Commercial,Agence Voyage")]
+
+
+ @if (IsLoaded)
+{
+	<Card_1 Title="LISTE DES CONTRATS FOURNISSEURS">
+		<ContratsListe Type="1" />
+	</Card_1>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+
+@code {
+	bool IsLoaded = false;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(100);
+		IsLoaded = true;
+	}
+}

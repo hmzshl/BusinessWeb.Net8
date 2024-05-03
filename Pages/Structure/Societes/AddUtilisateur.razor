@@ -1,0 +1,26 @@
+﻿
+<Select DataSource="@utilisateurs" TItem="AspNetUser" TItemValue="string" ValueName="@nameof(AspNetUser.Id)" LabelName="@nameof(AspNetUser.UserName)" @bind-Value="@row.Id" />
+<SfToolbar>
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+                <Template>
+                <SfButton OnClick="Submit" IconCss="e-icons e-save" IsPrimary="true">Enregister</SfButton>
+                </Template>
+            </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+
+@code {
+
+	[Parameter] public int SocieteID { get; set; } = 0;
+	private AspNetUser row = new AspNetUser();
+	IEnumerable<AspNetUser> utilisateurs;
+
+	 protected override async Task OnInitializedAsync()
+    {
+        utilisateurs = await EtendueService.GetAspNetUsers();
+    }
+    protected async Task Submit() {
+        DialogService.Close();
+    }
+}

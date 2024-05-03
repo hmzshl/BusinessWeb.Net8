@@ -1,0 +1,182 @@
+﻿<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+                <Template>
+                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="Submit">Enregistrer</SfButton>
+                </Template>
+            </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+<div>
+            <GridRow>
+                <GridCol Xs="24" Md="24">
+                    <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6">
+                        <SfTab CssClass="e-fill">
+                            <TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/><TabItems>
+                                <TabItem>
+                                    <ChildContent>
+                                        <TabHeader Text="Accueil"></TabHeader>
+                                    </ChildContent>
+                                    <ContentTemplate>
+                                        <GridRow>
+                                        <GridCol Xs="24" Md="24">
+                                            <Card Title="Identification">
+                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Intitule" LabelColSpan="6">
+                                                <SfTextBox @bind-Value="@row.Intitule" />
+                                                </FormItem>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Ville" LabelColSpan="6">
+                                                <SfTextBox @bind-Value="@row.Ville" />
+                                                </FormItem>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse" LabelColSpan="6">
+                                                <SfTextBox @bind-Value="@row.Adresse" />
+                                                </FormItem>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Reponsable" LabelColSpan="6">
+                                                <SfDropDownList TValue="int" TItem="API_T_Personnel" Placeholder="Responsable" DataSource="@(db.API_T_Personnel)" @bind-Value="@row.Responsable">
+                                                    <DropDownListEvents TValue="int" TItem="API_T_Personnel" />
+                                                    <DropDownListFieldSettings Text="Nom" Value="id" />
+                                                </SfDropDownList>
+                                            </FormItem>
+                                            </Card>
+                                        </GridCol>
+                                    <GridCol Xs="24" Md="24">
+                                        <Card Title="Utilisateurs">
+                                            <div style="height: 30vh;">
+                                                <SfGrid Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(users)">
+                                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                                    <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog"></GridEditSettings>
+                                                    <GridEvents OnActionBegin="UpdateUsers" TValue="API_T_Site_User"></GridEvents>
+                                                    <GridTemplates Context="EmptyContext">
+                                                        <EmptyRecordTemplate>
+                                                            <Empty></Empty>
+                                                        </EmptyRecordTemplate>
+                                                    </GridTemplates>
+                                                    <GridColumns>
+                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Site_User.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                                        <GridColumn AllowSorting="false" AllowFiltering="false" Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Utilisateurs">
+                                                            <Template Context="TemplateContext">
+                                                                @{
+                                                                    var dt = (EtendueService.GetAspNetUserById((TemplateContext as API_T_Site_User).User).Result);
+                                                                }
+                                                                @if (dt != null)
+                                                                {
+                                                                    <div>@dt.UserName</div>
+                                                                }
+                                                            </Template>
+                                                            <EditTemplate Context="EditContext">
+                                                                <SfDropDownList Placeholder="Utilisateur" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(EtendueService.GetAspNetUsers().Result.Where(a => !users.Select(a => a.User).Contains(a.Id)))" TValue="string" TItem="AspNetUser" @bind-Value="@((EditContext as API_T_Site_User).User)">
+                                                                    <DropDownListEvents TValue="string" TItem="AspNetUser" />
+                                                                    <DropDownListFieldSettings Text="UserName" Value="Id" />
+                                                                </SfDropDownList>
+                                                            </EditTemplate>
+                                                        </GridColumn>
+                                                    </GridColumns>
+                                                </SfGrid>
+                                            </div>
+
+                                        </Card>
+                                    </GridCol>
+                                    </GridRow>
+                                    </ContentTemplate>
+                                </TabItem>
+                                <TabItem>
+                                    <ChildContent>
+                                        <TabHeader Text="Traitements"></TabHeader>
+                                    </ChildContent>
+                                    <ContentTemplate>
+
+                                    </ContentTemplate>
+                                </TabItem>
+                            </TabItems>
+                        </SfTab>
+                    </Form>
+
+                </GridCol>
+
+            </GridRow>
+        </div>
+
+
+
+
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter] public int id { get; set; } = 0;
+    public API_T_Site row { get; set; }
+    private List<API_T_Site_User> users = new List<API_T_Site_User>();
+    private void LoadData()
+    {
+
+    }
+
+    protected override async Task OnInitializedAsync() 
+    {
+        db = session.db;
+        if (id == 0)
+        {
+            row = new API_T_Site();
+
+        }
+        else
+        {
+            row = db.API_T_Site.Where(a => a.id == id).SingleOrDefault();
+        }
+        LoadData();
+        users = db.API_T_Site_User.Where(a => a.Site == id).ToList();
+    }
+    private async Task Submit()
+    {
+        try
+        {
+            if (id == 0)
+            {
+                db.API_T_Site.Add(row);
+                db.SaveChanges();
+            }
+            else 
+            {
+                db.Update(row);
+                db.SaveChanges();
+            }
+            DialogService.Close();
+        }
+        catch (Exception ex)
+        {
+            await Message.Warning(ex.ToString());
+        }
+    }
+    public void UpdateUsers(ActionEventArgs<API_T_Site_User> args)
+    {
+        if (id == 0)
+        {
+            try
+            {
+                db.API_T_Site.Add(row);
+                db.SaveChanges();
+                this.id = row.id;
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+
+            if (args.Action == "Add")
+            {
+                API_T_Site_User item = args.Data;
+                item.Site = this.id;
+                db.Add(item);
+                db.SaveChanges();
+            }
+        }
+
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            db.Remove(args.Data);
+            db.SaveChanges();
+        }
+    }
+}

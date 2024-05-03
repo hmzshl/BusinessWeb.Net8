@@ -1,0 +1,192 @@
+﻿<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="Submit">Enregistrer</SfButton>
+            </Template>
+        </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+<div>
+    <GridRow>
+        <GridCol Xs="24" Md="24">
+            <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6">
+                <SfTab CssClass="e-fill">
+                    <TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/><TabItems>
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Accueil"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <GridRow>
+                                    <GridCol Xs="24" Md="24">
+                                        <Card>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro" LabelColSpan="4">
+                                                <SfTextBox @bind-Value="@row.CT_Num" Readonly/>
+                                            </FormItem>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Intitulé" LabelColSpan="4">
+                                                <SfTextBox @bind-Value="@row.CT_Intitule" @attributes="fn.Lenth(69)" />
+                                            </FormItem>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Abrégé" LabelColSpan="4">
+                                                <SfTextBox @bind-Value="@row.CT_Classement" @attributes="fn.Lenth(17)" />
+                                            </FormItem>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Qualité" LabelColSpan="4">
+                                                <SfTextBox @bind-Value="@row.CT_Qualite" @attributes="fn.Lenth(17)" />
+                                            </FormItem>
+                                        </Card>
+                                    </GridCol>
+                                    
+                                    <GridCol Xs="24" Md="24">
+                                        <Card>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Pays" LabelColSpan="4">
+                                                <SfTextBox @bind-Value="@row.CT_Pays" @attributes="fn.Lenth(35)" />
+                                            </FormItem>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Ville" LabelColSpan="4">
+                                                <SfTextBox @bind-Value="@row.CT_Ville" @attributes="fn.Lenth(35)" />
+                                            </FormItem>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse" LabelColSpan="4">
+                                                <SfTextBox @bind-Value="@row.CT_Adresse" @attributes="fn.Lenth(35)" />
+                                            </FormItem>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Code Postal" LabelColSpan="4">
+                                                <SfTextBox @bind-Value="@row.CT_CodePostal" @attributes="fn.Lenth(9)" />
+                                            </FormItem>
+                                        </Card>
+                                    </GridCol>
+                                    
+                                    <GridCol Xs="24" Md="24">
+                                        <Card>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Téléphone" LabelColSpan="4">
+                                                <SfTextBox @bind-Value="@row.CT_Telephone" @attributes="fn.Lenth(21)" />
+                                            </FormItem>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Télécopie" LabelColSpan="4">
+                                                <SfTextBox @bind-Value="@row.CT_Telecopie" @attributes="fn.Lenth(21)" />
+                                            </FormItem>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Email" LabelColSpan="4">
+                                                <SfTextBox @bind-Value="@row.CT_EMail" @attributes="fn.Lenth(69)" />
+                                            </FormItem>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Site Web" LabelColSpan="4">
+                                                <SfTextBox @bind-Value="@row.CT_Site" @attributes="fn.Lenth(69)" />
+                                            </FormItem>
+                                        </Card>
+                                    </GridCol>
+                                    
+                                    <GridCol Xs="24" Md="6">
+                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="CA Réalisé" Value="@((0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600 ;" Suffix="@fn.getDevise(db)" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="6">
+                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Contrats" Value="@((0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="6">
+                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Résérvations" Value="@((0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" Precision="0" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="6">
+                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Offres" Value="@((0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" Precision="0" />
+                                    </GridCol>
+                                </GridRow>
+                            </ContentTemplate>
+                        </TabItem>
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Contrats"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <div style="height: 70vh;">
+                                    <BusinessWeb.Pages.Traitement.AgenceVoyage.Contrats.ContratsListe cbMarq="@this.cbMarq" Type="@(row.CT_Type??0)"></BusinessWeb.Pages.Traitement.AgenceVoyage.Contrats.ContratsListe>
+                                </div>
+                               
+                            </ContentTemplate>
+                        </TabItem>
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Résérvations"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+
+                            </ContentTemplate>
+                        </TabItem>
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Solvabilité"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+
+                            </ContentTemplate>
+                        </TabItem>
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Documents"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <FilesManager table="F_COMPTET" id="@cbMarq" societe="@session.Societe.id.ToString()"></FilesManager>
+                            </ContentTemplate>
+                        </TabItem>
+                    </TabItems>
+                </SfTab>
+            </Form>
+
+        </GridCol>
+
+    </GridRow>
+</div>
+
+@code 
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter] public int Type { get; set; }
+    [Parameter] public int cbMarq { get; set; }
+    private F_COMPTET row = new F_COMPTET();
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        if (cbMarq != 0)
+        {
+            row = db.F_COMPTET.Where(a => a.cbMarq == cbMarq).SingleOrDefault();
+        }
+
+        else
+        {
+            row = new F_COMPTET();
+            fn.FillCT(row);
+            row.CT_Type = (short)Type;
+            if (Type == 0)
+            {
+                var dt = db.F_COMPTET.Where(a => a.CT_Type == Type && a.CT_Num.StartsWith("CLT"));
+                if (dt.Count() != 0)
+                {
+                    row.CT_Num = fn.getNextCode(dt.Max(a => a.CT_Num).ToString());
+                }
+                else
+                {
+                    row.CT_Num = "CLT000001";
+                }
+            }
+            if (Type == 1)
+            {
+                var dt = db.F_COMPTET.Where(a => a.CT_Type == Type && a.CT_Num.StartsWith("FRS"));
+                if (dt.Count() != 0)
+                {
+                    row.CT_Num = fn.getNextCode(dt.Max(a => a.CT_Num).ToString());
+                }
+                else
+                {
+                    row.CT_Num = "FRS000001";
+                }
+            }
+            row.CT_NumPayeur = row.CT_Num;
+            row.CG_NumPrinc = "34210000";
+
+        }
+    }
+    private async Task Submit()
+    {
+        if (cbMarq == 0)
+        {
+            db.Add(row);
+        }
+        db.SaveChanges();
+        DialogService.Close();
+    }
+}

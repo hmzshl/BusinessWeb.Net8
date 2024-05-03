@@ -1,0 +1,165 @@
+﻿<RadzenContent Container="main">
+    <div style="height: @grid_height;">
+        <SfGrid Height="100%" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                Toolbar="@(new List<object>() { "Search", "Print","Add", "Delete"})">
+            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@IsAttachement" AllowDeleting="@IsAttachement" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+            <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_ATTACHEMENT"></GridEvents>
+            <GridPageSettings PageSize="100"></GridPageSettings>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridTemplates>
+                <EmptyRecordTemplate>
+                    <Empty></Empty>
+                </EmptyRecordTemplate>
+            </GridTemplates>
+            <GridAggregates>
+                <GridAggregate>
+                    <GridAggregateColumns>
+                        <GridAggregateColumn Field="Montant" Type="AggregateType.Sum" Format="N2">
+                            <FooterTemplate>
+                                @{
+                                    var SumValue = (context as AggregateTemplateContext);
+                                    <div>
+                                        @SumValue.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+
+                        </GridAggregateColumn>
+                    </GridAggregateColumns>
+                </GridAggregate>
+            </GridAggregates>
+            <GridColumns>
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.Date)" HeaderText="Date" Format="d"></GridColumn>
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.Piece)" HeaderText="Piece"></GridColumn>
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.DateDebut)" HeaderText="Début" Format="d"></GridColumn>
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.DateFin)" HeaderText="Fin" Format="d"></GridColumn>
+                <GridColumn Width="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.NumeroMarche)" HeaderText="N°.Marché"/>
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.CA_Num)" HeaderText="Affaire" />
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.Objet)" HeaderText="Objet"/>
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.SiteIntitule)" HeaderText="Zone" />
+                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.VilleIntitule)" HeaderText="Ville" />
+
+
+                @if(IsDecompte) 
+                {
+                <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.TauxRabais)" HeaderText="% RB" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                }
+
+            </GridColumns>
+            <SfSpinner @bind-Visible="@loading">
+            </SfSpinner>
+        </SfGrid>
+    </div>
+    
+</RadzenContent>
+
+
+
+@code
+{
+
+    [Parameter] public bool IsDecompte { get; set; } = false;
+    [Parameter] public bool IsAttachement { get; set; } = false;
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    //Components
+    [Parameter] public string grid_height { get; set; } = "88vh";
+    [Parameter] public int Projet { get; set; } = 0;
+    [Parameter] public bool IsList { get; set; } = true;
+    private SfGrid<API_V_ATTACHEMENT> DefaultGrid;
+    [Parameter] public string type { get; set; } = "0";
+    private IEnumerable<API_V_ATTACHEMENT> items;
+    bool loading = false;
+    private SfDropDownList<int, API_T_Site> SiteDrop;
+    private RenderFragment Sites =>
+    @<SfDropDownList @ref=@SiteDrop TValue="int" TItem="API_T_Site" Placeholder="Site" DataSource=@(db.API_T_Site) Width="250" ShowClearButton>
+        <DropDownListFieldSettings Text="Intitule" Value="id"> </DropDownListFieldSettings>
+        <DropDownListEvents TValue="int" TItem="API_T_Site"> </DropDownListEvents>
+        </SfDropDownList>
+    ;
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await LoadData();
+
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadData();
+    }
+    protected async Task LoadData()
+    {
+        if(IsList)
+        {
+            items = session.db.API_V_ATTACHEMENT.ToList();
+        }
+        else
+        {
+            items = session.db.API_V_ATTACHEMENT.Where(a => a.Projet == Projet).ToList();
+        }
+
+    }
+
+    protected async Task Edit(RecordDoubleClickEventArgs<API_V_ATTACHEMENT> args)
+    {
+
+        if(IsList) 
+        {
+            await DialogService.OpenAsync<AttachementsFiche>(args.RowData.Piece,
+    new Dictionary<string, object>() { { "id", args.RowData.id }, { "type", Int32.Parse(type) }, { "IsAttachement", IsAttachement }, { "IsDecompte", IsDecompte } },
+new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        }
+
+        else
+        {
+            await DialogService.OpenAsync<AttachementsFiche>(args.RowData.Piece,
+    new Dictionary<string, object>() { { "Projet", Projet }, { "id", args.RowData.id }, { "type", Int32.Parse(type) }, { "IsAttachement", IsAttachement }, { "IsDecompte", IsDecompte } },
+new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "90%" });
+        }
+        await LoadData();
+    }
+    private async Task Add()
+    {
+        if(IsList)
+        {
+            await DialogService.OpenAsync<AttachementsFiche>($"Ajouter un élément",
+    new Dictionary<string, object>() { { "id", 0 }, { "type", Int32.Parse(type) }, { "IsAttachement", IsAttachement }, { "IsDecompte", IsDecompte } },
+    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        }
+        else
+        {
+            await DialogService.OpenAsync<AttachementsFiche>($"Ajouter un élément",
+    new Dictionary<string, object>() { { "Projet", Projet }, { "id", 0 }, { "type", Int32.Parse(type) }, { "IsAttachement", IsAttachement }, { "IsDecompte", IsDecompte } },
+    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "90%" });
+        }
+        await LoadData();
+    }
+    private async Task OnActionBegin(ActionEventArgs<API_V_ATTACHEMENT> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await Add();
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_ATTACHEMENTDetail WHERE Attachement = {0}", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_ATTACHEMENTHorsBD WHERE Attachement = {0}", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_ATTACHEMENT WHERE id = {0}", args.Data.id);
+            db.SaveChanges();
+            await LoadData();
+        }
+    }
+
+
+
+
+}

@@ -1,0 +1,177 @@
+﻿<RadzenContent Container="main">
+    <div class="grid-90">
+        <SfToolbar>
+            <ToolbarItems>
+                <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                    <Template>
+                        <div style="margin-left: 5px; margin-right: 10px;" id="debut">
+                            <SfDatePicker Placeholder="Date Début" Width="130px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
+                                <DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
+                            </SfDatePicker>
+                        </div>
+
+                    </Template>
+                </ToolbarItem>
+                <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                    <Template>
+                        <div style="margin-left: 5px; margin-right: 10px;" id="fin">
+                            <SfDatePicker Placeholder="Date Fin" Width="130px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
+                                <DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
+                            </SfDatePicker>
+                        </div>
+
+                    </Template>
+                </ToolbarItem>
+                <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                    <Template>
+                        <RadzenLabel Text="OPERATION" Component="operation" />
+                        <div style="padding-left: 10px; margin-right: 0px;" id="operation">
+                            <SfDropDownList ShowClearButton Width="130px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@operations" TValue="string" TItem="string" @bind-Value="@selected_operation">
+                                 <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
+                             </SfDropDownList>
+                         </div>
+                     </Template>
+                 </ToolbarItem>
+                 <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                     <Template>
+                         <RadzenLabel Text="USER" Component="user" />
+                         <div style="padding-left: 10px;" id="user">
+                             <SfDropDownList ShowClearButton Width="150px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@users" TValue="string" TItem="string" @bind-Value="@selected_user">
+                                 <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
+                             </SfDropDownList>
+                         </div>
+                     </Template>
+                 </ToolbarItem>
+                 
+                 <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                     <Template>
+                         <SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+                     </Template>
+                 </ToolbarItem>
+                 <ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+                 <ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+                 <ToolbarItem OnClick=@(args => (UpdateGrid())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
+             </ToolbarItems>
+         </SfToolbar>
+         <div class="grid-84">
+             <SfGrid AllowFiltering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
+                <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                <GridPageSettings PageSize="100"></GridPageSettings>
+                <GridTemplates>
+                    <EmptyRecordTemplate>
+                        <Empty></Empty>
+                    </EmptyRecordTemplate>
+                </GridTemplates>
+                <GridColumns>
+                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Timestamp)" HeaderText="Heure"></GridColumn>
+                    <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Operation)" HeaderText="Operation">
+                        <Template>
+                            @{
+                                var dt = (context as API_V_AUDIT_F_COMPTET);
+                                if (dt.Operation == "Insertion")
+                                {
+                                    <div style="text-align: left;">
+                                        <span class="statustxt e-activecolor">@dt.Operation</span>
+                                    </div>
+                                }
+                                else if (dt.Operation == "Suppression")
+                                {
+                                    <div style="text-align: left;">
+                                        <span class="statustxt e-inactivecolor">@dt.Operation</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div style="text-align: left;">
+                                        <span class="statustxt e-infocolor">@dt.Operation</span>
+                                    </div>
+                                }
+                            }
+                        </Template>
+                    </GridColumn>
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Sage_Name)" HeaderText="User"></GridColumn>
+                    <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Host_Name)" HeaderText="Host"></GridColumn>
+                    <GridColumn Width="140" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Suser_Name)" HeaderText="Session"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Num)" HeaderText="Numéro"/>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Intitule)" HeaderText="Intitule" Width="250"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Ville)" HeaderText="Ville"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Adresse)" HeaderText="Adresse" Width="250"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Telephone)" HeaderText="Téléphone"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_EMail)" HeaderText="Email"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Pays)" HeaderText="Pays"></GridColumn>
+                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Controle)" HeaderText="Controle"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.SommeilIntitule)" HeaderText="Statut"></GridColumn>
+                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique01)" HeaderText="Stat 1"></GridColumn>
+                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique02)" HeaderText="Stat 2"></GridColumn>
+                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique03)" HeaderText="Stat 3"></GridColumn>
+                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique04)" HeaderText="Stat 4"></GridColumn>
+                </GridColumns>
+                <SfSpinner @bind-Visible="@loading">
+                </SfSpinner>
+            </SfGrid>
+        </div>
+
+    </div>
+</RadzenContent>
+
+
+
+@code
+{
+
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    [Parameter] public int CT_Type { get; set; }
+    DB db = new DB();
+    //Components
+    private SfGrid<API_V_AUDIT_F_COMPTET> DefaultGrid;
+    bool IsLoaded = false;
+    DateTime? date1 = DateTime.Today;
+    DateTime? date2;
+    private List<API_V_AUDIT_F_COMPTET> items = new List<API_V_AUDIT_F_COMPTET>();
+    bool loading = false;
+
+    List<string> domaines = new List<string>();
+    List<string> types = new List<string>();
+    List<string> users = new List<string>();
+    List<string> operations = new List<string>();
+
+    string selected_domaine;
+    string selected_user;
+    string selected_type;
+    string selected_operation;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        db = session.db;
+
+        users = db.API_V_AUDIT_F_COMPTET.Where(a => a.CT_Type == CT_Type).Select(a => a.Sage_Name).Distinct().ToList();
+        operations = db.API_V_AUDIT_F_COMPTET.Where(a => a.CT_Type == CT_Type).Select(a => a.Operation).Distinct().ToList();
+
+        await UpdateGrid();
+        IsLoaded = true;
+
+    }
+    private async Task UpdateTypes()
+    {
+        
+        await UpdateGrid();
+    }
+    private async Task UpdateGrid()
+    {
+        items = db.API_V_AUDIT_F_COMPTET
+        .Where(a => a.CT_Type == CT_Type)
+        .Where(a => (
+            (date1 != null && a.Timestamp >= date1) || date1 == null)
+         && ((date2 != null && a.Timestamp <= date2) || date2 == null)
+               && (selected_user == null || (a.Sage_Name == selected_user))
+               && (selected_operation == null || (a.Operation == selected_operation))
+                )
+                .OrderByDescending(a => a.Timestamp)
+                .ToList();
+    }
+
+
+}

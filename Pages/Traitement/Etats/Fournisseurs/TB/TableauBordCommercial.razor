@@ -1,0 +1,435 @@
+﻿@if (IsLoaded)
+{
+    <Card_1 Title="@title" IsDetail="@IsDetail">
+        <RadzenContent Container="main">
+            <div class="grid-container small-grid" style="width: 100%;">
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        @if(!session.IsMobile)
+                        {
+                            <ToolbarItem Align="ItemAlign.Left">
+                                <Template>
+                                    @if (periode == "annuel")
+                                    {
+                                        <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined"><div style="text-transform: uppercase;">EXERCICE EN COURS: @annee</div></SfMessage>
+                                    }
+                                    @if (periode == "mensuel")
+                                    {
+                                        <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined"><div style="text-transform: uppercase;">MOIS EN COURS: @mois</div></SfMessage>
+                                    }
+                                    @if (periode == "journalier")
+                                    {
+                                        <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined"><div style="text-transform: uppercase;">JOURNEE EN COURS: @date1?.ToShortDateString()</div></SfMessage>
+                                    }
+                                </Template>
+                            </ToolbarItem>
+                        }
+
+                        @if (periode == "journalier" && !IsDateDetail)
+                        {
+                            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                <Template>
+                                    <RadzenLabel Text="JOURNEE" Component="journee"/>
+                                    <div style="margin-left: 15px;" id="journee">
+                                        <SfDatePicker Width="130px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date" ShowTodayButton>
+                                         <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
+                                     </SfDatePicker>
+                                    </div>
+
+                             </Template>
+                         </ToolbarItem>
+                        }
+
+                     @if (periode == "mensuel")
+                        {
+                            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                <Template>
+                                    <RadzenLabel Text="MOIS" Component="mois" />
+                                    <div style="margin-left: 15px;" id="mois">
+                                        <SfDropDownList Width="110px" AllowFiltering TValue="string" TItem="string" DataSource="@list_mois" @bind-Value="@mois">
+                                             <DropDownListFieldSettings Text="MoisAnnee" Value="MoisAnnee" />
+                                             <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => LoadData())"/>
+                                         </SfDropDownList>
+                                    </div>
+
+                                 </Template>
+                             </ToolbarItem>
+                        }
+                        @if (periode == "annuel")
+                        {
+                            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                <Template>
+                                    <RadzenLabel Text="ANNEE" Component="annee"/>
+                                    <div style="margin-left: 15px;" id="annee">
+                                        <SfDropDownList Width="110px" AllowFiltering TValue="string" TItem="string" DataSource="@list_annee" @bind-Value="@annee">
+                                             <DropDownListFieldSettings Text="Annee" Value="Annee" />
+                                             <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => LoadData())" />
+                                         </SfDropDownList>
+                                    </div>
+
+                                 </Template>
+                             </ToolbarItem>
+                        }
+                        @if (periode == "date")
+                        {
+                            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                <Template>
+                                    <div style="margin-left: 15px;" id="debut">
+                                        <SfDatePicker Placeholder="Date Début" Width="130px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
+                                         <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
+                                     </SfDatePicker>
+                                 </div>
+
+                             </Template>
+                         </ToolbarItem>
+                         <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Separator"/>
+                            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                <Template>
+                                    <div style="margin-left: 15px;" id="fin">
+                                        <SfDatePicker Placeholder="Date Fin" Width="130px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
+                                         <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
+                                     </SfDatePicker>
+                                 </div>
+
+                             </Template>
+                         </ToolbarItem>
+                        }
+                    </ToolbarItems>
+             </SfToolbar>
+             <GridRow>
+
+                 <GridCol Xs="12" Md="3">
+                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="CA HT" Value="@((dt?.Sum(a => a.DL_MontantHT)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+                     
+                 </GridCol>
+                 <GridCol Xs="12" Md="3">
+                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="CA TTC" Value="@((dt?.Sum(a => a.DL_MontantTTC)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+                 </GridCol>
+
+                 <GridCol Xs="12" Md="3">
+                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="Décaissements" Value="@((rg?.Sum(a => a.RG_Montant)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+                 </GridCol>
+                    <GridCol Xs="12" Md="3">
+                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-blue" Title="% Paiement" Value="@((dt.Sum(a => a.DL_MontantTTC) != 0.0m ? rg.Sum(a => a.RG_Montant) / dt.Sum(a => a.DL_MontantTTC) : 0.0m)?.ToString("### ### ##0.00 %;-### ### ##0.00 %;0.00"))" ValueStyle="color: #3f8600;" />
+                    </GridCol>
+                 <GridCol Xs="12" Md="6">
+
+                 </GridCol>
+
+                 <GridCol Xs="24" Md="9">
+                        <Card title="CA PAR FOURNISSEUR">
+                            <div class="no-border grid-67">
+                                <SfGrid AllowPaging="true" Height="100%" DataSource="@(dt_client)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(API_V_ACHAT.DL_MontantTTC)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var SumValue = (context as AggregateTemplateContext);
+                                                            <div>
+                                                                @SumValue.Sum
+                                                            </div>
+                                                        }
+                                                    </FooterTemplate>
+
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(API_V_ACHAT.DL_MontantHT)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var SumValue = (context as AggregateTemplateContext);
+                                                            <div>
+                                                                @SumValue.Sum
+                                                            </div>
+                                                        }
+                                                    </FooterTemplate>
+
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridPageSettings PageSize="100"/>
+                                    <GridEvents OnRecordDoubleClick=@(args => ShowDetail(args, "client")) TValue="API_V_ACHAT"></GridEvents>
+                                    <GridColumns>
+                                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Field="@nameof(API_V_ACHAT.CT_Num)" HeaderText="Num" Visible=@(!session.IsMobile)>
+                                            <Template>
+                                                @{
+                                                    var item = (context as API_V_ACHAT);
+                                                    <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 4px !important; padding-right: 4px !important;" Click="@(args => ShowFournisseur(item))" Shade="Shade.Darker" Variant="Variant.Text" Text="@item.CT_Num" ButtonStyle="ButtonStyle.Info" />
+                                                }
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ACHAT.CT_Intitule)" HeaderText="Intitulé">
+
+                                        </GridColumn>
+                                        <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ACHAT.DL_MontantHT)" HeaderText="CA HT" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                        <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ACHAT.DL_MontantTTC)" HeaderText="CA TTC" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                 </GridCol>
+                 <GridCol Xs="24" Md="9">
+                        <Card title="CA PAR ARTICLE">
+                            <div class="no-border grid-67">
+                                <SfGrid AllowPaging="true" Height="100%" DataSource="@(dt_article)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(API_V_ACHAT.DL_MontantHT)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var SumValue = (context as AggregateTemplateContext);
+                                                            <div>
+                                                                @SumValue.Sum
+                                                            </div>
+                                                        }
+                                                    </FooterTemplate>
+
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(API_V_ACHAT.DL_MontantTTC)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var SumValue = (context as AggregateTemplateContext);
+                                                            <div>
+                                                                @SumValue.Sum
+                                                            </div>
+                                                        }
+                                                    </FooterTemplate>
+
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridPageSettings PageSize="100" />
+                                    <GridEvents OnRecordDoubleClick=@(args => ShowDetail(args, "article")) TValue="API_V_ACHAT"></GridEvents>
+                                    <GridColumns>
+                                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Field="@nameof(API_V_ACHAT.AR_Ref)" HeaderText="Référence" Visible=@(!session.IsMobile)>
+                                                                                        <Template>
+                                                @{
+                                                    var item = (context as API_V_ACHAT);
+                                                    <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 4px !important; padding-right: 4px !important;" Click="@(args => ShowArticle(item))" Shade="Shade.Darker" Variant="Variant.Text" Text="@item.AR_Ref" ButtonStyle="ButtonStyle.Info" />
+                                                }
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ACHAT.AR_Design)" HeaderText="Désignation" />
+                                        <GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ACHAT.DL_Qte)" HeaderText="Qté" Format="N2" Visible=@(!session.IsMobile) TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                        <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ACHAT.DL_MontantHT)" HeaderText="CA HT" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                        <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ACHAT.DL_MontantTTC)" HeaderText="CA TTC" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                 </GridCol>
+                 <GridCol Xs="24" Md="6">
+                        <Card>
+                            <div class="no-border grid-34">
+
+
+                                <SfChart Title="C.A par acheteur" Width="90%" Theme="Theme.Fluent" Height="100%">
+                                    <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
+                                        <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+                                        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                                    </ChartPrimaryXAxis>
+                                    <ChartPrimaryYAxis LabelFormat="N2" EdgeLabelPlacement="EdgeLabelPlacement.Shift" Visible="false">
+                                        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                                        <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                                    </ChartPrimaryYAxis>
+                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+                                    <ChartLegendSettings Visible="true" EnableHighlight="true"></ChartLegendSettings>
+                                    <ChartSeriesCollection>
+                                        <ChartSeries DataSource="@dt_chart" XName="CO_Nom" YName="DL_MontantHT" Name="C.A HT" Width="2" ColumnSpacing="0.1" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Bar">
+                                            <ChartMarker>
+                                                <ChartDataLabel Visible="true" Position="Syncfusion.Blazor.Charts.LabelPosition.Outer" Alignment="Syncfusion.Blazor.Charts.Alignment.Near">
+                                                    <ChartDataLabelFont FontWeight="700" Size="11"></ChartDataLabelFont>
+                                                </ChartDataLabel>
+                                            </ChartMarker>
+                                        </ChartSeries>
+                                    </ChartSeriesCollection>
+                                </SfChart>
+                          </div>
+                    </Card>
+                        <Card>
+                            <div class="no-border grid-34">
+                                <SfAccumulationChart Title="Répartition des décaissements" EnableAnimation="true" Width="100%" Height="100%" Theme="Theme.Fluent" EnableBorderOnMouseMove="false" EnableSmartLabels="true">
+                                    <AccumulationChartBorder Color="transparent"></AccumulationChartBorder>
+                                    <AccumulationChartTooltipSettings Enable="true" Format="${point.x}"></AccumulationChartTooltipSettings>
+                                    <AccumulationChartSeriesCollection>
+                                        <AccumulationChartSeries DataSource="@rg_chart" Radius="80%" XName="R_Intitule" YName="RG_Montant" InnerRadius="40%">
+                                            <AccumulationChartSeriesBorder Width="3"></AccumulationChartSeriesBorder>
+                                            <AccumulationDataLabelSettings Visible="true" Name="R_Intitule" Position="AccumulationLabelPosition.Outside">
+                                                <AccumulationChartConnector Length="10px" Type="ConnectorType.Curve"></AccumulationChartConnector>
+                                            </AccumulationDataLabelSettings>
+                                        </AccumulationChartSeries>
+                                    </AccumulationChartSeriesCollection>
+                                    <AccumulationChartLegendSettings Visible="false"></AccumulationChartLegendSettings>
+                                </SfAccumulationChart>
+                            </div>
+                        </Card>  
+                 </GridCol>
+             </GridRow>
+             </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+
+}
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    [Parameter]
+    public string periode { get; set; }
+    [Parameter]
+    public DateTime date { get; set; }
+    [Parameter]
+    public bool IsDateDetail { get; set; }
+    [Parameter]
+    public string title { get; set; }
+    [Parameter]
+    public bool IsDetail { get; set; } = false;
+    DB db = new DB();
+    bool IsLoaded = false;
+    DateTime? date1;
+    DateTime? date2;
+    string mois;
+    string annee;
+    List<string> list_mois = new List<string>();
+    List<string> list_annee = new List<string>();
+    List<API_V_ACHAT> dt = new List<API_V_ACHAT>();
+    List<API_V_ACHAT> dt_chart = new List<API_V_ACHAT>();
+    List<API_V_ACHAT> dt_article = new List<API_V_ACHAT>();
+    List<API_V_ACHAT> dt_client = new List<API_V_ACHAT>();
+    List<API_V_CREGLEMENT> rg = new List<API_V_CREGLEMENT>();
+    List<API_V_CREGLEMENT> rg_chart = new List<API_V_CREGLEMENT>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        db = session.db;
+
+        if (periode == "journalier")
+        {
+            if(IsDateDetail) 
+            {
+                date1 = date;
+                date2 = date;
+            }
+            else 
+            {
+                date1 = DateTime.Today;
+                date2 = DateTime.Today;
+            }
+
+        }
+        else if (periode == "mensuel")
+        {
+            list_mois = db.API_V_ACHAT.Select(a => a.MoisAnnee).Distinct().OrderByDescending(a => a).ToList();
+            if(list_mois.Count() != 0)
+            {
+                mois = list_mois.First();
+            }
+        }
+        else if (periode == "annuel")
+        {
+            list_annee = db.API_V_ACHAT.OrderByDescending(a => a.Annee).Select(a => a.Annee).Distinct().OrderByDescending(a => a).ToList();
+            if(list_annee.Count() != 0)
+            {
+                annee = list_annee.First();
+            }
+        }
+
+
+        await LoadData();
+        IsLoaded = true;
+    }
+    private async Task LoadData()
+    {
+
+        IsLoaded = false;
+        await Task.Delay(300);
+        if (periode == "journalier")
+        {
+            dt = db.API_V_ACHAT.Where(a => a.DO_Date == date1).ToList();
+            rg = db.API_V_CREGLEMENT.Where(a => a.RG_Date == date1 && a.RG_Type == 0).ToList();
+        }
+        else if (periode == "mensuel")
+        {
+            dt = db.API_V_ACHAT.Where(a => a.MoisAnnee == mois).ToList();
+            rg = db.API_V_CREGLEMENT.Where(a => a.MoisAnnee == mois && a.RG_Type == 1).ToList();
+        }
+        else if (periode == "annuel")
+        {
+            dt = db.API_V_ACHAT.Where(a => a.Annee == annee).ToList();
+            rg = db.API_V_CREGLEMENT.Where(a => a.Annee == annee && a.RG_Type == 0).ToList();
+        }
+        else
+        {
+            dt = db.API_V_ACHAT.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).ToList();
+            rg = db.API_V_CREGLEMENT.Where(a => ((date1 != null && a.RG_Date >= date1) || date1 == null) && ((date2 != null && a.RG_Date <= date2) || date2 == null) && a.RG_Type == 0).ToList();
+        }
+
+        dt_client = dt.GroupBy(a => new { a.CT_Intitule, a.CT_Num })
+        .Select(a => new API_V_ACHAT
+            {
+                CT_Num = a.Key.CT_Num,
+                CT_Intitule = a.Key.CT_Intitule,
+                DL_MontantHT = a.Sum(a => a.DL_MontantHT),
+                DL_MontantTTC = a.Sum(a => a.DL_MontantTTC)
+            }).OrderByDescending(a => a.DL_MontantTTC).ToList();
+
+        dt_article = dt.GroupBy(a => new { a.AR_Design, a.AR_Ref })
+        .Select(a => new API_V_ACHAT
+            {
+                AR_Ref = a.Key.AR_Ref,
+                AR_Design = a.Key.AR_Design,
+                DL_Qte = a.Sum(a => a.DL_Qte),
+                DL_MontantHT = a.Sum(a => a.DL_MontantHT),
+                DL_MontantTTC = a.Sum(a => a.DL_MontantTTC)
+            }).OrderByDescending(a => a.DL_MontantTTC).ToList();
+
+        dt_chart = dt.GroupBy(a => new { a.CO_Nom }).Select(a => new API_V_ACHAT { CO_Nom = a.Key.CO_Nom, DL_MontantHT = a.Sum(a => a.DL_MontantHT) }).OrderBy(a => a.DL_MontantHT).ToList();
+        rg_chart = rg.GroupBy(a => new { a.R_Intitule }).Select(a => new API_V_CREGLEMENT { R_Intitule = a.Key.R_Intitule, RG_Montant = a.Sum(a => a.RG_Montant) }).ToList();
+        IsLoaded = true;
+        await Task.Delay(300);
+
+
+    }
+    protected async Task ShowDetail(RecordDoubleClickEventArgs<API_V_ACHAT> args, string type)
+    {
+        if (type == "article")
+        {
+            await DialogService.OpenAsync<DetailsAchat>(args.RowData.AR_Design,
+      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "AR_Ref", args.RowData.AR_Ref }, { "Height", "85vh" }, { "Annee", annee }, { "MoisAnnee", mois } },
+      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "95%" });
+        }
+        if (type == "client")
+        {
+            await DialogService.OpenAsync<DetailsAchat>(args.RowData.CT_Intitule,
+      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CT_Num", args.RowData.CT_Num }, { "Height", "85vh" }, { "Annee", annee }, { "MoisAnnee", mois } },
+      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "95%" });
+        }
+
+    }
+    private async Task ShowFournisseur(API_V_ACHAT args)
+    {
+        int? cbMarq = db.F_COMPTET.Where(a => a.CT_Num == args.CT_Num).SingleOrDefault()?.cbMarq;
+        await DialogService.OpenAsync<BusinessWeb.Pages.Structure.Tiers.TiersFiche>(args.CT_Intitule,
+     new Dictionary<string, object>() { { "cbMarq", cbMarq } },
+     new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+    }
+    private async Task ShowArticle(API_V_ACHAT args)
+    {
+        int? cbMarq = db.F_ARTICLE.Where(a => a.AR_Ref == args.AR_Ref).SingleOrDefault()?.cbMarq;
+        await DialogService.OpenAsync<BusinessWeb.Pages.Traitement.Etats.Articles.ArticlesFiche>(args.AR_Design,
+        new Dictionary<string, object>() { { "cbMarq", cbMarq } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+    }
+}

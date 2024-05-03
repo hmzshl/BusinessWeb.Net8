@@ -1,0 +1,414 @@
+﻿@page "/entretien/{type}"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction, Responsable Materiel")]
+
+
+
+@if (IsLoaded)
+{
+    <Card_1 Title="@(fn.TypeEntretien().Where(a => a.Id == Int16.Parse(type)).SingleOrDefault().Name)" IsDetail="@IsDetail">
+        <RadzenContent Container="main">
+            <div class="@grid_class">
+                <SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPaging="@(IsList)" DataSource="@items"
+                        Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete"})">
+                    <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                    <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_MATERIELENTRETIEN"></GridEvents>
+                    <GridPageSettings PageSize="100"></GridPageSettings>
+                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                    @if (IsList)
+                    {
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <Empty></Empty>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                    }
+
+                    <GridAggregates>
+                        <GridAggregate>
+                            <GridAggregateColumns>
+                                <GridAggregateColumn Field="Montant" Type="AggregateType.Sum" Format="N2">
+                                    <FooterTemplate>
+                                        @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                            </GridAggregateColumns>
+                        </GridAggregate>
+                    </GridAggregates>
+                    <GridColumns>
+                        <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Date)" HeaderText="Date" Format="d"></GridColumn>
+                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Piece)" HeaderText="Piece"></GridColumn>
+                        <GridColumn AllowFiltering="false" AllowSorting="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Fournisseur)" HeaderText="Fournisseur"></GridColumn>
+                        @if (IsList)
+                        {
+
+                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Materiel" Field="@nameof(API_V_MATERIELENTRETIEN.Intitule)">
+
+                            </GridColumn>
+                            <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Matricule" Field="@nameof(API_V_MATERIELENTRETIEN.Immatricule)">
+
+                            </GridColumn>
+                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Conducteur" Field="@nameof(API_V_MATERIELENTRETIEN.Nom)">
+
+                            </GridColumn>
+                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Objet" Field="@nameof(API_V_MATERIELENTRETIEN.Objet)">
+
+                            </GridColumn>
+                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° Marché" Field="@nameof(API_V_MATERIELENTRETIEN.NumeroMarche)">
+
+                            </GridColumn>
+                        }
+
+                        @if (type == "1")
+                        {
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Annee)" HeaderText="Année" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                <Template>
+                                    @{
+                                        var dt = (context as API_V_MATERIELENTRETIEN);
+                                        <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                        <RadzenButton Click="@(args => UploadFile("Entretien", dt.id))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                    }
+
+                                </Template>
+                                <EditTemplate>
+
+                                </EditTemplate>
+                            </GridColumn>
+
+                        }
+                        @if (type == "2")
+                        {
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Annee)" HeaderText="Année" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                <Template>
+                                    @{
+                                        var dt = (context as API_V_MATERIELENTRETIEN);
+                                        <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                        <RadzenButton Click="@(args => UploadFile("Entretien", dt.id))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                    }
+
+                                </Template>
+                                <EditTemplate>
+
+                                </EditTemplate>
+                            </GridColumn>
+
+                        }
+                        @if (type == "3")
+                        {
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Annee)" HeaderText="Année" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                <Template>
+                                    @{
+                                        var dt = (context as API_V_MATERIELENTRETIEN);
+                                        <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                        <RadzenButton Click="@(args => UploadFile("Entretien", dt.id))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                    }
+
+                                </Template>
+                                <EditTemplate>
+
+                                </EditTemplate>
+                            </GridColumn>
+
+                        }
+                        @if (type == "0")
+                        {
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Kilometrage)" HeaderText="Kilométrage" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Qté" Field="@nameof(API_V_MATERIELENTRETIEN.Qte)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+
+                            </GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                <Template>
+                                    @{
+                                        var dt = (context as API_V_MATERIELENTRETIEN);
+                                        <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                        <RadzenButton Click="@(args => UploadFile("Entretien", dt.id))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                    }
+
+                                </Template>
+                                <EditTemplate>
+
+                                </EditTemplate>
+                            </GridColumn>
+
+                        }
+                        @if (type == "4")
+                        {
+
+                        }
+                        @if (type == "5")
+                        {
+
+                        }
+                        @if (type == "6")
+                        {
+
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Kilometrage)" HeaderText="Kilométrage" Format="N0" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.KilometrageSuivant)" HeaderText="Kilo. Suivant" Format="N0" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                <Template>
+                                    @{
+                                        var dt = (context as API_V_MATERIELENTRETIEN);
+                                        <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                        <RadzenButton Click="@(args => UploadFile("Entretien", dt.id))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                    }
+
+                                </Template>
+                                <EditTemplate>
+
+                                </EditTemplate>
+                            </GridColumn>
+                        }
+                        @if (type == "7")
+                        {
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Kilometrage)" HeaderText="Kilométrage" Format="N0" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                <Template>
+                                    @{
+                                        var dt = (context as API_V_MATERIELENTRETIEN);
+                                        <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                        <RadzenButton Click="@(args => UploadFile("Entretien", dt.id))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                    }
+
+                                </Template>
+                                <EditTemplate>
+
+                                </EditTemplate>
+                            </GridColumn>
+                        }
+                        @if (type == "8")
+                        {
+
+                        }
+                        @if (type == "9")
+                        {
+
+                        }
+                        @if (type == "10")
+                        {
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Annee)" HeaderText="Année" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateDebut)" HeaderText="Date Début" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateFin)" HeaderText="Date Fin" Format="d"></GridColumn>
+                            <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                <Template>
+                                    @{
+                                        var dt = (context as API_V_MATERIELENTRETIEN);
+                                        <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                        <RadzenButton Click="@(args => UploadFile("Entretien", dt.id))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                    }
+
+                                </Template>
+                                <EditTemplate>
+
+                                </EditTemplate>
+                            </GridColumn>
+                        }
+                        @if (type == "11")
+                        {
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Annee)" HeaderText="Année" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                <Template>
+                                    @{
+                                        var dt = (context as API_V_MATERIELENTRETIEN);
+                                        <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                        <RadzenButton Click="@(args => UploadFile("Entretien", dt.id))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                    }
+
+                                </Template>
+                                <EditTemplate>
+
+                                </EditTemplate>
+                            </GridColumn>
+                        }
+                        @if (type == "12")
+                        {
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DatePaiement)" HeaderText="Date paiement" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.NumeroQuittance)" HeaderText="N° Quittance"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                <Template>
+                                    @{
+                                        var dt = (context as API_V_MATERIELENTRETIEN);
+                                        <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                        <RadzenButton Click="@(args => UploadFile("Entretien", dt.id))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                    }
+
+                                </Template>
+                                <EditTemplate>
+
+                                </EditTemplate>
+                            </GridColumn>
+                        }
+                        @if (type == "13")
+                        {
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateDebut)" HeaderText="Date début" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                <Template>
+                                    @{
+                                        var dt = (context as API_V_MATERIELENTRETIEN);
+                                        <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                        <RadzenButton Click="@(args => UploadFile("Entretien", dt.id))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                    }
+
+                                </Template>
+                                <EditTemplate>
+
+                                </EditTemplate>
+                            </GridColumn>
+                        }
+                    </GridColumns>
+                    <SfSpinner @bind-Visible="@loading">
+                    </SfSpinner>
+                </SfGrid>
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+    @code
+{
+    string grid_class = "grid-90";
+    [Parameter] public int Materiel { get; set; } = 0;
+    [Parameter] public int Projet { get; set; } = 0;
+    [Parameter] public bool IsList { get; set; } = true;
+    [Parameter]
+    public bool IsDetail { get; set; } = false;
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    //Components
+    
+    [Parameter] public string type { get; set; } = "0";
+    private IEnumerable<API_V_MATERIELENTRETIEN> items;
+    bool loading = false;
+    bool IsLoaded = false;
+    private SfDropDownList<int, API_T_Site> SiteDrop;
+    private RenderFragment Sites =>
+    @<SfDropDownList @ref=@SiteDrop TValue="int" TItem="API_T_Site" Placeholder="Site" DataSource=@(session.db.API_T_Site) Width="250" ShowClearButton>
+            <DropDownListFieldSettings Text="Intitule" Value="id"> </DropDownListFieldSettings>
+            <DropDownListEvents TValue="int" TItem="API_T_Site"> </DropDownListEvents>
+    </SfDropDownList>
+    ;
+    protected override async Task OnInitializedAsync()
+    {
+        		await Task.Delay(100);
+
+        if(!IsList)
+        {
+            grid_class = "grid-70";
+        }
+        db = session.db;
+        await LoadData();
+        		IsLoaded = true;
+
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadData();
+    }
+    protected async Task LoadData()
+    {   if(Materiel != 0)
+        {
+            items = session.db.API_V_MATERIELENTRETIEN.Where(a => a.Type == Int32.Parse(type) && a.Materiel == Materiel).ToList();
+        }
+        else if (Projet != 0)
+        {
+            items = session.db.API_V_MATERIELENTRETIEN.Where(a => a.Type == Int32.Parse(type) && a.Projet == Projet).ToList();
+        }
+        else
+        {
+            items = session.db.API_V_MATERIELENTRETIEN.Where(a => a.Type == Int32.Parse(type)).ToList();
+        }
+
+    }
+    protected async Task Edit(RecordDoubleClickEventArgs<API_V_MATERIELENTRETIEN> args)
+    {
+        await DialogService.OpenAsync<EntretiensFiche>(args.RowData.Piece,
+    new Dictionary<string, object>() { { "Projet", Projet }, { "Materiel", Materiel }, { "id", args.RowData.id }, { "type", Int32.Parse(type) } },
+    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "850px", Height = "800px" });
+         await LoadData();
+    }
+    private async Task Add()
+    {
+
+        await DialogService.OpenAsync<EntretiensFiche>($"Ajouter un élément",
+        new Dictionary<string, object>() { { "Projet", Projet }, { "Materiel", Materiel }, { "id", 0 }, { "type", Int32.Parse(type) } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "850px", Height = "800px" });
+        await LoadData();
+    }
+    private async Task OnActionBegin(ActionEventArgs<API_V_MATERIELENTRETIEN> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await Add();
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_MaterielEntretienDetail WHERE Entretien = {0}", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_MaterielEntretien WHERE id = {0}", args.Data.id);
+            db.SaveChanges();
+            await LoadData();
+        }
+    }
+    private async Task UploadFile(string table, int id)
+    {
+        await DialogService.OpenAsync<Uploader>("Integrer un document",
+                new Dictionary<string, object>() { { "Table", table }, { "id", id } },
+                new Radzen.DialogOptions() { Width = "800px", Height = "350px" });
+        await LoadData();
+
+    }
+    private async Task ShowFile(string url)
+    {
+        if (url.ToUpper().EndsWith(".PDF"))
+        {
+            await DialogService.OpenAsync<PdfViewer>("",
+                new Dictionary<string, object>() { { "DocumentPath", url } },
+                new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
+        }
+        if (url.ToUpper().EndsWith(".DOC") || url.ToUpper().EndsWith(".DOCX") || url.ToUpper().EndsWith(".TXT"))
+        {
+            await DialogService.OpenAsync<WordViewer>("",
+        new Dictionary<string, object>() { { "DocumentPath", url } },
+                new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
+        }
+    }
+
+
+
+
+}

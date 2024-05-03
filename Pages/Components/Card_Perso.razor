@@ -1,0 +1,17 @@
+﻿<RadzenCard>
+    <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" Class="rz-p-4">
+        <RadzenIcon Icon="@Icon" style="width: 100px; height: 100px; border-radius: 50%;"/>
+        <RadzenStack Gap="0">
+            <RadzenText TextStyle="TextStyle.Body1"><b>@Title</b></RadzenText>
+        </RadzenStack>
+    </RadzenStack>
+</RadzenCard>
+
+
+@code
+{
+    [Parameter]
+    public string Icon { get; set; }
+    [Parameter]
+    public string Title { get; set; }
+}

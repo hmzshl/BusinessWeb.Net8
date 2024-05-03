@@ -1,0 +1,78 @@
+﻿<button class="btn-2">
+	<div>@Title</div>
+	<svg fill="none" viewBox="0 0 24 24" height="25px" width="25px" xmlns="http://www.w3.org/2000/svg">
+		<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" stroke="white" d="M11.6801 14.62L14.2401 12.06L11.6801 9.5"></path>
+		<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" stroke="white" d="M4 12.0601H14.17"></path>
+		<path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" stroke="white" d="M12 4C16.42 4 20 7 20 12C20 17 16.42 20 12 20"></path>
+	</svg>
+</button>
+@code{
+	[Parameter]
+	public RenderFragment ChildContent { get; set; }
+	[Parameter]
+	public string Title { get; set; }
+}
+
+<style>
+	.btn-2 {
+		--color: #479f76;
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transition: all .5s;
+		border: none;
+		background-color: transparent;
+	}
+
+		.btn-2 div {
+			letter-spacing: 2px;
+			font-weight: bold;
+			background: var(--color);
+			border-radius: 0px;
+			color: white;
+			padding: 1rem;
+		}
+
+		.btn-2::before {
+			content: '';
+			z-index: -1;
+			background-color: var(--color);
+			border: 2px solid white;
+			border-radius: 0px;
+			width: 101%;
+			height: 100%;
+			position: absolute;
+			transform: rotate(1deg);
+			transition: .5s;
+			opacity: 0.2;
+		}
+
+		.btn-2:hover {
+			cursor: pointer;
+			filter: brightness(1.2);
+			transform: scale(1.1);
+		}
+
+			.btn-2:hover::before {
+				transform: rotate(0deg);
+				opacity: 1;
+			}
+
+		.btn-2 svg {
+			transform: translateX(-200%);
+			transition: .5s;
+			width: 0;
+			opacity: 0;
+		}
+
+		.btn-2:hover svg {
+			width: 15px;
+			transform: translateX(0%);
+			opacity: 1;
+		}
+
+		.btn-2:active {
+			filter: brightness(1.4);
+		}
+</style>

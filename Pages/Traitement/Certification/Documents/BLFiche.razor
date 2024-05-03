@@ -1,0 +1,581 @@
+﻿
+<SfToolbar CssClass="btns">
+	<ToolbarItems>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton IconCss="e-icons e-description" OnClick="InitFacturation">Transférer vers Sage</SfButton>
+			</Template>
+		</ToolbarItem>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton Disabled=@(id == 0) IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
+			</Template>
+		</ToolbarItem>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton OnClick="@(args => Submit(true))" IconCss="e-icons e-save" IsPrimary="true">Enregistrer</SfButton>
+			</Template>
+		</ToolbarItem>
+	</ToolbarItems>
+</SfToolbar>
+<div>
+	<GridRow>
+		<GridCol Xs="24" Md="24">
+			<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="row">
+				<SfTab CssClass="e-fill">
+					<TabEvents Selecting="@(args => fn.DisableTabSelect(args))" /><TabItems>
+						<TabItem>
+							<ChildContent>
+								<TabHeader Text="Identification"></TabHeader>
+							</ChildContent>
+							<ContentTemplate>
+								<GridRow>
+									<GridCol Xs="24" Md="4">
+										<Card>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro" LabelColSpan="8">
+												<SfTextBox @bind-Value="@(row.Piece)"/>
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
+													<SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
+												</FormItem>
+											</Card>
+										</GridCol>
+										<GridCol Xs="24" Md="6">
+											<Card>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Rapp Mission" LabelColSpan="10">
+													<SfTextBox @bind-Value="@(row.NumeroRapportMission)" />
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro Dossier" LabelColSpan="10">
+												<SfTextBox @bind-Value="@(row.NumeroDossier)" />
+												</FormItem>
+											</Card>
+
+										</GridCol>
+										<GridCol Xs="24" Md="14">
+											<Card>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Client">
+													<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0).Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Intitule + " ("+a.CT_Num+")"}))" @bind-Value="@row.CT_Num">
+														<DropDownListEvents TValue="string" TItem="F_COMPTET" />
+														<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+													</SfDropDownList>
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Chargé d'affaire">
+													<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="int" TItem="F_COLLABORATEUR" DataSource="@(db.F_COLLABORATEUR.Select(a => new F_COLLABORATEUR{CO_No = a.CO_No, CO_Nom = a.CO_Prenom + " " + a.CO_Nom}))" @bind-Value="@row.CO_No">
+														<DropDownListEvents TValue="int" TItem="F_COLLABORATEUR" />
+														<DropDownListFieldSettings Text="CO_Nom" Value="CO_No" />
+													</SfDropDownList>
+												</FormItem>
+											</Card>
+										</GridCol>
+										@*
+									<GridCol Xs="24" Md="4">
+									<Card>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Facture" LabelColSpan="8">
+									<SfTextBox @bind-Value="@(row.FactureNum)" Readonly />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Facture" LabelColSpan="8">
+									<SfDatePicker TValue="DateTime?" @bind-Value="@row.FactureDate" Readonly />
+									</FormItem>
+									</Card>
+									</GridCol>
+										*@
+
+										<GridCol Xs="24" Md="24">
+											<SfToolbar>
+												<ToolbarItems>
+													<ToolbarItem Align="ItemAlign.Left" Disabled="@(row.CT_Num == null)" OnClick=@(args => (DefaultGrid.AddRecordAsync())) TooltipText="Ajouter" Text="Ajouter" ShowTextOn="DisplayMode.Overflow" PrefixIcon="e-icons e-plus"></ToolbarItem>
+													<ToolbarItem Align="ItemAlign.Left" Disabled="@(row.CT_Num == null || id == 0)" OnClick="Copy" TooltipText="Dupliquer" Text="Dupliquer" ShowTextOn="DisplayMode.Overflow" PrefixIcon="e-icons e-copy"></ToolbarItem>
+													<ToolbarItem Align="ItemAlign.Left" Disabled="@(row.CT_Num == null || id == 0)" OnClick="Delete" TooltipText="Supprimer" Text="Supprimer" ShowTextOn="DisplayMode.Overflow" PrefixIcon="e-icons e-trash"></ToolbarItem>
+													<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+														<Template>
+															<SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+														</Template>
+													</ToolbarItem>
+												</ToolbarItems>
+											</SfToolbar>
+											<div style="height: 60vh;" class="no-border small-grid">
+												<SfGrid AllowRowDragAndDrop="true" Height="100%" DataSource="@(lignes)" AllowSelection @ref=@DefaultGrid AllowExcelExport>
+												<GridSelectionSettings PersistSelection Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
+													<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+													<GridEditSettings AllowDeleting ShowDeleteConfirmDialog AllowAdding AllowEditing Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+														<HeaderTemplate>
+															<span>@((context as API_T_CertifLigne).Libelle)</span>
+													</HeaderTemplate>
+												</GridEditSettings>
+												<GridEvents RowDropped="RowDropHandler" OnActionBegin="EditGrid" TValue="API_T_CertifLigne"></GridEvents>
+												<GridTemplates>
+													<EmptyRecordTemplate>
+														<Empty></Empty>
+													</EmptyRecordTemplate>
+												</GridTemplates>
+												<GridAggregates>
+													<GridAggregate>
+														<GridAggregateColumns>
+															<GridAggregateColumn Field="@nameof(API_T_CertifLigne.Reference)" Type="AggregateType.Count" Format="N0">
+																<FooterTemplate>
+																	@{
+																		var SumValue = (context as AggregateTemplateContext);
+																		<div style="text-align: center;">
+																			@lignes?.Count.ToString("N0")
+																		</div>
+																	}
+																</FooterTemplate>
+
+															</GridAggregateColumn>
+														</GridAggregateColumns>
+													</GridAggregate>
+												</GridAggregates>
+												<GridColumns>
+													<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifLigne.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+													<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifLigne.Reference) HeaderText="Reference"></GridColumn>
+													<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Article">
+														<Template>
+															@{
+																var dt = db.F_ARTICLE.Where(a => a.AR_Ref == (context as API_T_CertifLigne).AR_Ref).SingleOrDefault();
+																<div>@dt?.AR_Design</div>
+															}
+														</Template>
+														<EditTemplate>
+															<SfDropDownList AllowFiltering TValue="string" TItem="F_ARTICLE" DataSource="@db.F_ARTICLE" @bind-Value="@((context as API_T_CertifLigne).AR_Ref)">
+																	<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
+																	<DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
+																</SfDropDownList>
+															</EditTemplate>
+														</GridColumn>
+														<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifLigne.Libelle) HeaderText="Libellé Facture" />
+													</GridColumns>
+												</SfGrid>
+											</div>
+
+										</GridCol>
+									</GridRow>
+								</ContentTemplate>
+							</TabItem>
+							<TabItem>
+								<ChildContent>
+									<TabHeader Text="Fichiers"></TabHeader>
+								</ChildContent>
+								<ContentTemplate>
+									<Card Style="height: 100%;">
+										<FilesManager table="BLCertification" id="@id" societe="@session.Societe.id.ToString()"></FilesManager>
+									</Card>
+								</ContentTemplate>
+							</TabItem>
+						</TabItems>
+					</SfTab>
+				</Form>
+
+
+			</GridCol>
+
+		</GridRow>
+		<SfDialog Target="#target" Width="350px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@FaDG" CloseOnEscape>
+		<DialogTemplates>
+			<Header>
+				TRANSFER VERS SAGE
+			</Header>
+			<Content>
+				<SfDropDownList AllowFiltering TValue="short?" TItem="P_SOUCHEVENTE" DataSource="@db.P_SOUCHEVENTE.Where(a => a.S_Intitule != "")" @bind-Value=@souche>
+						<DropDownListEvents TValue="short?" TItem="P_SOUCHEVENTE" ValueChange="InitPiece" />
+						<DropDownListFieldSettings Text="S_Intitule" Value="cbIndice" />
+					</SfDropDownList>
+					<SfDatePicker Placeholder="Date" FloatLabelType="FloatLabelType.Always" TValue="DateTime" @bind-Value="@date" />
+					<SfTextBox Readonly Placeholder="N° Pièce" FloatLabelType="FloatLabelType.Always" @bind-Value="@row.Piece" />
+				</Content>
+			</DialogTemplates>
+			<DialogAnimationSettings></DialogAnimationSettings>
+			<DialogEvents></DialogEvents>
+			<DialogButtons>
+				<DialogButton Content="OK" IsPrimary="true" OnClick="Facturer" Disabled="@(souche == 0)"></DialogButton>
+				<DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => FaDG = false)"></DialogButton>
+			</DialogButtons>
+		</SfDialog>
+	</div>
+
+
+
+
+	@code {
+	[CascadingParameter]
+	public SessionDT session { get; set; }
+	DB db = new DB();
+	EditForm form = new EditForm();
+	[Parameter]
+	public int id { get; set; } = 0;
+	[Parameter]
+	public int caisse { get; set; } = 0;
+	[Parameter]
+	public int type { get; set; }
+	[Parameter]
+	public string operation { get; set; }
+	private API_T_CertifEntete row { get; set; }
+	List<API_T_CertifLigne> lignes = new List<API_T_CertifLigne>();
+	Helpers helpers = new Helpers();
+	[Parameter] public bool detail { get; set; } = false;
+	NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2", ShowSpinButton = false } };
+	[Parameter] public bool IsList { get; set; } = true;
+	public Syncfusion.Blazor.Data.Query LocalDataQuery = new Syncfusion.Blazor.Data.Query().Take(10);
+	SfGrid<API_T_CertifLigne> DefaultGrid;
+	string piece;
+	DateTime date = DateTime.Today;
+	short? souche = 0;
+	bool FaDG = false;
+
+	protected override async Task OnInitializedAsync()
+	{
+		db = session.db;
+
+		if (id == 0)
+		{
+			row = new API_T_CertifEntete();
+			row.Date = DateTime.Today;
+			row.Type = type;
+			row.Libelle = null;
+				/*
+				* string piece = "BLCR0000001";
+						var dt = db.API_T_CertifEntete.Where(a => a.Piece.StartsWith(("BLCR"))).ToList();
+			if (dt.Count != 0)
+				{
+				piece = fn.getNextCode(dt.Max(a => a.Piece));
+			}
+				*/
+
+			InitPiece();
+
+			row.Piece = piece;
+		}
+		else
+		{
+			row = db.API_T_CertifEntete.Where(a => a.id == id).SingleOrDefault();
+			UpdateGrid();
+
+		}
+
+	}
+	private void Submit(bool close)
+	{
+		if (id == 0)
+		{
+			db.API_T_CertifEntete.Add(row);
+		}
+		db.SaveChanges();
+		id = row.id;
+		if (close)
+		{
+			DialogService.Close();
+		}
+	}
+	private void UpdateGrid()
+	{
+		lignes = db.API_T_CertifLigne.Where(a => a.Entete == id).OrderBy(a => a.Affectation).ToList();
+	}
+	public void EditGrid(ActionEventArgs<API_T_CertifLigne> args)
+	{
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+			var ar = db.F_ARTICLE.Where(a => a.AR_Ref == args.Data.AR_Ref).SingleOrDefault();
+			args.Data.Libelle = (args.Data.Libelle) ?? ("Certificat " + ar?.AR_Design);
+
+			if (args.Action == "Add")
+			{
+				if (id == 0)
+				{
+					Submit(false);
+				}
+				API_T_CertifLigne item = args.Data;
+
+				item.Entete = this.id;
+				db.Add(item);
+				db.SaveChanges();
+
+			}
+			if (args.Action != "Add")
+			{
+				var local = db.Set<API_T_CertifLigne>().Local.FirstOrDefault(a => a.id == args.Data.id);
+				if (local != null)
+				{
+					db.Entry(local).State = EntityState.Detached;
+				}
+				db.Entry(args.Data).State = EntityState.Modified;
+				db.SaveChanges();
+
+
+			}
+
+		}
+
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+			foreach (API_T_CertifLigne item in dt)
+			{
+				db.Database.ExecuteSqlRaw("DELETE FROM API_T_CertifLigne WHERE id = {0}", item.id);
+			}
+
+
+		}
+	}
+
+	private async Task RowDropHandler(RowDroppedEventArgs<API_T_CertifLigne> args)
+	{
+		try
+		{
+
+			foreach (API_T_CertifLigne dt in DefaultGrid.GetCurrentViewRecordsAsync().Result)
+			{
+				double index = DefaultGrid.GetRowIndexByPrimaryKeyAsync(dt.id).Result;
+				string q1 = "UPDATE API_T_CertifLigne SET Affectation = {0} WHERE id = {1}";
+				db.Database.ExecuteSqlRaw(q1, (index + 1), dt.id);
+			}
+
+
+		}
+		catch (Exception ex)
+		{
+			await Message.Error(ex.Message);
+		}
+
+	}
+	private void OnFileOpen(FileOpenEventArgs<FileManagerDirectoryContent> args)
+	{
+		if (args.FileDetails.Name.ToUpper().EndsWith(".PDF"))
+		{
+			DialogService.OpenAsync<PdfViewer>(args.FileDetails.Name,
+				new Dictionary<string, object>() { { "DocumentPath", helpers.getPath(session.Societe.id.ToString(), "Projet", this.id.ToString()) + "/" + args.FileDetails.Name } },
+				new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+		}
+		if (args.FileDetails.Name.ToUpper().EndsWith(".DOC") || args.FileDetails.Name.ToUpper().EndsWith(".DOCX") || args.FileDetails.Name.ToUpper().EndsWith(".TXT"))
+		{
+			DialogService.OpenAsync<WordViewer>(args.FileDetails.Name,
+				new Dictionary<string, object>() { { "DocumentPath", helpers.getPath(session.Societe.id.ToString(), "Projet", this.id.ToString()) + "/" + args.FileDetails.Name } },
+				new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+		}
+
+	}
+	private async Task Print()
+	{
+		Submit(false);
+		List<JSReportParameter> parameters = new List<JSReportParameter>();
+
+		parameters.Add(new JSReportParameter { Name = "id", Values = new List<string>() { this.id.ToString() } });
+		await DialogService.OpenAsync<ReportViewer>(row.Piece,
+		new Dictionary<string, object>() { { "ReportName", "reports\\certification\\BonLivraison" }, { "parameters", parameters } },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });
+	}
+	private async Task Delete()
+	{
+		bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment supprimer la selection?", "SUPPRESSION");
+		if (isConfirm)
+		{
+			var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+			foreach (API_T_CertifLigne item in dt)
+			{
+				db.Database.ExecuteSqlRaw("DELETE FROM API_T_CertifLigne WHERE id = {0}", item.id);
+			}
+			lignes = db.API_T_CertifLigne.Where(a => a.Entete == id).OrderBy(a => a.id).ToList();
+		}
+
+	}
+	private async Task Copy()
+	{
+		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+		foreach (API_T_CertifLigne item in dt)
+		{
+			var ln = new API_T_CertifLigne();
+			fn.CopyData(item, ln);
+			db.Add(ln);
+		}
+		db.SaveChanges();
+		UpdateGrid();
+	}
+	private async Task InitPiece()
+	{
+		var q1 = db.F_DOCLIGNE.FromSqlRaw(@"SELECT 
+a.* 
+FROM F_DOCLIGNE a 
+INNER JOIN F_DOCENTETE b ON a.DO_Piece = b.DO_Piece AND a.DO_Type = b.DO_Type 
+WHERE b.DO_Provenance = 0 AND a.DO_Type IN (6,7)").Select(a => a.DL_PieceBL).Distinct();
+		var q2 = db.F_DOCENTETE.Where(a => a.DO_Type == 3).Select(a => a.DO_Piece).Distinct();
+		var max = q1.Concat(q2).Max();
+		if (max!= null)
+
+		{
+			piece = fn.getNextCode(max);
+		}
+		else
+
+		{
+			piece = "BLCR0000001";
+		}
+		//piece = row.Piece;
+	}
+	private async Task InitFacturation()
+	{
+		if (id == 0)
+		{
+			Submit(false);
+		}
+		FaDG = true;
+	}
+	private async Task Facturer()
+	{
+		fn.DisableTriggers(db,"F_DOCENTETE","INS");
+		fn.DisableTriggers(db,"F_DOCENTETE","UPD");
+		fn.DisableTriggers(db,"F_DOCLIGNE","INS");
+		fn.DisableTriggers(db, "F_DOCLIGNE", "UPD");
+		var doc = new F_DOCENTETE();
+		fn.FillDO(doc);
+		doc.DO_Type = 3;
+		doc.DO_Domaine = 0;
+		doc.DE_No = db.F_DEPOT.Where(a => a.DE_Principal == 1).SingleOrDefault()?.DE_No;
+		doc.DO_Date = date;
+		doc.DO_DateLivr = row.DateLivraison;
+		doc.DO_Piece = row.Piece;
+		doc.DO_Tiers = row.CT_Num;
+		doc.CT_NumPayeur = row.CT_Num;
+		doc.CG_Num = db.F_COMPTET.Where(a => a.CT_Num == row.CT_Num).SingleOrDefault()?.CG_NumPrinc;
+		doc.DO_Statut = 2;
+		doc.DO_Provenance = 0;
+		doc.CO_No = row.CO_No;
+		doc.N_CatCompta = 1;
+		if(souche == 1)
+		{
+			doc.DO_Souche = 0;
+		}
+		else
+		{
+			doc.DO_Souche = 1;
+		}
+		
+		doc.DO_Coord04 = row.Piece;
+		db.Add(doc);
+		db.SaveChanges();
+
+		row.FactureDate = doc.DO_Date;
+		row.FactureNum = doc.DO_Piece;
+		row.IsFacture = true;
+		row.FactureID = doc.cbMarq;
+		row.Souche = doc.DO_Souche;
+		db.SaveChanges();
+
+
+
+
+
+		var dt = lignes.GroupBy(a => new { a.AR_Ref, a.Libelle })
+				.Select(a => new API_T_CertifLigne
+		   {
+			   AR_Ref = a.Key.AR_Ref,
+			   Libelle = a.Key.Libelle,
+			   QL_Qte = a.Count()
+		   }).ToList();
+		int ligne = 1000;
+		int dl_no = 1;
+		Decimal ht = 0;
+		Decimal ttc = 0;
+		if (db.F_DOCLIGNE.Count() != 0)
+		{
+			dl_no = ((db.F_DOCLIGNE.Max(a => a.DL_No)) ?? 0) + 1;
+		}
+		foreach (API_T_CertifLigne item in dt)
+		{
+			var ln = new F_DOCLIGNE();
+			fn.FillDL(ln);
+			var ar = db.F_ARTICLE.Where(a => a.AR_Ref == item.AR_Ref).SingleOrDefault();
+			var cl = db.F_ARTCLIENT.Where(a => a.CT_Num == row.CT_Num && a.AR_Ref == item.AR_Ref && a.AC_Categorie == doc.DO_Tarif).SingleOrDefault();
+			var tx = new API_V_ARTCOMPTA();
+			var txs = db.API_V_ARTCOMPTA.Where(a => a.AR_Ref == item.AR_Ref && a.Type == 0 && a.Champ == doc.N_CatCompta);
+			if (txs.Count() != 0)
+			{
+				tx = txs.First();
+			}
+			ln.DL_CodeTaxe1 = tx?.CodeTaxe1;
+			ln.DL_Taxe1 = tx?.Taux1;
+
+			if (ar != null)
+			{
+				if (cl != null)
+				{
+					ln.DL_PrixUnitaire = cl.AC_PrixVen;
+				}
+				else
+				{
+					ln.DL_PrixUnitaire = ar.AR_PrixVen;
+				}
+				var un = db.P_UNITE.Where(a => a.cbIndice == ar.AR_UniteVen).SingleOrDefault();
+				ln.EU_Enumere = un?.U_Intitule;
+			}
+
+			ln.AR_Ref = item.AR_Ref;
+			if (item.AR_Ref == null)
+			{
+				if (item.Libelle?.Length < 69)
+				{
+					ln.DL_Design = item.Libelle;
+				}
+				else
+				{
+					ln.DL_Design = item.Libelle?.Substring(0, 69);
+				}
+				ln.DL_Qte = 0;
+				ln.EU_Qte = 0;
+				ln.DL_QteBL = 0;
+				ln.DL_Valorise = 0;
+				ln.DL_MontantHT = 0;
+				ln.DL_PUTTC = 0;
+				ln.DL_MontantTTC = 0;
+			}
+			else
+			{
+				ln.DL_Design = ar?.AR_Design;
+				ln.DL_Qte = item.QL_Qte;
+				ln.EU_Qte = item.QL_Qte;
+				ln.DL_QteBL = item.QL_Qte;
+				ln.CO_No = row.CO_No;
+				ln.DE_No = db.F_DEPOT.Where(a => a.DE_Principal == 1).SingleOrDefault()?.DE_No;
+				ln.DL_Valorise = 1;
+				ln.DL_MontantHT = ln.DL_PrixUnitaire * ln.DL_Qte;
+				ln.DL_PUTTC = ln.DL_PrixUnitaire * (1 + ((ln.DL_Taxe1 ?? 0) / 100));
+				ln.DL_MontantTTC = ln.DL_PUTTC * ln.DL_Qte;
+			}
+
+
+
+			ln.DO_Type = 3;
+			ln.DO_Domaine = 0;
+
+			ln.DO_Date = date;
+			ln.DO_DateLivr = row.DateLivraison;
+			ln.DO_Piece = piece;
+			ln.CT_Num = row.CT_Num;
+			ln.DL_Ligne = ligne;
+			ln.DL_No = dl_no;
+
+
+			ht = ht + (ln.DL_MontantHT ?? 0);
+			ttc = ttc + (ln.DL_MontantTTC ?? 0);
+
+			db.Add(ln);
+
+			ligne = ligne + 1000;
+			dl_no = dl_no + 1;
+		}
+		db.SaveChanges();
+		db.Database.ExecuteSqlRaw("UPDATE F_DOCENTETE set DO_Escompte = 1,DO_StatutBAP = 0, DO_DocType = 3,DO_TypeCalcul = 0, cbHashOrder = null, cbHashDate = null, cbHashVersion = 1, cbHash = null, DO_Valide = 0 WHERE DO_Piece = {0} AND DO_Type = 3", doc.DO_Piece);
+		db.Database.ExecuteSqlRaw(@"UPDATE a SET a.DO_TotalHT = {1}
+                                , a.DO_TotalHTNet = {1}
+                                , a.DO_TotalTTC = {2},
+                                a.DO_NetAPayer = {2}
+
+                                FROM F_DOCENTETE a
+                                WHERE a.DO_Piece = {0} AND a.DO_Type = 3
+
+                                ", doc.DO_Piece, ht, ttc);
+		fn.EnableTriggers(db, "F_DOCENTETE", "INS");
+		fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
+		fn.EnableTriggers(db, "F_DOCLIGNE", "INS");
+		fn.EnableTriggers(db, "F_DOCLIGNE", "UPD");
+		FaDG = false;
+		piece = null;
+	}
+}

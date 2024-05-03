@@ -1,0 +1,58 @@
+﻿<SfGrid AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items"
+        Toolbar="@(new List<object>() {  "Search"})">
+
+    <GridEvents OnRecordDoubleClick="@(args => Submit(args.RowData))" TValue="API_V_PERSONNEL"></GridEvents>
+    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+    <GridTemplates>
+        <EmptyRecordTemplate>
+            <Empty></Empty>
+        </EmptyRecordTemplate>
+    </GridTemplates>
+    <GridColumns>
+        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Intitule" HeaderText="Nom"></GridColumn>
+        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CIN" HeaderText="CIN"></GridColumn>
+    </GridColumns>
+    <SfSpinner @bind-Visible="@loading">
+    </SfSpinner>
+</SfGrid>
+
+@code 
+{
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter] public int ParentID { get; set; }
+    [Parameter] public string Form { get; set; }
+    private ICollection<API_V_PERSONNEL> items;
+    private SfGrid<API_V_PERSONNEL> DefaultGrid;
+    bool loading = true;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await Task.Run(LoadData);
+
+    }
+    private async Task LoadData()
+    {
+        loading = true;
+        await Task.Delay(1);
+        items = db.API_V_PERSONNEL.OrderBy(a => a.Nom).ToList();
+        loading = false;
+        await Task.Delay(1);
+    }
+    private void Submit(API_V_PERSONNEL args)
+    {
+        var dt = db.API_T_PersonnelEquipe.Where(a => a.EquipeID == args.id);
+        if(dt.Count() == 0) 
+        {
+            API_T_PersonnelEquipe ln = new API_T_PersonnelEquipe();
+            ln.ParentID = ParentID;
+            ln.EquipeID = args.id;
+            db.API_T_PersonnelEquipe.Add(ln);
+            db.SaveChanges();
+        }
+
+        DialogService.Close();
+    }
+}

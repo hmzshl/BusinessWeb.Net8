@@ -1,0 +1,166 @@
+﻿@using System.Net.NetworkInformation;
+@using System.Text;
+<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit())">Enregistrer</SfButton>
+            </Template>
+        </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="4" Context="FormContext">
+    <GridRow>
+        <GridCol Xs="24" Md="24">
+            <Card Title="License">
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="ID">
+                    <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Info" Text="@(macAddr)" />
+                </FormItem>
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="License">
+                    <SfTextBox @bind-Value="@row.Activation" ValueChange="@ValueChangeHandler" />
+                </FormItem>
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Statut">
+                    @if (!(license.Status == LicenseStatus.Valid || license.MachineCodeAsString == macAddr))
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Danger" Text="N'est pas activé" />
+                    }
+                    else
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Success" Text="Activé" />
+                    }
+                </FormItem>
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Expiration">
+                    @if (!(license.Status == LicenseStatus.Valid || license.MachineCodeAsString == macAddr))
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Danger" Text="Expiré" />
+                    }
+                    else
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Success" Text="@license.DateExpires.ToShortDateString()" />
+                    }
+
+                </FormItem>
+            </Card>
+            <Card Title="Applications">
+                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Caisse">
+                    @if ((license.IsFeaturePresentEx(12)))
+                    {
+                      <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Secondary" Text="Disponible" />  
+                    }
+                    else
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Light" Text="Non disponible" />
+                    }   
+                 </FormItem>
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Banque">
+                    @if ((license.IsFeaturePresentEx(13)))
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Secondary" Text="Disponible" />
+                    }
+                    else
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Light" Text="Non disponible" />
+                    }
+                </FormItem>
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Pilotage">
+                    @if ((license.IsFeaturePresentEx(14)))
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Secondary" Text="Disponible" />
+                    }
+                    else
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Light" Text="Non disponible" />
+                    }
+                </FormItem>
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Outils">
+                    @if ((license.IsFeaturePresentEx(9)))
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Secondary" Text="Disponible" />
+                    }
+                    else
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Light" Text="Non disponible" />
+                    }
+                </FormItem>
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Gestion Matériels">
+                    @if ((license.IsFeaturePresentEx(5)))
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Secondary" Text="Disponible" />
+                    }
+                    else
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Light" Text="Non disponible" />
+                    }
+                </FormItem>
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Gestion Personnels">
+                    @if ((license.IsFeaturePresentEx(6)))
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Secondary" Text="Disponible" />
+                    }
+                    else
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Light" Text="Non disponible" />
+                    }
+                </FormItem>
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Mobile">
+                    @if ((license.IsFeaturePresentEx(17)))
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Secondary" Text="Disponible" />
+                    }
+                    else
+                    {
+                        <RadzenBadge Shade="Shade.Dark" BadgeStyle="BadgeStyle.Light" Text="Non disponible" />
+                    }
+                </FormItem>
+            </Card>
+
+        </GridCol>
+    </GridRow>
+
+</Form>
+
+@code
+{
+
+    private TLicense row = new TLicense();
+    private CryptoLicense license;
+    string macAddr = (
+                        from nic in NetworkInterface.GetAllNetworkInterfaces()
+                        where nic.OperationalStatus == OperationalStatus.Up
+                        select nic.GetPhysicalAddress().ToString()
+                        ).FirstOrDefault();
+    protected override async Task OnInitializedAsync()
+    {
+        var dt = sdb.TLicenses.OrderBy(a => a.id).ToList();
+        if(dt.Count() != 0)
+        {
+            row = dt.First();
+        }
+        else
+        {
+            sdb.Add(row);
+            sdb.SaveChanges();
+        }
+        license = new CryptoLicense(row.Activation, fn.validationKey);
+
+    }
+    static string ConvertToBase64(string originalString)
+    {
+        byte[] bytesToEncode = System.Text.Encoding.UTF8.GetBytes(originalString);
+        return Convert.ToBase64String(bytesToEncode);
+    }
+    private async Task Annuler()
+    {
+        DialogService.Close();
+    }
+    private async Task Submit()
+    {
+        sdb.SaveChanges();
+        DialogService.Close();
+    }
+    private async Task ValueChangeHandler(Syncfusion.Blazor.Inputs.ChangedEventArgs args)
+    {
+        license = new CryptoLicense(row.Activation, fn.validationKey); 
+    }
+
+}

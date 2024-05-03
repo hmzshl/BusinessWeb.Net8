@@ -1,0 +1,83 @@
+﻿@page "/gestion-projets"
+@attribute [Authorize]
+
+<PageTitle>Projets</PageTitle>
+<GridRow Class="dash">
+    <GridCol Xs="24" Md="12">
+        <Card Title="10 Derniers projets">
+            <SfGrid DataSource="@projets">
+                <GridTemplates>
+                    <EmptyRecordTemplate>
+                        <Empty></Empty>
+                    </EmptyRecordTemplate>
+                </GridTemplates>
+                <GridColumns>
+                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" Format="d" Field="DateEnregistrement" HeaderText="Date"></GridColumn>
+                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" Field="NumeroMarche" HeaderText="Numéro"></GridColumn>
+                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="200" Field="CT_Num" HeaderText="Maitre d'ouvrage">
+                        <Template>
+                            @{
+                                var dt = (session.db.F_COMPTET.Where(a => a.CT_Num == (context as API_T_Projet).CT_Num));
+                            }
+                            @if (dt.Count() != 0)
+                            {
+                                <div>@dt.First().CT_Intitule</div>
+                            }
+                        </Template>
+                    </GridColumn>
+                </GridColumns>
+            </SfGrid>
+        </Card>
+    </GridCol>
+    <GridCol Xs="24" Md="12">
+        <Card Title="Top 10 Maitres d'ouvrage">
+            <SfGrid DataSource="@clients">
+                <GridTemplates>
+                    <EmptyRecordTemplate>
+                        <Empty></Empty>
+                    </EmptyRecordTemplate>
+                </GridTemplates>
+                <GridColumns>
+                    <GridColumn Width="80" Field="CT_Num" HeaderText="Numéro">
+                    </GridColumn>
+                    <GridColumn Field="CT_Intitule" HeaderText="Intitule" Width="250"></GridColumn>
+                    <GridColumn Width="80" Field="CT_Ville" HeaderText="Ville"></GridColumn>
+                </GridColumns>
+            </SfGrid>
+        </Card>
+    </GridCol>
+    <GridCol Xs="24" Md="12">
+        <Card Title="Top 10 Fournisseurs">
+            <SfGrid DataSource="@fournisseurs">
+                <GridTemplates>
+                    <EmptyRecordTemplate>
+                        <Empty></Empty>
+                    </EmptyRecordTemplate>
+                </GridTemplates>
+                <GridColumns>
+                    <GridColumn Width="80" Field="CT_Num" HeaderText="Numéro">
+                    </GridColumn>
+                    <GridColumn Field="CT_Intitule" HeaderText="Intitule" Width="250"></GridColumn>
+                    <GridColumn Width="80" Field="CT_Ville" HeaderText="Ville"></GridColumn>
+                </GridColumns>
+            </SfGrid>
+        </Card>
+    </GridCol>
+</GridRow>
+
+@code {
+
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    List<F_COMPTET> clients = new List<F_COMPTET>();
+    List<F_COMPTET> fournisseurs = new List<F_COMPTET>();
+    List<API_T_Projet> projets = new List<API_T_Projet>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        clients = session.db.F_COMPTET.Where(a => a.CT_Type == 0).Take(10).ToList();
+        fournisseurs = session.db.F_COMPTET.Where(a => a.CT_Type == 1).Take(10).ToList();
+        projets = session.db.API_T_Projet.Take(10).ToList();
+    }
+}
+

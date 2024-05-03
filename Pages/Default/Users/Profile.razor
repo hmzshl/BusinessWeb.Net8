@@ -1,0 +1,73 @@
+﻿
+<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit())">Enregistrer</SfButton>
+            </Template>
+        </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+<Form Model="@user" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="8">
+    <RadzenAlert Size="AlertSize.Large" Shade="Shade.Light" AlertStyle="AlertStyle.Danger" Variant="Variant.Flat" Title="Cannot change password" Visible="@errorVisible">@error</RadzenAlert>
+    <RadzenAlert Size="AlertSize.Large" Shade="Shade.Light" AlertStyle="AlertStyle.Success" Variant="Variant.Flat" Visible="@successVisible">
+        Your password has been changed.
+    </RadzenAlert>
+    <GridRow>
+        <GridCol Xs="24" Md="24">
+            <Card Title="Modifier le mot de passe">
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Ancien mot de passe" LabelColSpan="8">
+                    <SfTextBox Type="InputType.Password" @bind-Value="@oldPassword" />
+                </FormItem>
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Nouveau mot de passe" LabelColSpan="8">
+                    <SfTextBox Type="InputType.Password" @bind-Value="@newPassword" />
+                </FormItem>
+            </Card>
+        </GridCol>
+         <GridCol Xs="24" Md="24">
+            <Card Title="Roles">
+                @{
+                    string q1 = @"SELECT a.* FROM AspNetRoles a WHERE Id IN (SELECT a.RoleId FROM AspNetUserRoles a WHERE a.UserId = {0})";
+                }
+                <div style="height: 45vh;">
+                    <SfGrid Height="100%" DataSource="@(sdb.AspNetRoles.FromSqlRaw(q1,sc.User.Id))">
+                        <GridColumns>
+                            <GridColumn HeaderText="Nom" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(AspNetRole.Name)" />
+                        </GridColumns>
+                    </SfGrid>
+                </div>
+               
+            </Card>
+         </GridCol>
+    </GridRow>
+</Form>
+
+@code {
+    protected string oldPassword = "";
+    protected string newPassword = "";
+    protected string confirmPassword = "";
+    protected BusinessWeb.Models.ApplicationUser user = new ApplicationUser();
+    protected string error;
+    protected bool errorVisible;
+    protected bool successVisible;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = await sc.GetUserById($"{sc.User.Id}");
+    }
+
+    protected async Task Submit()
+    {
+        try
+        {
+            confirmPassword = newPassword;
+            await sc.ChangePassword(oldPassword, newPassword);
+            successVisible = true;
+        }
+        catch (Exception ex)
+        {
+            errorVisible = true;
+            error = ex.Message;
+        }
+    }
+}

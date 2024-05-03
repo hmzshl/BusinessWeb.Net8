@@ -1,0 +1,200 @@
+﻿<div style="height: 80vh">
+    <SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+            Toolbar="@(new List<object>() { "ColumnChooser", "Search"})">
+
+        <GridEvents OnRecordDoubleClick="@(args => RowSelected(args.RowData))" TValue="F_ARTICLE"></GridEvents>
+        <GridPageSettings PageSize="100"></GridPageSettings>
+        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+        <GridTemplates>
+            <EmptyRecordTemplate>
+                <Empty></Empty>
+            </EmptyRecordTemplate>
+        </GridTemplates>
+        <GridColumns>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_ARTICLE.AR_Ref)" HeaderText="Référence" Width="100"></GridColumn>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_ARTICLE.AR_Design)" HeaderText="Désignation"></GridColumn>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Unité" Width="100"></GridColumn>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_ARTICLE.FA_CodeFamille)" HeaderText="Code Fam." Width="100"></GridColumn>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Famille" Width="180"></GridColumn>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Sui Sto." Width="100"></GridColumn>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Qté Stock" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Width="80">
+                <Template>
+                    @{
+                        Decimal value = 0;
+                        var dt = db.F_ARTSTOCK.Where(a => a.AR_Ref == (context as F_ARTICLE).AR_Ref && a.DE_No == de_no);
+                        if (dt.Sum(a => a.AS_QteSto) > 0)
+                        {
+                            value = dt.Sum(a => a.AS_QteSto)??0;
+                            <div style="text-align: center;">
+                                <span class="statustxt e-activecolor">@value.ToString("N2")</span>
+                            </div>
+
+                        }
+                    }
+                </Template>
+            </GridColumn>
+        </GridColumns>
+        <SfSpinner @bind-Visible="@loading">
+        </SfSpinner>
+    </SfGrid>
+</div>
+
+
+
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    Helpers helpers = new Helpers();
+
+    private IEnumerable<F_ARTICLE> items;
+    List<F_ARTICLE> rows = new List<F_ARTICLE>();
+    bool loading = true;
+    [Parameter] public int cbMarq { get; set; } = 0;
+    [Parameter] public string src { get; set; } = "document";
+    [Parameter] public int de_no { get; set; } = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        loading = true;
+        await Task.Delay(1);
+        items = db.F_ARTICLE.ToList();
+        loading = false;
+        await Task.Delay(1);
+    }
+    private async Task Submit(F_ARTICLE args)
+    {
+        if (src == "document")
+        {
+            var row = db.F_DOCENTETE.Where(a => a.cbMarq == cbMarq).SingleOrDefault();
+            F_DOCLIGNE dl = new F_DOCLIGNE();
+            helpers.FillDL(dl);
+            dl.DO_Piece = row.DO_Piece;
+            dl.DO_Date = row.DO_Date;
+            dl.DO_Domaine = (short)row.DO_Domaine;
+            dl.DO_Type = (short)row.DO_Type;
+            dl.CO_No = row.CO_No;
+            dl.DE_No = row.DE_No;
+            dl.CA_Num = row.CA_Num;
+            dl.CT_Num = row.DO_Tiers;
+            dl.AR_Ref = args.AR_Ref;
+            dl.DL_Design = args.AR_Design;
+            var un = db.P_UNITE.Where(a => a.cbIndice == args.AR_UniteVen);
+            if(un.Count() != 0)
+            {
+                dl.EU_Enumere = un.First().U_Intitule;
+            }
+            
+            dl.DL_No = (db.F_DOCLIGNE.Max(a => a.DL_No) ?? 0) + 1;
+            dl.DL_Qte = 1;
+            dl.EU_Qte = 1;
+            if (dl.DO_Domaine == 4)
+            {
+                dl.DL_MvtStock = 3;
+            }
+            db.F_DOCLIGNE.Add(dl);
+            helpers.DisableTriggers(db, "F_DOCLIGNE", "INS");
+            db.SaveChanges();
+            helpers.EnableTriggers(db, "F_DOCLIGNE", "INS");
+        }
+    }
+    private async Task UpdateStock(F_ARTICLE args)
+    {
+        helpers.DisableTriggers(db, "F_ARTSTOCK", "INS");
+        helpers.DisableTriggers(db, "F_ARTSTOCK", "UPD");
+        string q00 = @"INSERT INTO F_ARTSTOCK ([AR_Ref],[DE_No],[AS_QteMini],[AS_QteMaxi],[AS_MontSto],[AS_QteSto],[AS_QteRes],[AS_QteCom],[AS_Principal],[AS_QteResCM],[AS_QteComCM]
+                    ,[AS_QtePrepa],[DP_NoPrincipal],[DP_NoControle],[AS_QteAControler],[AS_Mouvemente],[cbProt])
+
+            SELECT
+            b.AR_Ref,a.DE_No,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,0.000000,
+            0.000000,0.000000,0,0,0,0,0
+
+
+            FROM F_DEPOT a
+            INNER JOIN F_ARTICLE b ON 1 = 1
+            LEFT JOIN F_ARTSTOCK de ON a.DE_No = de.DE_No AND b.AR_Ref = de.AR_Ref
+
+
+            WHERE b.AR_Ref = {0} AND de.AR_Ref IS NULL";
+
+        string q1 = @"UPDATE a SET a.AS_QteSto = ISNULL(b.Qte,0), a.AS_MontSto = ISNULL(c.PU,0) * ISNULL(b.Qte,0)
+
+						FROM F_ARTSTOCK a
+						LEFT JOIN
+						(SELECT
+						a.DE_No,
+						a.AR_Ref,
+						SUM(CASE WHEN a.DL_MvtStock = 1 THEN a.DL_Qte ELSE -a.DL_Qte END) Qte
+						FROM F_DOCLIGNE a
+						WHERE a.DL_MvtStock IN (1,3)
+						GROUP BY
+						a.DE_No,
+						a.AR_Ref) b ON a.DE_No = b.DE_No AND a.AR_Ref = b.AR_Ref
+
+						LEFT JOIN
+						(
+						(SELECT
+						a.DE_No,
+						a.AR_Ref,
+						CASE WHEN SUM(a.DL_Qte) != 0 THEN SUM(a.DL_MontantHT)/SUM(a.DL_Qte) ELSE 0 END PU
+						FROM F_DOCLIGNE a
+						WHERE a.DL_MvtStock = 1
+						GROUP BY a.AR_Ref,
+						a.DE_No)
+						) c ON a.DE_No = c.DE_No AND a.AR_Ref = c.AR_Ref WHERE a.AR_Ref = {0}";
+        db.Database.ExecuteSqlRaw(q00, args.AR_Ref);
+        db.Database.ExecuteSqlRaw(q1, args.AR_Ref);
+        helpers.EnableTriggers(db, "F_ARTSTOCK", "INS");
+        helpers.EnableTriggers(db, "F_ARTSTOCK", "UPD");
+    }
+    private async Task RowSelected(F_ARTICLE args)
+    {
+
+        await Submit(args);
+        await UpdateStock(args);
+        DialogService.Close();
+    }
+
+}
+
+
+<style>
+    .statustemp.e-activecolor {
+        background-color: #ccffcc;
+        text-align: center;
+    }
+
+    td.e-rowcell .statustxt.e-activecolor {
+        color: #007d00;
+        background-color: #ccffcc;
+        border-radius: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        position: relative;
+        text-align: center;
+    }
+
+    .statustemp.e-inactivecolor {
+        background-color: #ffd7cc;
+        text-align: center;
+    }
+
+    td.e-rowcell .statustxt.e-inactivecolor {
+        color: #c40000;
+        background-color: #ffd7cc;
+        border-radius: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        position: relative;
+        text-align: center;
+    }
+</style>

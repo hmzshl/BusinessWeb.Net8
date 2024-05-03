@@ -1,0 +1,210 @@
+﻿@page "/av-bookings"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction,Commercial,Agence Voyage")]
+@if (IsLoaded)
+{
+    <Card_1 Title="LISTE DES BOOKINGS">
+        <RadzenContent Container="main">
+            <div style="height: @getHeight();">
+                <SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                        Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete"})">
+                    <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                    <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="RowDoubleClicked" TValue="API_T_AgenceBooking"></GridEvents>
+                    <GridPageSettings PageSize="100"></GridPageSettings>
+                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                    <GridTemplates>
+                        <EmptyRecordTemplate>
+                            <Empty></Empty>
+                        </EmptyRecordTemplate>
+                    </GridTemplates>
+                    <GridAggregates>
+                        <GridAggregate>
+                            <GridAggregateColumns>
+                                <GridAggregateColumn Field="@nameof(API_T_AgenceBooking.NbrPax)" Type="AggregateType.Sum" Format="N0">
+                                    <FooterTemplate>
+                                        @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="@nameof(API_T_AgenceBooking.NbrPaxAdult)" Type="AggregateType.Sum" Format="N0">
+                                    <FooterTemplate>
+                                        @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="@nameof(API_T_AgenceBooking.NbrPaxChild)" Type="AggregateType.Sum" Format="N0">
+                                    <FooterTemplate>
+                                        @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                            </GridAggregateColumns>
+                        </GridAggregate>
+                    </GridAggregates>
+                    <GridColumns>
+                        <GridColumn AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBooking.Date)" HeaderText="Date" Format="d"></GridColumn>
+                        <GridColumn AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBooking.Piece)" HeaderText="Pièce" />
+                        <GridColumn AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBooking.Reference)" HeaderText="Booking Ref" />
+                        <GridColumn AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBooking.SellingDateStart)" HeaderText="Date Vente" Format="d"></GridColumn>
+                        <GridColumn AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBooking.ArrivalDateStart)" HeaderText="Date Arrivé" Format="d"></GridColumn>
+                        <GridColumn AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBooking.ArrivalDateEnd)" HeaderText="Date Départ" Format="d"></GridColumn>
+                        <GridColumn AllowFiltering="false" Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBooking.Fournisseur)" HeaderText="Hotel">
+                            <Template>
+                                @{
+                                    var dt = (db.F_COMPTET.AsNoTracking().Where(a => a.cbMarq == (context as API_T_AgenceBooking).Fournisseur));
+                                }
+                                @if (dt.Count() != 0)
+                                {
+                                    <div>@dt.First().CT_Intitule</div>
+                                }
+                            </Template>
+                        </GridColumn>
+                        <GridColumn AllowFiltering="false" Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBooking.Client)" HeaderText="Client">
+                            <Template>
+                                @{
+                                    var dt = (db.F_COMPTET.AsNoTracking().Where(a => a.cbMarq == (context as API_T_AgenceBooking).Client));
+                                }
+                                @if (dt.Count() != 0)
+                                {
+                                    <div>@dt.First().CT_Intitule</div>
+                                }
+                            </Template>
+                        </GridColumn>
+                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBooking.NbrPax)" HeaderText="Nbr Pax" Format="N0" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBooking.NbrPaxAdult)" HeaderText="Adults" Format="N0" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                        <GridColumn AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceBooking.NbrPaxChild)" HeaderText="Childs" Format="N0" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                    </GridColumns>
+                    <SfSpinner @bind-Visible="@loading">
+                    </SfSpinner>
+                </SfGrid>
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+
+
+@code
+{
+
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    [Parameter] public int Type { get; set; } = 0;
+    [Parameter] public int cbMarq { get; set; } = 0;
+    private SfGrid<API_T_AgenceBooking> DefaultGrid;
+    private ICollection<API_T_AgenceBooking> items;
+    bool loading = true;
+    bool IsLoaded = false;
+
+    private string getTiers()
+    {
+        if (Type == 1)
+        {
+            return "Fournisseur";
+        }
+        else
+        {
+            return "Client";
+        }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(100);
+        db = session.db;
+        await Task.Run(UpdateGrid);
+        IsLoaded = true;
+    }
+    private async Task UpdateGrid()
+    {
+        loading = true;
+        await Task.Delay(1);
+        items = session.db.API_T_AgenceBooking.AsNoTracking().OrderBy(a => a.Date).ToList();
+        loading = false;
+        await Task.Delay(1);
+    }
+
+    protected async Task RowDoubleClicked(RecordDoubleClickEventArgs<API_T_AgenceBooking> args)
+    {
+        await DialogService.OpenAsync<BookingsFiche>(args.RowData.Piece,
+        new Dictionary<string, object>() { { "id", args.RowData.id } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "90%" });
+        await UpdateGrid();
+    }
+    protected async Task AddClick()
+    {
+        await DialogService.OpenAsync<BookingsFiche>($"Ajouter une élément",
+        new Dictionary<string, object>() { { "id", 0 }},
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "90%" });
+        await UpdateGrid();
+    }
+
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.ExcelExport();
+        }
+        if (args.Item.Id == "Grid_pdfexport")  //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.PdfExport();
+        }
+    }
+    private async Task OnActionBegin(ActionEventArgs<API_T_AgenceBooking> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+        else if (args.RequestType == Syncfusion.Blazor.Grids.Action.Delete)
+        {
+            string q1 = @"DELETE FROM API_T_AgenceBookingOffre WHERE Entete = {0}";
+            string q2 = @"DELETE FROM API_T_AgenceBookingPax WHERE Entete = {0}";
+            string q3 = @"DELETE FROM API_T_AgenceBooking WHERE id = {0}";
+            db.Database.ExecuteSqlRaw(q1, args.RowData.id);
+            db.Database.ExecuteSqlRaw(q2, args.RowData.id);
+            db.Database.ExecuteSqlRaw(q3, args.RowData.id);
+            await UpdateGrid();
+        }
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await AddClick();
+        }
+
+    }
+    private string getHeight()
+    {
+        if (cbMarq != 0)
+        {
+            return "70vh";
+        }
+        else
+        {
+            return "88vh";
+        }
+    }
+}

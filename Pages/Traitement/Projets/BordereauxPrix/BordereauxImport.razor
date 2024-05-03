@@ -1,0 +1,134 @@
+﻿<GridRow>
+    <SfUploader @ref=sfUploader AutoUpload="false" AllowedExtensions=".xls, .xlsx">
+        <UploaderEvents ValueChange="Import"></UploaderEvents>
+    </SfUploader>
+    <div>Charger un fichier excel...</div>
+
+</GridRow>
+
+@code 
+{
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    SfUploader sfUploader;
+    DB db = new DB();
+    [Parameter] public int id { get; set; } = 0;
+    bool loading = true;
+    protected override void OnInitialized()
+    {
+        db = session.db;
+    }
+    private void OnUploadSuccess(Syncfusion.Blazor.Inputs.SuccessEventArgs args)
+    {
+
+    }
+    private async Task Import(Syncfusion.Blazor.Inputs.UploadChangeEventArgs args)
+    {
+
+        try
+        {
+            SfGrid<ExpandoObject> Grid2;
+
+            foreach (var file in args.Files)
+            {
+                DataTable table = new DataTable();
+
+                System.IO.Directory.CreateDirectory(Path.Combine(sg.GetRoot(), "data" + "\\" + "T_Projet" + "\\" + "Import"));
+                var path = Path.Combine(sg.GetRoot(), "data" + "\\" + "T_Projet" + "\\" + "Import" + "\\" + file.FileInfo.Name);
+
+                //var path = file.FileInfo.Name;
+                ExcelEngine excelEngine = new ExcelEngine();
+                IApplication application = excelEngine.Excel;
+
+                application.DefaultVersion = ExcelVersion.Excel2016;
+
+                FileStream openFileStream = new FileStream(path, FileMode.OpenOrCreate);
+
+                await file.File.OpenReadStream(long.MaxValue).CopyToAsync(openFileStream);
+                FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                //access the workbook from that filtestream
+                IWorkbook workbook = application.Workbooks.Open(fileStream);
+                IWorksheet worksheet = workbook.Worksheets[0];
+                //get datatable from workbook
+                table = worksheet.ExportDataTable(worksheet.UsedRange, ExcelExportDataTableOptions.ColumnNames);
+                //convert to dynamic list and append to Grid.
+                GenerateListFromTable(table);
+                openFileStream.Close();
+
+            }
+        }
+        catch(Exception ex)
+        {
+            await Message.Error(ex.ToString(), 20);
+        }
+
+
+
+
+        DialogService.Close();
+
+    }
+    private void GenerateListFromTable(DataTable input)
+    {
+        int line = 1;
+        string[] Columns;
+        var list = new List<ExpandoObject>();
+        Columns = input.Columns.Cast<DataColumn>()
+                             .Select(x => x.ColumnName)
+                             .ToArray();
+
+        foreach (DataRow row in input.Rows)
+        {
+            line = line + 1;
+            API_T_ImportLog log = new API_T_ImportLog();
+            log.TableName = "API_T_BordereauDetail";
+            log.TableID = this.id;
+            log.Date = DateTime.Now;
+
+            try
+            {
+                System.Dynamic.ExpandoObject e = new System.Dynamic.ExpandoObject();
+                foreach (DataColumn col in input.Columns)
+                    e.TryAdd(col.ColumnName, row.ItemArray[col.Ordinal]);
+                API_T_BordereauDetail ln = Newtonsoft.Json.JsonConvert.DeserializeObject<API_T_BordereauDetail>(Newtonsoft.Json.JsonConvert.SerializeObject(e));
+                ln.Bordereau = this.id;
+                ln.Ordre = line;
+                ln.MontantMarche = ln.QteMarche * ln.PUMarche;
+                ln.Taxe = 20;
+                ln.PUTTC = ln.PU * (Decimal)(1.2);
+                ln.MontantTTC = ln.QteMarche * ln.PUTTC;
+                ln.Montant = ln.QteMarche * ln.PU;
+                db.API_T_BordereauDetail.Add(ln);
+                db.SaveChanges();
+                log.Libelle = "Ligne importée avec succès.";
+            }
+            catch (Exception ex)
+            {
+                log.Libelle = ex.Message;
+            }
+            db.API_T_ImportLog.Add(log);
+            db.SaveChanges();
+        }
+
+        db.SaveChanges();
+
+
+    }
+    void ShowNotification(Exception ex)
+    {
+        string key = $"open{DateTime.Now}";
+        RenderFragment btn =
+    @<Button Type="@AntDesign.ButtonType.Primary" OnClick="() => { _notice.Close(key); }">
+        OK
+    </Button>;
+        _ = _notice.Error(new()
+            {
+                Message = ex.Message,
+                Duration = 0,
+                Description = ex.StackTrace,
+                Placement = NotificationPlacement.BottomRight,
+                Btn = btn,
+                Key = key
+            });
+
+    }
+}

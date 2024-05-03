@@ -1,0 +1,373 @@
+﻿@page "/ot-ecritures"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction")]
+
+@if (IsLoaded) 
+{
+    <Card_1 Title="ECRITURES COMPTABLES">
+        <RadzenContent Container="main">
+            <div class="grid-90">
+                <SfToolbar>
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                            <Template>
+                                <div style="margin-left: 5px; margin-right: 10px;" id="debut">
+                                    <SfDatePicker Placeholder="Date Début" Width="130px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
+                                     <DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
+                                 </SfDatePicker>
+                             </div>
+
+                         </Template>
+                     </ToolbarItem>
+                     <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                         <Template>
+                             <div style="margin-left: 5px; margin-right: 10px;" id="fin">
+                                 <SfDatePicker Placeholder="Date Fin" Width="130px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
+                                     <DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
+                                 </SfDatePicker>
+                             </div>
+
+                         </Template>
+                     </ToolbarItem>
+                         <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                             <Template>
+                                 <SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+                             </Template>
+                         </ToolbarItem>
+                         <ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+                         <ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+                         <ToolbarItem OnClick=@(args => (UpdateGrid())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
+                     </ToolbarItems>
+                 </SfToolbar>
+                 <div class="grid-84">
+                 <SfGrid AllowFiltering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging ContextMenuItems="@(contextMenu())">
+                         <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
+                         <GridPageSettings PageSize="100"></GridPageSettings>
+                         <GridEvents ContextMenuItemClicked="OnContextMenuClick" TValue="API_V_ECRITUREC"></GridEvents>
+                         <GridTemplates>
+                             <EmptyRecordTemplate>
+                                 <Empty></Empty>
+                             </EmptyRecordTemplate>
+                         </GridTemplates>
+                         <GridColumns>
+                             <GridColumn Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Sta">
+                                 <Template>
+                                     @{
+                                        var dt = (context as API_V_ECRITUREC);
+                                        if (dt.EC_Cloture == 1)
+                                        {
+                                            <RadzenIcon Icon="lock" IconStyle="IconStyle.Success" />
+                                        }
+                                        else
+                                        {
+                                            <RadzenIcon Icon="lock_open" IconStyle="IconStyle.Primary" />
+                                        }
+                                    }
+                                </Template>
+                            </GridColumn>
+                            <GridColumn Format="d" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.MV_Date)" HeaderText="Date" />
+                            <GridColumn Format="d" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Echeance)" HeaderText="Date Ech" />
+                            <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.JO_Num)" HeaderText="N° Jou" />
+                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.JO_Intitule)" HeaderText="Journal" />
+                            <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CG_Num)" HeaderText="Compte" />
+                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CG_Intitule)" HeaderText="Intitulé Compte" />
+                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Piece)" HeaderText="Pièce" />
+                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_RefPiece)" HeaderText="Numéro" />
+                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CT_Num)" HeaderText="N° Tiers" />
+                            <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CT_Intitule)" HeaderText="Tiers" />
+                            <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Reference)" HeaderText="Référence" />
+                            <GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Intitule)" HeaderText="Libellé" />
+                            <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.Debit)" HeaderText="Débit" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                            <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.Credit)" HeaderText="Crédit" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                            <GridColumn Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="LT">
+                                <Template>
+                                    @{
+                                        var dt = (context as API_V_ECRITUREC);
+                                        if (dt.EC_Lettre == 1)
+                                        {
+                                            <RadzenIcon Icon="swap_horizontal_circle" IconStyle="IconStyle.Success" />
+                                        }
+                                    }
+                                </Template>
+                            </GridColumn>
+                            <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Lettrage)" HeaderText="Lettre" />
+                            <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_DateRappro)" Format="d" HeaderText="DT Rap" />
+                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_TresoPiece)" HeaderText="N° Rap" />
+
+                        </GridColumns>
+                        <SfSpinner @bind-Visible="@loading">
+                        </SfSpinner>
+                    </SfGrid>
+                </div>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+    <SfDialog Target="#target" Width="450px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_piece" CloseOnEscape>
+     <DialogTemplates>
+         <Header>
+             N° Pièce
+         </Header>
+         <Content>
+             <SfTextBox @bind-Value="@piece" @attributes="fn.Lenth(13)"></SfTextBox>
+         </Content>
+     </DialogTemplates>
+     <DialogAnimationSettings></DialogAnimationSettings>
+     <DialogEvents></DialogEvents>
+     <DialogButtons>
+         <DialogButton Content="OK" IsPrimary="true" OnClick="SubmitPiece"></DialogButton>
+         <DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_piece = false)"></DialogButton>
+     </DialogButtons>
+ </SfDialog>
+    <SfDialog Target="#target" Width="450px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_libelle" CloseOnEscape>
+    <DialogTemplates>
+        <Header>
+            Libelle
+        </Header>
+        <Content>
+             <SfTextBox @bind-Value="@libelle"  @attributes="fn.Lenth(69)"></SfTextBox>
+        </Content>
+    </DialogTemplates>
+    <DialogAnimationSettings></DialogAnimationSettings>
+    <DialogEvents></DialogEvents>
+    <DialogButtons>
+         <DialogButton Content="OK" IsPrimary="true" OnClick="SubmitLibelle"></DialogButton>
+        <DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_libelle = false)"></DialogButton>
+    </DialogButtons>
+ </SfDialog>
+
+    <SfDialog Target="#target" Width="450px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_tiers" CloseOnEscape>
+     <DialogTemplates>
+         <Header>
+             Tiers
+         </Header>
+         <Content>
+             <SfDropDownList Query="@fn.LocalDataQuery" ShowClearButton Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(list_tiers)" TValue="string" TItem="F_COMPTET" @bind-Value="@tiers">
+                     <DropDownListEvents TValue="string" TItem="F_COMPTET" />
+                     <DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+                 </SfDropDownList>
+         </Content>
+     </DialogTemplates>
+     <DialogAnimationSettings></DialogAnimationSettings>
+     <DialogEvents></DialogEvents>
+     <DialogButtons>
+             <DialogButton Content="OK" IsPrimary="true" OnClick="SubmitTiers"></DialogButton>
+             <DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_tiers = false)"></DialogButton>
+     </DialogButtons>
+ </SfDialog>
+
+    <SfDialog Target="#target" Width="450px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_compte" CloseOnEscape>
+     <DialogTemplates>
+         <Header>
+             Compte
+         </Header>
+         <Content>
+             <SfDropDownList Query="@fn.LocalDataQuery" ShowClearButton Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(list_compte)" TValue="string" TItem="F_COMPTEG" @bind-Value="@compte">
+                     <DropDownListEvents TValue="string" TItem="F_COMPTEG" />
+                     <DropDownListFieldSettings Text="CG_Intitule" Value="CG_Num" />
+                 </SfDropDownList>
+             </Content>
+         </DialogTemplates>
+         <DialogAnimationSettings></DialogAnimationSettings>
+         <DialogEvents></DialogEvents>
+         <DialogButtons>
+             <DialogButton Content="OK" IsPrimary="true" OnClick="SubmitCompte"></DialogButton>
+             <DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_compte = false)"></DialogButton>
+         </DialogButtons>
+     </SfDialog>
+
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+
+
+@code
+{
+
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    //Components
+    [Parameter] public int domaine { get; set; } = 0;
+    [Parameter] public string title { get; set; } = "";
+    private SfGrid<API_V_ECRITUREC> DefaultGrid;
+    bool IsLoaded = false;
+    DateTime? date1 = DateTime.Today;
+    DateTime? date2;
+    private List<API_V_ECRITUREC> items = new List<API_V_ECRITUREC>();
+    bool loading = false;
+
+
+    bool dg_compte = false;
+    bool dg_tiers = false;
+    bool dg_libelle = false;
+    bool dg_piece = false;
+
+
+    string compte;
+    string tiers;
+    string libelle;
+    string piece;
+
+
+    List<F_COMPTEG> list_compte = new List<F_COMPTEG>();
+    List<F_COMPTET> list_tiers = new List<F_COMPTET>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        db = session.db;
+        list_compte = db.F_COMPTEG.Select(a => new F_COMPTEG { CG_Num = a.CG_Num, CG_Intitule = a.CG_Num + " - " + a.CG_Intitule }).OrderBy(a => a.CG_Intitule).ToList();
+        list_tiers = db.F_COMPTET.Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule }).OrderBy(a => a.CT_Intitule).ToList();
+        await UpdateGrid();
+        IsLoaded = true;
+
+    }
+    private async Task UpdateTypes()
+    {       
+        await UpdateGrid();
+    }
+    private async Task UpdateGrid()
+    {
+        items = db.API_V_ECRITUREC
+        .Where(a => (
+            (date1 != null && a.MV_Date >= date1) || date1 == null)
+         && ((date2 != null && a.MV_Date <= date2) || date2 == null)
+                )
+                .OrderByDescending(a => a.MV_Date)
+                .ToList();
+    }
+    private List<object> contextMenu()
+    {
+        var dt = DefaultGrid?.GetSelectedRecordsAsync()?.Result;
+        return new List<object>() {
+                                 new ContextMenuItemModel { Text = "Changer le compte général", Target = ".e-content", Id = "compte", IconCss = "e-icons e-header" },
+                                 new ContextMenuItemModel { Text = "Changer le tiers", Target = ".e-content", Id = "tiers", IconCss = "e-icons e-people" },
+                                 new ContextMenuItemModel { Text = "Changer le libellé", Target = ".e-content", Id = "libelle", IconCss = "e-icons e-justify" },
+                                 new ContextMenuItemModel { Text = "Changer le N° Pièce", Target = ".e-content", Id = "piece", IconCss = "e-icons e-show-hide-panel" },
+                                 new ContextMenuItemModel {Separator = true},
+                                 new ContextMenuItemModel { Text = "Dé-valider", Target = ".e-content", Id = "devalider", IconCss = "e-icons e-lock" } ,
+                                 new ContextMenuItemModel { Text = "Dé-lettrer", Target = ".e-content", Id = "delettrer", IconCss = "e-icons e-replace" } ,
+                             };
+    } 
+
+
+    public async Task OnContextMenuClick(ContextMenuClickEventArgs<API_V_ECRITUREC> args)
+    {
+
+        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+        if (args.Item.Id == "compte")
+        {
+            dg_compte = true;
+        }
+        if (args.Item.Id == "tiers")
+        {
+            dg_tiers = true;
+        }
+        if (args.Item.Id == "libelle")
+        {
+            dg_libelle = true;
+        }
+        if (args.Item.Id == "piece")
+        {
+            dg_piece = true;
+        }
+        if (args.Item.Id == "devalider")
+        {
+            bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment dévalider les éléments selectionnés?");
+            if (isConfirm)
+            {
+                fn.DisableTriggers(db, "F_ECRITUREC", "UPD");
+                foreach (API_V_ECRITUREC item in dt)
+                {
+                    db.Database.ExecuteSqlRaw("update F_ECRITUREC set EC_Cloture = 0,EC_DateCloture = '1753-01-01', cbHashDate = '1753-01-01',cbHashVersion = 1, cbHashOrder = 0, cbHash = null, cbCreation = null, cbCreationUser = null where cbMarq = {0}", item.cbMarq);
+                }
+                fn.EnableTriggers(db, "F_ECRITUREC", "UPD");
+                await UpdateGrid();
+                await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+            }
+        }
+        if (args.Item.Id == "delettrer")
+        {
+            bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment délettrer les éléments selectionnés?");
+            if (isConfirm)
+            {
+                fn.DisableTriggers(db, "F_ECRITUREC", "UPD");
+                foreach (API_V_ECRITUREC item in dt)
+                {
+                    db.Database.ExecuteSqlRaw("UPDATE F_ECRITUREC SET EC_Lettre = 0, EC_Lettrage = '' WHERE cbMarq = {0}", item.cbMarq);
+                }
+                fn.EnableTriggers(db, "F_ECRITUREC", "UPD");
+                await UpdateGrid();
+                await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+            }
+        }
+
+    }
+    private async Task ShowNotification(NotificationMessage message)
+    {
+        NotificationService.Notify(message);
+    }
+    private async Task SubmitDate()
+    {
+        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+        foreach(API_V_ECRITUREC item in dt)
+        {
+            //db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET MV_Date = {0} WHERE cbMarq = {1}", date, item.cbMarq);
+        }
+        await UpdateGrid();
+        await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+    }
+    private async Task SubmitTiers()
+    {
+        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+        foreach (API_V_ECRITUREC item in dt)
+        {
+            db.Database.ExecuteSqlRaw("UPDATE F_ECRITUREC SET CT_Num = {0} WHERE cbMarq = {1}", tiers, item.cbMarq);
+        }
+        dg_tiers = false;
+        await UpdateGrid();
+        await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+    }
+    private async Task SubmitLibelle()
+    {
+        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+        foreach (API_V_ECRITUREC item in dt)
+        {
+            db.Database.ExecuteSqlRaw("UPDATE F_ECRITUREC SET EC_Intitule = {0} WHERE cbMarq = {1}", libelle, item.cbMarq);
+        }
+        dg_libelle = false;
+        await UpdateGrid();
+        await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+    }
+    private async Task SubmitPiece()
+    {
+        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+        foreach (API_V_ECRITUREC item in dt)
+        {
+            db.Database.ExecuteSqlRaw("UPDATE F_ECRITUREC SET EC_Piece = {0} WHERE cbMarq = {1}", piece, item.cbMarq);
+        }
+        dg_piece = false;
+        await UpdateGrid();
+        await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+    }
+    private async Task SubmitCompte()
+    {
+        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+        foreach (API_V_ECRITUREC item in dt)
+        {
+            db.Database.ExecuteSqlRaw("UPDATE F_ECRITUREC SET CG_Num = {0} WHERE cbMarq = {1}", compte, item.cbMarq);
+        }
+        dg_compte = false;
+        await UpdateGrid();
+        await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+    }
+
+
+}

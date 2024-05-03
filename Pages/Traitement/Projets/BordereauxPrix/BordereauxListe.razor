@@ -1,0 +1,186 @@
+﻿@page "/bordereaux-des-prix"
+
+
+@if (IsLoaded)
+{
+    <Card_1 Title="LISTE DES BORDEREAUX DES PRIX">
+        <RadzenContent Container="main">
+            <div class="grid-90">
+                <SfGrid Height="100%" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                        Toolbar="@(new List<object>() { "Search", "Print","Add", "Delete"})">
+                    <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                    <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_BORDEREAU"></GridEvents>
+                    <GridPageSettings PageSize="100"></GridPageSettings>
+                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                    <GridTemplates>
+                        <EmptyRecordTemplate>
+                            <Empty></Empty>
+                        </EmptyRecordTemplate>
+                    </GridTemplates>
+                    <GridAggregates>
+                        <GridAggregate>
+                            <GridAggregateColumns>
+                                <GridAggregateColumn Field="MontantMarche" Type="AggregateType.Sum" Format="N2">
+                                    <FooterTemplate>
+                                        @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="Montant" Type="AggregateType.Sum" Format="N2">
+                                    <FooterTemplate>
+                                        @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="CoutTotale" Type="AggregateType.Sum" Format="N2">
+                                    <FooterTemplate>
+                                        @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="Marge" Type="AggregateType.Sum" Format="N2">
+                                    <FooterTemplate>
+                                        @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="MargeP" Type="AggregateType.Average" Format="P2">
+                                    <FooterTemplate>
+                                        @{
+                                            var SumValue = (context as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Average
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+
+                                </GridAggregateColumn>
+                            </GridAggregateColumns>
+                        </GridAggregate>
+                    </GridAggregates>
+                    <GridColumns>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BORDEREAU.Date)" HeaderText="Date" Format="d"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BORDEREAU.Piece)" HeaderText="Piece"></GridColumn>
+                        <GridColumn Width="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.NumeroMarche)" HeaderText="N°.Marché" />
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.CA_Num)" HeaderText="Affaire" />
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.Objet)" HeaderText="Objet" />
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.SiteIntitule)" HeaderText="Zone" />
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ATTACHEMENT.VilleIntitule)" HeaderText="Ville" />
+                        <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BORDEREAU.Montant)" HeaderText="MNT.HT" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BORDEREAU.MontantTTC)" HeaderText="MNT.TTC" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BORDEREAU.CoutTotale)" HeaderText="Cout" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BORDEREAU.Marge)" HeaderText="Marge" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BORDEREAU.MargeP)" HeaderText="Marge %" Format="P2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    </GridColumns>
+                    <SfSpinner @bind-Visible="@loading">
+                    </SfSpinner>
+                </SfGrid>
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+@code
+{
+
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    //Components
+    private SfGrid<API_V_BORDEREAU> DefaultGrid;
+    [Parameter] public string type { get; set; } = "0";
+    private IEnumerable<API_V_BORDEREAU> items;
+    bool loading = false;
+    bool IsLoaded = false;
+    private SfDropDownList<int, API_T_Site> SiteDrop;
+    private RenderFragment Sites =>
+    @<SfDropDownList @ref=@SiteDrop TValue="int" TItem="API_T_Site" Placeholder="Site" DataSource=@(db.API_T_Site) Width="250" ShowClearButton>
+        <DropDownListFieldSettings Text="Intitule" Value="id"> </DropDownListFieldSettings>
+        <DropDownListEvents TValue="int" TItem="API_T_Site"> </DropDownListEvents>
+    </SfDropDownList>
+    ;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(100);
+        db = session.db;
+        await LoadData();
+        IsLoaded = true;
+
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        await LoadData();
+    }
+    private async Task LoadData()
+    {
+        items = session.db.API_V_BORDEREAU.ToList();
+    }
+
+    protected async Task Edit(RecordDoubleClickEventArgs<API_V_BORDEREAU> args)
+    {
+
+        await DialogService.OpenAsync<BordereauxFiche>(args.RowData.Piece,
+    new Dictionary<string, object>() { { "id", args.RowData.id }, { "type", Int32.Parse(type) } },
+    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "98%" });
+        await LoadData();
+    }
+    private async Task Add()
+    {
+        await DialogService.OpenAsync<BordereauxFiche>($"Ajouter un élément",
+        new Dictionary<string, object>() { { "id", 0 }, { "type", Int32.Parse(type) } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "98%" });
+        await LoadData();
+    }
+    private async Task OnActionBegin(ActionEventArgs<API_V_BORDEREAU> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await Add();
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_AttachementDetail WHERE Ligne IN ( SELECT id FROM API_T_BORDEREAUDetail WHERE Bordereau = {0})", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_BORDEREAUDetail WHERE Bordereau = {0}", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_BORDEREAU WHERE id = {0}", args.Data.id);
+            db.SaveChanges();
+            await LoadData();
+        }
+    }
+
+
+
+
+}

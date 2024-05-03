@@ -1,0 +1,90 @@
+﻿@attribute [Authorize(Roles = "Super Admin,Admin,Direction,Caissier")]
+<RadzenContent Container="main">
+    <div style="height: 70vh" class="no-border">
+        <SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)">
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                <HeaderTemplate>
+                    <span>@((context as API_T_Caisse).C_Nom)</span>
+                </HeaderTemplate>
+            </GridEditSettings>
+            <GridEvents OnActionBegin="EditGrid" TValue="API_T_Caisse" OnRecordDoubleClick="Edit"></GridEvents>
+            <GridTemplates>
+                <EmptyRecordTemplate>
+                    <Empty></Empty>
+                </EmptyRecordTemplate>
+            </GridTemplates>
+            <GridColumns>
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Caisse.C_Nom) HeaderText="Intitulé"></GridColumn>
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Caisse.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Caisse.JO_Num) HeaderText="Journal">
+                    <Template>
+                        @{
+                            <div>@(session.db.F_JOURNAUX.Where(a => a.JO_Num == (context as API_T_Caisse).JO_Num).SingleOrDefault()?.JO_Intitule)</div>
+                        }
+                    </Template>
+                    <EditTemplate>
+                        <SfDropDownList Placeholder="Journal" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(db.F_JOURNAUX.Where(a => a.JO_Type == 2))" TValue="string" TItem="F_JOURNAUX" @bind-Value="@((context as API_T_Caisse).JO_Num)">
+                            <DropDownListEvents TValue="string" TItem="F_JOURNAUX" />
+                            <DropDownListFieldSettings Text="JO_Intitule" Value="JO_Num" />
+                        </SfDropDownList>
+                    </EditTemplate>
+                </GridColumn>
+                <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Caisse.C_DateInitial) HeaderText="Initialisation" Format="d"></GridColumn>
+                <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Caisse.C_SoldeInitial) HeaderText="Solde Initial" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+            </GridColumns>
+        </SfGrid>
+    </div>
+</RadzenContent>
+
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    IEnumerable<API_T_Caisse> items;
+    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2", ShowSpinButton = false } };
+    DB db = new DB();
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await LoadData();
+
+    }
+    private async Task LoadData()
+    {
+        items = session.db.API_T_Caisse;
+    }
+    public async Task EditGrid(ActionEventArgs<API_T_Caisse> args)
+    {
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await DialogService.OpenAsync<CaissesFiche>("Ajouter un élément",
+    new Dictionary<string, object>() { { "id", 0 } },
+    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "650px", Height = "80%" });
+            await LoadData();
+        }
+
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            db.Remove(args.Data);
+            db.SaveChanges();
+        }
+    }
+    protected async Task Edit(RecordDoubleClickEventArgs<API_T_Caisse> args)
+    {
+        await DialogService.OpenAsync<CaissesFiche>($"{args.RowData.C_Nom}",
+        new Dictionary<string, object>() { { "id", args.RowData.id } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "650px", Height = "80%" });
+        await LoadData();
+    }
+}

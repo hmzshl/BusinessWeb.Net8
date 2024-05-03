@@ -1,0 +1,64 @@
+﻿<div class="card-4">
+	<p class="c-txt">@Title</p>
+</div>
+
+
+@code{
+	[Parameter]
+	public RenderFragment ChildContent { get; set; }
+	[Parameter]
+	public string Title { get; set; }
+	[Parameter]
+	public string Height { get; set; }
+	[Parameter]
+	public string Width { get; set; }
+}
+
+<style>
+	.card-4 {
+		width: @Width;
+		height: @Height;
+		background: lightgray;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 2em;
+		color: #333;
+		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+		border-radius: 0px;
+		cursor: pointer;
+		position: relative;
+		transition: all 0.7s ease-in-out;
+		overflow: hidden;
+	}
+
+		.card-4::before {
+			content: "";
+			position: absolute;
+			height: 40%;
+			width: 100%;
+			background-color: #088080;
+			bottom: 0;
+			right: 0;
+			transform: translatey(70px);
+			border-radius: 100%;
+			transition: all 0.7s ease-in-out;
+		}
+
+	.c-txt {
+		z-index: 2;
+		text-wrap: pretty;
+		font-weight: 600;
+		font-family: system-ui;
+	}
+
+	.card-4:hover::before {
+		transform: scale(7) translate(-20px);
+	}
+
+	.card-4:hover {
+		box-shadow: 1px -10px 500px 500px #9fe4e44a;
+		color: #f3f3f3;
+	}
+
+</style>

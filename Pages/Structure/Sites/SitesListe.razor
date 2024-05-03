@@ -1,0 +1,107 @@
+﻿@page "/sites"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction")]
+<Card_1 Title="LISTE DES ZONES">
+    <RadzenContent Container="main">
+        <div class="grid-90">
+            <SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                    Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete"})">
+                <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_T_Site"></GridEvents>
+                <GridPageSettings PageSize="100"></GridPageSettings>
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                <GridTemplates>
+                    <EmptyRecordTemplate>
+                        <Empty></Empty>
+                    </EmptyRecordTemplate>
+                </GridTemplates>
+                <GridColumns>
+                    <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Intitule" HeaderText="Intitulé"></GridColumn>
+                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Ville" HeaderText="Ville"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Adresse" HeaderText="Adresse"></GridColumn>
+                    <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable">
+                        <Template>
+                            @{
+                                var dt = (session.db.API_T_Personnel.Where(a => a.id == (context as API_T_Site).Responsable));
+                            }
+                            @if (dt.Count() != 0)
+                            {
+                                <div>@dt.First().Nom</div>
+                            }
+                        </Template>
+                    </GridColumn>
+                </GridColumns>
+                <SfSpinner @bind-Visible="@loading">
+                </SfSpinner>
+            </SfGrid>
+        </div>
+    </RadzenContent>
+</Card_1>
+
+
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+
+    //Components
+    private SfGrid<API_T_Site> DefaultGrid;
+    //End components
+
+    private List<API_T_Site> items = new List<API_T_Site>();
+    bool loading = true;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(LoadData);
+
+    }
+    private async Task LoadData()
+    {
+        loading = true;
+        await Task.Delay(1);
+        items = session.db.API_T_Site.ToList();
+        session.Sites = items;
+        if(items.Count() != 0 && session.Site.id == 0) 
+        {
+            session.Site = items.First();
+        }
+        loading = false;
+        await Task.Delay(1);
+
+    }
+
+    protected async Task Edit(RecordDoubleClickEventArgs<API_T_Site> args)
+    {
+        await DialogService.OpenAsync<SitesFiche>($"{args.RowData.Intitule}",
+        new Dictionary<string, object>() { { "id", args.RowData.id } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "700px" });
+        await LoadData();
+    }
+    private async Task Add()
+    {
+        await DialogService.OpenAsync<SitesFiche>($"Ajouter un élément",
+        new Dictionary<string, object>() { { "id", 0 } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "700px" });
+        await LoadData();
+    }
+    private async Task OnActionBegin(ActionEventArgs<API_T_Site> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Delete
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await Add();
+        }
+
+    }
+
+}

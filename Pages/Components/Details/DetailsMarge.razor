@@ -1,0 +1,278 @@
+﻿@if (IsLoaded)
+{
+	<div style="height: @Height;">
+		<SfGrid Height="100%" AllowGrouping=@(grouped != 0) AllowSelection EnableHover DataSource="@(items)" AllowPaging Toolbar="@(new List<object>() { "Print","ExcelExport","Search",new ToolbarItem() { Type = ItemType.Input,Template = Grouped, Id = "Grouper par", TooltipText = "Grouper par", Align = ItemAlign.Right}})" AllowSorting AllowFiltering>
+			<GridPageSettings PageSize="100" />
+			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+			<GridGroupSettings Columns="@(getGroups())" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates EnableLazyLoading>
+				<CaptionTemplate>
+					@{
+						var ag = (context as CaptionTemplateContext);
+						<div style="margin-left: 5px;">@ag.Key</div>
+					}
+				</CaptionTemplate>
+			</GridGroupSettings>
+			<GridAggregates>
+				<GridAggregate>
+					<GridAggregateColumns>
+						@if (AR_Ref != null)
+						{
+							<GridAggregateColumn Field="@nameof(API_V_MARGE.DL_Qte)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+								<FooterTemplate>
+									@{
+										var value = (context as AggregateTemplateContext);
+										<div>
+											@value.Sum
+										</div>
+									}
+								</FooterTemplate>
+								<GroupCaptionTemplate>
+									@{
+										var value = (context as AggregateTemplateContext);
+										<div>
+											@value.Sum
+										</div>
+									}
+								</GroupCaptionTemplate>
+
+							</GridAggregateColumn>
+						}
+
+						<GridAggregateColumn Field="@nameof(API_V_MARGE.DL_MontantHT)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+							<FooterTemplate>
+								@{
+									var value = (context as AggregateTemplateContext);
+									<div>
+										@value.Sum
+									</div>
+								}
+							</FooterTemplate>
+							<GroupCaptionTemplate>
+								@{
+									var value = (context as AggregateTemplateContext);
+									<div>
+										@value.Sum
+									</div>
+								}
+							</GroupCaptionTemplate>
+						</GridAggregateColumn>
+						<GridAggregateColumn Field="@nameof(API_V_MARGE.DL_MontantTTC)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+							<FooterTemplate>
+								@{
+									var value = (context as AggregateTemplateContext);
+									<div>
+										@value.Sum
+									</div>
+								}
+							</FooterTemplate>
+							<GroupCaptionTemplate>
+								@{
+									var value = (context as AggregateTemplateContext);
+									<div>
+										@value.Sum
+									</div>
+								}
+							</GroupCaptionTemplate>
+						</GridAggregateColumn>
+						<GridAggregateColumn Field="@nameof(API_V_MARGE.CMUPCoutTotal)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+							<FooterTemplate>
+								@{
+									var value = (context as AggregateTemplateContext);
+									<div>
+										@value.Sum
+									</div>
+								}
+							</FooterTemplate>
+							<GroupCaptionTemplate>
+								@{
+									var value = (context as AggregateTemplateContext);
+									<div>
+										@value.Sum
+									</div>
+								}
+							</GroupCaptionTemplate>
+						</GridAggregateColumn>
+						<GridAggregateColumn Field="@nameof(API_V_MARGE.CMUPMarge)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+							<FooterTemplate>
+								@{
+									var value = (context as AggregateTemplateContext);
+									<div>
+										@value.Sum
+									</div>
+								}
+							</FooterTemplate>
+							<GroupCaptionTemplate>
+								@{
+									var value = (context as AggregateTemplateContext);
+									<div>
+										@value.Sum
+									</div>
+								}
+							</GroupCaptionTemplate>
+						</GridAggregateColumn>
+					</GridAggregateColumns>
+				</GridAggregate>
+			</GridAggregates>
+			<GridColumns>
+				<GridColumn Format="d" Width="@(getDateWidth())" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DO_Date)" HeaderText="Date" />
+				<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DO_Piece)" HeaderText="Pièce" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CT_Num)" HeaderText="N° Tiers" Visible=@(CT_Num == null) />
+				<GridColumn Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CT_Intitule)" HeaderText="Tiers" Visible=@(CT_Num == null) />
+				<GridColumn Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CO_Nom)" HeaderText="Collaborateur" Visible=@(CO_No == 0) />
+				<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.AR_Ref)" HeaderText="Référence" Visible=@(AR_Ref == null) />
+				<GridColumn Width="350" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.AR_Design)" HeaderText="Désignation" Visible=@(AR_Ref == null) />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_Qte)" HeaderText="Qté" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.PUNet)" HeaderText="PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_MontantHT)" HeaderText="HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_MontantTTC)" HeaderText="TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUP)" HeaderText="CMUP" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUPCoutTotal)" HeaderText="COUT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUPMarge)" HeaderText="Marge" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+					<Template>
+						@{
+							var dt = (context as API_V_MARGE);
+							if (dt?.CMUPMarge > 0)
+							{
+								<div style="text-align: right;">
+									<span class="statustxt e-activecolor">@dt.CMUPMarge?.ToString("N2")</span>
+								</div>
+							}
+							if (dt?.CMUPMarge < 0)
+							{
+								<div style="text-align: right;">
+									<span class="statustxt e-inactivecolor">@dt.CMUPMarge?.ToString("N2")</span>
+								</div>
+							}
+						}
+					</Template>
+				</GridColumn>
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUPMargeP)" HeaderText="%" Format="P2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+					<Template>
+						@{
+							var dt = (context as API_V_MARGE);
+							if (dt?.CMUPMargeP > 0)
+							{
+								<div style="text-align: right;">
+									<span class="statustxt e-activecolor">@dt.CMUPMargeP?.ToString("P2")<RadzenIcon Icon="arrow_upward" /></span>
+								</div>
+							}
+							if (dt?.CMUPMargeP < 0)
+							{
+								<div style="text-align: right;">
+									<span class="statustxt e-inactivecolor">@dt.CMUPMargeP?.ToString("P2")<RadzenIcon Icon="arrow_downward" /></span>
+								</div>
+							}
+						}
+					</Template>
+				</GridColumn>
+			</GridColumns>
+
+		</SfGrid>
+	</div>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+@code
+{
+	[CascadingParameter]
+	public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	[Parameter] public bool IsLivraison { get; set; } = true;
+	[Parameter] public int DO_Domaine { get; set; }
+	[Parameter] public int DO_Type { get; set; }
+	[Parameter] public string CA_Num { get; set; }
+	[Parameter] public string CT_Num { get; set; }
+	[Parameter] public string DO_Piece { get; set; }
+	[Parameter] public string AR_Ref { get; set; }
+	[Parameter] public string CO_Nom { get; set; }
+	[Parameter] public string CT_CodeRegion { get; set; }
+	[Parameter] public string MoisAnnee { get; set; }
+	[Parameter] public string Annee { get; set; }
+	[Parameter] public int CO_No { get; set; } = 0;
+	[Parameter] public int DE_No { get; set; }
+	[Parameter] public string Height { get; set; }
+	[Parameter] public string Periode { get; set; }
+	[Parameter] public DateTime? Date1 { get; set; }
+	[Parameter] public DateTime? Date2 { get; set; }
+	bool IsLoaded = false;
+	int grouped = 1;
+	private List<API_V_MARGE> items = new List<API_V_MARGE>();
+	private RenderFragment Grouped =>
+	@<SfDropDownList PopupHeight="300px" Width="160px" Placeholder="Grouper par" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="int" TItem="Items" DataSource="@(fn.GroupedBy())" @bind-Value="@grouped">
+			<DropDownListEvents TValue="int" TItem="Items" />
+			<DropDownListFieldSettings Text="Name" Value="Id" />
+		</SfDropDownList>
+	;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(100);
+		db = session.db;
+		await UpdateGrid();
+		IsLoaded = true;
+	}
+	int[] liv = { 3, 4, 5, 6, 7, 13, 14, 15, 16, 17 };
+	private async Task UpdateGrid()
+	{
+		items = db.API_V_MARGE.Where(a =>
+			((a.CT_Num == CT_Num && CT_Num != null) || (CT_Num == null))
+			&& ((a.Annee == Annee && Annee != null) || (Annee == null))
+			&& ((a.MoisAnnee == MoisAnnee && MoisAnnee != null) || (MoisAnnee == null))
+			&& ((a.AR_Ref == AR_Ref && AR_Ref != null) || (AR_Ref == null))
+						&& ((a.CO_Nom == CO_Nom && CO_Nom != null) || (CO_Nom == null))
+												&& ((a.CT_CodeRegion == CT_CodeRegion && CT_CodeRegion != null) || (CT_CodeRegion == null))
+			&& ((Date1 != null && a.DO_Date >= Date1) || Date1 == null)
+			&& ((Date2 != null && a.DO_Date <= Date2) || Date2 == null)
+		).OrderBy(a => a.DO_Date).ToList();
+	}
+	private string getTiers()
+	{
+		string rs = "Tiers";
+		if (DO_Domaine == 0)
+		{
+			rs = "Client";
+		}
+		if (DO_Domaine == 1)
+		{
+			rs = "Fournisseur";
+		}
+
+		return rs;
+	}
+	private string getDateWidth()
+	{
+		if (grouped == 0)
+		{
+			return "80px";
+		}
+		else
+		{
+			return "320px";
+		}
+	}
+	private new string[] getGroups()
+	{
+		string[] rs = new string[] { "DO_Piece" };
+
+		if (grouped == 1)
+		{
+			rs = new string[] { "DO_Piece" };
+		}
+		if (grouped == 2)
+		{
+			rs = new string[] { "CT_Intitule" };
+		}
+		if (grouped == 3)
+		{
+			rs = new string[] { "AR_Design" };
+		}
+		if (grouped == 4)
+		{
+			rs = new string[] { "CO_Nom" };
+		}
+		return rs;
+	}
+}

@@ -1,0 +1,37 @@
+﻿@page "/pointage-materiel"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction, Responsable RH")]
+
+
+
+
+ @if (IsLoaded)
+{
+	<Card_1 Title="POINTAGE DES MATERIELS">
+		<PointageView IsMateriel="true" IsPersonnel="false" type="1"></PointageView>
+	</Card_1>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+@if (IsLoaded)
+{
+	
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+@code {
+	bool IsLoaded = false;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(100);
+		IsLoaded = true;
+	}
+}

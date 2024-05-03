@@ -1,0 +1,251 @@
+<Card_1 Title="LISTE DES ARTICLES">
+    <RadzenContent Container="main">
+        <div class="grid-90">
+            <SfGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items"
+                    Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete"})">
+                <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="false" AllowDeleting="false" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_V_ARTICLE"></GridEvents>
+                <GridPageSettings PageSize="100"></GridPageSettings>
+                <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                <GridTemplates>
+                    <EmptyRecordTemplate>
+                        <Empty></Empty>
+                    </EmptyRecordTemplate>
+                </GridTemplates>
+                <GridColumns>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="cbMarq" HeaderText="#" Visible="false" IsPrimaryKey="true"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_Ref" HeaderText="Reference" Visible="@(ARRef)"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_Design" HeaderText="Designation" Width="250" Visible="@(ARDesign)"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="U_Intitule" HeaderText="Unite" Visible="@(UIntitule)"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="FA_CodeFamille" HeaderText="Code Famille" Visible="@(FACodeFamille)"></GridColumn>
+                    <GridColumn CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="FA_Intitule" HeaderText="Famille" Width="150" Visible="@(FAIntitule)"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="SuiviStockIntitule" HeaderText="Suivi Stock" Visible="@(SuiviStockIntitule)"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_PrixAch" HeaderText="Prix Achat" Visible="@(ARPrixAch)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_PrixVen" HeaderText="Prix Vente" Visible="@(ARPrixVen)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="SommeilIntitule" HeaderText="Sommeil" Visible="@(SommeilIntitule)"></GridColumn>
+                    <!--Stock-->
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="EtatStock" HeaderText="Etat Stock" Visible="@(EtatStock)">
+                    </GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AS_QteSto" HeaderText="Qte Stock" Visible="@(ASQteSto)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AS_MontSto" HeaderText="Montant Stock" Visible="@(ASMontSto)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                    </GridColumn>
+                    <!--Achats-->
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Qte_Achat" HeaderText="Qte Achetee Totale" Visible="@(DLQteAchat)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT_Achat" HeaderText="Achats HT" Visible="@(DLMontantHTAchat)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+
+                    </GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC_Achat" HeaderText="Achats TTC" Visible="@(DLMontantTTCAchat)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                    </GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL_Achat" HeaderText="Der. Date Achat" Visible="@(DLDateBLAchat)" Format="d"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_Qte_Achat" HeaderText="Der. Qte Achetee" Visible="@(DLDernierQteAchat)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PUA_chat" HeaderText="Der. PU Achat" Visible="@(DLPUAchat)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantHT_Achat" HeaderText="Der. Achat HT" Visible="@(DLDernierMontantHTAchat)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantTTC_Achat" HeaderText="Der. Achat TTC" Visible="@(DLDernierMontantTTCAchat)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="FR_Intitule" HeaderText="Der. Fournisseur" Width="200" Visible="@(FRIntitule)"></GridColumn>
+                    <!--Ventes-->
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Qte_Vente" HeaderText="Qte Vendues Totale" Visible="@(DLQteVente)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT_Vente" HeaderText="CA HT" Visible="@(DLMontantHTVente)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                    </GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC_Vente" HeaderText="CA TTC" Visible="@(DLMontantTTCVente)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+
+                    </GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL_Vente" HeaderText="Der. Date Vente" Visible="@(DLDateBLVente)" Format="d"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_Qte_Vente" HeaderText="Der. Qte Venduee" Visible="@(DLDernierQteVente)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PU_Vente" HeaderText="Der. PU Vente" Visible="@(DLPUVente)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantHTVente" HeaderText="Der. Vente HT" Visible="@(DLDernierMontantHTVente)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn Width="80" CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantTTC_Vente" HeaderText="Der. Vente TTC" Visible="@(DLDernierMontantTTCVente)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    <GridColumn CustomAttributes="@attr" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CL_Intitule" HeaderText="Der. Client" Width="200" Visible="@(CLIntitule)"></GridColumn>
+                </GridColumns>
+                <SfSpinner @bind-Visible="@loading">
+                </SfSpinner>
+            </SfGrid>
+        </div>
+
+    </RadzenContent>
+    </Card_1>
+
+
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    //Parameters
+    [Parameter] public IEnumerable<API_V_ARTICLE> data { get; set; }
+    [Parameter] public bool ARRef { get; set; } = true;
+    [Parameter] public bool ARDesign { get; set; } = true;
+    [Parameter] public bool FAIntitule { get; set; }
+    [Parameter] public bool FACodeFamille { get; set; } = true;
+    [Parameter] public bool ARPrixAch { get; set; } = true;
+    [Parameter] public bool ARPrixVen { get; set; } = true;
+    [Parameter] public bool UIntitule { get; set; } = true;
+    [Parameter] public bool DLQteVente { get; set; } = false;
+    [Parameter] public bool DLMontantHTVente { get; set; } = false;
+    [Parameter] public bool DLMontantTTCVente { get; set; } = false;
+    [Parameter] public bool DLQteAchat { get; set; } = false;
+    [Parameter] public bool DLMontantHTAchat { get; set; } = false;
+    [Parameter] public bool DLMontantTTCAchat { get; set; } = false;
+    [Parameter] public bool CLIntitule { get; set; } = false;
+    [Parameter] public bool CLNum { get; set; } = false;
+    [Parameter] public bool DLDateBLVente { get; set; } = false;
+    [Parameter] public bool DLDernierMontantHTVente { get; set; } = false;
+    [Parameter] public bool DLDernierMontantTTCVente { get; set; } = false;
+    [Parameter] public bool DLPUVente { get; set; } = false;
+    [Parameter] public bool DLDernierQteVente { get; set; } = false;
+    [Parameter] public bool FRIntitule { get; set; } = false;
+    [Parameter] public bool FRNum { get; set; } = false;
+    [Parameter] public bool DLDateBLAchat { get; set; } = false;
+    [Parameter] public bool DLDernierMontantHTAchat { get; set; } = false;
+    [Parameter] public bool DLDernierMontantTTCAchat { get; set; } = false;
+    [Parameter] public bool DLPUAchat { get; set; } = false;
+    [Parameter] public bool DLDernierQteAchat { get; set; } = false;
+    [Parameter] public bool SuiviStockIntitule { get; set; } = true;
+    [Parameter] public bool SommeilIntitule { get; set; } = true;
+    [Parameter] public bool ASQteSto { get; set; } = true;
+    [Parameter] public bool ASMontSto { get; set; } = true;
+    [Parameter] public bool EtatStock { get; set; } = true;
+    [Parameter] public string src { get; set; } = "liste";
+    Dictionary<string, object> attr = new Dictionary<string, object>(){ { "class", "hide-td" }};
+    //End Parameters
+
+
+        //Components
+    private SfGrid<API_V_ARTICLE> DefaultGrid;
+    private SfDropDownList<string, F_FAMILLE> FamilleDrop;
+
+    private RenderFragment Familles =>
+    @<SfDropDownList @ref=@FamilleDrop TValue="string" TItem="F_FAMILLE" Placeholder="Famille" DataSource=@familles Width="200" ShowClearButton ValueChanged="@(args => UpdateGrid())">
+            <DropDownListFieldSettings Text="FAIntitule" Value="FACodeFamille"> </DropDownListFieldSettings>
+        <DropDownListEvents TValue="string" TItem="F_FAMILLE"> </DropDownListEvents>
+        </SfDropDownList>
+    ;
+
+    //End components
+
+    short? vlstock = 0;
+    private IEnumerable<API_V_ARTICLE> items;
+    string vlfamille = "";
+    ICollection<F_FAMILLE> familles;
+    List<API_V_ARTICLE> rows = new List<API_V_ARTICLE>();
+    string activekey = "0";
+    bool loading = true; 
+    IList<API_V_ARTICLE> selecteditems;
+    private async Task InitCol()
+    {
+        if(session.IsMobile) 
+        {
+            FAIntitule = false;
+            FACodeFamille  = false;
+            ARPrixAch  = false;
+            ARPrixVen  = false;
+            UIntitule  = false;
+            DLQteVente  = false;
+            DLMontantHTVente  = false;
+            DLMontantTTCVente  = false;
+            DLQteAchat  = false;
+            DLMontantHTAchat  = false;
+            DLMontantTTCAchat  = false;
+            CLIntitule  = false;
+            CLNum  = false;
+            DLDateBLVente  = false;
+            DLDernierMontantHTVente  = false;
+            DLDernierMontantTTCVente  = false;
+            DLPUVente  = false;
+            DLDernierQteVente  = false;
+            FRIntitule  = false;
+            FRNum  = false;
+            DLDateBLAchat  = false;
+            DLDernierMontantHTAchat  = false;
+            DLDernierMontantTTCAchat  = false;
+            DLPUAchat  = false;
+            DLDernierQteAchat  = false;
+            SuiviStockIntitule  = false;
+            SommeilIntitule  = false;
+            ASQteSto  = false;
+            ASMontSto  = false;
+            EtatStock  = false;
+        }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        InitCol();
+        db = session.db;
+        await Task.Run(LoadData);    
+    }
+    private async Task LoadData()
+    {
+        familles = session.db.F_FAMILLE.ToList();
+        await UpdateGrid();
+    }
+        private async Task OnActionBegin(ActionEventArgs<API_V_ARTICLE> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Delete
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            Add();
+        }
+
+    }
+    private async Task UpdateGrid()
+    {
+        loading = true;
+        await Task.Delay(1);
+        items = session.db.API_V_ARTICLE.ToList();
+        if (vlfamille != "")
+        {
+            items = await Task.FromResult(items.Where(a => a.FA_CodeFamille == vlfamille).ToList());
+        }
+        if (vlstock == 1)
+        {
+            items = await Task.FromResult(items.Where(a => a.EtatStock == "En stock").ToList());
+        }
+        else if (vlstock == 2)
+        {
+            items = await Task.FromResult(items.Where(a => a.EtatStock == "Stock épuisé").ToList());
+        }
+        loading = false;
+        await Task.Delay(1);
+    }
+
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.ExcelExport();
+        }
+        if (args.Item.Id == "Grid_pdfexport")  //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.PdfExport();
+        }
+    }
+    protected async Task Edit(RecordDoubleClickEventArgs<API_V_ARTICLE> args)
+    {
+
+        await DialogService.OpenAsync<ArticlesFiche>(args.RowData.AR_Design,
+        new Dictionary<string, object>() { { "cbMarq", args.RowData.cbMarq } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "90%" });
+
+        await UpdateGrid();
+        await DefaultGrid.SelectRowAsync(await DefaultGrid.GetRowIndexByPrimaryKeyAsync(args.RowData.cbMarq));
+    }
+
+    private async Task Add() 
+    {
+        await DialogService.OpenAsync<ArticlesFiche>($"Ajouter un élément",
+        new Dictionary<string, object>() { { "cbMarq", 0 } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "90%" });
+
+        await UpdateGrid();
+        
+    }
+}

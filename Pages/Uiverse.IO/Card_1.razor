@@ -1,0 +1,34 @@
+﻿<div class="card-1">
+    <div class="content-1">
+        @if (!IsDetail)
+        {
+            <div class="title outer dark" style="display: flex;justify-content: space-between;align-items: center;">
+                <div>
+                    @Title
+                </div>
+                <div>
+                    <RadzenButton Click=@(args => NavigationManager.NavigateTo("/")) Icon="close" Size="Radzen.ButtonSize.Small" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" Style="    border-radius: 100px !important;
+    height: 30px !important;
+    width: 30px !important;
+    padding: 0px !important;
+    min-width: 20px !important
+    min-height: 20px !important; color: #000000" />
+                </div>
+            </div>
+        }
+        
+        <div class="description">
+            @ChildContent
+        </div>
+    </div>
+</div>
+
+@code 
+{
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public bool IsDetail { get; set; } = false;
+}

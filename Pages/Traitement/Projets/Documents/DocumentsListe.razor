@@ -1,0 +1,216 @@
+﻿<Card_1 Title="@Title">
+    <RadzenContent Container="main">
+        <div class="grid-90">
+            <SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                    Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete"})">
+                <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="F_DOCENTETE"></GridEvents>
+                <GridPageSettings PageSize="100"></GridPageSettings>
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                <GridTemplates>
+                    <EmptyRecordTemplate>
+                        <Empty></Empty>
+                    </EmptyRecordTemplate>
+                </GridTemplates>
+                <GridColumns>
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Date" HeaderText="Date" Format="d"></GridColumn>
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Piece" HeaderText="Pièce"></GridColumn>
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Tiers" HeaderText="Numéro"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Intitule" HeaderText="Maitre D'ouvrage" Width="230">
+                        <Template>
+                            @{
+                                var dt = (session.db.F_COMPTET.Where(a => a.CT_Num == ((context as F_DOCENTETE).DO_Tiers)));
+                            }
+                            @if (dt.Count() != 0)
+                            {
+                                <div>@dt.First().CT_Intitule</div>
+                            }
+                        </Template>
+                    </GridColumn>
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CA_Num" HeaderText="Affaire"></GridColumn>
+                    <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° Marché">
+                        <Template>
+                            @{
+                                var dt = (session.db.API_T_Projet.Where(a => a.CA_Num == ((context as F_DOCENTETE).CA_Num)));
+                            }
+                            @if (dt.Count() != 0)
+                            {
+                                <div>@dt.First().NumeroMarche</div>
+                            }
+                        </Template>
+                    </GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Objet">
+                        <Template>
+                            @{
+                                var dt = (session.db.API_T_Projet.Where(a => a.CA_Num == ((context as F_DOCENTETE).CA_Num)));
+                            }
+                            @if (dt.Count() != 0)
+                            {
+                                <div>@dt.First().Objet</div>
+                            }
+                        </Template>
+                    </GridColumn>
+
+
+                    <GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DE_Intitule" HeaderText="Dépot">
+                        <Template>
+                            @{
+                                var dt = (session.db.F_DEPOT.Where(a => a.DE_No == ((context as F_DOCENTETE).DE_No)));
+                            }
+                            @if (dt.Count() != 0)
+                            {
+                                <div>@dt.First().DE_Intitule</div>
+                            }
+                        </Template>
+                    </GridColumn>
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT" HeaderText="Montant HT" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                </GridColumns>
+                <SfSpinner @bind-Visible="@_loading">
+                </SfSpinner>
+
+
+            </SfGrid>
+        </div>
+    </RadzenContent>
+</Card_1>
+
+<style>
+    #components-layout-demo-responsive .logo {
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: 16px;
+    }
+
+    .site-layout-sub-header-background {
+        background: #fff;
+    }
+
+    .site-layout-background {
+        background: #fff;
+    }
+</style>
+
+
+@code {
+    //Parameters
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter] public int CT_Type { get; set; } = 0;
+    [Parameter] public int DO_Domaine { get; set; } = 0;
+    [Parameter] public int DO_Type { get; set; } = 0;
+    [Parameter] public string Title { get; set; } = "";
+    [Parameter] public bool IsDemandeAchat { get; set; } = false;
+    [Parameter] public bool IsConsommation { get; set; } = false;
+    //End Parameters
+    private IEnumerable<F_DOCENTETE> items;
+    bool _loading = false;
+
+
+    private SfGrid<F_DOCENTETE> DefaultGrid;
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await UpdateGrid();
+        if (IsConsommation)
+        {
+            var dt = session.db.P_INTERNE.Where(a => a.D_Intitule == "Consommation chantiers");
+            if (dt.Count() != 0)
+            {
+                int index = dt.First().cbMarq;
+                this.DO_Type = 39 + index;
+                await UpdateGrid();
+            }
+        }
+    }
+    private async Task UpdateGrid()
+    {
+
+        if(IsConsommation || IsDemandeAchat)
+        {
+            string q1 = @"SELECT a.* FROM F_DOCENTETE a
+                        WHERE a.CA_Num IN
+                        (
+                        SELECT
+                        pr.CA_Num
+                        FROM API_T_Site_User a
+                        INNER JOIN API_T_Projet pr ON a.Site = pr.Site
+
+                        WHERE a.[User] = {0}
+                        ) AND a.DO_Type = {1}";
+            /*var zn = db.API_T_Site_User.Where(a => a.User == sc.User.Id).Select(a => a.Site);
+            var pr = db.API_T_Projet.Where(a => zn.Contains(a.Site)).Select(a => a.CA_Num); */
+            items = db.F_DOCENTETE.FromSqlRaw(q1, sc.User.Id, DO_Type).ToList();
+        }
+
+    }
+
+    protected async Task Edit(RecordDoubleClickEventArgs<F_DOCENTETE> args)
+    {
+        await DialogService.OpenAsync<DocumentsFiche>(args.RowData.DO_Piece,
+        new Dictionary<string, object>() { { "cbMarq", args.RowData.cbMarq }, { "IsConsommation", IsConsommation }, { "IsDemandeAchat", IsDemandeAchat }, { "DO_Domaine", DO_Domaine }, { "DO_Type", DO_Type } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "950px", Height = "95%" });
+        await UpdateGrid();
+    }
+
+    private async Task Add()
+    {
+        await DialogService.OpenAsync<DocumentsFiche>($"Ajouter un élément",
+        new Dictionary<string, object>() { { "cbMarq", 0 }, { "IsConsommation", IsConsommation }, { "IsDemandeAchat", IsDemandeAchat }, { "DO_Domaine", DO_Domaine }, { "DO_Type", DO_Type } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "950px", Height = "95%" });
+        await UpdateGrid();
+    }
+
+    private async Task OnActionBegin(ActionEventArgs<F_DOCENTETE> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Delete
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await Add();
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

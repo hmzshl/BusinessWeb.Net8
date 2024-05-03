@@ -1,0 +1,23 @@
+﻿@page "/caisse/depenses"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction,Caissier")]
+
+
+@if (IsLoaded)
+{
+	<CaisseView type="2" Title="Dépenses de caisse" />
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+@code {
+	bool IsLoaded = false;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(100);
+		IsLoaded = true;
+	}
+}

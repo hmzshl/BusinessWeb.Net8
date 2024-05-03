@@ -1,0 +1,185 @@
+﻿<div class="dg-parent">
+    <div class="grid-80">
+        <SfGrid AllowPaging @ref=sfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" DataSource="@items"
+                Toolbar="@(new List<object>() { "ColumnChooser", "Search",new ToolbarItem() { Type = ItemType.Input,Template = Date1, Id = "date1", TooltipText = "Date Début", Align = ItemAlign.Right}
+                    ,new ToolbarItem() { Type = ItemType.Input,Template = Date2, Id = "date2", TooltipText = "Date Fin", Align = ItemAlign.Right}})">
+            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="false" AllowDeleting="false" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+            <GridEvents TValue="API_V_CREGLEMENT"></GridEvents>
+            <GridPageSettings PageSize="100"/>
+            <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row" PersistSelection></GridSelectionSettings>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridTemplates>
+                <EmptyRecordTemplate>
+                    <Empty></Empty>
+                </EmptyRecordTemplate>
+            </GridTemplates>
+            <GridAggregates>
+                <GridAggregate>
+
+                    <GridAggregateColumns>
+                        <GridAggregateColumn Field="RG_Montant" Type="AggregateType.Sum" Format="N2">
+                            <FooterTemplate>
+                                @{
+                                    var SumValue = (context as AggregateTemplateContext);
+                                    <div>
+                                        @SumValue.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+
+                        </GridAggregateColumn>
+                    </GridAggregateColumns>
+                </GridAggregate>
+            </GridAggregates>
+            <GridTemplates>
+                <EmptyRecordTemplate>
+                    <Empty></Empty>
+                </EmptyRecordTemplate>
+            </GridTemplates>
+
+            <GridColumns>
+                <GridColumn AllowFiltering="false" AllowSorting="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Date)" HeaderText="Date" Format="d"></GridColumn>
+                <GridColumn AllowFiltering="false" AllowSorting="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Piece)" HeaderText="Pièce"></GridColumn>
+                <GridColumn AllowFiltering="false" AllowSorting="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Reference)" HeaderText="Réf"></GridColumn>
+                <GridColumn AllowFiltering="false" AllowSorting="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Num)" HeaderText="N° Tiers"></GridColumn>
+                <GridColumn AllowFiltering="false" AllowSorting="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Intitule)" HeaderText="Tiers"/>
+                <GridColumn AllowFiltering="false" AllowSorting="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.JO_Intitule)" HeaderText="Journal" />
+                <GridColumn AllowFiltering="false" AllowSorting="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Libelle)" HeaderText="Libellé"></GridColumn>
+                <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                <GridColumn AllowFiltering="false" AllowSorting="false" Type="ColumnType.CheckBox" Width="50" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+            </GridColumns>
+            <SfSpinner @bind-Visible="@loading">
+            </SfSpinner>
+        </SfGrid>
+    </div>
+    <div class="btns-end">
+        <SfButton OnClick="Submit" IsPrimary="true" IconCss="e-icons e-save">Enregistrer la selection</SfButton>
+    </div>
+</div>
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    DB db = new DB();
+    [Parameter] public int type { get; set; } = 0;
+    [Parameter] public int caisse { get; set; } = 0;
+    SfGrid<API_V_CREGLEMENT> sfGrid;
+    private IEnumerable<API_V_CREGLEMENT> items;
+    bool loading = false;
+    DateTime? date1;
+    DateTime? date2;
+    int payeur = 0;
+    private RenderFragment Date1 =>
+    @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date1" Width="120px" Placeholder="Date Début" TValue="DateTime?">
+        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+    </SfDatePicker>;
+    private RenderFragment Date2 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date2" Width="120px" Placeholder="Date Fin" TValue="DateTime?">
+        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+             </SfDatePicker>
+    ;
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await UpdateGrid();
+
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        await UpdateGrid();
+    }
+    protected async Task UpdateGrid()
+    {
+        items = db.API_V_CREGLEMENT.AsNoTracking().Where(a => a.RG_Type == type && a.RG_Date >= (date1 ?? new DateTime(1900, 1, 1)) && a.RG_Date <= (date2 ?? new DateTime(2900, 12, 31)) && ((a.CG_Num ?? "").StartsWith("5161"))).OrderByDescending(a => a.RG_Date).ToList();
+    }
+    private async Task Cancel()
+    {
+        DialogService.Close();
+    }
+    private async Task Submit()
+    {
+
+        var data = sfGrid.GetSelectedRecordsAsync().Result;
+
+
+
+
+        foreach (API_V_CREGLEMENT item in data)
+        {
+
+            var ln = new API_T_CaisseEntete();
+            ln.Caisse = caisse;
+            ln.Sense = type;
+            ln.Type = type;
+            ln.CT_Num = item.CT_Num;
+            ln.Libelle = item.RG_Libelle + " PN° "+item.RG_Piece;
+            ln.Montant = item.RG_Montant??0;
+            ln.MontantLettre = fn.getMontant((item.RG_Montant??0)) + " DHS";
+            ln.Date = item.RG_Date;
+            var cs = db.API_T_Caisse.Where(a => a.id == caisse).SingleOrDefault();
+            string piece = fn.PieceCaisse(type) + (cs?.C_Racine ?? "") + "00001";
+            var dt = db.API_T_CaisseEntete.Where(a => a.Numero.StartsWith(fn.PieceCaisse(type) + (cs.C_Racine ?? ""))).ToList();
+            if (dt.Count != 0)
+            {
+                piece = fn.getNextCode(dt.Max(a => a.Numero));
+            }
+            ln.Numero = piece;
+
+            db.Add(ln);
+            db.SaveChanges();
+            
+        }
+
+        
+        DialogService.Close();
+    }
+
+}
+
+<style>
+    .statustemp.e-activecolor {
+        background-color: #ccffcc;
+        text-align: center;
+    }
+
+    td.e-rowcell .statustxt.e-activecolor {
+        color: #007d00;
+        background-color: #ccffcc;
+        border-radius: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        position: relative;
+        text-align: center;
+    }
+
+    .statustemp.e-inactivecolor {
+        background-color: #ffd7cc;
+        text-align: center;
+    }
+
+    td.e-rowcell .statustxt.e-inactivecolor {
+        color: #c40000;
+        background-color: #ffd7cc;
+        border-radius: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        position: relative;
+        text-align: center;
+    }
+
+    .statustemp.e-inforcolor {
+        background-color: #ffd7cc;
+        text-align: center;
+    }
+
+    td.e-rowcell .statustxt.e-infocolor {
+        color: #918a36;
+        background-color: #f5f4e9;
+        border-radius: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        position: relative;
+        text-align: center;
+    }
+</style>

@@ -1,0 +1,25 @@
+﻿@page "/caisse/isc/recettes"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction,Caissier")]
+
+@if (IsLoaded)
+{
+    <Card_1 Title="RECETTES CAISSE">
+        <CaisseView type="0" Title="Recettes de caisse" />
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+@code {
+    bool IsLoaded = false;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        IsLoaded = true;
+    }
+}

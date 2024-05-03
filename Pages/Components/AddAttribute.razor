@@ -1,0 +1,61 @@
+﻿<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6">
+	<GridRow>
+	<GridCol Xs="24" Md="24">
+			<FormItem Label="Intitulé" LabelColSpan="6">
+				<Input @bind-Value="@row.Intitule"/>
+			</FormItem>
+	</GridCol>
+	<GridCol Xs="24" Md="24">
+			<FormItem Label="Période" LabelColSpan="6">
+				<Select TItem="int" TItemValue="int" @bind-Value="@row.Type">
+					<SelectOptions>
+						<SelectOption TItem="int" TItemValue="int" Value="0" Label="Texte" />
+						<SelectOption TItem="int" TItemValue="int" Value="1" Label="Date" />
+						<SelectOption TItem="int" TItemValue="int" Value="2" Label="Valeur" />
+						<SelectOption TItem="int" TItemValue="int" Value="3" Label="Bourdonner" />
+						<SelectOption TItem="int" TItemValue="int" Value="4" Label="Combobox" />
+						<SelectOption TItem="int" TItemValue="int" Value="5" Label="Table" />
+					</SelectOptions>
+				</Select>
+			</FormItem>
+	</GridCol>
+</GridRow>
+</Form>
+<SfToolbar>
+	<ToolbarItems>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="Submit">Enregister</SfButton>
+			</Template>
+		</ToolbarItem>
+	</ToolbarItems>
+</SfToolbar>
+
+@code {
+	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	[Parameter] public int ParentID { get; set; }
+	[Parameter] public string TableName { get; set; }
+	public API_T_Attribute row { get; set; } = new API_T_Attribute();
+	protected override void OnInitialized() 
+	{
+		db = session.db;
+	}
+	private void Submit()
+	{
+		try
+		{
+			row.ParentID = ParentID;
+			row.TableName = TableName;
+			db.API_T_Attribute.Add(row);
+			db.SaveChanges();
+			DialogService.Close();
+		}
+		catch (Exception ex)
+		{
+			Message.Warning(ex.ToString());
+		}
+	}
+
+}
+

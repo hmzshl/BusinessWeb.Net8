@@ -1,0 +1,197 @@
+﻿
+<Form Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="row" Model="@items">
+    <Card>
+        <GridRow>
+            @foreach (API_T_AttributeDetail item in items)
+            {
+                API_T_Attribute parent = parent = db.API_T_Attribute.Where(a => a.id == item.ParentID).SingleOrDefault();
+                if (parent.Type == 1)//Text
+                {
+                       <GridCol Xs="24" Md="8">
+
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="@parent.Intitule">
+                                <SfTextBox Value="@(item.TextValue)" ValueChanged="@(args => TextChanged(item.id,args.ToString()))" />
+                            </FormItem>
+                        </GridCol>
+                }
+                if (parent.Type == 2)//Date
+                {
+                        <GridCol Xs="24" Md="8">
+
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="@parent.Intitule">
+                                <SfDatePicker TValue="DateTime?" Value="@(item.DateValue)" ValueChanged="@(args => DateChanged(item.id,args.Value))" />
+                            </FormItem>
+                        </GridCol>
+                }
+                if (parent.Type == 3)//Decimal
+                {
+                        <GridCol Xs="24" Md="8">
+
+                           <FormItem LabelAlign="AntLabelAlignType.Left" Label="@parent.Intitule">
+                                <SfNumericTextBox TValue="Decimal?" Value="@(item.DecimalValue)" ValueChanged="@(args => DecimalChanged(item.id,args.Value))" ShowSpinButton="false" Decimals="2" Format="N2" />
+                            </FormItem>
+                        </GridCol>
+                }
+                if (parent.Type == 4)//Int
+                {
+                        <GridCol Xs="24" Md="8">
+
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="@parent.Intitule">
+                                <SfNumericTextBox TValue="int?" Value="@(item.IntValue)" ValueChanged="@(args => IntChanged(item.id,args.Value))" ShowSpinButton="false" Decimals="0" Format="#" />
+                            </FormItem>
+                        </GridCol>
+                }
+                if (parent.Type == 5)//Table
+                {
+                        <GridCol Xs="24" Md="8">
+
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="@parent.Intitule">
+                                <SfDatePicker TValue="DateTime?" Value="@(item.DateValue)" ValueChanged="@(args => DateChanged(item.id,args.Value))" />
+                            </FormItem>
+                        </GridCol>
+                }
+                if (parent.Type == 6)//Model
+                {
+                        <GridCol Xs="24" Md="8">
+
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="@parent.Intitule">
+                            @if (parent.Model == 1) //Articles
+                            {
+                                        <SfDropDownList TValue="int" TItem="F_ARTICLE" DataSource="@db.F_ARTICLE" Value="@(item.ModelValue)" ValueChanged="@(args => ModelChanged(item.id,args))">
+                                            <DropDownListEvents TValue="int" TItem="F_ARTICLE" />
+                                        <DropDownListFieldSettings Text="AR_Design" Value="cbMarq" />
+                                    </SfDropDownList>
+                            }
+                            @if (parent.Model == 2)// Clients
+                            {
+                                        <SfDropDownList TValue="int" TItem="F_COMPTET" DataSource="@db.F_COMPTET.Where(a => a.CT_Type == 0)" Value="@(item.ModelValue)" ValueChanged="@(args => ModelChanged(item.id,args))">
+                                            <DropDownListEvents TValue="int" TItem="F_COMPTET" />
+                                            <DropDownListFieldSettings Text="CT_Intitule" Value="cbMarq" />
+                                        </SfDropDownList>
+                            }
+                            @if (parent.Model == 3) //Fournisseurs
+                            {
+                                        <SfDropDownList TValue="int" TItem="F_COMPTET" DataSource="@db.F_COMPTET.Where(a => a.CT_Type == 1)" Value="@(item.ModelValue)" ValueChanged="@(args => ModelChanged(item.id,args))">
+                                            <DropDownListEvents TValue="int" TItem="F_COMPTET" />
+                                            <DropDownListFieldSettings Text="CT_Intitule" Value="cbMarq" />
+                                    </SfDropDownList>
+                            }
+                            @if (parent.Model == 4) //CompteG
+                            {
+                                        <SfDropDownList TValue="int" TItem="F_COMPTEG" DataSource="@db.F_COMPTEG" Value="@(item.ModelValue)" ValueChanged="@(args => ModelChanged(item.id,args))">
+                                            <DropDownListEvents TValue="int" TItem="F_COMPTEG" />
+                                        <DropDownListFieldSettings Text="CG_Intitule" Value="cbMarq" />
+                                    </SfDropDownList>
+                            }
+                            @if (parent.Model == 5) //CompteA
+                            {
+                                        <SfDropDownList TValue="int" TItem="F_COMPTEA" DataSource="@db.F_COMPTEA" Value="@(item.ModelValue)" ValueChanged="@(args => ModelChanged(item.id,args))">
+                                            <DropDownListEvents TValue="int" TItem="F_COMPTEA" />
+                                            <DropDownListFieldSettings Text="CA_Intitule" Value="cbMarq" />
+                                    </SfDropDownList>
+                            }
+                            @if (parent.Model == 6)//Projets
+                            {
+                                        <SfDropDownList TValue="int" TItem="API_T_Projet" DataSource="@db.API_T_Projet" Value="@(item.ModelValue)" ValueChanged="@(args => ModelChanged(item.id,args))">
+                                            <DropDownListEvents TValue="int" TItem="API_T_Projet" />
+                                            <DropDownListFieldSettings Text="Objet" Value="id" />
+                                        </SfDropDownList>
+                            }
+
+
+                            @if (parent.Model == 8)//Sites
+                            {
+                                        <SfDropDownList TValue="int" TItem="API_T_Site" DataSource="@db.API_T_Site" Value="@(item.ModelValue)" ValueChanged="@(args => ModelChanged(item.id,args))">
+                                            <DropDownListEvents TValue="int" TItem="API_T_Site" />
+                                            <DropDownListFieldSettings Text="Intitule" Value="id" />
+                                        </SfDropDownList>
+                            }
+                            @if (parent.Model == 10)//Personnels
+                            {
+                                        <SfDropDownList TValue="int" TItem="API_T_Personnel" DataSource="@db.API_T_Personnel" Value="@(item.ModelValue)" ValueChanged="@(args => ModelChanged(item.id,args))">
+                                            <DropDownListEvents TValue="int" TItem="API_T_Personnel" />
+                                            <DropDownListFieldSettings Text="Nom" Value="id" />
+                                        </SfDropDownList>
+                            }
+                            @if (parent.Model == 11)//Matériels
+                            {
+                                        <SfDropDownList TValue="int" TItem="API_T_Materiel" DataSource="@db.API_T_Materiel" Value="@(item.ModelValue)" ValueChanged="@(args => ModelChanged(item.id,args))">
+                                            <DropDownListEvents TValue="int" TItem="API_T_Materiel" />
+                                            <DropDownListFieldSettings Text="MarqueVH" Value="id" />
+                                        </SfDropDownList>
+                            }
+
+                            </FormItem>
+                        </GridCol>
+                }
+            }
+    </GridRow>
+    </Card>
+    
+
+</Form>
+
+@code 
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    DB db = new DB();
+
+    [Parameter]
+    public int TableIndex { get; set; }
+    [Parameter]
+    public int ChildID { get; set; }
+    private List<API_T_Attribute> attributes = new List<API_T_Attribute>();
+    private List<API_T_AttributeDetail> items = new List<API_T_AttributeDetail>();
+    Helpers helpers = new Helpers();
+
+    protected override async Task OnInitializedAsync() 
+    {
+        db = session.db;
+        attributes = db.API_T_Attribute.Where(a => a.TableIndex == TableIndex).ToList();
+        foreach(API_T_Attribute attr in attributes) 
+        {
+
+            if (!((db.API_T_AttributeDetail.Where(a => a.ParentID == attr.id && a.ChildID == ChildID)).Count() != 0))
+            {
+                var line = new API_T_AttributeDetail();
+                line.ChildID = ChildID;
+                line.ParentID = attr.id;
+                line.TableIndex = attr.TableIndex;
+                db.API_T_AttributeDetail.Add(line);
+                db.SaveChanges();
+            }
+        }
+        items = db.API_T_AttributeDetail.Where(a => a.TableIndex == TableIndex && a.ChildID == ChildID).ToList();
+    }
+    private async Task TextChanged(int id, string value)
+    {
+        var row = db.API_T_AttributeDetail.Where(a => a.id == id).SingleOrDefault();
+        row.TextValue = value;
+        db.SaveChanges();
+    }
+    private async Task DateChanged(int id, DateTime? value)
+    {
+        var row = db.API_T_AttributeDetail.Where(a => a.id == id).SingleOrDefault();
+        row.DateValue = value;
+        db.SaveChanges();
+    }
+    private async Task DecimalChanged(int id, Decimal? value)
+    {
+        var row = db.API_T_AttributeDetail.Where(a => a.id == id).SingleOrDefault();
+        row.DecimalValue = value??0;
+        db.SaveChanges();
+    }
+    private async Task IntChanged(int id, int? value)
+    {
+        var row = db.API_T_AttributeDetail.Where(a => a.id == id).SingleOrDefault();
+        row.IntValue = value??0;
+        db.SaveChanges();
+    }
+    private async Task ModelChanged(int id, int value)
+    {
+        var row = db.API_T_AttributeDetail.Where(a => a.id == id).SingleOrDefault();
+        row.ModelValue = value;
+        db.SaveChanges();
+    }
+}

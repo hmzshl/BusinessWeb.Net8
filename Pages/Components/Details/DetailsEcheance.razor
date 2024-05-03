@@ -1,0 +1,470 @@
+﻿
+@if (IsLoaded)
+{
+    <div style="height: @Height;">
+        <SfToolbar CssClass="btns">
+            <ToolbarItems>
+
+                 <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                     <Template>
+                         <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
+                         <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+                     </SfDatePicker>
+                 </Template>
+             </ToolbarItem>
+                <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                 <Template>
+                     <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
+                         <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+                     </SfDatePicker>
+                 </Template>
+             </ToolbarItem>
+
+             <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                 <Template>
+                     <SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+                 </Template>
+             </ToolbarItem>
+                <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                    <Template>
+                        <RadzenLabel Text="EXERCICE" Component="exercice" />
+                        <div style="padding-left: 10px; margin-right: 0px;" id="exercice">
+                            <SfDropDownList Width="100px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@exercices" TValue="string" TItem="string" @bind-Value="@selected_exercice">
+                                <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
+                            </SfDropDownList>
+                        </div>
+                    </Template>
+                </ToolbarItem>
+                <ToolbarItem OnClick=@(()=>{ _visible = true; }) TooltipText="Filtrer" Text="Filtrer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-filter"></ToolbarItem>
+             <ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+             <ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+
+         </ToolbarItems>
+     </SfToolbar>
+     <SfGrid Height="100%" AllowGrouping AllowSelection EnableHover DataSource="@(items)" @ref=DefaultGrid AllowSorting AllowFiltering="false" AllowExcelExport>
+         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridGroupSettings Columns="@(new string[] { "CT_Intitule" })" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates EnableLazyLoading>
+                <CaptionTemplate>
+                    @{
+                        var ag = (context as CaptionTemplateContext);
+                        <div style="margin-left: 5px;">@ag.Key</div>
+                    }
+                </CaptionTemplate>
+            </GridGroupSettings>
+             <GridAggregates>
+                 <GridAggregate>
+                     <GridAggregateColumns>
+                         <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.RG_Montant)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                             <FooterTemplate>
+                                 @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                            <GroupCaptionTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </GroupCaptionTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.M01)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                            <GroupCaptionTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div class="sm-sum">
+                                        @value.Sum
+                                    </div>
+                                }
+                            </GroupCaptionTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.M02)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                            <GroupCaptionTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div class="sm-sum">
+                                        @value.Sum
+                                    </div>
+                                }
+                            </GroupCaptionTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.M03)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                            <GroupCaptionTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div class="sm-sum">
+                                        @value.Sum
+                                    </div>
+                                }
+                            </GroupCaptionTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.M04)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                            <GroupCaptionTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div class="sm-sum">
+                                        @value.Sum
+                                    </div>
+                                }
+                            </GroupCaptionTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.M05)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                            <GroupCaptionTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div class="sm-sum">
+                                        @value.Sum
+                                    </div>
+                                }
+                            </GroupCaptionTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.M06)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                            <GroupCaptionTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div class="sm-sum">
+                                        @value.Sum
+                                    </div>
+                                }
+                            </GroupCaptionTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.M07)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                            <GroupCaptionTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div class="sm-sum">
+                                        @value.Sum
+                                    </div>
+                                }
+                            </GroupCaptionTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.M08)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                            <GroupCaptionTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div class="sm-sum">
+                                        @value.Sum
+                                    </div>
+                                }
+                            </GroupCaptionTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.M09)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                            <GroupCaptionTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div class="sm-sum">
+                                        @value.Sum
+                                    </div>
+                                }
+                            </GroupCaptionTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.M10)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                            <GroupCaptionTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div class="sm-sum">
+                                        @value.Sum
+                                    </div>
+                                }
+                            </GroupCaptionTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.M11)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                            <GroupCaptionTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div class="sm-sum">
+                                        @value.Sum
+                                    </div>
+                                }
+                            </GroupCaptionTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.M12)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                            <GroupCaptionTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div class="sm-sum">
+                                        @value.Sum
+                                    </div>
+                                }
+                            </GroupCaptionTemplate>
+                        </GridAggregateColumn>
+                    </GridAggregateColumns>
+                </GridAggregate>
+            </GridAggregates>
+            <GridColumns>
+            <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Intitule)" HeaderText="@(getTiers())" Visible="@(CT_Num == null)" />
+                <GridColumn Width="240" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Libelle)" HeaderText="Libellé" />
+                <GridColumn Width="85" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Num)" HeaderText="Numéro" Visible="@(CT_Num == null)" />
+                <GridColumn Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Date)" HeaderText="Date" Format="d" />
+                <GridColumn Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.DateEcheance)" HeaderText="Echéance" Format="d" />
+                
+                <GridColumn Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Piece)" HeaderText="Pièce" />
+                <GridColumn Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.R_Intitule)" HeaderText="Mode" />
+                <GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.JO_Intitule)" HeaderText="Journal" />
+                <GridColumn Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Reference)" HeaderText="Référence" />
+                <GridColumn Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.EtatReglement)" HeaderText="Statut">
+                    <Template>
+                        @{
+                            var dt = (context as API_V_CREGLEMENT);
+                            if (dt.EtatReglement == "Affécté")
+                            {
+                                <div style="text-align: left;">
+                                    <span class="statustxt e-activecolor">Affécté</span>
+                                </div>
+
+                            }
+                            else if (dt.EtatReglement == "Aff. Parciel")
+                            {
+                                <div style="text-align: left;">
+                                    <span class="statustxt e-infocolor">Aff. Parciel</span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div style="text-align: left;">
+                                    <span class="statustxt e-inactivecolor">Non Affecté</span>
+                                </div>
+
+                            }
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn Visible=@(IsVisible(1)) Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.M01)" HeaderText="@("01/"+selected_exercice)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Visible=@(IsVisible(2)) Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.M02)" HeaderText="@("02/"+selected_exercice)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Visible=@(IsVisible(3)) Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.M03)" HeaderText="@("03/"+selected_exercice)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Visible=@(IsVisible(4)) Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.M04)" HeaderText="@("04/"+selected_exercice)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Visible=@(IsVisible(5)) Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.M05)" HeaderText="@("05/"+selected_exercice)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Visible=@(IsVisible(6)) Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.M06)" HeaderText="@("06/"+selected_exercice)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Visible=@(IsVisible(7)) Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.M07)" HeaderText="@("07/"+selected_exercice)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Visible=@(IsVisible(8)) Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.M08)" HeaderText="@("08/"+selected_exercice)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Visible=@(IsVisible(9)) Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.M09)" HeaderText="@("09/"+selected_exercice)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Visible=@(IsVisible(10)) Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.M10)" HeaderText="@("10/"+selected_exercice)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Visible=@(IsVisible(11)) Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.M11)" HeaderText="@("11/"+selected_exercice)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Visible=@(IsVisible(12)) Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.M12)" HeaderText="@("12/"+selected_exercice)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Montant)" HeaderText="Total" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+            </GridColumns>
+        </SfGrid>
+    </div>
+    <SfDialog Target="#target" Width="600px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@_visible" CloseOnEscape>
+        <DialogTemplates>
+            <Header>
+                Filtrer
+            </Header>
+            <Content>
+                <RadzenStack Orientation="Radzen.Orientation.Vertical" AlignItems="Radzen.AlignItems.Start" Wrap="Radzen.FlexWrap.Wrap" Gap="10px" Style="padding: 20px; padding-bottom: 30px;">
+                    <SfMultiSelect FloatLabelType="FloatLabelType.Always" Placeholder="Mode de paiement" @bind-Value=@types ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.OrderBy(a => a.R_Intitule).Select(a => a.R_Intitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                        <MultiSelectFieldSettings Text="R_Intitule" Value="R_Intitule"></MultiSelectFieldSettings>
+                        <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                    </SfMultiSelect>
+                    <SfMultiSelect FloatLabelType="FloatLabelType.Always" Placeholder="Echéance" @bind-Value=@statut ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.OrderBy(a => a.Echeance).Select(a => a.Echeance).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                        <MultiSelectFieldSettings Text="Echeance" Value="Echeance"></MultiSelectFieldSettings>
+                        <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                    </SfMultiSelect>
+                    <SfMultiSelect FloatLabelType="FloatLabelType.Always" Placeholder="Affectation" @bind-Value=@affectation ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.OrderBy(a => a.EtatReglement).Select(a => a.EtatReglement).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                        <MultiSelectFieldSettings Text="EtatReglement" Value="EtatReglement"></MultiSelectFieldSettings>
+                        <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                    </SfMultiSelect>
+                    <SfMultiSelect FloatLabelType="FloatLabelType.Always" Placeholder="Journal" @bind-Value=@journaux ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.OrderBy(a => a.JO_Intitule).Select(a => a.JO_Intitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                        <MultiSelectFieldSettings Text="JO_Intitule" Value="JO_Intitule"></MultiSelectFieldSettings>
+                        <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                    </SfMultiSelect>
+                </RadzenStack>
+            </Content>
+        </DialogTemplates>
+        <DialogPositionData Y="160"></DialogPositionData>
+        <DialogButtons>
+            <DialogButton Content="Daccord" IsPrimary="true" OnClick="@(args => _visible = false)"></DialogButton>
+        </DialogButtons>
+    </SfDialog>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    bool IsLoaded = false;
+    bool _visible = false;
+    bool grid_loading = false;
+    [Parameter] public bool IsClients { get; set; } = false;
+    [Parameter] public bool IsFournisseurs { get; set; } = false;
+    [Parameter] public bool IsReleve { get; set; } = false;
+    [Parameter] public bool IsLivraison { get; set; } = true;
+    [Parameter] public int DO_Domaine { get; set; }
+    [Parameter] public int DO_Type { get; set; }
+    [Parameter] public string CA_Num { get; set; }
+    [Parameter] public string DO_Piece { get; set; }
+    [Parameter] public string CT_Num { get; set; }
+    [Parameter] public string JO_Num { get; set; }
+    [Parameter] public string Statut { get; set; }
+    [Parameter] public int CO_No { get; set; }
+    [Parameter] public int DE_No { get; set; }
+    [Parameter] public string Height { get; set; }
+    SfGrid<API_V_CREGLEMENT> DefaultGrid;
+    DateTime? date1 = DateTime.Today;
+    DateTime? date2;
+    int domaine = 0;
+    int type = 0;
+    private List<API_V_CREGLEMENT> data = new List<API_V_CREGLEMENT>();
+    List<string> types = new List<string>();
+    List<string> statut = new List<string>();
+    List<string> affectation = new List<string>();
+    List<string> journaux = new List<string>();
+    List<string> exercices = new List<string>();
+    string selected_exercice;
+    private List<API_V_CREGLEMENT> items = new List<API_V_CREGLEMENT>();
+
+    private Func<double, string> _fortmat1 = (p) => $"{(p / 100).ToString("### ### ##0 %")}";
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(100);
+        db = session.db;
+        types = db.API_V_CREGLEMENT.OrderBy(a => a.R_Intitule).Select(a => a.R_Intitule).Distinct().ToList();
+        statut = db.API_V_CREGLEMENT.OrderBy(a => a.Echeance).Select(a => a.Echeance).Distinct().ToList();
+        affectation = db.API_V_CREGLEMENT.OrderBy(a => a.EtatReglement).Select(a => a.EtatReglement).Distinct().ToList();
+        journaux = db.API_V_CREGLEMENT.OrderBy(a => a.JO_Intitule).Select(a => a.JO_Intitule).Distinct().ToList();
+        exercices = db.API_V_CREGLEMENT.OrderBy(a => a.DateEcheance).Select(a => ((a.DateEcheance ?? DateTime.Today).Year.ToString())).Distinct().ToList();
+        selected_exercice = exercices.Max();
+        await UpdateGrid();
+        IsLoaded = true;
+    }
+    private async Task UpdateGrid()
+    {
+        items = db.API_V_CREGLEMENT.Where(a => 
+            ((a.JO_Num == JO_Num && JO_Num != null) || (JO_Num == null))
+            && ((a.CT_Num == CT_Num && CT_Num != null) || (CT_Num == null))
+            && ((date1 != null && a.DateEcheance >= date1) || date1 == null)
+            && ((date2 != null && a.DateEcheance <= date2) || date2 == null)
+            && ((types != null && types.Contains(a.R_Intitule)))
+            && ((statut != null && statut.Contains(a.Echeance)))
+            && ((affectation != null && affectation.Contains(a.EtatReglement)))
+            && ((journaux != null && journaux.Contains(a.JO_Intitule)))
+            && a.RG_Type == DO_Domaine
+            && (selected_exercice != null && ((a.DateEcheance ?? DateTime.Today).Year.ToString() == selected_exercice))
+            ).OrderBy(a => a.DateEcheance)
+            .ToList();
+    }
+    private bool IsVisible(int mois)
+    {
+        return ((date1 ?? new DateTime(2024, 1, 1)).Month <= mois && (date2 ?? new DateTime(2024, 12, 31)).Month >= mois);        
+    }
+    private string getTiers()
+    {
+        string rs = "Tiers";
+        if (DO_Domaine == 0)
+        {
+            rs = "Client";
+        }
+        if (DO_Domaine == 1)
+        {
+            rs = "Fournisseur";
+        }
+
+        return rs;
+    }
+}

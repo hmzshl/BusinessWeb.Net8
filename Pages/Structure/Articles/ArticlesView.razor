@@ -1,0 +1,10 @@
+﻿@page "/articles"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction,Commercial,Magasinier,Acheteur")]
+
+        <RadzenContent Container="main">
+            <ArticlesListe/>
+        </RadzenContent>
+@code
+{
+
+ }

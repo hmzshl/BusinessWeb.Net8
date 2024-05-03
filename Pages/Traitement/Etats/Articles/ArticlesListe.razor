@@ -1,0 +1,412 @@
+@page "/et-articles"
+@attribute [Authorize]
+@if (IsLoaded)
+{
+    <Card_1 Title="LISTE DES ARTICLES">
+        <RadzenContent Container="main">
+            <div class="grid-90">
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+
+
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+
+                            <Template>
+                                <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap">
+                                    <RadzenLabel Text="AFFICHAGE" />
+                                    <SfMultiSelect Width="150px" @bind-Value=@selected_affichages ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(affichages)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                                    </SfMultiSelect>
+                                </RadzenStack>
+
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                            <Template>
+                                <SfTextBox Width="170px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem OnClick=@(()=>{ _visible = true; }) TooltipText="Filtrer" Text="Filtrer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-filter"></ToolbarItem>
+                        <ToolbarItem Disabled=@(!sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+                        <ToolbarItem Disabled=@(!sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+                <div class="grid-84">
+                    <SfGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowResizing AllowFiltering AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
+                        <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="false" AllowDeleting="false" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                        <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_V_ARTICLE"></GridEvents>
+                        <GridPageSettings PageSize="100"></GridPageSettings>
+                        <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
+                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <Empty></Empty>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                        <GridAggregates>
+                            <GridAggregate>
+                                <GridAggregateColumns>
+                                    <GridAggregateColumn Field="@nameof(API_V_ARTICLE.AR_Ref)" Type="AggregateType.Count" Format="N0">
+                                        <FooterTemplate>
+                                            @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div>
+                                                    @SumValue.Count
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+
+                                    </GridAggregateColumn>
+                                    <GridAggregateColumn Field="@nameof(API_V_ARTICLE.AS_MontSto)" Type="AggregateType.Sum" Format="N2">
+                                        <FooterTemplate>
+                                            @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div>
+                                                    @SumValue.Sum
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+
+                                    </GridAggregateColumn>
+                                </GridAggregateColumns>
+                            </GridAggregate>
+                        </GridAggregates>
+                        <GridColumns>
+                            @if (session.IsMobile)
+                            {
+                                <GridColumn HeaderText="Article" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                    <Template>
+                                        @{
+                                            var dt = (context as API_V_ARTICLE);
+                                            <div style="padding: 5px;">
+                                                <table>
+                                                    <Tr Title="Désignation" TitleClass="tr-intitule" ContentClass="tr-intitule">@dt.AR_Design</Tr>
+                                                    <Tr Title="Référence">@dt.AR_Ref</Tr>
+                                                    <Tr Title="Unité">@dt.U_Intitule</Tr>
+                                                    <Tr Title="Stock">
+                                                        @if (dt?.EtatStock == "En stock")
+                                                        {
+                                                            <div>
+                                                                <span class="statustxt e-activecolor">@dt?.EtatStock</span>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div>
+                                                                <span class="statustxt e-inactivecolor">@dt?.EtatStock</span>
+                                                            </div>
+                                                        }
+                                                    </Tr>
+                                                    <Tr Title="Qté" Align="right">@dt.AS_QteSto?.ToString("N2")</Tr>
+                                                </table>
+                                            </div>
+
+                                        }
+                                    </Template>
+                                </GridColumn>
+                            }
+                            else
+                            {
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="cbMarq" HeaderText="#" Visible="false" IsPrimaryKey="true"></GridColumn>
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_Ref" HeaderText="Reference"></GridColumn>
+                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_Design" HeaderText="Designation" Width="250"></GridColumn>
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="U_Intitule" HeaderText="Unite"></GridColumn>
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="FA_CodeFamille" HeaderText="Code.Fam"></GridColumn>
+                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="FA_Intitule" HeaderText="Famille" Width="150"></GridColumn>
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="SuiviStockIntitule" HeaderText="SV.Stock"></GridColumn>
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_PrixAch" HeaderText="PU.Achat" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_PrixVen" HeaderText="PU.Vente" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="SommeilIntitule" HeaderText="Sommeil"></GridColumn>
+                                <!--Stock-->
+                                @if (selected_affichages != null && selected_affichages.Contains("Stock"))
+                                {
+                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="STOCK">
+                                        <GridColumns>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="EtatStock" HeaderText="Stock">
+                                                <Template>
+                                                    @{
+                                                        var dt = (context as API_V_ARTICLE);
+                                                        if (dt?.EtatStock == "En stock")
+                                                        {
+                                                            <div>
+                                                                <span class="statustxt e-activecolor">@dt?.EtatStock</span>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div>
+                                                                <span class="statustxt e-inactivecolor">@dt?.EtatStock</span>
+                                                            </div>
+                                                        }
+                                                    }
+                                                </Template>
+                                            </GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AS_QteSto" HeaderText="Qte.Sto" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn Width="30" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="#">
+                                                <Template>
+                                                    @{
+                                                        var dt = (context as API_V_ARTICLE);
+                                                        <div style="text-align: center;">
+                                                            @if (dt.AS_QteSto > dt.AS_QteMaxi)
+                                                            {
+                                                                <RadzenIcon Icon="circle" Style="color: #34c062" />
+                                                            }
+                                                            else if (dt.AS_QteSto <= dt.AS_QteMini)
+                                                            {
+                                                                <RadzenIcon Icon="circle" Style="color: #d84e5c" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <RadzenIcon Icon="circle" Style="color: #e0a02b" />
+                                                            }
+                                                        </div>
+
+                                                    }
+                                                </Template>
+                                            </GridColumn>
+                                            
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="QteCD" HeaderText="Qte.Con" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="EC_Enumere" HeaderText="Con"></GridColumn>
+                                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AS_MontSto" HeaderText="Mnt.Sto" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QteCom)" HeaderText="Qte.Com" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QtePrepa)" HeaderText="Qte.Prepa" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QteRes)" HeaderText="Qte.Res" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QteMini)" HeaderText="Qte.Mini" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QteMaxi)" HeaderText="Qte.Maxi" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+
+
+                                        </GridColumns>
+                                    </GridColumn>
+                                }
+
+
+                                <!--Achats-->
+                                @if (selected_affichages != null && selected_affichages.Contains("Achats"))
+                                {
+                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="ACHATS">
+                                        <GridColumns>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Qte_Achat" HeaderText="Qte.Ach" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT_Achat" HeaderText="Ach.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+
+                                            </GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC_Achat" HeaderText="Ach.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                            </GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL_Achat" HeaderText="Date.Ach" Format="d"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_Qte_Achat" HeaderText="Der.Qte" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PUA_chat" HeaderText="Der.PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantHT_Achat" HeaderText="Der.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantTTC_Achat" HeaderText="Der.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="FR_Intitule" HeaderText="Der.Fournisseur" Width="200"></GridColumn>
+                                        </GridColumns>
+                                    </GridColumn>
+                                }
+
+
+                                <!--Ventes-->
+                                @if (selected_affichages != null && selected_affichages.Contains("Ventes"))
+                                {
+                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="VENTES">
+                                        <GridColumns>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Qte_Vente" HeaderText="Qte.Ven" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT_Vente" HeaderText="CA.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                            </GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC_Vente" HeaderText="CA.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+
+                                            </GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL_Vente" HeaderText="Der.Date" Format="d"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_Qte_Vente" HeaderText="Der.Qte" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PU_Vente" HeaderText="Der.PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantHTVente" HeaderText="Der.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantTTC_Vente" HeaderText="Der.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CL_Intitule" HeaderText="Der.Client" Width="200"></GridColumn>
+                                        </GridColumns>
+                                    </GridColumn>
+                                }
+                                @if (selected_affichages != null && selected_affichages.Contains("Lots"))
+                                {
+                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Lots">
+                                        <Template>
+                                            @{
+                                                var row = (context as API_V_ARTICLE);
+                                                var dt = db.F_LOTSERIE.Where(a => a.AR_Ref == row.AR_Ref && a.LS_QteRestant != 0);
+                                                foreach (F_LOTSERIE itm in dt)
+                                                {
+                                                    <div>
+                                                        @itm.LS_NoSerie
+                                                        <RadzenBadge Style="padding: 0px;" Shade="Shade.Lighter" BadgeStyle="BadgeStyle.Success" Text="@itm.LS_QteRestant?.ToString("N2")" />
+                                                        <RadzenBadge Style="padding: 0px;" Visible=@((itm?.LS_Peremption?.Year > 2000 && itm?.LS_Peremption >= DateTime.Today)) Shade="Shade.Lighter" BadgeStyle="BadgeStyle.Info" Text="@itm.LS_Peremption?.ToShortDateString()" />
+                                                        <RadzenBadge Style="padding: 0px;" Visible=@((itm?.LS_Peremption?.Year > 2000 && itm?.LS_Peremption < DateTime.Today)) Shade="Shade.Lighter" BadgeStyle="BadgeStyle.Danger" Text="@itm.LS_Peremption?.ToShortDateString()" />
+                                                    </div>
+                                                }
+                                            }
+                                        </Template>
+                                    </GridColumn>
+                                }
+                            }
+
+
+                        </GridColumns>
+                        <SfSpinner @bind-Visible="@loading">
+                        </SfSpinner>
+                    </SfGrid>
+                </div>
+
+            </div>
+
+        </RadzenContent>
+    </Card_1>
+    <SfDialog Target="#target" Width="600px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@_visible" CloseOnEscape>
+        <DialogTemplates>
+            <Header>
+                Filtrer
+            </Header>
+            <Content>
+                <RadzenStack Orientation="Radzen.Orientation.Vertical" AlignItems="Radzen.AlignItems.Start" Wrap="Radzen.FlexWrap.Wrap" Gap="10px" Style="padding: 20px; padding-bottom: 30px;">
+                    <SfMultiSelect FloatLabelType="FloatLabelType.Always" Placeholder="SOMMEIL" @bind-Value=@selected_sommeils ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(sommeils)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                        <MultiSelectFieldSettings Text="SommeilIntitule" Value="SommeilIntitule"></MultiSelectFieldSettings>
+                        <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                    </SfMultiSelect>
+                    <SfMultiSelect FloatLabelType="FloatLabelType.Always" Placeholder="STOCK" @bind-Value=@selected_etats ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(etats)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                        <MultiSelectFieldSettings Text="EtatStock" Value="EtatStock"></MultiSelectFieldSettings>
+                        <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                    </SfMultiSelect>
+                    <SfMultiSelect FloatLabelType="FloatLabelType.Always" Placeholder="DISPONIBILITE" @bind-Value=@selected_stockmin ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(stockmin)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                        <MultiSelectFieldSettings Text="EtatStockMin" Value="EtatStockMin"></MultiSelectFieldSettings>
+                        <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                    </SfMultiSelect>
+                    <SfMultiSelect FloatLabelType="FloatLabelType.Always" Placeholder="FAMILLE" @bind-Value=@selected_familles ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(familles)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                        <MultiSelectFieldSettings Text="FA_Intitule" Value="FA_Intitule"></MultiSelectFieldSettings>
+                        <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                    </SfMultiSelect>
+                </RadzenStack>
+            </Content>
+        </DialogTemplates>
+        <DialogPositionData Y="160"></DialogPositionData>
+        <DialogButtons>
+            <DialogButton Content="Daccord" IsPrimary="true" OnClick="@(args => _visible = false)"></DialogButton>
+        </DialogButtons>
+    </SfDialog>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+
+}
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    bool IsLoaded = false;
+
+
+    [Parameter] public string src { get; set; } = "liste";
+
+    private SfGrid<API_V_ARTICLE> DefaultGrid;
+
+
+    List<string> etats = new List<string>();
+    List<string> stockmin = new List<string>();
+    List<string> sommeils = new List<string>();
+    List<string> familles = new List<string>();
+    List<string> affichages = new List<string>();
+
+    List<string> selected_etats = new List<string>();
+    List<string> selected_stockmin = new List<string>();
+    List<string> selected_sommeils = new List<string>();
+    List<string> selected_familles = new List<string>();
+    List<string> selected_affichages = new List<string>();
+    short? vlstock = 0;
+    bool _visible = false;
+    private IEnumerable<API_V_ARTICLE> items;
+    string vlfamille = "";
+    List<API_V_ARTICLE> rows = new List<API_V_ARTICLE>();
+    string activekey = "0";
+    bool loading = true;
+    IList<API_V_ARTICLE> selecteditems;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        db = session.db;
+        etats = db.API_V_ARTICLE.Select(a => a.EtatStock).Distinct().ToList();
+        stockmin = db.API_V_ARTICLE.Select(a => a.EtatStockMin).Distinct().ToList();
+        sommeils = db.API_V_ARTICLE.Select(a => a.SommeilIntitule).Distinct().ToList();
+        familles = db.API_V_ARTICLE.Select(a => a.FA_Intitule).Distinct().ToList();
+        affichages.Add("Stock");
+        affichages.Add("Achats");
+        affichages.Add("Ventes");
+        affichages.Add("Lots");
+        selected_affichages.Add("Stock");
+        selected_etats = etats;
+        selected_stockmin = stockmin;
+        selected_familles = familles;
+        selected_sommeils = db.API_V_ARTICLE.Where(a => a.SommeilIntitule == "Actif").Select(a => a.SommeilIntitule).Distinct().ToList();
+        await UpdateGrid();
+        IsLoaded = true;
+    }
+    private async Task UpdateGrid()
+    {
+        loading = true;
+        await Task.Delay(1);
+        items = db.API_V_ARTICLE
+    .Where(a => (selected_sommeils != null && selected_sommeils.Contains(a.SommeilIntitule))
+    && (selected_etats != null && selected_etats.Contains(a.EtatStock))
+        && (selected_stockmin != null && selected_stockmin.Contains(a.EtatStockMin))
+    && (selected_familles != null && selected_familles.Contains(a.FA_Intitule))
+    ).ToList();
+        loading = false;
+        await Task.Delay(1);
+    }
+    private async Task OnActionBegin(ActionEventArgs<API_V_ARTICLE> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Delete
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            Add();
+        }
+
+    }
+
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.ExcelExport();
+        }
+        if (args.Item.Id == "Grid_pdfexport")  //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.PdfExport();
+        }
+    }
+    protected async Task Edit(RecordDoubleClickEventArgs<API_V_ARTICLE> args)
+    {
+
+        await DialogService.OpenAsync<ArticlesFiche>(args.RowData.AR_Design,
+        new Dictionary<string, object>() { { "cbMarq", args.RowData.cbMarq } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+
+        await UpdateGrid();
+        await DefaultGrid.SelectRowAsync(await DefaultGrid.GetRowIndexByPrimaryKeyAsync(args.RowData.cbMarq));
+    }
+
+    private async Task Add()
+    {
+        await DialogService.OpenAsync<ArticlesFiche>($"Ajouter un élément",
+        new Dictionary<string, object>() { { "cbMarq", 0 } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+
+        await UpdateGrid();
+
+    }
+}

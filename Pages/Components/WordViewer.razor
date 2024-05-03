@@ -1,0 +1,68 @@
+﻿@using System.IO
+@using Syncfusion.Blazor.DocumentEditor
+@using System.Text.Json
+
+<SfDocumentEditorContainer @ref="container" EnableToolbar=true Height="100%" Width="100%">
+    <DocumentEditorContainerEvents Created="OnLoad"></DocumentEditorContainerEvents>
+</SfDocumentEditorContainer>
+
+@code 
+{
+    [Parameter]
+    public string DocumentPath { get; set; }
+
+    SfDocumentEditorContainer container;
+
+    public void OnLoad(object args)
+    {
+        //string filePath = "wwwroot/data/GettingStarted.docx";
+        using (FileStream fileStream = new FileStream(DocumentPath, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+        {
+            try 
+            {
+                if(DocumentPath.ToUpper().EndsWith(".DOCX")) 
+                {
+                    WordDocument document = WordDocument.Load(fileStream, ImportFormatType.Docx);
+                    string json = System.Text.Json.JsonSerializer.Serialize(document);
+                    document.Dispose();
+                    //To observe the memory go down, null out the reference of document variable.
+                    document = null;
+                    SfDocumentEditor editor = container.DocumentEditor;
+                    editor.OpenAsync(json);
+                    //To observe the memory go down, null out the reference of json variable.
+                    json = null;
+                }
+                if (DocumentPath.ToUpper().EndsWith(".DOC"))
+                {
+                    WordDocument document = WordDocument.Load(fileStream, ImportFormatType.Doc);
+                    string json = System.Text.Json.JsonSerializer.Serialize(document);
+                    document.Dispose();
+                    //To observe the memory go down, null out the reference of document variable.
+                    document = null;
+                    SfDocumentEditor editor = container.DocumentEditor;
+                    editor.OpenAsync(json);
+                    //To observe the memory go down, null out the reference of json variable.
+                    json = null;
+                }
+                if (DocumentPath.ToUpper().EndsWith(".TXT"))
+                {
+                    WordDocument document = WordDocument.Load(fileStream, ImportFormatType.Txt);
+                    string json = System.Text.Json.JsonSerializer.Serialize(document);
+                    document.Dispose();
+                    //To observe the memory go down, null out the reference of document variable.
+                    document = null;
+                    SfDocumentEditor editor = container.DocumentEditor;
+                    editor.OpenAsync(json);
+                    //To observe the memory go down, null out the reference of json variable.
+                    json = null;
+                }
+            }
+            catch(Exception ex) 
+            {
+                Message.Error(ex.ToString());
+            }
+
+
+        }
+    }
+}

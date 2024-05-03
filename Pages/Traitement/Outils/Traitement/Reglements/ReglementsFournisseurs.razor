@@ -1,0 +1,15 @@
+﻿@page "/ot-reglements-fournisseurs"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction")]
+
+
+
+<Reglements domaine="1" title="REGLEMENTS FOURNISSEURS" />
+
+@code {
+    bool IsLoaded = false;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        IsLoaded = true;
+    }
+}

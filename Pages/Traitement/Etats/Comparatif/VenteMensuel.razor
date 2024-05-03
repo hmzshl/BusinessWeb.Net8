@@ -1,0 +1,158 @@
+﻿@page "/et-vente-mensuel"
+@attribute [Authorize]
+
+@if (IsLoaded)
+{
+    <Card_1 Title="VENTES PAR MOIS">
+
+        <RadzenContent>
+            <div class="grid-container no-border">
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
+                                 <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
+                             </SfDatePicker>
+                         </Template>
+                     </ToolbarItem>
+                     <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                         <Template>
+                             <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
+                                 <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
+                             </SfDatePicker>
+                         </Template>
+                     </ToolbarItem>
+                 </ToolbarItems>
+             </SfToolbar>
+
+                <GridRow>
+
+                    <GridCol Xs="24" Md="9">
+                        <Card Title="Clients">
+                            <div style="height: 72vh;">
+                             <SfPivotView TValue="API_V_MARGE" Height="100%" ShowFieldList=false Target="document" AllowDeferLayoutUpdate="true" ExportAllPages=false
+                                          EnableVirtualization="false" ShowToolbar=true AllowNumberFormatting=true AllowConditionalFormatting=true
+                                          AllowCalculatedField=true AllowPdfExport=true AllowExcelExport=true ShowGroupingBar="false" AllowGrouping=true EnableValueSorting=true ShowTooltip=false MaxNodeLimitInMemberEditor="50">
+                                     <PivotViewDisplayOption Primary="Primary.Table" View="View.Both"></PivotViewDisplayOption>
+                                     <PivotViewDataSourceSettings DataSource="@items">
+                                         <PivotViewColumns>
+                                             <PivotViewColumn Name="@nameof(API_V_MARGE.MoisAnnee)"></PivotViewColumn>
+                                         </PivotViewColumns>
+                                         <PivotViewRows>
+                                             <PivotViewRow Name="@nameof(API_V_MARGE.CT_Intitule)" Caption="Client"></PivotViewRow>
+                                         <PivotViewRow Name="@nameof(API_V_MARGE.AR_Design)" Caption="Article"></PivotViewRow>
+                                         </PivotViewRows>
+                                         <PivotViewValues>
+                                             <PivotViewValue Name="@nameof(API_V_MARGE.DL_MontantHT)" Caption="Montant"></PivotViewValue>
+
+                                         </PivotViewValues>
+                                         <PivotViewFormatSettings>
+                                             <PivotViewFormatSetting Name="@nameof(API_V_MARGE.DL_Qte)" Format="### ### ##0.00;-### ### ##0.00;#"></PivotViewFormatSetting>
+                                             <PivotViewFormatSetting Name="@nameof(API_V_MARGE.DL_MontantHT)" Format="### ### ##0.00;-### ### ##0.00;#"></PivotViewFormatSetting>
+                                         </PivotViewFormatSettings>
+                                     </PivotViewDataSourceSettings>
+                                     <PivotViewGridSettings AllowSelection=true ColumnWidth="80" RowHeight="23">
+                                         <PivotViewSelectionSettings Mode="Syncfusion.Blazor.PivotView.SelectionMode.Row" Type="PivotTableSelectionType.Single" CellSelectionMode="PivotCellSelectionMode.Flow"></PivotViewSelectionSettings>
+                                     </PivotViewGridSettings>
+                                     <PivotViewEvents TValue="API_V_MARGE"></PivotViewEvents>
+                                 </SfPivotView>
+                            </div>
+                        
+                        </Card>
+                    </GridCol>
+                 <GridCol Xs="24" Md="15">
+                     <Card Title="Articles">
+                         <div style="height: 72vh;">
+                             <SfPivotView TValue="API_V_MARGE" Height="100%" ShowFieldList=false Target="document" AllowDeferLayoutUpdate="true" ExportAllPages=false
+                                          EnableVirtualization="false" ShowToolbar=true AllowNumberFormatting=true AllowConditionalFormatting=true
+                                          AllowCalculatedField=true AllowPdfExport=true AllowExcelExport=true ShowGroupingBar="false" AllowGrouping=true EnableValueSorting=true ShowTooltip=false MaxNodeLimitInMemberEditor="50">
+                                 <PivotViewDisplayOption Primary="Primary.Table" View="View.Both"></PivotViewDisplayOption>
+                                 <PivotViewDataSourceSettings DataSource="@items">
+                                     <PivotViewColumns>
+                                         <PivotViewColumn Name="@nameof(API_V_MARGE.MoisAnnee)"></PivotViewColumn>
+                                     </PivotViewColumns>
+                                     <PivotViewRows>
+                                         <PivotViewRow Name="@nameof(API_V_MARGE.AR_Design)" Caption="Article"></PivotViewRow>
+                                         <PivotViewRow Name="@nameof(API_V_MARGE.CT_Intitule)" Caption="Fournisseur"></PivotViewRow>
+                                         
+                                     </PivotViewRows>
+                                     <PivotViewValues>
+                                         <PivotViewValue Name="@nameof(API_V_MARGE.DL_Qte)" Caption="Qté"></PivotViewValue>
+                                         <PivotViewValue Name="@nameof(API_V_MARGE.DL_MontantHT)" Caption="Montant"></PivotViewValue>
+
+                                     </PivotViewValues>
+                                     <PivotViewFormatSettings>
+                                         <PivotViewFormatSetting Name="@nameof(API_V_MARGE.DL_Qte)" Format="### ### ##0.00;-### ### ##0.00;#"></PivotViewFormatSetting>
+                                         <PivotViewFormatSetting Name="@nameof(API_V_MARGE.DL_MontantHT)" Format="### ### ##0.00;-### ### ##0.00;#"></PivotViewFormatSetting>
+                                     </PivotViewFormatSettings>
+                                 </PivotViewDataSourceSettings>
+                                 <PivotViewGridSettings AllowSelection=true ColumnWidth="80" RowHeight="23">
+                                     <PivotViewSelectionSettings Mode="Syncfusion.Blazor.PivotView.SelectionMode.Row" Type="PivotTableSelectionType.Single" CellSelectionMode="PivotCellSelectionMode.Flow"></PivotViewSelectionSettings>
+                                 </PivotViewGridSettings>
+                                 <PivotViewEvents TValue="API_V_MARGE"></PivotViewEvents>
+                             </SfPivotView>
+                         </div>
+
+                     </Card>
+                 </GridCol>
+                </GridRow>
+            </div>
+
+        </RadzenContent>
+    </Card_1>
+
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    private List<API_V_MARGE> items = new List<API_V_MARGE>();
+    private List<API_V_MARGE> chart_items = new List<API_V_MARGE>();
+    DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
+    DateTime? date2 = new DateTime(DateTime.Today.Year, 12, 31);
+    string FormatAsUSD(object value)
+    {
+        return ((double)value).ToString("N0");
+    }
+    bool IsLoaded = false;
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+        items = db.API_V_MARGE
+        .Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null))
+        .OrderByDescending(a => a.DL_MontantTTC).ToList();
+        IsLoaded = true;
+        await Task.Delay(300);
+
+    }
+    protected async Task ShowDetail(RecordDoubleClickEventArgs<API_V_MARGE> args)
+    {
+        /*await DialogService.OpenAsync<DetailsAchat>(args.RowData.CT_Intitule,
+        new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CT_Num", args.RowData.CT_Num }, { "Height", "85vh" } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });    */
+    }
+    public async Task CustomizeCell(Syncfusion.Blazor.Grids.QueryCellInfoEventArgs<API_V_MARGE> args)
+    {
+       var dt = args.Data;
+        string col = args.Column.Field;
+        string header = args.Column.HeaderText;
+    }
+}

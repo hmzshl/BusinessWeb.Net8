@@ -1,0 +1,317 @@
+<SfToolbar CssClass="btns">
+	<ToolbarItems>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton IconCss="e-icons e-print">Imprimer</SfButton>
+			</Template>
+		</ToolbarItem>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args =>Submit(true))">Enregistrer</SfButton>
+			</Template>
+		</ToolbarItem>
+	</ToolbarItems>
+</SfToolbar>
+<div>
+	<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="FormContext">
+		<GridRow>
+			<GridCol Xs="24" Md="24">
+				<Card Title="Identification">
+					<GridRow>
+						<GridCol Xs="24" Md="9">
+							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro d’enregistrement" LabelColSpan="14">
+								<SfTextBox @bind-Value="@row.Numero" />
+							</FormItem>
+
+							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="14">
+								<SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
+							</FormItem>
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro dossier" LabelColSpan="14">
+								<SfTextBox @bind-Value="@row.NumeroDossier" />
+							</FormItem>
+
+							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Ouverture" LabelColSpan="14">
+								<SfDatePicker TValue="DateTime?" @bind-Value="@row.DateOuverture" />
+							</FormItem>
+
+						</GridCol>
+						<GridCol Xs="24" Md="15">
+							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Raison sociale" LabelColSpan="4">
+								<SfTextBox @bind-Value="@row.Intitule" />
+							</FormItem>
+							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse" LabelColSpan="4">
+								<SfTextBox @bind-Value="@row.Adresse" />
+							</FormItem>
+							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Interlocuteur" LabelColSpan="4">
+								<SfTextBox @bind-Value="@row.Interlocuteur" />
+							</FormItem>
+							<RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
+								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Service" LabelColSpan="8">
+									<SfTextBox @bind-Value="@row.Service" />
+								</FormItem>
+								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Tél./ Fax" LabelColSpan="8">
+									<SfTextBox @bind-Value="@row.Telephone" />
+								</FormItem>
+
+							</RadzenStack>
+						</GridCol>
+					</GridRow>
+
+				</Card>
+			</GridCol>
+			<GridCol Xs="24" Md="24">
+				<Card Title="Demandes de prix">
+					<div style="height: 15vh;">
+						<SfGrid Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(demandes)">
+							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+							<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+								<HeaderTemplate>
+
+								</HeaderTemplate>
+							</GridEditSettings>
+							<GridEvents OnActionBegin="EditDemande" TValue="API_T_CertifDocument"></GridEvents>
+							<GridColumns>
+								<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifDocument.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+								<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="110" Field=@nameof(API_T_CertifDocument.Date) HeaderText="Date demande" EditType="EditType.DatePickerEdit" Format="d"></GridColumn>
+								<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifDocument.Reference) HeaderText="Référence demande"></GridColumn>
+								<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifDocument.Responsable) HeaderText="Responsable demande"></GridColumn>
+
+							</GridColumns>
+						</SfGrid>
+					</div>
+				</Card>
+			</GridCol>
+			<GridCol Xs="24" Md="24">
+				<Card Title="Offres de prix">
+					<div style="height: 15vh;">
+						<SfGrid Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(offres)">
+							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+							<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+								<HeaderTemplate>
+
+								</HeaderTemplate>
+							</GridEditSettings>
+							<GridEvents OnActionBegin="EditOffre" TValue="API_T_CertifDocument"></GridEvents>
+							<GridColumns>
+								<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifDocument.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+								<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="110" Field=@nameof(API_T_CertifDocument.Date) HeaderText="Date offre" EditType="EditType.DatePickerEdit" Format="d"></GridColumn>
+								<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifDocument.Reference) HeaderText="Référence offre"></GridColumn>
+								<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifDocument.Responsable) HeaderText="Responsable offre"></GridColumn>
+
+							</GridColumns>
+						</SfGrid>
+					</div>
+				</Card>
+			</GridCol>
+			<GridCol Xs="24" Md="24">
+				<Card Title="Bons de commandes">
+					<div style="height: 15vh;">
+						<SfGrid Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(commandes)">
+							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+							<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+								<HeaderTemplate>
+
+								</HeaderTemplate>
+							</GridEditSettings>
+							<GridEvents OnActionBegin="EditCommande" TValue="API_T_CertifDocument"></GridEvents>
+							<GridColumns>
+								<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifDocument.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+								<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="110" Field=@nameof(API_T_CertifDocument.Date) HeaderText="Date commande" EditType="EditType.DatePickerEdit" Format="d"></GridColumn>
+								<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifDocument.Reference) HeaderText="Référence commande"></GridColumn>
+								<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifDocument.Responsable) HeaderText="Responsable commande"></GridColumn>
+
+							</GridColumns>
+						</SfGrid>
+					</div>
+				</Card>
+			</GridCol>
+		</GridRow>
+	</Form>
+</div>
+
+
+
+
+@code {
+	[CascadingParameter]
+	public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	[Parameter] public int id { get; set; } = 0;
+	public API_T_CertifOuvertureDossier row { get; set; }
+	List<API_T_CertifDocument> demandes = new List<API_T_CertifDocument>();
+	List<API_T_CertifDocument> offres = new List<API_T_CertifDocument>();
+	List<API_T_CertifDocument> commandes = new List<API_T_CertifDocument>();
+	private DialogSettings DialogParams = new DialogSettings { Width = "550px" };
+	private void LoadData()
+	{
+
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		db = session.db;
+		if (id == 0)
+		{
+			row = new API_T_CertifOuvertureDossier();
+			row.Date = DateTime.Today;
+
+		}
+		else
+		{
+			row = db.API_T_CertifOuvertureDossier.Where(a => a.id == id).SingleOrDefault();
+			await UpdateDemande();
+			await UpdateOffre();
+			await UpdateCommande();
+		}
+		LoadData();
+	}
+	private async Task UpdateDemande()
+	{
+		demandes = db.API_T_CertifDocument.Where(a => a.Dossier == id && a.Type == 0).OrderBy(a => a.Date).ToList();
+	}
+	private async Task UpdateOffre()
+	{
+		offres = db.API_T_CertifDocument.Where(a => a.Dossier == id && a.Type == 1).OrderBy(a => a.Date).ToList();
+	}
+	private async Task UpdateCommande()
+	{
+		commandes = db.API_T_CertifDocument.Where(a => a.Dossier == id && a.Type == 2).OrderBy(a => a.Date).ToList();
+	}
+	private async Task Submit(bool close)
+	{
+		if (id == 0)
+		{
+			db.API_T_CertifOuvertureDossier.Add(row);
+			db.SaveChanges();
+			id = row.id;
+		}
+		else
+		{
+			db.SaveChanges();
+		}
+		if (close)
+		{
+			DialogService.Close();
+		}		
+	}
+	public async Task EditDemande(ActionEventArgs<API_T_CertifDocument> args)
+	{
+
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+			await Submit(false);
+			if (args.Action == "Add")
+			{
+				API_T_CertifDocument item = args.Data;
+				item.Dossier = row.id;
+				item.Type = 0;
+				db.Add(item);
+				db.SaveChanges();
+			}
+			if (args.Action != "Add")
+			{
+				var local = db.Set<API_T_CertifDocument>().Local.FirstOrDefault(a => a.id == args.Data.id);
+				if (local != null)
+				{
+					db.Entry(local).State = EntityState.Detached;
+				}
+				db.Entry(args.Data).State = EntityState.Modified;
+				db.SaveChanges();
+
+
+			}
+
+		}
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			var local = db.Set<API_T_CertifDocument>().Local.FirstOrDefault(a => a.id == args.Data.id);
+			if (local != null)
+			{
+				db.Entry(local).State = EntityState.Detached;
+			}
+			db.Entry(args.Data).State = EntityState.Deleted;
+			db.SaveChanges();
+		}
+
+	}
+	public async Task EditOffre(ActionEventArgs<API_T_CertifDocument> args)
+	{
+
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+			await Submit(false);
+			if (args.Action == "Add")
+			{
+				API_T_CertifDocument item = args.Data;
+				item.Dossier = row.id;
+				item.Type = 1;
+				db.Add(item);
+				db.SaveChanges();
+			}
+			if (args.Action != "Add")
+			{
+				var local = db.Set<API_T_CertifDocument>().Local.FirstOrDefault(a => a.id == args.Data.id);
+				if (local != null)
+				{
+					db.Entry(local).State = EntityState.Detached;
+				}
+				db.Entry(args.Data).State = EntityState.Modified;
+				db.SaveChanges();
+
+
+			}
+
+		}
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			var local = db.Set<API_T_CertifDocument>().Local.FirstOrDefault(a => a.id == args.Data.id);
+			if (local != null)
+			{
+				db.Entry(local).State = EntityState.Detached;
+			}
+			db.Entry(args.Data).State = EntityState.Deleted;
+			db.SaveChanges();
+		}
+		
+	}
+	public async Task EditCommande(ActionEventArgs<API_T_CertifDocument> args)
+	{
+
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+			await Submit(false);
+			if (args.Action == "Add")
+			{
+				API_T_CertifDocument item = args.Data;
+				item.Dossier = row.id;
+				item.Type = 2;
+				db.Add(item);
+				db.SaveChanges();
+			}
+			if (args.Action != "Add")
+			{
+				var local = db.Set<API_T_CertifDocument>().Local.FirstOrDefault(a => a.id == args.Data.id);
+				if (local != null)
+				{
+					db.Entry(local).State = EntityState.Detached;
+				}
+				db.Entry(args.Data).State = EntityState.Modified;
+				db.SaveChanges();
+
+
+			}
+
+		}
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			var local = db.Set<API_T_CertifDocument>().Local.FirstOrDefault(a => a.id == args.Data.id);
+			if (local != null)
+			{
+				db.Entry(local).State = EntityState.Detached;
+			}
+			db.Entry(args.Data).State = EntityState.Deleted;
+			db.SaveChanges();
+		}
+		
+	}
+}

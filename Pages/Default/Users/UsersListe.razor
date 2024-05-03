@@ -1,0 +1,140 @@
+﻿<RadzenContent Container="main">
+    <div class="grid-80">
+        <SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)" AllowPaging>
+            <GridPageSettings PageSize="100"></GridPageSettings>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                <HeaderTemplate>
+                    <span>@((context as ApplicationUser).Name)</span>
+                </HeaderTemplate>
+                <Template>
+                    @{
+                        var row = (context as ApplicationUser);
+                    }
+                    <RadzenTemplateForm TItem="ApplicationUser" Data="@row" Context="FormContext">
+                        <GridRow>
+                            <GridCol Xs="24" Md="24">
+                                <SfTextBox ID="Email" @bind-Value="@row.Email" Placeholder="Email" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" />
+                                <RadzenRequiredValidator Component="Email" Text="Email is required" />
+                            </GridCol>
+                            <GridCol Xs="24" Md="24">
+                                <SfMultiSelect @bind-Value="@(userRoles)" Placeholder="Roles" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" TValue="IEnumerable<string>" TItem="ApplicationRole" DataSource="@roles">
+                                    <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                </SfMultiSelect>
+                            </GridCol>
+                            <GridCol Xs="24" Md="24">
+                                <SfTextBox ID="Password" @bind-Value="@row.Password" Placeholder="Mot de passe" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" />
+                                <RadzenRequiredValidator Component="Password" Text="Password is required" />
+                            </GridCol>
+                            <GridCol Xs="24" Md="24">
+                                <SfTextBox ID="ConfirmPassword" @bind-Value="@row.ConfirmPassword" Placeholder="Confirmer le mot de passe" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" />
+                                <RadzenRequiredValidator Component="ConfirmPassword" Text="ConfirmPassword is required" />
+                                <RadzenCompareValidator Text="Passwords must match" Component="ConfirmPassword" Value="@row.Password" />
+                            </GridCol>
+                        </GridRow>
+                    </RadzenTemplateForm>
+
+                </Template>
+            </GridEditSettings>
+            <GridEvents OnActionBegin="UpdateListe" TValue="AspNetUser" OnRecordDoubleClick="RowSelected"></GridEvents>
+            <GridTemplates Context="GridContext">
+                <EmptyRecordTemplate>
+                    <Empty></Empty>
+                </EmptyRecordTemplate>
+            </GridTemplates>
+            <GridColumns>
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(AspNetUser.Id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(AspNetUser.UserName) HeaderText="Nom"></GridColumn>
+            </GridColumns>
+        </SfGrid>
+    </div>
+
+</RadzenContent>
+
+
+
+    @code
+{
+    private IEnumerable<AspNetUser> items;
+    protected IEnumerable<string> userRoles;
+    protected IEnumerable<ApplicationRole> roles;
+    protected override async Task OnInitializedAsync()
+    {
+        roles = await sc.GetRoles();
+        await Task.Run(LoadData);
+        await InitAuth();
+    }
+    private async Task LoadData()
+    {
+        await Task.Delay(1);
+        items = sdb.AspNetUsers.AsNoTracking().Where(a => 1 == 1).ToList();
+        await Task.Delay(1);
+    }
+
+    public async Task UpdateListe(ActionEventArgs<AspNetUser> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+|| args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+|| args.RequestType == Syncfusion.Blazor.Grids.Action.Delete
+|| args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+        var user = args.Data;
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await DialogService.OpenAsync<UsersFiche>("Ajouter un utilisateur", new Dictionary<string, object>(),
+    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "600px", Height = "400px" });
+            items = await EtendueService.GetAspNetUsers();
+            await LoadData();
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            await sc.DeleteUser(user.Id);
+            await LoadData();
+        }
+    }
+    public async Task RowSelected(RecordDoubleClickEventArgs<AspNetUser> args)
+    {
+        await DialogService.OpenAsync<UsersFiche>(args.RowData.Email.ToUpper(), new Dictionary<string, object> { { "Id", args.RowData.Id } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "600px", Height = "95%" });
+        await LoadData();
+    }
+    private async Task InitAuth()
+    {
+        var items = fn.AuthItems();
+        var societes = sdb.TSocietes.ToList();
+        foreach (TSociete ste in societes)
+        {
+            foreach (AuthItems item in items)
+            {
+                var auth = sdb.TAuthorizes.AsNoTracking().Where(a => a.Societe == ste.id && a.Url == item.Url && a.UserID == sc.User.Id && a.SelectedAPP == (item.SelectedAPP ?? 0)).AsNoTracking().ToList();
+                if (auth.Count == 0)
+                {
+                    var ln = new TAuthorize();
+                    ln.UserID = sc.User.Id;
+                    ln.Url = item.Url;
+                    ln.Societe = ste.id;
+                    ln.SelectedAPP = item.SelectedAPP ?? 0;
+                    ln.Title = item.Title;
+                    ln.Description = item.Description;
+
+                    sdb.Add(ln);
+                }
+                else
+                {
+
+                    var ln = auth.First();
+                    sdb.Database.ExecuteSqlRaw(@"UPDATE T_Authorize SET 
+                                                SelectedAPP = {0}, 
+                                                Title = {1},
+                                                Description = {2},
+                                                Url = {4}
+                                                WHERE id = {3}", item.SelectedAPP ?? 0, item.Title, item.Description, ln.id, item.Url);
+                }
+            }
+        }
+        sdb.SaveChanges();
+
+    }
+}

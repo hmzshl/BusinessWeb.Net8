@@ -1,0 +1,240 @@
+﻿<SfTab CssClass="e-fill" style="margin: 5px;">
+    <TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/><TabItems>
+        <TabItem>
+            <ChildContent>
+                <TabHeader Text="Avancement"></TabHeader>
+            </ChildContent>
+            <ContentTemplate>
+                <div class="grid-80">
+                    <SfGrid Height="100%" DataSource="@(lignes)" class="no-border">
+                        <GridEditSettings AllowEditing=@EditAllowed() Mode="Syncfusion.Blazor.Grids.EditMode.Batch" AllowNextRowEdit="false" />
+                        <GridEvents CellSaved="CellSaveHandler" TValue="API_T_AvancementDetail"></GridEvents>
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <Empty></Empty>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                        <GridAggregates>
+                            <GridAggregate>
+                                <GridAggregateColumns>
+                                    <GridAggregateColumn Field="Montant" Type="AggregateType.Sum" Format="N2">
+                                        <FooterTemplate>
+                                            @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div>
+                                                    @SumValue.Sum
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+
+                                    </GridAggregateColumn>
+                                </GridAggregateColumns>
+                            </GridAggregate>
+                        </GridAggregates>
+                        <GridColumns>
+                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementDetail.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                            <GridColumn AllowAdding="false" AllowEditing="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementDetail.NumeroPrix) HeaderText="Code Prix">
+                            </GridColumn>
+                            <GridColumn AllowEditing="false" AllowAdding="false" MinWidth="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementDetail.Libelle) HeaderText="Libellé"></GridColumn>
+                            <GridColumn AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementDetail.Unite) HeaderText="Unité">
+                            </GridColumn>
+                            <GridColumn AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementDetail.Consistance) HeaderText="Consis">
+                            </GridColumn>
+                            <GridColumn AllowEditing="false" AllowAdding="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementDetail.QteMarche) HeaderText="Qté CPS" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementDetail.QtePrec) AllowEditing="false" AllowAdding="false" HeaderText="Qté Préc" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementDetail.Qte) HeaderText="Qté Attachée" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementDetail.QteCumul) HeaderText="Qté Cumul" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="250" HeaderText="Avancement">
+                                <Template>
+                                    @{
+                                        var dt = (context as API_T_AvancementDetail);
+                                        Decimal? bl = (db.API_T_AvancementDetail.Where(a => a.Ligne == dt.id).Sum(a => a.Qte));
+                                        Decimal? av = 0;
+                                        if (dt.QteMarche != 0)
+                                        {
+                                            av = ((bl ?? 0) / dt.QteMarche);
+                                        }
+                                    }
+                                    <RadzenProgressBar ProgressBarStyle="ProgressBarStyle.Primary" Value="@(Math.Round((Convert.ToDouble((av)) * 100),2))" ShowValue Style="height: 16px; font-size: 80%;" />
+                                </Template>
+
+                            </GridColumn>
+
+                        </GridColumns>
+                    </SfGrid>
+                </div>
+            </ContentTemplate>
+        </TabItem>
+        <TabItem>
+            <ChildContent>
+                <TabHeader Text="Travaux hors BDS"></TabHeader>
+            </ChildContent>
+            <ContentTemplate>
+                <div class="grid-80">
+                    <SfGrid Height="100%" class="no-border" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(hors_bds)">
+                        <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+                        </GridEditSettings>
+                        <GridEvents TValue="API_T_AvancementHorsBD"></GridEvents>
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <Empty></Empty>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                        <GridAggregates>
+                            <GridAggregate>
+                                <GridAggregateColumns>
+                                    <GridAggregateColumn Field="Montant" Type="AggregateType.Sum" Format="N2">
+                                        <FooterTemplate>
+                                            @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div>
+                                                    @SumValue.Sum
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+
+                                    </GridAggregateColumn>
+                                </GridAggregateColumns>
+                            </GridAggregate>
+                        </GridAggregates>
+                        <GridColumns>
+                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementHorsBD.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                            <GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Article">
+                                <Template>
+                                    @{
+                                        var dt = (db.F_ARTICLE.Where(a => a.AR_Ref == ((context as API_T_AvancementHorsBD).AR_Ref ?? "")));
+                                    }
+                                    @if (dt.Count() != 0)
+                                    {
+                                        <div>@dt.First().AR_Design</div>
+                                    }
+                                </Template>
+                                <EditTemplate>
+                                    <SfDropDownList AllowFiltering Placeholder="Article" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(db.F_ARTICLE)" TValue="string" TItem="F_ARTICLE" @bind-Value="@((context as API_T_AvancementHorsBD).AR_Ref)">
+                                        <DropDownListEvents TValue="string" TItem="F_ARTICLE" />
+                                        <DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
+                                    </SfDropDownList>
+                                </EditTemplate>
+                            </GridColumn>
+                            <GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementHorsBD.Libelle) HeaderText="Libelle">
+                            </GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementHorsBD.Unite) HeaderText="Unité">
+                            </GridColumn>
+                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementHorsBD.Consistance) HeaderText="Consistance">
+                            </GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementHorsBD.Qte) HeaderText="Qté" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementHorsBD.PU) HeaderText="PU" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn Width="100" AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementHorsBD.Montant) HeaderText="Montant" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_AvancementHorsBD.DateExecution) HeaderText="Date Exec" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+
+                        </GridColumns>
+                    </SfGrid>
+                </div>
+
+            </ContentTemplate>
+        </TabItem>
+    </TabItems>
+</SfTab>
+
+
+@code 
+
+{
+    [CascadingParameter] public SessionDT session { get; set; }
+    DB db = new DB();
+    [Parameter] public int id { get; set; } = 0;
+    [Parameter] public int journee { get; set; } = 0;
+    private List<API_T_AvancementDetail> lignes = new List<API_T_AvancementDetail>();
+    private List<API_T_AvancementHorsBD> hors_bds = new List<API_T_AvancementHorsBD>();
+    private API_T_Projet row { get; set; }
+    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
+    protected override async Task OnInitializedAsync() 
+    {
+        db = session.db;
+        if (id == 0)
+        {
+            row = new API_T_Projet();
+        }
+        else
+        {
+            row = db.API_T_Projet.Where(a => a.id == id).SingleOrDefault();
+            await InitAvancement();
+            await UpdateGrid();
+        }
+    }
+    private async Task UpdateGrid()
+    {
+        lignes = db.API_T_AvancementDetail.Where(a => a.Projet == id && a.Journee == journee).ToList();
+        hors_bds = db.API_T_AvancementHorsBD.Where(a => a.Projet == id && a.Journee == journee).ToList();
+    }
+    private async Task InitAvancement()
+    {
+        if (journee != 0 && id != 0)
+        {
+            var dt = db.API_T_AvancementDetail.AsNoTracking().Where(a => a.Journee == journee && a.Projet == id);
+            if (dt.Count() == 0)
+            {
+                var bds = db.API_T_BordereauDetail.FromSqlRaw("SELECT a.* FROM API_T_BordereauDetail a WHERE a.Bordereau IN (SELECT id FROM API_T_Bordereau WHERE Projet = {0})", id).AsNoTracking();
+                foreach (API_T_BordereauDetail item in bds)
+                {
+
+                    var ln = new API_T_AvancementDetail();
+                    fn.CopyData(item, ln);
+                    ln.Journee = journee;
+                    ln.Projet = id;
+                    ln.Ligne = item.id;
+
+                    /* var old = db.API_T_AvancementDetail.AsNoTracking().Where(a => a.Ligne == item.id);
+                     if (old.Count() != 0)
+                     {
+                         ln.QtePrec = old.First().QteCumul;
+                     } */
+                    db.Add(ln);
+                }
+                db.SaveChanges();
+            }
+        }
+    }
+    public async Task CellSaveHandler(CellSaveArgs<API_T_AvancementDetail> args)
+    {
+
+        API_T_AvancementDetail dt = args.Data;
+        string col = args.ColumnName;
+        if (col == "QteCumul")
+        {
+            dt.Qte = dt.QteCumul - dt.QtePrec;
+        }
+        else if (col == "Qte")
+        {
+            dt.QteCumul = dt.Qte + dt.QtePrec;
+        }
+
+
+
+        var local = db.Set<API_T_AvancementDetail>().Local.FirstOrDefault(a => a.id == dt.id);
+        if (local != null)
+        {
+            db.Entry(local).State = EntityState.Detached;
+        }
+        db.Entry(dt).State = EntityState.Modified;
+        db.SaveChanges();
+    }
+    private bool EditAllowed()
+    {
+        /*string q1 = @"SELECT a.*
+            FROM API_T_AvancementDetail a
+            INNER JOIN API_T_PointageJournee jr ON a.Journee = jr.id
+            WHERE a.Projet = {0} AND jr.Date > {1}";
+        var dt = db.API_T_AvancementDetail.FromSqlRaw(q1, id, SelectedDate);
+        if (dt.Count() != 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }   */
+        return true;
+    }
+
+}

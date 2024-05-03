@@ -1,0 +1,26 @@
+﻿@page "/caisse/isc/depenses"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction,Caissier")]
+
+
+@if (IsLoaded)
+{
+    <Card_1 Title="DEPENSES DE CAISSE">
+        <CaisseView type="1" Title="Dépenses de caisse" />
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+@code {
+    bool IsLoaded = false;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        IsLoaded = true;
+    }
+}

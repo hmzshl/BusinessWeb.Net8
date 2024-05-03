@@ -1,0 +1,188 @@
+﻿@if (IsLoaded)
+{
+	<div style="height: @Height;">
+		<SfToolbar CssClass="btns">
+			<ToolbarItems>
+				<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+					<Template>
+						<SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
+							<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+						</SfDatePicker>
+					</Template>
+				</ToolbarItem>
+				<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+					<Template>
+						<SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
+							<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+						</SfDatePicker>
+					</Template>
+				</ToolbarItem>
+				<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+					<Template>
+						<RadzenLabel Text="Type" Component="type" />
+						<div style="padding-left: 10px; margin-right: 10px;" id="type">
+							<SfMultiSelect Width="230px" @bind-Value=@types ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(data.OrderBy(a => a.TypeIntitule).Select(a => a.TypeIntitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+								<MultiSelectFieldSettings Text="TypeIntitule" Value="TypeIntitule"></MultiSelectFieldSettings>
+								<MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+							</SfMultiSelect>
+						</div>
+					</Template>
+				</ToolbarItem>
+
+
+				<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+					<Template>
+						<SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+					</Template>
+				</ToolbarItem>
+				<ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+				<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+			</ToolbarItems>
+		</SfToolbar>
+		<SfGrid Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowPaging @ref=@DefaultGrid AllowSorting AllowFiltering>
+			<GridPageSettings PageSize="100" />
+			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+			<GridAggregates>
+				<GridAggregate>
+					<GridAggregateColumns>
+						<GridAggregateColumn Field="@nameof(API_V_DOCENTETE.DL_MontantHT)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+							<FooterTemplate>
+								@{
+									var value = (context as AggregateTemplateContext);
+									<div>
+										@value.Sum
+									</div>
+								}
+							</FooterTemplate>
+						</GridAggregateColumn>
+						<GridAggregateColumn Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+							<FooterTemplate>
+								@{
+									var value = (context as AggregateTemplateContext);
+									<div>
+										@value.Sum
+									</div>
+								}
+							</FooterTemplate>
+						</GridAggregateColumn>
+						<GridAggregateColumn Field="@nameof(API_V_DOCENTETE.RC_Montant)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+							<FooterTemplate>
+								@{
+									var value = (context as AggregateTemplateContext);
+									<div>
+										@value.Sum
+									</div>
+								}
+							</FooterTemplate>
+						</GridAggregateColumn>
+						<GridAggregateColumn Field="@nameof(API_V_DOCENTETE.Reste)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+							<FooterTemplate>
+								@{
+									var value = (context as AggregateTemplateContext);
+									<div>
+										@value.Sum
+									</div>
+								}
+							</FooterTemplate>
+						</GridAggregateColumn>
+					</GridAggregateColumns>
+				</GridAggregate>
+			</GridAggregates>
+			<GridEvents OnRecordDoubleClick="@(args => ShowPiece(args.RowData.DO_Piece,args.RowData.DO_Type))" TValue="API_V_DOCENTETE"></GridEvents>
+			<GridColumns>
+				<GridColumn Format="d" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Date)" HeaderText="Date" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Piece)" HeaderText="Pièce" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.TypeIntitule)" HeaderText="Type" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Tiers)" HeaderText="Numéro" Visible="@(CT_Num == null)" />
+				<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CT_Intitule)" HeaderText="@(getTiers())" Visible="@(CT_Num == null)" />
+				<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DE_Intitule)" HeaderText="Dépot" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CA_Num)" HeaderText="N° Affaire" Visible="@(CA_Num == null)" />
+				<GridColumn Width="190" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CA_Intitule)" HeaderText="Affaire" Visible="@(CA_Num == null)" />
+				<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantHT)" HeaderText="MNT HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+				<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" HeaderText="MNT TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+				<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.RC_Montant)" HeaderText="Réglé" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+				<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.Reste)" HeaderText="Reste" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+			</GridColumns>
+
+		</SfGrid>
+	</div>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+@code
+{
+	[CascadingParameter]
+	public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	[Parameter] public bool IsLivraison { get; set; } = true;
+	[Parameter] public int DO_Domaine { get; set; }
+	[Parameter] public int DO_Type { get; set; }
+	[Parameter] public string CA_Num { get; set; }
+	[Parameter] public string DO_Piece { get; set; }
+	[Parameter] public string CT_Num { get; set; }
+	[Parameter] public int CO_No { get; set; } = 0;
+	[Parameter] public int DE_No { get; set; }
+	[Parameter] public string Height { get; set; }
+	SfGrid<API_V_DOCENTETE> DefaultGrid;
+	DateTime? date1;
+	DateTime? date2;
+	int domaine = 0;
+	int type = 0;
+	private List<API_V_DOCENTETE> data = new List<API_V_DOCENTETE>();
+	List<string> types = new List<string>();
+	private List<API_V_DOCENTETE> items = new List<API_V_DOCENTETE>();
+	bool IsLoaded = false;
+	private Func<double, string> _fortmat1 = (p) => $"{(p / 100).ToString("### ### ##0 %")}";
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(100);
+		db = session.db;
+		data = db.API_V_DOCENTETE.Where(a => a.DO_Domaine == DO_Domaine
+	&& ((a.CA_Num == CA_Num && CA_Num != null) || (CA_Num == null))
+	&& ((a.DO_Tiers == CT_Num && CT_Num != null) || (CT_Num == null))
+	&& ((!IsLivraison) || (IsLivraison && liv.Contains(a.DO_Type ?? 0))))
+		.ToList();
+		types = data.OrderBy(a => a.TypeIntitule).Select(a => a.TypeIntitule).Distinct().ToList();
+		await UpdateGrid();
+		IsLoaded = true;
+	}
+	int[] liv = { 3, 4, 5, 6, 7, 13, 14, 15, 16, 17 };
+	private async Task UpdateGrid()
+	{
+		items = db.API_V_DOCENTETE.Where(a => a.DO_Domaine == DO_Domaine
+			&& ((a.CA_Num == CA_Num && CA_Num != null) || (CA_Num == null))
+			&& ((a.CO_No2 == CO_No && CO_No != 0) || (CO_No == 0))
+			&& ((a.DO_Tiers == CT_Num && CT_Num != null) || (CT_Num == null))
+			&& ((date1 != null && a.DO_Date >= date1) || date1 == null)
+			&& ((date2 != null && a.DO_Date <= date2) || date2 == null)
+			&& ((types != null && types.Contains(a.TypeIntitule)))
+			&& ((!IsLivraison) || (IsLivraison && liv.Contains(a.DO_Type ?? 0))))
+
+			.OrderBy(a => a.DO_Date).ToList();
+	}
+	private string getTiers()
+	{
+		string rs = "Tiers";
+		if (DO_Domaine == 0)
+		{
+			rs = "Client";
+		}
+		if (DO_Domaine == 1)
+		{
+			rs = "Fournisseur";
+		}
+
+		return rs;
+	}
+	protected async Task ShowPiece(string DO_Piece, short? DO_Type)
+	{
+		await DialogService.OpenAsync<DetailsPiece>(DO_Piece,
+		new Dictionary<string, object>() { { "DO_Piece", DO_Piece }, { "DO_Type", DO_Type } },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "90%" });
+	}
+}

@@ -1,0 +1,70 @@
+﻿<div class="dg-parent">
+    <div>
+        <GridRow>
+            <GridCol Xs="24" Md="24">
+                <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="FormContext">
+                    <GridRow>
+                        <GridCol Xs="24" Md="24">
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Début" LabelColSpan="12">
+                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateDebut" Min="@(min_debut)" />
+                            </FormItem>
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Fin" LabelColSpan="12">
+                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateFin" Min="@(row.DateDebut??(new DateTime()).AddDays(1))" Readonly=@(row.DateDebut == null) />
+                            </FormItem>
+                        </GridCol>
+                    </GridRow>
+                </Form>
+            </GridCol>
+        </GridRow>
+    </div>
+    <div class="btns-end">
+        <SfButton OnClick="@Submit" IsPrimary="true">Enregistrer</SfButton>
+        <SfButton OnClick="@Cancel">Annuler</SfButton>
+    </div>
+</div>
+
+
+
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter]
+    public int id { get; set; }
+    [Parameter]
+    public int contrat { get; set; }
+    API_T_AgenceContratDate row = new API_T_AgenceContratDate();
+    DateTime min_debut = new DateTime();
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        if(id == 0)
+        {
+            row.Contrat = contrat;
+            var dt = db.API_T_AgenceContratDate.Where(a => a.Contrat == contrat);
+            if(dt.Count() != 0)
+            {
+                min_debut = dt.OrderByDescending(a => a.DateFin).First().DateFin.Value.AddDays(1);
+            }
+            else
+            {
+                
+            }
+        } 
+    }
+
+    public async Task Cancel()
+    {
+        DialogService.Close();
+    }
+    public async Task Submit()
+    {
+        db.Add(row);
+        db.SaveChanges();
+        DialogService.Close();
+    }
+}

@@ -1,0 +1,409 @@
+﻿<RadzenContent Container="main">
+    <div class="grid-90">
+        <SfToolbar CssClass="btns">
+            <ToolbarItems>
+                <ToolbarItem Align="ItemAlign.Left">
+                    <Template>
+                        <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined"><div style="text-transform: uppercase;">Date: @SelectedDate.ToShortDateString()</div></SfMessage>
+                    </Template>
+                </ToolbarItem>
+                <!--
+                <ToolbarItem Align="ItemAlign.Left">
+                    <Template>
+                        <SfMessage Severity="MessageSeverity.Error" Variant="MessageVariant.Outlined"><div style="text-transform: uppercase;">Journée n'est pas validée</div></SfMessage>
+                    </Template>
+                </ToolbarItem> -->
+                <ToolbarItem Align="ItemAlign.Right">
+                    <Template>
+                        <SfButton IconCss="e-icons e-save" IsPrimary="false" Disabled>Valider la journée</SfButton>
+                    </Template>
+                </ToolbarItem>
+            </ToolbarItems>
+        </SfToolbar>
+        <GridRow>
+            <GridCol Xs="24" Md="5">
+                <Card Title="Zone" Style="padding: 5px;">
+
+                    <SfDropDownList @bind-Value=@SelectedSite Width="100%" ShowClearButton AllowFiltering TValue="int" TItem="API_T_Site" DataSource="@sites">
+                        <DropDownListEvents TValue="int" TItem="API_T_Site" ValueChange="@(args => LoadData())" />
+                        <DropDownListFieldSettings Text="Intitule" Value="id" />
+                    </SfDropDownList>
+                </Card>
+                <Card Title="Journée" Style="padding: 5px;">
+                    <Calendar Style="width: 100%" Value="@SelectedDate" OnChange="OnSelect" OnPanelChange="OnPanelChange" DateCellRender="DateCellRender" />
+                </Card>
+
+
+            </GridCol>
+            <GridCol Xs="24" Md="19">
+                <div class="grid-80">
+
+
+                    <SfGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                            Toolbar="@(new List<object>() { "ColumnChooser", "Search"})">
+
+                        <GridEvents TValue="API_V_PROJET" OnRecordDoubleClick="Edit"></GridEvents>
+                        <GridPageSettings PageSize="100"></GridPageSettings>
+                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <Empty></Empty>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                        <GridColumns>
+                            <GridColumn AllowSorting="false" AllowFiltering="false" Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PROJET.CT_Intitule)" HeaderText="Maitre d'ouvrage">
+                            </GridColumn>
+                            <GridColumn AllowSorting="false" AllowFiltering="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CA_Num" HeaderText="Affaire"></GridColumn>
+                            <GridColumn AllowSorting="false" AllowFiltering="false" Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="NumeroMarche" HeaderText="N° Marche"></GridColumn>
+                            <GridColumn AllowSorting="false" AllowFiltering="false" MinWidth="350" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Objet" HeaderText="Objet"></GridColumn>
+                            <GridColumn AllowSorting="false" AllowFiltering="false" Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable">
+                                <Template>
+                                    @{
+                                        var dt = (EtendueService.GetAspNetUsers().Result.Where(a => a.Id == (context as API_V_PROJET).Utilisateur));
+                                    }
+                                    @if (dt.Count() != 0)
+                                    {
+                                        <div>@dt.First().Intitule</div>
+                                    }
+                                </Template>
+                            </GridColumn>
+                            <GridColumn AllowSorting="false" AllowFiltering="false" Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut">
+                                <Template>
+                                    @{
+                                        var dt = db.API_T_PointageDetail.Where(a => a.Projet == (context as API_V_PROJET).id && a.Journee == journee && a.Type == type).ToList();
+                                        if (dt.Count() != 0)
+                                        {
+                                            <div style="text-align: center;">
+                                                <span class="statustxt e-activecolor">Terminé</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div style="text-align: center;">
+                                                <span class="statustxt e-inactivecolor">En attente</span>
+                                            </div>
+                                        }
+                                    }
+                                </Template>
+                            </GridColumn>
+                            <GridColumn AllowSorting="false" AllowFiltering="false" Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Total Frais">
+                                <Template>
+                                    @{
+                                        var dt = db.API_T_PointageDetail.Where(a => a.Projet == (context as API_V_PROJET).id && a.Journee == journee && a.Type == type).ToList();
+                                        if (dt.Count() != 0)
+                                        {
+                                            <div style="text-align: right;">
+                                                <span>@(dt.Sum(a => a.Montant).ToString("N2"))</span>
+                                            </div>
+                                        }
+                                    }
+                                </Template>
+                            </GridColumn>
+                        </GridColumns>
+                        <SfSpinner @bind-Visible="@loading">
+                        </SfSpinner>
+                    </SfGrid>
+
+
+
+                    <!-- -->
+
+                </div>
+            </GridCol>
+        </GridRow>
+    </div>
+</RadzenContent>
+
+
+
+    @code
+{
+
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    [Parameter] public bool IsMateriel { get; set; } = false;
+    [Parameter] public bool IsPersonnel { get; set; } = true;
+    [Parameter] public int type { get; set; } = 0;
+    DB db = new DB();
+    //Components
+    private SfGrid<API_T_PointageDetail> DefaultGrid;
+    private int journee = 0;
+    private int SelectedAnnee = DateTime.Today.Year;
+    private int SelectedMois = DateTime.Today.Month;
+    private DateTime SelectedDate = DateTime.Today;
+    private int SelectedProjet = 0;
+    private int SelectedResponsable = 0;
+    private int SelectedSite = 0;
+    string grid_height = "80vh";
+    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
+    List<API_T_PointageDetail> lignes = new List<API_T_PointageDetail>();
+    private List<API_V_PROJET> items = new List<API_V_PROJET>();
+    bool loading = false;
+    private DateTime value = DateTime.Today;
+    List<API_T_Site> sites = new  List<API_T_Site>();
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await InitAnnees();
+        await InitAnnees();
+        await InitMois();
+        await InitJournee();
+                     sites = db.API_T_Site.ToList();
+                    if (!sc.IsInRole("Super Admin", "Responsable Appel d'offre", "Direction", "Admin", "Responsable Marché"))
+                    {
+                        string q1 = @"SELECT a.* FROM API_T_Site a WHERE a.id IN (SELECT a.Site FROM API_T_Site_User a WHERE a.[User] = {0})";
+                        sites = db.API_T_Site.FromSqlRaw(q1, sc.User.Id).ToList();
+                    }
+                    if (sites.Count() != 0)
+                    {
+                        SelectedSite = sites.First().id;
+                    }
+        await LoadData();
+
+    }
+    private async Task InitAnnees()
+    {
+        var an = db.API_T_PointageAnnee.Where(a => a.Annee == SelectedDate.Year).AsNoTracking();
+        if (an.Count() == 0)
+        {
+            var item = new API_T_PointageAnnee();
+            item.Annee = SelectedDate.Year;
+            db.Add(item);
+            db.SaveChanges();
+        }
+        var dt = db.API_T_PointageAnnee.Where(a => a.Annee == SelectedDate.Year).AsNoTracking();
+        if (dt.Count() != 0)
+        {
+            SelectedAnnee = dt.First().id;
+        }
+    }
+    private async Task InitMois()
+    {
+        for (int i = 1; i <= 12; i++)
+        {
+            var mo = db.API_T_PointageMois.Where(a => a.Mois == i && a.AnneeID == SelectedAnnee).AsNoTracking();
+            if (mo.Count() == 0)
+            {
+                var item = new API_T_PointageMois();
+                item.Mois = i;
+                var mos = fn.GetMois().Where(a => a.Id == i);
+                if (mos.Count() != 0)
+                {
+                    item.Intitule = mos.First().Name;
+                }
+                var ans = db.API_T_PointageAnnee.Where(a => a.id == SelectedAnnee);
+                if (ans.Count() != 0)
+                {
+                    item.Description = ans.First().Annee.ToString() + "/" + i.ToString("00");
+                }
+
+                item.AnneeID = SelectedAnnee;
+                db.Add(item);
+                db.SaveChanges();
+
+            }
+        }
+        var dt = db.API_T_PointageMois.Where(a => a.AnneeID == SelectedAnnee && a.Mois == SelectedDate.Month);
+        if (dt.Count() != 0)
+        {
+            SelectedMois = dt.First().id;
+        }
+    }
+    private async Task InitJournee()
+    {
+        var jo = db.API_T_PointageJournee.Where(a => a.Date == SelectedDate);
+        if (jo.Count() == 0)
+        {
+            var item = new API_T_PointageJournee();
+            item.AnneeID = SelectedAnnee;
+            item.MoisID = SelectedMois;
+            item.Date = SelectedDate;
+            db.Add(item);
+
+            db.SaveChanges();
+
+        }
+        var dt = db.API_T_PointageJournee.Where(a => a.Date == SelectedDate);
+        if (dt.Count() != 0)
+        {
+            journee = dt.First().id;
+        }
+        await LoadData();
+    }
+    private async Task LoadData()
+    {
+        //lignes = db.API_T_PointageDetail.Where(a => a.Projet == SelectedProjet && a.Journee == journee && a.Type == type).ToList();
+        items = db.API_V_PROJET.Where(a => a.Site == SelectedSite).ToList();
+    }
+    private async Task OnSelect(DateTime value)
+    {
+        this.value = value;
+        SelectedDate = value;
+        await InitAnnees();
+        await InitMois();
+        await InitJournee();
+        await LoadData();
+    }
+    private async Task ValueChangeHandler(ChangeEventArgs<int, API_V_PROJET> args)
+    {
+        await LoadData();
+    }
+    private void OnPanelChange(DateTime value, string mode)
+    {
+        this.value = value;
+    }
+    protected async Task Edit(RecordDoubleClickEventArgs<API_V_PROJET> args)
+    {
+        await DialogService.OpenAsync<PointageFiche>(args.RowData.CA_Intitule,
+        new Dictionary<string, object>() { { "id", args.RowData.id }, { "journee", journee }, { "IsMateriel", IsMateriel }, { "IsPersonnel", IsPersonnel }, { "type", type } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "800px", Height = "98%" });
+
+        await LoadData();
+    }
+    public void EditGrid(ActionEventArgs<API_T_PointageDetail> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+
+            if (args.Action == "Add")
+            {
+                API_T_PointageDetail item = args.Data;
+                item.Projet = SelectedProjet;
+                item.Responsable = SelectedResponsable;
+                item.Journee = journee;
+                item.Type = type;
+                var per = db.API_T_Personnel.Where(a => a.id == item.Personnel);
+                if (per.Count() != 0)
+                {
+                    item.PU = per.First().SalaireBaseHoraire;
+                }
+                item.Montant = item.PU * item.NbrHeure;
+                db.Add(item);
+                db.SaveChanges();
+            }
+            if (args.Action != "Add")
+            {
+                var local = db.Set<API_T_PointageDetail>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                if (local != null)
+                {
+                    db.Entry(local).State = EntityState.Detached;
+                }
+                db.Entry(args.Data).State = EntityState.Modified;
+                db.SaveChanges();
+
+            }
+
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            var local = db.Set<API_T_PointageDetail>().Local.FirstOrDefault(a => a.id == args.Data.id);
+            if (local != null)
+            {
+                db.Entry(local).State = EntityState.Detached;
+            }
+            db.Entry(args.Data).State = EntityState.Deleted;
+            db.SaveChanges();
+        }
+
+    }
+    private RenderFragment DateCellRender(DateTime value)
+    {
+        var jr = db.API_T_PointageJournee.Where(a => a.Date == value);
+        if(jr.Count() != 0)
+        {
+            var dt = db.API_T_PointageDetail.Where(a => a.Journee == jr.First().id && items.Select(a => a.id).Contains(a.Projet) && a.Type == type);
+            if(dt.Count() != 0)
+            {
+                return
+                   @<Template>                            
+                        <div>
+            <RadzenIcon Icon="check_circle_outline" IconStyle="@IconStyle.Success" />
+                        </div>
+                    </Template>
+                ;
+            }
+            else
+            {
+                return
+                    @<Template>
+                        <div/>
+                    </Template>
+                ;
+            }
+        }
+        else
+        {
+            return
+               @<Template>
+                   <div/>
+               </Template>;
+        }
+
+
+    }
+
+}
+
+<style>
+    .ant-picker-calendar-header .ant-picker-calendar-mode-switch {
+        display: none;
+    }
+
+    .ant-picker-calendar-header {
+        margin-right: 10px;
+    }
+
+    .events {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        .events .ant-badge-status {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+            text-overflow: ellipsis;
+            font-size: 12px;
+        }
+
+    .notes-month {
+        text-align: center;
+        font-size: 28px;
+    }
+
+        .notes-month section {
+            font-size: 28px;
+        }
+
+    .ant-picker-calendar-full .ant-picker-panel .ant-picker-body th {
+        text-align: center;
+    }
+
+    .ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date {
+        height: 60px;
+    }
+
+    .item-label {
+        font-size: 11px !important;
+        padding: 4px 8px !important;
+        width: 110px !important;
+        color: rgba(0, 0, 0, 0.87) !important;
+        border-bottom-left-radius: 0px !important;
+        border-top-left-radius: 0px !important;
+        font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.025rem !important;
+        font-style: normal !important;
+        text-transform: uppercase !important;
+        color: #203154 !important;
+        background-color: #FFFFFF !important;
+        -webkit-border-radius: 0px !important;
+        -moz-border-radius: 0px !important;
+        border-style: solid !important;
+        border-width: 0.025rem !important;
+        border-color: #71639e !important;
+        -webkit-box-shadow: none !important;
+
+    }
+</style>
+           

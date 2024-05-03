@@ -1,0 +1,325 @@
+﻿@page "/et-balanceagee-fournisseur"
+@attribute [Authorize]
+
+@if (IsLoaded)
+{
+    <Card_1 Title="BALANCE AGEE FOURNISSEURS">
+        <RadzenContent Container="main">
+            <div class="grid-90">
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                            <Template>
+                                <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap">
+                                    <RadzenLabel Text="VILLES" />
+                                    <SfMultiSelect Width="230px" @bind-Value=@selected_villes ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(villes)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                                         <MultiSelectFieldSettings Text="CT_Ville" Value="CT_Ville"></MultiSelectFieldSettings>
+                                         <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                                     </SfMultiSelect>
+                                 </RadzenStack>
+
+                             </Template>
+                         </ToolbarItem>
+                         
+                         <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                             <Template>
+                                 <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap">
+                                     <RadzenLabel Text="COLLABORATEURS" />
+                                     <SfMultiSelect Width="230px" @bind-Value=@selected_collaborateurs ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(collaborateurs)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                                         <MultiSelectFieldSettings Text="CO_Nom" Value="CO_Nom"></MultiSelectFieldSettings>
+                                         <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                                     </SfMultiSelect>
+                                 </RadzenStack>
+                             </Template>
+                         </ToolbarItem>
+
+
+                         <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                             <Template>
+                                 <SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+                             </Template>
+                         </ToolbarItem>
+                         <ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+                         <ToolbarItem OnClick=@(args => (ExportExcel())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+                     </ToolbarItems>
+                 </SfToolbar>
+                 <div class="grid-84">
+                     <SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
+                         <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+
+                         </GridEditSettings>
+                         <GridEvents OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_V_BALANCEAGEEFOURNISSEUR"></GridEvents>
+                         <GridPageSettings PageSize="100"></GridPageSettings>
+                         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                         <GridTemplates>
+                             <EmptyRecordTemplate>
+                                 <Empty></Empty>
+                             </EmptyRecordTemplate>
+                         </GridTemplates>
+                         <GridAggregates>
+                             <GridAggregate>
+                                 <GridAggregateColumns>
+                                     <GridAggregateColumn Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR.CT_Num)" Type="AggregateType.Count" Format="### ### ###">
+                                         <FooterTemplate>
+                                             @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div style="text-align: center;">
+                                                    @SumValue.Count
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+
+                                    </GridAggregateColumn>
+                                    <GridAggregateColumn Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR.AN)" Type="AggregateType.Sum" Format="### ### ###">
+                                        <FooterTemplate>
+                                            @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div>
+                                                    @SumValue.Sum
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+
+                                    </GridAggregateColumn>
+                                    <GridAggregateColumn Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR._30J)" Type="AggregateType.Sum" Format="### ### ###">
+                                        <FooterTemplate>
+                                            @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div>
+                                                    @SumValue.Sum
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+
+                                    </GridAggregateColumn>
+                                    <GridAggregateColumn Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR._60J)" Type="AggregateType.Sum" Format="### ### ###">
+                                        <FooterTemplate>
+                                            @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div>
+                                                    @SumValue.Sum
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+
+                                    </GridAggregateColumn>
+                                    <GridAggregateColumn Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR._90J)" Type="AggregateType.Sum" Format="### ### ###">
+                                        <FooterTemplate>
+                                            @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div>
+                                                    @SumValue.Sum
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+
+                                    </GridAggregateColumn>
+                                    <GridAggregateColumn Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR._120J)" Type="AggregateType.Sum" Format="### ### ###">
+                                        <FooterTemplate>
+                                            @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div>
+                                                    @SumValue.Sum
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+
+                                    </GridAggregateColumn>
+                                    <GridAggregateColumn Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR._150J)" Type="AggregateType.Sum" Format="### ### ###">
+                                        <FooterTemplate>
+                                            @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div>
+                                                    @SumValue.Sum
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+
+                                    </GridAggregateColumn>
+                                    <GridAggregateColumn Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR.Encours)" Type="AggregateType.Sum" Format="### ### ###">
+                                        <FooterTemplate>
+                                            @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div>
+                                                    @SumValue.Sum
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+
+                                    </GridAggregateColumn>
+                                </GridAggregateColumns>
+                            </GridAggregate>
+                        </GridAggregates>
+                        <GridColumns>
+                            <GridColumn Width="120" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR.CT_Num)" HeaderText="N° Four."></GridColumn>
+                             <GridColumn AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR.CT_Intitule)" HeaderText="Fournisseur"></GridColumn>
+                             <GridColumn Width="150" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BALANCEAGEECLIENT.CT_Ville)" HeaderText="Ville"></GridColumn>
+                             <GridColumn Width="200" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BALANCEAGEECLIENT.CO_Nom)" HeaderText="Collaborateur"></GridColumn>
+                             <GridColumn Width="120" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR._30J)" HeaderText="30Jrs" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                 <Template>
+                                     @{
+                                        var item = (context as API_V_BALANCEAGEEFOURNISSEUR);
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_30J"))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item._30J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                    }
+                                </Template>
+                            </GridColumn>
+                            <GridColumn Width="120" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR._60J)" HeaderText="60Jrs" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                 <Template>
+                                     @{
+                                        var item = (context as API_V_BALANCEAGEEFOURNISSEUR);
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_60J"))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item._60J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                    }
+                                </Template>
+                            </GridColumn>
+                            <GridColumn Width="120" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR._90J)" HeaderText="90Jrs" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                 <Template>
+                                     @{
+                                        var item = (context as API_V_BALANCEAGEEFOURNISSEUR);
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_90J"))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item._90J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                    }
+                                </Template>
+                            </GridColumn>
+                            <GridColumn Width="120" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR._120J)" HeaderText="120Jrs" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                 <Template>
+                                     @{
+                                        var item = (context as API_V_BALANCEAGEEFOURNISSEUR);
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_120J"))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item._120J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                    }
+                                </Template>
+                            </GridColumn>
+                            <GridColumn Width="120" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR._150J)" HeaderText="150Jrs" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                 <Template>
+                                     @{
+                                        var item = (context as API_V_BALANCEAGEEFOURNISSEUR);
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_150J"))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item._150J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                    }
+                                </Template>
+                            </GridColumn>
+                            <GridColumn Width="120" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR.AN)" HeaderText="Plus 150Jrs" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                 <Template>
+                                     @{
+                                        var item = (context as API_V_BALANCEAGEEFOURNISSEUR);
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"AN"))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item.AN ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                    }
+                                </Template>
+                            </GridColumn>
+                            <GridColumn Width="120" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_BALANCEAGEEFOURNISSEUR.Encours)" HeaderText="Solde" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                 <Template>
+                                     @{
+                                        var item = (context as API_V_BALANCEAGEEFOURNISSEUR);
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"Encours"))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item.Encours ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                    }
+                                </Template>
+                            </GridColumn>
+                        </GridColumns>
+                        <SfSpinner @bind-Visible="@loading">
+                        </SfSpinner>
+                    </SfGrid>
+                 </div>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter] public int type { get; set; }
+    [Parameter] public bool IsList { get; set; } = true;
+    [Parameter] public string Title { get; set; } = "";
+    string grid_height = "80vh";
+    //Components
+    private SfGrid<API_V_BALANCEAGEEFOURNISSEUR> DefaultGrid;
+    private Func<double, string> _fortmat1 = (p) => $"{(p / 100).ToString("### ### ##0 %")}";
+
+    List<string> villes = new List<string>();
+    List<string> collaborateurs = new List<string>();
+
+    List<string> selected_villes = new List<string>();
+    List<string> selected_collaborateurs = new List<string>();
+
+    private IEnumerable<API_V_BALANCEAGEEFOURNISSEUR> items;
+    List<API_V_BALANCEAGEEFOURNISSEUR> rows = new List<API_V_BALANCEAGEEFOURNISSEUR>();
+    string activekey = "0";
+    bool loading = false;
+    bool IsLoaded = false;                                                                                                                                           
+    List<API_T_Caisse> caisses = new List<API_T_Caisse>();
+    int caisse = 0;
+    DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
+    DateTime? date2;
+    IList<API_V_BALANCEAGEEFOURNISSEUR> selecteditems;
+    private RenderFragment Date1 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date1" Width="130px" Placeholder="Date Début" TValue="DateTime?">
+        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+    </SfDatePicker>;
+    private RenderFragment Date2 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date2" Width="130px" Placeholder="Date Fin" TValue="DateTime?">
+        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+            </SfDatePicker>
+    ;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        db = session.db;
+        villes = db.API_V_BALANCEAGEEFOURNISSEUR.Select(a => a.CT_Ville).Distinct().ToList();
+        collaborateurs = db.API_V_BALANCEAGEEFOURNISSEUR.Select(a => a.CO_Nom).Distinct().ToList();
+        selected_villes = villes;
+        selected_collaborateurs = collaborateurs;
+        await UpdateGrid();
+        IsLoaded = true;
+    }
+    private async Task UpdateGrid()
+    {
+        loading = true;
+        await Task.Delay(1);
+        items = session.db.API_V_BALANCEAGEEFOURNISSEUR
+                .Where(a => ((selected_villes != null && selected_villes.Contains(a.CT_Ville)))
+        && ((selected_collaborateurs != null && selected_collaborateurs.Contains(a.CO_Nom))))
+        .OrderBy(a => a.CT_Intitule).ToList();
+        loading = false;
+        await Task.Delay(1);
+    }
+    private async Task ExportExcel()
+    {
+        ExcelExportProperties ExportProperties = new ExcelExportProperties();
+        ExportProperties.IncludeTemplateColumn = true;
+        await this.DefaultGrid.ExportToExcelAsync(ExportProperties);
+    }
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.ExcelExport();
+        }
+        if (args.Item.Id == "Grid_pdfexport")  //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.PdfExport();
+        }
+
+    }
+
+    protected async Task Edit(RecordDoubleClickEventArgs<API_V_BALANCEAGEEFOURNISSEUR> args)
+    {
+
+    }
+    private async Task Add()
+    {
+
+    }
+    private async Task ShowDetail(string CT_Num, string col)
+    {
+        await DialogService.OpenAsync<DetailsReleve>(CT_Num,
+      new Dictionary<string, object>() { { "CT_Num", CT_Num }, { "Periode", col }, { "Height", "84vh" } },
+  new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "92%", Height = "95%" });
+    }
+}

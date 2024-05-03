@@ -1,0 +1,616 @@
+﻿
+<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
+            </Template>
+        </ToolbarItem>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit(true))">Enregistrer</SfButton>
+            </Template>
+        </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+<div>
+    <GridRow>
+        <GridCol Xs="24" Md="24">
+            <EditForm @ref=form Model="@row" Context="EditContext">
+                <FluentValidationValidator TValidator="AV_ContratValidator" />
+                <div class="validation-group">
+                    <ValidationSummary />
+                </div>
+                <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="FormContext">
+                    <GridRow>
+                        <GridCol Xs="24" Md="8">
+                            <Card Style="height: 90px;">
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="@(getTiers())" LabelColSpan="6">
+                                    <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="int" TItem="F_COMPTET" DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == Type).OrderBy(a => a.CT_Intitule))" @bind-Value="@row.Tiers">
+                                        <DropDownListEvents TValue="int" TItem="F_COMPTET" />
+                                        <DropDownListFieldSettings Text="CT_Intitule" Value="cbMarq" />
+                                    </SfDropDownList>
+                                </FormItem>
+                               <FormItem LabelAlign="AntLabelAlignType.Left" Label="Réference" LabelColSpan="6">
+                                    <SfTextBox @bind-Value="@row.Reference" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Remarque" LabelColSpan="6">
+                                    <SfTextBox @bind-Value="@row.Libelle" />
+                                </FormItem>
+                            </Card>
+                        </GridCol>
+                        <GridCol Xs="24" Md="4">
+                            <Card Style="height: 90px;">
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Saisie" LabelColSpan="10">
+                                    <SfDatePicker Readonly TValue="DateTime?" @bind-Value="@row.Date" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Début" LabelColSpan="10">
+                                    <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateDebut" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Expiration" LabelColSpan="10">
+                                    <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateFin" />
+                                </FormItem>
+
+
+
+                            </Card>
+                        </GridCol>
+                        <GridCol Xs="24" Md="3">
+                            <Card Style="height: 90px;">
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Num" LabelColSpan="10">
+                                    <SfTextBox @bind-Value="@row.Piece" Readonly />
+                                </FormItem>
+
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Statut" LabelColSpan="10">
+                                    <SfDropDownList TValue="int" TItem="Items" DataSource="@fn.AV_StatutContrat()" @bind-Value="@row.Statut">
+                                        <DropDownListEvents TValue="int" TItem="Items" />
+                                        <DropDownListFieldSettings Text="Name" Value="Id" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Régime" LabelColSpan="10">
+                                    <SfDropDownList TValue="int" TItem="Items" DataSource="@fn.AV_Regime()" @bind-Value="@row.Regime" Readonly>
+                                        <DropDownListEvents TValue="int" TItem="Items" />
+                                        <DropDownListFieldSettings Text="Name" Value="Id" />
+                                    </SfDropDownList>
+                                </FormItem>
+                            </Card>
+                        </GridCol>
+                        <GridCol Xs="24" Md="3">
+                            <Card Style="height: 90px;">
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Infant DU" LabelColSpan="13">
+                                    <SfNumericTextBox @bind-Value="@row.InfantStart" ShowSpinButton="false" Format="N0" Decimals="0" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Infant AU" LabelColSpan="13">
+                                    <SfNumericTextBox @bind-Value="@row.InfantEnd" ShowSpinButton="false" Format="N0" Decimals="0" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="% Infant" LabelColSpan="13">
+                                    <SfNumericTextBox @bind-Value="@row.RemiseInfant" ShowSpinButton="false" Format="N2" Decimals="2" />
+                                </FormItem>
+                            </Card>
+                        </GridCol>
+                        <GridCol Xs="24" Md="3">
+                            <Card Style="height: 90px;">
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Child DU" LabelColSpan="13">
+                                    <SfNumericTextBox @bind-Value="@row.ChildStart" ShowSpinButton="false" Format="N0" Decimals="0" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Child AU" LabelColSpan="13">
+                                    <SfNumericTextBox @bind-Value="@row.ChildEnd" ShowSpinButton="false" Format="N0" Decimals="0" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="% Child" LabelColSpan="13">
+                                    <SfNumericTextBox @bind-Value="@row.RemiseChild" ShowSpinButton="false" Format="N2" Decimals="2" />
+                                </FormItem>
+                            </Card>
+                        </GridCol>
+                        <GridCol Xs="24" Md="3">
+                            <Card Style="height: 90px;">
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Devise" LabelColSpan="10">
+                                    <SfDropDownList TValue="int" TItem="P_DEVISE" DataSource="@(db.P_DEVISE.Where(a => (a.D_Intitule ?? "") != ""))" @bind-Value="@row.Devise" Readonly=@(lignes.Count() != 0)>
+                                        <DropDownListEvents TValue="int" TItem="P_DEVISE" ValueChange="DeviseChanged" />
+                                        <DropDownListFieldSettings Text="D_Intitule" Value="cbMarq" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Cours" LabelColSpan="10">
+                                    <SfNumericTextBox @bind-Value="@row.Taux" ShowSpinButton="false" Format="N2" Decimals="2" Readonly=@(lignes.Count() != 0) />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Taxe" LabelColSpan="10">
+                                    <SfNumericTextBox @bind-Value="@row.Tax" ShowSpinButton="false" Format="N2" Decimals="2"/>
+                                </FormItem>
+
+                            </Card>
+                        </GridCol>
+                    </GridRow>
+                </Form>
+            </EditForm>
+
+        </GridCol>
+        <GridCol Xs="24" Md="24">
+            <div style="height: 35vh;">
+                <SfGrid Height="100%" @ref=@MainGrid Toolbar="@(new List<object>() { "Add", "Delete",
+                        #pragma warning disable BL0005
+                        new ToolbarItem() {Id = "add_periode", TooltipText = "Ajouter une période", Align = ItemAlign.Right,PrefixIcon = "e-icons e-adjustment" }
+                        })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
+                    <GridEvents OnActionBegin="OnActionBegin" QueryCellInfo="CustomizeCell" TValue="API_T_AgenceContratLigne" OnToolbarClick="OnToolbarClick"></GridEvents>
+                    <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
+                    <GridEditSettings AllowAdding AllowDeleting ShowDeleteConfirmDialog AllowEditing Mode="Syncfusion.Blazor.Grids.EditMode.Normal" AllowNextRowEdit>
+                        <HeaderTemplate>
+
+                        </HeaderTemplate>
+                    </GridEditSettings>
+                    <GridColumns>
+                        <GridColumn AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContratLigne.id)" HeaderText="#" Visible="false" IsPrimaryKey="true" />
+                        <GridColumn Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Article">
+                            <Template>
+                                @{
+                                    var dt = (db.API_T_AgenceArticle.Where(a => a.id == (context as API_T_AgenceContratLigne).Article));
+                                }
+                                @if (dt.Count() != 0)
+                                {
+                                    <div>@dt.First().Designation</div>
+                                }
+                            </Template>
+                            <EditTemplate>
+                                @{
+
+                                }
+                                <SfDropDownList Placeholder="Article" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(db.API_T_AgenceArticle)" TValue="int" TItem="API_T_AgenceArticle" @bind-Value="@((context as API_T_AgenceContratLigne).Article)">
+                                    <DropDownListEvents TValue="int" TItem="API_T_AgenceArticle" />
+                                    <DropDownListFieldSettings Text="Designation" Value="id" />
+                                </SfDropDownList>
+                            </EditTemplate>
+                        </GridColumn>
+                        <GridColumn Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContratLigne.LibelleFA)" HeaderText="Libelle Facturation" />
+                        @{
+                            var dt = db.API_T_AgenceContratDate.Where(a => a.Contrat == this.id).OrderBy(a => a.DateFin);
+                            foreach (API_T_AgenceContratDate item in dt)
+                            {
+                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="@(item.DateDebut.Value.ToString("dd/MM/yy") + " AU "+item.DateFin.Value.ToString("d/MM/yy"))">
+                                    <GridColumns>
+                                        <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceContratLigne.PUDevise)" HeaderText="DEVISE">
+                                            <Template>
+                                                @{
+                                                    var dt = db.API_T_AgenceContratDetail.Where(a => a.Ligne == (context as API_T_AgenceContratLigne).id && a.Periode == item.id);
+                                                    if (dt.Count() != 0)
+                                                    {
+                                                        <div style="text-align: right;">@dt.First().PUDevise.ToString("N2")</div>
+                                                    }
+                                                }
+                                            </Template>
+                                            <EditTemplate>
+                                                @{
+                                                    var dt = db.API_T_AgenceContratDetail.Where(a => a.Ligne == (context as API_T_AgenceContratLigne).id && a.Periode == item.id);
+                                                    if (dt.Count() != 0)
+                                                    {
+                                                        <SfNumericTextBox @bind-Value="@dt.First().PUDevise" ShowSpinButton="false" Format="N2" Decimals="2" />
+                                                    }
+                                                }
+
+                                            </EditTemplate>
+                                        </GridColumn>
+                                        <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="MAD">
+                                            <Template>
+                                                @{
+                                                    var dt = db.API_T_AgenceContratDetail.Where(a => a.Ligne == (context as API_T_AgenceContratLigne).id && a.Periode == item.id);
+                                                    if (dt.Count() != 0)
+                                                    {
+                                                        <div style="text-align: right;">@((dt.First().PUDevise * row.Taux).ToString("N2"))</div>
+                                                    }
+                                                }
+                                            </Template>
+                                            <EditTemplate>
+                                                @{
+                                                    var dt = db.API_T_AgenceContratDetail.Where(a => a.Ligne == (context as API_T_AgenceContratLigne).id && a.Periode == item.id);
+                                                    if (dt.Count() != 0)
+                                                    {
+                                                        <div style="text-align: right;">@((dt.First().PUDevise * row.Taux).ToString("N2"))</div>
+                                                    }
+                                                }
+                                            </EditTemplate>
+                                        </GridColumn>
+                                    </GridColumns>
+
+                                </GridColumn>
+                            }
+                        }
+
+                    </GridColumns>
+
+
+                </SfGrid>
+            </div>
+        </GridCol>
+        <GridCol Xs="24" Md="24">
+            <Card Title="SPO">
+                <div style="height: 30vh;">
+                    <SfGrid Height="100%" Toolbar="@(new List<object>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@spos">
+                        <GridEvents OnActionBegin="OnActionBeginSPO" TValue="API_T_AgenceOffre"></GridEvents>
+                        <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
+                        <GridEditSettings AllowAdding AllowDeleting ShowDeleteConfirmDialog AllowEditing Mode="Syncfusion.Blazor.Grids.EditMode.Normal" AllowNextRowEdit>
+                            <HeaderTemplate>
+
+                            </HeaderTemplate>
+                        </GridEditSettings>
+                        <GridColumns>
+                            <GridColumn AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceOffre.id)" HeaderText="#" Visible="false" IsPrimaryKey="true" />
+                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Libelle">
+                                <Template>
+                                    @{
+                                        var dt = (fn.AV_TypeOffre().Where(a => a.Id == (context as API_T_AgenceOffre).Offre));
+                                    }
+                                    @if (dt.Count() != 0)
+                                    {
+                                        <div>@dt.First().Name</div>
+                                    }
+                                </Template>
+                                <EditTemplate>
+                                    <SfDropDownList Placeholder="Libellé" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.AV_TypeOffre())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_AgenceOffre).Offre)">
+                                        <DropDownListEvents TValue="int" TItem="Items" />
+                                        <DropDownListFieldSettings Text="Name" Value="Id" />
+                                    </SfDropDownList>
+                                </EditTemplate>
+                            </GridColumn>
+                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="SELLING DATE">
+                                 <GridColumns>
+                                    <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceOffre.SellingDateStart)" HeaderText="DU" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceOffre.SellingDateEnd)" HeaderText="AU" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                 </GridColumns>
+                            </GridColumn>
+                             <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="ARRIVAL DATE">
+                                 <GridColumns>
+                                    <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceOffre.ArrivalDateStart)" HeaderText="DU" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceOffre.ArrivalDateEnd)" HeaderText="AU" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                 </GridColumns>
+                             </GridColumn>
+
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceOffre.Cumulative)" HeaderText="Cumulable" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                <Template>
+                                    @{
+                                        <SfCheckBox Checked="@((context as API_T_AgenceOffre).Cumulative??false)"></SfCheckBox>
+                                    }
+                                </Template>
+                            </GridColumn>
+                            <GridColumn Width="100" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceOffre.Remise)" HeaderText="REMISE %" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"/>
+
+                        </GridColumns>
+
+
+                    </SfGrid>
+                </div>
+
+            </Card>
+        </GridCol>
+    </GridRow>
+</div>
+
+
+
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    [Parameter] public int id { get; set; }
+    [Parameter] public int cbMarq { get; set; }
+    [Parameter] public int Type { get; set; }
+    DB db = new DB();
+    public API_T_AgenceContrat row = new API_T_AgenceContrat();
+    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
+    SfGrid<API_T_AgenceContratLigne> MainGrid;
+
+    List<F_COMPTET> tiers = new List<F_COMPTET>();
+    List<API_T_AgenceContratLigne> lignes = new List<API_T_AgenceContratLigne>();
+    List<API_T_AgenceOffre> spos = new List<API_T_AgenceOffre>();
+    bool loading = true;
+    double index = 0;
+    string ct_num = "";
+    EditForm form = new EditForm();
+
+    private async Task UpdateLignes()
+    {
+        await InitLigne();
+        lignes = db.API_T_AgenceContratLigne.Where(a => a.Entete == id).OrderByDescending(a => a.id).ToList();
+        spos = db.API_T_AgenceOffre.Where(a => a.Entete == id).OrderByDescending(a => a.id).ToList();
+    }
+    public async Task OnToolbarClick(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "add_periode")
+        {
+
+            await DialogService.OpenAsync<Periodes>($"Périodes",
+        new Dictionary<string, object>() { { "contrat", this.id } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "400px", Height = "600px" });
+
+            await UpdateLignes();
+        }
+    }
+    private async Task InitLigne()
+    {
+        string q1 = @"INSERT INTO API_T_AgenceContratDetail
+
+                    (
+                    Ligne,
+                    Periode,
+					Contrat,
+					Article
+                    )
+
+
+                    SELECT
+                    a.id Ligne,
+                    b.id Periode,
+					b.Contrat,
+					a.Article
+                    FROM API_T_AgenceContratLigne a
+                    INNER JOIN API_T_AgenceContratDate b ON a.Entete = b.Contrat
+                    LEFT JOIN API_T_AgenceContratDetail dt ON a.id = dt.Ligne AND b.id = dt.Periode
+
+
+                    WHERE dt.id IS NULL AND b.Contrat = {0}";
+        db.Database.ExecuteSqlRaw(q1,this.id);
+
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        var zn = db.API_T_Site_User.Where(a => a.User == sc.User.Id).Select(a => a.Site);
+        if (zn.Count() != 0)
+        {
+            var pr = db.API_T_Projet.Where(a => zn.Contains(a.Site)).Select(a => a.CT_Num).ToList();
+            if (pr.Count() != 0)
+            {
+                tiers = db.F_COMPTET.Where(a => a.CT_Type == 0 && (pr.Contains((a.CT_Num ?? "")))).OrderBy(a => a.CT_Intitule).ToList();
+            }
+
+        }
+        if (id == 0)
+        {
+            row = new API_T_AgenceContrat();
+            if(Type == 0)
+            {
+                var dt = db.API_T_AgenceContrat.Where(a => a.Piece.StartsWith("CCS") && a.Type == Type).ToList();
+                if (dt.Count != 0)
+                {
+                    row.Piece = fn.getNextCode(dt.Max(a => a.Piece));
+                }
+                else
+                {
+                    row.Piece = "CCS0000001";
+                }
+            }
+            else 
+            {
+                var dt = db.API_T_AgenceContrat.Where(a => a.Piece.StartsWith("CSU") && a.Type == Type).ToList();
+                if (dt.Count != 0)
+                {
+                    row.Piece = fn.getNextCode(dt.Max(a => a.Piece));
+                }
+                else
+                {
+                    row.Piece = "CSU0000001";
+                }
+            }
+
+            row.Date = DateTime.Today.Date;
+            row.Tiers = cbMarq;
+        }
+        else
+        {
+            row = db.API_T_AgenceContrat.Where(a => a.id == id).SingleOrDefault();
+            await UpdateLignes();
+        }
+    }
+    private async Task Print()
+    {
+        List<JSReportParameter> parameters = new List<JSReportParameter>();
+
+        /*parameters.Add(new JSReportParameter { Name = "id", Values = new List<string>() { this.cbMarq.ToString() } });
+        await DialogService.OpenAsync<ReportViewer>(row.DO_Piece,
+        new Dictionary<string, object>() { { "ReportName", "reports\\projets\\ConsommationChantier" }, { "parameters", parameters } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });*/
+
+
+    }
+    private string getTiers()
+    {
+        if (Type == 1)
+        {
+            return "Fournisseur";
+        }
+        else
+        {
+            return "Client";
+        }
+    }
+    private async Task DeviseChanged(ChangeEventArgs<int, P_DEVISE> args)
+    {
+        if(id == 0 || row.Taux == 0)
+        {
+            var dt = db.P_DEVISE.Where(a => a.cbMarq == args.Value);
+            if(dt.Count() != 0)
+            {
+                row.Taux = dt.First().D_Cours ?? 0;
+            }
+
+        } 
+    }
+    private void Submit(bool close)
+    {
+        if (form.EditContext.Validate())
+        {
+            try
+            {
+                if (id == 0)
+                {
+                    row.Type = Type;
+                    var ct = db.F_COMPTET.Where(a => a.cbMarq == row.Tiers);
+                    if(ct.Count() != 0)
+                    {
+                        row.CT_Num = ct.First().CT_Num;
+                    }
+                    if (Type == 0)
+                    {
+                        var dt = db.API_T_AgenceContrat.Where(a => a.Piece.StartsWith("CCS") && a.Type == Type).ToList();
+                        if (dt.Count != 0)
+                        {
+                            row.Piece = fn.getNextCode(dt.Max(a => a.Piece));
+                        }
+                        else
+                        {
+                            row.Piece = "CCS0000001";
+                        }
+                    }
+                    else
+                    {
+                        var dt = db.API_T_AgenceContrat.Where(a => a.Piece.StartsWith("CSU") && a.Type == Type).ToList();
+                        if (dt.Count != 0)
+                        {
+                            row.Piece = fn.getNextCode(dt.Max(a => a.Piece));
+                        }
+                        else
+                        {
+                            row.Piece = "CSU0000001";
+                        }
+                    }
+                    db.API_T_AgenceContrat.Add(row);
+                    db.SaveChanges();
+                    this.id = row.id;
+                }
+                else
+                {
+                    db.SaveChanges();
+                }
+                if (close == true)
+                {
+                    DialogService.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Message.Warning(ex.ToString());
+            }
+        }
+
+    }
+    public void CustomizeCell(Syncfusion.Blazor.Grids.QueryCellInfoEventArgs<API_T_AgenceContratLigne> args)
+    {
+        /*try
+        {
+        var dt = args.Data;
+        if (dt.AR_Ref == null && args.Column.Field == "DL_Design")
+            {
+            args.Cell.AddClass(new string[] { "td-bold" });
+    }
+    }
+    catch (Exception ex)
+        {
+        Message.Error(ex.ToString());
+            }
+            */
+
+    }
+    private async Task OnActionBegin(ActionEventArgs<API_T_AgenceContratLigne> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            if (!form.EditContext.Validate())
+            {
+                args.Cancel = true;
+            }
+
+        }
+        if(args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+
+            if(args.Data.Article != 0)
+            {
+                args.Data.Devise = row.Devise;
+                args.Data.Taux = row.Taux;
+                var ar = db.API_T_AgenceArticle.Where(a => a.id == args.Data.Article).SingleOrDefault();
+                if (row.Taux != 0)
+                {
+                    args.Data.PU = args.Data.PUDevise * row.Taux;
+                }
+                args.Data.Libelle = ar.Designation;
+                args.Data.LibelleFA = args.Data.LibelleFA ?? ar.Designation;
+                if (args.Action == "Add")
+                {
+                    if (id == 0)
+                    {
+                        Submit(false);
+                    }
+                    args.Data.Entete = this.id;
+                    db.Add(args.Data);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    var local = db.Set<API_T_AgenceContratLigne>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                    if (local != null)
+                    {
+                        db.Entry(local).State = EntityState.Detached;
+                    }
+                    db.Entry(args.Data).State = EntityState.Modified;
+                    db.SaveChanges();
+                    string q1 = @"UPDATE API_T_AgenceContratDetail SET PU = PUDevise * {0}, Taux = {0} WHERE Ligne = {1}";
+                    db.Database.ExecuteSqlRaw(q1,row.Taux, args.Data.id);
+
+                   
+                }
+            }
+            await UpdateLignes();
+
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            string q1 = @"DELETE FROM API_T_AgenceContratDetail WHERE Ligne = {0}";
+            string q2 = @"DELETE FROM API_T_AgenceContratLigne WHERE id = {0}";
+            db.Database.ExecuteSqlRaw(q1,args.Data.id);
+            db.Database.ExecuteSqlRaw(q2,args.Data.id);
+        }
+    }
+    private async Task OnActionBeginSPO(ActionEventArgs<API_T_AgenceOffre> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            if (!form.EditContext.Validate())
+            {
+                args.Cancel = true;
+            }
+
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+            if (args.Data.Offre != 0)
+            {
+                if (args.Action == "Add")
+                {
+                    if (id == 0)
+                    {
+                        Submit(false);
+                    }
+                    args.Data.Entete = this.id;
+                    db.Add(args.Data);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    var local = db.Set<API_T_AgenceOffre>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                    if (local != null)
+                    {
+                        db.Entry(local).State = EntityState.Detached;
+                    }
+                    db.Entry(args.Data).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            var local = db.Set<API_T_AgenceOffre>().Local.FirstOrDefault(a => a.id == args.Data.id);
+            if (local != null)
+            {
+                db.Entry(local).State = EntityState.Detached;
+            }
+            db.Entry(args.Data).State = EntityState.Deleted;
+            db.SaveChanges();
+        }
+    }
+}

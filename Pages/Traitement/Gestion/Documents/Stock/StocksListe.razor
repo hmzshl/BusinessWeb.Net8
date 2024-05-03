@@ -1,0 +1,8 @@
+﻿@page "/stocks/{type}"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction,Magasinier")]
+<DocumentsListe type=@type DO_Domaine="2" Title="MOUVEMENTS DE STOCK" />
+
+
+@code {
+    [Parameter] public string type { get; set; }
+}

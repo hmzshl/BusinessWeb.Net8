@@ -1,0 +1,79 @@
+﻿@attribute [Authorize]
+<RadzenContent Container="main">
+    <div style="height: 70vh" class="no-border">
+        <SfGrid Height="100%" AllowPaging Toolbar="@(new List<string>() { "Add", "Delete"})" DataSource="@(items)">
+             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+             <GridPageSettings PageSize="40"></GridPageSettings>
+             <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting AllowEditing Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                 <HeaderTemplate>
+                     <span>@((context as API_T_Personnel).Nom)</span>
+                </HeaderTemplate>
+            </GridEditSettings>
+            <GridEvents OnActionBegin="UpdateListe" TValue="API_T_Personnel"></GridEvents>
+            <GridTemplates>
+                <EmptyRecordTemplate>
+                    <Empty></Empty>
+                </EmptyRecordTemplate>
+            </GridTemplates>
+            <GridColumns>
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Personnel.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Personnel.Nom) HeaderText="Nom"></GridColumn>
+                <GridColumn Width="100px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Personnel.Telephone) HeaderText="Téléphone"></GridColumn>
+                <GridColumn Width="100px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Personnel.Email) HeaderText="Email"></GridColumn>
+            </GridColumns>
+        </SfGrid>
+    </div>
+</RadzenContent>
+
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    List<API_T_Personnel> items = new List<API_T_Personnel>();
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        items = db.API_T_Personnel.OrderBy(a => a.Nom).ToList();
+    }
+    public void UpdateListe(ActionEventArgs<API_T_Personnel> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+
+            if (args.Action == "Add")
+            {
+                API_T_Personnel item = args.Data;
+                db.API_T_Personnel.Add(item);
+                db.SaveChanges();
+
+            }
+            if (args.Action != "Add")
+            {
+                var local = db.Set<API_T_Personnel>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                if (local != null)
+                {
+                    db.Entry(local).State = EntityState.Detached;
+                }
+                db.Entry(args.Data).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+        }
+
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            var local = db.Set<API_T_Personnel>().Local.FirstOrDefault(a => a.id == args.Data.id);
+            if (local != null)
+            {
+                db.Entry(local).State = EntityState.Detached;
+            }
+            db.Entry(args.Data).State = EntityState.Deleted;
+            db.SaveChanges();
+        }
+    }
+
+
+}

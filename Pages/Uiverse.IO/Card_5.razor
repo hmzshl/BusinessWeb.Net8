@@ -1,0 +1,84 @@
+﻿<div class="card-5">
+    <div class="card-5-img">
+        <RadzenImage Path="@Img" Style="width: 100px; height: 100px;">
+        </RadzenImage>
+    </div>
+    <div class="card-5-textBox">
+        <div class="card-5-textContent">
+            <p class="card-5-h1">
+                @ChildContent
+             </p>
+        </div>
+    </div>
+</div>
+
+@code
+{
+    [Parameter]
+    public string Img { get; set; }
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public string Title { get; set; }
+}
+
+<style>
+    .card-5 {
+        width: 100%;
+        max-width: 290px;
+        height: 70px;
+        background: #353535;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        backdrop-filter: blur(10px);
+        transition: 0.5s ease-in-out;
+    }
+
+        .card-5:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+        }
+
+    .card-5-img {
+        width: 50px;
+        height: 50px;
+        margin-left: 10px;
+        border-radius: 10px;
+        background: linear-gradient(#d7cfcf, #9198e5);
+    }
+
+    .card-5:hover > .card-5-img {
+        transition: 0.5s ease-in-out;
+        background: linear-gradient(#9198e5, #712020);
+    }
+
+    .card-5-textBox {
+        width: calc(100% - 90px);
+        margin-left: 10px;
+        color: white;
+        font-family: 'Poppins' sans-serif;
+    }
+
+    .card-5-textContent {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .card-5-span {
+        font-size: 10px;
+    }
+
+    .card-5-h1 {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .card-5-p {
+        font-size: 12px;
+        font-weight: lighter;
+    }
+
+</style>

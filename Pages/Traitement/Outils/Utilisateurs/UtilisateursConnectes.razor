@@ -1,0 +1,84 @@
+﻿@page "/utilisateurs-connectes"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction")]
+
+@if (IsLoaded)
+{
+    <Card_1 Title="UTILISATEURS CONNECTES">
+        <RadzenContent Container="main">
+            <div class="grid-90">
+                <SfGrid Height="100%" AllowResizing AllowSorting AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items">
+                     <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                     <GridTemplates>
+                         <EmptyRecordTemplate>
+                             <Empty></Empty>
+                         </EmptyRecordTemplate>
+                     </GridTemplates>
+                     <GridColumns>
+                         <GridColumn  HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CBSESSION.cbUserName)" HeaderText="Utilisateur"></GridColumn>
+                         <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CBSESSION.App)" HeaderText="Application"></GridColumn>
+                         <GridColumn Width="110" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CBSESSION.CB_Type)" HeaderText="Type"></GridColumn>
+                         <GridColumn Width="110" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CBSESSION.CB_Creator)" HeaderText="Créateur"></GridColumn>
+                         <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left">
+                             <Template>
+                                 @{
+                                    var dt = (context as API_V_CBSESSION);
+                                    <RadzenButton Click=@(args => Deconnecter(dt)) Shade="@Shade.Dark" ButtonStyle="ButtonStyle.Primary" Variant="Variant.Flat" Size="Radzen.ButtonSize.ExtraSmall" Icon="logout" />
+                                 }
+                             </Template>
+                         </GridColumn>
+                     </GridColumns>
+                     <SfSpinner @bind-Visible="@loading">
+                     </SfSpinner>
+                 </SfGrid>
+             </div>
+         </RadzenContent>
+     </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+
+
+
+ @code
+{
+
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    //Components
+    private SfGrid<API_V_CBSESSION> DefaultGrid;
+    bool IsLoaded = false;
+
+    private List<API_V_CBSESSION> items = new List<API_V_CBSESSION>();
+    bool loading = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        db = session.db;
+        await UpdateGrid();
+        IsLoaded = true;
+
+    }
+    private async Task UpdateGrid()
+    {
+        items = session.db.API_V_CBSESSION.OrderBy(a => a.cbUserName).ToList();
+    }
+    private async Task Deconnecter(API_V_CBSESSION args)
+    {
+        bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment déconnecter cet utilisateur");
+        if(isConfirm)
+        {
+            db.Database.ExecuteSqlRaw("DELETE FROM cbUserSession WHERE cbSession = {0}",args.cbSession);
+            await UpdateGrid();
+        }
+    }
+
+
+}

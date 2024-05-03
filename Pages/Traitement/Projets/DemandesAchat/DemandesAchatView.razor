@@ -1,0 +1,26 @@
+﻿@page "/demandes-achats"
+
+
+
+@if (IsLoaded)
+{
+	<BusinessWeb.Pages.Traitement.Projets.Documents.DocumentsListe IsDemandeAchat="true" DO_Type=10 DO_Domaine="1" Title="LISTE DES DEMANDES D'ACHATS" />
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+@code {
+	bool IsLoaded = false;
+	[Parameter] public int DO_Type { get; set; }
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(100);
+		IsLoaded = true;
+	}
+}
+
+

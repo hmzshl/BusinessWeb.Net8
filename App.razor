@@ -1,0 +1,24 @@
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <RedirectToLogin IsAuthenticated="@context.User.Identity.IsAuthenticated" />
+                </NotAuthorized>
+                <Authorizing></Authorizing>
+            </AuthorizeRouteView>
+        </Found>
+        <NotFound>
+            <PageTitle>Not found</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <div class="center-screen">
+                    <Result Status="404" Title="Page non trouvée" SubTitle="Désolé, mais il n'y a rien ici !" />
+                </div>
+            </LayoutView>
+        </NotFound>
+    </Router>
+
+</CascadingAuthenticationState>
+
+

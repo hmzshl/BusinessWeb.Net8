@@ -1,0 +1,50 @@
+﻿@page "/centres-charge"
+@attribute [Authorize(Roles = "Super Admin,Admin")]
+<h1>CENTRES DE CHARGE</h1>
+<Divider></Divider>
+<RadzenContent Container="main">
+
+</RadzenContent>
+
+
+
+@code
+{
+
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    //Components
+
+    //End components
+
+    bool loading = true;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await Task.Run(LoadData);
+
+    }
+    private async Task LoadData()
+    {
+        loading = true;
+        await Task.Delay(1);
+
+        loading = false;
+        await Task.Delay(1);
+    }
+
+
+    private async Task Add() 
+    {
+        await DialogService.OpenAsync<CentresChargeFiche>($"Ajouter un élément",
+        new Dictionary<string, object>() { { "id", 0 } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "80%" });
+        await LoadData();
+    }
+
+
+
+
+}

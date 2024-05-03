@@ -1,0 +1,292 @@
+﻿
+@if (IsLoaded)
+{
+    <div style="height: @Height;">
+        @if (CT_Num != null || CO_No != 0)
+        {
+            <SfToolbar CssClass="btns">
+                <ToolbarItems>
+                    <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                        <Template>
+                            <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
+                                <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+                            </SfDatePicker>
+                        </Template>
+                    </ToolbarItem>
+                    <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                        <Template>
+                            <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
+                                <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+                            </SfDatePicker>
+                        </Template>
+                    </ToolbarItem>
+                    <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                        <Template>
+                            <RadzenLabel Text="Type" Component="type" />
+                            <div style="padding-left: 10px; margin-right: 10px;" id="type">
+                                <SfMultiSelect Width="200px" @bind-Value=@types ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_RELEVE.Where(a => a.Groupe == "Document" && a.CT_Num == CT_Num).OrderBy(a => a.TypeIntitule).Select(a => a.TypeIntitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                                     <MultiSelectFieldSettings Text="TypeIntitule" Value="TypeIntitule"></MultiSelectFieldSettings>
+                                     <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                                 </SfMultiSelect>
+                             </div>
+                         </Template>
+                     </ToolbarItem>
+                    <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                         <Template>
+                             <RadzenLabel Text="Etat" Component="etat" />
+                             <div style="padding-left: 10px; margin-right: 10px;" id="etat">
+                                <SfMultiSelect Width="140px" @bind-Value=@selected_statuts ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(statuts)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                                    <MultiSelectFieldSettings Text="EtatReglement" Value="EtatReglement"></MultiSelectFieldSettings>
+                                    <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                                </SfMultiSelect>
+                             </div>
+                         </Template>
+                     </ToolbarItem>
+
+
+
+                 
+                 <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                     <Template>
+                         <SfTextBox Width="160px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+                     </Template>
+                 </ToolbarItem>
+                 <ToolbarItem  OnClick=@(args => (Print())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+                 <ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+             </ToolbarItems>
+         </SfToolbar>
+        }
+        <SfGrid @ref=DefaultGrid Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowPaging AllowSorting AllowFiltering>
+             <GridPageSettings PageSize="100" />
+         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+             <GridAggregates>
+                 <GridAggregate>
+                     <GridAggregateColumns>
+                         <GridAggregateColumn Field="@nameof(API_V_RELEVE.MontantTTC)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                             <FooterTemplate>
+                                 @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_RELEVE.MontantRegle)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_RELEVE.Reste)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                        </GridAggregateColumn>
+                    </GridAggregateColumns>
+                </GridAggregate>
+            </GridAggregates>
+            <GridEvents OnRecordDoubleClick="@(args => ShowPiece(args.RowData.DO_Piece,args.RowData.DO_Type))" TValue="API_V_RELEVE"></GridEvents>
+            <GridColumns>
+
+                @if (session.IsMobile)
+                {
+                    <GridColumn HeaderText="Article" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                        <Template>
+                            @{
+                                var dt = (context as API_V_RELEVE);
+                                <div style="padding: 5px;">
+                                    <table>
+                                        <Tr Title="Pièce" TitleClass="tr-intitule" ContentClass="tr-intitule">@dt.DO_Piece</Tr>
+                                        <Tr Title="Date">@dt.DO_Date?.ToShortDateString()</Tr>
+                                        
+                                        <Tr Title="Type">@dt.TypeIntitule</Tr>
+                                        <Tr Title="Libellé">@dt.DO_Libelle</Tr>
+                                        <Tr Title="Collaborateur">@dt.CO_Nom</Tr>
+                                        <Tr Title="Montant" Align="right">@dt.MontantTTC?.ToString("N2")</Tr>
+                                        <Tr Title="Réglé" Align="right">@dt.MontantRegle.ToString("N2")</Tr>
+                                        <Tr Title="reste" Align="right">@dt.Reste?.ToString("N2")</Tr>
+                                        <Tr Title="Etat">
+                                           @if (dt.EtatReglement == "Réglé")
+                                            {
+                                                <div style="text-align: left;">
+                                                    <span class="statustxt e-activecolor">Réglé</span>
+                                                </div>
+
+                                            }
+                                            else if (dt.EtatReglement == "Regl. Parciel")
+                                            {
+                                                <div style="text-align: left;">
+                                                    <span class="statustxt e-infocolor">Régl. Parciel</span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div style="text-align: left;">
+                                                    <span class="statustxt e-inactivecolor">Non réglé</span>
+                                                </div>
+
+                                            }
+                                        </Tr>
+                                        
+                                    </table>
+                                </div>
+
+                            }
+                        </Template>
+                    </GridColumn>
+                }
+                else
+                {
+                    <GridColumn Format="d" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DO_Date)" HeaderText="Date" />
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DO_Piece)" HeaderText="Pièce" />
+                    <GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.TypeIntitule)" HeaderText="Type" />
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DO_Libelle)" HeaderText="Libellé" />
+                    <GridColumn Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.CO_Nom)" HeaderText="Collaborateur" />
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.MontantTTC)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.MontantRegle)" HeaderText="Réglé" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.Reste)" HeaderText="Reste" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                    <GridColumn Width="90" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Etat">
+                        <Template>
+                            @{
+                                var dt = (context as API_V_RELEVE);
+                                if (dt.EtatReglement == "Réglé")
+                                {
+                                    <div style="text-align: left;">
+                                        <span class="statustxt e-activecolor">Réglé</span>
+                                    </div>
+
+                                }
+                                else if (dt.EtatReglement == "Regl. Parciel")
+                                {
+                                    <div style="text-align: left;">
+                                        <span class="statustxt e-infocolor">Régl. Parciel</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div style="text-align: left;">
+                                        <span class="statustxt e-inactivecolor">Non réglé</span>
+                                    </div>
+
+                                }
+                            }
+                        </Template>
+                    </GridColumn>
+                }
+
+
+            </GridColumns>
+
+        </SfGrid>
+    </div>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    bool IsLoaded = false;
+    [Parameter] public bool IsLivraison { get; set; } = true;
+    [Parameter] public int DO_Domaine { get; set; }
+    [Parameter] public int DO_Type { get; set; }
+    [Parameter] public string CA_Num { get; set; }
+    [Parameter] public string CT_Num { get; set; }
+    [Parameter] public string DO_Piece { get; set; }
+    [Parameter] public string AR_Ref { get; set; }
+    [Parameter] public int CO_No { get; set; } = 0;
+    [Parameter] public int DE_No { get; set; }
+    [Parameter] public string Height { get; set; }
+    [Parameter] public string Periode { get; set; }
+    SfGrid<API_V_RELEVE> DefaultGrid;
+    private List<API_V_RELEVE> items = new List<API_V_RELEVE>();
+    DateTime? date1;
+    DateTime? date2;
+    int domaine = 0;
+    int type = 0;
+
+    List<string> types = new List<string>();
+    List<string> statuts = new List<string>();
+    List<string> selected_types = new List<string>();
+    List<string> selected_statuts = new List<string>();
+    string selected_type;
+    string selected_statut;
+    private Func<double, string> _fortmat1 = (p) => $"{(p / 100).ToString("### ### ##0 %")}";
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(100);
+        db = session.db;
+        types = db.API_V_RELEVE.OrderBy(a => a.TypeIntitule).Select(a => a.TypeIntitule).Distinct().ToList();
+        statuts = db.API_V_RELEVE.Where(a => a.DO_Domaine == domaine).Select(a => a.EtatReglement).Distinct().ToList();
+        selected_statuts = statuts;
+        selected_types = types;
+        await UpdateGrid();
+        IsLoaded = true;
+    }
+    int[] liv = { 3, 4, 5, 6, 7, 13, 14, 15, 16, 17 };
+    private async Task UpdateGrid()
+    {
+        items = db.API_V_RELEVE.Where(a => 
+            ((a.CT_Num == CT_Num && CT_Num != null) || (CT_Num == null))
+            && (
+                (Periode == "_30J" && a.Jours <= 30)
+                || (Periode == "_60J" && a.Jours > 30 && a.Jours <= 60)
+                || (Periode == "_90J" && a.Jours > 60 && a.Jours <= 90)
+                || (Periode == "_120J" && a.Jours > 90 && a.Jours <= 120)
+                || (Periode == "_150J" && a.Jours > 120 && a.Jours <= 150)
+                || (Periode == "AN" && a.Jours > 150)
+                || (Periode == "Encours")
+            )
+            && a.Groupe == "Document"
+            && ((date1 != null && a.DO_Date >= date1) || date1 == null)
+                        && ((selected_statuts != null && selected_statuts.Contains(a.EtatReglement)))
+                        && ((types != null && types.Contains(a.TypeIntitule)))
+            && ((date2 != null && a.DO_Date <= date2) || date2 == null)                               
+        ).Where(a => (a.CO_No2 == CO_No && CO_No != 0) || (CO_No == 0))
+            .OrderBy(a => a.DO_Date).ToList();
+    }
+    private string getTiers()
+    {
+        string rs = "Tiers";
+        if (DO_Domaine == 0)
+        {
+            rs = "Client";
+        }
+        if (DO_Domaine == 1)
+        {
+            rs = "Fournisseur";
+        }
+
+        return rs;
+    }
+    protected async Task ShowPiece(string DO_Piece, short? DO_Type)
+    {
+        await DialogService.OpenAsync<DetailsPiece>(DO_Piece,
+        new Dictionary<string, object>() { { "DO_Piece", DO_Piece }, { "DO_Type", DO_Type } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "90%" });
+    }
+    protected async Task Print()
+    {
+        List<JSReportParameter> parameters = new List<JSReportParameter>();
+        string data = JsonSerializer.Serialize(items);
+
+        await DialogService.OpenAsync<ReportViewerJSON>("",
+        new Dictionary<string, object>() { { "ReportName", "reports\\commercial\\ReleveDocument" }, { "data", data } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
+    }
+}

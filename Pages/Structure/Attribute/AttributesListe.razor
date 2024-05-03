@@ -1,0 +1,141 @@
+﻿@page "/attribute"
+@attribute [Authorize(Roles = "Super Admin,Admin")]
+<h1>ATTRIBUTES</h1>
+<Divider></Divider>
+<SfGrid class="table-vh" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)">
+                                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                                <GridEditSettings ShowDeleteConfirmDialog AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                                                             <HeaderTemplate>
+                                                                 <span>@((context as API_T_Attribute).Intitule)</span>
+                                                            </HeaderTemplate>
+                                                </GridEditSettings>
+                                            <GridEvents OnActionBegin="UpdateAttributes" TValue="API_T_Attribute"></GridEvents>
+                                                <GridTemplates>
+                                                    <EmptyRecordTemplate>
+                                                        <Empty></Empty>
+                                                    </EmptyRecordTemplate>
+                                                </GridTemplates>
+                                                <GridColumns>
+                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Attribute.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Attribute.Intitule) HeaderText="Intitulé"></GridColumn>
+                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Attribute.TableIndex) HeaderText="Target">
+                                                        <Template>
+                                                           @{
+                                                                var dt = (helpers.AttributeTables().Where(a => a.Id == (context as API_T_Attribute).TableIndex));
+                                                            }
+                                                            @if(dt.Count() != 0) 
+                                                            {
+                                                                <div>@dt.First().Name</div>
+                                                            }
+                                                        </Template>
+                                                        <EditTemplate>
+                                                            <SfDropDownList Placeholder="Target" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(helpers.AttributeTables())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_Attribute).TableIndex)">
+                                                                <DropDownListEvents TValue="int" TItem="Items" />
+                                                                <DropDownListFieldSettings Text="Name" Value="Id" />
+                                                            </SfDropDownList>
+                                                        </EditTemplate>
+                                                    </GridColumn>
+                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Attribute.Type) HeaderText="Type" EditType="EditType.DropDownEdit">
+                                                        <Template>
+                                                            @{
+                                                                var dt = (types.Where(a => a.Id == (context as API_T_Attribute).Type));
+                                                            }
+                                                            @if (dt.Count() != 0)
+                                                            {
+                                                                <div>@dt.First().Name</div>
+                                                            }
+                                                        </Template>
+                                                        <EditTemplate>
+                                                        <SfDropDownList Placeholder="Type" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(types)" TValue="int" TItem="Items" @bind-Value="@((context as API_T_Attribute).Type)">
+                                                                <DropDownListEvents TValue="int" TItem="Items" />
+                                                                <DropDownListFieldSettings Text="Name" Value="Id" />
+                                                            </SfDropDownList>
+                                                        </EditTemplate>
+
+                                                    </GridColumn>
+                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Attribute.Model) HeaderText="Model" EditType="EditType.DropDownEdit">
+                                                        <Template>
+                                                           @{
+                                                                var dt = (helpers.AttributeModels().Where(a => a.Id == (context as API_T_Attribute).Model));
+                                                            }
+                                                            @if(dt.Count() != 0) 
+                                                            {
+                                                                <div>@dt.First().Name</div>
+                                                            }
+                                                        </Template>
+                                                        
+                                                        <EditTemplate>
+
+                                                            <SfDropDownList Enabled=@((context as API_T_Attribute).Type == 6) DataSource="@(helpers.AttributeModels())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_Attribute).Model)" Placeholder="Model" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always">
+                                                                <DropDownListEvents TValue="int" TItem="Items" />
+                                                                <DropDownListFieldSettings Text="Name" Value="Id" />
+                                                            </SfDropDownList>                                 
+                                                            
+                                                        </EditTemplate>
+
+                                                    </GridColumn>
+                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_Attribute.Imprimable) HeaderText="Imprimable" EditType="EditType.BooleanEdit" />
+                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_Attribute.Visible) HeaderText="Visible" EditType="EditType.BooleanEdit" />
+                                                </GridColumns>
+                                            </SfGrid>
+
+
+
+
+
+@code 
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    DB db = new DB();
+    List<API_T_Attribute> items = new List<API_T_Attribute>();
+    List<Items> types = new List<Items>();
+    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
+    Helpers helpers = new Helpers();
+
+    protected override async Task OnInitializedAsync() 
+    {
+        types.Add(new Items { Id = 1, Name = "Text" });
+        types.Add(new Items { Id = 2, Name = "Date" });
+        types.Add(new Items { Id = 3, Name = "Decimal" });
+        types.Add(new Items { Id = 4, Name = "Int" });
+        types.Add(new Items { Id = 5, Name = "Table" });
+        types.Add(new Items { Id = 6, Name = "Model" });
+
+        db = session.db;
+
+        items = db.API_T_Attribute.AsNoTracking().ToList();
+    }
+    public void UpdateAttributes(ActionEventArgs<API_T_Attribute> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+
+            if (args.Action == "Add")
+            {
+                API_T_Attribute item = args.Data;
+                db.Add(item);
+                db.SaveChanges();
+            }
+            if (args.Action != "Add")
+            {
+                var local = db.Set<API_T_Attribute>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                if (local != null)
+                {
+                    db.Entry(local).State = EntityState.Detached;
+                }
+                db.Entry(args.Data).State = EntityState.Modified;
+                db.SaveChanges();
+
+
+            }
+
+        }
+
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            db.Remove(args.Data);
+            db.SaveChanges();
+        }
+    }
+}

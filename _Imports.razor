@@ -1,0 +1,67 @@
+@using System.Net.Http
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.JSInterop
+@using System.Text.RegularExpressions;
+@using Radzen
+@using Radzen.Blazor
+@using BusinessWeb
+@using BusinessWeb.Shared
+@using AntDesign
+@using System.Text.Json
+@using BusinessWeb.Data
+@using BusinessWeb.Pages.Components
+@using BusinessWeb.Pages.Components.Details
+@using BusinessWeb.Pages.Uiverse_IO
+@using BusinessWeb.Models.Perso
+@using BusinessWeb.Models
+@using BusinessWeb.Models.Perso
+@using BusinessWeb.Models.DB
+@using BusinessWeb.Models.BusinessWebDB
+@using BusinessWeb.Validations
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Spinner
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.ProgressBar
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Lists
+@using Syncfusion.Blazor.PivotView
+@using Microsoft.EntityFrameworkCore
+@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.Data
+@using BusinessWeb.Pages.Structure.Articles
+@using Syncfusion.Blazor.SplitButtons
+@using Syncfusion.Blazor.RichTextEditor
+@using Syncfusion.Blazor.FileManager
+@using Syncfusion.Blazor.Layouts
+@using Syncfusion.Blazor.Charts
+@using Syncfusion.XlsIO;
+@using System.IO;
+@using System.Data
+@using System.Dynamic
+@using Syncfusion.Blazor.Notifications
+@using Syncfusion.Blazor.Popups
+@using LogicNP.CryptoLicensing;
+
+@inject Radzen.DialogService DialogService
+@inject ContextMenuService ContextMenuService
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@inject TooltipService TooltipService
+@inject Radzen.NotificationService NotificationService
+@inject BusinessWebDBService EtendueService
+@inject IMessageService Message
+@inject IHostEnvironment host
+@inject Helpers fn
+@inject SecurityService sc
+@inject BusinessWebService sg
+@inject AntDesign.NotificationService _notice
+@inject SfDialogService SyncDialog
+@inject BusinessWebDBContext sdb

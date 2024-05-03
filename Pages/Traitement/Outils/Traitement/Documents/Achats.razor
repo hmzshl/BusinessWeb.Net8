@@ -1,0 +1,15 @@
+﻿@page "/ot-achats"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction")]
+
+
+
+<Documents domaine="1" title="DOCUMENTS ACHATS" />
+
+@code {
+    bool IsLoaded = false;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        IsLoaded = true;
+    }
+}

@@ -1,0 +1,35 @@
+﻿
+<SfTextBox @bind-Value="@value" Placeholder="Information" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" />
+<Divider></Divider>
+<div style="display: flex; align-items: center;">
+    <SfButton style="margin-left: auto;" IconCss="e-icons e-save" IsPrimary="true" OnClick="Submit">Enregistrer</SfButton>
+</div>
+
+
+@code 
+{
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    [Parameter] public int Tab { get; set; } = 0;
+    string value;
+    DB db = new DB();
+    protected override void OnInitialized()
+    {
+        db = session.db;
+    }
+    private void Submit()
+    {
+        if((value??"") != "")
+        {
+            var row = new API_T_Information();
+            row.Tab = Tab;
+            row.Valeur = value;
+            db.Add(row);
+            db.SaveChanges();
+            DialogService.Close();
+        } 
+        else
+        {
+            Message.Error("Merci de remplir l'information..");
+        }
+    }
+}

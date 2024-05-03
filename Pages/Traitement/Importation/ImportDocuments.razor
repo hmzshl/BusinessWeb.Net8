@@ -1,0 +1,411 @@
+﻿@using Syncfusion.Blazor.ProgressBar
+@if(loading) 
+{
+	<SfSpinner @bind-Visible="@loading" Label="@("Importation en cours..."+progress+"")">
+	</SfSpinner>
+}
+else 
+{
+	<Form Model="@row" Layout="@FormLayout.Horizontal" LabelColSpan="10" Context="context">
+		<FormItem LabelAlign="AntLabelAlignType.Left" Label="Domaine">
+			<SfDropDownList TValue="short?" TItem="DomaineIntitule" DataSource="@domaines" @bind-Value="@row.do_domaine">
+				<DropDownListEvents TValue="short?" TItem="DomaineIntitule" />
+				<DropDownListFieldSettings Text="Intitule" Value="DO_Domaine" />
+			</SfDropDownList>
+		</FormItem>
+		<FormItem LabelAlign="AntLabelAlignType.Left" Label="Type document">
+			<SfDropDownList TValue="short?" TItem="TypeIntitule" DataSource="@types.Where(a => a.DO_Domaine == row.do_domaine)" @bind-Value="@row.do_type">
+                  <DropDownListEvents TValue="short?" TItem="TypeIntitule" />
+				<DropDownListFieldSettings Text="Intitule" Value="DO_Type" />
+			</SfDropDownList>
+		</FormItem>
+		<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Début">
+			<SfDatePicker TValue="DateTime?" @bind-Value="@row.do_date1" />
+		</FormItem>
+		<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Fin">
+			<SfDatePicker TValue="DateTime?" @bind-Value="@row.do_date2" />
+		</FormItem>
+	</Form>
+	
+	<SfToolbar>
+		<ToolbarItems>
+			<ToolbarItem Align="ItemAlign.Right">
+				<Template>
+					<SfButton IconCss="e-icons e-save" OnClick="Submit">Importer</SfButton>
+				</Template>
+			</ToolbarItem>
+		</ToolbarItems>
+	</SfToolbar>
+}
+
+
+@code 
+{
+	[Parameter] public data row { get; set; }
+	[Parameter] public DB db1 { get; set; }
+	[Parameter] public DB db2 { get; set; }
+	bool loading = false;
+	string progress = "";
+	Helpers helpers = new Helpers();
+	List<DomaineIntitule> domaines = new List<DomaineIntitule>();
+	List<TypeIntitule> types = new List<TypeIntitule>();
+	protected override async Task OnInitializedAsync() 
+	{
+		domaines.Add(new DomaineIntitule { DO_Domaine = 0, Intitule = "Ventes" });
+		domaines.Add(new DomaineIntitule { DO_Domaine = 1, Intitule = "Achats" });
+		domaines.Add(new DomaineIntitule { DO_Domaine = 2, Intitule = "Mouvements Stock" });
+		domaines.Add(new DomaineIntitule { DO_Domaine = 4, Intitule = "Documents Internes" });
+
+		types.Add(new TypeIntitule {DO_Domaine = 0, DO_Type = 0 });
+		types.Add(new TypeIntitule {DO_Domaine = 0, DO_Type = 1 });
+		types.Add(new TypeIntitule {DO_Domaine = 0, DO_Type = 2 });
+		types.Add(new TypeIntitule {DO_Domaine = 0, DO_Type = 3 });
+		types.Add(new TypeIntitule {DO_Domaine = 0, DO_Type = 4 });
+		types.Add(new TypeIntitule {DO_Domaine = 0, DO_Type = 5 });
+		types.Add(new TypeIntitule {DO_Domaine = 0, DO_Type = 6 });
+		types.Add(new TypeIntitule {DO_Domaine = 0, DO_Type = 7 });
+
+		types.Add(new TypeIntitule {DO_Domaine = 1, DO_Type = 10 });
+		types.Add(new TypeIntitule {DO_Domaine = 1, DO_Type = 11 });
+		types.Add(new TypeIntitule {DO_Domaine = 1, DO_Type = 12 });
+		types.Add(new TypeIntitule {DO_Domaine = 1, DO_Type = 13 });
+		types.Add(new TypeIntitule {DO_Domaine = 1, DO_Type = 14 });
+		types.Add(new TypeIntitule {DO_Domaine = 1, DO_Type = 15 });
+		types.Add(new TypeIntitule {DO_Domaine = 1, DO_Type = 16 });
+		types.Add(new TypeIntitule {DO_Domaine = 1, DO_Type = 17 });
+
+		types.Add(new TypeIntitule {DO_Domaine = 2, DO_Type = 20 });
+		types.Add(new TypeIntitule {DO_Domaine = 2, DO_Type = 21 });
+		types.Add(new TypeIntitule {DO_Domaine = 2, DO_Type = 22 });
+	}
+	private class TypeIntitule 
+	{
+		public short? DO_Type { get; set; }
+		public short? DO_Domaine { get; set; }
+		public string Intitule
+		{
+			get
+			{
+				return GetTypeIntitule(this.DO_Type??0);
+			}
+			set
+			{
+
+			}
+		}
+	}
+	private class DomaineIntitule
+	{
+		public short? DO_Domaine { get; set; }
+		public string Intitule { get; set; }
+	}
+	public static string GetTypeIntitule(short? index)
+	{
+		string rs = "Autre document";
+		if (index == 0) { rs = "Devis"; }
+		if (index == 1) { rs = "Bons de commande vente"; }
+		if (index == 2) { rs = "Préparations de vente"; }
+		if (index == 3) { rs = "Bons de livraison vente"; }
+		if (index == 4) { rs = "Bons de retour vente"; }
+		if (index == 5) { rs = "Bons de retour vente"; }
+		if (index == 6) { rs = "Factures vente"; }
+		if (index == 7) { rs = "Factures comptabilisées vente"; }
+		if (index == 10) { rs = "Demandes d'achat"; }
+		if (index == 11) { rs = "Préparations de commande achat"; }
+		if (index == 12) { rs = "Bons de commande achat"; }
+		if (index == 13) { rs = "Bons de livraison achat"; }
+		if (index == 14) { rs = "Bons de retour achat"; }
+		if (index == 15) { rs = "Bons de retour achat"; }
+		if (index == 16) { rs = "Factures achat"; }
+		if (index == 17) { rs = "Factures comptabilisées achat"; }
+		if (index == 20) { rs = "Mouvements d'entrée"; }
+		if (index == 21) { rs = "Mouvements de sortie"; }
+		if (index == 23) { rs = "Mouvments de transfert"; }
+
+		return rs;
+	}
+	private async Task Submit() 
+	{
+		try 
+		{
+			loading = true;
+			await Task.Delay(1);
+			row.do_date1 = (row.do_date1) ?? (DateTime.Today);
+			row.do_date2 = (row.do_date2) ?? (DateTime.Today);
+			List<F_COMPTEG> comptes = new List<F_COMPTEG>();
+			List<F_COMPTET> tiers = new List<F_COMPTET>();
+			List<F_TAXE> taxes = new List<F_TAXE>();
+			List<F_DEPOT> depots = new List<F_DEPOT>();
+			List<F_COMPTEA> affaires = new List<F_COMPTEA>();
+			List<F_LIVRAISON> livraisons = new List<F_LIVRAISON>();
+			List<F_COLLABORATEUR> collaborateurs = new List<F_COLLABORATEUR>();
+			List<F_DOCREGL> docregls = new List<F_DOCREGL>();
+			List<F_DOCENTETE> entetes = new List<F_DOCENTETE>();
+			List<F_FAMILLE> familles = new List<F_FAMILLE>();
+			List<F_ARTICLE> articles = new List<F_ARTICLE>();
+			List<F_DOCLIGNE> lignes = new List<F_DOCLIGNE>();
+
+			entetes = db1.F_DOCENTETE.FromSqlRaw<F_DOCENTETE>("SELECT * FROM F_DOCENTETE WHERE DO_Date BETWEEN {0} AND {1} AND DO_Domaine = {2} AND DO_Type = {3}",
+		row.do_date1, row.do_date2, row.do_domaine, row.do_type).ToList();
+
+			comptes = db1.F_COMPTEG.ToList();
+
+			affaires = db1.F_COMPTEA.FromSqlRaw<F_COMPTEA>("SELECT * FROM F_COMPTEA WHERE CA_Num IN (SELECT CA_Num FROM (SELECT a.DO_Type,a.DO_Domaine,a.DO_Date,a.CA_Num FROM F_DOCLIGNE a UNION SELECT a.DO_Type,a.DO_Domaine,a.DO_Date,a.CA_Num FROM F_DOCENTETE a ) a WHERE DO_Date BETWEEN {0} AND {1} AND DO_Domaine = {2} AND DO_Type = {3})",
+		row.do_date1, row.do_date2, row.do_domaine, row.do_type).ToList();
+
+			depots = db1.F_DEPOT.FromSqlRaw<F_DEPOT>("SELECT * FROM F_DEPOT WHERE DE_No IN (SELECT DE_No FROM (SELECT a.DO_Type,a.DO_Domaine,a.DO_Date,a.DE_No FROM F_DOCLIGNE a UNION SELECT a.DO_Type,a.DO_Domaine,a.DO_Date,a.DE_No FROM F_DOCENTETE a ) a WHERE DO_Date BETWEEN {0} AND {1} AND DO_Domaine = {2} AND DO_Type = {3})",
+		row.do_date1, row.do_date2, row.do_domaine, row.do_type).ToList();
+
+			livraisons = db1.F_LIVRAISON.FromSqlRaw<F_LIVRAISON>("SELECT * FROM F_LIVRAISON WHERE LI_No IN (SELECT LI_No FROM F_DOCENTETE WHERE DO_Date BETWEEN {0} AND {1} AND DO_Domaine = {2} AND DO_Type = {3})",
+		row.do_date1, row.do_date2, row.do_domaine, row.do_type).ToList();
+
+			tiers = db1.F_COMPTET.FromSqlRaw<F_COMPTET>("SELECT * FROM F_COMPTET WHERE CT_Num IN (SELECT DO_Tiers FROM F_DOCENTETE WHERE DO_Date BETWEEN {0} AND {1} AND DO_Domaine = {2} AND DO_Type = {3})",
+			row.do_date1, row.do_date2, row.do_domaine, row.do_type).ToList();
+
+			collaborateurs = db1.F_COLLABORATEUR.FromSqlRaw<F_COLLABORATEUR>("SELECT * FROM F_COLLABORATEUR WHERE CO_No IN (SELECT CO_No FROM (SELECT a.DO_Type,a.DO_Domaine,a.DO_Date,a.CO_No FROM F_DOCLIGNE a UNION SELECT a.DO_Type,a.DO_Domaine,a.DO_Date,a.CO_No FROM F_DOCENTETE a ) a WHERE DO_Date BETWEEN {0} AND {1} AND DO_Domaine = {2} AND DO_Type = {3})",
+			row.do_date1, row.do_date2, row.do_domaine, row.do_type).ToList();
+
+			taxes = db1.F_TAXE.FromSqlRaw<F_TAXE>("SELECT * FROM F_TAXE WHERE TA_Code IN (SELECT TA_Code FROM F_DOCLIGNE WHERE DO_Date BETWEEN {0} AND {1} AND DO_Domaine = {2} AND DO_Type = {3})",
+		row.do_date1, row.do_date2, row.do_domaine, row.do_type).ToList();
+
+			lignes = db1.F_DOCLIGNE.FromSqlRaw<F_DOCLIGNE>("SELECT a.* FROM F_DOCLIGNE a INNER JOIN F_DOCENTETE b ON a.DO_Piece = b.DO_Piece AND a.DO_Type = b.DO_Type WHERE a.DO_Date BETWEEN {0} AND {1} AND a.DO_Domaine = {2} AND a.DO_Type = {3}",
+		row.do_date1, row.do_date2, row.do_domaine, row.do_type).ToList();
+
+			docregls = db1.F_DOCREGL.FromSqlRaw<F_DOCREGL>("SELECT a.* FROM F_DOCREGL a INNER JOIN F_DOCENTETE b ON a.DO_Piece = b.DO_Piece AND a.DO_Type = b.DO_Type WHERE b.DO_Date BETWEEN {0} AND {1} AND b.DO_Domaine = {2} AND b.DO_Type = {3}",
+		row.do_date1, row.do_date2, row.do_domaine, row.do_type).ToList();
+
+			articles = db1.F_ARTICLE.FromSqlRaw<F_ARTICLE>("SELECT * FROM F_ARTICLE WHERE AR_Ref IN (SELECT AR_Ref FROM F_DOCLIGNE WHERE DO_Date BETWEEN {0} AND {1} AND DO_Domaine = {2} AND DO_Type = {3})",
+		row.do_date1, row.do_date2, row.do_domaine, row.do_type).ToList();
+
+			familles = db1.F_FAMILLE.FromSqlRaw<F_FAMILLE>("SELECT * FROM F_FAMILLE WHERE FA_CodeFamille IN (SELECT b.FA_CodeFamille FROM F_DOCLIGNE a INNER JOIN F_ARTICLE b ON a.AR_Ref = b.AR_Ref WHERE a.DO_Date BETWEEN {0} AND {1} AND a.DO_Domaine = {2} AND a.DO_Type = {3})",
+		row.do_date1, row.do_date2, row.do_domaine, row.do_type).ToList();
+
+
+
+
+			helpers.DisableTriggers(db2, "F_COMPTEG", "INS");
+			helpers.DisableTriggers(db2, "F_COMPTEA", "INS");
+			helpers.DisableTriggers(db2, "F_COMPTET", "INS");
+			helpers.DisableTriggers(db2, "F_TAXE", "INS");
+			helpers.DisableTriggers(db2, "F_DEPOT", "INS");
+			helpers.DisableTriggers(db2, "F_LIVRAISON", "INS");
+			helpers.DisableTriggers(db2, "F_FAMILLE", "INS");
+			helpers.DisableTriggers(db2, "F_ARTICLE", "INS");
+			helpers.DisableTriggers(db2, "F_DOCLIGNE", "INS");
+			helpers.DisableTriggers(db2, "F_DOCREGL", "INS");
+			helpers.DisableTriggers(db2, "F_DOCENTETE", "INS");
+			helpers.DisableTriggers(db2, "F_ARTSTOCK", "INS");
+
+
+			foreach (F_COMPTEG ln in comptes)
+			{
+				if ((db2.F_COMPTEG.Where(a => a.CG_Num == ln.CG_Num).Count() == 0))
+				{
+
+					progress = ln.CG_Num;
+					await Task.Delay(1);
+					var item = new F_COMPTEG();
+					helpers.CopyData(ln, item);
+					item.TA_Code = null;
+					db2.F_COMPTEG.Add(item);
+					db2.SaveChanges();
+					await Task.Delay(1);
+				}
+
+			}
+			foreach (F_COMPTET ln in tiers)
+			{
+				if (!(db2.F_COMPTET.Where(a => a.CT_Num == ln.CT_Num).Count() != 0))
+				{
+					progress = ln.CT_Num;
+					await Task.Delay(1);
+					var item = new F_COMPTET();
+					helpers.CopyData(ln, item);
+					db2.F_COMPTET.Add(item);
+					db2.SaveChanges();
+					await Task.Delay(1);
+				}
+
+
+			}
+			foreach (F_TAXE ln in taxes)
+			{
+				if (!(db2.F_TAXE.Where(a => a.TA_Code == ln.TA_Code).Count() != 0))
+				{
+					int TA_No = db2.F_TAXE.Max(a => a.TA_No) + 1;
+					progress = ln.TA_Code;
+					await Task.Delay(1);
+					var item = new F_TAXE();
+					helpers.CopyData(ln, item);
+					item.TA_No = TA_No;
+					db2.F_TAXE.Add(item);
+					db2.SaveChanges();
+					await Task.Delay(1);
+				}
+
+			}
+			foreach (F_DEPOT ln in depots)
+			{
+				if (!(db2.F_DEPOT.Where(a => a.DE_No == ln.DE_No).Count() != 0))
+				{
+					progress = ln.DE_Intitule;
+					await Task.Delay(1);
+					var item = new F_DEPOT();
+					helpers.CopyData(ln, item);
+					db2.F_DEPOT.Add(item);
+					db2.SaveChanges();
+					await Task.Delay(1);
+				}
+
+
+			}
+			foreach (F_COMPTEA ln in affaires)
+			{
+				if (!(db2.F_COMPTEA.Where(a => a.CA_Num == ln.CA_Num).Count() != 0))
+				{
+					progress = ln.CA_Num;
+					await Task.Delay(1);
+					var item = new F_COMPTEA();
+					helpers.CopyData(ln, item);
+					db2.F_COMPTEA.Add(item);
+					db2.SaveChanges();
+					await Task.Delay(1);
+				}
+
+			}
+			foreach (F_LIVRAISON ln in livraisons)
+			{
+				if (!(db2.F_LIVRAISON.Where(a => a.LI_No == ln.LI_No).Count() != 0))
+				{
+					progress = ln.LI_Adresse;
+					await Task.Delay(1);
+					var item = new F_LIVRAISON();
+					helpers.CopyData(ln, item);
+					db2.F_LIVRAISON.Add(item);
+					db2.SaveChanges();
+					await Task.Delay(1);
+				}
+			}
+			foreach (F_COLLABORATEUR ln in collaborateurs)
+			{
+				if (!(db2.F_COLLABORATEUR.Where(a => a.CO_No == ln.CO_No || a.CO_Nom == ln.CO_Nom).Count() != 0))
+				{
+					progress = ln.CO_Nom;
+					await Task.Delay(1);
+					var item = new F_COLLABORATEUR();
+					helpers.CopyData(ln, item);
+					db2.F_COLLABORATEUR.Add(item);
+					db2.SaveChanges();
+					await Task.Delay(1);
+				}
+			}
+			foreach (F_DOCENTETE ln in entetes)
+			{
+				if (!(db2.F_DOCENTETE.Where(a => a.DO_Piece == ln.DO_Piece && a.DO_Type == ln.DO_Type).Count() != 0))
+				{
+
+
+					progress = ln.DO_Piece;
+					await Task.Delay(1);
+					var item = new F_DOCENTETE();
+					helpers.CopyData(ln, item);
+					item.DO_CodeTaxe1 = null;
+					item.DO_CodeTaxe2 = null;
+					item.DO_CodeTaxe3 = null;
+					db2.F_DOCENTETE.Add(item);
+					db2.SaveChanges();
+					await Task.Delay(1);
+
+				}
+
+			}
+			foreach (F_FAMILLE ln in familles)
+			{
+				if (!(db2.F_FAMILLE.Where(a => a.FA_CodeFamille == ln.FA_CodeFamille).Count() != 0))
+				{
+					progress = ln.FA_CodeFamille;
+					await Task.Delay(1);
+					var item = new F_FAMILLE();
+					helpers.CopyData(ln, item);
+					db2.F_FAMILLE.Add(item);
+					db2.SaveChanges();
+					await Task.Delay(1);
+				}
+			}
+			foreach (F_ARTICLE ln in articles)
+			{
+				if (!(db2.F_ARTICLE.Where(a => a.AR_Ref == ln.AR_Ref).Count() != 0))
+				{
+					progress = ln.AR_Ref;
+					await Task.Delay(1);
+					var item = new F_ARTICLE();
+					helpers.CopyData(ln, item);
+					db2.F_ARTICLE.Add(item);
+					db2.SaveChanges();
+					await Task.Delay(1);
+				}
+			}
+			foreach (F_DOCLIGNE ln in lignes)
+			{
+				progress = ln.DO_Piece;
+				await Task.Delay(1);
+				var item = new F_DOCLIGNE();
+				helpers.CopyData(ln, item);
+				item.DL_No = db2.F_DOCLIGNE.Max(a => a.DL_No) + 1;
+				db2.F_DOCLIGNE.Add(item);
+				db2.SaveChanges();
+				await Task.Delay(1);
+			}
+			string q1 = @"UPDATE a SET a.AS_QteSto = ISNULL(b.Qte,0), a.AS_MontSto = ISNULL(c.PU,0) * ISNULL(b.Qte,0)
+
+						FROM F_ARTSTOCK a
+						LEFT JOIN
+						(SELECT
+						a.DE_No,
+						a.AR_Ref,
+						SUM(CASE WHEN a.DL_MvtStock = 1 THEN a.DL_Qte ELSE -a.DL_Qte END) Qte
+						FROM F_DOCLIGNE a
+						WHERE a.DL_MvtStock IN (1,3)
+						GROUP BY
+						a.DE_No,
+						a.AR_Ref) b ON a.DE_No = b.DE_No AND a.AR_Ref = b.AR_Ref
+
+						LEFT JOIN
+						(
+						(SELECT
+						a.DE_No,
+						a.AR_Ref,
+						CASE WHEN SUM(a.DL_Qte) != 0 THEN SUM(a.DL_MontantHT)/SUM(a.DL_Qte) ELSE 0 END PU
+						FROM F_DOCLIGNE a
+						WHERE a.DL_MvtStock = 1
+						GROUP BY a.AR_Ref,
+						a.DE_No)
+						) c ON a.DE_No = c.DE_No AND a.AR_Ref = c.AR_Ref";
+			db2.Database.ExecuteSqlRaw(q1);
+
+			helpers.EnableTriggers(db2, "F_COMPTEG", "INS");
+			helpers.EnableTriggers(db2, "F_COMPTEA", "INS");
+			helpers.EnableTriggers(db2, "F_COMPTET", "INS");
+			helpers.EnableTriggers(db2, "F_TAXE", "INS");
+			helpers.EnableTriggers(db2, "F_DEPOT", "INS");
+			helpers.EnableTriggers(db2, "F_LIVRAISON", "INS");
+			helpers.EnableTriggers(db2, "F_DOCENTETE", "INS");
+			helpers.EnableTriggers(db2, "F_FAMILLE", "INS");
+			helpers.EnableTriggers(db2, "F_ARTICLE", "INS");
+			helpers.EnableTriggers(db2, "F_DOCLIGNE", "INS");
+			helpers.EnableTriggers(db2, "F_DOCREGL", "INS");
+			helpers.EnableTriggers(db2, "F_ARTSTOCK", "INS");
+
+
+			DialogService.Close();
+
+			loading = false;
+			await Task.Delay(1);
+		}
+		catch(Exception ex) 
+		{
+			Message.Error(ex.ToString());
+		}
+	}
+	
+}
