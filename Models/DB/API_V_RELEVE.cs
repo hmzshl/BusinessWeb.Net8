@@ -48,5 +48,6 @@ namespace BusinessWeb.Models.DB
         public decimal? BL { get; set; }
         public decimal? RG_Montant { get; set; }
         public decimal? CT_Encours { get; set; }
+        public DateTime? DateEcheance { get; set; }
     }
 }

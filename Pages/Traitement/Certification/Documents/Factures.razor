@@ -180,7 +180,7 @@ else
     {
         loading = true;
         await Task.Delay(1);
-        items = session.db.API_V_DOCENTETE.Where(a => (a.DO_Type == 6 || a.DO_Type == 7) && a.DO_Date >= (date1 ?? new DateTime(1900, 1, 1)) && a.DO_Date <= (date2 ?? new DateTime(2900, 12, 31))).OrderBy(a => a.DO_Date).ToList();
+        items = session.db.API_V_DOCENTETE.Where(a => (a.DO_Type == 6 || a.DO_Type == 7) && a.DO_Date >= (date1 ?? new DateTime(1900, 1, 1)) && a.DO_Date <= (date2 ?? new DateTime(2070, 12, 31))).OrderBy(a => a.DO_Date).ToList();
         loading = false;
         await Task.Delay(1);
     }

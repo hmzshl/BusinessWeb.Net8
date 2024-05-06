@@ -91,7 +91,7 @@
     }
     protected async Task UpdateGrid()
     {
-        items = db.API_V_CREGLEMENT.AsNoTracking().Where(a => a.RG_Type == type && a.RG_Date >= (date1 ?? new DateTime(1900, 1, 1)) && a.RG_Date <= (date2 ?? new DateTime(2900, 12, 31)) && ((a.CG_Num ?? "").StartsWith("5161"))).OrderByDescending(a => a.RG_Date).ToList();
+        items = db.API_V_CREGLEMENT.AsNoTracking().Where(a => a.RG_Type == type && a.RG_Date >= (date1 ?? new DateTime(1900, 1, 1)) && a.RG_Date <= (date2 ?? new DateTime(2070, 12, 31)) && ((a.CG_Num ?? "").StartsWith("5161"))).OrderByDescending(a => a.RG_Date).ToList();
     }
     private async Task Cancel()
     {

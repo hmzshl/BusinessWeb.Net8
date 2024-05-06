@@ -3,6 +3,7 @@ using BusinessWeb;
 using BusinessWeb.Data;
 using BusinessWeb.Middleware;
 using BusinessWeb.Models;
+using BusinessWeb.Pages;
 using JBSystem;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -37,11 +38,11 @@ builder.Services.AddScoped<BusinessWeb.BusinessWebDBService>();
 builder.Services.AddScoped<BusinessWeb.Helpers>();
 builder.Services.AddDbContext<BusinessWeb.Data.BusinessWebDBContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"), o => o.UseCompatibilityLevel(100));
 }, ServiceLifetime.Transient);
 builder.Services.AddDbContext<BusinessWeb.Data.DB>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("APIDB"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("APIDB"), o => o.UseCompatibilityLevel(100));
 }, ServiceLifetime.Transient);
 builder.Services.AddHttpClient("BusinessWeb").AddHeaderPropagation(o => o.Headers.Add("Cookie"));
 builder.Services.AddHeaderPropagation(o => o.Headers.Add("Cookie"));
@@ -52,7 +53,7 @@ builder.Services.AddScoped<BusinessWeb.SecurityService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<ApplicationIdentityDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"), o => o.UseCompatibilityLevel(100));
 }, ServiceLifetime.Transient);
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ApplicationIdentityDbContext>().AddDefaultTokenProviders();
 builder.Services.AddControllers().AddOData(o =>
@@ -94,9 +95,11 @@ builder.Services.AddResponseCompression(options =>
     options.EnableForHttps = true; // Optional: Enable compression for HTTPS
 });
 builder.Services.AddMvc(e => e.EnableEndpointRouting = false);
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
 var app = builder.Build();
 app.UseResponseCompression();
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzE1MDU5NkAzMjM0MmUzMDJlMzBtOFFFakhYb2F6QVU1dTdvTmFaQk8vNzVXckNSb2dDcmJPcWpRekE4MFhnPQ==");
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzI1ODQ2NEAzMjM1MmUzMDJlMzBaQjFRaEVKdVgxRGsrQUJtQ05ucnZwbjZvaTVtS3lEV29qVU5GVXJmMXNNPQ==");
 Bold.Licensing.BoldLicenseProvider.RegisterLicense("zidV+mAe83DkDarVg0J39aLvzg6umhkhjiPNndeU1j4=");
 app.UseRequestLocalization("fr");
 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("fr");
@@ -115,16 +118,17 @@ app.UseHttpsRedirection();
 app.UseHeaderPropagation();
 app.UseAuthentication();
 app.UseRouting();
-app.UseCors();
 app.UseAuthorization();
-app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>().Database.Migrate();
-
-app.UseMiddleware<ApiKeyMiddleware>();
+app.UseAntiforgery();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
-    endpoints.MapFallbackToPage("/_Host");
-    endpoints.MapBlazorHub();
 });
+app.UseCors();
+
+app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>().Database.Migrate();
+app.UseMiddleware<ApiKeyMiddleware>();
 app.MapControllers();
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
 app.Run();

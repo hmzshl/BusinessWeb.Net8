@@ -111,5 +111,8 @@ namespace BusinessWeb.Models.DB
         public string Objet { get; set; }
         public string NumeroMarche { get; set; }
         public int? CO_No2 { get; set; }
+        public short? RT_NbJour { get; set; }
+        public DateTime? DateEcheance { get; set; }
+        public string Echeance { get; set; }
     }
 }

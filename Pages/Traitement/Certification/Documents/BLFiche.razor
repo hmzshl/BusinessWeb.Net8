@@ -136,7 +136,7 @@
 															}
 														</Template>
 														<EditTemplate>
-															<SfDropDownList AllowFiltering TValue="string" TItem="F_ARTICLE" DataSource="@db.F_ARTICLE" @bind-Value="@((context as API_T_CertifLigne).AR_Ref)">
+															<SfDropDownList Query="@fn.LocalDataQuery" AllowFiltering TValue="string" TItem="F_ARTICLE" DataSource="@db.F_ARTICLE" @bind-Value="@((context as API_T_CertifLigne).AR_Ref)">
 																	<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
 																	<DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
 																</SfDropDownList>

@@ -433,7 +433,7 @@ namespace BusinessWeb
         public DB getDb(TSociete ste)
         {
             var optionBuilder = new DbContextOptionsBuilder<DB>();
-            optionBuilder.UseSqlServer(getConnectionString(ste));
+            optionBuilder.UseSqlServer(getConnectionString(ste), o => o.UseCompatibilityLevel(100));
             DB db = new DB(optionBuilder.Options);
             db.Database.Migrate();
             if (db.F_DOCLIGNE.Where(a => a.DO_Type == 40).Count() == 0)

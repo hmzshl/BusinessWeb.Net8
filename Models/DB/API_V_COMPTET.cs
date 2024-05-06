@@ -113,5 +113,8 @@ namespace BusinessWeb.Models.DB
         public string Controle { get; set; }
         public string SommeilIntitule { get; set; }
         public string EtatSolde { get; set; }
+        public short? RT_NbJour { get; set; }
+        public string R_Intitule { get; set; }
+        public string D_Intitule { get; set; }
     }
 }

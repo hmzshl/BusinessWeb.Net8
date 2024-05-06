@@ -5574,12 +5574,20 @@ namespace BusinessWeb.Data
 
                 entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(38, 6)");
 
+                entity.Property(e => e.D_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.EtatSolde)
                     .IsRequired()
                     .HasMaxLength(9)
                     .IsUnicode(false);
 
                 entity.Property(e => e.RG_Montant).HasColumnType("numeric(38, 6)");
+
+                entity.Property(e => e.R_Intitule)
+                    .HasMaxLength(35)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.SoldeCommercial).HasColumnType("numeric(38, 6)");
 
@@ -5858,7 +5866,14 @@ namespace BusinessWeb.Data
 
                 entity.Property(e => e.DO_ValFranco).HasColumnType("numeric(24, 6)");
 
+                entity.Property(e => e.DateEcheance).HasColumnType("smalldatetime");
+
                 entity.Property(e => e.DomaineIntitule)
+                    .IsRequired()
+                    .HasMaxLength(8)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Echeance)
                     .IsRequired()
                     .HasMaxLength(8)
                     .IsUnicode(false);
@@ -7049,6 +7064,8 @@ namespace BusinessWeb.Data
                 entity.Property(e => e.DO_Ref)
                     .HasMaxLength(17)
                     .IsUnicode(false);
+
+                entity.Property(e => e.DateEcheance).HasColumnType("smalldatetime");
 
                 entity.Property(e => e.Debit).HasColumnType("numeric(38, 6)");
 

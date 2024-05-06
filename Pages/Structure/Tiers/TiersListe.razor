@@ -211,6 +211,8 @@
                             </Template>
                         </GridColumn>
                         <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Encours" HeaderText="Plafond" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="R_Intitule" HeaderText="Mode.P"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="RT_NbJour" HeaderText="Echéance" Format="N0" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                         <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL" HeaderText="Der. Vte" Visible="@(DLDateBL)" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                         <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DelaiSommeil" HeaderText="Inactivité" Visible="@(DelaiSommeil)" Format="N0" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                         <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Taux" HeaderText="%" Visible="@(Taux)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
@@ -305,6 +307,7 @@
         await Task.Delay(1);
         items = db.API_V_COMPTET
     .Where(a => a.CT_Type == CT_Type && (selected_sommeils != null && selected_sommeils.Contains(a.SommeilIntitule)) && (selected_etats != null && selected_etats.Contains(a.EtatSolde)))
+    .OrderBy(a => a.CT_Intitule)
     .ToList();
         loading = false;
         await Task.Delay(1);
