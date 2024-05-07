@@ -54,13 +54,13 @@
 										<GridCol Xs="24" Md="14">
 											<Card>
 												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Client">
-													<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0).Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Intitule + " ("+a.CT_Num+")"}))" @bind-Value="@row.CT_Num">
+													<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" DataSource="@(clients)" @bind-Value="@row.CT_Num">
 														<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 														<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
 													</SfDropDownList>
 												</FormItem>
 												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Chargé d'affaire">
-													<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="int" TItem="F_COLLABORATEUR" DataSource="@(db.F_COLLABORATEUR.Select(a => new F_COLLABORATEUR{CO_No = a.CO_No, CO_Nom = a.CO_Prenom + " " + a.CO_Nom}))" @bind-Value="@row.CO_No">
+													<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="int" TItem="F_COLLABORATEUR" DataSource="@(collabs)" @bind-Value="@row.CO_No">
 														<DropDownListEvents TValue="int" TItem="F_COLLABORATEUR" />
 														<DropDownListFieldSettings Text="CO_Nom" Value="CO_No" />
 													</SfDropDownList>
@@ -195,7 +195,7 @@
 
 
 
-	@code {
+@code {
 	[CascadingParameter]
 	public SessionDT session { get; set; }
 	DB db = new DB();
@@ -220,11 +220,13 @@
 	DateTime date = DateTime.Today;
 	short? souche = 0;
 	bool FaDG = false;
-
+	List<F_COMPTET> clients = new List<F_COMPTET>();
+	List<F_COLLABORATEUR> collabs = new List<F_COLLABORATEUR>();
 	protected override async Task OnInitializedAsync()
 	{
 		db = session.db;
-
+		clients = db.F_COMPTET.Where(a => a.CT_Type == 0).Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule }).ToList();
+		collabs = db.F_COLLABORATEUR.Select(a => new F_COLLABORATEUR { CO_No = a.CO_No, CO_Nom = a.CO_Prenom + " " + a.CO_Nom }).ToList();
 		if (id == 0)
 		{
 			row = new API_T_CertifEntete();
