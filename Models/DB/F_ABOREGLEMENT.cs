@@ -3,29 +3,45 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_ABOREGLEMENT
-    {
-        public int AB_No { get; set; }
-        public short? N_Reglement { get; set; }
-        public short? RA_Condition { get; set; }
-        public short? RA_NbJour { get; set; }
-        public short? RA_JourTb01 { get; set; }
-        public short? RA_JourTb02 { get; set; }
-        public short? RA_JourTb03 { get; set; }
-        public short? RA_JourTb04 { get; set; }
-        public short? RA_JourTb05 { get; set; }
-        public short? RA_JourTb06 { get; set; }
-        public short? RA_TRepart { get; set; }
-        public decimal? RA_VRepart { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_ABOENTETE AB_NoNavigation { get; set; }
-    }
+public partial class F_ABOREGLEMENT
+{
+    public int AB_No { get; set; }
+
+    public short? N_Reglement { get; set; }
+
+    public short? RA_Condition { get; set; }
+
+    public short? RA_NbJour { get; set; }
+
+    public short? RA_JourTb01 { get; set; }
+
+    public short? RA_JourTb02 { get; set; }
+
+    public short? RA_JourTb03 { get; set; }
+
+    public short? RA_JourTb04 { get; set; }
+
+    public short? RA_JourTb05 { get; set; }
+
+    public short? RA_JourTb06 { get; set; }
+
+    public short? RA_TRepart { get; set; }
+
+    public decimal? RA_VRepart { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_ABOENTETE AB_NoNavigation { get; set; }
 }

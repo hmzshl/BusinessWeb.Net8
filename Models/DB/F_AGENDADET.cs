@@ -3,18 +3,25 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_AGENDADET
 {
-    public partial class F_AGENDADET
-    {
-        public short? AD_Champ { get; set; }
-        public string AD_Evenem { get; set; }
-        public byte[] cbAD_Evenem { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
-    }
+    public short? AD_Champ { get; set; }
+
+    public string AD_Evenem { get; set; }
+
+    public byte[] cbAD_Evenem { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 }

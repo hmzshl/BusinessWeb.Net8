@@ -3,21 +3,31 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_ECHANGECIAL
 {
-    public partial class P_ECHANGECIAL
-    {
-        public decimal? E_TauxRemise01 { get; set; }
-        public decimal? E_TauxRemise02 { get; set; }
-        public decimal? E_TauxRemise03 { get; set; }
-        public decimal? E_TauxRemise04 { get; set; }
-        public decimal? E_TauxRemise05 { get; set; }
-        public string AR_Ref01 { get; set; }
-        public string AR_Ref02 { get; set; }
-        public string AR_Ref03 { get; set; }
-        public string AR_Ref04 { get; set; }
-        public string AR_Ref05 { get; set; }
-        public short? E_SousTrait { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public decimal? E_TauxRemise01 { get; set; }
+
+    public decimal? E_TauxRemise02 { get; set; }
+
+    public decimal? E_TauxRemise03 { get; set; }
+
+    public decimal? E_TauxRemise04 { get; set; }
+
+    public decimal? E_TauxRemise05 { get; set; }
+
+    public string AR_Ref01 { get; set; }
+
+    public string AR_Ref02 { get; set; }
+
+    public string AR_Ref03 { get; set; }
+
+    public string AR_Ref04 { get; set; }
+
+    public string AR_Ref05 { get; set; }
+
+    public short? E_SousTrait { get; set; }
+
+    public int cbMarq { get; set; }
 }

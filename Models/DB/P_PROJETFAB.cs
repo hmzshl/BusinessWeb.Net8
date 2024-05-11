@@ -3,139 +3,267 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_PROJETFAB
 {
-    public partial class P_PROJETFAB
-    {
-        public string PF_Numero { get; set; }
-        public short? PF_Origine01 { get; set; }
-        public short? PF_Origine02 { get; set; }
-        public short? PF_Origine03 { get; set; }
-        public short? PF_Origine04 { get; set; }
-        public short? PF_Origine05 { get; set; }
-        public short? PF_Origine06 { get; set; }
-        public short? PF_Origine07 { get; set; }
-        public short? PF_Origine08 { get; set; }
-        public short? PF_Origine09 { get; set; }
-        public short? PF_Origine10 { get; set; }
-        public short? PF_Origine11 { get; set; }
-        public short? PF_Origine12 { get; set; }
-        public short? PF_Origine13 { get; set; }
-        public short? PF_Origine14 { get; set; }
-        public short? PF_Origine15 { get; set; }
-        public short? PF_Origine16 { get; set; }
-        public short? PF_Origine17 { get; set; }
-        public short? PF_Origine18 { get; set; }
-        public short? PF_Origine19 { get; set; }
-        public short? PF_Origine20 { get; set; }
-        public short? PF_Origine21 { get; set; }
-        public short? PF_Origine22 { get; set; }
-        public short? PF_Origine23 { get; set; }
-        public short? PF_Origine24 { get; set; }
-        public short? PF_Origine25 { get; set; }
-        public short? PF_Origine26 { get; set; }
-        public short? PF_Origine27 { get; set; }
-        public short? PF_Origine28 { get; set; }
-        public short? PF_Origine29 { get; set; }
-        public short? PF_Origine30 { get; set; }
-        public short? PF_Origine31 { get; set; }
-        public short? PF_Origine32 { get; set; }
-        public short? PF_Origine33 { get; set; }
-        public short? PF_Origine34 { get; set; }
-        public short? PF_Origine35 { get; set; }
-        public short? PF_Origine36 { get; set; }
-        public short? PF_Origine37 { get; set; }
-        public short? PF_Origine38 { get; set; }
-        public short? PF_Origine39 { get; set; }
-        public short? PF_Origine40 { get; set; }
-        public short? PF_Origine41 { get; set; }
-        public short? PF_Origine42 { get; set; }
-        public short? PF_Origine43 { get; set; }
-        public short? PF_Origine44 { get; set; }
-        public short? PF_Origine45 { get; set; }
-        public short? PF_Origine46 { get; set; }
-        public short? PF_Origine47 { get; set; }
-        public short? PF_Origine48 { get; set; }
-        public short? PF_Origine49 { get; set; }
-        public short? PF_Origine50 { get; set; }
-        public short? PF_Origine51 { get; set; }
-        public short? PF_Origine52 { get; set; }
-        public short? PF_Origine53 { get; set; }
-        public short? PF_Origine54 { get; set; }
-        public short? PF_Origine55 { get; set; }
-        public short? PF_Origine56 { get; set; }
-        public short? PF_Origine57 { get; set; }
-        public short? PF_Origine58 { get; set; }
-        public short? PF_Origine59 { get; set; }
-        public short? PF_Origine60 { get; set; }
-        public short? PF_Origine61 { get; set; }
-        public short? PF_Origine62 { get; set; }
-        public short? PF_Origine63 { get; set; }
-        public short? PF_Origine64 { get; set; }
-        public short? PF_Origine65 { get; set; }
-        public short? PF_Origine66 { get; set; }
-        public short? PF_Origine67 { get; set; }
-        public short? PF_Origine68 { get; set; }
-        public short? PF_Origine69 { get; set; }
-        public short? PF_Origine70 { get; set; }
-        public short? PF_Origine71 { get; set; }
-        public short? PF_Origine72 { get; set; }
-        public short? PF_Origine73 { get; set; }
-        public short? PF_Origine74 { get; set; }
-        public short? PF_Origine75 { get; set; }
-        public short? PF_Origine76 { get; set; }
-        public short? PF_Origine77 { get; set; }
-        public short? PF_Origine78 { get; set; }
-        public short? PF_Origine79 { get; set; }
-        public short? PF_Origine80 { get; set; }
-        public short? PF_Origine81 { get; set; }
-        public short? PF_Origine82 { get; set; }
-        public short? PF_Origine83 { get; set; }
-        public short? PF_Origine84 { get; set; }
-        public short? PF_Origine85 { get; set; }
-        public short? PF_Origine86 { get; set; }
-        public short? PF_Origine87 { get; set; }
-        public short? PF_Origine88 { get; set; }
-        public short? PF_Planning01 { get; set; }
-        public short? PF_Planning02 { get; set; }
-        public short? PF_Planning03 { get; set; }
-        public short? PF_Planning04 { get; set; }
-        public short? PF_Planning05 { get; set; }
-        public short? PF_Planning06 { get; set; }
-        public short? PF_Planning07 { get; set; }
-        public short? PF_Planning08 { get; set; }
-        public short? PF_Planning09 { get; set; }
-        public short? PF_Planning10 { get; set; }
-        public short? PF_Planning11 { get; set; }
-        public short? PF_Planning12 { get; set; }
-        public short? PF_Planning13 { get; set; }
-        public short? PF_Planning14 { get; set; }
-        public short? PF_Synthese01 { get; set; }
-        public short? PF_Synthese02 { get; set; }
-        public short? PF_Synthese03 { get; set; }
-        public short? PF_Synthese04 { get; set; }
-        public short? PF_Synthese05 { get; set; }
-        public short? PF_Synthese06 { get; set; }
-        public short? PF_Synthese07 { get; set; }
-        public short? PF_Synthese08 { get; set; }
-        public short? PF_Synthese09 { get; set; }
-        public short? PF_Synthese10 { get; set; }
-        public short? PF_Synthese11 { get; set; }
-        public short? PF_Synthese12 { get; set; }
-        public short? PF_Synthese13 { get; set; }
-        public short? PF_Synthese14 { get; set; }
-        public short? PF_Synthese15 { get; set; }
-        public short? PF_Historique01 { get; set; }
-        public short? PF_Historique02 { get; set; }
-        public short? PF_Historique03 { get; set; }
-        public short? PF_Historique04 { get; set; }
-        public short? PF_Historique05 { get; set; }
-        public short? PF_Historique06 { get; set; }
-        public short? PF_Historique07 { get; set; }
-        public short? PF_Historique08 { get; set; }
-        public short? PF_Historique09 { get; set; }
-        public short? PF_Historique10 { get; set; }
-        public short? PF_Historique11 { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public string PF_Numero { get; set; }
+
+    public short? PF_Origine01 { get; set; }
+
+    public short? PF_Origine02 { get; set; }
+
+    public short? PF_Origine03 { get; set; }
+
+    public short? PF_Origine04 { get; set; }
+
+    public short? PF_Origine05 { get; set; }
+
+    public short? PF_Origine06 { get; set; }
+
+    public short? PF_Origine07 { get; set; }
+
+    public short? PF_Origine08 { get; set; }
+
+    public short? PF_Origine09 { get; set; }
+
+    public short? PF_Origine10 { get; set; }
+
+    public short? PF_Origine11 { get; set; }
+
+    public short? PF_Origine12 { get; set; }
+
+    public short? PF_Origine13 { get; set; }
+
+    public short? PF_Origine14 { get; set; }
+
+    public short? PF_Origine15 { get; set; }
+
+    public short? PF_Origine16 { get; set; }
+
+    public short? PF_Origine17 { get; set; }
+
+    public short? PF_Origine18 { get; set; }
+
+    public short? PF_Origine19 { get; set; }
+
+    public short? PF_Origine20 { get; set; }
+
+    public short? PF_Origine21 { get; set; }
+
+    public short? PF_Origine22 { get; set; }
+
+    public short? PF_Origine23 { get; set; }
+
+    public short? PF_Origine24 { get; set; }
+
+    public short? PF_Origine25 { get; set; }
+
+    public short? PF_Origine26 { get; set; }
+
+    public short? PF_Origine27 { get; set; }
+
+    public short? PF_Origine28 { get; set; }
+
+    public short? PF_Origine29 { get; set; }
+
+    public short? PF_Origine30 { get; set; }
+
+    public short? PF_Origine31 { get; set; }
+
+    public short? PF_Origine32 { get; set; }
+
+    public short? PF_Origine33 { get; set; }
+
+    public short? PF_Origine34 { get; set; }
+
+    public short? PF_Origine35 { get; set; }
+
+    public short? PF_Origine36 { get; set; }
+
+    public short? PF_Origine37 { get; set; }
+
+    public short? PF_Origine38 { get; set; }
+
+    public short? PF_Origine39 { get; set; }
+
+    public short? PF_Origine40 { get; set; }
+
+    public short? PF_Origine41 { get; set; }
+
+    public short? PF_Origine42 { get; set; }
+
+    public short? PF_Origine43 { get; set; }
+
+    public short? PF_Origine44 { get; set; }
+
+    public short? PF_Origine45 { get; set; }
+
+    public short? PF_Origine46 { get; set; }
+
+    public short? PF_Origine47 { get; set; }
+
+    public short? PF_Origine48 { get; set; }
+
+    public short? PF_Origine49 { get; set; }
+
+    public short? PF_Origine50 { get; set; }
+
+    public short? PF_Origine51 { get; set; }
+
+    public short? PF_Origine52 { get; set; }
+
+    public short? PF_Origine53 { get; set; }
+
+    public short? PF_Origine54 { get; set; }
+
+    public short? PF_Origine55 { get; set; }
+
+    public short? PF_Origine56 { get; set; }
+
+    public short? PF_Origine57 { get; set; }
+
+    public short? PF_Origine58 { get; set; }
+
+    public short? PF_Origine59 { get; set; }
+
+    public short? PF_Origine60 { get; set; }
+
+    public short? PF_Origine61 { get; set; }
+
+    public short? PF_Origine62 { get; set; }
+
+    public short? PF_Origine63 { get; set; }
+
+    public short? PF_Origine64 { get; set; }
+
+    public short? PF_Origine65 { get; set; }
+
+    public short? PF_Origine66 { get; set; }
+
+    public short? PF_Origine67 { get; set; }
+
+    public short? PF_Origine68 { get; set; }
+
+    public short? PF_Origine69 { get; set; }
+
+    public short? PF_Origine70 { get; set; }
+
+    public short? PF_Origine71 { get; set; }
+
+    public short? PF_Origine72 { get; set; }
+
+    public short? PF_Origine73 { get; set; }
+
+    public short? PF_Origine74 { get; set; }
+
+    public short? PF_Origine75 { get; set; }
+
+    public short? PF_Origine76 { get; set; }
+
+    public short? PF_Origine77 { get; set; }
+
+    public short? PF_Origine78 { get; set; }
+
+    public short? PF_Origine79 { get; set; }
+
+    public short? PF_Origine80 { get; set; }
+
+    public short? PF_Origine81 { get; set; }
+
+    public short? PF_Origine82 { get; set; }
+
+    public short? PF_Origine83 { get; set; }
+
+    public short? PF_Origine84 { get; set; }
+
+    public short? PF_Origine85 { get; set; }
+
+    public short? PF_Origine86 { get; set; }
+
+    public short? PF_Origine87 { get; set; }
+
+    public short? PF_Origine88 { get; set; }
+
+    public short? PF_Planning01 { get; set; }
+
+    public short? PF_Planning02 { get; set; }
+
+    public short? PF_Planning03 { get; set; }
+
+    public short? PF_Planning04 { get; set; }
+
+    public short? PF_Planning05 { get; set; }
+
+    public short? PF_Planning06 { get; set; }
+
+    public short? PF_Planning07 { get; set; }
+
+    public short? PF_Planning08 { get; set; }
+
+    public short? PF_Planning09 { get; set; }
+
+    public short? PF_Planning10 { get; set; }
+
+    public short? PF_Planning11 { get; set; }
+
+    public short? PF_Planning12 { get; set; }
+
+    public short? PF_Planning13 { get; set; }
+
+    public short? PF_Planning14 { get; set; }
+
+    public short? PF_Synthese01 { get; set; }
+
+    public short? PF_Synthese02 { get; set; }
+
+    public short? PF_Synthese03 { get; set; }
+
+    public short? PF_Synthese04 { get; set; }
+
+    public short? PF_Synthese05 { get; set; }
+
+    public short? PF_Synthese06 { get; set; }
+
+    public short? PF_Synthese07 { get; set; }
+
+    public short? PF_Synthese08 { get; set; }
+
+    public short? PF_Synthese09 { get; set; }
+
+    public short? PF_Synthese10 { get; set; }
+
+    public short? PF_Synthese11 { get; set; }
+
+    public short? PF_Synthese12 { get; set; }
+
+    public short? PF_Synthese13 { get; set; }
+
+    public short? PF_Synthese14 { get; set; }
+
+    public short? PF_Synthese15 { get; set; }
+
+    public short? PF_Historique01 { get; set; }
+
+    public short? PF_Historique02 { get; set; }
+
+    public short? PF_Historique03 { get; set; }
+
+    public short? PF_Historique04 { get; set; }
+
+    public short? PF_Historique05 { get; set; }
+
+    public short? PF_Historique06 { get; set; }
+
+    public short? PF_Historique07 { get; set; }
+
+    public short? PF_Historique08 { get; set; }
+
+    public short? PF_Historique09 { get; set; }
+
+    public short? PF_Historique10 { get; set; }
+
+    public short? PF_Historique11 { get; set; }
+
+    public int cbMarq { get; set; }
 }

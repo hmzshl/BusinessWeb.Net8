@@ -3,39 +3,65 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_FAMCOMPTA
-    {
-        public string FA_CodeFamille { get; set; }
-        public byte[] cbFA_CodeFamille { get; set; }
-        public short? FCP_Type { get; set; }
-        public short? FCP_Champ { get; set; }
-        public string FCP_ComptaCPT_CompteG { get; set; }
-        public string FCP_ComptaCPT_CompteA { get; set; }
-        public string FCP_ComptaCPT_Taxe1 { get; set; }
-        public string FCP_ComptaCPT_Taxe2 { get; set; }
-        public string FCP_ComptaCPT_Taxe3 { get; set; }
-        public DateTime? FCP_ComptaCPT_Date1 { get; set; }
-        public DateTime? FCP_ComptaCPT_Date2 { get; set; }
-        public DateTime? FCP_ComptaCPT_Date3 { get; set; }
-        public string FCP_ComptaCPT_TaxeAnc1 { get; set; }
-        public string FCP_ComptaCPT_TaxeAnc2 { get; set; }
-        public string FCP_ComptaCPT_TaxeAnc3 { get; set; }
-        public short? FCP_TypeFacture { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_COMPTEG FCP_ComptaCPT_CompteGNavigation { get; set; }
-        public virtual F_TAXE FCP_ComptaCPT_Taxe1Navigation { get; set; }
-        public virtual F_TAXE FCP_ComptaCPT_Taxe2Navigation { get; set; }
-        public virtual F_TAXE FCP_ComptaCPT_Taxe3Navigation { get; set; }
-        public virtual F_TAXE FCP_ComptaCPT_TaxeAnc1Navigation { get; set; }
-        public virtual F_TAXE FCP_ComptaCPT_TaxeAnc2Navigation { get; set; }
-        public virtual F_TAXE FCP_ComptaCPT_TaxeAnc3Navigation { get; set; }
-    }
+public partial class F_FAMCOMPTA
+{
+    public string FA_CodeFamille { get; set; }
+
+    public byte[] cbFA_CodeFamille { get; set; }
+
+    public short? FCP_Type { get; set; }
+
+    public short? FCP_Champ { get; set; }
+
+    public string FCP_ComptaCPT_CompteG { get; set; }
+
+    public string FCP_ComptaCPT_CompteA { get; set; }
+
+    public string FCP_ComptaCPT_Taxe1 { get; set; }
+
+    public string FCP_ComptaCPT_Taxe2 { get; set; }
+
+    public string FCP_ComptaCPT_Taxe3 { get; set; }
+
+    public DateTime? FCP_ComptaCPT_Date1 { get; set; }
+
+    public DateTime? FCP_ComptaCPT_Date2 { get; set; }
+
+    public DateTime? FCP_ComptaCPT_Date3 { get; set; }
+
+    public string FCP_ComptaCPT_TaxeAnc1 { get; set; }
+
+    public string FCP_ComptaCPT_TaxeAnc2 { get; set; }
+
+    public string FCP_ComptaCPT_TaxeAnc3 { get; set; }
+
+    public short? FCP_TypeFacture { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_COMPTEG FCP_ComptaCPT_CompteGNavigation { get; set; }
+
+    public virtual F_TAXE FCP_ComptaCPT_Taxe1Navigation { get; set; }
+
+    public virtual F_TAXE FCP_ComptaCPT_Taxe2Navigation { get; set; }
+
+    public virtual F_TAXE FCP_ComptaCPT_Taxe3Navigation { get; set; }
+
+    public virtual F_TAXE FCP_ComptaCPT_TaxeAnc1Navigation { get; set; }
+
+    public virtual F_TAXE FCP_ComptaCPT_TaxeAnc2Navigation { get; set; }
+
+    public virtual F_TAXE FCP_ComptaCPT_TaxeAnc3Navigation { get; set; }
 }

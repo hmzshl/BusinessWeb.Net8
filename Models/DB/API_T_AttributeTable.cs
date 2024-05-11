@@ -3,14 +3,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_AttributeTable
-    {
-        public int id { get; set; }
-        public int ParentID { get; set; }
-        public string TextValue { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_AttributeDetail Parent { get; set; }
-    }
+public partial class API_T_AttributeTable
+{
+    public int id { get; set; }
+
+    public int ParentID { get; set; }
+
+    public string TextValue { get; set; }
+
+    public virtual API_T_AttributeDetail Parent { get; set; }
 }

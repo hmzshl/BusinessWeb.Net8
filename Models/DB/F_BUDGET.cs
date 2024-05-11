@@ -3,466 +3,909 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_BUDGET
 {
-    public partial class F_BUDGET
-    {
-        public F_BUDGET()
-        {
-            F_EBUDGET = new HashSet<F_EBUDGET>();
-        }
+    public int BD_No { get; set; }
 
-        public int BD_No { get; set; }
-        public string BD_Num { get; set; }
-        public byte[] cbBD_Num { get; set; }
-        public string BD_Intitule { get; set; }
-        public byte[] cbBD_Intitule { get; set; }
-        public short? BD_Type { get; set; }
-        public short? BD_Sens { get; set; }
-        public string BD_NumCentr { get; set; }
-        public byte[] cbBD_NumCentr { get; set; }
-        public short? BD_TRepart { get; set; }
-        public string BD_VRepart { get; set; }
-        public byte[] cbBD_VRepart { get; set; }
-        public decimal? BD_Dotation0101 { get; set; }
-        public decimal? BD_Dotation0102 { get; set; }
-        public decimal? BD_Dotation0103 { get; set; }
-        public decimal? BD_Dotation0104 { get; set; }
-        public decimal? BD_Dotation0105 { get; set; }
-        public decimal? BD_Dotation0106 { get; set; }
-        public decimal? BD_Dotation0107 { get; set; }
-        public decimal? BD_Dotation0108 { get; set; }
-        public decimal? BD_Dotation0109 { get; set; }
-        public decimal? BD_Dotation0110 { get; set; }
-        public decimal? BD_Dotation0111 { get; set; }
-        public decimal? BD_Dotation0112 { get; set; }
-        public decimal? BD_Dotation0113 { get; set; }
-        public decimal? BD_Dotation0114 { get; set; }
-        public decimal? BD_Dotation0115 { get; set; }
-        public decimal? BD_Dotation0116 { get; set; }
-        public decimal? BD_Dotation0117 { get; set; }
-        public decimal? BD_Dotation0118 { get; set; }
-        public decimal? BD_Dotation0119 { get; set; }
-        public decimal? BD_Dotation0120 { get; set; }
-        public decimal? BD_Dotation0121 { get; set; }
-        public decimal? BD_Dotation0122 { get; set; }
-        public decimal? BD_Dotation0123 { get; set; }
-        public decimal? BD_Dotation0124 { get; set; }
-        public decimal? BD_Dotation0125 { get; set; }
-        public decimal? BD_Dotation0126 { get; set; }
-        public decimal? BD_Dotation0127 { get; set; }
-        public decimal? BD_Dotation0128 { get; set; }
-        public decimal? BD_Dotation0129 { get; set; }
-        public decimal? BD_Dotation0130 { get; set; }
-        public decimal? BD_Dotation0131 { get; set; }
-        public decimal? BD_Dotation0132 { get; set; }
-        public decimal? BD_Dotation0133 { get; set; }
-        public decimal? BD_Dotation0134 { get; set; }
-        public decimal? BD_Dotation0135 { get; set; }
-        public decimal? BD_Dotation0136 { get; set; }
-        public decimal? BD_Dotation0201 { get; set; }
-        public decimal? BD_Dotation0202 { get; set; }
-        public decimal? BD_Dotation0203 { get; set; }
-        public decimal? BD_Dotation0204 { get; set; }
-        public decimal? BD_Dotation0205 { get; set; }
-        public decimal? BD_Dotation0206 { get; set; }
-        public decimal? BD_Dotation0207 { get; set; }
-        public decimal? BD_Dotation0208 { get; set; }
-        public decimal? BD_Dotation0209 { get; set; }
-        public decimal? BD_Dotation0210 { get; set; }
-        public decimal? BD_Dotation0211 { get; set; }
-        public decimal? BD_Dotation0212 { get; set; }
-        public decimal? BD_Dotation0213 { get; set; }
-        public decimal? BD_Dotation0214 { get; set; }
-        public decimal? BD_Dotation0215 { get; set; }
-        public decimal? BD_Dotation0216 { get; set; }
-        public decimal? BD_Dotation0217 { get; set; }
-        public decimal? BD_Dotation0218 { get; set; }
-        public decimal? BD_Dotation0219 { get; set; }
-        public decimal? BD_Dotation0220 { get; set; }
-        public decimal? BD_Dotation0221 { get; set; }
-        public decimal? BD_Dotation0222 { get; set; }
-        public decimal? BD_Dotation0223 { get; set; }
-        public decimal? BD_Dotation0224 { get; set; }
-        public decimal? BD_Dotation0225 { get; set; }
-        public decimal? BD_Dotation0226 { get; set; }
-        public decimal? BD_Dotation0227 { get; set; }
-        public decimal? BD_Dotation0228 { get; set; }
-        public decimal? BD_Dotation0229 { get; set; }
-        public decimal? BD_Dotation0230 { get; set; }
-        public decimal? BD_Dotation0231 { get; set; }
-        public decimal? BD_Dotation0232 { get; set; }
-        public decimal? BD_Dotation0233 { get; set; }
-        public decimal? BD_Dotation0234 { get; set; }
-        public decimal? BD_Dotation0235 { get; set; }
-        public decimal? BD_Dotation0236 { get; set; }
-        public decimal? BD_Dotation0301 { get; set; }
-        public decimal? BD_Dotation0302 { get; set; }
-        public decimal? BD_Dotation0303 { get; set; }
-        public decimal? BD_Dotation0304 { get; set; }
-        public decimal? BD_Dotation0305 { get; set; }
-        public decimal? BD_Dotation0306 { get; set; }
-        public decimal? BD_Dotation0307 { get; set; }
-        public decimal? BD_Dotation0308 { get; set; }
-        public decimal? BD_Dotation0309 { get; set; }
-        public decimal? BD_Dotation0310 { get; set; }
-        public decimal? BD_Dotation0311 { get; set; }
-        public decimal? BD_Dotation0312 { get; set; }
-        public decimal? BD_Dotation0313 { get; set; }
-        public decimal? BD_Dotation0314 { get; set; }
-        public decimal? BD_Dotation0315 { get; set; }
-        public decimal? BD_Dotation0316 { get; set; }
-        public decimal? BD_Dotation0317 { get; set; }
-        public decimal? BD_Dotation0318 { get; set; }
-        public decimal? BD_Dotation0319 { get; set; }
-        public decimal? BD_Dotation0320 { get; set; }
-        public decimal? BD_Dotation0321 { get; set; }
-        public decimal? BD_Dotation0322 { get; set; }
-        public decimal? BD_Dotation0323 { get; set; }
-        public decimal? BD_Dotation0324 { get; set; }
-        public decimal? BD_Dotation0325 { get; set; }
-        public decimal? BD_Dotation0326 { get; set; }
-        public decimal? BD_Dotation0327 { get; set; }
-        public decimal? BD_Dotation0328 { get; set; }
-        public decimal? BD_Dotation0329 { get; set; }
-        public decimal? BD_Dotation0330 { get; set; }
-        public decimal? BD_Dotation0331 { get; set; }
-        public decimal? BD_Dotation0332 { get; set; }
-        public decimal? BD_Dotation0333 { get; set; }
-        public decimal? BD_Dotation0334 { get; set; }
-        public decimal? BD_Dotation0335 { get; set; }
-        public decimal? BD_Dotation0336 { get; set; }
-        public decimal? BD_Dotation0401 { get; set; }
-        public decimal? BD_Dotation0402 { get; set; }
-        public decimal? BD_Dotation0403 { get; set; }
-        public decimal? BD_Dotation0404 { get; set; }
-        public decimal? BD_Dotation0405 { get; set; }
-        public decimal? BD_Dotation0406 { get; set; }
-        public decimal? BD_Dotation0407 { get; set; }
-        public decimal? BD_Dotation0408 { get; set; }
-        public decimal? BD_Dotation0409 { get; set; }
-        public decimal? BD_Dotation0410 { get; set; }
-        public decimal? BD_Dotation0411 { get; set; }
-        public decimal? BD_Dotation0412 { get; set; }
-        public decimal? BD_Dotation0413 { get; set; }
-        public decimal? BD_Dotation0414 { get; set; }
-        public decimal? BD_Dotation0415 { get; set; }
-        public decimal? BD_Dotation0416 { get; set; }
-        public decimal? BD_Dotation0417 { get; set; }
-        public decimal? BD_Dotation0418 { get; set; }
-        public decimal? BD_Dotation0419 { get; set; }
-        public decimal? BD_Dotation0420 { get; set; }
-        public decimal? BD_Dotation0421 { get; set; }
-        public decimal? BD_Dotation0422 { get; set; }
-        public decimal? BD_Dotation0423 { get; set; }
-        public decimal? BD_Dotation0424 { get; set; }
-        public decimal? BD_Dotation0425 { get; set; }
-        public decimal? BD_Dotation0426 { get; set; }
-        public decimal? BD_Dotation0427 { get; set; }
-        public decimal? BD_Dotation0428 { get; set; }
-        public decimal? BD_Dotation0429 { get; set; }
-        public decimal? BD_Dotation0430 { get; set; }
-        public decimal? BD_Dotation0431 { get; set; }
-        public decimal? BD_Dotation0432 { get; set; }
-        public decimal? BD_Dotation0433 { get; set; }
-        public decimal? BD_Dotation0434 { get; set; }
-        public decimal? BD_Dotation0435 { get; set; }
-        public decimal? BD_Dotation0436 { get; set; }
-        public decimal? BD_Dotation0501 { get; set; }
-        public decimal? BD_Dotation0502 { get; set; }
-        public decimal? BD_Dotation0503 { get; set; }
-        public decimal? BD_Dotation0504 { get; set; }
-        public decimal? BD_Dotation0505 { get; set; }
-        public decimal? BD_Dotation0506 { get; set; }
-        public decimal? BD_Dotation0507 { get; set; }
-        public decimal? BD_Dotation0508 { get; set; }
-        public decimal? BD_Dotation0509 { get; set; }
-        public decimal? BD_Dotation0510 { get; set; }
-        public decimal? BD_Dotation0511 { get; set; }
-        public decimal? BD_Dotation0512 { get; set; }
-        public decimal? BD_Dotation0513 { get; set; }
-        public decimal? BD_Dotation0514 { get; set; }
-        public decimal? BD_Dotation0515 { get; set; }
-        public decimal? BD_Dotation0516 { get; set; }
-        public decimal? BD_Dotation0517 { get; set; }
-        public decimal? BD_Dotation0518 { get; set; }
-        public decimal? BD_Dotation0519 { get; set; }
-        public decimal? BD_Dotation0520 { get; set; }
-        public decimal? BD_Dotation0521 { get; set; }
-        public decimal? BD_Dotation0522 { get; set; }
-        public decimal? BD_Dotation0523 { get; set; }
-        public decimal? BD_Dotation0524 { get; set; }
-        public decimal? BD_Dotation0525 { get; set; }
-        public decimal? BD_Dotation0526 { get; set; }
-        public decimal? BD_Dotation0527 { get; set; }
-        public decimal? BD_Dotation0528 { get; set; }
-        public decimal? BD_Dotation0529 { get; set; }
-        public decimal? BD_Dotation0530 { get; set; }
-        public decimal? BD_Dotation0531 { get; set; }
-        public decimal? BD_Dotation0532 { get; set; }
-        public decimal? BD_Dotation0533 { get; set; }
-        public decimal? BD_Dotation0534 { get; set; }
-        public decimal? BD_Dotation0535 { get; set; }
-        public decimal? BD_Dotation0536 { get; set; }
-        public decimal? BD_Dotation0601 { get; set; }
-        public decimal? BD_Dotation0602 { get; set; }
-        public decimal? BD_Dotation0603 { get; set; }
-        public decimal? BD_Dotation0604 { get; set; }
-        public decimal? BD_Dotation0605 { get; set; }
-        public decimal? BD_Dotation0606 { get; set; }
-        public decimal? BD_Dotation0607 { get; set; }
-        public decimal? BD_Dotation0608 { get; set; }
-        public decimal? BD_Dotation0609 { get; set; }
-        public decimal? BD_Dotation0610 { get; set; }
-        public decimal? BD_Dotation0611 { get; set; }
-        public decimal? BD_Dotation0612 { get; set; }
-        public decimal? BD_Dotation0613 { get; set; }
-        public decimal? BD_Dotation0614 { get; set; }
-        public decimal? BD_Dotation0615 { get; set; }
-        public decimal? BD_Dotation0616 { get; set; }
-        public decimal? BD_Dotation0617 { get; set; }
-        public decimal? BD_Dotation0618 { get; set; }
-        public decimal? BD_Dotation0619 { get; set; }
-        public decimal? BD_Dotation0620 { get; set; }
-        public decimal? BD_Dotation0621 { get; set; }
-        public decimal? BD_Dotation0622 { get; set; }
-        public decimal? BD_Dotation0623 { get; set; }
-        public decimal? BD_Dotation0624 { get; set; }
-        public decimal? BD_Dotation0625 { get; set; }
-        public decimal? BD_Dotation0626 { get; set; }
-        public decimal? BD_Dotation0627 { get; set; }
-        public decimal? BD_Dotation0628 { get; set; }
-        public decimal? BD_Dotation0629 { get; set; }
-        public decimal? BD_Dotation0630 { get; set; }
-        public decimal? BD_Dotation0631 { get; set; }
-        public decimal? BD_Dotation0632 { get; set; }
-        public decimal? BD_Dotation0633 { get; set; }
-        public decimal? BD_Dotation0634 { get; set; }
-        public decimal? BD_Dotation0635 { get; set; }
-        public decimal? BD_Dotation0636 { get; set; }
-        public decimal? BD_DotationQ0101 { get; set; }
-        public decimal? BD_DotationQ0102 { get; set; }
-        public decimal? BD_DotationQ0103 { get; set; }
-        public decimal? BD_DotationQ0104 { get; set; }
-        public decimal? BD_DotationQ0105 { get; set; }
-        public decimal? BD_DotationQ0106 { get; set; }
-        public decimal? BD_DotationQ0107 { get; set; }
-        public decimal? BD_DotationQ0108 { get; set; }
-        public decimal? BD_DotationQ0109 { get; set; }
-        public decimal? BD_DotationQ0110 { get; set; }
-        public decimal? BD_DotationQ0111 { get; set; }
-        public decimal? BD_DotationQ0112 { get; set; }
-        public decimal? BD_DotationQ0113 { get; set; }
-        public decimal? BD_DotationQ0114 { get; set; }
-        public decimal? BD_DotationQ0115 { get; set; }
-        public decimal? BD_DotationQ0116 { get; set; }
-        public decimal? BD_DotationQ0117 { get; set; }
-        public decimal? BD_DotationQ0118 { get; set; }
-        public decimal? BD_DotationQ0119 { get; set; }
-        public decimal? BD_DotationQ0120 { get; set; }
-        public decimal? BD_DotationQ0121 { get; set; }
-        public decimal? BD_DotationQ0122 { get; set; }
-        public decimal? BD_DotationQ0123 { get; set; }
-        public decimal? BD_DotationQ0124 { get; set; }
-        public decimal? BD_DotationQ0125 { get; set; }
-        public decimal? BD_DotationQ0126 { get; set; }
-        public decimal? BD_DotationQ0127 { get; set; }
-        public decimal? BD_DotationQ0128 { get; set; }
-        public decimal? BD_DotationQ0129 { get; set; }
-        public decimal? BD_DotationQ0130 { get; set; }
-        public decimal? BD_DotationQ0131 { get; set; }
-        public decimal? BD_DotationQ0132 { get; set; }
-        public decimal? BD_DotationQ0133 { get; set; }
-        public decimal? BD_DotationQ0134 { get; set; }
-        public decimal? BD_DotationQ0135 { get; set; }
-        public decimal? BD_DotationQ0136 { get; set; }
-        public decimal? BD_DotationQ0201 { get; set; }
-        public decimal? BD_DotationQ0202 { get; set; }
-        public decimal? BD_DotationQ0203 { get; set; }
-        public decimal? BD_DotationQ0204 { get; set; }
-        public decimal? BD_DotationQ0205 { get; set; }
-        public decimal? BD_DotationQ0206 { get; set; }
-        public decimal? BD_DotationQ0207 { get; set; }
-        public decimal? BD_DotationQ0208 { get; set; }
-        public decimal? BD_DotationQ0209 { get; set; }
-        public decimal? BD_DotationQ0210 { get; set; }
-        public decimal? BD_DotationQ0211 { get; set; }
-        public decimal? BD_DotationQ0212 { get; set; }
-        public decimal? BD_DotationQ0213 { get; set; }
-        public decimal? BD_DotationQ0214 { get; set; }
-        public decimal? BD_DotationQ0215 { get; set; }
-        public decimal? BD_DotationQ0216 { get; set; }
-        public decimal? BD_DotationQ0217 { get; set; }
-        public decimal? BD_DotationQ0218 { get; set; }
-        public decimal? BD_DotationQ0219 { get; set; }
-        public decimal? BD_DotationQ0220 { get; set; }
-        public decimal? BD_DotationQ0221 { get; set; }
-        public decimal? BD_DotationQ0222 { get; set; }
-        public decimal? BD_DotationQ0223 { get; set; }
-        public decimal? BD_DotationQ0224 { get; set; }
-        public decimal? BD_DotationQ0225 { get; set; }
-        public decimal? BD_DotationQ0226 { get; set; }
-        public decimal? BD_DotationQ0227 { get; set; }
-        public decimal? BD_DotationQ0228 { get; set; }
-        public decimal? BD_DotationQ0229 { get; set; }
-        public decimal? BD_DotationQ0230 { get; set; }
-        public decimal? BD_DotationQ0231 { get; set; }
-        public decimal? BD_DotationQ0232 { get; set; }
-        public decimal? BD_DotationQ0233 { get; set; }
-        public decimal? BD_DotationQ0234 { get; set; }
-        public decimal? BD_DotationQ0235 { get; set; }
-        public decimal? BD_DotationQ0236 { get; set; }
-        public decimal? BD_DotationQ0301 { get; set; }
-        public decimal? BD_DotationQ0302 { get; set; }
-        public decimal? BD_DotationQ0303 { get; set; }
-        public decimal? BD_DotationQ0304 { get; set; }
-        public decimal? BD_DotationQ0305 { get; set; }
-        public decimal? BD_DotationQ0306 { get; set; }
-        public decimal? BD_DotationQ0307 { get; set; }
-        public decimal? BD_DotationQ0308 { get; set; }
-        public decimal? BD_DotationQ0309 { get; set; }
-        public decimal? BD_DotationQ0310 { get; set; }
-        public decimal? BD_DotationQ0311 { get; set; }
-        public decimal? BD_DotationQ0312 { get; set; }
-        public decimal? BD_DotationQ0313 { get; set; }
-        public decimal? BD_DotationQ0314 { get; set; }
-        public decimal? BD_DotationQ0315 { get; set; }
-        public decimal? BD_DotationQ0316 { get; set; }
-        public decimal? BD_DotationQ0317 { get; set; }
-        public decimal? BD_DotationQ0318 { get; set; }
-        public decimal? BD_DotationQ0319 { get; set; }
-        public decimal? BD_DotationQ0320 { get; set; }
-        public decimal? BD_DotationQ0321 { get; set; }
-        public decimal? BD_DotationQ0322 { get; set; }
-        public decimal? BD_DotationQ0323 { get; set; }
-        public decimal? BD_DotationQ0324 { get; set; }
-        public decimal? BD_DotationQ0325 { get; set; }
-        public decimal? BD_DotationQ0326 { get; set; }
-        public decimal? BD_DotationQ0327 { get; set; }
-        public decimal? BD_DotationQ0328 { get; set; }
-        public decimal? BD_DotationQ0329 { get; set; }
-        public decimal? BD_DotationQ0330 { get; set; }
-        public decimal? BD_DotationQ0331 { get; set; }
-        public decimal? BD_DotationQ0332 { get; set; }
-        public decimal? BD_DotationQ0333 { get; set; }
-        public decimal? BD_DotationQ0334 { get; set; }
-        public decimal? BD_DotationQ0335 { get; set; }
-        public decimal? BD_DotationQ0336 { get; set; }
-        public decimal? BD_DotationQ0401 { get; set; }
-        public decimal? BD_DotationQ0402 { get; set; }
-        public decimal? BD_DotationQ0403 { get; set; }
-        public decimal? BD_DotationQ0404 { get; set; }
-        public decimal? BD_DotationQ0405 { get; set; }
-        public decimal? BD_DotationQ0406 { get; set; }
-        public decimal? BD_DotationQ0407 { get; set; }
-        public decimal? BD_DotationQ0408 { get; set; }
-        public decimal? BD_DotationQ0409 { get; set; }
-        public decimal? BD_DotationQ0410 { get; set; }
-        public decimal? BD_DotationQ0411 { get; set; }
-        public decimal? BD_DotationQ0412 { get; set; }
-        public decimal? BD_DotationQ0413 { get; set; }
-        public decimal? BD_DotationQ0414 { get; set; }
-        public decimal? BD_DotationQ0415 { get; set; }
-        public decimal? BD_DotationQ0416 { get; set; }
-        public decimal? BD_DotationQ0417 { get; set; }
-        public decimal? BD_DotationQ0418 { get; set; }
-        public decimal? BD_DotationQ0419 { get; set; }
-        public decimal? BD_DotationQ0420 { get; set; }
-        public decimal? BD_DotationQ0421 { get; set; }
-        public decimal? BD_DotationQ0422 { get; set; }
-        public decimal? BD_DotationQ0423 { get; set; }
-        public decimal? BD_DotationQ0424 { get; set; }
-        public decimal? BD_DotationQ0425 { get; set; }
-        public decimal? BD_DotationQ0426 { get; set; }
-        public decimal? BD_DotationQ0427 { get; set; }
-        public decimal? BD_DotationQ0428 { get; set; }
-        public decimal? BD_DotationQ0429 { get; set; }
-        public decimal? BD_DotationQ0430 { get; set; }
-        public decimal? BD_DotationQ0431 { get; set; }
-        public decimal? BD_DotationQ0432 { get; set; }
-        public decimal? BD_DotationQ0433 { get; set; }
-        public decimal? BD_DotationQ0434 { get; set; }
-        public decimal? BD_DotationQ0435 { get; set; }
-        public decimal? BD_DotationQ0436 { get; set; }
-        public decimal? BD_DotationQ0501 { get; set; }
-        public decimal? BD_DotationQ0502 { get; set; }
-        public decimal? BD_DotationQ0503 { get; set; }
-        public decimal? BD_DotationQ0504 { get; set; }
-        public decimal? BD_DotationQ0505 { get; set; }
-        public decimal? BD_DotationQ0506 { get; set; }
-        public decimal? BD_DotationQ0507 { get; set; }
-        public decimal? BD_DotationQ0508 { get; set; }
-        public decimal? BD_DotationQ0509 { get; set; }
-        public decimal? BD_DotationQ0510 { get; set; }
-        public decimal? BD_DotationQ0511 { get; set; }
-        public decimal? BD_DotationQ0512 { get; set; }
-        public decimal? BD_DotationQ0513 { get; set; }
-        public decimal? BD_DotationQ0514 { get; set; }
-        public decimal? BD_DotationQ0515 { get; set; }
-        public decimal? BD_DotationQ0516 { get; set; }
-        public decimal? BD_DotationQ0517 { get; set; }
-        public decimal? BD_DotationQ0518 { get; set; }
-        public decimal? BD_DotationQ0519 { get; set; }
-        public decimal? BD_DotationQ0520 { get; set; }
-        public decimal? BD_DotationQ0521 { get; set; }
-        public decimal? BD_DotationQ0522 { get; set; }
-        public decimal? BD_DotationQ0523 { get; set; }
-        public decimal? BD_DotationQ0524 { get; set; }
-        public decimal? BD_DotationQ0525 { get; set; }
-        public decimal? BD_DotationQ0526 { get; set; }
-        public decimal? BD_DotationQ0527 { get; set; }
-        public decimal? BD_DotationQ0528 { get; set; }
-        public decimal? BD_DotationQ0529 { get; set; }
-        public decimal? BD_DotationQ0530 { get; set; }
-        public decimal? BD_DotationQ0531 { get; set; }
-        public decimal? BD_DotationQ0532 { get; set; }
-        public decimal? BD_DotationQ0533 { get; set; }
-        public decimal? BD_DotationQ0534 { get; set; }
-        public decimal? BD_DotationQ0535 { get; set; }
-        public decimal? BD_DotationQ0536 { get; set; }
-        public decimal? BD_DotationQ0601 { get; set; }
-        public decimal? BD_DotationQ0602 { get; set; }
-        public decimal? BD_DotationQ0603 { get; set; }
-        public decimal? BD_DotationQ0604 { get; set; }
-        public decimal? BD_DotationQ0605 { get; set; }
-        public decimal? BD_DotationQ0606 { get; set; }
-        public decimal? BD_DotationQ0607 { get; set; }
-        public decimal? BD_DotationQ0608 { get; set; }
-        public decimal? BD_DotationQ0609 { get; set; }
-        public decimal? BD_DotationQ0610 { get; set; }
-        public decimal? BD_DotationQ0611 { get; set; }
-        public decimal? BD_DotationQ0612 { get; set; }
-        public decimal? BD_DotationQ0613 { get; set; }
-        public decimal? BD_DotationQ0614 { get; set; }
-        public decimal? BD_DotationQ0615 { get; set; }
-        public decimal? BD_DotationQ0616 { get; set; }
-        public decimal? BD_DotationQ0617 { get; set; }
-        public decimal? BD_DotationQ0618 { get; set; }
-        public decimal? BD_DotationQ0619 { get; set; }
-        public decimal? BD_DotationQ0620 { get; set; }
-        public decimal? BD_DotationQ0621 { get; set; }
-        public decimal? BD_DotationQ0622 { get; set; }
-        public decimal? BD_DotationQ0623 { get; set; }
-        public decimal? BD_DotationQ0624 { get; set; }
-        public decimal? BD_DotationQ0625 { get; set; }
-        public decimal? BD_DotationQ0626 { get; set; }
-        public decimal? BD_DotationQ0627 { get; set; }
-        public decimal? BD_DotationQ0628 { get; set; }
-        public decimal? BD_DotationQ0629 { get; set; }
-        public decimal? BD_DotationQ0630 { get; set; }
-        public decimal? BD_DotationQ0631 { get; set; }
-        public decimal? BD_DotationQ0632 { get; set; }
-        public decimal? BD_DotationQ0633 { get; set; }
-        public decimal? BD_DotationQ0634 { get; set; }
-        public decimal? BD_DotationQ0635 { get; set; }
-        public decimal? BD_DotationQ0636 { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public string BD_Num { get; set; }
 
-        public virtual ICollection<F_EBUDGET> F_EBUDGET { get; set; }
-    }
+    public byte[] cbBD_Num { get; set; }
+
+    public string BD_Intitule { get; set; }
+
+    public byte[] cbBD_Intitule { get; set; }
+
+    public short? BD_Type { get; set; }
+
+    public short? BD_Sens { get; set; }
+
+    public string BD_NumCentr { get; set; }
+
+    public byte[] cbBD_NumCentr { get; set; }
+
+    public short? BD_TRepart { get; set; }
+
+    public string BD_VRepart { get; set; }
+
+    public byte[] cbBD_VRepart { get; set; }
+
+    public decimal? BD_Dotation0101 { get; set; }
+
+    public decimal? BD_Dotation0102 { get; set; }
+
+    public decimal? BD_Dotation0103 { get; set; }
+
+    public decimal? BD_Dotation0104 { get; set; }
+
+    public decimal? BD_Dotation0105 { get; set; }
+
+    public decimal? BD_Dotation0106 { get; set; }
+
+    public decimal? BD_Dotation0107 { get; set; }
+
+    public decimal? BD_Dotation0108 { get; set; }
+
+    public decimal? BD_Dotation0109 { get; set; }
+
+    public decimal? BD_Dotation0110 { get; set; }
+
+    public decimal? BD_Dotation0111 { get; set; }
+
+    public decimal? BD_Dotation0112 { get; set; }
+
+    public decimal? BD_Dotation0113 { get; set; }
+
+    public decimal? BD_Dotation0114 { get; set; }
+
+    public decimal? BD_Dotation0115 { get; set; }
+
+    public decimal? BD_Dotation0116 { get; set; }
+
+    public decimal? BD_Dotation0117 { get; set; }
+
+    public decimal? BD_Dotation0118 { get; set; }
+
+    public decimal? BD_Dotation0119 { get; set; }
+
+    public decimal? BD_Dotation0120 { get; set; }
+
+    public decimal? BD_Dotation0121 { get; set; }
+
+    public decimal? BD_Dotation0122 { get; set; }
+
+    public decimal? BD_Dotation0123 { get; set; }
+
+    public decimal? BD_Dotation0124 { get; set; }
+
+    public decimal? BD_Dotation0125 { get; set; }
+
+    public decimal? BD_Dotation0126 { get; set; }
+
+    public decimal? BD_Dotation0127 { get; set; }
+
+    public decimal? BD_Dotation0128 { get; set; }
+
+    public decimal? BD_Dotation0129 { get; set; }
+
+    public decimal? BD_Dotation0130 { get; set; }
+
+    public decimal? BD_Dotation0131 { get; set; }
+
+    public decimal? BD_Dotation0132 { get; set; }
+
+    public decimal? BD_Dotation0133 { get; set; }
+
+    public decimal? BD_Dotation0134 { get; set; }
+
+    public decimal? BD_Dotation0135 { get; set; }
+
+    public decimal? BD_Dotation0136 { get; set; }
+
+    public decimal? BD_Dotation0201 { get; set; }
+
+    public decimal? BD_Dotation0202 { get; set; }
+
+    public decimal? BD_Dotation0203 { get; set; }
+
+    public decimal? BD_Dotation0204 { get; set; }
+
+    public decimal? BD_Dotation0205 { get; set; }
+
+    public decimal? BD_Dotation0206 { get; set; }
+
+    public decimal? BD_Dotation0207 { get; set; }
+
+    public decimal? BD_Dotation0208 { get; set; }
+
+    public decimal? BD_Dotation0209 { get; set; }
+
+    public decimal? BD_Dotation0210 { get; set; }
+
+    public decimal? BD_Dotation0211 { get; set; }
+
+    public decimal? BD_Dotation0212 { get; set; }
+
+    public decimal? BD_Dotation0213 { get; set; }
+
+    public decimal? BD_Dotation0214 { get; set; }
+
+    public decimal? BD_Dotation0215 { get; set; }
+
+    public decimal? BD_Dotation0216 { get; set; }
+
+    public decimal? BD_Dotation0217 { get; set; }
+
+    public decimal? BD_Dotation0218 { get; set; }
+
+    public decimal? BD_Dotation0219 { get; set; }
+
+    public decimal? BD_Dotation0220 { get; set; }
+
+    public decimal? BD_Dotation0221 { get; set; }
+
+    public decimal? BD_Dotation0222 { get; set; }
+
+    public decimal? BD_Dotation0223 { get; set; }
+
+    public decimal? BD_Dotation0224 { get; set; }
+
+    public decimal? BD_Dotation0225 { get; set; }
+
+    public decimal? BD_Dotation0226 { get; set; }
+
+    public decimal? BD_Dotation0227 { get; set; }
+
+    public decimal? BD_Dotation0228 { get; set; }
+
+    public decimal? BD_Dotation0229 { get; set; }
+
+    public decimal? BD_Dotation0230 { get; set; }
+
+    public decimal? BD_Dotation0231 { get; set; }
+
+    public decimal? BD_Dotation0232 { get; set; }
+
+    public decimal? BD_Dotation0233 { get; set; }
+
+    public decimal? BD_Dotation0234 { get; set; }
+
+    public decimal? BD_Dotation0235 { get; set; }
+
+    public decimal? BD_Dotation0236 { get; set; }
+
+    public decimal? BD_Dotation0301 { get; set; }
+
+    public decimal? BD_Dotation0302 { get; set; }
+
+    public decimal? BD_Dotation0303 { get; set; }
+
+    public decimal? BD_Dotation0304 { get; set; }
+
+    public decimal? BD_Dotation0305 { get; set; }
+
+    public decimal? BD_Dotation0306 { get; set; }
+
+    public decimal? BD_Dotation0307 { get; set; }
+
+    public decimal? BD_Dotation0308 { get; set; }
+
+    public decimal? BD_Dotation0309 { get; set; }
+
+    public decimal? BD_Dotation0310 { get; set; }
+
+    public decimal? BD_Dotation0311 { get; set; }
+
+    public decimal? BD_Dotation0312 { get; set; }
+
+    public decimal? BD_Dotation0313 { get; set; }
+
+    public decimal? BD_Dotation0314 { get; set; }
+
+    public decimal? BD_Dotation0315 { get; set; }
+
+    public decimal? BD_Dotation0316 { get; set; }
+
+    public decimal? BD_Dotation0317 { get; set; }
+
+    public decimal? BD_Dotation0318 { get; set; }
+
+    public decimal? BD_Dotation0319 { get; set; }
+
+    public decimal? BD_Dotation0320 { get; set; }
+
+    public decimal? BD_Dotation0321 { get; set; }
+
+    public decimal? BD_Dotation0322 { get; set; }
+
+    public decimal? BD_Dotation0323 { get; set; }
+
+    public decimal? BD_Dotation0324 { get; set; }
+
+    public decimal? BD_Dotation0325 { get; set; }
+
+    public decimal? BD_Dotation0326 { get; set; }
+
+    public decimal? BD_Dotation0327 { get; set; }
+
+    public decimal? BD_Dotation0328 { get; set; }
+
+    public decimal? BD_Dotation0329 { get; set; }
+
+    public decimal? BD_Dotation0330 { get; set; }
+
+    public decimal? BD_Dotation0331 { get; set; }
+
+    public decimal? BD_Dotation0332 { get; set; }
+
+    public decimal? BD_Dotation0333 { get; set; }
+
+    public decimal? BD_Dotation0334 { get; set; }
+
+    public decimal? BD_Dotation0335 { get; set; }
+
+    public decimal? BD_Dotation0336 { get; set; }
+
+    public decimal? BD_Dotation0401 { get; set; }
+
+    public decimal? BD_Dotation0402 { get; set; }
+
+    public decimal? BD_Dotation0403 { get; set; }
+
+    public decimal? BD_Dotation0404 { get; set; }
+
+    public decimal? BD_Dotation0405 { get; set; }
+
+    public decimal? BD_Dotation0406 { get; set; }
+
+    public decimal? BD_Dotation0407 { get; set; }
+
+    public decimal? BD_Dotation0408 { get; set; }
+
+    public decimal? BD_Dotation0409 { get; set; }
+
+    public decimal? BD_Dotation0410 { get; set; }
+
+    public decimal? BD_Dotation0411 { get; set; }
+
+    public decimal? BD_Dotation0412 { get; set; }
+
+    public decimal? BD_Dotation0413 { get; set; }
+
+    public decimal? BD_Dotation0414 { get; set; }
+
+    public decimal? BD_Dotation0415 { get; set; }
+
+    public decimal? BD_Dotation0416 { get; set; }
+
+    public decimal? BD_Dotation0417 { get; set; }
+
+    public decimal? BD_Dotation0418 { get; set; }
+
+    public decimal? BD_Dotation0419 { get; set; }
+
+    public decimal? BD_Dotation0420 { get; set; }
+
+    public decimal? BD_Dotation0421 { get; set; }
+
+    public decimal? BD_Dotation0422 { get; set; }
+
+    public decimal? BD_Dotation0423 { get; set; }
+
+    public decimal? BD_Dotation0424 { get; set; }
+
+    public decimal? BD_Dotation0425 { get; set; }
+
+    public decimal? BD_Dotation0426 { get; set; }
+
+    public decimal? BD_Dotation0427 { get; set; }
+
+    public decimal? BD_Dotation0428 { get; set; }
+
+    public decimal? BD_Dotation0429 { get; set; }
+
+    public decimal? BD_Dotation0430 { get; set; }
+
+    public decimal? BD_Dotation0431 { get; set; }
+
+    public decimal? BD_Dotation0432 { get; set; }
+
+    public decimal? BD_Dotation0433 { get; set; }
+
+    public decimal? BD_Dotation0434 { get; set; }
+
+    public decimal? BD_Dotation0435 { get; set; }
+
+    public decimal? BD_Dotation0436 { get; set; }
+
+    public decimal? BD_Dotation0501 { get; set; }
+
+    public decimal? BD_Dotation0502 { get; set; }
+
+    public decimal? BD_Dotation0503 { get; set; }
+
+    public decimal? BD_Dotation0504 { get; set; }
+
+    public decimal? BD_Dotation0505 { get; set; }
+
+    public decimal? BD_Dotation0506 { get; set; }
+
+    public decimal? BD_Dotation0507 { get; set; }
+
+    public decimal? BD_Dotation0508 { get; set; }
+
+    public decimal? BD_Dotation0509 { get; set; }
+
+    public decimal? BD_Dotation0510 { get; set; }
+
+    public decimal? BD_Dotation0511 { get; set; }
+
+    public decimal? BD_Dotation0512 { get; set; }
+
+    public decimal? BD_Dotation0513 { get; set; }
+
+    public decimal? BD_Dotation0514 { get; set; }
+
+    public decimal? BD_Dotation0515 { get; set; }
+
+    public decimal? BD_Dotation0516 { get; set; }
+
+    public decimal? BD_Dotation0517 { get; set; }
+
+    public decimal? BD_Dotation0518 { get; set; }
+
+    public decimal? BD_Dotation0519 { get; set; }
+
+    public decimal? BD_Dotation0520 { get; set; }
+
+    public decimal? BD_Dotation0521 { get; set; }
+
+    public decimal? BD_Dotation0522 { get; set; }
+
+    public decimal? BD_Dotation0523 { get; set; }
+
+    public decimal? BD_Dotation0524 { get; set; }
+
+    public decimal? BD_Dotation0525 { get; set; }
+
+    public decimal? BD_Dotation0526 { get; set; }
+
+    public decimal? BD_Dotation0527 { get; set; }
+
+    public decimal? BD_Dotation0528 { get; set; }
+
+    public decimal? BD_Dotation0529 { get; set; }
+
+    public decimal? BD_Dotation0530 { get; set; }
+
+    public decimal? BD_Dotation0531 { get; set; }
+
+    public decimal? BD_Dotation0532 { get; set; }
+
+    public decimal? BD_Dotation0533 { get; set; }
+
+    public decimal? BD_Dotation0534 { get; set; }
+
+    public decimal? BD_Dotation0535 { get; set; }
+
+    public decimal? BD_Dotation0536 { get; set; }
+
+    public decimal? BD_Dotation0601 { get; set; }
+
+    public decimal? BD_Dotation0602 { get; set; }
+
+    public decimal? BD_Dotation0603 { get; set; }
+
+    public decimal? BD_Dotation0604 { get; set; }
+
+    public decimal? BD_Dotation0605 { get; set; }
+
+    public decimal? BD_Dotation0606 { get; set; }
+
+    public decimal? BD_Dotation0607 { get; set; }
+
+    public decimal? BD_Dotation0608 { get; set; }
+
+    public decimal? BD_Dotation0609 { get; set; }
+
+    public decimal? BD_Dotation0610 { get; set; }
+
+    public decimal? BD_Dotation0611 { get; set; }
+
+    public decimal? BD_Dotation0612 { get; set; }
+
+    public decimal? BD_Dotation0613 { get; set; }
+
+    public decimal? BD_Dotation0614 { get; set; }
+
+    public decimal? BD_Dotation0615 { get; set; }
+
+    public decimal? BD_Dotation0616 { get; set; }
+
+    public decimal? BD_Dotation0617 { get; set; }
+
+    public decimal? BD_Dotation0618 { get; set; }
+
+    public decimal? BD_Dotation0619 { get; set; }
+
+    public decimal? BD_Dotation0620 { get; set; }
+
+    public decimal? BD_Dotation0621 { get; set; }
+
+    public decimal? BD_Dotation0622 { get; set; }
+
+    public decimal? BD_Dotation0623 { get; set; }
+
+    public decimal? BD_Dotation0624 { get; set; }
+
+    public decimal? BD_Dotation0625 { get; set; }
+
+    public decimal? BD_Dotation0626 { get; set; }
+
+    public decimal? BD_Dotation0627 { get; set; }
+
+    public decimal? BD_Dotation0628 { get; set; }
+
+    public decimal? BD_Dotation0629 { get; set; }
+
+    public decimal? BD_Dotation0630 { get; set; }
+
+    public decimal? BD_Dotation0631 { get; set; }
+
+    public decimal? BD_Dotation0632 { get; set; }
+
+    public decimal? BD_Dotation0633 { get; set; }
+
+    public decimal? BD_Dotation0634 { get; set; }
+
+    public decimal? BD_Dotation0635 { get; set; }
+
+    public decimal? BD_Dotation0636 { get; set; }
+
+    public decimal? BD_DotationQ0101 { get; set; }
+
+    public decimal? BD_DotationQ0102 { get; set; }
+
+    public decimal? BD_DotationQ0103 { get; set; }
+
+    public decimal? BD_DotationQ0104 { get; set; }
+
+    public decimal? BD_DotationQ0105 { get; set; }
+
+    public decimal? BD_DotationQ0106 { get; set; }
+
+    public decimal? BD_DotationQ0107 { get; set; }
+
+    public decimal? BD_DotationQ0108 { get; set; }
+
+    public decimal? BD_DotationQ0109 { get; set; }
+
+    public decimal? BD_DotationQ0110 { get; set; }
+
+    public decimal? BD_DotationQ0111 { get; set; }
+
+    public decimal? BD_DotationQ0112 { get; set; }
+
+    public decimal? BD_DotationQ0113 { get; set; }
+
+    public decimal? BD_DotationQ0114 { get; set; }
+
+    public decimal? BD_DotationQ0115 { get; set; }
+
+    public decimal? BD_DotationQ0116 { get; set; }
+
+    public decimal? BD_DotationQ0117 { get; set; }
+
+    public decimal? BD_DotationQ0118 { get; set; }
+
+    public decimal? BD_DotationQ0119 { get; set; }
+
+    public decimal? BD_DotationQ0120 { get; set; }
+
+    public decimal? BD_DotationQ0121 { get; set; }
+
+    public decimal? BD_DotationQ0122 { get; set; }
+
+    public decimal? BD_DotationQ0123 { get; set; }
+
+    public decimal? BD_DotationQ0124 { get; set; }
+
+    public decimal? BD_DotationQ0125 { get; set; }
+
+    public decimal? BD_DotationQ0126 { get; set; }
+
+    public decimal? BD_DotationQ0127 { get; set; }
+
+    public decimal? BD_DotationQ0128 { get; set; }
+
+    public decimal? BD_DotationQ0129 { get; set; }
+
+    public decimal? BD_DotationQ0130 { get; set; }
+
+    public decimal? BD_DotationQ0131 { get; set; }
+
+    public decimal? BD_DotationQ0132 { get; set; }
+
+    public decimal? BD_DotationQ0133 { get; set; }
+
+    public decimal? BD_DotationQ0134 { get; set; }
+
+    public decimal? BD_DotationQ0135 { get; set; }
+
+    public decimal? BD_DotationQ0136 { get; set; }
+
+    public decimal? BD_DotationQ0201 { get; set; }
+
+    public decimal? BD_DotationQ0202 { get; set; }
+
+    public decimal? BD_DotationQ0203 { get; set; }
+
+    public decimal? BD_DotationQ0204 { get; set; }
+
+    public decimal? BD_DotationQ0205 { get; set; }
+
+    public decimal? BD_DotationQ0206 { get; set; }
+
+    public decimal? BD_DotationQ0207 { get; set; }
+
+    public decimal? BD_DotationQ0208 { get; set; }
+
+    public decimal? BD_DotationQ0209 { get; set; }
+
+    public decimal? BD_DotationQ0210 { get; set; }
+
+    public decimal? BD_DotationQ0211 { get; set; }
+
+    public decimal? BD_DotationQ0212 { get; set; }
+
+    public decimal? BD_DotationQ0213 { get; set; }
+
+    public decimal? BD_DotationQ0214 { get; set; }
+
+    public decimal? BD_DotationQ0215 { get; set; }
+
+    public decimal? BD_DotationQ0216 { get; set; }
+
+    public decimal? BD_DotationQ0217 { get; set; }
+
+    public decimal? BD_DotationQ0218 { get; set; }
+
+    public decimal? BD_DotationQ0219 { get; set; }
+
+    public decimal? BD_DotationQ0220 { get; set; }
+
+    public decimal? BD_DotationQ0221 { get; set; }
+
+    public decimal? BD_DotationQ0222 { get; set; }
+
+    public decimal? BD_DotationQ0223 { get; set; }
+
+    public decimal? BD_DotationQ0224 { get; set; }
+
+    public decimal? BD_DotationQ0225 { get; set; }
+
+    public decimal? BD_DotationQ0226 { get; set; }
+
+    public decimal? BD_DotationQ0227 { get; set; }
+
+    public decimal? BD_DotationQ0228 { get; set; }
+
+    public decimal? BD_DotationQ0229 { get; set; }
+
+    public decimal? BD_DotationQ0230 { get; set; }
+
+    public decimal? BD_DotationQ0231 { get; set; }
+
+    public decimal? BD_DotationQ0232 { get; set; }
+
+    public decimal? BD_DotationQ0233 { get; set; }
+
+    public decimal? BD_DotationQ0234 { get; set; }
+
+    public decimal? BD_DotationQ0235 { get; set; }
+
+    public decimal? BD_DotationQ0236 { get; set; }
+
+    public decimal? BD_DotationQ0301 { get; set; }
+
+    public decimal? BD_DotationQ0302 { get; set; }
+
+    public decimal? BD_DotationQ0303 { get; set; }
+
+    public decimal? BD_DotationQ0304 { get; set; }
+
+    public decimal? BD_DotationQ0305 { get; set; }
+
+    public decimal? BD_DotationQ0306 { get; set; }
+
+    public decimal? BD_DotationQ0307 { get; set; }
+
+    public decimal? BD_DotationQ0308 { get; set; }
+
+    public decimal? BD_DotationQ0309 { get; set; }
+
+    public decimal? BD_DotationQ0310 { get; set; }
+
+    public decimal? BD_DotationQ0311 { get; set; }
+
+    public decimal? BD_DotationQ0312 { get; set; }
+
+    public decimal? BD_DotationQ0313 { get; set; }
+
+    public decimal? BD_DotationQ0314 { get; set; }
+
+    public decimal? BD_DotationQ0315 { get; set; }
+
+    public decimal? BD_DotationQ0316 { get; set; }
+
+    public decimal? BD_DotationQ0317 { get; set; }
+
+    public decimal? BD_DotationQ0318 { get; set; }
+
+    public decimal? BD_DotationQ0319 { get; set; }
+
+    public decimal? BD_DotationQ0320 { get; set; }
+
+    public decimal? BD_DotationQ0321 { get; set; }
+
+    public decimal? BD_DotationQ0322 { get; set; }
+
+    public decimal? BD_DotationQ0323 { get; set; }
+
+    public decimal? BD_DotationQ0324 { get; set; }
+
+    public decimal? BD_DotationQ0325 { get; set; }
+
+    public decimal? BD_DotationQ0326 { get; set; }
+
+    public decimal? BD_DotationQ0327 { get; set; }
+
+    public decimal? BD_DotationQ0328 { get; set; }
+
+    public decimal? BD_DotationQ0329 { get; set; }
+
+    public decimal? BD_DotationQ0330 { get; set; }
+
+    public decimal? BD_DotationQ0331 { get; set; }
+
+    public decimal? BD_DotationQ0332 { get; set; }
+
+    public decimal? BD_DotationQ0333 { get; set; }
+
+    public decimal? BD_DotationQ0334 { get; set; }
+
+    public decimal? BD_DotationQ0335 { get; set; }
+
+    public decimal? BD_DotationQ0336 { get; set; }
+
+    public decimal? BD_DotationQ0401 { get; set; }
+
+    public decimal? BD_DotationQ0402 { get; set; }
+
+    public decimal? BD_DotationQ0403 { get; set; }
+
+    public decimal? BD_DotationQ0404 { get; set; }
+
+    public decimal? BD_DotationQ0405 { get; set; }
+
+    public decimal? BD_DotationQ0406 { get; set; }
+
+    public decimal? BD_DotationQ0407 { get; set; }
+
+    public decimal? BD_DotationQ0408 { get; set; }
+
+    public decimal? BD_DotationQ0409 { get; set; }
+
+    public decimal? BD_DotationQ0410 { get; set; }
+
+    public decimal? BD_DotationQ0411 { get; set; }
+
+    public decimal? BD_DotationQ0412 { get; set; }
+
+    public decimal? BD_DotationQ0413 { get; set; }
+
+    public decimal? BD_DotationQ0414 { get; set; }
+
+    public decimal? BD_DotationQ0415 { get; set; }
+
+    public decimal? BD_DotationQ0416 { get; set; }
+
+    public decimal? BD_DotationQ0417 { get; set; }
+
+    public decimal? BD_DotationQ0418 { get; set; }
+
+    public decimal? BD_DotationQ0419 { get; set; }
+
+    public decimal? BD_DotationQ0420 { get; set; }
+
+    public decimal? BD_DotationQ0421 { get; set; }
+
+    public decimal? BD_DotationQ0422 { get; set; }
+
+    public decimal? BD_DotationQ0423 { get; set; }
+
+    public decimal? BD_DotationQ0424 { get; set; }
+
+    public decimal? BD_DotationQ0425 { get; set; }
+
+    public decimal? BD_DotationQ0426 { get; set; }
+
+    public decimal? BD_DotationQ0427 { get; set; }
+
+    public decimal? BD_DotationQ0428 { get; set; }
+
+    public decimal? BD_DotationQ0429 { get; set; }
+
+    public decimal? BD_DotationQ0430 { get; set; }
+
+    public decimal? BD_DotationQ0431 { get; set; }
+
+    public decimal? BD_DotationQ0432 { get; set; }
+
+    public decimal? BD_DotationQ0433 { get; set; }
+
+    public decimal? BD_DotationQ0434 { get; set; }
+
+    public decimal? BD_DotationQ0435 { get; set; }
+
+    public decimal? BD_DotationQ0436 { get; set; }
+
+    public decimal? BD_DotationQ0501 { get; set; }
+
+    public decimal? BD_DotationQ0502 { get; set; }
+
+    public decimal? BD_DotationQ0503 { get; set; }
+
+    public decimal? BD_DotationQ0504 { get; set; }
+
+    public decimal? BD_DotationQ0505 { get; set; }
+
+    public decimal? BD_DotationQ0506 { get; set; }
+
+    public decimal? BD_DotationQ0507 { get; set; }
+
+    public decimal? BD_DotationQ0508 { get; set; }
+
+    public decimal? BD_DotationQ0509 { get; set; }
+
+    public decimal? BD_DotationQ0510 { get; set; }
+
+    public decimal? BD_DotationQ0511 { get; set; }
+
+    public decimal? BD_DotationQ0512 { get; set; }
+
+    public decimal? BD_DotationQ0513 { get; set; }
+
+    public decimal? BD_DotationQ0514 { get; set; }
+
+    public decimal? BD_DotationQ0515 { get; set; }
+
+    public decimal? BD_DotationQ0516 { get; set; }
+
+    public decimal? BD_DotationQ0517 { get; set; }
+
+    public decimal? BD_DotationQ0518 { get; set; }
+
+    public decimal? BD_DotationQ0519 { get; set; }
+
+    public decimal? BD_DotationQ0520 { get; set; }
+
+    public decimal? BD_DotationQ0521 { get; set; }
+
+    public decimal? BD_DotationQ0522 { get; set; }
+
+    public decimal? BD_DotationQ0523 { get; set; }
+
+    public decimal? BD_DotationQ0524 { get; set; }
+
+    public decimal? BD_DotationQ0525 { get; set; }
+
+    public decimal? BD_DotationQ0526 { get; set; }
+
+    public decimal? BD_DotationQ0527 { get; set; }
+
+    public decimal? BD_DotationQ0528 { get; set; }
+
+    public decimal? BD_DotationQ0529 { get; set; }
+
+    public decimal? BD_DotationQ0530 { get; set; }
+
+    public decimal? BD_DotationQ0531 { get; set; }
+
+    public decimal? BD_DotationQ0532 { get; set; }
+
+    public decimal? BD_DotationQ0533 { get; set; }
+
+    public decimal? BD_DotationQ0534 { get; set; }
+
+    public decimal? BD_DotationQ0535 { get; set; }
+
+    public decimal? BD_DotationQ0536 { get; set; }
+
+    public decimal? BD_DotationQ0601 { get; set; }
+
+    public decimal? BD_DotationQ0602 { get; set; }
+
+    public decimal? BD_DotationQ0603 { get; set; }
+
+    public decimal? BD_DotationQ0604 { get; set; }
+
+    public decimal? BD_DotationQ0605 { get; set; }
+
+    public decimal? BD_DotationQ0606 { get; set; }
+
+    public decimal? BD_DotationQ0607 { get; set; }
+
+    public decimal? BD_DotationQ0608 { get; set; }
+
+    public decimal? BD_DotationQ0609 { get; set; }
+
+    public decimal? BD_DotationQ0610 { get; set; }
+
+    public decimal? BD_DotationQ0611 { get; set; }
+
+    public decimal? BD_DotationQ0612 { get; set; }
+
+    public decimal? BD_DotationQ0613 { get; set; }
+
+    public decimal? BD_DotationQ0614 { get; set; }
+
+    public decimal? BD_DotationQ0615 { get; set; }
+
+    public decimal? BD_DotationQ0616 { get; set; }
+
+    public decimal? BD_DotationQ0617 { get; set; }
+
+    public decimal? BD_DotationQ0618 { get; set; }
+
+    public decimal? BD_DotationQ0619 { get; set; }
+
+    public decimal? BD_DotationQ0620 { get; set; }
+
+    public decimal? BD_DotationQ0621 { get; set; }
+
+    public decimal? BD_DotationQ0622 { get; set; }
+
+    public decimal? BD_DotationQ0623 { get; set; }
+
+    public decimal? BD_DotationQ0624 { get; set; }
+
+    public decimal? BD_DotationQ0625 { get; set; }
+
+    public decimal? BD_DotationQ0626 { get; set; }
+
+    public decimal? BD_DotationQ0627 { get; set; }
+
+    public decimal? BD_DotationQ0628 { get; set; }
+
+    public decimal? BD_DotationQ0629 { get; set; }
+
+    public decimal? BD_DotationQ0630 { get; set; }
+
+    public decimal? BD_DotationQ0631 { get; set; }
+
+    public decimal? BD_DotationQ0632 { get; set; }
+
+    public decimal? BD_DotationQ0633 { get; set; }
+
+    public decimal? BD_DotationQ0634 { get; set; }
+
+    public decimal? BD_DotationQ0635 { get; set; }
+
+    public decimal? BD_DotationQ0636 { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual ICollection<F_EBUDGET> F_EBUDGET { get; set; } = new List<F_EBUDGET>();
 }

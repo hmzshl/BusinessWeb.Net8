@@ -3,45 +3,77 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_ARTFOURNISS
-    {
-        public string AR_Ref { get; set; }
-        public byte[] cbAR_Ref { get; set; }
-        public string CT_Num { get; set; }
-        public byte[] cbCT_Num { get; set; }
-        public string AF_RefFourniss { get; set; }
-        public byte[] cbAF_RefFourniss { get; set; }
-        public decimal? AF_PrixAch { get; set; }
-        public short? AF_Unite { get; set; }
-        public decimal? AF_Conversion { get; set; }
-        public short? AF_DelaiAppro { get; set; }
-        public short? AF_Garantie { get; set; }
-        public decimal? AF_Colisage { get; set; }
-        public decimal? AF_QteMini { get; set; }
-        public short? AF_QteMont { get; set; }
-        public short? EG_Champ { get; set; }
-        public short? AF_Principal { get; set; }
-        public decimal? AF_PrixDev { get; set; }
-        public short? AF_Devise { get; set; }
-        public decimal? AF_Remise { get; set; }
-        public decimal? AF_ConvDiv { get; set; }
-        public short? AF_TypeRem { get; set; }
-        public string AF_CodeBarre { get; set; }
-        public byte[] cbAF_CodeBarre { get; set; }
-        public decimal? AF_PrixAchNouv { get; set; }
-        public decimal? AF_PrixDevNouv { get; set; }
-        public decimal? AF_RemiseNouv { get; set; }
-        public DateTime? AF_DateApplication { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_ARTICLE AR_RefNavigation { get; set; }
-        public virtual F_COMPTET CT_NumNavigation { get; set; }
-    }
+public partial class F_ARTFOURNISS
+{
+    public string AR_Ref { get; set; }
+
+    public byte[] cbAR_Ref { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public byte[] cbCT_Num { get; set; }
+
+    public string AF_RefFourniss { get; set; }
+
+    public byte[] cbAF_RefFourniss { get; set; }
+
+    public decimal? AF_PrixAch { get; set; }
+
+    public short? AF_Unite { get; set; }
+
+    public decimal? AF_Conversion { get; set; }
+
+    public short? AF_DelaiAppro { get; set; }
+
+    public short? AF_Garantie { get; set; }
+
+    public decimal? AF_Colisage { get; set; }
+
+    public decimal? AF_QteMini { get; set; }
+
+    public short? AF_QteMont { get; set; }
+
+    public short? EG_Champ { get; set; }
+
+    public short? AF_Principal { get; set; }
+
+    public decimal? AF_PrixDev { get; set; }
+
+    public short? AF_Devise { get; set; }
+
+    public decimal? AF_Remise { get; set; }
+
+    public decimal? AF_ConvDiv { get; set; }
+
+    public short? AF_TypeRem { get; set; }
+
+    public string AF_CodeBarre { get; set; }
+
+    public byte[] cbAF_CodeBarre { get; set; }
+
+    public decimal? AF_PrixAchNouv { get; set; }
+
+    public decimal? AF_PrixDevNouv { get; set; }
+
+    public decimal? AF_RemiseNouv { get; set; }
+
+    public DateTime? AF_DateApplication { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_ARTICLE AR_RefNavigation { get; set; }
+
+    public virtual F_COMPTET CT_NumNavigation { get; set; }
 }

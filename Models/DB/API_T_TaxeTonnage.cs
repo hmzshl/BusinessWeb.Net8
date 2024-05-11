@@ -3,15 +3,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_TaxeTonnage
-    {
-        public int id { get; set; }
-        public int Materiel { get; set; }
-        public DateTime? DatePaiement { get; set; }
-        public DateTime? DateValidite { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_Materiel MaterielNavigation { get; set; }
-    }
+public partial class API_T_TaxeTonnage
+{
+    public int id { get; set; }
+
+    public int Materiel { get; set; }
+
+    public DateTime? DatePaiement { get; set; }
+
+    public DateTime? DateValidite { get; set; }
+
+    public virtual API_T_Materiel MaterielNavigation { get; set; }
 }

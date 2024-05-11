@@ -3,26 +3,39 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_BONAPAYERHISTO
-    {
-        public int EC_No { get; set; }
-        public short? BP_Type { get; set; }
-        public int? CO_No { get; set; }
-        public int? cbCO_No { get; set; }
-        public DateTime? BP_Date { get; set; }
-        public string BP_Commentaire { get; set; }
-        public short? BP_Application { get; set; }
-        public short? BP_Retour { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_ECRITUREC EC_NoNavigation { get; set; }
-        public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
-    }
+public partial class F_BONAPAYERHISTO
+{
+    public int EC_No { get; set; }
+
+    public short? BP_Type { get; set; }
+
+    public int? CO_No { get; set; }
+
+    public int? cbCO_No { get; set; }
+
+    public DateTime? BP_Date { get; set; }
+
+    public string BP_Commentaire { get; set; }
+
+    public short? BP_Application { get; set; }
+
+    public short? BP_Retour { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_ECRITUREC EC_NoNavigation { get; set; }
+
+    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
 }

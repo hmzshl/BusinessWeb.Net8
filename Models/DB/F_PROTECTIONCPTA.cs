@@ -3,37 +3,47 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_PROTECTIONCPTA
 {
-    public partial class F_PROTECTIONCPTA
-    {
-        public F_PROTECTIONCPTA()
-        {
-            F_COLLABORATEUR = new HashSet<F_COLLABORATEUR>();
-            F_EPROTECTIONCPTA = new HashSet<F_EPROTECTIONCPTA>();
-            InversecbPROT_UserProfilNavigation = new HashSet<F_PROTECTIONCPTA>();
-        }
+    public string PROT_User { get; set; }
 
-        public string PROT_User { get; set; }
-        public byte[] cbCIPROT_User { get; set; }
-        public string PROT_Description { get; set; }
-        public short? PROT_Right { get; set; }
-        public int? PROT_No { get; set; }
-        public string PROT_EMail { get; set; }
-        public int? PROT_UserProfil { get; set; }
-        public int? cbPROT_UserProfil { get; set; }
-        public short? PROT_Administrator { get; set; }
-        public DateTime? PROT_DatePwd { get; set; }
-        public DateTime? PROT_LastLoginDate { get; set; }
-        public string PROT_LastLoginTime { get; set; }
-        public short? PROT_PwdStatus { get; set; }
-        public short? PROT_Disabled { get; set; }
-        public int? PROT_ApplicationRight { get; set; }
-        public int cbMarq { get; set; }
+    public byte[] cbCIPROT_User { get; set; }
 
-        public virtual F_PROTECTIONCPTA cbPROT_UserProfilNavigation { get; set; }
-        public virtual ICollection<F_COLLABORATEUR> F_COLLABORATEUR { get; set; }
-        public virtual ICollection<F_EPROTECTIONCPTA> F_EPROTECTIONCPTA { get; set; }
-        public virtual ICollection<F_PROTECTIONCPTA> InversecbPROT_UserProfilNavigation { get; set; }
-    }
+    public string PROT_Description { get; set; }
+
+    public short? PROT_Right { get; set; }
+
+    public int? PROT_No { get; set; }
+
+    public string PROT_EMail { get; set; }
+
+    public int? PROT_UserProfil { get; set; }
+
+    public int? cbPROT_UserProfil { get; set; }
+
+    public short? PROT_Administrator { get; set; }
+
+    public DateTime? PROT_DatePwd { get; set; }
+
+    public DateTime? PROT_LastLoginDate { get; set; }
+
+    public string PROT_LastLoginTime { get; set; }
+
+    public short? PROT_PwdStatus { get; set; }
+
+    public short? PROT_Disabled { get; set; }
+
+    public int? PROT_ApplicationRight { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public virtual ICollection<F_COLLABORATEUR> F_COLLABORATEUR { get; set; } = new List<F_COLLABORATEUR>();
+
+    public virtual ICollection<F_EPROTECTIONCPTA> F_EPROTECTIONCPTA { get; set; } = new List<F_EPROTECTIONCPTA>();
+
+    public virtual ICollection<F_PROTECTIONCPTA> InversecbPROT_UserProfilNavigation { get; set; } = new List<F_PROTECTIONCPTA>();
+
+    public virtual F_PROTECTIONCPTA cbPROT_UserProfilNavigation { get; set; }
 }

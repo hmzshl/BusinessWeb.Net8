@@ -3,44 +3,51 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_DEPOTEMPL
 {
-    public partial class F_DEPOTEMPL
-    {
-        public F_DEPOTEMPL()
-        {
-            F_ARTSTOCKEMPL = new HashSet<F_ARTSTOCKEMPL>();
-            F_ARTSTOCKcbDP_NoControleNavigation = new HashSet<F_ARTSTOCK>();
-            F_ARTSTOCKcbDP_NoPrincipalNavigation = new HashSet<F_ARTSTOCK>();
-            F_DEPOT = new HashSet<F_DEPOT>();
-            F_DOCLIGNEEMPL = new HashSet<F_DOCLIGNEEMPL>();
-            F_GAMSTOCKEMPL = new HashSet<F_GAMSTOCKEMPL>();
-            F_GAMSTOCKcbDP_NoControleNavigation = new HashSet<F_GAMSTOCK>();
-            F_GAMSTOCKcbDP_NoPrincipalNavigation = new HashSet<F_GAMSTOCK>();
-        }
+    public int DE_No { get; set; }
 
-        public int DE_No { get; set; }
-        public int? DP_No { get; set; }
-        public string DP_Code { get; set; }
-        public byte[] cbDP_Code { get; set; }
-        public string DP_Intitule { get; set; }
-        public short? DP_Zone { get; set; }
-        public short? DP_Type { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public int? DP_No { get; set; }
 
-        public virtual F_DEPOT DE_NoNavigation { get; set; }
-        public virtual ICollection<F_ARTSTOCKEMPL> F_ARTSTOCKEMPL { get; set; }
-        public virtual ICollection<F_ARTSTOCK> F_ARTSTOCKcbDP_NoControleNavigation { get; set; }
-        public virtual ICollection<F_ARTSTOCK> F_ARTSTOCKcbDP_NoPrincipalNavigation { get; set; }
-        public virtual ICollection<F_DEPOT> F_DEPOT { get; set; }
-        public virtual ICollection<F_DOCLIGNEEMPL> F_DOCLIGNEEMPL { get; set; }
-        public virtual ICollection<F_GAMSTOCKEMPL> F_GAMSTOCKEMPL { get; set; }
-        public virtual ICollection<F_GAMSTOCK> F_GAMSTOCKcbDP_NoControleNavigation { get; set; }
-        public virtual ICollection<F_GAMSTOCK> F_GAMSTOCKcbDP_NoPrincipalNavigation { get; set; }
-    }
+    public string DP_Code { get; set; }
+
+    public byte[] cbDP_Code { get; set; }
+
+    public string DP_Intitule { get; set; }
+
+    public short? DP_Zone { get; set; }
+
+    public short? DP_Type { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_DEPOT DE_NoNavigation { get; set; }
+
+    public virtual ICollection<F_ARTSTOCKEMPL> F_ARTSTOCKEMPL { get; set; } = new List<F_ARTSTOCKEMPL>();
+
+    public virtual ICollection<F_ARTSTOCK> F_ARTSTOCKcbDP_NoControleNavigation { get; set; } = new List<F_ARTSTOCK>();
+
+    public virtual ICollection<F_ARTSTOCK> F_ARTSTOCKcbDP_NoPrincipalNavigation { get; set; } = new List<F_ARTSTOCK>();
+
+    public virtual ICollection<F_DEPOT> F_DEPOT { get; set; } = new List<F_DEPOT>();
+
+    public virtual ICollection<F_DOCLIGNEEMPL> F_DOCLIGNEEMPL { get; set; } = new List<F_DOCLIGNEEMPL>();
+
+    public virtual ICollection<F_GAMSTOCKEMPL> F_GAMSTOCKEMPL { get; set; } = new List<F_GAMSTOCKEMPL>();
+
+    public virtual ICollection<F_GAMSTOCK> F_GAMSTOCKcbDP_NoControleNavigation { get; set; } = new List<F_GAMSTOCK>();
+
+    public virtual ICollection<F_GAMSTOCK> F_GAMSTOCKcbDP_NoPrincipalNavigation { get; set; } = new List<F_GAMSTOCK>();
 }

@@ -3,27 +3,43 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_MANDAT
 {
-    public partial class F_MANDAT
-    {
-        public string CT_Num { get; set; }
-        public byte[] cbCT_Num { get; set; }
-        public short BT_Num { get; set; }
-        public int MD_No { get; set; }
-        public string MD_Reference { get; set; }
-        public byte[] cbMD_Reference { get; set; }
-        public string MD_Intitule { get; set; }
-        public DateTime? MD_Date { get; set; }
-        public short? MD_TypePaiement { get; set; }
-        public short? MD_Statut { get; set; }
-        public short? MD_Revoque { get; set; }
-        public short? MD_B2B { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
-    }
+    public string CT_Num { get; set; }
+
+    public byte[] cbCT_Num { get; set; }
+
+    public short BT_Num { get; set; }
+
+    public int MD_No { get; set; }
+
+    public string MD_Reference { get; set; }
+
+    public byte[] cbMD_Reference { get; set; }
+
+    public string MD_Intitule { get; set; }
+
+    public DateTime? MD_Date { get; set; }
+
+    public short? MD_TypePaiement { get; set; }
+
+    public short? MD_Statut { get; set; }
+
+    public short? MD_Revoque { get; set; }
+
+    public short? MD_B2B { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 }

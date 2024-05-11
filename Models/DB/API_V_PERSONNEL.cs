@@ -3,88 +3,165 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_V_PERSONNEL
 {
-    public partial class API_V_PERSONNEL
-    {
-        public int id { get; set; }
-        public string Nom { get; set; }
-        public string Prenom { get; set; }
-        public DateTime? DateEmbouche { get; set; }
-        public string Activite { get; set; }
-        public decimal SalaireNet { get; set; }
-        public decimal CNSS { get; set; }
-        public decimal AMO { get; set; }
-        public decimal IR { get; set; }
-        public decimal CMR { get; set; }
-        public string Banque { get; set; }
-        public int Paiement { get; set; }
-        public DateTime? DateNaissance { get; set; }
-        public string CIN { get; set; }
-        public string Adresse { get; set; }
-        public int Departement { get; set; }
-        public string Telephone { get; set; }
-        public string NumCNSS { get; set; }
-        public int Agence { get; set; }
-        public int Fonction { get; set; }
-        public string Email { get; set; }
-        public int Site { get; set; }
-        public string Matricule { get; set; }
-        public string LieuNaissance { get; set; }
-        public int? Nationalite { get; set; }
-        public string Diplome { get; set; }
-        public int? Qualification { get; set; }
-        public int? Categorie { get; set; }
-        public DateTime? DateEmbauche { get; set; }
-        public bool? Actif { get; set; }
-        public decimal? SalaireBase { get; set; }
-        public string RIB { get; set; }
-        public int? SituationFamiliale { get; set; }
-        public string CIMR { get; set; }
-        public int? ModePaiement { get; set; }
-        public int? NombreEnfant { get; set; }
-        public int? PersonneCharge { get; set; }
-        public int? UnitePaiement { get; set; }
-        public int? TypeDeclaration { get; set; }
-        public int? TypePaiement { get; set; }
-        public int? ModelePaie { get; set; }
-        public int? JourRepos { get; set; }
-        public string Code { get; set; }
-        public int? Equipe { get; set; }
-        public decimal? TauxAnc { get; set; }
-        public decimal? Anc { get; set; }
-        public decimal? TauxRepos { get; set; }
-        public bool? PrimeDiversCNSS { get; set; }
-        public bool? PrimeReposCNSS { get; set; }
-        public bool? Checked { get; set; }
-        public string BanqueID { get; set; }
-        public string GuichetID { get; set; }
-        public string CompteID { get; set; }
-        public string CleID { get; set; }
-        public int? Contrat { get; set; }
-        public string PermisNum { get; set; }
-        public string PermisType { get; set; }
-        public DateTime? PermisDateDebut { get; set; }
-        public DateTime? PermisDateFin { get; set; }
-        public string TelephonePerso { get; set; }
-        public string TelephonePro { get; set; }
-        public string TelephoneAutre { get; set; }
-        public decimal SalaireBaseMensuel { get; set; }
-        public decimal SalaireBaseJournalier { get; set; }
-        public decimal SalaireBaseHoraire { get; set; }
-        public int SalaireType { get; set; }
-        public int Projet { get; set; }
-        public DateTime? ExpirationCIN { get; set; }
-        public string RefContrat { get; set; }
-        public DateTime? DateSortie { get; set; }
-        public string Intitule { get; set; }
-        public string DepartementIntitule { get; set; }
-        public string AgenceIntitule { get; set; }
-        public string FonctionIntitule { get; set; }
-        public string NationaliteIntitule { get; set; }
-        public string SituationFamilialeIntitule { get; set; }
-        public string ContratIntitule { get; set; }
-        public string ZoneIntitule { get; set; }
-        public string ModePaiementIntitule { get; set; }
-    }
+    public int id { get; set; }
+
+    public string Nom { get; set; }
+
+    public string Prenom { get; set; }
+
+    public DateTime? DateEmbouche { get; set; }
+
+    public string Activite { get; set; }
+
+    public decimal SalaireNet { get; set; }
+
+    public decimal CNSS { get; set; }
+
+    public decimal AMO { get; set; }
+
+    public decimal IR { get; set; }
+
+    public decimal CMR { get; set; }
+
+    public string Banque { get; set; }
+
+    public int Paiement { get; set; }
+
+    public DateTime? DateNaissance { get; set; }
+
+    public string CIN { get; set; }
+
+    public string Adresse { get; set; }
+
+    public int Departement { get; set; }
+
+    public string Telephone { get; set; }
+
+    public string NumCNSS { get; set; }
+
+    public int Agence { get; set; }
+
+    public int Fonction { get; set; }
+
+    public string Email { get; set; }
+
+    public int Site { get; set; }
+
+    public string Matricule { get; set; }
+
+    public string LieuNaissance { get; set; }
+
+    public int? Nationalite { get; set; }
+
+    public string Diplome { get; set; }
+
+    public int? Qualification { get; set; }
+
+    public int? Categorie { get; set; }
+
+    public DateTime? DateEmbauche { get; set; }
+
+    public bool? Actif { get; set; }
+
+    public decimal? SalaireBase { get; set; }
+
+    public string RIB { get; set; }
+
+    public int? SituationFamiliale { get; set; }
+
+    public string CIMR { get; set; }
+
+    public int? ModePaiement { get; set; }
+
+    public int? NombreEnfant { get; set; }
+
+    public int? PersonneCharge { get; set; }
+
+    public int? UnitePaiement { get; set; }
+
+    public int? TypeDeclaration { get; set; }
+
+    public int? TypePaiement { get; set; }
+
+    public int? ModelePaie { get; set; }
+
+    public int? JourRepos { get; set; }
+
+    public string Code { get; set; }
+
+    public int? Equipe { get; set; }
+
+    public decimal? TauxAnc { get; set; }
+
+    public decimal? Anc { get; set; }
+
+    public decimal? TauxRepos { get; set; }
+
+    public bool? PrimeDiversCNSS { get; set; }
+
+    public bool? PrimeReposCNSS { get; set; }
+
+    public bool? Checked { get; set; }
+
+    public string BanqueID { get; set; }
+
+    public string GuichetID { get; set; }
+
+    public string CompteID { get; set; }
+
+    public string CleID { get; set; }
+
+    public int? Contrat { get; set; }
+
+    public string PermisNum { get; set; }
+
+    public string PermisType { get; set; }
+
+    public DateTime? PermisDateDebut { get; set; }
+
+    public DateTime? PermisDateFin { get; set; }
+
+    public string TelephonePerso { get; set; }
+
+    public string TelephonePro { get; set; }
+
+    public string TelephoneAutre { get; set; }
+
+    public decimal SalaireBaseMensuel { get; set; }
+
+    public decimal SalaireBaseJournalier { get; set; }
+
+    public decimal SalaireBaseHoraire { get; set; }
+
+    public int SalaireType { get; set; }
+
+    public int Projet { get; set; }
+
+    public DateTime? ExpirationCIN { get; set; }
+
+    public string RefContrat { get; set; }
+
+    public DateTime? DateSortie { get; set; }
+
+    public string Intitule { get; set; }
+
+    public string DepartementIntitule { get; set; }
+
+    public string AgenceIntitule { get; set; }
+
+    public string FonctionIntitule { get; set; }
+
+    public string NationaliteIntitule { get; set; }
+
+    public string SituationFamilialeIntitule { get; set; }
+
+    public string ContratIntitule { get; set; }
+
+    public string ZoneIntitule { get; set; }
+
+    public string ModePaiementIntitule { get; set; }
 }

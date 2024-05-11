@@ -3,19 +3,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_Information
 {
-    public partial class API_T_Information
-    {
-        public API_T_Information()
-        {
-            API_T_AgenceOffre = new HashSet<API_T_AgenceOffre>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public int Tab { get; set; }
-        public string Valeur { get; set; }
+    public int Tab { get; set; }
 
-        public virtual ICollection<API_T_AgenceOffre> API_T_AgenceOffre { get; set; }
-    }
+    public string Valeur { get; set; }
+
+    public virtual ICollection<API_T_AgenceOffre> API_T_AgenceOffre { get; set; } = new List<API_T_AgenceOffre>();
 }

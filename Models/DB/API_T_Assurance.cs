@@ -3,23 +3,35 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_Assurance
 {
-    public partial class API_T_Assurance
-    {
-        public int id { get; set; }
-        public int Type { get; set; }
-        public int? Projet { get; set; }
-        public int? Materiel { get; set; }
-        public int? Personnel { get; set; }
-        public string Fournisseur { get; set; }
-        public decimal? Montant { get; set; }
-        public int? ModePaiement { get; set; }
-        public string Libelle { get; set; }
-        public DateTime? DateDebut { get; set; }
-        public string Fichier { get; set; }
-        public DateTime? DateFin { get; set; }
-        public decimal? Prolongement { get; set; }
-        public DateTime? NouvelleDateFin { get; set; }
-    }
+    public int id { get; set; }
+
+    public int Type { get; set; }
+
+    public int? Projet { get; set; }
+
+    public int? Materiel { get; set; }
+
+    public int? Personnel { get; set; }
+
+    public string Fournisseur { get; set; }
+
+    public decimal? Montant { get; set; }
+
+    public int? ModePaiement { get; set; }
+
+    public string Libelle { get; set; }
+
+    public DateTime? DateDebut { get; set; }
+
+    public string Fichier { get; set; }
+
+    public DateTime? DateFin { get; set; }
+
+    public decimal? Prolongement { get; set; }
+
+    public DateTime? NouvelleDateFin { get; set; }
 }

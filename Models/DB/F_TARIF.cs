@@ -3,49 +3,71 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_TARIF
 {
-    public partial class F_TARIF
-    {
-        public F_TARIF()
-        {
-            F_REPCOM = new HashSet<F_REPCOM>();
-            F_TARIFREMISE = new HashSet<F_TARIFREMISE>();
-            F_TARIFSELECT = new HashSet<F_TARIFSELECT>();
-        }
+    public int? TF_No { get; set; }
 
-        public int? TF_No { get; set; }
-        public string TF_Intitule { get; set; }
-        public byte[] cbTF_Intitule { get; set; }
-        public short? TF_Interes { get; set; }
-        public DateTime? TF_Debut { get; set; }
-        public DateTime? TF_Fin { get; set; }
-        public short? TF_Objectif { get; set; }
-        public short? TF_Domaine { get; set; }
-        public short? TF_Base { get; set; }
-        public short? TF_Calcul { get; set; }
-        public string AR_Ref { get; set; }
-        public byte[] cbAR_Ref { get; set; }
-        public decimal? TF_Remise01REM_Valeur { get; set; }
-        public short? TF_Remise01REM_Type { get; set; }
-        public decimal? TF_Remise02REM_Valeur { get; set; }
-        public short? TF_Remise02REM_Type { get; set; }
-        public decimal? TF_Remise03REM_Valeur { get; set; }
-        public short? TF_Remise03REM_Type { get; set; }
-        public short? TF_Type { get; set; }
-        public string CT_Num { get; set; }
-        public byte[] cbCT_Num { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public string TF_Intitule { get; set; }
 
-        public virtual F_ARTICLE AR_RefNavigation { get; set; }
-        public virtual F_COMPTET CT_NumNavigation { get; set; }
-        public virtual ICollection<F_REPCOM> F_REPCOM { get; set; }
-        public virtual ICollection<F_TARIFREMISE> F_TARIFREMISE { get; set; }
-        public virtual ICollection<F_TARIFSELECT> F_TARIFSELECT { get; set; }
-    }
+    public byte[] cbTF_Intitule { get; set; }
+
+    public short? TF_Interes { get; set; }
+
+    public DateTime? TF_Debut { get; set; }
+
+    public DateTime? TF_Fin { get; set; }
+
+    public short? TF_Objectif { get; set; }
+
+    public short? TF_Domaine { get; set; }
+
+    public short? TF_Base { get; set; }
+
+    public short? TF_Calcul { get; set; }
+
+    public string AR_Ref { get; set; }
+
+    public byte[] cbAR_Ref { get; set; }
+
+    public decimal? TF_Remise01REM_Valeur { get; set; }
+
+    public short? TF_Remise01REM_Type { get; set; }
+
+    public decimal? TF_Remise02REM_Valeur { get; set; }
+
+    public short? TF_Remise02REM_Type { get; set; }
+
+    public decimal? TF_Remise03REM_Valeur { get; set; }
+
+    public short? TF_Remise03REM_Type { get; set; }
+
+    public short? TF_Type { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public byte[] cbCT_Num { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_ARTICLE AR_RefNavigation { get; set; }
+
+    public virtual F_COMPTET CT_NumNavigation { get; set; }
+
+    public virtual ICollection<F_REPCOM> F_REPCOM { get; set; } = new List<F_REPCOM>();
+
+    public virtual ICollection<F_TARIFREMISE> F_TARIFREMISE { get; set; } = new List<F_TARIFREMISE>();
+
+    public virtual ICollection<F_TARIFSELECT> F_TARIFSELECT { get; set; } = new List<F_TARIFSELECT>();
 }

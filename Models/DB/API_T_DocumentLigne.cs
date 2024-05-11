@@ -3,42 +3,71 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_DocumentLigne
-    {
-        public int id { get; set; }
-        public int ProjeAPI_T_ID { get; set; }
-        public string CAPI_T_Num { get; set; }
-        public string DO_Piece { get; set; }
-        public DateTime? DO_Date { get; set; }
-        public string DO_Ref { get; set; }
-        public string AR_Ref { get; set; }
-        public string DL_Design { get; set; }
-        public decimal DL_PrixUnitaire { get; set; }
-        public int DL_Taxe1 { get; set; }
-        public string DL_CodeTaxe1 { get; set; }
-        public decimal DL_Qte { get; set; }
-        public decimal DL_QteDE { get; set; }
-        public decimal DL_QteBC { get; set; }
-        public string EU_Enumere { get; set; }
-        public decimal DL_MontantHT { get; set; }
-        public decimal DL_MontantTTC { get; set; }
-        public int Version { get; set; }
-        public int DO_Type { get; set; }
-        public int Ordre { get; set; }
-        public decimal DL_PrixRevient { get; set; }
-        public decimal DL_MargeU { get; set; }
-        public decimal DL_MargeTotal { get; set; }
-        public decimal DL_MargePourcentage { get; set; }
-        public decimal DL_MontantHTBC { get; set; }
-        public decimal DL_MontantTTCBC { get; set; }
-        public decimal Superficie { get; set; }
-        public decimal DL_PUBC { get; set; }
-        public decimal DL_PrixBC { get; set; }
-        public decimal MargeLibre { get; set; }
-        public int Entete { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_DocumentEntete EnteteNavigation { get; set; }
-    }
+public partial class API_T_DocumentLigne
+{
+    public int id { get; set; }
+
+    public int ProjeAPI_T_ID { get; set; }
+
+    public string CAPI_T_Num { get; set; }
+
+    public string DO_Piece { get; set; }
+
+    public DateTime? DO_Date { get; set; }
+
+    public string DO_Ref { get; set; }
+
+    public string AR_Ref { get; set; }
+
+    public string DL_Design { get; set; }
+
+    public decimal DL_PrixUnitaire { get; set; }
+
+    public int DL_Taxe1 { get; set; }
+
+    public string DL_CodeTaxe1 { get; set; }
+
+    public decimal DL_Qte { get; set; }
+
+    public decimal DL_QteDE { get; set; }
+
+    public decimal DL_QteBC { get; set; }
+
+    public string EU_Enumere { get; set; }
+
+    public decimal DL_MontantHT { get; set; }
+
+    public decimal DL_MontantTTC { get; set; }
+
+    public int Version { get; set; }
+
+    public int DO_Type { get; set; }
+
+    public int Ordre { get; set; }
+
+    public decimal DL_PrixRevient { get; set; }
+
+    public decimal DL_MargeU { get; set; }
+
+    public decimal DL_MargeTotal { get; set; }
+
+    public decimal DL_MargePourcentage { get; set; }
+
+    public decimal DL_MontantHTBC { get; set; }
+
+    public decimal DL_MontantTTCBC { get; set; }
+
+    public decimal Superficie { get; set; }
+
+    public decimal DL_PUBC { get; set; }
+
+    public decimal DL_PrixBC { get; set; }
+
+    public decimal MargeLibre { get; set; }
+
+    public int Entete { get; set; }
+
+    public virtual API_T_DocumentEntete EnteteNavigation { get; set; }
 }

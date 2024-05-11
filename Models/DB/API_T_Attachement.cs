@@ -3,36 +3,47 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_Attachement
 {
-    public partial class API_T_Attachement
-    {
-        public API_T_Attachement()
-        {
-            API_T_AttachementDetail = new HashSet<API_T_AttachementDetail>();
-            API_T_AttachementHorsBD = new HashSet<API_T_AttachementHorsBD>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public int Projet { get; set; }
-        public DateTime? Date { get; set; }
-        public string Piece { get; set; }
-        public string Libelle { get; set; }
-        public int Responsable { get; set; }
-        public decimal Montant { get; set; }
-        public decimal MontantMarche { get; set; }
-        public decimal MontantCumul { get; set; }
-        public decimal MontantReste { get; set; }
-        public decimal TauxRabais { get; set; }
-        public DateTime? DateDebut { get; set; }
-        public DateTime? DateFin { get; set; }
-        public int? Statut { get; set; }
-        public string NumeroDecompte { get; set; }
-        public DateTime? DateDecompte { get; set; }
-        public decimal? MontantTTC { get; set; }
+    public int Projet { get; set; }
 
-        public virtual API_T_Projet ProjetNavigation { get; set; }
-        public virtual ICollection<API_T_AttachementDetail> API_T_AttachementDetail { get; set; }
-        public virtual ICollection<API_T_AttachementHorsBD> API_T_AttachementHorsBD { get; set; }
-    }
+    public DateTime? Date { get; set; }
+
+    public string Piece { get; set; }
+
+    public string Libelle { get; set; }
+
+    public int Responsable { get; set; }
+
+    public decimal Montant { get; set; }
+
+    public decimal MontantMarche { get; set; }
+
+    public decimal MontantCumul { get; set; }
+
+    public decimal MontantReste { get; set; }
+
+    public decimal TauxRabais { get; set; }
+
+    public DateTime? DateDebut { get; set; }
+
+    public DateTime? DateFin { get; set; }
+
+    public int? Statut { get; set; }
+
+    public string NumeroDecompte { get; set; }
+
+    public DateTime? DateDecompte { get; set; }
+
+    public decimal? MontantTTC { get; set; }
+
+    public virtual ICollection<API_T_AttachementDetail> API_T_AttachementDetail { get; set; } = new List<API_T_AttachementDetail>();
+
+    public virtual ICollection<API_T_AttachementHorsBD> API_T_AttachementHorsBD { get; set; } = new List<API_T_AttachementHorsBD>();
+
+    public virtual API_T_Projet ProjetNavigation { get; set; }
 }

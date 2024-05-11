@@ -3,73 +3,123 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_ABONNEMENT
 {
-    public partial class F_ABONNEMENT
-    {
-        public F_ABONNEMENT()
-        {
-            F_ABOPERIODE = new HashSet<F_ABOPERIODE>();
-        }
+    public int? AB_No { get; set; }
 
-        public int? AB_No { get; set; }
-        public short? AB_TypeTiers { get; set; }
-        public short? AB_Type { get; set; }
-        public string CT_Num { get; set; }
-        public byte[] cbCT_Num { get; set; }
-        public string AB_Modele { get; set; }
-        public byte[] cbAB_Modele { get; set; }
-        public string AB_Intitule { get; set; }
-        public byte[] cbAB_Intitule { get; set; }
-        public string AB_Contrat { get; set; }
-        public short? AB_Periodicite { get; set; }
-        public short? AB_TypePeriod { get; set; }
-        public short? AB_Duree { get; set; }
-        public short? AB_TypeDuree { get; set; }
-        public DateTime? AB_Debut { get; set; }
-        public DateTime? AB_Fin { get; set; }
-        public DateTime? AB_Resiliation { get; set; }
-        public short? AB_Motif { get; set; }
-        public short? AB_Delai { get; set; }
-        public short? AB_TypeDelai { get; set; }
-        public DateTime? AB_FinAbo { get; set; }
-        public short? AB_Reconduction { get; set; }
-        public short? AB_PieceGen { get; set; }
-        public short? AB_Souche { get; set; }
-        public short? AB_NbJoursGen { get; set; }
-        public short? AB_TypeGen { get; set; }
-        public short? AB_JourTbGen01 { get; set; }
-        public short? AB_JourTbGen02 { get; set; }
-        public short? AB_JourTbGen03 { get; set; }
-        public short? AB_JourTbGen04 { get; set; }
-        public short? AB_JourTbGen05 { get; set; }
-        public short? AB_JourTbGen06 { get; set; }
-        public short? AB_NbJoursLivr { get; set; }
-        public short? AB_TypeLivr { get; set; }
-        public short? AB_JourTbLivr01 { get; set; }
-        public short? AB_JourTbLivr02 { get; set; }
-        public short? AB_JourTbLivr03 { get; set; }
-        public short? AB_JourTbLivr04 { get; set; }
-        public short? AB_JourTbLivr05 { get; set; }
-        public short? AB_JourTbLivr06 { get; set; }
-        public short? AB_Entete { get; set; }
-        public short? AB_Tarif { get; set; }
-        public short? AB_Remise { get; set; }
-        public short? AB_CatCompta { get; set; }
-        public short? AB_Represent { get; set; }
-        public short? AB_Depot { get; set; }
-        public short? AB_Escompte { get; set; }
-        public short? AB_Echeance { get; set; }
-        public short? AB_Contact { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public short? AB_TypeTiers { get; set; }
 
-        public virtual F_COMPTET CT_NumNavigation { get; set; }
-        public virtual F_ABOENTETE F_ABOENTETE { get; set; }
-        public virtual ICollection<F_ABOPERIODE> F_ABOPERIODE { get; set; }
-    }
+    public short? AB_Type { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public byte[] cbCT_Num { get; set; }
+
+    public string AB_Modele { get; set; }
+
+    public byte[] cbAB_Modele { get; set; }
+
+    public string AB_Intitule { get; set; }
+
+    public byte[] cbAB_Intitule { get; set; }
+
+    public string AB_Contrat { get; set; }
+
+    public short? AB_Periodicite { get; set; }
+
+    public short? AB_TypePeriod { get; set; }
+
+    public short? AB_Duree { get; set; }
+
+    public short? AB_TypeDuree { get; set; }
+
+    public DateTime? AB_Debut { get; set; }
+
+    public DateTime? AB_Fin { get; set; }
+
+    public DateTime? AB_Resiliation { get; set; }
+
+    public short? AB_Motif { get; set; }
+
+    public short? AB_Delai { get; set; }
+
+    public short? AB_TypeDelai { get; set; }
+
+    public DateTime? AB_FinAbo { get; set; }
+
+    public short? AB_Reconduction { get; set; }
+
+    public short? AB_PieceGen { get; set; }
+
+    public short? AB_Souche { get; set; }
+
+    public short? AB_NbJoursGen { get; set; }
+
+    public short? AB_TypeGen { get; set; }
+
+    public short? AB_JourTbGen01 { get; set; }
+
+    public short? AB_JourTbGen02 { get; set; }
+
+    public short? AB_JourTbGen03 { get; set; }
+
+    public short? AB_JourTbGen04 { get; set; }
+
+    public short? AB_JourTbGen05 { get; set; }
+
+    public short? AB_JourTbGen06 { get; set; }
+
+    public short? AB_NbJoursLivr { get; set; }
+
+    public short? AB_TypeLivr { get; set; }
+
+    public short? AB_JourTbLivr01 { get; set; }
+
+    public short? AB_JourTbLivr02 { get; set; }
+
+    public short? AB_JourTbLivr03 { get; set; }
+
+    public short? AB_JourTbLivr04 { get; set; }
+
+    public short? AB_JourTbLivr05 { get; set; }
+
+    public short? AB_JourTbLivr06 { get; set; }
+
+    public short? AB_Entete { get; set; }
+
+    public short? AB_Tarif { get; set; }
+
+    public short? AB_Remise { get; set; }
+
+    public short? AB_CatCompta { get; set; }
+
+    public short? AB_Represent { get; set; }
+
+    public short? AB_Depot { get; set; }
+
+    public short? AB_Escompte { get; set; }
+
+    public short? AB_Echeance { get; set; }
+
+    public short? AB_Contact { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_COMPTET CT_NumNavigation { get; set; }
+
+    public virtual F_ABOENTETE F_ABOENTETE { get; set; }
+
+    public virtual ICollection<F_ABOPERIODE> F_ABOPERIODE { get; set; } = new List<F_ABOPERIODE>();
 }

@@ -3,34 +3,57 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_CONTACTD
 {
-    public partial class F_CONTACTD
-    {
-        public string CD_Nom { get; set; }
-        public byte[] cbCD_Nom { get; set; }
-        public string CD_Prenom { get; set; }
-        public byte[] cbCD_Prenom { get; set; }
-        public short? N_Service { get; set; }
-        public string CD_Fonction { get; set; }
-        public string CD_Telephone { get; set; }
-        public string CD_TelPortable { get; set; }
-        public string CD_Telecopie { get; set; }
-        public string CD_EMail { get; set; }
-        public short? CD_Civilite { get; set; }
-        public short? N_Contact { get; set; }
-        public string CD_Adresse { get; set; }
-        public string CD_Complement { get; set; }
-        public string CD_CodePostal { get; set; }
-        public string CD_Ville { get; set; }
-        public int? CD_No { get; set; }
-        public string CD_CodeRegion { get; set; }
-        public string CD_Pays { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
-    }
+    public string CD_Nom { get; set; }
+
+    public byte[] cbCD_Nom { get; set; }
+
+    public string CD_Prenom { get; set; }
+
+    public byte[] cbCD_Prenom { get; set; }
+
+    public short? N_Service { get; set; }
+
+    public string CD_Fonction { get; set; }
+
+    public string CD_Telephone { get; set; }
+
+    public string CD_TelPortable { get; set; }
+
+    public string CD_Telecopie { get; set; }
+
+    public string CD_EMail { get; set; }
+
+    public short? CD_Civilite { get; set; }
+
+    public short? N_Contact { get; set; }
+
+    public string CD_Adresse { get; set; }
+
+    public string CD_Complement { get; set; }
+
+    public string CD_CodePostal { get; set; }
+
+    public string CD_Ville { get; set; }
+
+    public int? CD_No { get; set; }
+
+    public string CD_CodeRegion { get; set; }
+
+    public string CD_Pays { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 }

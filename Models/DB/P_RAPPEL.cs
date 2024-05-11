@@ -3,15 +3,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_RAPPEL
 {
-    public partial class P_RAPPEL
-    {
-        public string R_Intitule { get; set; }
-        public short? R_Debut { get; set; }
-        public short? R_Fin { get; set; }
-        public short? R_NbJours { get; set; }
-        public short? cbIndice { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public string R_Intitule { get; set; }
+
+    public short? R_Debut { get; set; }
+
+    public short? R_Fin { get; set; }
+
+    public short? R_NbJours { get; set; }
+
+    public short? cbIndice { get; set; }
+
+    public int cbMarq { get; set; }
 }

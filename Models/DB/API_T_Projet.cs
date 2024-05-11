@@ -3,79 +3,111 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_Projet
 {
-    public partial class API_T_Projet
-    {
-        public API_T_Projet()
-        {
-            API_T_Attachement = new HashSet<API_T_Attachement>();
-            API_T_AvancementDetail = new HashSet<API_T_AvancementDetail>();
-            API_T_AvancementHorsBD = new HashSet<API_T_AvancementHorsBD>();
-            API_T_Bordereau = new HashSet<API_T_Bordereau>();
-            API_T_Caution = new HashSet<API_T_Caution>();
-            API_T_DroitConstate = new HashSet<API_T_DroitConstate>();
-            API_T_Nantissement = new HashSet<API_T_Nantissement>();
-            API_T_PointageDetail = new HashSet<API_T_PointageDetail>();
-            API_T_ProjetAvenant = new HashSet<API_T_ProjetAvenant>();
-            API_T_ProjetDate = new HashSet<API_T_ProjetDate>();
-            API_T_ProjetPlanningDecompte = new HashSet<API_T_ProjetPlanningDecompte>();
-            API_T_ProjetReception = new HashSet<API_T_ProjetReception>();
-            API_T_RevisionPrix = new HashSet<API_T_RevisionPrix>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public string CA_Num { get; set; }
-        public string CT_Num { get; set; }
-        public string Objet { get; set; }
-        public int Site { get; set; }
-        public int Ville { get; set; }
-        public int TypeMarche { get; set; }
-        public int SituationMarche { get; set; }
-        public int PhaseMarche { get; set; }
-        public DateTime? DateOuverturePils { get; set; }
-        public DateTime? DateOrdreNotification { get; set; }
-        public DateTime? DateEnregistrement { get; set; }
-        public DateTime? DateReceptionDefinitivePrevue { get; set; }
-        public DateTime? DateReceptionDefinitiveEffective { get; set; }
-        public DateTime? DateOrdreService { get; set; }
-        public DateTime? DateExemplaireUnique { get; set; }
-        public decimal CoutMarchePrevisionnel { get; set; }
-        public decimal TotalMarcheTTC { get; set; }
-        public decimal TotalMarcheHT { get; set; }
-        public decimal MontantRetenueGarantie { get; set; }
-        public decimal TauxRetenueGarantie { get; set; }
-        public decimal TauxRetenueGarantieDecompte { get; set; }
-        public string NumeroMarche { get; set; }
-        public string PeriodeExecutionResume { get; set; }
-        public string PeriodeExecutionDetail { get; set; }
-        public string ObjetDetail { get; set; }
-        public string CA_Intitule { get; set; }
-        public DateTime? DatePublication { get; set; }
-        public bool? Resultat { get; set; }
-        public int? ModeSoumission { get; set; }
-        public int? TypeAppelOffre { get; set; }
-        public decimal? MontantAppelOffreEstime { get; set; }
-        public bool? IsAppelOffre { get; set; }
-        public string Utilisateur { get; set; }
-        public string NumeroAppelOffre { get; set; }
-        public DateTime? DateEnregistrementCPS { get; set; }
-        public DateTime? DateEnregistrementExemplaire { get; set; }
-        public string ResultatMarchePV { get; set; }
-        public int ResultatMarche { get; set; }
+    public string CA_Num { get; set; }
 
-        public virtual ICollection<API_T_Attachement> API_T_Attachement { get; set; }
-        public virtual ICollection<API_T_AvancementDetail> API_T_AvancementDetail { get; set; }
-        public virtual ICollection<API_T_AvancementHorsBD> API_T_AvancementHorsBD { get; set; }
-        public virtual ICollection<API_T_Bordereau> API_T_Bordereau { get; set; }
-        public virtual ICollection<API_T_Caution> API_T_Caution { get; set; }
-        public virtual ICollection<API_T_DroitConstate> API_T_DroitConstate { get; set; }
-        public virtual ICollection<API_T_Nantissement> API_T_Nantissement { get; set; }
-        public virtual ICollection<API_T_PointageDetail> API_T_PointageDetail { get; set; }
-        public virtual ICollection<API_T_ProjetAvenant> API_T_ProjetAvenant { get; set; }
-        public virtual ICollection<API_T_ProjetDate> API_T_ProjetDate { get; set; }
-        public virtual ICollection<API_T_ProjetPlanningDecompte> API_T_ProjetPlanningDecompte { get; set; }
-        public virtual ICollection<API_T_ProjetReception> API_T_ProjetReception { get; set; }
-        public virtual ICollection<API_T_RevisionPrix> API_T_RevisionPrix { get; set; }
-    }
+    public string CT_Num { get; set; }
+
+    public string Objet { get; set; }
+
+    public int Site { get; set; }
+
+    public int Ville { get; set; }
+
+    public int TypeMarche { get; set; }
+
+    public int SituationMarche { get; set; }
+
+    public int PhaseMarche { get; set; }
+
+    public DateTime? DateOuverturePils { get; set; }
+
+    public DateTime? DateOrdreNotification { get; set; }
+
+    public DateTime? DateEnregistrement { get; set; }
+
+    public DateTime? DateReceptionDefinitivePrevue { get; set; }
+
+    public DateTime? DateReceptionDefinitiveEffective { get; set; }
+
+    public DateTime? DateOrdreService { get; set; }
+
+    public DateTime? DateExemplaireUnique { get; set; }
+
+    public decimal CoutMarchePrevisionnel { get; set; }
+
+    public decimal TotalMarcheTTC { get; set; }
+
+    public decimal TotalMarcheHT { get; set; }
+
+    public decimal MontantRetenueGarantie { get; set; }
+
+    public decimal TauxRetenueGarantie { get; set; }
+
+    public decimal TauxRetenueGarantieDecompte { get; set; }
+
+    public string NumeroMarche { get; set; }
+
+    public string PeriodeExecutionResume { get; set; }
+
+    public string PeriodeExecutionDetail { get; set; }
+
+    public string ObjetDetail { get; set; }
+
+    public string CA_Intitule { get; set; }
+
+    public DateTime? DatePublication { get; set; }
+
+    public bool? Resultat { get; set; }
+
+    public int? ModeSoumission { get; set; }
+
+    public int? TypeAppelOffre { get; set; }
+
+    public decimal? MontantAppelOffreEstime { get; set; }
+
+    public bool? IsAppelOffre { get; set; }
+
+    public string Utilisateur { get; set; }
+
+    public string NumeroAppelOffre { get; set; }
+
+    public DateTime? DateEnregistrementCPS { get; set; }
+
+    public DateTime? DateEnregistrementExemplaire { get; set; }
+
+    public string ResultatMarchePV { get; set; }
+
+    public int ResultatMarche { get; set; }
+
+    public virtual ICollection<API_T_Attachement> API_T_Attachement { get; set; } = new List<API_T_Attachement>();
+
+    public virtual ICollection<API_T_AvancementDetail> API_T_AvancementDetail { get; set; } = new List<API_T_AvancementDetail>();
+
+    public virtual ICollection<API_T_AvancementHorsBD> API_T_AvancementHorsBD { get; set; } = new List<API_T_AvancementHorsBD>();
+
+    public virtual ICollection<API_T_Bordereau> API_T_Bordereau { get; set; } = new List<API_T_Bordereau>();
+
+    public virtual ICollection<API_T_Caution> API_T_Caution { get; set; } = new List<API_T_Caution>();
+
+    public virtual ICollection<API_T_DroitConstate> API_T_DroitConstate { get; set; } = new List<API_T_DroitConstate>();
+
+    public virtual ICollection<API_T_Nantissement> API_T_Nantissement { get; set; } = new List<API_T_Nantissement>();
+
+    public virtual ICollection<API_T_PointageDetail> API_T_PointageDetail { get; set; } = new List<API_T_PointageDetail>();
+
+    public virtual ICollection<API_T_ProjetAvenant> API_T_ProjetAvenant { get; set; } = new List<API_T_ProjetAvenant>();
+
+    public virtual ICollection<API_T_ProjetDate> API_T_ProjetDate { get; set; } = new List<API_T_ProjetDate>();
+
+    public virtual ICollection<API_T_ProjetPlanningDecompte> API_T_ProjetPlanningDecompte { get; set; } = new List<API_T_ProjetPlanningDecompte>();
+
+    public virtual ICollection<API_T_ProjetReception> API_T_ProjetReception { get; set; } = new List<API_T_ProjetReception>();
+
+    public virtual ICollection<API_T_RevisionPrix> API_T_RevisionPrix { get; set; } = new List<API_T_RevisionPrix>();
 }

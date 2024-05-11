@@ -3,19 +3,27 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_DOCCURRENTPIECE
 {
-    public partial class F_DOCCURRENTPIECE
-    {
-        public short? DC_Domaine { get; set; }
-        public short? DC_IdCol { get; set; }
-        public short? DC_Souche { get; set; }
-        public string DC_Piece { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
-    }
+    public short? DC_Domaine { get; set; }
+
+    public short? DC_IdCol { get; set; }
+
+    public short? DC_Souche { get; set; }
+
+    public string DC_Piece { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 }

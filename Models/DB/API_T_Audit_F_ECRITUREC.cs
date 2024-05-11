@@ -3,69 +3,127 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_Audit_F_ECRITUREC
 {
-    public partial class API_T_Audit_F_ECRITUREC
-    {
-        public int id { get; set; }
-        public string Operation { get; set; }
-        public DateTime? Timestamp { get; set; }
-        public string Suser_Name { get; set; }
-        public string Host_Name { get; set; }
-        public string Sage_Name { get; set; }
-        public int? cbMarq { get; set; }
-        public string JO_Num { get; set; }
-        public int EC_No { get; set; }
-        public int? EC_NoLink { get; set; }
-        public DateTime JM_Date { get; set; }
-        public short? EC_Jour { get; set; }
-        public DateTime? EC_Date { get; set; }
-        public string EC_Piece { get; set; }
-        public string EC_RefPiece { get; set; }
-        public string EC_TresoPiece { get; set; }
-        public string CG_Num { get; set; }
-        public string CG_NumCont { get; set; }
-        public string CT_Num { get; set; }
-        public string EC_Intitule { get; set; }
-        public short? N_Reglement { get; set; }
-        public DateTime? EC_Echeance { get; set; }
-        public decimal? EC_Parite { get; set; }
-        public decimal? EC_Quantite { get; set; }
-        public short? N_Devise { get; set; }
-        public short? EC_Sens { get; set; }
-        public decimal? EC_Montant { get; set; }
-        public short? EC_Lettre { get; set; }
-        public string EC_Lettrage { get; set; }
-        public short? EC_Point { get; set; }
-        public string EC_Pointage { get; set; }
-        public short? EC_Impression { get; set; }
-        public short? EC_Cloture { get; set; }
-        public short? EC_CType { get; set; }
-        public short? EC_Rappel { get; set; }
-        public string CT_NumCont { get; set; }
-        public short? EC_LettreQ { get; set; }
-        public string EC_LettrageQ { get; set; }
-        public short? EC_ANType { get; set; }
-        public short? EC_RType { get; set; }
-        public decimal? EC_Devise { get; set; }
-        public short? EC_Remise { get; set; }
-        public short? EC_ExportExpert { get; set; }
-        public string TA_Code { get; set; }
-        public short? EC_Norme { get; set; }
-        public short? TA_Provenance { get; set; }
-        public short? EC_PenalType { get; set; }
-        public DateTime? EC_DatePenal { get; set; }
-        public DateTime? EC_DateRelance { get; set; }
-        public DateTime? EC_DateRappro { get; set; }
-        public string EC_Reference { get; set; }
-        public short? EC_StatusRegle { get; set; }
-        public decimal? EC_MontantRegle { get; set; }
-        public DateTime? EC_DateRegle { get; set; }
-        public int? EC_RIB { get; set; }
-        public DateTime? EC_DateOp { get; set; }
-        public int? EC_NoCloture { get; set; }
-        public short? EC_ExportRappro { get; set; }
-        public Guid? EC_FactureGUID { get; set; }
-        public DateTime? EC_DateCloture { get; set; }
-    }
+    public int id { get; set; }
+
+    public string Operation { get; set; }
+
+    public DateTime? Timestamp { get; set; }
+
+    public string Suser_Name { get; set; }
+
+    public string Host_Name { get; set; }
+
+    public string Sage_Name { get; set; }
+
+    public int? cbMarq { get; set; }
+
+    public string JO_Num { get; set; }
+
+    public int EC_No { get; set; }
+
+    public int? EC_NoLink { get; set; }
+
+    public DateTime JM_Date { get; set; }
+
+    public short? EC_Jour { get; set; }
+
+    public DateTime? EC_Date { get; set; }
+
+    public string EC_Piece { get; set; }
+
+    public string EC_RefPiece { get; set; }
+
+    public string EC_TresoPiece { get; set; }
+
+    public string CG_Num { get; set; }
+
+    public string CG_NumCont { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public string EC_Intitule { get; set; }
+
+    public short? N_Reglement { get; set; }
+
+    public DateTime? EC_Echeance { get; set; }
+
+    public decimal? EC_Parite { get; set; }
+
+    public decimal? EC_Quantite { get; set; }
+
+    public short? N_Devise { get; set; }
+
+    public short? EC_Sens { get; set; }
+
+    public decimal? EC_Montant { get; set; }
+
+    public short? EC_Lettre { get; set; }
+
+    public string EC_Lettrage { get; set; }
+
+    public short? EC_Point { get; set; }
+
+    public string EC_Pointage { get; set; }
+
+    public short? EC_Impression { get; set; }
+
+    public short? EC_Cloture { get; set; }
+
+    public short? EC_CType { get; set; }
+
+    public short? EC_Rappel { get; set; }
+
+    public string CT_NumCont { get; set; }
+
+    public short? EC_LettreQ { get; set; }
+
+    public string EC_LettrageQ { get; set; }
+
+    public short? EC_ANType { get; set; }
+
+    public short? EC_RType { get; set; }
+
+    public decimal? EC_Devise { get; set; }
+
+    public short? EC_Remise { get; set; }
+
+    public short? EC_ExportExpert { get; set; }
+
+    public string TA_Code { get; set; }
+
+    public short? EC_Norme { get; set; }
+
+    public short? TA_Provenance { get; set; }
+
+    public short? EC_PenalType { get; set; }
+
+    public DateTime? EC_DatePenal { get; set; }
+
+    public DateTime? EC_DateRelance { get; set; }
+
+    public DateTime? EC_DateRappro { get; set; }
+
+    public string EC_Reference { get; set; }
+
+    public short? EC_StatusRegle { get; set; }
+
+    public decimal? EC_MontantRegle { get; set; }
+
+    public DateTime? EC_DateRegle { get; set; }
+
+    public int? EC_RIB { get; set; }
+
+    public DateTime? EC_DateOp { get; set; }
+
+    public int? EC_NoCloture { get; set; }
+
+    public short? EC_ExportRappro { get; set; }
+
+    public Guid? EC_FactureGUID { get; set; }
+
+    public DateTime? EC_DateCloture { get; set; }
 }

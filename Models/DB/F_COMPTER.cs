@@ -3,29 +3,35 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_COMPTER
 {
-    public partial class F_COMPTER
-    {
-        public F_COMPTER()
-        {
-            F_COMPTEG = new HashSet<F_COMPTEG>();
-        }
+    public string CR_Num { get; set; }
 
-        public string CR_Num { get; set; }
-        public byte[] cbCR_Num { get; set; }
-        public short? CR_Type { get; set; }
-        public string CR_Intitule { get; set; }
-        public string CR_Classement { get; set; }
-        public byte[] cbCR_Classement { get; set; }
-        public short? CR_Saut { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public byte[] cbCR_Num { get; set; }
 
-        public virtual ICollection<F_COMPTEG> F_COMPTEG { get; set; }
-    }
+    public short? CR_Type { get; set; }
+
+    public string CR_Intitule { get; set; }
+
+    public string CR_Classement { get; set; }
+
+    public byte[] cbCR_Classement { get; set; }
+
+    public short? CR_Saut { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual ICollection<F_COMPTEG> F_COMPTEG { get; set; } = new List<F_COMPTEG>();
 }

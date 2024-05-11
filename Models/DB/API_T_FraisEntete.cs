@@ -3,28 +3,33 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_FraisEntete
 {
-    public partial class API_T_FraisEntete
-    {
-        public API_T_FraisEntete()
-        {
-            API_T_FraisLigne = new HashSet<API_T_FraisLigne>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public int Type { get; set; }
-        public string Piece { get; set; }
-        public DateTime? Date { get; set; }
-        public string Libelle { get; set; }
-        public int Beneficiaire { get; set; }
-        public int Materiel { get; set; }
-        public int Projet { get; set; }
-        public int CO_No { get; set; }
-        public string CT_Num { get; set; }
-        public string CA_Num { get; set; }
-        public decimal Montant { get; set; }
+    public int Type { get; set; }
 
-        public virtual ICollection<API_T_FraisLigne> API_T_FraisLigne { get; set; }
-    }
+    public string Piece { get; set; }
+
+    public DateTime? Date { get; set; }
+
+    public string Libelle { get; set; }
+
+    public int Beneficiaire { get; set; }
+
+    public int Materiel { get; set; }
+
+    public int Projet { get; set; }
+
+    public int CO_No { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public decimal Montant { get; set; }
+
+    public virtual ICollection<API_T_FraisLigne> API_T_FraisLigne { get; set; } = new List<API_T_FraisLigne>();
 }

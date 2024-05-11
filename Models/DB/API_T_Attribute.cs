@@ -3,25 +3,27 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_Attribute
 {
-    public partial class API_T_Attribute
-    {
-        public API_T_Attribute()
-        {
-            API_T_AttributeDetail = new HashSet<API_T_AttributeDetail>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public int Type { get; set; }
-        public string Intitule { get; set; }
-        public int Model { get; set; }
-        public int TableIndex { get; set; }
-        public string TableName { get; set; }
-        public int ParentID { get; set; }
-        public bool Imprimable { get; set; }
-        public bool Visible { get; set; }
+    public int Type { get; set; }
 
-        public virtual ICollection<API_T_AttributeDetail> API_T_AttributeDetail { get; set; }
-    }
+    public string Intitule { get; set; }
+
+    public int Model { get; set; }
+
+    public int TableIndex { get; set; }
+
+    public string TableName { get; set; }
+
+    public int ParentID { get; set; }
+
+    public bool Imprimable { get; set; }
+
+    public bool Visible { get; set; }
+
+    public virtual ICollection<API_T_AttributeDetail> API_T_AttributeDetail { get; set; } = new List<API_T_AttributeDetail>();
 }

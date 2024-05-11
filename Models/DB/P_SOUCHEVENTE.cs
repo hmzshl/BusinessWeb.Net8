@@ -3,15 +3,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_SOUCHEVENTE
 {
-    public partial class P_SOUCHEVENTE
-    {
-        public string S_Intitule { get; set; }
-        public short? S_Valide { get; set; }
-        public string JO_Num { get; set; }
-        public string JO_NumSituation { get; set; }
-        public short? cbIndice { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public string S_Intitule { get; set; }
+
+    public short? S_Valide { get; set; }
+
+    public string JO_Num { get; set; }
+
+    public string JO_NumSituation { get; set; }
+
+    public short? cbIndice { get; set; }
+
+    public int cbMarq { get; set; }
 }

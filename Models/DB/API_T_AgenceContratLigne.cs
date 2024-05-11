@@ -3,30 +3,37 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_AgenceContratLigne
 {
-    public partial class API_T_AgenceContratLigne
-    {
-        public API_T_AgenceContratLigne()
-        {
-            API_T_AgenceContratDetail = new HashSet<API_T_AgenceContratDetail>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public int Entete { get; set; }
-        public string Libelle { get; set; }
-        public decimal PU { get; set; }
-        public bool IsJourneeReserved { get; set; }
-        public int Unite { get; set; }
-        public string LibelleFA { get; set; }
-        public decimal PUDevise { get; set; }
-        public decimal Taux { get; set; }
-        public int Devise { get; set; }
-        public int Article { get; set; }
-        public string Reference { get; set; }
+    public int Entete { get; set; }
 
-        public virtual API_T_AgenceArticle ArticleNavigation { get; set; }
-        public virtual API_T_AgenceContrat EnteteNavigation { get; set; }
-        public virtual ICollection<API_T_AgenceContratDetail> API_T_AgenceContratDetail { get; set; }
-    }
+    public string Libelle { get; set; }
+
+    public decimal PU { get; set; }
+
+    public bool IsJourneeReserved { get; set; }
+
+    public int Unite { get; set; }
+
+    public string LibelleFA { get; set; }
+
+    public decimal PUDevise { get; set; }
+
+    public decimal Taux { get; set; }
+
+    public int Devise { get; set; }
+
+    public int Article { get; set; }
+
+    public string Reference { get; set; }
+
+    public virtual ICollection<API_T_AgenceContratDetail> API_T_AgenceContratDetail { get; set; } = new List<API_T_AgenceContratDetail>();
+
+    public virtual API_T_AgenceArticle ArticleNavigation { get; set; }
+
+    public virtual API_T_AgenceContrat EnteteNavigation { get; set; }
 }

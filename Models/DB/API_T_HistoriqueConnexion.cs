@@ -3,17 +3,23 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_HistoriqueConnexion
 {
-    public partial class API_T_HistoriqueConnexion
-    {
-        public int id { get; set; }
-        public string Utilisateur { get; set; }
-        public string AdressIP { get; set; }
-        public string Computer { get; set; }
-        public string SessionWindows { get; set; }
-        public DateTime? DateOP { get; set; }
-        public string TypeOP { get; set; }
-        public string CB_Type { get; set; }
-    }
+    public int id { get; set; }
+
+    public string Utilisateur { get; set; }
+
+    public string AdressIP { get; set; }
+
+    public string Computer { get; set; }
+
+    public string SessionWindows { get; set; }
+
+    public DateTime? DateOP { get; set; }
+
+    public string TypeOP { get; set; }
+
+    public string CB_Type { get; set; }
 }

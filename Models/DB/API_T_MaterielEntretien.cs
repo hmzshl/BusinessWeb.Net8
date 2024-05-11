@@ -3,38 +3,53 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_MaterielEntretien
 {
-    public partial class API_T_MaterielEntretien
-    {
-        public API_T_MaterielEntretien()
-        {
-            API_T_MaterielEntretienDetail = new HashSet<API_T_MaterielEntretienDetail>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public int Materiel { get; set; }
-        public int Type { get; set; }
-        public DateTime? Date { get; set; }
-        public string Piece { get; set; }
-        public string Libelle { get; set; }
-        public int Responsable { get; set; }
-        public DateTime? DateDebut { get; set; }
-        public DateTime? DateFin { get; set; }
-        public decimal Kilometrage { get; set; }
-        public decimal Montant { get; set; }
-        public string Fournisseur { get; set; }
-        public string CT_Num { get; set; }
-        public int Projet { get; set; }
-        public decimal KilometrageSuivant { get; set; }
-        public DateTime? DateSuivante { get; set; }
-        public int Conducteur { get; set; }
-        public int? Annee { get; set; }
-        public DateTime? DatePaiement { get; set; }
-        public DateTime? DateValidite { get; set; }
-        public string NumeroQuittance { get; set; }
-        public string Fichier { get; set; }
+    public int Materiel { get; set; }
 
-        public virtual ICollection<API_T_MaterielEntretienDetail> API_T_MaterielEntretienDetail { get; set; }
-    }
+    public int Type { get; set; }
+
+    public DateTime? Date { get; set; }
+
+    public string Piece { get; set; }
+
+    public string Libelle { get; set; }
+
+    public int Responsable { get; set; }
+
+    public DateTime? DateDebut { get; set; }
+
+    public DateTime? DateFin { get; set; }
+
+    public decimal Kilometrage { get; set; }
+
+    public decimal Montant { get; set; }
+
+    public string Fournisseur { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public int Projet { get; set; }
+
+    public decimal KilometrageSuivant { get; set; }
+
+    public DateTime? DateSuivante { get; set; }
+
+    public int Conducteur { get; set; }
+
+    public int? Annee { get; set; }
+
+    public DateTime? DatePaiement { get; set; }
+
+    public DateTime? DateValidite { get; set; }
+
+    public string NumeroQuittance { get; set; }
+
+    public string Fichier { get; set; }
+
+    public virtual ICollection<API_T_MaterielEntretienDetail> API_T_MaterielEntretienDetail { get; set; } = new List<API_T_MaterielEntretienDetail>();
 }

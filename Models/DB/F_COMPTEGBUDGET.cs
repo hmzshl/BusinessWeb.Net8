@@ -3,458 +3,893 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_COMPTEGBUDGET
 {
-    public partial class F_COMPTEGBUDGET
-    {
-        public F_COMPTEGBUDGET()
-        {
-            F_COMPTEGBUDGETA = new HashSet<F_COMPTEGBUDGETA>();
-        }
+    public string CG_Num { get; set; }
 
-        public string CG_Num { get; set; }
-        public byte[] cbCG_Num { get; set; }
-        public short? CG_BSens { get; set; }
-        public decimal? CG_BDotation0101 { get; set; }
-        public decimal? CG_BDotation0102 { get; set; }
-        public decimal? CG_BDotation0103 { get; set; }
-        public decimal? CG_BDotation0104 { get; set; }
-        public decimal? CG_BDotation0105 { get; set; }
-        public decimal? CG_BDotation0106 { get; set; }
-        public decimal? CG_BDotation0107 { get; set; }
-        public decimal? CG_BDotation0108 { get; set; }
-        public decimal? CG_BDotation0109 { get; set; }
-        public decimal? CG_BDotation0110 { get; set; }
-        public decimal? CG_BDotation0111 { get; set; }
-        public decimal? CG_BDotation0112 { get; set; }
-        public decimal? CG_BDotation0113 { get; set; }
-        public decimal? CG_BDotation0114 { get; set; }
-        public decimal? CG_BDotation0115 { get; set; }
-        public decimal? CG_BDotation0116 { get; set; }
-        public decimal? CG_BDotation0117 { get; set; }
-        public decimal? CG_BDotation0118 { get; set; }
-        public decimal? CG_BDotation0119 { get; set; }
-        public decimal? CG_BDotation0120 { get; set; }
-        public decimal? CG_BDotation0121 { get; set; }
-        public decimal? CG_BDotation0122 { get; set; }
-        public decimal? CG_BDotation0123 { get; set; }
-        public decimal? CG_BDotation0124 { get; set; }
-        public decimal? CG_BDotation0125 { get; set; }
-        public decimal? CG_BDotation0126 { get; set; }
-        public decimal? CG_BDotation0127 { get; set; }
-        public decimal? CG_BDotation0128 { get; set; }
-        public decimal? CG_BDotation0129 { get; set; }
-        public decimal? CG_BDotation0130 { get; set; }
-        public decimal? CG_BDotation0131 { get; set; }
-        public decimal? CG_BDotation0132 { get; set; }
-        public decimal? CG_BDotation0133 { get; set; }
-        public decimal? CG_BDotation0134 { get; set; }
-        public decimal? CG_BDotation0135 { get; set; }
-        public decimal? CG_BDotation0136 { get; set; }
-        public decimal? CG_BDotation0201 { get; set; }
-        public decimal? CG_BDotation0202 { get; set; }
-        public decimal? CG_BDotation0203 { get; set; }
-        public decimal? CG_BDotation0204 { get; set; }
-        public decimal? CG_BDotation0205 { get; set; }
-        public decimal? CG_BDotation0206 { get; set; }
-        public decimal? CG_BDotation0207 { get; set; }
-        public decimal? CG_BDotation0208 { get; set; }
-        public decimal? CG_BDotation0209 { get; set; }
-        public decimal? CG_BDotation0210 { get; set; }
-        public decimal? CG_BDotation0211 { get; set; }
-        public decimal? CG_BDotation0212 { get; set; }
-        public decimal? CG_BDotation0213 { get; set; }
-        public decimal? CG_BDotation0214 { get; set; }
-        public decimal? CG_BDotation0215 { get; set; }
-        public decimal? CG_BDotation0216 { get; set; }
-        public decimal? CG_BDotation0217 { get; set; }
-        public decimal? CG_BDotation0218 { get; set; }
-        public decimal? CG_BDotation0219 { get; set; }
-        public decimal? CG_BDotation0220 { get; set; }
-        public decimal? CG_BDotation0221 { get; set; }
-        public decimal? CG_BDotation0222 { get; set; }
-        public decimal? CG_BDotation0223 { get; set; }
-        public decimal? CG_BDotation0224 { get; set; }
-        public decimal? CG_BDotation0225 { get; set; }
-        public decimal? CG_BDotation0226 { get; set; }
-        public decimal? CG_BDotation0227 { get; set; }
-        public decimal? CG_BDotation0228 { get; set; }
-        public decimal? CG_BDotation0229 { get; set; }
-        public decimal? CG_BDotation0230 { get; set; }
-        public decimal? CG_BDotation0231 { get; set; }
-        public decimal? CG_BDotation0232 { get; set; }
-        public decimal? CG_BDotation0233 { get; set; }
-        public decimal? CG_BDotation0234 { get; set; }
-        public decimal? CG_BDotation0235 { get; set; }
-        public decimal? CG_BDotation0236 { get; set; }
-        public decimal? CG_BDotation0301 { get; set; }
-        public decimal? CG_BDotation0302 { get; set; }
-        public decimal? CG_BDotation0303 { get; set; }
-        public decimal? CG_BDotation0304 { get; set; }
-        public decimal? CG_BDotation0305 { get; set; }
-        public decimal? CG_BDotation0306 { get; set; }
-        public decimal? CG_BDotation0307 { get; set; }
-        public decimal? CG_BDotation0308 { get; set; }
-        public decimal? CG_BDotation0309 { get; set; }
-        public decimal? CG_BDotation0310 { get; set; }
-        public decimal? CG_BDotation0311 { get; set; }
-        public decimal? CG_BDotation0312 { get; set; }
-        public decimal? CG_BDotation0313 { get; set; }
-        public decimal? CG_BDotation0314 { get; set; }
-        public decimal? CG_BDotation0315 { get; set; }
-        public decimal? CG_BDotation0316 { get; set; }
-        public decimal? CG_BDotation0317 { get; set; }
-        public decimal? CG_BDotation0318 { get; set; }
-        public decimal? CG_BDotation0319 { get; set; }
-        public decimal? CG_BDotation0320 { get; set; }
-        public decimal? CG_BDotation0321 { get; set; }
-        public decimal? CG_BDotation0322 { get; set; }
-        public decimal? CG_BDotation0323 { get; set; }
-        public decimal? CG_BDotation0324 { get; set; }
-        public decimal? CG_BDotation0325 { get; set; }
-        public decimal? CG_BDotation0326 { get; set; }
-        public decimal? CG_BDotation0327 { get; set; }
-        public decimal? CG_BDotation0328 { get; set; }
-        public decimal? CG_BDotation0329 { get; set; }
-        public decimal? CG_BDotation0330 { get; set; }
-        public decimal? CG_BDotation0331 { get; set; }
-        public decimal? CG_BDotation0332 { get; set; }
-        public decimal? CG_BDotation0333 { get; set; }
-        public decimal? CG_BDotation0334 { get; set; }
-        public decimal? CG_BDotation0335 { get; set; }
-        public decimal? CG_BDotation0336 { get; set; }
-        public decimal? CG_BDotation0401 { get; set; }
-        public decimal? CG_BDotation0402 { get; set; }
-        public decimal? CG_BDotation0403 { get; set; }
-        public decimal? CG_BDotation0404 { get; set; }
-        public decimal? CG_BDotation0405 { get; set; }
-        public decimal? CG_BDotation0406 { get; set; }
-        public decimal? CG_BDotation0407 { get; set; }
-        public decimal? CG_BDotation0408 { get; set; }
-        public decimal? CG_BDotation0409 { get; set; }
-        public decimal? CG_BDotation0410 { get; set; }
-        public decimal? CG_BDotation0411 { get; set; }
-        public decimal? CG_BDotation0412 { get; set; }
-        public decimal? CG_BDotation0413 { get; set; }
-        public decimal? CG_BDotation0414 { get; set; }
-        public decimal? CG_BDotation0415 { get; set; }
-        public decimal? CG_BDotation0416 { get; set; }
-        public decimal? CG_BDotation0417 { get; set; }
-        public decimal? CG_BDotation0418 { get; set; }
-        public decimal? CG_BDotation0419 { get; set; }
-        public decimal? CG_BDotation0420 { get; set; }
-        public decimal? CG_BDotation0421 { get; set; }
-        public decimal? CG_BDotation0422 { get; set; }
-        public decimal? CG_BDotation0423 { get; set; }
-        public decimal? CG_BDotation0424 { get; set; }
-        public decimal? CG_BDotation0425 { get; set; }
-        public decimal? CG_BDotation0426 { get; set; }
-        public decimal? CG_BDotation0427 { get; set; }
-        public decimal? CG_BDotation0428 { get; set; }
-        public decimal? CG_BDotation0429 { get; set; }
-        public decimal? CG_BDotation0430 { get; set; }
-        public decimal? CG_BDotation0431 { get; set; }
-        public decimal? CG_BDotation0432 { get; set; }
-        public decimal? CG_BDotation0433 { get; set; }
-        public decimal? CG_BDotation0434 { get; set; }
-        public decimal? CG_BDotation0435 { get; set; }
-        public decimal? CG_BDotation0436 { get; set; }
-        public decimal? CG_BDotation0501 { get; set; }
-        public decimal? CG_BDotation0502 { get; set; }
-        public decimal? CG_BDotation0503 { get; set; }
-        public decimal? CG_BDotation0504 { get; set; }
-        public decimal? CG_BDotation0505 { get; set; }
-        public decimal? CG_BDotation0506 { get; set; }
-        public decimal? CG_BDotation0507 { get; set; }
-        public decimal? CG_BDotation0508 { get; set; }
-        public decimal? CG_BDotation0509 { get; set; }
-        public decimal? CG_BDotation0510 { get; set; }
-        public decimal? CG_BDotation0511 { get; set; }
-        public decimal? CG_BDotation0512 { get; set; }
-        public decimal? CG_BDotation0513 { get; set; }
-        public decimal? CG_BDotation0514 { get; set; }
-        public decimal? CG_BDotation0515 { get; set; }
-        public decimal? CG_BDotation0516 { get; set; }
-        public decimal? CG_BDotation0517 { get; set; }
-        public decimal? CG_BDotation0518 { get; set; }
-        public decimal? CG_BDotation0519 { get; set; }
-        public decimal? CG_BDotation0520 { get; set; }
-        public decimal? CG_BDotation0521 { get; set; }
-        public decimal? CG_BDotation0522 { get; set; }
-        public decimal? CG_BDotation0523 { get; set; }
-        public decimal? CG_BDotation0524 { get; set; }
-        public decimal? CG_BDotation0525 { get; set; }
-        public decimal? CG_BDotation0526 { get; set; }
-        public decimal? CG_BDotation0527 { get; set; }
-        public decimal? CG_BDotation0528 { get; set; }
-        public decimal? CG_BDotation0529 { get; set; }
-        public decimal? CG_BDotation0530 { get; set; }
-        public decimal? CG_BDotation0531 { get; set; }
-        public decimal? CG_BDotation0532 { get; set; }
-        public decimal? CG_BDotation0533 { get; set; }
-        public decimal? CG_BDotation0534 { get; set; }
-        public decimal? CG_BDotation0535 { get; set; }
-        public decimal? CG_BDotation0536 { get; set; }
-        public decimal? CG_BDotation0601 { get; set; }
-        public decimal? CG_BDotation0602 { get; set; }
-        public decimal? CG_BDotation0603 { get; set; }
-        public decimal? CG_BDotation0604 { get; set; }
-        public decimal? CG_BDotation0605 { get; set; }
-        public decimal? CG_BDotation0606 { get; set; }
-        public decimal? CG_BDotation0607 { get; set; }
-        public decimal? CG_BDotation0608 { get; set; }
-        public decimal? CG_BDotation0609 { get; set; }
-        public decimal? CG_BDotation0610 { get; set; }
-        public decimal? CG_BDotation0611 { get; set; }
-        public decimal? CG_BDotation0612 { get; set; }
-        public decimal? CG_BDotation0613 { get; set; }
-        public decimal? CG_BDotation0614 { get; set; }
-        public decimal? CG_BDotation0615 { get; set; }
-        public decimal? CG_BDotation0616 { get; set; }
-        public decimal? CG_BDotation0617 { get; set; }
-        public decimal? CG_BDotation0618 { get; set; }
-        public decimal? CG_BDotation0619 { get; set; }
-        public decimal? CG_BDotation0620 { get; set; }
-        public decimal? CG_BDotation0621 { get; set; }
-        public decimal? CG_BDotation0622 { get; set; }
-        public decimal? CG_BDotation0623 { get; set; }
-        public decimal? CG_BDotation0624 { get; set; }
-        public decimal? CG_BDotation0625 { get; set; }
-        public decimal? CG_BDotation0626 { get; set; }
-        public decimal? CG_BDotation0627 { get; set; }
-        public decimal? CG_BDotation0628 { get; set; }
-        public decimal? CG_BDotation0629 { get; set; }
-        public decimal? CG_BDotation0630 { get; set; }
-        public decimal? CG_BDotation0631 { get; set; }
-        public decimal? CG_BDotation0632 { get; set; }
-        public decimal? CG_BDotation0633 { get; set; }
-        public decimal? CG_BDotation0634 { get; set; }
-        public decimal? CG_BDotation0635 { get; set; }
-        public decimal? CG_BDotation0636 { get; set; }
-        public decimal? CG_BDotationQ0101 { get; set; }
-        public decimal? CG_BDotationQ0102 { get; set; }
-        public decimal? CG_BDotationQ0103 { get; set; }
-        public decimal? CG_BDotationQ0104 { get; set; }
-        public decimal? CG_BDotationQ0105 { get; set; }
-        public decimal? CG_BDotationQ0106 { get; set; }
-        public decimal? CG_BDotationQ0107 { get; set; }
-        public decimal? CG_BDotationQ0108 { get; set; }
-        public decimal? CG_BDotationQ0109 { get; set; }
-        public decimal? CG_BDotationQ0110 { get; set; }
-        public decimal? CG_BDotationQ0111 { get; set; }
-        public decimal? CG_BDotationQ0112 { get; set; }
-        public decimal? CG_BDotationQ0113 { get; set; }
-        public decimal? CG_BDotationQ0114 { get; set; }
-        public decimal? CG_BDotationQ0115 { get; set; }
-        public decimal? CG_BDotationQ0116 { get; set; }
-        public decimal? CG_BDotationQ0117 { get; set; }
-        public decimal? CG_BDotationQ0118 { get; set; }
-        public decimal? CG_BDotationQ0119 { get; set; }
-        public decimal? CG_BDotationQ0120 { get; set; }
-        public decimal? CG_BDotationQ0121 { get; set; }
-        public decimal? CG_BDotationQ0122 { get; set; }
-        public decimal? CG_BDotationQ0123 { get; set; }
-        public decimal? CG_BDotationQ0124 { get; set; }
-        public decimal? CG_BDotationQ0125 { get; set; }
-        public decimal? CG_BDotationQ0126 { get; set; }
-        public decimal? CG_BDotationQ0127 { get; set; }
-        public decimal? CG_BDotationQ0128 { get; set; }
-        public decimal? CG_BDotationQ0129 { get; set; }
-        public decimal? CG_BDotationQ0130 { get; set; }
-        public decimal? CG_BDotationQ0131 { get; set; }
-        public decimal? CG_BDotationQ0132 { get; set; }
-        public decimal? CG_BDotationQ0133 { get; set; }
-        public decimal? CG_BDotationQ0134 { get; set; }
-        public decimal? CG_BDotationQ0135 { get; set; }
-        public decimal? CG_BDotationQ0136 { get; set; }
-        public decimal? CG_BDotationQ0201 { get; set; }
-        public decimal? CG_BDotationQ0202 { get; set; }
-        public decimal? CG_BDotationQ0203 { get; set; }
-        public decimal? CG_BDotationQ0204 { get; set; }
-        public decimal? CG_BDotationQ0205 { get; set; }
-        public decimal? CG_BDotationQ0206 { get; set; }
-        public decimal? CG_BDotationQ0207 { get; set; }
-        public decimal? CG_BDotationQ0208 { get; set; }
-        public decimal? CG_BDotationQ0209 { get; set; }
-        public decimal? CG_BDotationQ0210 { get; set; }
-        public decimal? CG_BDotationQ0211 { get; set; }
-        public decimal? CG_BDotationQ0212 { get; set; }
-        public decimal? CG_BDotationQ0213 { get; set; }
-        public decimal? CG_BDotationQ0214 { get; set; }
-        public decimal? CG_BDotationQ0215 { get; set; }
-        public decimal? CG_BDotationQ0216 { get; set; }
-        public decimal? CG_BDotationQ0217 { get; set; }
-        public decimal? CG_BDotationQ0218 { get; set; }
-        public decimal? CG_BDotationQ0219 { get; set; }
-        public decimal? CG_BDotationQ0220 { get; set; }
-        public decimal? CG_BDotationQ0221 { get; set; }
-        public decimal? CG_BDotationQ0222 { get; set; }
-        public decimal? CG_BDotationQ0223 { get; set; }
-        public decimal? CG_BDotationQ0224 { get; set; }
-        public decimal? CG_BDotationQ0225 { get; set; }
-        public decimal? CG_BDotationQ0226 { get; set; }
-        public decimal? CG_BDotationQ0227 { get; set; }
-        public decimal? CG_BDotationQ0228 { get; set; }
-        public decimal? CG_BDotationQ0229 { get; set; }
-        public decimal? CG_BDotationQ0230 { get; set; }
-        public decimal? CG_BDotationQ0231 { get; set; }
-        public decimal? CG_BDotationQ0232 { get; set; }
-        public decimal? CG_BDotationQ0233 { get; set; }
-        public decimal? CG_BDotationQ0234 { get; set; }
-        public decimal? CG_BDotationQ0235 { get; set; }
-        public decimal? CG_BDotationQ0236 { get; set; }
-        public decimal? CG_BDotationQ0301 { get; set; }
-        public decimal? CG_BDotationQ0302 { get; set; }
-        public decimal? CG_BDotationQ0303 { get; set; }
-        public decimal? CG_BDotationQ0304 { get; set; }
-        public decimal? CG_BDotationQ0305 { get; set; }
-        public decimal? CG_BDotationQ0306 { get; set; }
-        public decimal? CG_BDotationQ0307 { get; set; }
-        public decimal? CG_BDotationQ0308 { get; set; }
-        public decimal? CG_BDotationQ0309 { get; set; }
-        public decimal? CG_BDotationQ0310 { get; set; }
-        public decimal? CG_BDotationQ0311 { get; set; }
-        public decimal? CG_BDotationQ0312 { get; set; }
-        public decimal? CG_BDotationQ0313 { get; set; }
-        public decimal? CG_BDotationQ0314 { get; set; }
-        public decimal? CG_BDotationQ0315 { get; set; }
-        public decimal? CG_BDotationQ0316 { get; set; }
-        public decimal? CG_BDotationQ0317 { get; set; }
-        public decimal? CG_BDotationQ0318 { get; set; }
-        public decimal? CG_BDotationQ0319 { get; set; }
-        public decimal? CG_BDotationQ0320 { get; set; }
-        public decimal? CG_BDotationQ0321 { get; set; }
-        public decimal? CG_BDotationQ0322 { get; set; }
-        public decimal? CG_BDotationQ0323 { get; set; }
-        public decimal? CG_BDotationQ0324 { get; set; }
-        public decimal? CG_BDotationQ0325 { get; set; }
-        public decimal? CG_BDotationQ0326 { get; set; }
-        public decimal? CG_BDotationQ0327 { get; set; }
-        public decimal? CG_BDotationQ0328 { get; set; }
-        public decimal? CG_BDotationQ0329 { get; set; }
-        public decimal? CG_BDotationQ0330 { get; set; }
-        public decimal? CG_BDotationQ0331 { get; set; }
-        public decimal? CG_BDotationQ0332 { get; set; }
-        public decimal? CG_BDotationQ0333 { get; set; }
-        public decimal? CG_BDotationQ0334 { get; set; }
-        public decimal? CG_BDotationQ0335 { get; set; }
-        public decimal? CG_BDotationQ0336 { get; set; }
-        public decimal? CG_BDotationQ0401 { get; set; }
-        public decimal? CG_BDotationQ0402 { get; set; }
-        public decimal? CG_BDotationQ0403 { get; set; }
-        public decimal? CG_BDotationQ0404 { get; set; }
-        public decimal? CG_BDotationQ0405 { get; set; }
-        public decimal? CG_BDotationQ0406 { get; set; }
-        public decimal? CG_BDotationQ0407 { get; set; }
-        public decimal? CG_BDotationQ0408 { get; set; }
-        public decimal? CG_BDotationQ0409 { get; set; }
-        public decimal? CG_BDotationQ0410 { get; set; }
-        public decimal? CG_BDotationQ0411 { get; set; }
-        public decimal? CG_BDotationQ0412 { get; set; }
-        public decimal? CG_BDotationQ0413 { get; set; }
-        public decimal? CG_BDotationQ0414 { get; set; }
-        public decimal? CG_BDotationQ0415 { get; set; }
-        public decimal? CG_BDotationQ0416 { get; set; }
-        public decimal? CG_BDotationQ0417 { get; set; }
-        public decimal? CG_BDotationQ0418 { get; set; }
-        public decimal? CG_BDotationQ0419 { get; set; }
-        public decimal? CG_BDotationQ0420 { get; set; }
-        public decimal? CG_BDotationQ0421 { get; set; }
-        public decimal? CG_BDotationQ0422 { get; set; }
-        public decimal? CG_BDotationQ0423 { get; set; }
-        public decimal? CG_BDotationQ0424 { get; set; }
-        public decimal? CG_BDotationQ0425 { get; set; }
-        public decimal? CG_BDotationQ0426 { get; set; }
-        public decimal? CG_BDotationQ0427 { get; set; }
-        public decimal? CG_BDotationQ0428 { get; set; }
-        public decimal? CG_BDotationQ0429 { get; set; }
-        public decimal? CG_BDotationQ0430 { get; set; }
-        public decimal? CG_BDotationQ0431 { get; set; }
-        public decimal? CG_BDotationQ0432 { get; set; }
-        public decimal? CG_BDotationQ0433 { get; set; }
-        public decimal? CG_BDotationQ0434 { get; set; }
-        public decimal? CG_BDotationQ0435 { get; set; }
-        public decimal? CG_BDotationQ0436 { get; set; }
-        public decimal? CG_BDotationQ0501 { get; set; }
-        public decimal? CG_BDotationQ0502 { get; set; }
-        public decimal? CG_BDotationQ0503 { get; set; }
-        public decimal? CG_BDotationQ0504 { get; set; }
-        public decimal? CG_BDotationQ0505 { get; set; }
-        public decimal? CG_BDotationQ0506 { get; set; }
-        public decimal? CG_BDotationQ0507 { get; set; }
-        public decimal? CG_BDotationQ0508 { get; set; }
-        public decimal? CG_BDotationQ0509 { get; set; }
-        public decimal? CG_BDotationQ0510 { get; set; }
-        public decimal? CG_BDotationQ0511 { get; set; }
-        public decimal? CG_BDotationQ0512 { get; set; }
-        public decimal? CG_BDotationQ0513 { get; set; }
-        public decimal? CG_BDotationQ0514 { get; set; }
-        public decimal? CG_BDotationQ0515 { get; set; }
-        public decimal? CG_BDotationQ0516 { get; set; }
-        public decimal? CG_BDotationQ0517 { get; set; }
-        public decimal? CG_BDotationQ0518 { get; set; }
-        public decimal? CG_BDotationQ0519 { get; set; }
-        public decimal? CG_BDotationQ0520 { get; set; }
-        public decimal? CG_BDotationQ0521 { get; set; }
-        public decimal? CG_BDotationQ0522 { get; set; }
-        public decimal? CG_BDotationQ0523 { get; set; }
-        public decimal? CG_BDotationQ0524 { get; set; }
-        public decimal? CG_BDotationQ0525 { get; set; }
-        public decimal? CG_BDotationQ0526 { get; set; }
-        public decimal? CG_BDotationQ0527 { get; set; }
-        public decimal? CG_BDotationQ0528 { get; set; }
-        public decimal? CG_BDotationQ0529 { get; set; }
-        public decimal? CG_BDotationQ0530 { get; set; }
-        public decimal? CG_BDotationQ0531 { get; set; }
-        public decimal? CG_BDotationQ0532 { get; set; }
-        public decimal? CG_BDotationQ0533 { get; set; }
-        public decimal? CG_BDotationQ0534 { get; set; }
-        public decimal? CG_BDotationQ0535 { get; set; }
-        public decimal? CG_BDotationQ0536 { get; set; }
-        public decimal? CG_BDotationQ0601 { get; set; }
-        public decimal? CG_BDotationQ0602 { get; set; }
-        public decimal? CG_BDotationQ0603 { get; set; }
-        public decimal? CG_BDotationQ0604 { get; set; }
-        public decimal? CG_BDotationQ0605 { get; set; }
-        public decimal? CG_BDotationQ0606 { get; set; }
-        public decimal? CG_BDotationQ0607 { get; set; }
-        public decimal? CG_BDotationQ0608 { get; set; }
-        public decimal? CG_BDotationQ0609 { get; set; }
-        public decimal? CG_BDotationQ0610 { get; set; }
-        public decimal? CG_BDotationQ0611 { get; set; }
-        public decimal? CG_BDotationQ0612 { get; set; }
-        public decimal? CG_BDotationQ0613 { get; set; }
-        public decimal? CG_BDotationQ0614 { get; set; }
-        public decimal? CG_BDotationQ0615 { get; set; }
-        public decimal? CG_BDotationQ0616 { get; set; }
-        public decimal? CG_BDotationQ0617 { get; set; }
-        public decimal? CG_BDotationQ0618 { get; set; }
-        public decimal? CG_BDotationQ0619 { get; set; }
-        public decimal? CG_BDotationQ0620 { get; set; }
-        public decimal? CG_BDotationQ0621 { get; set; }
-        public decimal? CG_BDotationQ0622 { get; set; }
-        public decimal? CG_BDotationQ0623 { get; set; }
-        public decimal? CG_BDotationQ0624 { get; set; }
-        public decimal? CG_BDotationQ0625 { get; set; }
-        public decimal? CG_BDotationQ0626 { get; set; }
-        public decimal? CG_BDotationQ0627 { get; set; }
-        public decimal? CG_BDotationQ0628 { get; set; }
-        public decimal? CG_BDotationQ0629 { get; set; }
-        public decimal? CG_BDotationQ0630 { get; set; }
-        public decimal? CG_BDotationQ0631 { get; set; }
-        public decimal? CG_BDotationQ0632 { get; set; }
-        public decimal? CG_BDotationQ0633 { get; set; }
-        public decimal? CG_BDotationQ0634 { get; set; }
-        public decimal? CG_BDotationQ0635 { get; set; }
-        public decimal? CG_BDotationQ0636 { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public byte[] cbCG_Num { get; set; }
 
-        public virtual F_COMPTEG CG_NumNavigation { get; set; }
-        public virtual ICollection<F_COMPTEGBUDGETA> F_COMPTEGBUDGETA { get; set; }
-    }
+    public short? CG_BSens { get; set; }
+
+    public decimal? CG_BDotation0101 { get; set; }
+
+    public decimal? CG_BDotation0102 { get; set; }
+
+    public decimal? CG_BDotation0103 { get; set; }
+
+    public decimal? CG_BDotation0104 { get; set; }
+
+    public decimal? CG_BDotation0105 { get; set; }
+
+    public decimal? CG_BDotation0106 { get; set; }
+
+    public decimal? CG_BDotation0107 { get; set; }
+
+    public decimal? CG_BDotation0108 { get; set; }
+
+    public decimal? CG_BDotation0109 { get; set; }
+
+    public decimal? CG_BDotation0110 { get; set; }
+
+    public decimal? CG_BDotation0111 { get; set; }
+
+    public decimal? CG_BDotation0112 { get; set; }
+
+    public decimal? CG_BDotation0113 { get; set; }
+
+    public decimal? CG_BDotation0114 { get; set; }
+
+    public decimal? CG_BDotation0115 { get; set; }
+
+    public decimal? CG_BDotation0116 { get; set; }
+
+    public decimal? CG_BDotation0117 { get; set; }
+
+    public decimal? CG_BDotation0118 { get; set; }
+
+    public decimal? CG_BDotation0119 { get; set; }
+
+    public decimal? CG_BDotation0120 { get; set; }
+
+    public decimal? CG_BDotation0121 { get; set; }
+
+    public decimal? CG_BDotation0122 { get; set; }
+
+    public decimal? CG_BDotation0123 { get; set; }
+
+    public decimal? CG_BDotation0124 { get; set; }
+
+    public decimal? CG_BDotation0125 { get; set; }
+
+    public decimal? CG_BDotation0126 { get; set; }
+
+    public decimal? CG_BDotation0127 { get; set; }
+
+    public decimal? CG_BDotation0128 { get; set; }
+
+    public decimal? CG_BDotation0129 { get; set; }
+
+    public decimal? CG_BDotation0130 { get; set; }
+
+    public decimal? CG_BDotation0131 { get; set; }
+
+    public decimal? CG_BDotation0132 { get; set; }
+
+    public decimal? CG_BDotation0133 { get; set; }
+
+    public decimal? CG_BDotation0134 { get; set; }
+
+    public decimal? CG_BDotation0135 { get; set; }
+
+    public decimal? CG_BDotation0136 { get; set; }
+
+    public decimal? CG_BDotation0201 { get; set; }
+
+    public decimal? CG_BDotation0202 { get; set; }
+
+    public decimal? CG_BDotation0203 { get; set; }
+
+    public decimal? CG_BDotation0204 { get; set; }
+
+    public decimal? CG_BDotation0205 { get; set; }
+
+    public decimal? CG_BDotation0206 { get; set; }
+
+    public decimal? CG_BDotation0207 { get; set; }
+
+    public decimal? CG_BDotation0208 { get; set; }
+
+    public decimal? CG_BDotation0209 { get; set; }
+
+    public decimal? CG_BDotation0210 { get; set; }
+
+    public decimal? CG_BDotation0211 { get; set; }
+
+    public decimal? CG_BDotation0212 { get; set; }
+
+    public decimal? CG_BDotation0213 { get; set; }
+
+    public decimal? CG_BDotation0214 { get; set; }
+
+    public decimal? CG_BDotation0215 { get; set; }
+
+    public decimal? CG_BDotation0216 { get; set; }
+
+    public decimal? CG_BDotation0217 { get; set; }
+
+    public decimal? CG_BDotation0218 { get; set; }
+
+    public decimal? CG_BDotation0219 { get; set; }
+
+    public decimal? CG_BDotation0220 { get; set; }
+
+    public decimal? CG_BDotation0221 { get; set; }
+
+    public decimal? CG_BDotation0222 { get; set; }
+
+    public decimal? CG_BDotation0223 { get; set; }
+
+    public decimal? CG_BDotation0224 { get; set; }
+
+    public decimal? CG_BDotation0225 { get; set; }
+
+    public decimal? CG_BDotation0226 { get; set; }
+
+    public decimal? CG_BDotation0227 { get; set; }
+
+    public decimal? CG_BDotation0228 { get; set; }
+
+    public decimal? CG_BDotation0229 { get; set; }
+
+    public decimal? CG_BDotation0230 { get; set; }
+
+    public decimal? CG_BDotation0231 { get; set; }
+
+    public decimal? CG_BDotation0232 { get; set; }
+
+    public decimal? CG_BDotation0233 { get; set; }
+
+    public decimal? CG_BDotation0234 { get; set; }
+
+    public decimal? CG_BDotation0235 { get; set; }
+
+    public decimal? CG_BDotation0236 { get; set; }
+
+    public decimal? CG_BDotation0301 { get; set; }
+
+    public decimal? CG_BDotation0302 { get; set; }
+
+    public decimal? CG_BDotation0303 { get; set; }
+
+    public decimal? CG_BDotation0304 { get; set; }
+
+    public decimal? CG_BDotation0305 { get; set; }
+
+    public decimal? CG_BDotation0306 { get; set; }
+
+    public decimal? CG_BDotation0307 { get; set; }
+
+    public decimal? CG_BDotation0308 { get; set; }
+
+    public decimal? CG_BDotation0309 { get; set; }
+
+    public decimal? CG_BDotation0310 { get; set; }
+
+    public decimal? CG_BDotation0311 { get; set; }
+
+    public decimal? CG_BDotation0312 { get; set; }
+
+    public decimal? CG_BDotation0313 { get; set; }
+
+    public decimal? CG_BDotation0314 { get; set; }
+
+    public decimal? CG_BDotation0315 { get; set; }
+
+    public decimal? CG_BDotation0316 { get; set; }
+
+    public decimal? CG_BDotation0317 { get; set; }
+
+    public decimal? CG_BDotation0318 { get; set; }
+
+    public decimal? CG_BDotation0319 { get; set; }
+
+    public decimal? CG_BDotation0320 { get; set; }
+
+    public decimal? CG_BDotation0321 { get; set; }
+
+    public decimal? CG_BDotation0322 { get; set; }
+
+    public decimal? CG_BDotation0323 { get; set; }
+
+    public decimal? CG_BDotation0324 { get; set; }
+
+    public decimal? CG_BDotation0325 { get; set; }
+
+    public decimal? CG_BDotation0326 { get; set; }
+
+    public decimal? CG_BDotation0327 { get; set; }
+
+    public decimal? CG_BDotation0328 { get; set; }
+
+    public decimal? CG_BDotation0329 { get; set; }
+
+    public decimal? CG_BDotation0330 { get; set; }
+
+    public decimal? CG_BDotation0331 { get; set; }
+
+    public decimal? CG_BDotation0332 { get; set; }
+
+    public decimal? CG_BDotation0333 { get; set; }
+
+    public decimal? CG_BDotation0334 { get; set; }
+
+    public decimal? CG_BDotation0335 { get; set; }
+
+    public decimal? CG_BDotation0336 { get; set; }
+
+    public decimal? CG_BDotation0401 { get; set; }
+
+    public decimal? CG_BDotation0402 { get; set; }
+
+    public decimal? CG_BDotation0403 { get; set; }
+
+    public decimal? CG_BDotation0404 { get; set; }
+
+    public decimal? CG_BDotation0405 { get; set; }
+
+    public decimal? CG_BDotation0406 { get; set; }
+
+    public decimal? CG_BDotation0407 { get; set; }
+
+    public decimal? CG_BDotation0408 { get; set; }
+
+    public decimal? CG_BDotation0409 { get; set; }
+
+    public decimal? CG_BDotation0410 { get; set; }
+
+    public decimal? CG_BDotation0411 { get; set; }
+
+    public decimal? CG_BDotation0412 { get; set; }
+
+    public decimal? CG_BDotation0413 { get; set; }
+
+    public decimal? CG_BDotation0414 { get; set; }
+
+    public decimal? CG_BDotation0415 { get; set; }
+
+    public decimal? CG_BDotation0416 { get; set; }
+
+    public decimal? CG_BDotation0417 { get; set; }
+
+    public decimal? CG_BDotation0418 { get; set; }
+
+    public decimal? CG_BDotation0419 { get; set; }
+
+    public decimal? CG_BDotation0420 { get; set; }
+
+    public decimal? CG_BDotation0421 { get; set; }
+
+    public decimal? CG_BDotation0422 { get; set; }
+
+    public decimal? CG_BDotation0423 { get; set; }
+
+    public decimal? CG_BDotation0424 { get; set; }
+
+    public decimal? CG_BDotation0425 { get; set; }
+
+    public decimal? CG_BDotation0426 { get; set; }
+
+    public decimal? CG_BDotation0427 { get; set; }
+
+    public decimal? CG_BDotation0428 { get; set; }
+
+    public decimal? CG_BDotation0429 { get; set; }
+
+    public decimal? CG_BDotation0430 { get; set; }
+
+    public decimal? CG_BDotation0431 { get; set; }
+
+    public decimal? CG_BDotation0432 { get; set; }
+
+    public decimal? CG_BDotation0433 { get; set; }
+
+    public decimal? CG_BDotation0434 { get; set; }
+
+    public decimal? CG_BDotation0435 { get; set; }
+
+    public decimal? CG_BDotation0436 { get; set; }
+
+    public decimal? CG_BDotation0501 { get; set; }
+
+    public decimal? CG_BDotation0502 { get; set; }
+
+    public decimal? CG_BDotation0503 { get; set; }
+
+    public decimal? CG_BDotation0504 { get; set; }
+
+    public decimal? CG_BDotation0505 { get; set; }
+
+    public decimal? CG_BDotation0506 { get; set; }
+
+    public decimal? CG_BDotation0507 { get; set; }
+
+    public decimal? CG_BDotation0508 { get; set; }
+
+    public decimal? CG_BDotation0509 { get; set; }
+
+    public decimal? CG_BDotation0510 { get; set; }
+
+    public decimal? CG_BDotation0511 { get; set; }
+
+    public decimal? CG_BDotation0512 { get; set; }
+
+    public decimal? CG_BDotation0513 { get; set; }
+
+    public decimal? CG_BDotation0514 { get; set; }
+
+    public decimal? CG_BDotation0515 { get; set; }
+
+    public decimal? CG_BDotation0516 { get; set; }
+
+    public decimal? CG_BDotation0517 { get; set; }
+
+    public decimal? CG_BDotation0518 { get; set; }
+
+    public decimal? CG_BDotation0519 { get; set; }
+
+    public decimal? CG_BDotation0520 { get; set; }
+
+    public decimal? CG_BDotation0521 { get; set; }
+
+    public decimal? CG_BDotation0522 { get; set; }
+
+    public decimal? CG_BDotation0523 { get; set; }
+
+    public decimal? CG_BDotation0524 { get; set; }
+
+    public decimal? CG_BDotation0525 { get; set; }
+
+    public decimal? CG_BDotation0526 { get; set; }
+
+    public decimal? CG_BDotation0527 { get; set; }
+
+    public decimal? CG_BDotation0528 { get; set; }
+
+    public decimal? CG_BDotation0529 { get; set; }
+
+    public decimal? CG_BDotation0530 { get; set; }
+
+    public decimal? CG_BDotation0531 { get; set; }
+
+    public decimal? CG_BDotation0532 { get; set; }
+
+    public decimal? CG_BDotation0533 { get; set; }
+
+    public decimal? CG_BDotation0534 { get; set; }
+
+    public decimal? CG_BDotation0535 { get; set; }
+
+    public decimal? CG_BDotation0536 { get; set; }
+
+    public decimal? CG_BDotation0601 { get; set; }
+
+    public decimal? CG_BDotation0602 { get; set; }
+
+    public decimal? CG_BDotation0603 { get; set; }
+
+    public decimal? CG_BDotation0604 { get; set; }
+
+    public decimal? CG_BDotation0605 { get; set; }
+
+    public decimal? CG_BDotation0606 { get; set; }
+
+    public decimal? CG_BDotation0607 { get; set; }
+
+    public decimal? CG_BDotation0608 { get; set; }
+
+    public decimal? CG_BDotation0609 { get; set; }
+
+    public decimal? CG_BDotation0610 { get; set; }
+
+    public decimal? CG_BDotation0611 { get; set; }
+
+    public decimal? CG_BDotation0612 { get; set; }
+
+    public decimal? CG_BDotation0613 { get; set; }
+
+    public decimal? CG_BDotation0614 { get; set; }
+
+    public decimal? CG_BDotation0615 { get; set; }
+
+    public decimal? CG_BDotation0616 { get; set; }
+
+    public decimal? CG_BDotation0617 { get; set; }
+
+    public decimal? CG_BDotation0618 { get; set; }
+
+    public decimal? CG_BDotation0619 { get; set; }
+
+    public decimal? CG_BDotation0620 { get; set; }
+
+    public decimal? CG_BDotation0621 { get; set; }
+
+    public decimal? CG_BDotation0622 { get; set; }
+
+    public decimal? CG_BDotation0623 { get; set; }
+
+    public decimal? CG_BDotation0624 { get; set; }
+
+    public decimal? CG_BDotation0625 { get; set; }
+
+    public decimal? CG_BDotation0626 { get; set; }
+
+    public decimal? CG_BDotation0627 { get; set; }
+
+    public decimal? CG_BDotation0628 { get; set; }
+
+    public decimal? CG_BDotation0629 { get; set; }
+
+    public decimal? CG_BDotation0630 { get; set; }
+
+    public decimal? CG_BDotation0631 { get; set; }
+
+    public decimal? CG_BDotation0632 { get; set; }
+
+    public decimal? CG_BDotation0633 { get; set; }
+
+    public decimal? CG_BDotation0634 { get; set; }
+
+    public decimal? CG_BDotation0635 { get; set; }
+
+    public decimal? CG_BDotation0636 { get; set; }
+
+    public decimal? CG_BDotationQ0101 { get; set; }
+
+    public decimal? CG_BDotationQ0102 { get; set; }
+
+    public decimal? CG_BDotationQ0103 { get; set; }
+
+    public decimal? CG_BDotationQ0104 { get; set; }
+
+    public decimal? CG_BDotationQ0105 { get; set; }
+
+    public decimal? CG_BDotationQ0106 { get; set; }
+
+    public decimal? CG_BDotationQ0107 { get; set; }
+
+    public decimal? CG_BDotationQ0108 { get; set; }
+
+    public decimal? CG_BDotationQ0109 { get; set; }
+
+    public decimal? CG_BDotationQ0110 { get; set; }
+
+    public decimal? CG_BDotationQ0111 { get; set; }
+
+    public decimal? CG_BDotationQ0112 { get; set; }
+
+    public decimal? CG_BDotationQ0113 { get; set; }
+
+    public decimal? CG_BDotationQ0114 { get; set; }
+
+    public decimal? CG_BDotationQ0115 { get; set; }
+
+    public decimal? CG_BDotationQ0116 { get; set; }
+
+    public decimal? CG_BDotationQ0117 { get; set; }
+
+    public decimal? CG_BDotationQ0118 { get; set; }
+
+    public decimal? CG_BDotationQ0119 { get; set; }
+
+    public decimal? CG_BDotationQ0120 { get; set; }
+
+    public decimal? CG_BDotationQ0121 { get; set; }
+
+    public decimal? CG_BDotationQ0122 { get; set; }
+
+    public decimal? CG_BDotationQ0123 { get; set; }
+
+    public decimal? CG_BDotationQ0124 { get; set; }
+
+    public decimal? CG_BDotationQ0125 { get; set; }
+
+    public decimal? CG_BDotationQ0126 { get; set; }
+
+    public decimal? CG_BDotationQ0127 { get; set; }
+
+    public decimal? CG_BDotationQ0128 { get; set; }
+
+    public decimal? CG_BDotationQ0129 { get; set; }
+
+    public decimal? CG_BDotationQ0130 { get; set; }
+
+    public decimal? CG_BDotationQ0131 { get; set; }
+
+    public decimal? CG_BDotationQ0132 { get; set; }
+
+    public decimal? CG_BDotationQ0133 { get; set; }
+
+    public decimal? CG_BDotationQ0134 { get; set; }
+
+    public decimal? CG_BDotationQ0135 { get; set; }
+
+    public decimal? CG_BDotationQ0136 { get; set; }
+
+    public decimal? CG_BDotationQ0201 { get; set; }
+
+    public decimal? CG_BDotationQ0202 { get; set; }
+
+    public decimal? CG_BDotationQ0203 { get; set; }
+
+    public decimal? CG_BDotationQ0204 { get; set; }
+
+    public decimal? CG_BDotationQ0205 { get; set; }
+
+    public decimal? CG_BDotationQ0206 { get; set; }
+
+    public decimal? CG_BDotationQ0207 { get; set; }
+
+    public decimal? CG_BDotationQ0208 { get; set; }
+
+    public decimal? CG_BDotationQ0209 { get; set; }
+
+    public decimal? CG_BDotationQ0210 { get; set; }
+
+    public decimal? CG_BDotationQ0211 { get; set; }
+
+    public decimal? CG_BDotationQ0212 { get; set; }
+
+    public decimal? CG_BDotationQ0213 { get; set; }
+
+    public decimal? CG_BDotationQ0214 { get; set; }
+
+    public decimal? CG_BDotationQ0215 { get; set; }
+
+    public decimal? CG_BDotationQ0216 { get; set; }
+
+    public decimal? CG_BDotationQ0217 { get; set; }
+
+    public decimal? CG_BDotationQ0218 { get; set; }
+
+    public decimal? CG_BDotationQ0219 { get; set; }
+
+    public decimal? CG_BDotationQ0220 { get; set; }
+
+    public decimal? CG_BDotationQ0221 { get; set; }
+
+    public decimal? CG_BDotationQ0222 { get; set; }
+
+    public decimal? CG_BDotationQ0223 { get; set; }
+
+    public decimal? CG_BDotationQ0224 { get; set; }
+
+    public decimal? CG_BDotationQ0225 { get; set; }
+
+    public decimal? CG_BDotationQ0226 { get; set; }
+
+    public decimal? CG_BDotationQ0227 { get; set; }
+
+    public decimal? CG_BDotationQ0228 { get; set; }
+
+    public decimal? CG_BDotationQ0229 { get; set; }
+
+    public decimal? CG_BDotationQ0230 { get; set; }
+
+    public decimal? CG_BDotationQ0231 { get; set; }
+
+    public decimal? CG_BDotationQ0232 { get; set; }
+
+    public decimal? CG_BDotationQ0233 { get; set; }
+
+    public decimal? CG_BDotationQ0234 { get; set; }
+
+    public decimal? CG_BDotationQ0235 { get; set; }
+
+    public decimal? CG_BDotationQ0236 { get; set; }
+
+    public decimal? CG_BDotationQ0301 { get; set; }
+
+    public decimal? CG_BDotationQ0302 { get; set; }
+
+    public decimal? CG_BDotationQ0303 { get; set; }
+
+    public decimal? CG_BDotationQ0304 { get; set; }
+
+    public decimal? CG_BDotationQ0305 { get; set; }
+
+    public decimal? CG_BDotationQ0306 { get; set; }
+
+    public decimal? CG_BDotationQ0307 { get; set; }
+
+    public decimal? CG_BDotationQ0308 { get; set; }
+
+    public decimal? CG_BDotationQ0309 { get; set; }
+
+    public decimal? CG_BDotationQ0310 { get; set; }
+
+    public decimal? CG_BDotationQ0311 { get; set; }
+
+    public decimal? CG_BDotationQ0312 { get; set; }
+
+    public decimal? CG_BDotationQ0313 { get; set; }
+
+    public decimal? CG_BDotationQ0314 { get; set; }
+
+    public decimal? CG_BDotationQ0315 { get; set; }
+
+    public decimal? CG_BDotationQ0316 { get; set; }
+
+    public decimal? CG_BDotationQ0317 { get; set; }
+
+    public decimal? CG_BDotationQ0318 { get; set; }
+
+    public decimal? CG_BDotationQ0319 { get; set; }
+
+    public decimal? CG_BDotationQ0320 { get; set; }
+
+    public decimal? CG_BDotationQ0321 { get; set; }
+
+    public decimal? CG_BDotationQ0322 { get; set; }
+
+    public decimal? CG_BDotationQ0323 { get; set; }
+
+    public decimal? CG_BDotationQ0324 { get; set; }
+
+    public decimal? CG_BDotationQ0325 { get; set; }
+
+    public decimal? CG_BDotationQ0326 { get; set; }
+
+    public decimal? CG_BDotationQ0327 { get; set; }
+
+    public decimal? CG_BDotationQ0328 { get; set; }
+
+    public decimal? CG_BDotationQ0329 { get; set; }
+
+    public decimal? CG_BDotationQ0330 { get; set; }
+
+    public decimal? CG_BDotationQ0331 { get; set; }
+
+    public decimal? CG_BDotationQ0332 { get; set; }
+
+    public decimal? CG_BDotationQ0333 { get; set; }
+
+    public decimal? CG_BDotationQ0334 { get; set; }
+
+    public decimal? CG_BDotationQ0335 { get; set; }
+
+    public decimal? CG_BDotationQ0336 { get; set; }
+
+    public decimal? CG_BDotationQ0401 { get; set; }
+
+    public decimal? CG_BDotationQ0402 { get; set; }
+
+    public decimal? CG_BDotationQ0403 { get; set; }
+
+    public decimal? CG_BDotationQ0404 { get; set; }
+
+    public decimal? CG_BDotationQ0405 { get; set; }
+
+    public decimal? CG_BDotationQ0406 { get; set; }
+
+    public decimal? CG_BDotationQ0407 { get; set; }
+
+    public decimal? CG_BDotationQ0408 { get; set; }
+
+    public decimal? CG_BDotationQ0409 { get; set; }
+
+    public decimal? CG_BDotationQ0410 { get; set; }
+
+    public decimal? CG_BDotationQ0411 { get; set; }
+
+    public decimal? CG_BDotationQ0412 { get; set; }
+
+    public decimal? CG_BDotationQ0413 { get; set; }
+
+    public decimal? CG_BDotationQ0414 { get; set; }
+
+    public decimal? CG_BDotationQ0415 { get; set; }
+
+    public decimal? CG_BDotationQ0416 { get; set; }
+
+    public decimal? CG_BDotationQ0417 { get; set; }
+
+    public decimal? CG_BDotationQ0418 { get; set; }
+
+    public decimal? CG_BDotationQ0419 { get; set; }
+
+    public decimal? CG_BDotationQ0420 { get; set; }
+
+    public decimal? CG_BDotationQ0421 { get; set; }
+
+    public decimal? CG_BDotationQ0422 { get; set; }
+
+    public decimal? CG_BDotationQ0423 { get; set; }
+
+    public decimal? CG_BDotationQ0424 { get; set; }
+
+    public decimal? CG_BDotationQ0425 { get; set; }
+
+    public decimal? CG_BDotationQ0426 { get; set; }
+
+    public decimal? CG_BDotationQ0427 { get; set; }
+
+    public decimal? CG_BDotationQ0428 { get; set; }
+
+    public decimal? CG_BDotationQ0429 { get; set; }
+
+    public decimal? CG_BDotationQ0430 { get; set; }
+
+    public decimal? CG_BDotationQ0431 { get; set; }
+
+    public decimal? CG_BDotationQ0432 { get; set; }
+
+    public decimal? CG_BDotationQ0433 { get; set; }
+
+    public decimal? CG_BDotationQ0434 { get; set; }
+
+    public decimal? CG_BDotationQ0435 { get; set; }
+
+    public decimal? CG_BDotationQ0436 { get; set; }
+
+    public decimal? CG_BDotationQ0501 { get; set; }
+
+    public decimal? CG_BDotationQ0502 { get; set; }
+
+    public decimal? CG_BDotationQ0503 { get; set; }
+
+    public decimal? CG_BDotationQ0504 { get; set; }
+
+    public decimal? CG_BDotationQ0505 { get; set; }
+
+    public decimal? CG_BDotationQ0506 { get; set; }
+
+    public decimal? CG_BDotationQ0507 { get; set; }
+
+    public decimal? CG_BDotationQ0508 { get; set; }
+
+    public decimal? CG_BDotationQ0509 { get; set; }
+
+    public decimal? CG_BDotationQ0510 { get; set; }
+
+    public decimal? CG_BDotationQ0511 { get; set; }
+
+    public decimal? CG_BDotationQ0512 { get; set; }
+
+    public decimal? CG_BDotationQ0513 { get; set; }
+
+    public decimal? CG_BDotationQ0514 { get; set; }
+
+    public decimal? CG_BDotationQ0515 { get; set; }
+
+    public decimal? CG_BDotationQ0516 { get; set; }
+
+    public decimal? CG_BDotationQ0517 { get; set; }
+
+    public decimal? CG_BDotationQ0518 { get; set; }
+
+    public decimal? CG_BDotationQ0519 { get; set; }
+
+    public decimal? CG_BDotationQ0520 { get; set; }
+
+    public decimal? CG_BDotationQ0521 { get; set; }
+
+    public decimal? CG_BDotationQ0522 { get; set; }
+
+    public decimal? CG_BDotationQ0523 { get; set; }
+
+    public decimal? CG_BDotationQ0524 { get; set; }
+
+    public decimal? CG_BDotationQ0525 { get; set; }
+
+    public decimal? CG_BDotationQ0526 { get; set; }
+
+    public decimal? CG_BDotationQ0527 { get; set; }
+
+    public decimal? CG_BDotationQ0528 { get; set; }
+
+    public decimal? CG_BDotationQ0529 { get; set; }
+
+    public decimal? CG_BDotationQ0530 { get; set; }
+
+    public decimal? CG_BDotationQ0531 { get; set; }
+
+    public decimal? CG_BDotationQ0532 { get; set; }
+
+    public decimal? CG_BDotationQ0533 { get; set; }
+
+    public decimal? CG_BDotationQ0534 { get; set; }
+
+    public decimal? CG_BDotationQ0535 { get; set; }
+
+    public decimal? CG_BDotationQ0536 { get; set; }
+
+    public decimal? CG_BDotationQ0601 { get; set; }
+
+    public decimal? CG_BDotationQ0602 { get; set; }
+
+    public decimal? CG_BDotationQ0603 { get; set; }
+
+    public decimal? CG_BDotationQ0604 { get; set; }
+
+    public decimal? CG_BDotationQ0605 { get; set; }
+
+    public decimal? CG_BDotationQ0606 { get; set; }
+
+    public decimal? CG_BDotationQ0607 { get; set; }
+
+    public decimal? CG_BDotationQ0608 { get; set; }
+
+    public decimal? CG_BDotationQ0609 { get; set; }
+
+    public decimal? CG_BDotationQ0610 { get; set; }
+
+    public decimal? CG_BDotationQ0611 { get; set; }
+
+    public decimal? CG_BDotationQ0612 { get; set; }
+
+    public decimal? CG_BDotationQ0613 { get; set; }
+
+    public decimal? CG_BDotationQ0614 { get; set; }
+
+    public decimal? CG_BDotationQ0615 { get; set; }
+
+    public decimal? CG_BDotationQ0616 { get; set; }
+
+    public decimal? CG_BDotationQ0617 { get; set; }
+
+    public decimal? CG_BDotationQ0618 { get; set; }
+
+    public decimal? CG_BDotationQ0619 { get; set; }
+
+    public decimal? CG_BDotationQ0620 { get; set; }
+
+    public decimal? CG_BDotationQ0621 { get; set; }
+
+    public decimal? CG_BDotationQ0622 { get; set; }
+
+    public decimal? CG_BDotationQ0623 { get; set; }
+
+    public decimal? CG_BDotationQ0624 { get; set; }
+
+    public decimal? CG_BDotationQ0625 { get; set; }
+
+    public decimal? CG_BDotationQ0626 { get; set; }
+
+    public decimal? CG_BDotationQ0627 { get; set; }
+
+    public decimal? CG_BDotationQ0628 { get; set; }
+
+    public decimal? CG_BDotationQ0629 { get; set; }
+
+    public decimal? CG_BDotationQ0630 { get; set; }
+
+    public decimal? CG_BDotationQ0631 { get; set; }
+
+    public decimal? CG_BDotationQ0632 { get; set; }
+
+    public decimal? CG_BDotationQ0633 { get; set; }
+
+    public decimal? CG_BDotationQ0634 { get; set; }
+
+    public decimal? CG_BDotationQ0635 { get; set; }
+
+    public decimal? CG_BDotationQ0636 { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_COMPTEG CG_NumNavigation { get; set; }
+
+    public virtual ICollection<F_COMPTEGBUDGETA> F_COMPTEGBUDGETA { get; set; } = new List<F_COMPTEGBUDGETA>();
 }

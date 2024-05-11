@@ -3,75 +3,139 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_INTERBANCAIRE
 {
-    public partial class F_INTERBANCAIRE
-    {
-        public string IB_AFB { get; set; }
-        public byte[] cbIB_AFB { get; set; }
-        public string IB_Nature { get; set; }
-        public string IB_Intitule { get; set; }
-        public short IB_Sens { get; set; }
-        public short? N_Reglement01 { get; set; }
-        public short? N_Reglement02 { get; set; }
-        public short? N_Reglement03 { get; set; }
-        public short? N_Reglement04 { get; set; }
-        public short? N_Reglement05 { get; set; }
-        public short? N_Reglement06 { get; set; }
-        public short? N_Reglement07 { get; set; }
-        public short? N_Reglement08 { get; set; }
-        public short? N_Reglement09 { get; set; }
-        public short? N_Reglement10 { get; set; }
-        public short? N_Reglement11 { get; set; }
-        public short? N_Reglement12 { get; set; }
-        public short? N_Reglement13 { get; set; }
-        public short? N_Reglement14 { get; set; }
-        public short? N_Reglement15 { get; set; }
-        public short? N_Reglement16 { get; set; }
-        public short? N_Reglement17 { get; set; }
-        public short? N_Reglement18 { get; set; }
-        public short? N_Reglement19 { get; set; }
-        public short? N_Reglement20 { get; set; }
-        public short? N_Reglement21 { get; set; }
-        public short? N_Reglement22 { get; set; }
-        public short? N_Reglement23 { get; set; }
-        public short? N_Reglement24 { get; set; }
-        public short? N_Reglement25 { get; set; }
-        public short? N_Reglement26 { get; set; }
-        public short? N_Reglement27 { get; set; }
-        public short? N_Reglement28 { get; set; }
-        public short? N_Reglement29 { get; set; }
-        public short? N_Reglement30 { get; set; }
-        public short? IB_NbJoursValeur { get; set; }
-        public short? IB_JourType { get; set; }
-        public short? IB_EchReport { get; set; }
-        public short? IB_ExoCommission { get; set; }
-        public short? IB_NbJoursEcheance { get; set; }
-        public short? IB_JourTypeEcheance { get; set; }
-        public int? IB_NatureTreso { get; set; }
-        public short? N_ReglementPrinc { get; set; }
-        public short? IB_RapproMode { get; set; }
-        public string IB_RapproAFB { get; set; }
-        public byte[] cbIB_RapproAFB { get; set; }
-        public short? IB_RapproPuissanceEc { get; set; }
-        public short? IB_RapproPuissanceEx { get; set; }
-        public short? IB_RapproDelaiEc { get; set; }
-        public short? IB_RapproDelaiEcNbJours { get; set; }
-        public short? IB_RapproDelaiEx { get; set; }
-        public short? IB_RapproDelaiExNbJours { get; set; }
-        public short? IB_RapproDelaiEcEx { get; set; }
-        public short? IB_RapproDelaiEcExNbJours { get; set; }
-        public short? IB_RapproComp { get; set; }
-        public short? IB_RapproCompNbCar { get; set; }
-        public short? IB_RapproCompEcZone { get; set; }
-        public short? IB_RapproCompEcPos { get; set; }
-        public short? IB_RapproCompExZone { get; set; }
-        public short? IB_RapproCompExPos { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
-    }
+    public string IB_AFB { get; set; }
+
+    public byte[] cbIB_AFB { get; set; }
+
+    public string IB_Nature { get; set; }
+
+    public string IB_Intitule { get; set; }
+
+    public short IB_Sens { get; set; }
+
+    public short? N_Reglement01 { get; set; }
+
+    public short? N_Reglement02 { get; set; }
+
+    public short? N_Reglement03 { get; set; }
+
+    public short? N_Reglement04 { get; set; }
+
+    public short? N_Reglement05 { get; set; }
+
+    public short? N_Reglement06 { get; set; }
+
+    public short? N_Reglement07 { get; set; }
+
+    public short? N_Reglement08 { get; set; }
+
+    public short? N_Reglement09 { get; set; }
+
+    public short? N_Reglement10 { get; set; }
+
+    public short? N_Reglement11 { get; set; }
+
+    public short? N_Reglement12 { get; set; }
+
+    public short? N_Reglement13 { get; set; }
+
+    public short? N_Reglement14 { get; set; }
+
+    public short? N_Reglement15 { get; set; }
+
+    public short? N_Reglement16 { get; set; }
+
+    public short? N_Reglement17 { get; set; }
+
+    public short? N_Reglement18 { get; set; }
+
+    public short? N_Reglement19 { get; set; }
+
+    public short? N_Reglement20 { get; set; }
+
+    public short? N_Reglement21 { get; set; }
+
+    public short? N_Reglement22 { get; set; }
+
+    public short? N_Reglement23 { get; set; }
+
+    public short? N_Reglement24 { get; set; }
+
+    public short? N_Reglement25 { get; set; }
+
+    public short? N_Reglement26 { get; set; }
+
+    public short? N_Reglement27 { get; set; }
+
+    public short? N_Reglement28 { get; set; }
+
+    public short? N_Reglement29 { get; set; }
+
+    public short? N_Reglement30 { get; set; }
+
+    public short? IB_NbJoursValeur { get; set; }
+
+    public short? IB_JourType { get; set; }
+
+    public short? IB_EchReport { get; set; }
+
+    public short? IB_ExoCommission { get; set; }
+
+    public short? IB_NbJoursEcheance { get; set; }
+
+    public short? IB_JourTypeEcheance { get; set; }
+
+    public int? IB_NatureTreso { get; set; }
+
+    public short? N_ReglementPrinc { get; set; }
+
+    public short? IB_RapproMode { get; set; }
+
+    public string IB_RapproAFB { get; set; }
+
+    public byte[] cbIB_RapproAFB { get; set; }
+
+    public short? IB_RapproPuissanceEc { get; set; }
+
+    public short? IB_RapproPuissanceEx { get; set; }
+
+    public short? IB_RapproDelaiEc { get; set; }
+
+    public short? IB_RapproDelaiEcNbJours { get; set; }
+
+    public short? IB_RapproDelaiEx { get; set; }
+
+    public short? IB_RapproDelaiExNbJours { get; set; }
+
+    public short? IB_RapproDelaiEcEx { get; set; }
+
+    public short? IB_RapproDelaiEcExNbJours { get; set; }
+
+    public short? IB_RapproComp { get; set; }
+
+    public short? IB_RapproCompNbCar { get; set; }
+
+    public short? IB_RapproCompEcZone { get; set; }
+
+    public short? IB_RapproCompEcPos { get; set; }
+
+    public short? IB_RapproCompExZone { get; set; }
+
+    public short? IB_RapproCompExPos { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 }

@@ -3,75 +3,139 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_FISCAL
 {
-    public partial class P_FISCAL
-    {
-        public short? F_Regime { get; set; }
-        public string F_Recette { get; set; }
-        public string F_NoDossier { get; set; }
-        public string F_Cle { get; set; }
-        public string F_CDI { get; set; }
-        public string F_Inspection { get; set; }
-        public decimal? F_Deduction { get; set; }
-        public string F_CentreAdresse { get; set; }
-        public string F_CentreComplement { get; set; }
-        public string F_CentreCP { get; set; }
-        public string F_CentreVille { get; set; }
-        public string F_CentreTelephone { get; set; }
-        public string F_CentreHoraire { get; set; }
-        public string JO_NumMAJ { get; set; }
-        public string CG_NumMAJDecaisser { get; set; }
-        public string CG_NumMAJCredit { get; set; }
-        public string CG_NumMAJEcartD { get; set; }
-        public string CG_NumMAJEcartC { get; set; }
-        public string CG_NumMAJRembours { get; set; }
-        public string BP_CodeMAJRembours { get; set; }
-        public string CG_NumMAJApur { get; set; }
-        public string F_Arrondissement { get; set; }
-        public string F_ArrondissementCode { get; set; }
-        public string F_ArrondissementNum { get; set; }
-        public string F_NIFExpert { get; set; }
-        public decimal? F_MontantLimite { get; set; }
-        public short? F_AffiliationCM { get; set; }
-        public short? F_DateLimiteJour { get; set; }
-        public short? F_DateLimiteMois { get; set; }
-        public string F_EDINumFRP { get; set; }
-        public string CD_Nom { get; set; }
-        public short? F_EDIAutreTiers { get; set; }
-        public string F_EDIRaisonSoc { get; set; }
-        public string F_EDIAdresse { get; set; }
-        public string F_EDIComplement { get; set; }
-        public string F_EDICodePostal { get; set; }
-        public string F_EDIVille { get; set; }
-        public string F_EDISiret { get; set; }
-        public string F_EDITelephone { get; set; }
-        public string F_EDIEMail { get; set; }
-        public short? F_EDICession { get; set; }
-        public string F_DeclNom { get; set; }
-        public string F_DeclQualite { get; set; }
-        public string F_DeclTelephone { get; set; }
-        public short? F_VatIntraNo { get; set; }
-        public short? F_VatListNo { get; set; }
-        public string F_EDINumOCFI { get; set; }
-        public DateTime? F_EDIDateRedress { get; set; }
-        public string F_EDICodeRegion { get; set; }
-        public string F_EDIPays { get; set; }
-        public string F_CentreCodeRegion { get; set; }
-        public string F_CentrePays { get; set; }
-        public string F_OGARaisonSoc { get; set; }
-        public string F_OGAComplementSoc { get; set; }
-        public string F_OGAQualite { get; set; }
-        public string F_OGASiret { get; set; }
-        public string F_OGAAdherent { get; set; }
-        public string F_OGAAgrement { get; set; }
-        public string F_OGAAdresse { get; set; }
-        public string F_OGAComplement { get; set; }
-        public string F_OGACodePostal { get; set; }
-        public string F_OGAVille { get; set; }
-        public string F_OGAPays { get; set; }
-        public string F_OGATelephone { get; set; }
-        public string F_OGAEMail { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public short? F_Regime { get; set; }
+
+    public string F_Recette { get; set; }
+
+    public string F_NoDossier { get; set; }
+
+    public string F_Cle { get; set; }
+
+    public string F_CDI { get; set; }
+
+    public string F_Inspection { get; set; }
+
+    public decimal? F_Deduction { get; set; }
+
+    public string F_CentreAdresse { get; set; }
+
+    public string F_CentreComplement { get; set; }
+
+    public string F_CentreCP { get; set; }
+
+    public string F_CentreVille { get; set; }
+
+    public string F_CentreTelephone { get; set; }
+
+    public string F_CentreHoraire { get; set; }
+
+    public string JO_NumMAJ { get; set; }
+
+    public string CG_NumMAJDecaisser { get; set; }
+
+    public string CG_NumMAJCredit { get; set; }
+
+    public string CG_NumMAJEcartD { get; set; }
+
+    public string CG_NumMAJEcartC { get; set; }
+
+    public string CG_NumMAJRembours { get; set; }
+
+    public string BP_CodeMAJRembours { get; set; }
+
+    public string CG_NumMAJApur { get; set; }
+
+    public string F_Arrondissement { get; set; }
+
+    public string F_ArrondissementCode { get; set; }
+
+    public string F_ArrondissementNum { get; set; }
+
+    public string F_NIFExpert { get; set; }
+
+    public decimal? F_MontantLimite { get; set; }
+
+    public short? F_AffiliationCM { get; set; }
+
+    public short? F_DateLimiteJour { get; set; }
+
+    public short? F_DateLimiteMois { get; set; }
+
+    public string F_EDINumFRP { get; set; }
+
+    public string CD_Nom { get; set; }
+
+    public short? F_EDIAutreTiers { get; set; }
+
+    public string F_EDIRaisonSoc { get; set; }
+
+    public string F_EDIAdresse { get; set; }
+
+    public string F_EDIComplement { get; set; }
+
+    public string F_EDICodePostal { get; set; }
+
+    public string F_EDIVille { get; set; }
+
+    public string F_EDISiret { get; set; }
+
+    public string F_EDITelephone { get; set; }
+
+    public string F_EDIEMail { get; set; }
+
+    public short? F_EDICession { get; set; }
+
+    public string F_DeclNom { get; set; }
+
+    public string F_DeclQualite { get; set; }
+
+    public string F_DeclTelephone { get; set; }
+
+    public short? F_VatIntraNo { get; set; }
+
+    public short? F_VatListNo { get; set; }
+
+    public string F_EDINumOCFI { get; set; }
+
+    public DateTime? F_EDIDateRedress { get; set; }
+
+    public string F_EDICodeRegion { get; set; }
+
+    public string F_EDIPays { get; set; }
+
+    public string F_CentreCodeRegion { get; set; }
+
+    public string F_CentrePays { get; set; }
+
+    public string F_OGARaisonSoc { get; set; }
+
+    public string F_OGAComplementSoc { get; set; }
+
+    public string F_OGAQualite { get; set; }
+
+    public string F_OGASiret { get; set; }
+
+    public string F_OGAAdherent { get; set; }
+
+    public string F_OGAAgrement { get; set; }
+
+    public string F_OGAAdresse { get; set; }
+
+    public string F_OGAComplement { get; set; }
+
+    public string F_OGACodePostal { get; set; }
+
+    public string F_OGAVille { get; set; }
+
+    public string F_OGAPays { get; set; }
+
+    public string F_OGATelephone { get; set; }
+
+    public string F_OGAEMail { get; set; }
+
+    public int cbMarq { get; set; }
 }

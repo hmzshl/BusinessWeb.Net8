@@ -3,87 +3,163 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_INTERROCAISSE
 {
-    public partial class P_INTERROCAISSE
-    {
-        public short? IC_ListeMvt01 { get; set; }
-        public short? IC_ListeMvt02 { get; set; }
-        public short? IC_ListeMvt03 { get; set; }
-        public short? IC_ListeMvt04 { get; set; }
-        public short? IC_ListeMvt05 { get; set; }
-        public short? IC_ListeMvt06 { get; set; }
-        public short? IC_ListeMvt07 { get; set; }
-        public short? IC_ListeMvt08 { get; set; }
-        public short? IC_ListeMvt09 { get; set; }
-        public short? IC_ListeMvt10 { get; set; }
-        public short? IC_ListeMvt11 { get; set; }
-        public short? IC_ListeMvt12 { get; set; }
-        public short? IC_ListeMvt13 { get; set; }
-        public short? IC_ListeMvt14 { get; set; }
-        public short? IC_ListeMvt15 { get; set; }
-        public short? IC_ListeMvt16 { get; set; }
-        public short? IC_ListeMvt17 { get; set; }
-        public short? IC_ListeMvt18 { get; set; }
-        public short? IC_ListeMvt19 { get; set; }
-        public short? IC_ListeMvt20 { get; set; }
-        public short? IC_ListeDoc01 { get; set; }
-        public short? IC_ListeDoc02 { get; set; }
-        public short? IC_ListeDoc03 { get; set; }
-        public short? IC_ListeDoc04 { get; set; }
-        public short? IC_ListeDoc05 { get; set; }
-        public short? IC_ListeDoc06 { get; set; }
-        public short? IC_ListeDoc07 { get; set; }
-        public short? IC_ListeDoc08 { get; set; }
-        public short? IC_ListeDoc09 { get; set; }
-        public short? IC_ListeDoc10 { get; set; }
-        public short? IC_ListeDoc11 { get; set; }
-        public short? IC_ListeLigne01 { get; set; }
-        public short? IC_ListeLigne02 { get; set; }
-        public short? IC_ListeLigne03 { get; set; }
-        public short? IC_ListeLigne04 { get; set; }
-        public short? IC_ListeLigne05 { get; set; }
-        public short? IC_ListeLigne06 { get; set; }
-        public short? IC_ListeLigne07 { get; set; }
-        public short? IC_ListeLigne08 { get; set; }
-        public short? IC_ListeLigne09 { get; set; }
-        public short? IC_ListeLigne10 { get; set; }
-        public short? IC_ListeLigne11 { get; set; }
-        public short? IC_ListeLigne12 { get; set; }
-        public short? IC_ListeLigne13 { get; set; }
-        public short? IC_ListeLigne14 { get; set; }
-        public short? IC_ListeLigne15 { get; set; }
-        public short? IC_ListeLigne16 { get; set; }
-        public short? IC_ListeLigne17 { get; set; }
-        public short? IC_ListeLigne18 { get; set; }
-        public short? IC_ListeLigne19 { get; set; }
-        public short? IC_ListeLigne20 { get; set; }
-        public short? IC_ListeLigne21 { get; set; }
-        public short? IC_ListeLigne22 { get; set; }
-        public short? IC_ListeLigne23 { get; set; }
-        public short? IC_ListeLigne24 { get; set; }
-        public short? IC_ListeLigne25 { get; set; }
-        public short? IC_ListeLigne26 { get; set; }
-        public short? IC_ListeLigne27 { get; set; }
-        public short? IC_ListeLigne28 { get; set; }
-        public short? IC_ListeLigne29 { get; set; }
-        public short? IC_ListeLigne30 { get; set; }
-        public short? IC_ListeLigne31 { get; set; }
-        public short? IC_ListeLigne32 { get; set; }
-        public short? IC_ListeLigne33 { get; set; }
-        public short? IC_ListeLigne34 { get; set; }
-        public short? IC_ListeTicket01 { get; set; }
-        public short? IC_ListeTicket02 { get; set; }
-        public short? IC_ListeTicket03 { get; set; }
-        public short? IC_ListeTicket04 { get; set; }
-        public short? IC_ListeTicket05 { get; set; }
-        public short? IC_ListeTicket06 { get; set; }
-        public short? IC_ListeTicket07 { get; set; }
-        public short? IC_ListeTicket08 { get; set; }
-        public short? IC_ListeTicket09 { get; set; }
-        public short? IC_ListeTicket10 { get; set; }
-        public short? IC_ListeTicket11 { get; set; }
-        public short? IC_ListeTicket12 { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public short? IC_ListeMvt01 { get; set; }
+
+    public short? IC_ListeMvt02 { get; set; }
+
+    public short? IC_ListeMvt03 { get; set; }
+
+    public short? IC_ListeMvt04 { get; set; }
+
+    public short? IC_ListeMvt05 { get; set; }
+
+    public short? IC_ListeMvt06 { get; set; }
+
+    public short? IC_ListeMvt07 { get; set; }
+
+    public short? IC_ListeMvt08 { get; set; }
+
+    public short? IC_ListeMvt09 { get; set; }
+
+    public short? IC_ListeMvt10 { get; set; }
+
+    public short? IC_ListeMvt11 { get; set; }
+
+    public short? IC_ListeMvt12 { get; set; }
+
+    public short? IC_ListeMvt13 { get; set; }
+
+    public short? IC_ListeMvt14 { get; set; }
+
+    public short? IC_ListeMvt15 { get; set; }
+
+    public short? IC_ListeMvt16 { get; set; }
+
+    public short? IC_ListeMvt17 { get; set; }
+
+    public short? IC_ListeMvt18 { get; set; }
+
+    public short? IC_ListeMvt19 { get; set; }
+
+    public short? IC_ListeMvt20 { get; set; }
+
+    public short? IC_ListeDoc01 { get; set; }
+
+    public short? IC_ListeDoc02 { get; set; }
+
+    public short? IC_ListeDoc03 { get; set; }
+
+    public short? IC_ListeDoc04 { get; set; }
+
+    public short? IC_ListeDoc05 { get; set; }
+
+    public short? IC_ListeDoc06 { get; set; }
+
+    public short? IC_ListeDoc07 { get; set; }
+
+    public short? IC_ListeDoc08 { get; set; }
+
+    public short? IC_ListeDoc09 { get; set; }
+
+    public short? IC_ListeDoc10 { get; set; }
+
+    public short? IC_ListeDoc11 { get; set; }
+
+    public short? IC_ListeLigne01 { get; set; }
+
+    public short? IC_ListeLigne02 { get; set; }
+
+    public short? IC_ListeLigne03 { get; set; }
+
+    public short? IC_ListeLigne04 { get; set; }
+
+    public short? IC_ListeLigne05 { get; set; }
+
+    public short? IC_ListeLigne06 { get; set; }
+
+    public short? IC_ListeLigne07 { get; set; }
+
+    public short? IC_ListeLigne08 { get; set; }
+
+    public short? IC_ListeLigne09 { get; set; }
+
+    public short? IC_ListeLigne10 { get; set; }
+
+    public short? IC_ListeLigne11 { get; set; }
+
+    public short? IC_ListeLigne12 { get; set; }
+
+    public short? IC_ListeLigne13 { get; set; }
+
+    public short? IC_ListeLigne14 { get; set; }
+
+    public short? IC_ListeLigne15 { get; set; }
+
+    public short? IC_ListeLigne16 { get; set; }
+
+    public short? IC_ListeLigne17 { get; set; }
+
+    public short? IC_ListeLigne18 { get; set; }
+
+    public short? IC_ListeLigne19 { get; set; }
+
+    public short? IC_ListeLigne20 { get; set; }
+
+    public short? IC_ListeLigne21 { get; set; }
+
+    public short? IC_ListeLigne22 { get; set; }
+
+    public short? IC_ListeLigne23 { get; set; }
+
+    public short? IC_ListeLigne24 { get; set; }
+
+    public short? IC_ListeLigne25 { get; set; }
+
+    public short? IC_ListeLigne26 { get; set; }
+
+    public short? IC_ListeLigne27 { get; set; }
+
+    public short? IC_ListeLigne28 { get; set; }
+
+    public short? IC_ListeLigne29 { get; set; }
+
+    public short? IC_ListeLigne30 { get; set; }
+
+    public short? IC_ListeLigne31 { get; set; }
+
+    public short? IC_ListeLigne32 { get; set; }
+
+    public short? IC_ListeLigne33 { get; set; }
+
+    public short? IC_ListeLigne34 { get; set; }
+
+    public short? IC_ListeTicket01 { get; set; }
+
+    public short? IC_ListeTicket02 { get; set; }
+
+    public short? IC_ListeTicket03 { get; set; }
+
+    public short? IC_ListeTicket04 { get; set; }
+
+    public short? IC_ListeTicket05 { get; set; }
+
+    public short? IC_ListeTicket06 { get; set; }
+
+    public short? IC_ListeTicket07 { get; set; }
+
+    public short? IC_ListeTicket08 { get; set; }
+
+    public short? IC_ListeTicket09 { get; set; }
+
+    public short? IC_ListeTicket10 { get; set; }
+
+    public short? IC_ListeTicket11 { get; set; }
+
+    public short? IC_ListeTicket12 { get; set; }
+
+    public int cbMarq { get; set; }
 }

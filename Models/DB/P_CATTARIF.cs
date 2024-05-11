@@ -3,13 +3,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_CATTARIF
 {
-    public partial class P_CATTARIF
-    {
-        public string CT_Intitule { get; set; }
-        public short? CT_PrixTTC { get; set; }
-        public short? cbIndice { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public string CT_Intitule { get; set; }
+
+    public short? CT_PrixTTC { get; set; }
+
+    public short? cbIndice { get; set; }
+
+    public int cbMarq { get; set; }
 }

@@ -3,16 +3,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_RECOUVREMENT
 {
-    public partial class P_RECOUVREMENT
-    {
-        public string JO_NumProv { get; set; }
-        public int? PI_NoProvDotation { get; set; }
-        public int? PI_NoProvReprise { get; set; }
-        public string CG_NumPerte { get; set; }
-        public string R_Modele { get; set; }
-        public string CG_NumDouteux { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public string JO_NumProv { get; set; }
+
+    public int? PI_NoProvDotation { get; set; }
+
+    public int? PI_NoProvReprise { get; set; }
+
+    public string CG_NumPerte { get; set; }
+
+    public string R_Modele { get; set; }
+
+    public string CG_NumDouteux { get; set; }
+
+    public int cbMarq { get; set; }
 }

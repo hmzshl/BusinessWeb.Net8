@@ -3,38 +3,63 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_ARTSTOCK
-    {
-        public string AR_Ref { get; set; }
-        public byte[] cbAR_Ref { get; set; }
-        public int DE_No { get; set; }
-        public decimal? AS_QteMini { get; set; }
-        public decimal? AS_QteMaxi { get; set; }
-        public decimal? AS_MontSto { get; set; }
-        public decimal? AS_QteSto { get; set; }
-        public decimal? AS_QteRes { get; set; }
-        public decimal? AS_QteCom { get; set; }
-        public short? AS_Principal { get; set; }
-        public decimal? AS_QteResCM { get; set; }
-        public decimal? AS_QteComCM { get; set; }
-        public decimal? AS_QtePrepa { get; set; }
-        public int? DP_NoPrincipal { get; set; }
-        public int? cbDP_NoPrincipal { get; set; }
-        public int? DP_NoControle { get; set; }
-        public int? cbDP_NoControle { get; set; }
-        public decimal? AS_QteAControler { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_ARTICLE AR_RefNavigation { get; set; }
-        public virtual F_DEPOT DE_NoNavigation { get; set; }
-        public virtual F_DEPOTEMPL cbDP_NoControleNavigation { get; set; }
-        public virtual F_DEPOTEMPL cbDP_NoPrincipalNavigation { get; set; }
-    }
+public partial class F_ARTSTOCK
+{
+    public string AR_Ref { get; set; }
+
+    public byte[] cbAR_Ref { get; set; }
+
+    public int DE_No { get; set; }
+
+    public decimal? AS_QteMini { get; set; }
+
+    public decimal? AS_QteMaxi { get; set; }
+
+    public decimal? AS_MontSto { get; set; }
+
+    public decimal? AS_QteSto { get; set; }
+
+    public decimal? AS_QteRes { get; set; }
+
+    public decimal? AS_QteCom { get; set; }
+
+    public short? AS_Principal { get; set; }
+
+    public decimal? AS_QteResCM { get; set; }
+
+    public decimal? AS_QteComCM { get; set; }
+
+    public decimal? AS_QtePrepa { get; set; }
+
+    public int? DP_NoPrincipal { get; set; }
+
+    public int? cbDP_NoPrincipal { get; set; }
+
+    public int? DP_NoControle { get; set; }
+
+    public int? cbDP_NoControle { get; set; }
+
+    public decimal? AS_QteAControler { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_ARTICLE AR_RefNavigation { get; set; }
+
+    public virtual F_DEPOT DE_NoNavigation { get; set; }
+
+    public virtual F_DEPOTEMPL cbDP_NoControleNavigation { get; set; }
+
+    public virtual F_DEPOTEMPL cbDP_NoPrincipalNavigation { get; set; }
 }

@@ -3,22 +3,31 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_PointageDetail
-    {
-        public int id { get; set; }
-        public int Personnel { get; set; }
-        public int Materiel { get; set; }
-        public decimal NbrHeure { get; set; }
-        public int Projet { get; set; }
-        public decimal PU { get; set; }
-        public decimal Montant { get; set; }
-        public int Journee { get; set; }
-        public int Responsable { get; set; }
-        public int Type { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_PointageJournee JourneeNavigation { get; set; }
-        public virtual API_T_Projet ProjetNavigation { get; set; }
-    }
+public partial class API_T_PointageDetail
+{
+    public int id { get; set; }
+
+    public int Personnel { get; set; }
+
+    public int Materiel { get; set; }
+
+    public decimal NbrHeure { get; set; }
+
+    public int Projet { get; set; }
+
+    public decimal PU { get; set; }
+
+    public decimal Montant { get; set; }
+
+    public int Journee { get; set; }
+
+    public int Responsable { get; set; }
+
+    public int Type { get; set; }
+
+    public virtual API_T_PointageJournee JourneeNavigation { get; set; }
+
+    public virtual API_T_Projet ProjetNavigation { get; set; }
 }

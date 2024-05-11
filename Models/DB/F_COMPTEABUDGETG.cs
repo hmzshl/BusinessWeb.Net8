@@ -3,41 +3,69 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_COMPTEABUDGETG
-    {
-        public short N_Analytique { get; set; }
-        public string CA_Num { get; set; }
-        public byte[] cbCA_Num { get; set; }
-        public string CG_Num { get; set; }
-        public byte[] cbCG_Num { get; set; }
-        public short? CA_BGTRepart01 { get; set; }
-        public short? CA_BGTRepart02 { get; set; }
-        public short? CA_BGTRepart03 { get; set; }
-        public short? CA_BGTRepart04 { get; set; }
-        public short? CA_BGTRepart05 { get; set; }
-        public short? CA_BGTRepart06 { get; set; }
-        public decimal? CA_BGVRepart01 { get; set; }
-        public decimal? CA_BGVRepart02 { get; set; }
-        public decimal? CA_BGVRepart03 { get; set; }
-        public decimal? CA_BGVRepart04 { get; set; }
-        public decimal? CA_BGVRepart05 { get; set; }
-        public decimal? CA_BGVRepart06 { get; set; }
-        public decimal? CA_BGVRepartQ01 { get; set; }
-        public decimal? CA_BGVRepartQ02 { get; set; }
-        public decimal? CA_BGVRepartQ03 { get; set; }
-        public decimal? CA_BGVRepartQ04 { get; set; }
-        public decimal? CA_BGVRepartQ05 { get; set; }
-        public decimal? CA_BGVRepartQ06 { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_COMPTEG CG_NumNavigation { get; set; }
-        public virtual F_COMPTEABUDGET F_COMPTEABUDGET { get; set; }
-    }
+public partial class F_COMPTEABUDGETG
+{
+    public short N_Analytique { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public byte[] cbCA_Num { get; set; }
+
+    public string CG_Num { get; set; }
+
+    public byte[] cbCG_Num { get; set; }
+
+    public short? CA_BGTRepart01 { get; set; }
+
+    public short? CA_BGTRepart02 { get; set; }
+
+    public short? CA_BGTRepart03 { get; set; }
+
+    public short? CA_BGTRepart04 { get; set; }
+
+    public short? CA_BGTRepart05 { get; set; }
+
+    public short? CA_BGTRepart06 { get; set; }
+
+    public decimal? CA_BGVRepart01 { get; set; }
+
+    public decimal? CA_BGVRepart02 { get; set; }
+
+    public decimal? CA_BGVRepart03 { get; set; }
+
+    public decimal? CA_BGVRepart04 { get; set; }
+
+    public decimal? CA_BGVRepart05 { get; set; }
+
+    public decimal? CA_BGVRepart06 { get; set; }
+
+    public decimal? CA_BGVRepartQ01 { get; set; }
+
+    public decimal? CA_BGVRepartQ02 { get; set; }
+
+    public decimal? CA_BGVRepartQ03 { get; set; }
+
+    public decimal? CA_BGVRepartQ04 { get; set; }
+
+    public decimal? CA_BGVRepartQ05 { get; set; }
+
+    public decimal? CA_BGVRepartQ06 { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_COMPTEG CG_NumNavigation { get; set; }
+
+    public virtual F_COMPTEABUDGET F_COMPTEABUDGET { get; set; }
 }

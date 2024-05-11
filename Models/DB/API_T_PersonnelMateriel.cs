@@ -3,14 +3,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_PersonnelMateriel
 {
-    public partial class API_T_PersonnelMateriel
-    {
-        public int id { get; set; }
-        public int ParentID { get; set; }
-        public int MaterielID { get; set; }
-        public DateTime? DateDebut { get; set; }
-        public DateTime? DateFin { get; set; }
-    }
+    public int id { get; set; }
+
+    public int ParentID { get; set; }
+
+    public int MaterielID { get; set; }
+
+    public DateTime? DateDebut { get; set; }
+
+    public DateTime? DateFin { get; set; }
 }

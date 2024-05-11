@@ -3,24 +3,37 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_LETTRAGE
 {
-    public partial class P_LETTRAGE
-    {
-        public string JO_Num { get; set; }
-        public int? PI_NoDebit { get; set; }
-        public int? PI_NoCredit { get; set; }
-        public decimal? L_MaxDebit { get; set; }
-        public decimal? L_MaxCredit { get; set; }
-        public short? L_Conv { get; set; }
-        public string JO_NumConv { get; set; }
-        public int? PI_NoDebitConv { get; set; }
-        public int? PI_NoCreditConv { get; set; }
-        public decimal? L_SeuilConv { get; set; }
-        public string JO_NumChange { get; set; }
-        public int? PI_NoDebitChange { get; set; }
-        public int? PI_NoCreditChange { get; set; }
-        public short? cbIndice { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public string JO_Num { get; set; }
+
+    public int? PI_NoDebit { get; set; }
+
+    public int? PI_NoCredit { get; set; }
+
+    public decimal? L_MaxDebit { get; set; }
+
+    public decimal? L_MaxCredit { get; set; }
+
+    public short? L_Conv { get; set; }
+
+    public string JO_NumConv { get; set; }
+
+    public int? PI_NoDebitConv { get; set; }
+
+    public int? PI_NoCreditConv { get; set; }
+
+    public decimal? L_SeuilConv { get; set; }
+
+    public string JO_NumChange { get; set; }
+
+    public int? PI_NoDebitChange { get; set; }
+
+    public int? PI_NoCreditChange { get; set; }
+
+    public short? cbIndice { get; set; }
+
+    public int cbMarq { get; set; }
 }

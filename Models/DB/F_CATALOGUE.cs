@@ -3,47 +3,55 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_CATALOGUE
 {
-    public partial class F_CATALOGUE
-    {
-        public F_CATALOGUE()
-        {
-            F_ARTICLEcbCL_No1Navigation = new HashSet<F_ARTICLE>();
-            F_ARTICLEcbCL_No2Navigation = new HashSet<F_ARTICLE>();
-            F_ARTICLEcbCL_No3Navigation = new HashSet<F_ARTICLE>();
-            F_ARTICLEcbCL_No4Navigation = new HashSet<F_ARTICLE>();
-            F_FAMILLEcbCL_No1Navigation = new HashSet<F_FAMILLE>();
-            F_FAMILLEcbCL_No2Navigation = new HashSet<F_FAMILLE>();
-            F_FAMILLEcbCL_No3Navigation = new HashSet<F_FAMILLE>();
-            F_FAMILLEcbCL_No4Navigation = new HashSet<F_FAMILLE>();
-            InversecbCL_NoParentNavigation = new HashSet<F_CATALOGUE>();
-        }
+    public int? CL_No { get; set; }
 
-        public int? CL_No { get; set; }
-        public string CL_Intitule { get; set; }
-        public byte[] cbCL_Intitule { get; set; }
-        public string CL_Code { get; set; }
-        public short? CL_Stock { get; set; }
-        public int? CL_NoParent { get; set; }
-        public int? cbCL_NoParent { get; set; }
-        public short? CL_Niveau { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public string CL_Intitule { get; set; }
 
-        public virtual F_CATALOGUE cbCL_NoParentNavigation { get; set; }
-        public virtual ICollection<F_ARTICLE> F_ARTICLEcbCL_No1Navigation { get; set; }
-        public virtual ICollection<F_ARTICLE> F_ARTICLEcbCL_No2Navigation { get; set; }
-        public virtual ICollection<F_ARTICLE> F_ARTICLEcbCL_No3Navigation { get; set; }
-        public virtual ICollection<F_ARTICLE> F_ARTICLEcbCL_No4Navigation { get; set; }
-        public virtual ICollection<F_FAMILLE> F_FAMILLEcbCL_No1Navigation { get; set; }
-        public virtual ICollection<F_FAMILLE> F_FAMILLEcbCL_No2Navigation { get; set; }
-        public virtual ICollection<F_FAMILLE> F_FAMILLEcbCL_No3Navigation { get; set; }
-        public virtual ICollection<F_FAMILLE> F_FAMILLEcbCL_No4Navigation { get; set; }
-        public virtual ICollection<F_CATALOGUE> InversecbCL_NoParentNavigation { get; set; }
-    }
+    public byte[] cbCL_Intitule { get; set; }
+
+    public string CL_Code { get; set; }
+
+    public short? CL_Stock { get; set; }
+
+    public int? CL_NoParent { get; set; }
+
+    public int? cbCL_NoParent { get; set; }
+
+    public short? CL_Niveau { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual ICollection<F_ARTICLE> F_ARTICLEcbCL_No1Navigation { get; set; } = new List<F_ARTICLE>();
+
+    public virtual ICollection<F_ARTICLE> F_ARTICLEcbCL_No2Navigation { get; set; } = new List<F_ARTICLE>();
+
+    public virtual ICollection<F_ARTICLE> F_ARTICLEcbCL_No3Navigation { get; set; } = new List<F_ARTICLE>();
+
+    public virtual ICollection<F_ARTICLE> F_ARTICLEcbCL_No4Navigation { get; set; } = new List<F_ARTICLE>();
+
+    public virtual ICollection<F_FAMILLE> F_FAMILLEcbCL_No1Navigation { get; set; } = new List<F_FAMILLE>();
+
+    public virtual ICollection<F_FAMILLE> F_FAMILLEcbCL_No2Navigation { get; set; } = new List<F_FAMILLE>();
+
+    public virtual ICollection<F_FAMILLE> F_FAMILLEcbCL_No3Navigation { get; set; } = new List<F_FAMILLE>();
+
+    public virtual ICollection<F_FAMILLE> F_FAMILLEcbCL_No4Navigation { get; set; } = new List<F_FAMILLE>();
+
+    public virtual ICollection<F_CATALOGUE> InversecbCL_NoParentNavigation { get; set; } = new List<F_CATALOGUE>();
+
+    public virtual F_CATALOGUE cbCL_NoParentNavigation { get; set; }
 }

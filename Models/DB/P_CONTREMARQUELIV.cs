@@ -3,12 +3,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_CONTREMARQUELIV
 {
-    public partial class P_CONTREMARQUELIV
-    {
-        public short? C_ContremarqueLiv { get; set; }
-        public short? cbIndice { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public short? C_ContremarqueLiv { get; set; }
+
+    public short? cbIndice { get; set; }
+
+    public int cbMarq { get; set; }
 }

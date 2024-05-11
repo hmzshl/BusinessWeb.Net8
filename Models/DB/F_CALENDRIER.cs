@@ -3,64 +3,103 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_CALENDRIER
 {
-    public partial class F_CALENDRIER
-    {
-        public F_CALENDRIER()
-        {
-            F_ECALENDRIER = new HashSet<F_ECALENDRIER>();
-            F_RESSOURCEPROD = new HashSet<F_RESSOURCEPROD>();
-        }
+    public string CAL_Intitule { get; set; }
 
-        public string CAL_Intitule { get; set; }
-        public byte[] cbCAL_Intitule { get; set; }
-        public int? CAL_No { get; set; }
-        public short? CAL_FirstWeekDay { get; set; }
-        public short? CAL_FirstWeek { get; set; }
-        public short? CAL_Ouvre01 { get; set; }
-        public short? CAL_Ouvre02 { get; set; }
-        public short? CAL_Ouvre03 { get; set; }
-        public short? CAL_Ouvre04 { get; set; }
-        public short? CAL_Ouvre05 { get; set; }
-        public short? CAL_Ouvre06 { get; set; }
-        public short? CAL_Ouvre07 { get; set; }
-        public string CAL_Horaire0101CAL_PlageDebut { get; set; }
-        public string CAL_Horaire0101CAL_PlageFin { get; set; }
-        public string CAL_Horaire0102CAL_PlageDebut { get; set; }
-        public string CAL_Horaire0102CAL_PlageFin { get; set; }
-        public string CAL_Horaire0201CAL_PlageDebut { get; set; }
-        public string CAL_Horaire0201CAL_PlageFin { get; set; }
-        public string CAL_Horaire0202CAL_PlageDebut { get; set; }
-        public string CAL_Horaire0202CAL_PlageFin { get; set; }
-        public string CAL_Horaire0301CAL_PlageDebut { get; set; }
-        public string CAL_Horaire0301CAL_PlageFin { get; set; }
-        public string CAL_Horaire0302CAL_PlageDebut { get; set; }
-        public string CAL_Horaire0302CAL_PlageFin { get; set; }
-        public string CAL_Horaire0401CAL_PlageDebut { get; set; }
-        public string CAL_Horaire0401CAL_PlageFin { get; set; }
-        public string CAL_Horaire0402CAL_PlageDebut { get; set; }
-        public string CAL_Horaire0402CAL_PlageFin { get; set; }
-        public string CAL_Horaire0501CAL_PlageDebut { get; set; }
-        public string CAL_Horaire0501CAL_PlageFin { get; set; }
-        public string CAL_Horaire0502CAL_PlageDebut { get; set; }
-        public string CAL_Horaire0502CAL_PlageFin { get; set; }
-        public string CAL_Horaire0601CAL_PlageDebut { get; set; }
-        public string CAL_Horaire0601CAL_PlageFin { get; set; }
-        public string CAL_Horaire0602CAL_PlageDebut { get; set; }
-        public string CAL_Horaire0602CAL_PlageFin { get; set; }
-        public string CAL_Horaire0701CAL_PlageDebut { get; set; }
-        public string CAL_Horaire0701CAL_PlageFin { get; set; }
-        public string CAL_Horaire0702CAL_PlageDebut { get; set; }
-        public string CAL_Horaire0702CAL_PlageFin { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public byte[] cbCAL_Intitule { get; set; }
 
-        public virtual ICollection<F_ECALENDRIER> F_ECALENDRIER { get; set; }
-        public virtual ICollection<F_RESSOURCEPROD> F_RESSOURCEPROD { get; set; }
-    }
+    public int? CAL_No { get; set; }
+
+    public short? CAL_FirstWeekDay { get; set; }
+
+    public short? CAL_FirstWeek { get; set; }
+
+    public short? CAL_Ouvre01 { get; set; }
+
+    public short? CAL_Ouvre02 { get; set; }
+
+    public short? CAL_Ouvre03 { get; set; }
+
+    public short? CAL_Ouvre04 { get; set; }
+
+    public short? CAL_Ouvre05 { get; set; }
+
+    public short? CAL_Ouvre06 { get; set; }
+
+    public short? CAL_Ouvre07 { get; set; }
+
+    public string CAL_Horaire0101CAL_PlageDebut { get; set; }
+
+    public string CAL_Horaire0101CAL_PlageFin { get; set; }
+
+    public string CAL_Horaire0102CAL_PlageDebut { get; set; }
+
+    public string CAL_Horaire0102CAL_PlageFin { get; set; }
+
+    public string CAL_Horaire0201CAL_PlageDebut { get; set; }
+
+    public string CAL_Horaire0201CAL_PlageFin { get; set; }
+
+    public string CAL_Horaire0202CAL_PlageDebut { get; set; }
+
+    public string CAL_Horaire0202CAL_PlageFin { get; set; }
+
+    public string CAL_Horaire0301CAL_PlageDebut { get; set; }
+
+    public string CAL_Horaire0301CAL_PlageFin { get; set; }
+
+    public string CAL_Horaire0302CAL_PlageDebut { get; set; }
+
+    public string CAL_Horaire0302CAL_PlageFin { get; set; }
+
+    public string CAL_Horaire0401CAL_PlageDebut { get; set; }
+
+    public string CAL_Horaire0401CAL_PlageFin { get; set; }
+
+    public string CAL_Horaire0402CAL_PlageDebut { get; set; }
+
+    public string CAL_Horaire0402CAL_PlageFin { get; set; }
+
+    public string CAL_Horaire0501CAL_PlageDebut { get; set; }
+
+    public string CAL_Horaire0501CAL_PlageFin { get; set; }
+
+    public string CAL_Horaire0502CAL_PlageDebut { get; set; }
+
+    public string CAL_Horaire0502CAL_PlageFin { get; set; }
+
+    public string CAL_Horaire0601CAL_PlageDebut { get; set; }
+
+    public string CAL_Horaire0601CAL_PlageFin { get; set; }
+
+    public string CAL_Horaire0602CAL_PlageDebut { get; set; }
+
+    public string CAL_Horaire0602CAL_PlageFin { get; set; }
+
+    public string CAL_Horaire0701CAL_PlageDebut { get; set; }
+
+    public string CAL_Horaire0701CAL_PlageFin { get; set; }
+
+    public string CAL_Horaire0702CAL_PlageDebut { get; set; }
+
+    public string CAL_Horaire0702CAL_PlageFin { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual ICollection<F_ECALENDRIER> F_ECALENDRIER { get; set; } = new List<F_ECALENDRIER>();
+
+    public virtual ICollection<F_RESSOURCEPROD> F_RESSOURCEPROD { get; set; } = new List<F_RESSOURCEPROD>();
 }

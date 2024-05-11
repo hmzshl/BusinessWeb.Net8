@@ -3,27 +3,31 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_Caisse
 {
-    public partial class API_T_Caisse
-    {
-        public API_T_Caisse()
-        {
-            API_T_CaisseEntete = new HashSet<API_T_CaisseEntete>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public string C_Nom { get; set; }
-        public DateTime C_DateCreation { get; set; }
-        public DateTime C_DateInitial { get; set; }
-        public decimal C_SoldeInitial { get; set; }
-        public decimal C_Solde { get; set; }
-        public string C_Remarque { get; set; }
-        public string JO_Num { get; set; }
-        public string CG_Num { get; set; }
-        public string C_Racine { get; set; }
-        public int Agence { get; set; }
+    public string C_Nom { get; set; }
 
-        public virtual ICollection<API_T_CaisseEntete> API_T_CaisseEntete { get; set; }
-    }
+    public DateTime C_DateCreation { get; set; }
+
+    public DateTime C_DateInitial { get; set; }
+
+    public decimal C_SoldeInitial { get; set; }
+
+    public decimal C_Solde { get; set; }
+
+    public string C_Remarque { get; set; }
+
+    public string JO_Num { get; set; }
+
+    public string CG_Num { get; set; }
+
+    public string C_Racine { get; set; }
+
+    public int Agence { get; set; }
+
+    public virtual ICollection<API_T_CaisseEntete> API_T_CaisseEntete { get; set; } = new List<API_T_CaisseEntete>();
 }

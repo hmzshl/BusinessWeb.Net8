@@ -3,32 +3,53 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_V_POINTAGEDETAIL
 {
-    public partial class API_V_POINTAGEDETAIL
-    {
-        public int id { get; set; }
-        public int Personnel { get; set; }
-        public int Materiel { get; set; }
-        public decimal NbrHeure { get; set; }
-        public int Projet { get; set; }
-        public decimal PU { get; set; }
-        public decimal Montant { get; set; }
-        public int Journee { get; set; }
-        public int Responsable { get; set; }
-        public int Type { get; set; }
-        public DateTime? Date { get; set; }
-        public string Objet { get; set; }
-        public string CT_Num { get; set; }
-        public string CA_Num { get; set; }
-        public string NumeroMarche { get; set; }
-        public string PersonnelIntitule { get; set; }
-        public string CIN { get; set; }
-        public string Telephone { get; set; }
-        public DateTime? DateNaissance { get; set; }
-        public string Matricule { get; set; }
-        public string MaterielIntitule { get; set; }
-        public string Immatricule { get; set; }
-        public string ResponsableIntitule { get; set; }
-    }
+    public int id { get; set; }
+
+    public int Personnel { get; set; }
+
+    public int Materiel { get; set; }
+
+    public decimal NbrHeure { get; set; }
+
+    public int Projet { get; set; }
+
+    public decimal PU { get; set; }
+
+    public decimal Montant { get; set; }
+
+    public int Journee { get; set; }
+
+    public int Responsable { get; set; }
+
+    public int Type { get; set; }
+
+    public DateTime? Date { get; set; }
+
+    public string Objet { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public string NumeroMarche { get; set; }
+
+    public string PersonnelIntitule { get; set; }
+
+    public string CIN { get; set; }
+
+    public string Telephone { get; set; }
+
+    public DateTime? DateNaissance { get; set; }
+
+    public string Matricule { get; set; }
+
+    public string MaterielIntitule { get; set; }
+
+    public string Immatricule { get; set; }
+
+    public string ResponsableIntitule { get; set; }
 }

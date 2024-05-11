@@ -3,24 +3,37 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_V_ARTICLEMVT
 {
-    public partial class API_V_ARTICLEMVT
-    {
-        public DateTime? DO_Date { get; set; }
-        public string DO_Piece { get; set; }
-        public DateTime? DL_DateBL { get; set; }
-        public string DL_PieceBL { get; set; }
-        public string DomaineIntitule { get; set; }
-        public string TypeIntitule { get; set; }
-        public string AR_Ref { get; set; }
-        public string AR_Design { get; set; }
-        public string CT_Num { get; set; }
-        public string TiersIntitule { get; set; }
-        public int? DE_No { get; set; }
-        public string DE_Intitule { get; set; }
-        public decimal? DL_Qte { get; set; }
-        public decimal? Mvt { get; set; }
-        public string Sense { get; set; }
-    }
+    public DateTime? DO_Date { get; set; }
+
+    public string DO_Piece { get; set; }
+
+    public DateTime? DL_DateBL { get; set; }
+
+    public string DL_PieceBL { get; set; }
+
+    public string DomaineIntitule { get; set; }
+
+    public string TypeIntitule { get; set; }
+
+    public string AR_Ref { get; set; }
+
+    public string AR_Design { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public string TiersIntitule { get; set; }
+
+    public int? DE_No { get; set; }
+
+    public string DE_Intitule { get; set; }
+
+    public decimal? DL_Qte { get; set; }
+
+    public decimal? Mvt { get; set; }
+
+    public string Sense { get; set; }
 }

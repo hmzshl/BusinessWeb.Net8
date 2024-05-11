@@ -3,14 +3,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_SCDREGLEMENT
 {
-    public partial class P_SCDREGLEMENT
-    {
-        public short? SCD_Type { get; set; }
-        public string JO_NumCli { get; set; }
-        public string JO_NumFour { get; set; }
-        public short? cbIndice { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public short? SCD_Type { get; set; }
+
+    public string JO_NumCli { get; set; }
+
+    public string JO_NumFour { get; set; }
+
+    public short? cbIndice { get; set; }
+
+    public int cbMarq { get; set; }
 }

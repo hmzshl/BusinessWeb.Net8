@@ -3,10 +3,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_CertifMission
 {
-    public partial class API_T_CertifMission
-    {
-        public int id { get; set; }
-    }
+    public int id { get; set; }
 }

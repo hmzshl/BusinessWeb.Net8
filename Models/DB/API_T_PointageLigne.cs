@@ -3,20 +3,27 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_PointageLigne
-    {
-        public int id { get; set; }
-        public int? Jour { get; set; }
-        public int? Personnel { get; set; }
-        public int? Materiel { get; set; }
-        public int? Projet { get; set; }
-        public string CA_Num { get; set; }
-        public int Pointage { get; set; }
-        public int? Pointeur { get; set; }
-        public decimal? NbrHeure { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_Pointage PointageNavigation { get; set; }
-    }
+public partial class API_T_PointageLigne
+{
+    public int id { get; set; }
+
+    public int? Jour { get; set; }
+
+    public int? Personnel { get; set; }
+
+    public int? Materiel { get; set; }
+
+    public int? Projet { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public int Pointage { get; set; }
+
+    public int? Pointeur { get; set; }
+
+    public decimal? NbrHeure { get; set; }
+
+    public virtual API_T_Pointage PointageNavigation { get; set; }
 }

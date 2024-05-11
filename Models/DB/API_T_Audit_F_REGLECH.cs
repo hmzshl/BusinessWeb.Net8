@@ -3,23 +3,35 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_Audit_F_REGLECH
 {
-    public partial class API_T_Audit_F_REGLECH
-    {
-        public int id { get; set; }
-        public string Operation { get; set; }
-        public DateTime? Timestamp { get; set; }
-        public string Suser_Name { get; set; }
-        public string Host_Name { get; set; }
-        public string Sage_Name { get; set; }
-        public int? cbMarq { get; set; }
-        public int RG_No { get; set; }
-        public int DR_No { get; set; }
-        public short? DO_Domaine { get; set; }
-        public short? DO_Type { get; set; }
-        public string DO_Piece { get; set; }
-        public decimal? RC_Montant { get; set; }
-        public short? RG_TypeReg { get; set; }
-    }
+    public int id { get; set; }
+
+    public string Operation { get; set; }
+
+    public DateTime? Timestamp { get; set; }
+
+    public string Suser_Name { get; set; }
+
+    public string Host_Name { get; set; }
+
+    public string Sage_Name { get; set; }
+
+    public int? cbMarq { get; set; }
+
+    public int RG_No { get; set; }
+
+    public int DR_No { get; set; }
+
+    public short? DO_Domaine { get; set; }
+
+    public short? DO_Type { get; set; }
+
+    public string DO_Piece { get; set; }
+
+    public decimal? RC_Montant { get; set; }
+
+    public short? RG_TypeReg { get; set; }
 }

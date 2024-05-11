@@ -3,27 +3,41 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_CertifLigne
-    {
-        public int id { get; set; }
-        public int Entete { get; set; }
-        public int Affectation { get; set; }
-        public string Libelle { get; set; }
-        public decimal Montant { get; set; }
-        public string AR_Ref { get; set; }
-        public string AR_Design { get; set; }
-        public string Unite { get; set; }
-        public decimal? QL_Qte { get; set; }
-        public decimal? DL_PU { get; set; }
-        public decimal? DL_Taxe { get; set; }
-        public decimal? DL_PUTTC { get; set; }
-        public decimal? DL_MontantHT { get; set; }
-        public decimal? DL_MontantTTC { get; set; }
-        public string DL_CodeTaxe { get; set; }
-        public string Reference { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_CertifEntete EnteteNavigation { get; set; }
-    }
+public partial class API_T_CertifLigne
+{
+    public int id { get; set; }
+
+    public int Entete { get; set; }
+
+    public int Affectation { get; set; }
+
+    public string Libelle { get; set; }
+
+    public decimal Montant { get; set; }
+
+    public string AR_Ref { get; set; }
+
+    public string AR_Design { get; set; }
+
+    public string Unite { get; set; }
+
+    public decimal? QL_Qte { get; set; }
+
+    public decimal? DL_PU { get; set; }
+
+    public decimal? DL_Taxe { get; set; }
+
+    public decimal? DL_PUTTC { get; set; }
+
+    public decimal? DL_MontantHT { get; set; }
+
+    public decimal? DL_MontantTTC { get; set; }
+
+    public string DL_CodeTaxe { get; set; }
+
+    public string Reference { get; set; }
+
+    public virtual API_T_CertifEntete EnteteNavigation { get; set; }
 }

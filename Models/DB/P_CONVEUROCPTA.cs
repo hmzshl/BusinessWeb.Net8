@@ -3,15 +3,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_CONVEUROCPTA
 {
-    public partial class P_CONVEUROCPTA
-    {
-        public short? C_Devises { get; set; }
-        public short? C_Tiers { get; set; }
-        public short? C_Banques { get; set; }
-        public short? C_InfosL { get; set; }
-        public short? C_DeviseCompte { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public short? C_Devises { get; set; }
+
+    public short? C_Tiers { get; set; }
+
+    public short? C_Banques { get; set; }
+
+    public short? C_InfosL { get; set; }
+
+    public short? C_DeviseCompte { get; set; }
+
+    public int cbMarq { get; set; }
 }

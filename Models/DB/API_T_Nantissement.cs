@@ -3,17 +3,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_Nantissement
-    {
-        public int id { get; set; }
-        public int Projet { get; set; }
-        public int? EB_No { get; set; }
-        public DateTime? DateDebut { get; set; }
-        public DateTime? DateFin { get; set; }
-        public string Fichier { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_Projet ProjetNavigation { get; set; }
-    }
+public partial class API_T_Nantissement
+{
+    public int id { get; set; }
+
+    public int Projet { get; set; }
+
+    public int? EB_No { get; set; }
+
+    public DateTime? DateDebut { get; set; }
+
+    public DateTime? DateFin { get; set; }
+
+    public string Fichier { get; set; }
+
+    public virtual API_T_Projet ProjetNavigation { get; set; }
 }

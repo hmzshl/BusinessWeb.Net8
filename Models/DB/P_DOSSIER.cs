@@ -3,137 +3,263 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_DOSSIER
 {
-    public partial class P_DOSSIER
-    {
-        public string D_RaisonSoc { get; set; }
-        public string D_Profession { get; set; }
-        public string D_Adresse { get; set; }
-        public string D_Complement { get; set; }
-        public string D_CodePostal { get; set; }
-        public string D_Ville { get; set; }
-        public string D_CodeRegion { get; set; }
-        public string D_Pays { get; set; }
-        public string D_Commentaire { get; set; }
-        public string D_Siret { get; set; }
-        public string D_Ape { get; set; }
-        public string D_Identifiant { get; set; }
-        public DateTime? D_DebutExo01 { get; set; }
-        public DateTime? D_DebutExo02 { get; set; }
-        public DateTime? D_DebutExo03 { get; set; }
-        public DateTime? D_DebutExo04 { get; set; }
-        public DateTime? D_DebutExo05 { get; set; }
-        public DateTime? D_FinExo01 { get; set; }
-        public DateTime? D_FinExo02 { get; set; }
-        public DateTime? D_FinExo03 { get; set; }
-        public DateTime? D_FinExo04 { get; set; }
-        public DateTime? D_FinExo05 { get; set; }
-        public short? D_LgCg { get; set; }
-        public short? D_LgAn { get; set; }
-        public string D_FormatQtes { get; set; }
-        public short? D_CodeTrait { get; set; }
-        public short? D_ConfSupp { get; set; }
-        public short? D_AnalyseGL01 { get; set; }
-        public short? D_AnalyseGL02 { get; set; }
-        public short? D_AnalyseGL03 { get; set; }
-        public short? D_Delai { get; set; }
-        public short? D_OuvCompte { get; set; }
-        public short? D_Budget { get; set; }
-        public short? D_SuppEc { get; set; }
-        public short? D_RegTaxe { get; set; }
-        public short? D_Ventil { get; set; }
-        public short? D_Edi { get; set; }
-        public short? D_Archivage01 { get; set; }
-        public short? D_Archivage02 { get; set; }
-        public short? D_Archivage03 { get; set; }
-        public short? D_Archivage04 { get; set; }
-        public short? D_Archivage05 { get; set; }
-        public short? D_RBSupp { get; set; }
-        public short? D_MajImport { get; set; }
-        public short? D_SaisCab { get; set; }
-        public short? D_TypeValid { get; set; }
-        public short? D_ImpressZero { get; set; }
-        public short? N_DeviseCompte { get; set; }
-        public short? N_DeviseEquival { get; set; }
-        public short? D_ANSais { get; set; }
-        public string JO_NumAN { get; set; }
-        public string CG_NumANOuv { get; set; }
-        public string CG_NumANBenef { get; set; }
-        public string CG_NumANPerte { get; set; }
-        public short? D_TVAEncReg { get; set; }
-        public short? D_TVAEncAffect { get; set; }
-        public short? D_DeviseEq { get; set; }
-        public short? D_AnAffect { get; set; }
-        public short? D_ReglPiece { get; set; }
-        public short? D_ExtNeg { get; set; }
-        public short? D_RapproDevise { get; set; }
-        public short? D_ImportEqJo { get; set; }
-        public short? D_ImportEqAn { get; set; }
-        public string CG_NumImportDebit { get; set; }
-        public string CG_NumImportCredit { get; set; }
-        public short? N_Analytique { get; set; }
-        public string D_NumDoss { get; set; }
-        public string D_EMail { get; set; }
-        public string D_EMailExpert { get; set; }
-        public string D_Expert { get; set; }
-        public string D_Telephone { get; set; }
-        public string D_Telecopie { get; set; }
-        public string D_EMailSoc { get; set; }
-        public string D_Site { get; set; }
-        public short? D_AppelTiers { get; set; }
-        public short? D_AppelSection { get; set; }
-        public short? D_ProtPiece { get; set; }
-        public short? D_NumCont { get; set; }
-        public DateTime? D_DateClot { get; set; }
-        public short? D_CompteGTotal { get; set; }
-        public short? D_RapproRecherche { get; set; }
-        public decimal? D_RapproEcart { get; set; }
-        public string CG_NumRappro { get; set; }
-        public short? D_RapproContrepartie { get; set; }
-        public short? D_ComSens { get; set; }
-        public short? D_ComType { get; set; }
-        public short? D_ComMoyen { get; set; }
-        public short? D_ComSoft { get; set; }
-        public string D_ComCodeExpert { get; set; }
-        public DateTime? D_ComDateSynchro { get; set; }
-        public Guid? D_ComGUID { get; set; }
-        public short? D_RapproTypeEcart { get; set; }
-        public short? D_RapproReport { get; set; }
-        public string JO_NumRapproEscCl { get; set; }
-        public int? PI_NoRapproEscCl { get; set; }
-        public string JO_NumRapproEscFr { get; set; }
-        public int? PI_NoRapproEscFr { get; set; }
-        public short? D_GestionIFRS { get; set; }
-        public short? D_SaisieIFRS { get; set; }
-        public short? N_AnalytiqueIFRS { get; set; }
-        public string JA_NumAN { get; set; }
-        public string JO_NumANIFRS { get; set; }
-        public string JA_NumANIFRS { get; set; }
-        public decimal? D_RappelSoldeMin { get; set; }
-        public short? D_ImportVentil { get; set; }
-        public decimal? D_PenalTaux { get; set; }
-        public short? D_PenalImputation { get; set; }
-        public string JO_NumPenal { get; set; }
-        public int? PI_NoPenal { get; set; }
-        public string JO_NumImpayes { get; set; }
-        public int? PI_NoImpayes { get; set; }
-        public short? D_ImpressFactRef { get; set; }
-        public decimal? D_SeuilTVA { get; set; }
-        public short? D_NotSaisieSommeil { get; set; }
-        public short? D_NormeDGI { get; set; }
-        public DateTime? D_ArchivePeriod { get; set; }
-        public int? D_ECNoCloture01 { get; set; }
-        public int? D_ECNoCloture02 { get; set; }
-        public int? D_ECNoCloture03 { get; set; }
-        public int? D_ECNoCloture04 { get; set; }
-        public int? D_ECNoCloture05 { get; set; }
-        public DateTime? D_CloturePeriod { get; set; }
-        public short? D_MaterialPiece { get; set; }
-        public short? D_BudgetAn { get; set; }
-        public decimal? D_Capital { get; set; }
-        public string D_FormeJuridique { get; set; }
-        public decimal? D_ForfaitImpayes { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public string D_RaisonSoc { get; set; }
+
+    public string D_Profession { get; set; }
+
+    public string D_Adresse { get; set; }
+
+    public string D_Complement { get; set; }
+
+    public string D_CodePostal { get; set; }
+
+    public string D_Ville { get; set; }
+
+    public string D_CodeRegion { get; set; }
+
+    public string D_Pays { get; set; }
+
+    public string D_Commentaire { get; set; }
+
+    public string D_Siret { get; set; }
+
+    public string D_Ape { get; set; }
+
+    public string D_Identifiant { get; set; }
+
+    public DateTime? D_DebutExo01 { get; set; }
+
+    public DateTime? D_DebutExo02 { get; set; }
+
+    public DateTime? D_DebutExo03 { get; set; }
+
+    public DateTime? D_DebutExo04 { get; set; }
+
+    public DateTime? D_DebutExo05 { get; set; }
+
+    public DateTime? D_FinExo01 { get; set; }
+
+    public DateTime? D_FinExo02 { get; set; }
+
+    public DateTime? D_FinExo03 { get; set; }
+
+    public DateTime? D_FinExo04 { get; set; }
+
+    public DateTime? D_FinExo05 { get; set; }
+
+    public short? D_LgCg { get; set; }
+
+    public short? D_LgAn { get; set; }
+
+    public string D_FormatQtes { get; set; }
+
+    public short? D_CodeTrait { get; set; }
+
+    public short? D_ConfSupp { get; set; }
+
+    public short? D_AnalyseGL01 { get; set; }
+
+    public short? D_AnalyseGL02 { get; set; }
+
+    public short? D_AnalyseGL03 { get; set; }
+
+    public short? D_Delai { get; set; }
+
+    public short? D_OuvCompte { get; set; }
+
+    public short? D_Budget { get; set; }
+
+    public short? D_SuppEc { get; set; }
+
+    public short? D_RegTaxe { get; set; }
+
+    public short? D_Ventil { get; set; }
+
+    public short? D_Edi { get; set; }
+
+    public short? D_Archivage01 { get; set; }
+
+    public short? D_Archivage02 { get; set; }
+
+    public short? D_Archivage03 { get; set; }
+
+    public short? D_Archivage04 { get; set; }
+
+    public short? D_Archivage05 { get; set; }
+
+    public short? D_RBSupp { get; set; }
+
+    public short? D_MajImport { get; set; }
+
+    public short? D_SaisCab { get; set; }
+
+    public short? D_TypeValid { get; set; }
+
+    public short? D_ImpressZero { get; set; }
+
+    public short? N_DeviseCompte { get; set; }
+
+    public short? N_DeviseEquival { get; set; }
+
+    public short? D_ANSais { get; set; }
+
+    public string JO_NumAN { get; set; }
+
+    public string CG_NumANOuv { get; set; }
+
+    public string CG_NumANBenef { get; set; }
+
+    public string CG_NumANPerte { get; set; }
+
+    public short? D_TVAEncReg { get; set; }
+
+    public short? D_TVAEncAffect { get; set; }
+
+    public short? D_DeviseEq { get; set; }
+
+    public short? D_AnAffect { get; set; }
+
+    public short? D_ReglPiece { get; set; }
+
+    public short? D_ExtNeg { get; set; }
+
+    public short? D_RapproDevise { get; set; }
+
+    public short? D_ImportEqJo { get; set; }
+
+    public short? D_ImportEqAn { get; set; }
+
+    public string CG_NumImportDebit { get; set; }
+
+    public string CG_NumImportCredit { get; set; }
+
+    public short? N_Analytique { get; set; }
+
+    public string D_NumDoss { get; set; }
+
+    public string D_EMail { get; set; }
+
+    public string D_EMailExpert { get; set; }
+
+    public string D_Expert { get; set; }
+
+    public string D_Telephone { get; set; }
+
+    public string D_Telecopie { get; set; }
+
+    public string D_EMailSoc { get; set; }
+
+    public string D_Site { get; set; }
+
+    public short? D_AppelTiers { get; set; }
+
+    public short? D_AppelSection { get; set; }
+
+    public short? D_ProtPiece { get; set; }
+
+    public short? D_NumCont { get; set; }
+
+    public DateTime? D_DateClot { get; set; }
+
+    public short? D_CompteGTotal { get; set; }
+
+    public short? D_RapproRecherche { get; set; }
+
+    public decimal? D_RapproEcart { get; set; }
+
+    public string CG_NumRappro { get; set; }
+
+    public short? D_RapproContrepartie { get; set; }
+
+    public short? D_ComSens { get; set; }
+
+    public short? D_ComType { get; set; }
+
+    public short? D_ComMoyen { get; set; }
+
+    public short? D_ComSoft { get; set; }
+
+    public string D_ComCodeExpert { get; set; }
+
+    public DateTime? D_ComDateSynchro { get; set; }
+
+    public Guid? D_ComGUID { get; set; }
+
+    public short? D_RapproTypeEcart { get; set; }
+
+    public short? D_RapproReport { get; set; }
+
+    public string JO_NumRapproEscCl { get; set; }
+
+    public int? PI_NoRapproEscCl { get; set; }
+
+    public string JO_NumRapproEscFr { get; set; }
+
+    public int? PI_NoRapproEscFr { get; set; }
+
+    public short? D_GestionIFRS { get; set; }
+
+    public short? D_SaisieIFRS { get; set; }
+
+    public short? N_AnalytiqueIFRS { get; set; }
+
+    public string JA_NumAN { get; set; }
+
+    public string JO_NumANIFRS { get; set; }
+
+    public string JA_NumANIFRS { get; set; }
+
+    public decimal? D_RappelSoldeMin { get; set; }
+
+    public short? D_ImportVentil { get; set; }
+
+    public decimal? D_PenalTaux { get; set; }
+
+    public short? D_PenalImputation { get; set; }
+
+    public string JO_NumPenal { get; set; }
+
+    public int? PI_NoPenal { get; set; }
+
+    public string JO_NumImpayes { get; set; }
+
+    public int? PI_NoImpayes { get; set; }
+
+    public short? D_ImpressFactRef { get; set; }
+
+    public decimal? D_SeuilTVA { get; set; }
+
+    public short? D_NotSaisieSommeil { get; set; }
+
+    public short? D_NormeDGI { get; set; }
+
+    public DateTime? D_ArchivePeriod { get; set; }
+
+    public int? D_ECNoCloture01 { get; set; }
+
+    public int? D_ECNoCloture02 { get; set; }
+
+    public int? D_ECNoCloture03 { get; set; }
+
+    public int? D_ECNoCloture04 { get; set; }
+
+    public int? D_ECNoCloture05 { get; set; }
+
+    public DateTime? D_CloturePeriod { get; set; }
+
+    public short? D_MaterialPiece { get; set; }
+
+    public short? D_BudgetAn { get; set; }
+
+    public decimal? D_Capital { get; set; }
+
+    public string D_FormeJuridique { get; set; }
+
+    public decimal? D_ForfaitImpayes { get; set; }
+
+    public int cbMarq { get; set; }
 }

@@ -3,19 +3,27 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class cbUserSession
 {
-    public partial class cbUserSession
-    {
-        public short cbSession { get; set; }
-        public string CB_Type { get; set; }
-        public string CB_Creator { get; set; }
-        public short? cbLicence { get; set; }
-        public short? cbLockBase { get; set; }
-        public short? cbOldMode { get; set; }
-        public byte[] cbWorkstation { get; set; }
-        public string cbExtCreator { get; set; }
-        public string cbUserName { get; set; }
-        public short? cbCurrentSynchroType { get; set; }
-    }
+    public short cbSession { get; set; }
+
+    public string CB_Type { get; set; }
+
+    public string CB_Creator { get; set; }
+
+    public short? cbLicence { get; set; }
+
+    public short? cbLockBase { get; set; }
+
+    public short? cbOldMode { get; set; }
+
+    public byte[] cbWorkstation { get; set; }
+
+    public string cbExtCreator { get; set; }
+
+    public string cbUserName { get; set; }
+
+    public short? cbCurrentSynchroType { get; set; }
 }

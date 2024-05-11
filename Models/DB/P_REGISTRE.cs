@@ -3,12 +3,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_REGISTRE
 {
-    public partial class P_REGISTRE
-    {
-        public short? R_Registre01 { get; set; }
-        public short? R_Registre02 { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public short? R_Registre01 { get; set; }
+
+    public short? R_Registre02 { get; set; }
+
+    public int cbMarq { get; set; }
 }

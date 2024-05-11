@@ -3,38 +3,53 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_DOCREGL
 {
-    public partial class F_DOCREGL
-    {
-        public F_DOCREGL()
-        {
-            F_REGLECH = new HashSet<F_REGLECH>();
-        }
+    public int? DR_No { get; set; }
 
-        public int? DR_No { get; set; }
-        public short? DO_Domaine { get; set; }
-        public short? DO_Type { get; set; }
-        public string DO_Piece { get; set; }
-        public byte[] cbDO_Piece { get; set; }
-        public short? DR_TypeRegl { get; set; }
-        public DateTime? DR_Date { get; set; }
-        public string DR_Libelle { get; set; }
-        public decimal? DR_Pourcent { get; set; }
-        public decimal? DR_Montant { get; set; }
-        public decimal? DR_MontantDev { get; set; }
-        public short? DR_Equil { get; set; }
-        public int? EC_No { get; set; }
-        public int? cbEC_No { get; set; }
-        public short? DR_Regle { get; set; }
-        public short? N_Reglement { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public short? DO_Domaine { get; set; }
 
-        public virtual ICollection<F_REGLECH> F_REGLECH { get; set; }
-    }
+    public short? DO_Type { get; set; }
+
+    public string DO_Piece { get; set; }
+
+    public byte[] cbDO_Piece { get; set; }
+
+    public short? DR_TypeRegl { get; set; }
+
+    public DateTime? DR_Date { get; set; }
+
+    public string DR_Libelle { get; set; }
+
+    public decimal? DR_Pourcent { get; set; }
+
+    public decimal? DR_Montant { get; set; }
+
+    public decimal? DR_MontantDev { get; set; }
+
+    public short? DR_Equil { get; set; }
+
+    public int? EC_No { get; set; }
+
+    public int? cbEC_No { get; set; }
+
+    public short? DR_Regle { get; set; }
+
+    public short? N_Reglement { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual ICollection<F_REGLECH> F_REGLECH { get; set; } = new List<F_REGLECH>();
 }

@@ -3,18 +3,25 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_Config
 {
-    public partial class API_T_Config
-    {
-        public int id { get; set; }
-        public bool? BL_Releve { get; set; }
-        public bool? BL_BalanceClient { get; set; }
-        public bool? BL_BalanceFournisseur { get; set; }
-        public bool? BL_Marge { get; set; }
-        public bool? FA_Releve { get; set; }
-        public bool? FA_BalanceClient { get; set; }
-        public bool? FA_BalanceFournisseur { get; set; }
-        public bool? FA_Marge { get; set; }
-    }
+    public int id { get; set; }
+
+    public bool? BL_Releve { get; set; }
+
+    public bool? BL_BalanceClient { get; set; }
+
+    public bool? BL_BalanceFournisseur { get; set; }
+
+    public bool? BL_Marge { get; set; }
+
+    public bool? FA_Releve { get; set; }
+
+    public bool? FA_BalanceClient { get; set; }
+
+    public bool? FA_BalanceFournisseur { get; set; }
+
+    public bool? FA_Marge { get; set; }
 }

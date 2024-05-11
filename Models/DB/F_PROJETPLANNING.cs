@@ -3,72 +3,119 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_PROJETPLANNING
 {
-    public partial class F_PROJETPLANNING
-    {
-        public F_PROJETPLANNING()
-        {
-            F_AGENDA = new HashSet<F_AGENDA>();
-            F_PROJETHISTO = new HashSet<F_PROJETHISTO>();
-        }
+    public string PF_Num { get; set; }
 
-        public string PF_Num { get; set; }
-        public byte[] cbPF_Num { get; set; }
-        public short? PP_Type { get; set; }
-        public string AR_RefCompose { get; set; }
-        public byte[] cbAR_RefCompose { get; set; }
-        public int? AG_No1Compose { get; set; }
-        public int? AG_No2Compose { get; set; }
-        public string PP_Operation { get; set; }
-        public byte[] cbPP_Operation { get; set; }
-        public string AR_RefComposant { get; set; }
-        public byte[] cbAR_RefComposant { get; set; }
-        public int? AG_No1Composant { get; set; }
-        public int? AG_No2Composant { get; set; }
-        public string RP_Code { get; set; }
-        public byte[] cbRP_Code { get; set; }
-        public string PP_Intitule { get; set; }
-        public decimal? PP_Quantite { get; set; }
-        public string PP_Temps { get; set; }
-        public decimal? PP_QteAffectee { get; set; }
-        public string PP_TempsAffecte { get; set; }
-        public decimal? PP_PUHT { get; set; }
-        public DateTime? PP_DateDebut { get; set; }
-        public DateTime? PP_DateFin { get; set; }
-        public int? DE_No { get; set; }
-        public int? cbDE_No { get; set; }
-        public int? PP_No { get; set; }
-        public short? PP_Ajout { get; set; }
-        public short? PP_Ordre { get; set; }
-        public short? PP_SousTraitance { get; set; }
-        public short? PP_Chevauche { get; set; }
-        public short? PP_Demarre { get; set; }
-        public string PP_OperationChevauche { get; set; }
-        public decimal? PP_ValeurChevauche { get; set; }
-        public short? PP_TypeChevauche { get; set; }
-        public short? PP_TypeNomencl { get; set; }
-        public decimal? PP_QteRealisee { get; set; }
-        public string PP_TempsRealise { get; set; }
-        public string PP_HeureDebut { get; set; }
-        public string PP_HeureFin { get; set; }
-        public decimal? PP_QteReservee { get; set; }
-        public short? PF_Type { get; set; }
-        public int? PP_NoOrigine { get; set; }
-        public decimal? PP_CoutStd { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public byte[] cbPF_Num { get; set; }
 
-        public virtual F_ARTICLE AR_RefComposantNavigation { get; set; }
-        public virtual F_ARTICLE AR_RefComposeNavigation { get; set; }
-        public virtual F_PROJETFABRICATION PF_NumNavigation { get; set; }
-        public virtual F_RESSOURCEPROD RP_CodeNavigation { get; set; }
-        public virtual F_DEPOT cbDE_NoNavigation { get; set; }
-        public virtual ICollection<F_AGENDA> F_AGENDA { get; set; }
-        public virtual ICollection<F_PROJETHISTO> F_PROJETHISTO { get; set; }
-    }
+    public short? PP_Type { get; set; }
+
+    public string AR_RefCompose { get; set; }
+
+    public byte[] cbAR_RefCompose { get; set; }
+
+    public int? AG_No1Compose { get; set; }
+
+    public int? AG_No2Compose { get; set; }
+
+    public string PP_Operation { get; set; }
+
+    public byte[] cbPP_Operation { get; set; }
+
+    public string AR_RefComposant { get; set; }
+
+    public byte[] cbAR_RefComposant { get; set; }
+
+    public int? AG_No1Composant { get; set; }
+
+    public int? AG_No2Composant { get; set; }
+
+    public string RP_Code { get; set; }
+
+    public byte[] cbRP_Code { get; set; }
+
+    public string PP_Intitule { get; set; }
+
+    public decimal? PP_Quantite { get; set; }
+
+    public string PP_Temps { get; set; }
+
+    public decimal? PP_QteAffectee { get; set; }
+
+    public string PP_TempsAffecte { get; set; }
+
+    public decimal? PP_PUHT { get; set; }
+
+    public DateTime? PP_DateDebut { get; set; }
+
+    public DateTime? PP_DateFin { get; set; }
+
+    public int? DE_No { get; set; }
+
+    public int? cbDE_No { get; set; }
+
+    public int? PP_No { get; set; }
+
+    public short? PP_Ajout { get; set; }
+
+    public short? PP_Ordre { get; set; }
+
+    public short? PP_SousTraitance { get; set; }
+
+    public short? PP_Chevauche { get; set; }
+
+    public short? PP_Demarre { get; set; }
+
+    public string PP_OperationChevauche { get; set; }
+
+    public decimal? PP_ValeurChevauche { get; set; }
+
+    public short? PP_TypeChevauche { get; set; }
+
+    public short? PP_TypeNomencl { get; set; }
+
+    public decimal? PP_QteRealisee { get; set; }
+
+    public string PP_TempsRealise { get; set; }
+
+    public string PP_HeureDebut { get; set; }
+
+    public string PP_HeureFin { get; set; }
+
+    public decimal? PP_QteReservee { get; set; }
+
+    public short? PF_Type { get; set; }
+
+    public int? PP_NoOrigine { get; set; }
+
+    public decimal? PP_CoutStd { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_ARTICLE AR_RefComposantNavigation { get; set; }
+
+    public virtual F_ARTICLE AR_RefComposeNavigation { get; set; }
+
+    public virtual ICollection<F_AGENDA> F_AGENDA { get; set; } = new List<F_AGENDA>();
+
+    public virtual ICollection<F_PROJETHISTO> F_PROJETHISTO { get; set; } = new List<F_PROJETHISTO>();
+
+    public virtual F_PROJETFABRICATION PF_NumNavigation { get; set; }
+
+    public virtual F_RESSOURCEPROD RP_CodeNavigation { get; set; }
+
+    public virtual F_DEPOT cbDE_NoNavigation { get; set; }
 }

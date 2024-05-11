@@ -3,69 +3,113 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_CertifGrilleDialogue
 {
-    public partial class API_T_CertifGrilleDialogue
-    {
-        public API_T_CertifGrilleDialogue()
-        {
-            API_T_CertifGrilleDialogueExigence = new HashSet<API_T_CertifGrilleDialogueExigence>();
-            API_T_CertifGrilleDialogueModif = new HashSet<API_T_CertifGrilleDialogueModif>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public DateTime? Date { get; set; }
-        public string Numero { get; set; }
-        public string CT_Num { get; set; }
-        public int DemandePar { get; set; }
-        public string RaisonSocial { get; set; }
-        public string Telephone { get; set; }
-        public string Fax { get; set; }
-        public string Adresse { get; set; }
-        public string Interlocuteur { get; set; }
-        public string FonctionInterlocuteur { get; set; }
-        public bool PreuvesRaccord { get; set; }
-        public bool _ListePersonnelQualifie { get; set; }
-        public bool _AuditAuLaboratoire { get; set; }
-        public bool PMQ { get; set; }
-        public bool ProcedureTraitementReclamation { get; set; }
-        public string LieuPrestation { get; set; }
-        public string OperationsAttendues { get; set; }
-        public bool PeriodiciteEtalonnageEtiquettes { get; set; }
-        public bool PeriodiciteEtalonnageRapports { get; set; }
-        public bool RelanceEtalonnageAnnuel { get; set; }
-        public DateTime? DateSouhaiteePrestation { get; set; }
-        public DateTime? DateTransmissionDocuments { get; set; }
-        public string AdresseLivraisonExpedition { get; set; }
-        public string ModeLivraisonExpedition { get; set; }
-        public bool PriseChargeTransport { get; set; }
-        public int NaturePrestation { get; set; }
-        public int PointsEtalonnage { get; set; }
-        public bool CapaciteDisponibiliteRessourcesNecessaires { get; set; }
-        public int LieuPrestationInt { get; set; }
-        public int OperationsAttenduesInt { get; set; }
-        public int PreuvesRaccordRes { get; set; }
-        public int ListePersonnelQualifieRes { get; set; }
-        public int AuditAuLaboratoireRes { get; set; }
-        public int PMQRes { get; set; }
-        public int ProcedureTraitementReclamationRes { get; set; }
-        public int MethodeEtalonnange { get; set; }
-        public int AvisPertinenceMethode { get; set; }
-        public string Commentaire { get; set; }
-        public string MethodeEtalonnageAutre { get; set; }
-        public int Statut { get; set; }
-        public string PreuvesRaccordChar { get; set; }
-        public string ListePersonnelQualifieChar { get; set; }
-        public string AuditAuLaboratoireChar { get; set; }
-        public string PMQChar { get; set; }
-        public string ProcedureTraitementReclamationChar { get; set; }
-        public string DemandeParAutre { get; set; }
-        public int PriseChargeTransportInt { get; set; }
-        public string PeriodiciteEtalonnageEtiquettesPeriode { get; set; }
-        public string PeriodiciteEtalonnageRapportsPeriode { get; set; }
-        public string PointsEtalonnageAutre { get; set; }
+    public DateTime? Date { get; set; }
 
-        public virtual ICollection<API_T_CertifGrilleDialogueExigence> API_T_CertifGrilleDialogueExigence { get; set; }
-        public virtual ICollection<API_T_CertifGrilleDialogueModif> API_T_CertifGrilleDialogueModif { get; set; }
-    }
+    public string Numero { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public int DemandePar { get; set; }
+
+    public string RaisonSocial { get; set; }
+
+    public string Telephone { get; set; }
+
+    public string Fax { get; set; }
+
+    public string Adresse { get; set; }
+
+    public string Interlocuteur { get; set; }
+
+    public string FonctionInterlocuteur { get; set; }
+
+    public bool PreuvesRaccord { get; set; }
+
+    public bool _ListePersonnelQualifie { get; set; }
+
+    public bool _AuditAuLaboratoire { get; set; }
+
+    public bool PMQ { get; set; }
+
+    public bool ProcedureTraitementReclamation { get; set; }
+
+    public string LieuPrestation { get; set; }
+
+    public string OperationsAttendues { get; set; }
+
+    public bool PeriodiciteEtalonnageEtiquettes { get; set; }
+
+    public bool PeriodiciteEtalonnageRapports { get; set; }
+
+    public bool RelanceEtalonnageAnnuel { get; set; }
+
+    public DateTime? DateSouhaiteePrestation { get; set; }
+
+    public DateTime? DateTransmissionDocuments { get; set; }
+
+    public string AdresseLivraisonExpedition { get; set; }
+
+    public string ModeLivraisonExpedition { get; set; }
+
+    public bool PriseChargeTransport { get; set; }
+
+    public int NaturePrestation { get; set; }
+
+    public int PointsEtalonnage { get; set; }
+
+    public bool CapaciteDisponibiliteRessourcesNecessaires { get; set; }
+
+    public int LieuPrestationInt { get; set; }
+
+    public int OperationsAttenduesInt { get; set; }
+
+    public int PreuvesRaccordRes { get; set; }
+
+    public int ListePersonnelQualifieRes { get; set; }
+
+    public int AuditAuLaboratoireRes { get; set; }
+
+    public int PMQRes { get; set; }
+
+    public int ProcedureTraitementReclamationRes { get; set; }
+
+    public int MethodeEtalonnange { get; set; }
+
+    public int AvisPertinenceMethode { get; set; }
+
+    public string Commentaire { get; set; }
+
+    public string MethodeEtalonnageAutre { get; set; }
+
+    public int Statut { get; set; }
+
+    public string PreuvesRaccordChar { get; set; }
+
+    public string ListePersonnelQualifieChar { get; set; }
+
+    public string AuditAuLaboratoireChar { get; set; }
+
+    public string PMQChar { get; set; }
+
+    public string ProcedureTraitementReclamationChar { get; set; }
+
+    public string DemandeParAutre { get; set; }
+
+    public int PriseChargeTransportInt { get; set; }
+
+    public string PeriodiciteEtalonnageEtiquettesPeriode { get; set; }
+
+    public string PeriodiciteEtalonnageRapportsPeriode { get; set; }
+
+    public string PointsEtalonnageAutre { get; set; }
+
+    public virtual ICollection<API_T_CertifGrilleDialogueExigence> API_T_CertifGrilleDialogueExigence { get; set; } = new List<API_T_CertifGrilleDialogueExigence>();
+
+    public virtual ICollection<API_T_CertifGrilleDialogueModif> API_T_CertifGrilleDialogueModif { get; set; } = new List<API_T_CertifGrilleDialogueModif>();
 }

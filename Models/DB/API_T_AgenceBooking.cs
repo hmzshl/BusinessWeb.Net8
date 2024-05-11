@@ -3,40 +3,53 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_AgenceBooking
 {
-    public partial class API_T_AgenceBooking
-    {
-        public API_T_AgenceBooking()
-        {
-            API_T_AgenceBookingDetail = new HashSet<API_T_AgenceBookingDetail>();
-            API_T_AgenceBookingOffre = new HashSet<API_T_AgenceBookingOffre>();
-            API_T_AgenceBookingPax = new HashSet<API_T_AgenceBookingPax>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public DateTime? Date { get; set; }
-        public string Piece { get; set; }
-        public DateTime? SellingDateStart { get; set; }
-        public DateTime? SellingDateEnd { get; set; }
-        public DateTime? ArrivalDateStart { get; set; }
-        public DateTime? ArrivalDateEnd { get; set; }
-        public string Libelle { get; set; }
-        public decimal NbrPax { get; set; }
-        public decimal NbrPaxAdult { get; set; }
-        public decimal NbrPaxChild { get; set; }
-        public string Reference { get; set; }
-        public int Prestation { get; set; }
-        public int Client { get; set; }
-        public int Fournisseur { get; set; }
-        public decimal PU { get; set; }
-        public decimal PUDevise { get; set; }
-        public int Devise { get; set; }
-        public decimal Taux { get; set; }
-        public decimal NbrPaxInfant { get; set; }
+    public DateTime? Date { get; set; }
 
-        public virtual ICollection<API_T_AgenceBookingDetail> API_T_AgenceBookingDetail { get; set; }
-        public virtual ICollection<API_T_AgenceBookingOffre> API_T_AgenceBookingOffre { get; set; }
-        public virtual ICollection<API_T_AgenceBookingPax> API_T_AgenceBookingPax { get; set; }
-    }
+    public string Piece { get; set; }
+
+    public DateTime? SellingDateStart { get; set; }
+
+    public DateTime? SellingDateEnd { get; set; }
+
+    public DateTime? ArrivalDateStart { get; set; }
+
+    public DateTime? ArrivalDateEnd { get; set; }
+
+    public string Libelle { get; set; }
+
+    public decimal NbrPax { get; set; }
+
+    public decimal NbrPaxAdult { get; set; }
+
+    public decimal NbrPaxChild { get; set; }
+
+    public string Reference { get; set; }
+
+    public int Prestation { get; set; }
+
+    public int Client { get; set; }
+
+    public int Fournisseur { get; set; }
+
+    public decimal PU { get; set; }
+
+    public decimal PUDevise { get; set; }
+
+    public int Devise { get; set; }
+
+    public decimal Taux { get; set; }
+
+    public decimal NbrPaxInfant { get; set; }
+
+    public virtual ICollection<API_T_AgenceBookingDetail> API_T_AgenceBookingDetail { get; set; } = new List<API_T_AgenceBookingDetail>();
+
+    public virtual ICollection<API_T_AgenceBookingOffre> API_T_AgenceBookingOffre { get; set; } = new List<API_T_AgenceBookingOffre>();
+
+    public virtual ICollection<API_T_AgenceBookingPax> API_T_AgenceBookingPax { get; set; } = new List<API_T_AgenceBookingPax>();
 }

@@ -3,13 +3,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_Authorize
 {
-    public partial class API_T_Authorize
-    {
-        public int id { get; set; }
-        public string UserID { get; set; }
-        public string Url { get; set; }
-        public int? SelectedAPP { get; set; }
-    }
+    public int id { get; set; }
+
+    public string UserID { get; set; }
+
+    public string Url { get; set; }
+
+    public int? SelectedAPP { get; set; }
 }

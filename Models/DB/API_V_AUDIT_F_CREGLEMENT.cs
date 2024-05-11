@@ -3,37 +3,63 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_V_AUDIT_F_CREGLEMENT
 {
-    public partial class API_V_AUDIT_F_CREGLEMENT
-    {
-        public int? cbMarq { get; set; }
-        public int? RG_No { get; set; }
-        public DateTime? RG_Date { get; set; }
-        public string RG_Piece { get; set; }
-        public string RG_Reference { get; set; }
-        public string RG_Libelle { get; set; }
-        public string CT_Num { get; set; }
-        public string CT_Intitule { get; set; }
-        public string JO_Num { get; set; }
-        public string JO_Intitule { get; set; }
-        public string RG_DateEcheance { get; set; }
-        public string Echeance { get; set; }
-        public string R_Intitule { get; set; }
-        public string CT_Type { get; set; }
-        public decimal? RG_Montant { get; set; }
-        public decimal? Debit { get; set; }
-        public decimal? Credit { get; set; }
-        public short? RG_Type { get; set; }
-        public string CG_Num { get; set; }
-        public string Annee { get; set; }
-        public string Mois { get; set; }
-        public string MoisAnnee { get; set; }
-        public string Operation { get; set; }
-        public DateTime? Timestamp { get; set; }
-        public string Suser_Name { get; set; }
-        public string Host_Name { get; set; }
-        public string Sage_Name { get; set; }
-        public int id { get; set; }
-    }
+    public int? cbMarq { get; set; }
+
+    public int? RG_No { get; set; }
+
+    public DateTime? RG_Date { get; set; }
+
+    public string RG_Piece { get; set; }
+
+    public string RG_Reference { get; set; }
+
+    public string RG_Libelle { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public string CT_Intitule { get; set; }
+
+    public string JO_Num { get; set; }
+
+    public string JO_Intitule { get; set; }
+
+    public string RG_DateEcheance { get; set; }
+
+    public string Echeance { get; set; }
+
+    public string R_Intitule { get; set; }
+
+    public string CT_Type { get; set; }
+
+    public decimal? RG_Montant { get; set; }
+
+    public decimal? Debit { get; set; }
+
+    public decimal? Credit { get; set; }
+
+    public short? RG_Type { get; set; }
+
+    public string CG_Num { get; set; }
+
+    public string Annee { get; set; }
+
+    public string Mois { get; set; }
+
+    public string MoisAnnee { get; set; }
+
+    public string Operation { get; set; }
+
+    public DateTime? Timestamp { get; set; }
+
+    public string Suser_Name { get; set; }
+
+    public string Host_Name { get; set; }
+
+    public string Sage_Name { get; set; }
+
+    public int id { get; set; }
 }

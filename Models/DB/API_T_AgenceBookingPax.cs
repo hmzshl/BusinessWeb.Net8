@@ -3,21 +3,29 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_AgenceBookingPax
-    {
-        public int id { get; set; }
-        public string Nom { get; set; }
-        public string CIN { get; set; }
-        public string Telephone { get; set; }
-        public string Email { get; set; }
-        public int Entete { get; set; }
-        public DateTime? Naissance { get; set; }
-        public string Adresse { get; set; }
-        public string Pays { get; set; }
-        public string Ville { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_AgenceBooking EnteteNavigation { get; set; }
-    }
+public partial class API_T_AgenceBookingPax
+{
+    public int id { get; set; }
+
+    public string Nom { get; set; }
+
+    public string CIN { get; set; }
+
+    public string Telephone { get; set; }
+
+    public string Email { get; set; }
+
+    public int Entete { get; set; }
+
+    public DateTime? Naissance { get; set; }
+
+    public string Adresse { get; set; }
+
+    public string Pays { get; set; }
+
+    public string Ville { get; set; }
+
+    public virtual API_T_AgenceBooking EnteteNavigation { get; set; }
 }

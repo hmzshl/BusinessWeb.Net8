@@ -3,33 +3,53 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_JOURNAUX
-    {
-        public string JO_Num { get; set; }
-        public byte[] cbJO_Num { get; set; }
-        public string JO_Intitule { get; set; }
-        public byte[] cbJO_Intitule { get; set; }
-        public string CG_Num { get; set; }
-        public byte[] cbCG_Num { get; set; }
-        public short? JO_Type { get; set; }
-        public short? JO_NumPiece { get; set; }
-        public short? JO_Contrepartie { get; set; }
-        public short? JO_SaisAnal { get; set; }
-        public short? JO_NotCalcTot { get; set; }
-        public short? JO_Rappro { get; set; }
-        public short? JO_Sommeil { get; set; }
-        public short? JO_IFRS { get; set; }
-        public short? JO_Reglement { get; set; }
-        public short? JO_SuiviTreso { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_COMPTEG CG_NumNavigation { get; set; }
-    }
+public partial class F_JOURNAUX
+{
+    public string JO_Num { get; set; }
+
+    public byte[] cbJO_Num { get; set; }
+
+    public string JO_Intitule { get; set; }
+
+    public byte[] cbJO_Intitule { get; set; }
+
+    public string CG_Num { get; set; }
+
+    public byte[] cbCG_Num { get; set; }
+
+    public short? JO_Type { get; set; }
+
+    public short? JO_NumPiece { get; set; }
+
+    public short? JO_Contrepartie { get; set; }
+
+    public short? JO_SaisAnal { get; set; }
+
+    public short? JO_NotCalcTot { get; set; }
+
+    public short? JO_Rappro { get; set; }
+
+    public short? JO_Sommeil { get; set; }
+
+    public short? JO_IFRS { get; set; }
+
+    public short? JO_Reglement { get; set; }
+
+    public short? JO_SuiviTreso { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_COMPTEG CG_NumNavigation { get; set; }
 }

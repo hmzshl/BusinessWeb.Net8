@@ -3,22 +3,33 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_V_ARTICLESTOCK
 {
-    public partial class API_V_ARTICLESTOCK
-    {
-        public string AR_Ref { get; set; }
-        public string AR_Design { get; set; }
-        public int DE_No { get; set; }
-        public string DE_Intitule { get; set; }
-        public decimal? AS_QteSto { get; set; }
-        public decimal? AS_MontSto { get; set; }
-        public decimal? AS_QteCom { get; set; }
-        public decimal? AS_QtePrepa { get; set; }
-        public decimal? AS_QteRes { get; set; }
-        public decimal? AS_QteMini { get; set; }
-        public decimal? AS_QteMaxi { get; set; }
-        public string FA_CodeFamille { get; set; }
-        public string FA_Intitule { get; set; }
-    }
+    public string AR_Ref { get; set; }
+
+    public string AR_Design { get; set; }
+
+    public int DE_No { get; set; }
+
+    public string DE_Intitule { get; set; }
+
+    public decimal? AS_QteSto { get; set; }
+
+    public decimal? AS_MontSto { get; set; }
+
+    public decimal? AS_QteCom { get; set; }
+
+    public decimal? AS_QtePrepa { get; set; }
+
+    public decimal? AS_QteRes { get; set; }
+
+    public decimal? AS_QteMini { get; set; }
+
+    public decimal? AS_QteMaxi { get; set; }
+
+    public string FA_CodeFamille { get; set; }
+
+    public string FA_Intitule { get; set; }
 }

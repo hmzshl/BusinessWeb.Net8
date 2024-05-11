@@ -3,29 +3,35 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_AttributeDetail
 {
-    public partial class API_T_AttributeDetail
-    {
-        public API_T_AttributeDetail()
-        {
-            API_T_AttributeTable = new HashSet<API_T_AttributeTable>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public int ParentID { get; set; }
-        public string TextValue { get; set; }
-        public DateTime? DateValue { get; set; }
-        public bool BoolValue { get; set; }
-        public decimal DecimalValue { get; set; }
-        public int IntValue { get; set; }
-        public int ModelValue { get; set; }
-        public int TableValue { get; set; }
-        public int ChildID { get; set; }
-        public string TableName { get; set; }
-        public int TableIndex { get; set; }
+    public int ParentID { get; set; }
 
-        public virtual API_T_Attribute Parent { get; set; }
-        public virtual ICollection<API_T_AttributeTable> API_T_AttributeTable { get; set; }
-    }
+    public string TextValue { get; set; }
+
+    public DateTime? DateValue { get; set; }
+
+    public bool BoolValue { get; set; }
+
+    public decimal DecimalValue { get; set; }
+
+    public int IntValue { get; set; }
+
+    public int ModelValue { get; set; }
+
+    public int TableValue { get; set; }
+
+    public int ChildID { get; set; }
+
+    public string TableName { get; set; }
+
+    public int TableIndex { get; set; }
+
+    public virtual ICollection<API_T_AttributeTable> API_T_AttributeTable { get; set; } = new List<API_T_AttributeTable>();
+
+    public virtual API_T_Attribute Parent { get; set; }
 }

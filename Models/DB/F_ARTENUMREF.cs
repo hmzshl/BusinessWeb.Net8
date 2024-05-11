@@ -3,29 +3,45 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_ARTENUMREF
-    {
-        public string AR_Ref { get; set; }
-        public byte[] cbAR_Ref { get; set; }
-        public int? AG_No1 { get; set; }
-        public int? AG_No2 { get; set; }
-        public string AE_Ref { get; set; }
-        public byte[] cbAE_Ref { get; set; }
-        public decimal? AE_PrixAch { get; set; }
-        public string AE_CodeBarre { get; set; }
-        public byte[] cbAE_CodeBarre { get; set; }
-        public decimal? AE_PrixAchNouv { get; set; }
-        public string AE_EdiCode { get; set; }
-        public short? AE_Sommeil { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_ARTICLE AR_RefNavigation { get; set; }
-    }
+public partial class F_ARTENUMREF
+{
+    public string AR_Ref { get; set; }
+
+    public byte[] cbAR_Ref { get; set; }
+
+    public int? AG_No1 { get; set; }
+
+    public int? AG_No2 { get; set; }
+
+    public string AE_Ref { get; set; }
+
+    public byte[] cbAE_Ref { get; set; }
+
+    public decimal? AE_PrixAch { get; set; }
+
+    public string AE_CodeBarre { get; set; }
+
+    public byte[] cbAE_CodeBarre { get; set; }
+
+    public decimal? AE_PrixAchNouv { get; set; }
+
+    public string AE_EdiCode { get; set; }
+
+    public short? AE_Sommeil { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_ARTICLE AR_RefNavigation { get; set; }
 }

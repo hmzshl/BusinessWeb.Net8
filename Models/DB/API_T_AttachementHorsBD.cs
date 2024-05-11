@@ -3,22 +3,31 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_AttachementHorsBD
-    {
-        public int id { get; set; }
-        public int Attachement { get; set; }
-        public string Article { get; set; }
-        public string AR_Ref { get; set; }
-        public decimal Qte { get; set; }
-        public string Unite { get; set; }
-        public string Consistance { get; set; }
-        public string Libelle { get; set; }
-        public decimal PU { get; set; }
-        public decimal Montant { get; set; }
-        public DateTime? DateExecution { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_Attachement AttachementNavigation { get; set; }
-    }
+public partial class API_T_AttachementHorsBD
+{
+    public int id { get; set; }
+
+    public int Attachement { get; set; }
+
+    public string Article { get; set; }
+
+    public string AR_Ref { get; set; }
+
+    public decimal Qte { get; set; }
+
+    public string Unite { get; set; }
+
+    public string Consistance { get; set; }
+
+    public string Libelle { get; set; }
+
+    public decimal PU { get; set; }
+
+    public decimal Montant { get; set; }
+
+    public DateTime? DateExecution { get; set; }
+
+    public virtual API_T_Attachement AttachementNavigation { get; set; }
 }

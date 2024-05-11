@@ -3,13 +3,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_REJET
 {
-    public partial class P_REJET
-    {
-        public string R_Intitule { get; set; }
-        public string R_Code { get; set; }
-        public short? cbIndice { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public string R_Intitule { get; set; }
+
+    public string R_Code { get; set; }
+
+    public short? cbIndice { get; set; }
+
+    public int cbMarq { get; set; }
 }

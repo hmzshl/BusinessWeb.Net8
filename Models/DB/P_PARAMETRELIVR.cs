@@ -3,19 +3,27 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_PARAMETRELIVR
 {
-    public partial class P_PARAMETRELIVR
-    {
-        public short? PL_Priorite1 { get; set; }
-        public short? PL_Priorite2 { get; set; }
-        public short? PL_Priorite3 { get; set; }
-        public short? PL_Duree { get; set; }
-        public short? PL_TypeDuree { get; set; }
-        public short? PL_Reliquat { get; set; }
-        public short? PL_Quantite { get; set; }
-        public short? PL_Generation { get; set; }
-        public short? PL_Statut { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public short? PL_Priorite1 { get; set; }
+
+    public short? PL_Priorite2 { get; set; }
+
+    public short? PL_Priorite3 { get; set; }
+
+    public short? PL_Duree { get; set; }
+
+    public short? PL_TypeDuree { get; set; }
+
+    public short? PL_Reliquat { get; set; }
+
+    public short? PL_Quantite { get; set; }
+
+    public short? PL_Generation { get; set; }
+
+    public short? PL_Statut { get; set; }
+
+    public int cbMarq { get; set; }
 }

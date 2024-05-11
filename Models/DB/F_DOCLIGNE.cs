@@ -3,126 +3,221 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_DOCLIGNE
 {
-    public partial class F_DOCLIGNE
-    {
-        public F_DOCLIGNE()
-        {
-            F_AGENDA = new HashSet<F_AGENDA>();
-            F_DOCLIGNEEMPL = new HashSet<F_DOCLIGNEEMPL>();
-            F_DOCLIGNEINFOS = new HashSet<F_DOCLIGNEINFOS>();
-            F_PROJETLIGNE = new HashSet<F_PROJETLIGNE>();
-            InversecbDL_NoLinkNavigation = new HashSet<F_DOCLIGNE>();
-        }
+    public short? DO_Domaine { get; set; }
 
-        public short? DO_Domaine { get; set; }
-        public short DO_Type { get; set; }
-        public string CT_Num { get; set; }
-        public byte[] cbCT_Num { get; set; }
-        public string DO_Piece { get; set; }
-        public byte[] cbDO_Piece { get; set; }
-        public string DL_PieceBC { get; set; }
-        public byte[] cbDL_PieceBC { get; set; }
-        public string DL_PieceBL { get; set; }
-        public byte[] cbDL_PieceBL { get; set; }
-        public DateTime? DO_Date { get; set; }
-        public DateTime? DL_DateBC { get; set; }
-        public DateTime? DL_DateBL { get; set; }
-        public int? DL_Ligne { get; set; }
-        public string DO_Ref { get; set; }
-        public short? DL_TNomencl { get; set; }
-        public short? DL_TRemPied { get; set; }
-        public short? DL_TRemExep { get; set; }
-        public string AR_Ref { get; set; }
-        public byte[] cbAR_Ref { get; set; }
-        public string DL_Design { get; set; }
-        public decimal? DL_Qte { get; set; }
-        public decimal? DL_QteBC { get; set; }
-        public decimal? DL_QteBL { get; set; }
-        public decimal? DL_PoidsNet { get; set; }
-        public decimal? DL_PoidsBrut { get; set; }
-        public decimal? DL_Remise01REM_Valeur { get; set; }
-        public short? DL_Remise01REM_Type { get; set; }
-        public decimal? DL_Remise02REM_Valeur { get; set; }
-        public short? DL_Remise02REM_Type { get; set; }
-        public decimal? DL_Remise03REM_Valeur { get; set; }
-        public short? DL_Remise03REM_Type { get; set; }
-        public decimal? DL_PrixUnitaire { get; set; }
-        public decimal? DL_PUBC { get; set; }
-        public decimal? DL_Taxe1 { get; set; }
-        public short? DL_TypeTaux1 { get; set; }
-        public short? DL_TypeTaxe1 { get; set; }
-        public decimal? DL_Taxe2 { get; set; }
-        public short? DL_TypeTaux2 { get; set; }
-        public short? DL_TypeTaxe2 { get; set; }
-        public int? CO_No { get; set; }
-        public int? cbCO_No { get; set; }
-        public int? AG_No1 { get; set; }
-        public int? AG_No2 { get; set; }
-        public decimal? DL_PrixRU { get; set; }
-        public decimal? DL_CMUP { get; set; }
-        public short? DL_MvtStock { get; set; }
-        public int? DT_No { get; set; }
-        public int? cbDT_No { get; set; }
-        public string AF_RefFourniss { get; set; }
-        public byte[] cbAF_RefFourniss { get; set; }
-        public string EU_Enumere { get; set; }
-        public decimal? EU_Qte { get; set; }
-        public short? DL_TTC { get; set; }
-        public int? DE_No { get; set; }
-        public int? cbDE_No { get; set; }
-        public short? DL_NoRef { get; set; }
-        public short? DL_TypePL { get; set; }
-        public decimal? DL_PUDevise { get; set; }
-        public decimal? DL_PUTTC { get; set; }
-        public int? DL_No { get; set; }
-        public DateTime? DO_DateLivr { get; set; }
-        public string CA_Num { get; set; }
-        public byte[] cbCA_Num { get; set; }
-        public decimal? DL_Taxe3 { get; set; }
-        public short? DL_TypeTaux3 { get; set; }
-        public short? DL_TypeTaxe3 { get; set; }
-        public decimal? DL_Frais { get; set; }
-        public short? DL_Valorise { get; set; }
-        public string AR_RefCompose { get; set; }
-        public byte[] cbAR_RefCompose { get; set; }
-        public short? DL_NonLivre { get; set; }
-        public string AC_RefClient { get; set; }
-        public decimal? DL_MontantHT { get; set; }
-        public decimal? DL_MontantTTC { get; set; }
-        public short? DL_FactPoids { get; set; }
-        public short? DL_Escompte { get; set; }
-        public string DL_PiecePL { get; set; }
-        public byte[] cbDL_PiecePL { get; set; }
-        public DateTime? DL_DatePL { get; set; }
-        public decimal? DL_QtePL { get; set; }
-        public string DL_NoColis { get; set; }
-        public int? DL_NoLink { get; set; }
-        public int? cbDL_NoLink { get; set; }
-        public string RP_Code { get; set; }
-        public byte[] cbRP_Code { get; set; }
-        public int? DL_QteRessource { get; set; }
-        public DateTime? DL_DateAvancement { get; set; }
-        public string PF_Num { get; set; }
-        public byte[] cbPF_Num { get; set; }
-        public string DL_CodeTaxe1 { get; set; }
-        public string DL_CodeTaxe2 { get; set; }
-        public string DL_CodeTaxe3 { get; set; }
-        public int cbMarq { get; set; }
+    public short DO_Type { get; set; }
 
-        public virtual F_ARTICLE AR_RefNavigation { get; set; }
-        public virtual F_TAXE DL_CodeTaxe1Navigation { get; set; }
-        public virtual F_TAXE DL_CodeTaxe2Navigation { get; set; }
-        public virtual F_TAXE DL_CodeTaxe3Navigation { get; set; }
-        public virtual F_RESSOURCEPROD RP_CodeNavigation { get; set; }
-        public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
-        public virtual F_DEPOT cbDE_NoNavigation { get; set; }
-        public virtual F_DOCLIGNE cbDL_NoLinkNavigation { get; set; }
-        public virtual ICollection<F_AGENDA> F_AGENDA { get; set; }
-        public virtual ICollection<F_DOCLIGNEEMPL> F_DOCLIGNEEMPL { get; set; }
-        public virtual ICollection<F_DOCLIGNEINFOS> F_DOCLIGNEINFOS { get; set; }
-        public virtual ICollection<F_PROJETLIGNE> F_PROJETLIGNE { get; set; }
-        public virtual ICollection<F_DOCLIGNE> InversecbDL_NoLinkNavigation { get; set; }
-    }
+    public string CT_Num { get; set; }
+
+    public byte[] cbCT_Num { get; set; }
+
+    public string DO_Piece { get; set; }
+
+    public byte[] cbDO_Piece { get; set; }
+
+    public string DL_PieceBC { get; set; }
+
+    public byte[] cbDL_PieceBC { get; set; }
+
+    public string DL_PieceBL { get; set; }
+
+    public byte[] cbDL_PieceBL { get; set; }
+
+    public DateTime? DO_Date { get; set; }
+
+    public DateTime? DL_DateBC { get; set; }
+
+    public DateTime? DL_DateBL { get; set; }
+
+    public int? DL_Ligne { get; set; }
+
+    public string DO_Ref { get; set; }
+
+    public short? DL_TNomencl { get; set; }
+
+    public short? DL_TRemPied { get; set; }
+
+    public short? DL_TRemExep { get; set; }
+
+    public string AR_Ref { get; set; }
+
+    public byte[] cbAR_Ref { get; set; }
+
+    public string DL_Design { get; set; }
+
+    public decimal? DL_Qte { get; set; }
+
+    public decimal? DL_QteBC { get; set; }
+
+    public decimal? DL_QteBL { get; set; }
+
+    public decimal? DL_PoidsNet { get; set; }
+
+    public decimal? DL_PoidsBrut { get; set; }
+
+    public decimal? DL_Remise01REM_Valeur { get; set; }
+
+    public short? DL_Remise01REM_Type { get; set; }
+
+    public decimal? DL_Remise02REM_Valeur { get; set; }
+
+    public short? DL_Remise02REM_Type { get; set; }
+
+    public decimal? DL_Remise03REM_Valeur { get; set; }
+
+    public short? DL_Remise03REM_Type { get; set; }
+
+    public decimal? DL_PrixUnitaire { get; set; }
+
+    public decimal? DL_PUBC { get; set; }
+
+    public decimal? DL_Taxe1 { get; set; }
+
+    public short? DL_TypeTaux1 { get; set; }
+
+    public short? DL_TypeTaxe1 { get; set; }
+
+    public decimal? DL_Taxe2 { get; set; }
+
+    public short? DL_TypeTaux2 { get; set; }
+
+    public short? DL_TypeTaxe2 { get; set; }
+
+    public int? CO_No { get; set; }
+
+    public int? cbCO_No { get; set; }
+
+    public int? AG_No1 { get; set; }
+
+    public int? AG_No2 { get; set; }
+
+    public decimal? DL_PrixRU { get; set; }
+
+    public decimal? DL_CMUP { get; set; }
+
+    public short? DL_MvtStock { get; set; }
+
+    public int? DT_No { get; set; }
+
+    public int? cbDT_No { get; set; }
+
+    public string AF_RefFourniss { get; set; }
+
+    public byte[] cbAF_RefFourniss { get; set; }
+
+    public string EU_Enumere { get; set; }
+
+    public decimal? EU_Qte { get; set; }
+
+    public short? DL_TTC { get; set; }
+
+    public int? DE_No { get; set; }
+
+    public int? cbDE_No { get; set; }
+
+    public short? DL_NoRef { get; set; }
+
+    public short? DL_TypePL { get; set; }
+
+    public decimal? DL_PUDevise { get; set; }
+
+    public decimal? DL_PUTTC { get; set; }
+
+    public int? DL_No { get; set; }
+
+    public DateTime? DO_DateLivr { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public byte[] cbCA_Num { get; set; }
+
+    public decimal? DL_Taxe3 { get; set; }
+
+    public short? DL_TypeTaux3 { get; set; }
+
+    public short? DL_TypeTaxe3 { get; set; }
+
+    public decimal? DL_Frais { get; set; }
+
+    public short? DL_Valorise { get; set; }
+
+    public string AR_RefCompose { get; set; }
+
+    public byte[] cbAR_RefCompose { get; set; }
+
+    public short? DL_NonLivre { get; set; }
+
+    public string AC_RefClient { get; set; }
+
+    public decimal? DL_MontantHT { get; set; }
+
+    public decimal? DL_MontantTTC { get; set; }
+
+    public short? DL_FactPoids { get; set; }
+
+    public short? DL_Escompte { get; set; }
+
+    public string DL_PiecePL { get; set; }
+
+    public byte[] cbDL_PiecePL { get; set; }
+
+    public DateTime? DL_DatePL { get; set; }
+
+    public decimal? DL_QtePL { get; set; }
+
+    public string DL_NoColis { get; set; }
+
+    public int? DL_NoLink { get; set; }
+
+    public int? cbDL_NoLink { get; set; }
+
+    public string RP_Code { get; set; }
+
+    public byte[] cbRP_Code { get; set; }
+
+    public int? DL_QteRessource { get; set; }
+
+    public DateTime? DL_DateAvancement { get; set; }
+
+    public string PF_Num { get; set; }
+
+    public byte[] cbPF_Num { get; set; }
+
+    public string DL_CodeTaxe1 { get; set; }
+
+    public string DL_CodeTaxe2 { get; set; }
+
+    public string DL_CodeTaxe3 { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public virtual F_ARTICLE AR_RefNavigation { get; set; }
+
+    public virtual F_TAXE DL_CodeTaxe1Navigation { get; set; }
+
+    public virtual F_TAXE DL_CodeTaxe2Navigation { get; set; }
+
+    public virtual F_TAXE DL_CodeTaxe3Navigation { get; set; }
+
+    public virtual ICollection<F_AGENDA> F_AGENDA { get; set; } = new List<F_AGENDA>();
+
+    public virtual ICollection<F_DOCLIGNEEMPL> F_DOCLIGNEEMPL { get; set; } = new List<F_DOCLIGNEEMPL>();
+
+    public virtual ICollection<F_DOCLIGNEINFOS> F_DOCLIGNEINFOS { get; set; } = new List<F_DOCLIGNEINFOS>();
+
+    public virtual ICollection<F_PROJETLIGNE> F_PROJETLIGNE { get; set; } = new List<F_PROJETLIGNE>();
+
+    public virtual ICollection<F_DOCLIGNE> InversecbDL_NoLinkNavigation { get; set; } = new List<F_DOCLIGNE>();
+
+    public virtual F_RESSOURCEPROD RP_CodeNavigation { get; set; }
+
+    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
+
+    public virtual F_DEPOT cbDE_NoNavigation { get; set; }
+
+    public virtual F_DOCLIGNE cbDL_NoLinkNavigation { get; set; }
 }

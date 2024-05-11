@@ -3,16 +3,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_ProjetPlanningDecompte
-    {
-        public int id { get; set; }
-        public int Projet { get; set; }
-        public string Description { get; set; }
-        public DateTime? DatePrevue { get; set; }
-        public string Fichier { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_Projet ProjetNavigation { get; set; }
-    }
+public partial class API_T_ProjetPlanningDecompte
+{
+    public int id { get; set; }
+
+    public int Projet { get; set; }
+
+    public string Description { get; set; }
+
+    public DateTime? DatePrevue { get; set; }
+
+    public string Fichier { get; set; }
+
+    public virtual API_T_Projet ProjetNavigation { get; set; }
 }

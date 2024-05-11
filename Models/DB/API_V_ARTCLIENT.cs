@@ -3,31 +3,51 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_V_ARTCLIENT
 {
-    public partial class API_V_ARTCLIENT
-    {
-        public string AR_Ref { get; set; }
-        public short? AC_Categorie { get; set; }
-        public decimal? AC_PrixVen { get; set; }
-        public decimal? AC_Coef { get; set; }
-        public short? AC_PrixTTC { get; set; }
-        public short? AC_Arrondi { get; set; }
-        public short? AC_QteMont { get; set; }
-        public short? EG_Champ { get; set; }
-        public decimal? AC_PrixDev { get; set; }
-        public short? AC_Devise { get; set; }
-        public string CT_Num { get; set; }
-        public decimal? AC_Remise { get; set; }
-        public short? AC_Calcul { get; set; }
-        public short? AC_TypeRem { get; set; }
-        public string AC_RefClient { get; set; }
-        public decimal? AC_CoefNouv { get; set; }
-        public decimal? AC_PrixVenNouv { get; set; }
-        public decimal? AC_PrixDevNouv { get; set; }
-        public decimal? AC_RemiseNouv { get; set; }
-        public int cbMarq { get; set; }
-        public string CategorieTarif { get; set; }
-        public string CT_Intitule { get; set; }
-    }
+    public string AR_Ref { get; set; }
+
+    public short? AC_Categorie { get; set; }
+
+    public decimal? AC_PrixVen { get; set; }
+
+    public decimal? AC_Coef { get; set; }
+
+    public short? AC_PrixTTC { get; set; }
+
+    public short? AC_Arrondi { get; set; }
+
+    public short? AC_QteMont { get; set; }
+
+    public short? EG_Champ { get; set; }
+
+    public decimal? AC_PrixDev { get; set; }
+
+    public short? AC_Devise { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public decimal? AC_Remise { get; set; }
+
+    public short? AC_Calcul { get; set; }
+
+    public short? AC_TypeRem { get; set; }
+
+    public string AC_RefClient { get; set; }
+
+    public decimal? AC_CoefNouv { get; set; }
+
+    public decimal? AC_PrixVenNouv { get; set; }
+
+    public decimal? AC_PrixDevNouv { get; set; }
+
+    public decimal? AC_RemiseNouv { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string CategorieTarif { get; set; }
+
+    public string CT_Intitule { get; set; }
 }

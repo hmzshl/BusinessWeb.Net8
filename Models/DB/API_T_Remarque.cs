@@ -3,19 +3,27 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_Remarque
 {
-    public partial class API_T_Remarque
-    {
-        public int id { get; set; }
-        public int Type { get; set; }
-        public DateTime? Date { get; set; }
-        public DateTime? DateAlerte { get; set; }
-        public string Remarque { get; set; }
-        public string Utilisateur { get; set; }
-        public int Realisation { get; set; }
-        public string Etape { get; set; }
-        public string CAPI_T_Num { get; set; }
-        public int? Demande { get; set; }
-    }
+    public int id { get; set; }
+
+    public int Type { get; set; }
+
+    public DateTime? Date { get; set; }
+
+    public DateTime? DateAlerte { get; set; }
+
+    public string Remarque { get; set; }
+
+    public string Utilisateur { get; set; }
+
+    public int Realisation { get; set; }
+
+    public string Etape { get; set; }
+
+    public string CAPI_T_Num { get; set; }
+
+    public int? Demande { get; set; }
 }

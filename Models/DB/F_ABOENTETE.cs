@@ -3,71 +3,115 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_ABOENTETE
 {
-    public partial class F_ABOENTETE
-    {
-        public F_ABOENTETE()
-        {
-            F_ABOENTETEINFOS = new HashSet<F_ABOENTETEINFOS>();
-            F_ABOLIGNE = new HashSet<F_ABOLIGNE>();
-            F_ABOREGLEMENT = new HashSet<F_ABOREGLEMENT>();
-        }
+    public int AB_No { get; set; }
 
-        public int AB_No { get; set; }
-        public string AE_Ref { get; set; }
-        public int? CO_No { get; set; }
-        public int? cbCO_No { get; set; }
-        public short? AE_Period { get; set; }
-        public short? AE_Devise { get; set; }
-        public decimal? AE_Cours { get; set; }
-        public int DE_No { get; set; }
-        public int? LI_No { get; set; }
-        public int? cbLI_No { get; set; }
-        public string CT_NumPayeur { get; set; }
-        public byte[] cbCT_NumPayeur { get; set; }
-        public short? AE_Expedit { get; set; }
-        public short? AE_NbFacture { get; set; }
-        public short? AE_BLFact { get; set; }
-        public decimal? AE_TxEscompte { get; set; }
-        public string CA_Num { get; set; }
-        public byte[] cbCA_Num { get; set; }
-        public string AE_Coord01 { get; set; }
-        public string AE_Coord02 { get; set; }
-        public string AE_Coord03 { get; set; }
-        public string AE_Coord04 { get; set; }
-        public short? AE_Condition { get; set; }
-        public short? AE_Tarif { get; set; }
-        public short? AE_Colisage { get; set; }
-        public short? AE_TypeColis { get; set; }
-        public short? AE_Transaction { get; set; }
-        public short? AE_Langue { get; set; }
-        public short? AE_Regime { get; set; }
-        public short? N_CatCompta { get; set; }
-        public short? AE_BaseCalcul { get; set; }
-        public short? AE_Genere { get; set; }
-        public string CG_Num { get; set; }
-        public byte[] cbCG_Num { get; set; }
-        public string CA_NumIFRS { get; set; }
-        public string CT_NumCentrale { get; set; }
-        public byte[] cbCT_NumCentrale { get; set; }
-        public string AE_Contact { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public string AE_Ref { get; set; }
 
-        public virtual F_ABONNEMENT AB_NoNavigation { get; set; }
-        public virtual F_COMPTEG CG_NumNavigation { get; set; }
-        public virtual F_COMPTET CT_NumCentraleNavigation { get; set; }
-        public virtual F_COMPTET CT_NumPayeurNavigation { get; set; }
-        public virtual F_DEPOT DE_NoNavigation { get; set; }
-        public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
-        public virtual F_LIVRAISON cbLI_NoNavigation { get; set; }
-        public virtual ICollection<F_ABOENTETEINFOS> F_ABOENTETEINFOS { get; set; }
-        public virtual ICollection<F_ABOLIGNE> F_ABOLIGNE { get; set; }
-        public virtual ICollection<F_ABOREGLEMENT> F_ABOREGLEMENT { get; set; }
-    }
+    public int? CO_No { get; set; }
+
+    public int? cbCO_No { get; set; }
+
+    public short? AE_Period { get; set; }
+
+    public short? AE_Devise { get; set; }
+
+    public decimal? AE_Cours { get; set; }
+
+    public int DE_No { get; set; }
+
+    public int? LI_No { get; set; }
+
+    public int? cbLI_No { get; set; }
+
+    public string CT_NumPayeur { get; set; }
+
+    public byte[] cbCT_NumPayeur { get; set; }
+
+    public short? AE_Expedit { get; set; }
+
+    public short? AE_NbFacture { get; set; }
+
+    public short? AE_BLFact { get; set; }
+
+    public decimal? AE_TxEscompte { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public byte[] cbCA_Num { get; set; }
+
+    public string AE_Coord01 { get; set; }
+
+    public string AE_Coord02 { get; set; }
+
+    public string AE_Coord03 { get; set; }
+
+    public string AE_Coord04 { get; set; }
+
+    public short? AE_Condition { get; set; }
+
+    public short? AE_Tarif { get; set; }
+
+    public short? AE_Colisage { get; set; }
+
+    public short? AE_TypeColis { get; set; }
+
+    public short? AE_Transaction { get; set; }
+
+    public short? AE_Langue { get; set; }
+
+    public short? AE_Regime { get; set; }
+
+    public short? N_CatCompta { get; set; }
+
+    public short? AE_BaseCalcul { get; set; }
+
+    public short? AE_Genere { get; set; }
+
+    public string CG_Num { get; set; }
+
+    public byte[] cbCG_Num { get; set; }
+
+    public string CA_NumIFRS { get; set; }
+
+    public string CT_NumCentrale { get; set; }
+
+    public byte[] cbCT_NumCentrale { get; set; }
+
+    public string AE_Contact { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_ABONNEMENT AB_NoNavigation { get; set; }
+
+    public virtual F_COMPTEG CG_NumNavigation { get; set; }
+
+    public virtual F_COMPTET CT_NumCentraleNavigation { get; set; }
+
+    public virtual F_COMPTET CT_NumPayeurNavigation { get; set; }
+
+    public virtual F_DEPOT DE_NoNavigation { get; set; }
+
+    public virtual ICollection<F_ABOENTETEINFOS> F_ABOENTETEINFOS { get; set; } = new List<F_ABOENTETEINFOS>();
+
+    public virtual ICollection<F_ABOLIGNE> F_ABOLIGNE { get; set; } = new List<F_ABOLIGNE>();
+
+    public virtual ICollection<F_ABOREGLEMENT> F_ABOREGLEMENT { get; set; } = new List<F_ABOREGLEMENT>();
+
+    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
+
+    public virtual F_LIVRAISON cbLI_NoNavigation { get; set; }
 }

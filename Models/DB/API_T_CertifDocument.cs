@@ -3,18 +3,23 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_CertifDocument
-    {
-        public int id { get; set; }
-        public int Type { get; set; }
-        public DateTime? Date { get; set; }
-        public string Numero { get; set; }
-        public string Responsable { get; set; }
-        public int Dossier { get; set; }
-        public string Reference { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_CertifOuvertureDossier DossierNavigation { get; set; }
-    }
+public partial class API_T_CertifDocument
+{
+    public int id { get; set; }
+
+    public int Type { get; set; }
+
+    public DateTime? Date { get; set; }
+
+    public string Numero { get; set; }
+
+    public string Responsable { get; set; }
+
+    public int Dossier { get; set; }
+
+    public string Reference { get; set; }
+
+    public virtual API_T_CertifOuvertureDossier DossierNavigation { get; set; }
 }

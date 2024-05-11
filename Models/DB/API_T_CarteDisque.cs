@@ -3,17 +3,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_CarteDisque
-    {
-        public int id { get; set; }
-        public int Materiel { get; set; }
-        public int? Annee { get; set; }
-        public DateTime? DateDebut { get; set; }
-        public DateTime? DateFin { get; set; }
-        public decimal? Montant { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_Materiel MaterielNavigation { get; set; }
-    }
+public partial class API_T_CarteDisque
+{
+    public int id { get; set; }
+
+    public int Materiel { get; set; }
+
+    public int? Annee { get; set; }
+
+    public DateTime? DateDebut { get; set; }
+
+    public DateTime? DateFin { get; set; }
+
+    public decimal? Montant { get; set; }
+
+    public virtual API_T_Materiel MaterielNavigation { get; set; }
 }

@@ -3,26 +3,41 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_FAMTARIFQTE
 {
-    public partial class F_FAMTARIFQTE
-    {
-        public string FA_CodeFamille { get; set; }
-        public byte[] cbFA_CodeFamille { get; set; }
-        public string FQ_RefCF { get; set; }
-        public byte[] cbFQ_RefCF { get; set; }
-        public decimal? FQ_BorneSup { get; set; }
-        public decimal? FQ_Remise01REM_Valeur { get; set; }
-        public short? FQ_Remise01REM_Type { get; set; }
-        public decimal? FQ_Remise02REM_Valeur { get; set; }
-        public short? FQ_Remise02REM_Type { get; set; }
-        public decimal? FQ_Remise03REM_Valeur { get; set; }
-        public short? FQ_Remise03REM_Type { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
-    }
+    public string FA_CodeFamille { get; set; }
+
+    public byte[] cbFA_CodeFamille { get; set; }
+
+    public string FQ_RefCF { get; set; }
+
+    public byte[] cbFQ_RefCF { get; set; }
+
+    public decimal? FQ_BorneSup { get; set; }
+
+    public decimal? FQ_Remise01REM_Valeur { get; set; }
+
+    public short? FQ_Remise01REM_Type { get; set; }
+
+    public decimal? FQ_Remise02REM_Valeur { get; set; }
+
+    public short? FQ_Remise02REM_Type { get; set; }
+
+    public decimal? FQ_Remise03REM_Valeur { get; set; }
+
+    public short? FQ_Remise03REM_Type { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 }

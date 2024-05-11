@@ -3,12 +3,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_PersonnelEquipe
 {
-    public partial class API_T_PersonnelEquipe
-    {
-        public int id { get; set; }
-        public int ParentID { get; set; }
-        public int EquipeID { get; set; }
-    }
+    public int id { get; set; }
+
+    public int ParentID { get; set; }
+
+    public int EquipeID { get; set; }
 }

@@ -3,14 +3,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_Site
 {
-    public partial class API_T_Site
-    {
-        public int id { get; set; }
-        public string Intitule { get; set; }
-        public string Ville { get; set; }
-        public string Adresse { get; set; }
-        public int Responsable { get; set; }
-    }
+    public int id { get; set; }
+
+    public string Intitule { get; set; }
+
+    public string Ville { get; set; }
+
+    public string Adresse { get; set; }
+
+    public int Responsable { get; set; }
 }

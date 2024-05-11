@@ -3,96 +3,169 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_ABOLIGNE
 {
-    public partial class F_ABOLIGNE
-    {
-        public F_ABOLIGNE()
-        {
-            F_ABOLIGNEINFOS = new HashSet<F_ABOLIGNEINFOS>();
-        }
+    public int AB_No { get; set; }
 
-        public int AB_No { get; set; }
-        public int? AL_Ligne { get; set; }
-        public string AL_Ref { get; set; }
-        public short? AL_TRemPied { get; set; }
-        public short? AL_TRemExep { get; set; }
-        public string AR_Ref { get; set; }
-        public byte[] cbAR_Ref { get; set; }
-        public string AL_Design { get; set; }
-        public decimal? AL_Qte { get; set; }
-        public decimal? AL_PoidsNet { get; set; }
-        public decimal? AL_PoidsBrut { get; set; }
-        public decimal? AL_Remise01REM_Valeur { get; set; }
-        public short? AL_Remise01REM_Type { get; set; }
-        public decimal? AL_Remise02REM_Valeur { get; set; }
-        public short? AL_Remise02REM_Type { get; set; }
-        public decimal? AL_Remise03REM_Valeur { get; set; }
-        public short? AL_Remise03REM_Type { get; set; }
-        public decimal? AL_PrixUnitaire { get; set; }
-        public decimal? AL_Taxe1 { get; set; }
-        public short? AL_TypeTaux1 { get; set; }
-        public short? AL_TypeTaxe1 { get; set; }
-        public decimal? AL_Taxe2 { get; set; }
-        public short? AL_TypeTaux2 { get; set; }
-        public short? AL_TypeTaxe2 { get; set; }
-        public int? CO_No { get; set; }
-        public int? cbCO_No { get; set; }
-        public int? AG_No1 { get; set; }
-        public int? AG_No2 { get; set; }
-        public int? DT_No { get; set; }
-        public int? cbDT_No { get; set; }
-        public string AF_RefFourniss { get; set; }
-        public byte[] cbAF_RefFourniss { get; set; }
-        public string EU_Enumere { get; set; }
-        public decimal? EU_Qte { get; set; }
-        public short? AL_TTC { get; set; }
-        public int? DE_No { get; set; }
-        public int? cbDE_No { get; set; }
-        public decimal? AL_PUDevise { get; set; }
-        public decimal? AL_PUTTC { get; set; }
-        public string CA_Num { get; set; }
-        public byte[] cbCA_Num { get; set; }
-        public decimal? AL_Taxe3 { get; set; }
-        public short? AL_TypeTaux3 { get; set; }
-        public short? AL_TypeTaxe3 { get; set; }
-        public short? AL_Period { get; set; }
-        public DateTime? AL_Debut { get; set; }
-        public DateTime? AL_Fin { get; set; }
-        public short? AL_GestAnnee { get; set; }
-        public short? AL_Prorata { get; set; }
-        public short? AL_Reconduction { get; set; }
-        public decimal? AL_PrixRU { get; set; }
-        public decimal? AL_CMUP { get; set; }
-        public short? AL_Valorise { get; set; }
-        public string AR_RefCompose { get; set; }
-        public string AC_RefClient { get; set; }
-        public decimal? AL_MontantHT { get; set; }
-        public decimal? AL_MontantTTC { get; set; }
-        public short? AL_FactPoids { get; set; }
-        public short? AL_Escompte { get; set; }
-        public string RP_Code { get; set; }
-        public byte[] cbRP_Code { get; set; }
-        public int? AL_QteRessource { get; set; }
-        public int? AL_No { get; set; }
-        public string AL_CodeTaxe1 { get; set; }
-        public string AL_CodeTaxe2 { get; set; }
-        public string AL_CodeTaxe3 { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public int? AL_Ligne { get; set; }
 
-        public virtual F_ABOENTETE AB_NoNavigation { get; set; }
-        public virtual F_TAXE AL_CodeTaxe1Navigation { get; set; }
-        public virtual F_TAXE AL_CodeTaxe2Navigation { get; set; }
-        public virtual F_TAXE AL_CodeTaxe3Navigation { get; set; }
-        public virtual F_ARTICLE AR_RefNavigation { get; set; }
-        public virtual F_RESSOURCEPROD RP_CodeNavigation { get; set; }
-        public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
-        public virtual F_DEPOT cbDE_NoNavigation { get; set; }
-        public virtual ICollection<F_ABOLIGNEINFOS> F_ABOLIGNEINFOS { get; set; }
-    }
+    public string AL_Ref { get; set; }
+
+    public short? AL_TRemPied { get; set; }
+
+    public short? AL_TRemExep { get; set; }
+
+    public string AR_Ref { get; set; }
+
+    public byte[] cbAR_Ref { get; set; }
+
+    public string AL_Design { get; set; }
+
+    public decimal? AL_Qte { get; set; }
+
+    public decimal? AL_PoidsNet { get; set; }
+
+    public decimal? AL_PoidsBrut { get; set; }
+
+    public decimal? AL_Remise01REM_Valeur { get; set; }
+
+    public short? AL_Remise01REM_Type { get; set; }
+
+    public decimal? AL_Remise02REM_Valeur { get; set; }
+
+    public short? AL_Remise02REM_Type { get; set; }
+
+    public decimal? AL_Remise03REM_Valeur { get; set; }
+
+    public short? AL_Remise03REM_Type { get; set; }
+
+    public decimal? AL_PrixUnitaire { get; set; }
+
+    public decimal? AL_Taxe1 { get; set; }
+
+    public short? AL_TypeTaux1 { get; set; }
+
+    public short? AL_TypeTaxe1 { get; set; }
+
+    public decimal? AL_Taxe2 { get; set; }
+
+    public short? AL_TypeTaux2 { get; set; }
+
+    public short? AL_TypeTaxe2 { get; set; }
+
+    public int? CO_No { get; set; }
+
+    public int? cbCO_No { get; set; }
+
+    public int? AG_No1 { get; set; }
+
+    public int? AG_No2 { get; set; }
+
+    public int? DT_No { get; set; }
+
+    public int? cbDT_No { get; set; }
+
+    public string AF_RefFourniss { get; set; }
+
+    public byte[] cbAF_RefFourniss { get; set; }
+
+    public string EU_Enumere { get; set; }
+
+    public decimal? EU_Qte { get; set; }
+
+    public short? AL_TTC { get; set; }
+
+    public int? DE_No { get; set; }
+
+    public int? cbDE_No { get; set; }
+
+    public decimal? AL_PUDevise { get; set; }
+
+    public decimal? AL_PUTTC { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public byte[] cbCA_Num { get; set; }
+
+    public decimal? AL_Taxe3 { get; set; }
+
+    public short? AL_TypeTaux3 { get; set; }
+
+    public short? AL_TypeTaxe3 { get; set; }
+
+    public short? AL_Period { get; set; }
+
+    public DateTime? AL_Debut { get; set; }
+
+    public DateTime? AL_Fin { get; set; }
+
+    public short? AL_GestAnnee { get; set; }
+
+    public short? AL_Prorata { get; set; }
+
+    public short? AL_Reconduction { get; set; }
+
+    public decimal? AL_PrixRU { get; set; }
+
+    public decimal? AL_CMUP { get; set; }
+
+    public short? AL_Valorise { get; set; }
+
+    public string AR_RefCompose { get; set; }
+
+    public string AC_RefClient { get; set; }
+
+    public decimal? AL_MontantHT { get; set; }
+
+    public decimal? AL_MontantTTC { get; set; }
+
+    public short? AL_FactPoids { get; set; }
+
+    public short? AL_Escompte { get; set; }
+
+    public string RP_Code { get; set; }
+
+    public byte[] cbRP_Code { get; set; }
+
+    public int? AL_QteRessource { get; set; }
+
+    public int? AL_No { get; set; }
+
+    public string AL_CodeTaxe1 { get; set; }
+
+    public string AL_CodeTaxe2 { get; set; }
+
+    public string AL_CodeTaxe3 { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_ABOENTETE AB_NoNavigation { get; set; }
+
+    public virtual F_TAXE AL_CodeTaxe1Navigation { get; set; }
+
+    public virtual F_TAXE AL_CodeTaxe2Navigation { get; set; }
+
+    public virtual F_TAXE AL_CodeTaxe3Navigation { get; set; }
+
+    public virtual F_ARTICLE AR_RefNavigation { get; set; }
+
+    public virtual ICollection<F_ABOLIGNEINFOS> F_ABOLIGNEINFOS { get; set; } = new List<F_ABOLIGNEINFOS>();
+
+    public virtual F_RESSOURCEPROD RP_CodeNavigation { get; set; }
+
+    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
+
+    public virtual F_DEPOT cbDE_NoNavigation { get; set; }
 }

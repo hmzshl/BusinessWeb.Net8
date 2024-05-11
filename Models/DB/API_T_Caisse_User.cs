@@ -3,12 +3,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_Caisse_User
 {
-    public partial class API_T_Caisse_User
-    {
-        public int id { get; set; }
-        public int Caisse { get; set; }
-        public string User { get; set; }
-    }
+    public int id { get; set; }
+
+    public int Caisse { get; set; }
+
+    public string User { get; set; }
 }

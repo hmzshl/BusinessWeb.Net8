@@ -3,30 +3,37 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_Bordereau
 {
-    public partial class API_T_Bordereau
-    {
-        public API_T_Bordereau()
-        {
-            API_T_BordereauDetail = new HashSet<API_T_BordereauDetail>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public int Projet { get; set; }
-        public DateTime? Date { get; set; }
-        public string Piece { get; set; }
-        public string Libelle { get; set; }
-        public int Responsable { get; set; }
-        public decimal Montant { get; set; }
-        public decimal MontantMarche { get; set; }
-        public decimal CoutTotale { get; set; }
-        public decimal Marge { get; set; }
-        public decimal MargeP { get; set; }
-        public decimal Rabais { get; set; }
-        public decimal? MontantTTC { get; set; }
+    public int Projet { get; set; }
 
-        public virtual API_T_Projet ProjetNavigation { get; set; }
-        public virtual ICollection<API_T_BordereauDetail> API_T_BordereauDetail { get; set; }
-    }
+    public DateTime? Date { get; set; }
+
+    public string Piece { get; set; }
+
+    public string Libelle { get; set; }
+
+    public int Responsable { get; set; }
+
+    public decimal Montant { get; set; }
+
+    public decimal MontantMarche { get; set; }
+
+    public decimal CoutTotale { get; set; }
+
+    public decimal Marge { get; set; }
+
+    public decimal MargeP { get; set; }
+
+    public decimal Rabais { get; set; }
+
+    public decimal? MontantTTC { get; set; }
+
+    public virtual ICollection<API_T_BordereauDetail> API_T_BordereauDetail { get; set; } = new List<API_T_BordereauDetail>();
+
+    public virtual API_T_Projet ProjetNavigation { get; set; }
 }

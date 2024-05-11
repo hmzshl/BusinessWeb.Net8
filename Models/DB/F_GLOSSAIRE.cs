@@ -3,31 +3,39 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_GLOSSAIRE
 {
-    public partial class F_GLOSSAIRE
-    {
-        public F_GLOSSAIRE()
-        {
-            F_ARTGLOSS = new HashSet<F_ARTGLOSS>();
-        }
+    public int? GL_No { get; set; }
 
-        public int? GL_No { get; set; }
-        public short? GL_Domaine { get; set; }
-        public string GL_Intitule { get; set; }
-        public byte[] cbGL_Intitule { get; set; }
-        public string GL_Raccourci { get; set; }
-        public byte[] cbGL_Raccourci { get; set; }
-        public DateTime? GL_PeriodeDeb { get; set; }
-        public DateTime? GL_PeriodeFin { get; set; }
-        public string GL_Text { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public short? GL_Domaine { get; set; }
 
-        public virtual ICollection<F_ARTGLOSS> F_ARTGLOSS { get; set; }
-    }
+    public string GL_Intitule { get; set; }
+
+    public byte[] cbGL_Intitule { get; set; }
+
+    public string GL_Raccourci { get; set; }
+
+    public byte[] cbGL_Raccourci { get; set; }
+
+    public DateTime? GL_PeriodeDeb { get; set; }
+
+    public DateTime? GL_PeriodeFin { get; set; }
+
+    public string GL_Text { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual ICollection<F_ARTGLOSS> F_ARTGLOSS { get; set; } = new List<F_ARTGLOSS>();
 }

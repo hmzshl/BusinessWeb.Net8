@@ -3,16 +3,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_HistoriquePiece
 {
-    public partial class API_T_HistoriquePiece
-    {
-        public int id { get; set; }
-        public string Piece { get; set; }
-        public DateTime? Date { get; set; }
-        public DateTime? CreatedAt { get; set; }
-        public int DO_Type { get; set; }
-        public int DO_Domaine { get; set; }
-        public string Tab { get; set; }
-    }
+    public int id { get; set; }
+
+    public string Piece { get; set; }
+
+    public DateTime? Date { get; set; }
+
+    public DateTime? CreatedAt { get; set; }
+
+    public int DO_Type { get; set; }
+
+    public int DO_Domaine { get; set; }
+
+    public string Tab { get; set; }
 }

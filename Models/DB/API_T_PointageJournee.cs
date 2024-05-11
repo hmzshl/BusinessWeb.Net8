@@ -3,29 +3,29 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_PointageJournee
 {
-    public partial class API_T_PointageJournee
-    {
-        public API_T_PointageJournee()
-        {
-            API_T_AvancementDetail = new HashSet<API_T_AvancementDetail>();
-            API_T_AvancementHorsBD = new HashSet<API_T_AvancementHorsBD>();
-            API_T_PointageDetail = new HashSet<API_T_PointageDetail>();
-            API_T_PointageProjet = new HashSet<API_T_PointageProjet>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public int AnneeID { get; set; }
-        public int MoisID { get; set; }
-        public DateTime Date { get; set; }
-        public bool Cloture { get; set; }
+    public int AnneeID { get; set; }
 
-        public virtual API_T_PointageAnnee Annee { get; set; }
-        public virtual API_T_PointageMois Mois { get; set; }
-        public virtual ICollection<API_T_AvancementDetail> API_T_AvancementDetail { get; set; }
-        public virtual ICollection<API_T_AvancementHorsBD> API_T_AvancementHorsBD { get; set; }
-        public virtual ICollection<API_T_PointageDetail> API_T_PointageDetail { get; set; }
-        public virtual ICollection<API_T_PointageProjet> API_T_PointageProjet { get; set; }
-    }
+    public int MoisID { get; set; }
+
+    public DateTime Date { get; set; }
+
+    public bool Cloture { get; set; }
+
+    public virtual ICollection<API_T_AvancementDetail> API_T_AvancementDetail { get; set; } = new List<API_T_AvancementDetail>();
+
+    public virtual ICollection<API_T_AvancementHorsBD> API_T_AvancementHorsBD { get; set; } = new List<API_T_AvancementHorsBD>();
+
+    public virtual ICollection<API_T_PointageDetail> API_T_PointageDetail { get; set; } = new List<API_T_PointageDetail>();
+
+    public virtual ICollection<API_T_PointageProjet> API_T_PointageProjet { get; set; } = new List<API_T_PointageProjet>();
+
+    public virtual API_T_PointageAnnee Annee { get; set; }
+
+    public virtual API_T_PointageMois Mois { get; set; }
 }

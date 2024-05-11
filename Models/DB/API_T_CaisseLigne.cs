@@ -3,17 +3,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_CaisseLigne
-    {
-        public int id { get; set; }
-        public int Entete { get; set; }
-        public string Libelle { get; set; }
-        public decimal Qte { get; set; }
-        public decimal PU { get; set; }
-        public decimal Montant { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_CaisseEntete EnteteNavigation { get; set; }
-    }
+public partial class API_T_CaisseLigne
+{
+    public int id { get; set; }
+
+    public int Entete { get; set; }
+
+    public string Libelle { get; set; }
+
+    public decimal Qte { get; set; }
+
+    public decimal PU { get; set; }
+
+    public decimal Montant { get; set; }
+
+    public virtual API_T_CaisseEntete EnteteNavigation { get; set; }
 }

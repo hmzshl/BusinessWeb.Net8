@@ -3,22 +3,31 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_COMPTEAMEDIA
-    {
-        public short N_Analytique { get; set; }
-        public string CA_Num { get; set; }
-        public byte[] cbCA_Num { get; set; }
-        public string ME_Commentaire { get; set; }
-        public string ME_Fichier { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_COMPTEA F_COMPTEA { get; set; }
-    }
+public partial class F_COMPTEAMEDIA
+{
+    public short N_Analytique { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public byte[] cbCA_Num { get; set; }
+
+    public string ME_Commentaire { get; set; }
+
+    public string ME_Fichier { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_COMPTEA F_COMPTEA { get; set; }
 }

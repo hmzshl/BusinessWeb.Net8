@@ -3,26 +3,41 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_V_AFFAIREAVANCEMENT
 {
-    public partial class API_V_AFFAIREAVANCEMENT
-    {
-        public string CT_Num { get; set; }
-        public string CT_Intitule { get; set; }
-        public string CA_Num { get; set; }
-        public string AR_Ref { get; set; }
-        public string AR_Design { get; set; }
-        public string Unite { get; set; }
-        public decimal? DE { get; set; }
-        public decimal? BC { get; set; }
-        public decimal? PL { get; set; }
-        public decimal? BL { get; set; }
-        public decimal? CADE { get; set; }
-        public decimal? CABL { get; set; }
-        public decimal? ResteQte { get; set; }
-        public decimal? ResteCA { get; set; }
-        public decimal? EcartQte { get; set; }
-        public decimal? EcartCA { get; set; }
-        public decimal? Avancement { get; set; }
-    }
+    public string CT_Num { get; set; }
+
+    public string CT_Intitule { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public string AR_Ref { get; set; }
+
+    public string AR_Design { get; set; }
+
+    public string Unite { get; set; }
+
+    public decimal? DE { get; set; }
+
+    public decimal? BC { get; set; }
+
+    public decimal? PL { get; set; }
+
+    public decimal? BL { get; set; }
+
+    public decimal? CADE { get; set; }
+
+    public decimal? CABL { get; set; }
+
+    public decimal? ResteQte { get; set; }
+
+    public decimal? ResteCA { get; set; }
+
+    public decimal? EcartQte { get; set; }
+
+    public decimal? EcartCA { get; set; }
+
+    public decimal? Avancement { get; set; }
 }

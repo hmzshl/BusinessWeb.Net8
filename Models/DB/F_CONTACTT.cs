@@ -3,38 +3,53 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_CONTACTT
 {
-    public partial class F_CONTACTT
-    {
-        public F_CONTACTT()
-        {
-            F_DRECOUVREMENT = new HashSet<F_DRECOUVREMENT>();
-        }
+    public string CT_Num { get; set; }
 
-        public string CT_Num { get; set; }
-        public byte[] cbCT_Num { get; set; }
-        public string CT_Nom { get; set; }
-        public byte[] cbCT_Nom { get; set; }
-        public string CT_Prenom { get; set; }
-        public byte[] cbCT_Prenom { get; set; }
-        public short? N_Service { get; set; }
-        public string CT_Fonction { get; set; }
-        public string CT_Telephone { get; set; }
-        public string CT_TelPortable { get; set; }
-        public string CT_Telecopie { get; set; }
-        public string CT_EMail { get; set; }
-        public short? CT_Civilite { get; set; }
-        public short? N_Contact { get; set; }
-        public int? CT_No { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public byte[] cbCT_Num { get; set; }
 
-        public virtual F_COMPTET CT_NumNavigation { get; set; }
-        public virtual ICollection<F_DRECOUVREMENT> F_DRECOUVREMENT { get; set; }
-    }
+    public string CT_Nom { get; set; }
+
+    public byte[] cbCT_Nom { get; set; }
+
+    public string CT_Prenom { get; set; }
+
+    public byte[] cbCT_Prenom { get; set; }
+
+    public short? N_Service { get; set; }
+
+    public string CT_Fonction { get; set; }
+
+    public string CT_Telephone { get; set; }
+
+    public string CT_TelPortable { get; set; }
+
+    public string CT_Telecopie { get; set; }
+
+    public string CT_EMail { get; set; }
+
+    public short? CT_Civilite { get; set; }
+
+    public short? N_Contact { get; set; }
+
+    public int? CT_No { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_COMPTET CT_NumNavigation { get; set; }
+
+    public virtual ICollection<F_DRECOUVREMENT> F_DRECOUVREMENT { get; set; } = new List<F_DRECOUVREMENT>();
 }

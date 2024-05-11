@@ -3,196 +3,301 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_ARTICLE
 {
-    public partial class F_ARTICLE
-    {
-        public F_ARTICLE()
-        {
-            F_ABOLIGNE = new HashSet<F_ABOLIGNE>();
-            F_ARTCLIENT = new HashSet<F_ARTCLIENT>();
-            F_ARTCOMPO = new HashSet<F_ARTCOMPO>();
-            F_ARTCOMPTA = new HashSet<F_ARTCOMPTA>();
-            F_ARTENUMREF = new HashSet<F_ARTENUMREF>();
-            F_ARTFOURNISS = new HashSet<F_ARTFOURNISS>();
-            F_ARTGAMME = new HashSet<F_ARTGAMME>();
-            F_ARTGLOSS = new HashSet<F_ARTGLOSS>();
-            F_ARTICLEMEDIA = new HashSet<F_ARTICLEMEDIA>();
-            F_ARTICLERESSOURCE = new HashSet<F_ARTICLERESSOURCE>();
-            F_ARTMODELE = new HashSet<F_ARTMODELE>();
-            F_ARTPRIX = new HashSet<F_ARTPRIX>();
-            F_ARTSTOCK = new HashSet<F_ARTSTOCK>();
-            F_ARTSTOCKEMPL = new HashSet<F_ARTSTOCKEMPL>();
-            F_CLAVIER = new HashSet<F_CLAVIER>();
-            F_CONDITION = new HashSet<F_CONDITION>();
-            F_DOCLIGNE = new HashSet<F_DOCLIGNE>();
-            F_GAMSTOCK = new HashSet<F_GAMSTOCK>();
-            F_GAMSTOCKEMPL = new HashSet<F_GAMSTOCKEMPL>();
-            F_LIGNEARCHIVE = new HashSet<F_LIGNEARCHIVE>();
-            F_LOTFIFO = new HashSet<F_LOTFIFO>();
-            F_LOTSERIE = new HashSet<F_LOTSERIE>();
-            F_NOMENCLATAR_RefNavigation = new HashSet<F_NOMENCLAT>();
-            F_NOMENCLATNO_RefDetNavigation = new HashSet<F_NOMENCLAT>();
-            F_PREVISION = new HashSet<F_PREVISION>();
-            F_PROJETHISTOAR_RefComposantNavigation = new HashSet<F_PROJETHISTO>();
-            F_PROJETHISTOAR_RefComposeNavigation = new HashSet<F_PROJETHISTO>();
-            F_PROJETPLANNINGAR_RefComposantNavigation = new HashSet<F_PROJETPLANNING>();
-            F_PROJETPLANNINGAR_RefComposeNavigation = new HashSet<F_PROJETPLANNING>();
-            F_RESSOURCEPROD = new HashSet<F_RESSOURCEPROD>();
-            F_TARIF = new HashSet<F_TARIF>();
-            F_TARIFCOND = new HashSet<F_TARIFCOND>();
-            F_TARIFGAM = new HashSet<F_TARIFGAM>();
-            F_TARIFQTE = new HashSet<F_TARIFQTE>();
-            InverseAR_SubstitutNavigation = new HashSet<F_ARTICLE>();
-        }
+    public string AR_Ref { get; set; }
 
-        public string AR_Ref { get; set; }
-        public byte[] cbAR_Ref { get; set; }
-        public string AR_Design { get; set; }
-        public byte[] cbAR_Design { get; set; }
-        public string FA_CodeFamille { get; set; }
-        public byte[] cbFA_CodeFamille { get; set; }
-        public string AR_Substitut { get; set; }
-        public byte[] cbAR_Substitut { get; set; }
-        public string AR_Raccourci { get; set; }
-        public byte[] cbAR_Raccourci { get; set; }
-        public short? AR_Garantie { get; set; }
-        public short? AR_UnitePoids { get; set; }
-        public decimal? AR_PoidsNet { get; set; }
-        public decimal? AR_PoidsBrut { get; set; }
-        public short? AR_UniteVen { get; set; }
-        public decimal? AR_PrixAch { get; set; }
-        public decimal? AR_Coef { get; set; }
-        public decimal? AR_PrixVen { get; set; }
-        public short? AR_PrixTTC { get; set; }
-        public short? AR_Gamme1 { get; set; }
-        public short? AR_Gamme2 { get; set; }
-        public short? AR_SuiviStock { get; set; }
-        public short? AR_Nomencl { get; set; }
-        public string AR_Stat01 { get; set; }
-        public string AR_Stat02 { get; set; }
-        public string AR_Stat03 { get; set; }
-        public string AR_Stat04 { get; set; }
-        public string AR_Stat05 { get; set; }
-        public short? AR_Escompte { get; set; }
-        public short? AR_Delai { get; set; }
-        public short? AR_HorsStat { get; set; }
-        public short? AR_VteDebit { get; set; }
-        public short? AR_NotImp { get; set; }
-        public short? AR_Sommeil { get; set; }
-        public string AR_Langue1 { get; set; }
-        public string AR_Langue2 { get; set; }
-        public string AR_EdiCode { get; set; }
-        public string AR_CodeBarre { get; set; }
-        public byte[] cbAR_CodeBarre { get; set; }
-        public string AR_CodeFiscal { get; set; }
-        public string AR_Pays { get; set; }
-        public string AR_Frais01FR_Denomination { get; set; }
-        public decimal? AR_Frais01FR_Rem01REM_Valeur { get; set; }
-        public short? AR_Frais01FR_Rem01REM_Type { get; set; }
-        public decimal? AR_Frais01FR_Rem02REM_Valeur { get; set; }
-        public short? AR_Frais01FR_Rem02REM_Type { get; set; }
-        public decimal? AR_Frais01FR_Rem03REM_Valeur { get; set; }
-        public short? AR_Frais01FR_Rem03REM_Type { get; set; }
-        public string AR_Frais02FR_Denomination { get; set; }
-        public decimal? AR_Frais02FR_Rem01REM_Valeur { get; set; }
-        public short? AR_Frais02FR_Rem01REM_Type { get; set; }
-        public decimal? AR_Frais02FR_Rem02REM_Valeur { get; set; }
-        public short? AR_Frais02FR_Rem02REM_Type { get; set; }
-        public decimal? AR_Frais02FR_Rem03REM_Valeur { get; set; }
-        public short? AR_Frais02FR_Rem03REM_Type { get; set; }
-        public string AR_Frais03FR_Denomination { get; set; }
-        public decimal? AR_Frais03FR_Rem01REM_Valeur { get; set; }
-        public short? AR_Frais03FR_Rem01REM_Type { get; set; }
-        public decimal? AR_Frais03FR_Rem02REM_Valeur { get; set; }
-        public short? AR_Frais03FR_Rem02REM_Type { get; set; }
-        public decimal? AR_Frais03FR_Rem03REM_Valeur { get; set; }
-        public short? AR_Frais03FR_Rem03REM_Type { get; set; }
-        public short? AR_Condition { get; set; }
-        public decimal? AR_PUNet { get; set; }
-        public short? AR_Contremarque { get; set; }
-        public short? AR_FactPoids { get; set; }
-        public short? AR_FactForfait { get; set; }
-        public short? AR_SaisieVar { get; set; }
-        public short? AR_Transfere { get; set; }
-        public short? AR_Publie { get; set; }
-        public DateTime? AR_DateModif { get; set; }
-        public string AR_Photo { get; set; }
-        public decimal? AR_PrixAchNouv { get; set; }
-        public decimal? AR_CoefNouv { get; set; }
-        public decimal? AR_PrixVenNouv { get; set; }
-        public DateTime? AR_DateApplication { get; set; }
-        public decimal? AR_CoutStd { get; set; }
-        public decimal? AR_QteComp { get; set; }
-        public decimal? AR_QteOperatoire { get; set; }
-        public int? CO_No { get; set; }
-        public int? cbCO_No { get; set; }
-        public short? AR_Prevision { get; set; }
-        public int? CL_No1 { get; set; }
-        public int? cbCL_No1 { get; set; }
-        public int? CL_No2 { get; set; }
-        public int? cbCL_No2 { get; set; }
-        public int? CL_No3 { get; set; }
-        public int? cbCL_No3 { get; set; }
-        public int? CL_No4 { get; set; }
-        public int? cbCL_No4 { get; set; }
-        public short? AR_Type { get; set; }
-        public string RP_CodeDefaut { get; set; }
-        public short? AR_Nature { get; set; }
-        public short? AR_DelaiFabrication { get; set; }
-        public short? AR_NbColis { get; set; }
-        public short? AR_DelaiPeremption { get; set; }
-        public short? AR_DelaiSecurite { get; set; }
-        public short? AR_Fictif { get; set; }
-        public short? AR_SousTraitance { get; set; }
-        public short? AR_TypeLancement { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public byte[] cbAR_Ref { get; set; }
 
-        public virtual F_ARTICLE AR_SubstitutNavigation { get; set; }
-        public virtual F_RESSOURCEPROD RP_CodeDefautNavigation { get; set; }
-        public virtual F_CATALOGUE cbCL_No1Navigation { get; set; }
-        public virtual F_CATALOGUE cbCL_No2Navigation { get; set; }
-        public virtual F_CATALOGUE cbCL_No3Navigation { get; set; }
-        public virtual F_CATALOGUE cbCL_No4Navigation { get; set; }
-        public virtual ICollection<F_ABOLIGNE> F_ABOLIGNE { get; set; }
-        public virtual ICollection<F_ARTCLIENT> F_ARTCLIENT { get; set; }
-        public virtual ICollection<F_ARTCOMPO> F_ARTCOMPO { get; set; }
-        public virtual ICollection<F_ARTCOMPTA> F_ARTCOMPTA { get; set; }
-        public virtual ICollection<F_ARTENUMREF> F_ARTENUMREF { get; set; }
-        public virtual ICollection<F_ARTFOURNISS> F_ARTFOURNISS { get; set; }
-        public virtual ICollection<F_ARTGAMME> F_ARTGAMME { get; set; }
-        public virtual ICollection<F_ARTGLOSS> F_ARTGLOSS { get; set; }
-        public virtual ICollection<F_ARTICLEMEDIA> F_ARTICLEMEDIA { get; set; }
-        public virtual ICollection<F_ARTICLERESSOURCE> F_ARTICLERESSOURCE { get; set; }
-        public virtual ICollection<F_ARTMODELE> F_ARTMODELE { get; set; }
-        public virtual ICollection<F_ARTPRIX> F_ARTPRIX { get; set; }
-        public virtual ICollection<F_ARTSTOCK> F_ARTSTOCK { get; set; }
-        public virtual ICollection<F_ARTSTOCKEMPL> F_ARTSTOCKEMPL { get; set; }
-        public virtual ICollection<F_CLAVIER> F_CLAVIER { get; set; }
-        public virtual ICollection<F_CONDITION> F_CONDITION { get; set; }
-        public virtual ICollection<F_DOCLIGNE> F_DOCLIGNE { get; set; }
-        public virtual ICollection<F_GAMSTOCK> F_GAMSTOCK { get; set; }
-        public virtual ICollection<F_GAMSTOCKEMPL> F_GAMSTOCKEMPL { get; set; }
-        public virtual ICollection<F_LIGNEARCHIVE> F_LIGNEARCHIVE { get; set; }
-        public virtual ICollection<F_LOTFIFO> F_LOTFIFO { get; set; }
-        public virtual ICollection<F_LOTSERIE> F_LOTSERIE { get; set; }
-        public virtual ICollection<F_NOMENCLAT> F_NOMENCLATAR_RefNavigation { get; set; }
-        public virtual ICollection<F_NOMENCLAT> F_NOMENCLATNO_RefDetNavigation { get; set; }
-        public virtual ICollection<F_PREVISION> F_PREVISION { get; set; }
-        public virtual ICollection<F_PROJETHISTO> F_PROJETHISTOAR_RefComposantNavigation { get; set; }
-        public virtual ICollection<F_PROJETHISTO> F_PROJETHISTOAR_RefComposeNavigation { get; set; }
-        public virtual ICollection<F_PROJETPLANNING> F_PROJETPLANNINGAR_RefComposantNavigation { get; set; }
-        public virtual ICollection<F_PROJETPLANNING> F_PROJETPLANNINGAR_RefComposeNavigation { get; set; }
-        public virtual ICollection<F_RESSOURCEPROD> F_RESSOURCEPROD { get; set; }
-        public virtual ICollection<F_TARIF> F_TARIF { get; set; }
-        public virtual ICollection<F_TARIFCOND> F_TARIFCOND { get; set; }
-        public virtual ICollection<F_TARIFGAM> F_TARIFGAM { get; set; }
-        public virtual ICollection<F_TARIFQTE> F_TARIFQTE { get; set; }
-        public virtual ICollection<F_ARTICLE> InverseAR_SubstitutNavigation { get; set; }
-    }
+    public string AR_Design { get; set; }
+
+    public byte[] cbAR_Design { get; set; }
+
+    public string FA_CodeFamille { get; set; }
+
+    public byte[] cbFA_CodeFamille { get; set; }
+
+    public string AR_Substitut { get; set; }
+
+    public byte[] cbAR_Substitut { get; set; }
+
+    public string AR_Raccourci { get; set; }
+
+    public byte[] cbAR_Raccourci { get; set; }
+
+    public short? AR_Garantie { get; set; }
+
+    public short? AR_UnitePoids { get; set; }
+
+    public decimal? AR_PoidsNet { get; set; }
+
+    public decimal? AR_PoidsBrut { get; set; }
+
+    public short? AR_UniteVen { get; set; }
+
+    public decimal? AR_PrixAch { get; set; }
+
+    public decimal? AR_Coef { get; set; }
+
+    public decimal? AR_PrixVen { get; set; }
+
+    public short? AR_PrixTTC { get; set; }
+
+    public short? AR_Gamme1 { get; set; }
+
+    public short? AR_Gamme2 { get; set; }
+
+    public short? AR_SuiviStock { get; set; }
+
+    public short? AR_Nomencl { get; set; }
+
+    public string AR_Stat01 { get; set; }
+
+    public string AR_Stat02 { get; set; }
+
+    public string AR_Stat03 { get; set; }
+
+    public string AR_Stat04 { get; set; }
+
+    public string AR_Stat05 { get; set; }
+
+    public short? AR_Escompte { get; set; }
+
+    public short? AR_Delai { get; set; }
+
+    public short? AR_HorsStat { get; set; }
+
+    public short? AR_VteDebit { get; set; }
+
+    public short? AR_NotImp { get; set; }
+
+    public short? AR_Sommeil { get; set; }
+
+    public string AR_Langue1 { get; set; }
+
+    public string AR_Langue2 { get; set; }
+
+    public string AR_EdiCode { get; set; }
+
+    public string AR_CodeBarre { get; set; }
+
+    public byte[] cbAR_CodeBarre { get; set; }
+
+    public string AR_CodeFiscal { get; set; }
+
+    public string AR_Pays { get; set; }
+
+    public string AR_Frais01FR_Denomination { get; set; }
+
+    public decimal? AR_Frais01FR_Rem01REM_Valeur { get; set; }
+
+    public short? AR_Frais01FR_Rem01REM_Type { get; set; }
+
+    public decimal? AR_Frais01FR_Rem02REM_Valeur { get; set; }
+
+    public short? AR_Frais01FR_Rem02REM_Type { get; set; }
+
+    public decimal? AR_Frais01FR_Rem03REM_Valeur { get; set; }
+
+    public short? AR_Frais01FR_Rem03REM_Type { get; set; }
+
+    public string AR_Frais02FR_Denomination { get; set; }
+
+    public decimal? AR_Frais02FR_Rem01REM_Valeur { get; set; }
+
+    public short? AR_Frais02FR_Rem01REM_Type { get; set; }
+
+    public decimal? AR_Frais02FR_Rem02REM_Valeur { get; set; }
+
+    public short? AR_Frais02FR_Rem02REM_Type { get; set; }
+
+    public decimal? AR_Frais02FR_Rem03REM_Valeur { get; set; }
+
+    public short? AR_Frais02FR_Rem03REM_Type { get; set; }
+
+    public string AR_Frais03FR_Denomination { get; set; }
+
+    public decimal? AR_Frais03FR_Rem01REM_Valeur { get; set; }
+
+    public short? AR_Frais03FR_Rem01REM_Type { get; set; }
+
+    public decimal? AR_Frais03FR_Rem02REM_Valeur { get; set; }
+
+    public short? AR_Frais03FR_Rem02REM_Type { get; set; }
+
+    public decimal? AR_Frais03FR_Rem03REM_Valeur { get; set; }
+
+    public short? AR_Frais03FR_Rem03REM_Type { get; set; }
+
+    public short? AR_Condition { get; set; }
+
+    public decimal? AR_PUNet { get; set; }
+
+    public short? AR_Contremarque { get; set; }
+
+    public short? AR_FactPoids { get; set; }
+
+    public short? AR_FactForfait { get; set; }
+
+    public short? AR_SaisieVar { get; set; }
+
+    public short? AR_Transfere { get; set; }
+
+    public short? AR_Publie { get; set; }
+
+    public DateTime? AR_DateModif { get; set; }
+
+    public string AR_Photo { get; set; }
+
+    public decimal? AR_PrixAchNouv { get; set; }
+
+    public decimal? AR_CoefNouv { get; set; }
+
+    public decimal? AR_PrixVenNouv { get; set; }
+
+    public DateTime? AR_DateApplication { get; set; }
+
+    public decimal? AR_CoutStd { get; set; }
+
+    public decimal? AR_QteComp { get; set; }
+
+    public decimal? AR_QteOperatoire { get; set; }
+
+    public int? CO_No { get; set; }
+
+    public int? cbCO_No { get; set; }
+
+    public short? AR_Prevision { get; set; }
+
+    public int? CL_No1 { get; set; }
+
+    public int? cbCL_No1 { get; set; }
+
+    public int? CL_No2 { get; set; }
+
+    public int? cbCL_No2 { get; set; }
+
+    public int? CL_No3 { get; set; }
+
+    public int? cbCL_No3 { get; set; }
+
+    public int? CL_No4 { get; set; }
+
+    public int? cbCL_No4 { get; set; }
+
+    public short? AR_Type { get; set; }
+
+    public string RP_CodeDefaut { get; set; }
+
+    public short? AR_Nature { get; set; }
+
+    public short? AR_DelaiFabrication { get; set; }
+
+    public short? AR_NbColis { get; set; }
+
+    public short? AR_DelaiPeremption { get; set; }
+
+    public short? AR_DelaiSecurite { get; set; }
+
+    public short? AR_Fictif { get; set; }
+
+    public short? AR_SousTraitance { get; set; }
+
+    public short? AR_TypeLancement { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_ARTICLE AR_SubstitutNavigation { get; set; }
+
+    public virtual ICollection<F_ABOLIGNE> F_ABOLIGNE { get; set; } = new List<F_ABOLIGNE>();
+
+    public virtual ICollection<F_ARTCLIENT> F_ARTCLIENT { get; set; } = new List<F_ARTCLIENT>();
+
+    public virtual ICollection<F_ARTCOMPO> F_ARTCOMPO { get; set; } = new List<F_ARTCOMPO>();
+
+    public virtual ICollection<F_ARTCOMPTA> F_ARTCOMPTA { get; set; } = new List<F_ARTCOMPTA>();
+
+    public virtual ICollection<F_ARTENUMREF> F_ARTENUMREF { get; set; } = new List<F_ARTENUMREF>();
+
+    public virtual ICollection<F_ARTFOURNISS> F_ARTFOURNISS { get; set; } = new List<F_ARTFOURNISS>();
+
+    public virtual ICollection<F_ARTGAMME> F_ARTGAMME { get; set; } = new List<F_ARTGAMME>();
+
+    public virtual ICollection<F_ARTGLOSS> F_ARTGLOSS { get; set; } = new List<F_ARTGLOSS>();
+
+    public virtual ICollection<F_ARTICLEMEDIA> F_ARTICLEMEDIA { get; set; } = new List<F_ARTICLEMEDIA>();
+
+    public virtual ICollection<F_ARTICLERESSOURCE> F_ARTICLERESSOURCE { get; set; } = new List<F_ARTICLERESSOURCE>();
+
+    public virtual ICollection<F_ARTMODELE> F_ARTMODELE { get; set; } = new List<F_ARTMODELE>();
+
+    public virtual ICollection<F_ARTPRIX> F_ARTPRIX { get; set; } = new List<F_ARTPRIX>();
+
+    public virtual ICollection<F_ARTSTOCK> F_ARTSTOCK { get; set; } = new List<F_ARTSTOCK>();
+
+    public virtual ICollection<F_ARTSTOCKEMPL> F_ARTSTOCKEMPL { get; set; } = new List<F_ARTSTOCKEMPL>();
+
+    public virtual ICollection<F_CLAVIER> F_CLAVIER { get; set; } = new List<F_CLAVIER>();
+
+    public virtual ICollection<F_CONDITION> F_CONDITION { get; set; } = new List<F_CONDITION>();
+
+    public virtual ICollection<F_DOCLIGNE> F_DOCLIGNE { get; set; } = new List<F_DOCLIGNE>();
+
+    public virtual ICollection<F_GAMSTOCK> F_GAMSTOCK { get; set; } = new List<F_GAMSTOCK>();
+
+    public virtual ICollection<F_GAMSTOCKEMPL> F_GAMSTOCKEMPL { get; set; } = new List<F_GAMSTOCKEMPL>();
+
+    public virtual ICollection<F_LIGNEARCHIVE> F_LIGNEARCHIVE { get; set; } = new List<F_LIGNEARCHIVE>();
+
+    public virtual ICollection<F_LOTFIFO> F_LOTFIFO { get; set; } = new List<F_LOTFIFO>();
+
+    public virtual ICollection<F_LOTSERIE> F_LOTSERIE { get; set; } = new List<F_LOTSERIE>();
+
+    public virtual ICollection<F_NOMENCLAT> F_NOMENCLATAR_RefNavigation { get; set; } = new List<F_NOMENCLAT>();
+
+    public virtual ICollection<F_NOMENCLAT> F_NOMENCLATNO_RefDetNavigation { get; set; } = new List<F_NOMENCLAT>();
+
+    public virtual ICollection<F_PREVISION> F_PREVISION { get; set; } = new List<F_PREVISION>();
+
+    public virtual ICollection<F_PROJETHISTO> F_PROJETHISTOAR_RefComposantNavigation { get; set; } = new List<F_PROJETHISTO>();
+
+    public virtual ICollection<F_PROJETHISTO> F_PROJETHISTOAR_RefComposeNavigation { get; set; } = new List<F_PROJETHISTO>();
+
+    public virtual ICollection<F_PROJETPLANNING> F_PROJETPLANNINGAR_RefComposantNavigation { get; set; } = new List<F_PROJETPLANNING>();
+
+    public virtual ICollection<F_PROJETPLANNING> F_PROJETPLANNINGAR_RefComposeNavigation { get; set; } = new List<F_PROJETPLANNING>();
+
+    public virtual ICollection<F_RESSOURCEPROD> F_RESSOURCEPROD { get; set; } = new List<F_RESSOURCEPROD>();
+
+    public virtual ICollection<F_TARIF> F_TARIF { get; set; } = new List<F_TARIF>();
+
+    public virtual ICollection<F_TARIFCOND> F_TARIFCOND { get; set; } = new List<F_TARIFCOND>();
+
+    public virtual ICollection<F_TARIFGAM> F_TARIFGAM { get; set; } = new List<F_TARIFGAM>();
+
+    public virtual ICollection<F_TARIFQTE> F_TARIFQTE { get; set; } = new List<F_TARIFQTE>();
+
+    public virtual ICollection<F_ARTICLE> InverseAR_SubstitutNavigation { get; set; } = new List<F_ARTICLE>();
+
+    public virtual F_RESSOURCEPROD RP_CodeDefautNavigation { get; set; }
+
+    public virtual F_CATALOGUE cbCL_No1Navigation { get; set; }
+
+    public virtual F_CATALOGUE cbCL_No2Navigation { get; set; }
+
+    public virtual F_CATALOGUE cbCL_No3Navigation { get; set; }
+
+    public virtual F_CATALOGUE cbCL_No4Navigation { get; set; }
 }

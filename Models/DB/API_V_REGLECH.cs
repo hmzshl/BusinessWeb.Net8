@@ -3,21 +3,31 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_V_REGLECH
 {
-    public partial class API_V_REGLECH
-    {
-        public int RG_No { get; set; }
-        public int DR_No { get; set; }
-        public short? DO_Domaine { get; set; }
-        public short? DO_Type { get; set; }
-        public string DO_Piece { get; set; }
-        public decimal? RC_Montant { get; set; }
-        public short? RG_TypeReg { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public DateTime? DO_Date { get; set; }
-        public string CT_Num { get; set; }
-        public string CT_Intitule { get; set; }
-    }
+    public int RG_No { get; set; }
+
+    public int DR_No { get; set; }
+
+    public short? DO_Domaine { get; set; }
+
+    public short? DO_Type { get; set; }
+
+    public string DO_Piece { get; set; }
+
+    public decimal? RC_Montant { get; set; }
+
+    public short? RG_TypeReg { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public DateTime? DO_Date { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public string CT_Intitule { get; set; }
 }

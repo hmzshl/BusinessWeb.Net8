@@ -3,56 +3,79 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_CAISSE
 {
-    public partial class F_CAISSE
-    {
-        public F_CAISSE()
-        {
-            F_AFFICHEURCAISSE = new HashSet<F_AFFICHEURCAISSE>();
-            F_CAISSECAISSIER = new HashSet<F_CAISSECAISSIER>();
-            F_CREGLEMENT = new HashSet<F_CREGLEMENT>();
-            F_DOCENTETE = new HashSet<F_DOCENTETE>();
-            F_REGLEARCHIVE = new HashSet<F_REGLEARCHIVE>();
-            F_TICKETARCHIVE = new HashSet<F_TICKETARCHIVE>();
-        }
+    public int? CA_No { get; set; }
 
-        public int? CA_No { get; set; }
-        public string CA_Intitule { get; set; }
-        public byte[] cbCA_Intitule { get; set; }
-        public int DE_No { get; set; }
-        public int? CO_No { get; set; }
-        public int? cbCO_No { get; set; }
-        public int? CO_NoCaissier { get; set; }
-        public int? cbCO_NoCaissier { get; set; }
-        public string CT_Num { get; set; }
-        public byte[] cbCT_Num { get; set; }
-        public string JO_Num { get; set; }
-        public short? CA_IdentifCaissier { get; set; }
-        public DateTime? CA_DateCreation { get; set; }
-        public short? N_Comptoir { get; set; }
-        public short? N_Clavier { get; set; }
-        public short? CA_LignesAfficheur { get; set; }
-        public short? CA_ColonnesAfficheur { get; set; }
-        public short? CA_ImpTicket { get; set; }
-        public short? CA_SaisieVendeur { get; set; }
-        public short? CA_Souche { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public string CA_Intitule { get; set; }
 
-        public virtual F_COMPTET CT_NumNavigation { get; set; }
-        public virtual F_DEPOT DE_NoNavigation { get; set; }
-        public virtual F_COLLABORATEUR cbCO_NoCaissierNavigation { get; set; }
-        public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
-        public virtual ICollection<F_AFFICHEURCAISSE> F_AFFICHEURCAISSE { get; set; }
-        public virtual ICollection<F_CAISSECAISSIER> F_CAISSECAISSIER { get; set; }
-        public virtual ICollection<F_CREGLEMENT> F_CREGLEMENT { get; set; }
-        public virtual ICollection<F_DOCENTETE> F_DOCENTETE { get; set; }
-        public virtual ICollection<F_REGLEARCHIVE> F_REGLEARCHIVE { get; set; }
-        public virtual ICollection<F_TICKETARCHIVE> F_TICKETARCHIVE { get; set; }
-    }
+    public byte[] cbCA_Intitule { get; set; }
+
+    public int DE_No { get; set; }
+
+    public int? CO_No { get; set; }
+
+    public int? cbCO_No { get; set; }
+
+    public int? CO_NoCaissier { get; set; }
+
+    public int? cbCO_NoCaissier { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public byte[] cbCT_Num { get; set; }
+
+    public string JO_Num { get; set; }
+
+    public short? CA_IdentifCaissier { get; set; }
+
+    public DateTime? CA_DateCreation { get; set; }
+
+    public short? N_Comptoir { get; set; }
+
+    public short? N_Clavier { get; set; }
+
+    public short? CA_LignesAfficheur { get; set; }
+
+    public short? CA_ColonnesAfficheur { get; set; }
+
+    public short? CA_ImpTicket { get; set; }
+
+    public short? CA_SaisieVendeur { get; set; }
+
+    public short? CA_Souche { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_COMPTET CT_NumNavigation { get; set; }
+
+    public virtual F_DEPOT DE_NoNavigation { get; set; }
+
+    public virtual ICollection<F_AFFICHEURCAISSE> F_AFFICHEURCAISSE { get; set; } = new List<F_AFFICHEURCAISSE>();
+
+    public virtual ICollection<F_CAISSECAISSIER> F_CAISSECAISSIER { get; set; } = new List<F_CAISSECAISSIER>();
+
+    public virtual ICollection<F_CREGLEMENT> F_CREGLEMENT { get; set; } = new List<F_CREGLEMENT>();
+
+    public virtual ICollection<F_DOCENTETE> F_DOCENTETE { get; set; } = new List<F_DOCENTETE>();
+
+    public virtual ICollection<F_REGLEARCHIVE> F_REGLEARCHIVE { get; set; } = new List<F_REGLEARCHIVE>();
+
+    public virtual ICollection<F_TICKETARCHIVE> F_TICKETARCHIVE { get; set; } = new List<F_TICKETARCHIVE>();
+
+    public virtual F_COLLABORATEUR cbCO_NoCaissierNavigation { get; set; }
+
+    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
 }

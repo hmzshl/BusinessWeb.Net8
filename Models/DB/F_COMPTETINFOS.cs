@@ -3,26 +3,39 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_COMPTETINFOS
-    {
-        public string CT_Num { get; set; }
-        public byte[] cbCT_Num { get; set; }
-        public string CI_Code { get; set; }
-        public byte[] cbCI_Code { get; set; }
-        public string CI_Intitule { get; set; }
-        public byte[] cbCI_Intitule { get; set; }
-        public short? CI_Domaine { get; set; }
-        public short? CI_Type { get; set; }
-        public string CI_Valeur { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_COMPTET CT_NumNavigation { get; set; }
-    }
+public partial class F_COMPTETINFOS
+{
+    public string CT_Num { get; set; }
+
+    public byte[] cbCT_Num { get; set; }
+
+    public string CI_Code { get; set; }
+
+    public byte[] cbCI_Code { get; set; }
+
+    public string CI_Intitule { get; set; }
+
+    public byte[] cbCI_Intitule { get; set; }
+
+    public short? CI_Domaine { get; set; }
+
+    public short? CI_Type { get; set; }
+
+    public string CI_Valeur { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_COMPTET CT_NumNavigation { get; set; }
 }

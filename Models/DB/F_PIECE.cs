@@ -3,34 +3,41 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_PIECE
 {
-    public partial class F_PIECE
-    {
-        public F_PIECE()
-        {
-            F_COMPTET = new HashSet<F_COMPTET>();
-            F_MODELEA = new HashSet<F_MODELEA>();
-            F_PIECEG = new HashSet<F_PIECEG>();
-        }
+    public int PI_No { get; set; }
 
-        public int PI_No { get; set; }
-        public string PI_Intitule { get; set; }
-        public byte[] cbPI_Intitule { get; set; }
-        public string PI_Raccourci { get; set; }
-        public byte[] cbPI_Raccourci { get; set; }
-        public short? JO_Type { get; set; }
-        public string JO_Num { get; set; }
-        public byte[] cbJO_Num { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public string PI_Intitule { get; set; }
 
-        public virtual ICollection<F_COMPTET> F_COMPTET { get; set; }
-        public virtual ICollection<F_MODELEA> F_MODELEA { get; set; }
-        public virtual ICollection<F_PIECEG> F_PIECEG { get; set; }
-    }
+    public byte[] cbPI_Intitule { get; set; }
+
+    public string PI_Raccourci { get; set; }
+
+    public byte[] cbPI_Raccourci { get; set; }
+
+    public short? JO_Type { get; set; }
+
+    public string JO_Num { get; set; }
+
+    public byte[] cbJO_Num { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual ICollection<F_COMPTET> F_COMPTET { get; set; } = new List<F_COMPTET>();
+
+    public virtual ICollection<F_MODELEA> F_MODELEA { get; set; } = new List<F_MODELEA>();
+
+    public virtual ICollection<F_PIECEG> F_PIECEG { get; set; } = new List<F_PIECEG>();
 }

@@ -3,23 +3,33 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_EMODELEG
-    {
-        public int MG_No { get; set; }
-        public short? N_Analytique { get; set; }
-        public string CX_Num { get; set; }
-        public byte[] cbCX_Num { get; set; }
-        public short? EG_TRepart { get; set; }
-        public decimal? EG_VRepart { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_MODELEG MG_NoNavigation { get; set; }
-    }
+public partial class F_EMODELEG
+{
+    public int MG_No { get; set; }
+
+    public short? N_Analytique { get; set; }
+
+    public string CX_Num { get; set; }
+
+    public byte[] cbCX_Num { get; set; }
+
+    public short? EG_TRepart { get; set; }
+
+    public decimal? EG_VRepart { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_MODELEG MG_NoNavigation { get; set; }
 }

@@ -3,13 +3,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_RevisionPrix
-    {
-        public int id { get; set; }
-        public int Projet { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_Projet ProjetNavigation { get; set; }
-    }
+public partial class API_T_RevisionPrix
+{
+    public int id { get; set; }
+
+    public int Projet { get; set; }
+
+    public virtual API_T_Projet ProjetNavigation { get; set; }
 }

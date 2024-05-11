@@ -3,23 +3,33 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_ABOPERIODE
-    {
-        public int AB_No { get; set; }
-        public DateTime? PE_Debut { get; set; }
-        public DateTime? PE_Fin { get; set; }
-        public DateTime? PE_Generation { get; set; }
-        public DateTime? PE_Livraison { get; set; }
-        public short? PE_Etat { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_ABONNEMENT AB_NoNavigation { get; set; }
-    }
+public partial class F_ABOPERIODE
+{
+    public int AB_No { get; set; }
+
+    public DateTime? PE_Debut { get; set; }
+
+    public DateTime? PE_Fin { get; set; }
+
+    public DateTime? PE_Generation { get; set; }
+
+    public DateTime? PE_Livraison { get; set; }
+
+    public short? PE_Etat { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_ABONNEMENT AB_NoNavigation { get; set; }
 }

@@ -3,25 +3,37 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_TARIFREMISE
-    {
-        public int TF_No { get; set; }
-        public decimal? TR_BorneSup { get; set; }
-        public decimal? TR_Remise01REM_Valeur { get; set; }
-        public short? TR_Remise01REM_Type { get; set; }
-        public decimal? TR_Remise02REM_Valeur { get; set; }
-        public short? TR_Remise02REM_Type { get; set; }
-        public decimal? TR_Remise03REM_Valeur { get; set; }
-        public short? TR_Remise03REM_Type { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_TARIF TF_NoNavigation { get; set; }
-    }
+public partial class F_TARIFREMISE
+{
+    public int TF_No { get; set; }
+
+    public decimal? TR_BorneSup { get; set; }
+
+    public decimal? TR_Remise01REM_Valeur { get; set; }
+
+    public short? TR_Remise01REM_Type { get; set; }
+
+    public decimal? TR_Remise02REM_Valeur { get; set; }
+
+    public short? TR_Remise02REM_Type { get; set; }
+
+    public decimal? TR_Remise03REM_Valeur { get; set; }
+
+    public short? TR_Remise03REM_Type { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_TARIF TF_NoNavigation { get; set; }
 }

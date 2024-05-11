@@ -3,23 +3,35 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_PAYS
 {
-    public partial class F_PAYS
-    {
-        public string PA_Intitule { get; set; }
-        public byte[] cbPA_Intitule { get; set; }
-        public string PA_Code { get; set; }
-        public string PA_CodeEdi { get; set; }
-        public decimal? PA_Assurance { get; set; }
-        public decimal? PA_Transport { get; set; }
-        public string PA_CodeISO2 { get; set; }
-        public short? PA_SEPA { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
-    }
+    public string PA_Intitule { get; set; }
+
+    public byte[] cbPA_Intitule { get; set; }
+
+    public string PA_Code { get; set; }
+
+    public string PA_CodeEdi { get; set; }
+
+    public decimal? PA_Assurance { get; set; }
+
+    public decimal? PA_Transport { get; set; }
+
+    public string PA_CodeISO2 { get; set; }
+
+    public short? PA_SEPA { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 }

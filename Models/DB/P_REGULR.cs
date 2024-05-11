@@ -3,16 +3,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_REGULR
 {
-    public partial class P_REGULR
-    {
-        public string JO_NumExercice { get; set; }
-        public string JO_NumSituation { get; set; }
-        public int? PI_NoCharge { get; set; }
-        public int? PI_NoFr { get; set; }
-        public int? PI_NoProduit { get; set; }
-        public int? PI_NoCl { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public string JO_NumExercice { get; set; }
+
+    public string JO_NumSituation { get; set; }
+
+    public int? PI_NoCharge { get; set; }
+
+    public int? PI_NoFr { get; set; }
+
+    public int? PI_NoProduit { get; set; }
+
+    public int? PI_NoCl { get; set; }
+
+    public int cbMarq { get; set; }
 }

@@ -3,13 +3,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_CONVEUROCIAL
 {
-    public partial class P_CONVEUROCIAL
-    {
-        public short? C_BasculeTarif { get; set; }
-        public short? C_BasculeLibre { get; set; }
-        public short? C_BasculeCompte { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public short? C_BasculeTarif { get; set; }
+
+    public short? C_BasculeLibre { get; set; }
+
+    public short? C_BasculeCompte { get; set; }
+
+    public int cbMarq { get; set; }
 }

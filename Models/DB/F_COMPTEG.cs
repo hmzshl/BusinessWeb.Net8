@@ -3,106 +3,133 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_COMPTEG
 {
-    public partial class F_COMPTEG
-    {
-        public F_COMPTEG()
-        {
-            F_ABOENTETE = new HashSet<F_ABOENTETE>();
-            F_ARTCOMPTA = new HashSet<F_ARTCOMPTA>();
-            F_COMPTEABUDGETG = new HashSet<F_COMPTEABUDGETG>();
-            F_COMPTEGA = new HashSet<F_COMPTEGA>();
-            F_COMPTEGNOTE = new HashSet<F_COMPTEGNOTE>();
-            F_COMPTET = new HashSet<F_COMPTET>();
-            F_COMPTETG = new HashSet<F_COMPTETG>();
-            F_CREGLEMENTCG_NumContNavigation = new HashSet<F_CREGLEMENT>();
-            F_CREGLEMENTCG_NumEcartNavigation = new HashSet<F_CREGLEMENT>();
-            F_CREGLEMENTCG_NumNavigation = new HashSet<F_CREGLEMENT>();
-            F_DOCENTETE = new HashSet<F_DOCENTETE>();
-            F_EBUDGET = new HashSet<F_EBUDGET>();
-            F_ECRITUREC = new HashSet<F_ECRITUREC>();
-            F_ECRITUREF = new HashSet<F_ECRITUREF>();
-            F_ECRITURER = new HashSet<F_ECRITURER>();
-            F_ETAXE = new HashSet<F_ETAXE>();
-            F_FAMCOMPTA = new HashSet<F_FAMCOMPTA>();
-            F_JOURNAUX = new HashSet<F_JOURNAUX>();
-            F_REGTAXECG_Num01Navigation = new HashSet<F_REGTAXE>();
-            F_REGTAXECG_Num02Navigation = new HashSet<F_REGTAXE>();
-            F_REGTAXECG_Num03Navigation = new HashSet<F_REGTAXE>();
-            F_REGTAXECG_Num04Navigation = new HashSet<F_REGTAXE>();
-            F_REGTAXECG_Num05Navigation = new HashSet<F_REGTAXE>();
-            F_REGTAXECG_Num06Navigation = new HashSet<F_REGTAXE>();
-            F_REGTAXECG_Num07Navigation = new HashSet<F_REGTAXE>();
-            F_REGTAXECG_Num08Navigation = new HashSet<F_REGTAXE>();
-            F_REGTAXECG_Num09Navigation = new HashSet<F_REGTAXE>();
-            F_REGTAXECG_Num10Navigation = new HashSet<F_REGTAXE>();
-            F_TAXE = new HashSet<F_TAXE>();
-        }
+    public string CG_Num { get; set; }
 
-        public string CG_Num { get; set; }
-        public byte[] cbCG_Num { get; set; }
-        public short? CG_Type { get; set; }
-        public string CG_Intitule { get; set; }
-        public string CG_Classement { get; set; }
-        public byte[] cbCG_Classement { get; set; }
-        public short? N_Nature { get; set; }
-        public short? CG_Report { get; set; }
-        public string CR_Num { get; set; }
-        public byte[] cbCR_Num { get; set; }
-        public string CG_Raccourci { get; set; }
-        public byte[] cbCG_Raccourci { get; set; }
-        public short? CG_Saut { get; set; }
-        public short? CG_Regroup { get; set; }
-        public short? CG_Analytique { get; set; }
-        public short? CG_Echeance { get; set; }
-        public short? CG_Quantite { get; set; }
-        public short? CG_Lettrage { get; set; }
-        public short? CG_Tiers { get; set; }
-        public short? CG_Devise { get; set; }
-        public short? N_Devise { get; set; }
-        public string TA_Code { get; set; }
-        public byte[] cbTA_Code { get; set; }
-        public short? CG_Sommeil { get; set; }
-        public short? CG_ReportAnal { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public byte[] cbCG_Num { get; set; }
 
-        public virtual F_COMPTER CR_NumNavigation { get; set; }
-        public virtual F_TAXE TA_CodeNavigation { get; set; }
-        public virtual F_COMPTEGBUDGET F_COMPTEGBUDGET { get; set; }
-        public virtual ICollection<F_ABOENTETE> F_ABOENTETE { get; set; }
-        public virtual ICollection<F_ARTCOMPTA> F_ARTCOMPTA { get; set; }
-        public virtual ICollection<F_COMPTEABUDGETG> F_COMPTEABUDGETG { get; set; }
-        public virtual ICollection<F_COMPTEGA> F_COMPTEGA { get; set; }
-        public virtual ICollection<F_COMPTEGNOTE> F_COMPTEGNOTE { get; set; }
-        public virtual ICollection<F_COMPTET> F_COMPTET { get; set; }
-        public virtual ICollection<F_COMPTETG> F_COMPTETG { get; set; }
-        public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCG_NumContNavigation { get; set; }
-        public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCG_NumEcartNavigation { get; set; }
-        public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCG_NumNavigation { get; set; }
-        public virtual ICollection<F_DOCENTETE> F_DOCENTETE { get; set; }
-        public virtual ICollection<F_EBUDGET> F_EBUDGET { get; set; }
-        public virtual ICollection<F_ECRITUREC> F_ECRITUREC { get; set; }
-        public virtual ICollection<F_ECRITUREF> F_ECRITUREF { get; set; }
-        public virtual ICollection<F_ECRITURER> F_ECRITURER { get; set; }
-        public virtual ICollection<F_ETAXE> F_ETAXE { get; set; }
-        public virtual ICollection<F_FAMCOMPTA> F_FAMCOMPTA { get; set; }
-        public virtual ICollection<F_JOURNAUX> F_JOURNAUX { get; set; }
-        public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num01Navigation { get; set; }
-        public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num02Navigation { get; set; }
-        public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num03Navigation { get; set; }
-        public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num04Navigation { get; set; }
-        public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num05Navigation { get; set; }
-        public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num06Navigation { get; set; }
-        public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num07Navigation { get; set; }
-        public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num08Navigation { get; set; }
-        public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num09Navigation { get; set; }
-        public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num10Navigation { get; set; }
-        public virtual ICollection<F_TAXE> F_TAXE { get; set; }
-    }
+    public short? CG_Type { get; set; }
+
+    public string CG_Intitule { get; set; }
+
+    public string CG_Classement { get; set; }
+
+    public byte[] cbCG_Classement { get; set; }
+
+    public short? N_Nature { get; set; }
+
+    public short? CG_Report { get; set; }
+
+    public string CR_Num { get; set; }
+
+    public byte[] cbCR_Num { get; set; }
+
+    public string CG_Raccourci { get; set; }
+
+    public byte[] cbCG_Raccourci { get; set; }
+
+    public short? CG_Saut { get; set; }
+
+    public short? CG_Regroup { get; set; }
+
+    public short? CG_Analytique { get; set; }
+
+    public short? CG_Echeance { get; set; }
+
+    public short? CG_Quantite { get; set; }
+
+    public short? CG_Lettrage { get; set; }
+
+    public short? CG_Tiers { get; set; }
+
+    public short? CG_Devise { get; set; }
+
+    public short? N_Devise { get; set; }
+
+    public string TA_Code { get; set; }
+
+    public byte[] cbTA_Code { get; set; }
+
+    public short? CG_Sommeil { get; set; }
+
+    public short? CG_ReportAnal { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_COMPTER CR_NumNavigation { get; set; }
+
+    public virtual ICollection<F_ABOENTETE> F_ABOENTETE { get; set; } = new List<F_ABOENTETE>();
+
+    public virtual ICollection<F_ARTCOMPTA> F_ARTCOMPTA { get; set; } = new List<F_ARTCOMPTA>();
+
+    public virtual ICollection<F_COMPTEABUDGETG> F_COMPTEABUDGETG { get; set; } = new List<F_COMPTEABUDGETG>();
+
+    public virtual ICollection<F_COMPTEGA> F_COMPTEGA { get; set; } = new List<F_COMPTEGA>();
+
+    public virtual F_COMPTEGBUDGET F_COMPTEGBUDGET { get; set; }
+
+    public virtual ICollection<F_COMPTEGNOTE> F_COMPTEGNOTE { get; set; } = new List<F_COMPTEGNOTE>();
+
+    public virtual ICollection<F_COMPTET> F_COMPTET { get; set; } = new List<F_COMPTET>();
+
+    public virtual ICollection<F_COMPTETG> F_COMPTETG { get; set; } = new List<F_COMPTETG>();
+
+    public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCG_NumContNavigation { get; set; } = new List<F_CREGLEMENT>();
+
+    public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCG_NumEcartNavigation { get; set; } = new List<F_CREGLEMENT>();
+
+    public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCG_NumNavigation { get; set; } = new List<F_CREGLEMENT>();
+
+    public virtual ICollection<F_DOCENTETE> F_DOCENTETE { get; set; } = new List<F_DOCENTETE>();
+
+    public virtual ICollection<F_EBUDGET> F_EBUDGET { get; set; } = new List<F_EBUDGET>();
+
+    public virtual ICollection<F_ECRITUREC> F_ECRITUREC { get; set; } = new List<F_ECRITUREC>();
+
+    public virtual ICollection<F_ECRITUREF> F_ECRITUREF { get; set; } = new List<F_ECRITUREF>();
+
+    public virtual ICollection<F_ECRITURER> F_ECRITURER { get; set; } = new List<F_ECRITURER>();
+
+    public virtual ICollection<F_ETAXE> F_ETAXE { get; set; } = new List<F_ETAXE>();
+
+    public virtual ICollection<F_FAMCOMPTA> F_FAMCOMPTA { get; set; } = new List<F_FAMCOMPTA>();
+
+    public virtual ICollection<F_JOURNAUX> F_JOURNAUX { get; set; } = new List<F_JOURNAUX>();
+
+    public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num01Navigation { get; set; } = new List<F_REGTAXE>();
+
+    public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num02Navigation { get; set; } = new List<F_REGTAXE>();
+
+    public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num03Navigation { get; set; } = new List<F_REGTAXE>();
+
+    public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num04Navigation { get; set; } = new List<F_REGTAXE>();
+
+    public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num05Navigation { get; set; } = new List<F_REGTAXE>();
+
+    public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num06Navigation { get; set; } = new List<F_REGTAXE>();
+
+    public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num07Navigation { get; set; } = new List<F_REGTAXE>();
+
+    public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num08Navigation { get; set; } = new List<F_REGTAXE>();
+
+    public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num09Navigation { get; set; } = new List<F_REGTAXE>();
+
+    public virtual ICollection<F_REGTAXE> F_REGTAXECG_Num10Navigation { get; set; } = new List<F_REGTAXE>();
+
+    public virtual ICollection<F_TAXE> F_TAXE { get; set; } = new List<F_TAXE>();
+
+    public virtual F_TAXE TA_CodeNavigation { get; set; }
 }

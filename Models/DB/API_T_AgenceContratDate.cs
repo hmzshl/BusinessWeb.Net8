@@ -3,21 +3,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_AgenceContratDate
 {
-    public partial class API_T_AgenceContratDate
-    {
-        public API_T_AgenceContratDate()
-        {
-            API_T_AgenceContratDetail = new HashSet<API_T_AgenceContratDetail>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public int Contrat { get; set; }
-        public DateTime? DateDebut { get; set; }
-        public DateTime? DateFin { get; set; }
+    public int Contrat { get; set; }
 
-        public virtual API_T_AgenceContrat ContratNavigation { get; set; }
-        public virtual ICollection<API_T_AgenceContratDetail> API_T_AgenceContratDetail { get; set; }
-    }
+    public DateTime? DateDebut { get; set; }
+
+    public DateTime? DateFin { get; set; }
+
+    public virtual ICollection<API_T_AgenceContratDetail> API_T_AgenceContratDetail { get; set; } = new List<API_T_AgenceContratDetail>();
+
+    public virtual API_T_AgenceContrat ContratNavigation { get; set; }
 }

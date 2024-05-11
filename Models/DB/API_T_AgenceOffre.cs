@@ -3,24 +3,35 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_AgenceOffre
-    {
-        public int id { get; set; }
-        public string Intitule { get; set; }
-        public int Type { get; set; }
-        public int Entete { get; set; }
-        public DateTime? SellingDateStart { get; set; }
-        public DateTime? SellingDateEnd { get; set; }
-        public DateTime? ArrivalDateStart { get; set; }
-        public DateTime? ArrivalDateEnd { get; set; }
-        public decimal PU { get; set; }
-        public decimal Remise { get; set; }
-        public int Offre { get; set; }
-        public bool? Cumulative { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_AgenceContrat EnteteNavigation { get; set; }
-        public virtual API_T_Information OffreNavigation { get; set; }
-    }
+public partial class API_T_AgenceOffre
+{
+    public int id { get; set; }
+
+    public string Intitule { get; set; }
+
+    public int Type { get; set; }
+
+    public int Entete { get; set; }
+
+    public DateTime? SellingDateStart { get; set; }
+
+    public DateTime? SellingDateEnd { get; set; }
+
+    public DateTime? ArrivalDateStart { get; set; }
+
+    public DateTime? ArrivalDateEnd { get; set; }
+
+    public decimal PU { get; set; }
+
+    public decimal Remise { get; set; }
+
+    public int Offre { get; set; }
+
+    public bool? Cumulative { get; set; }
+
+    public virtual API_T_AgenceContrat EnteteNavigation { get; set; }
+
+    public virtual API_T_Information OffreNavigation { get; set; }
 }

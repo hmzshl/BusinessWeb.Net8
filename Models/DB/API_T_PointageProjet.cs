@@ -3,19 +3,25 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_PointageProjet
-    {
-        public int id { get; set; }
-        public int Journee { get; set; }
-        public int Projet { get; set; }
-        public string CA_Num { get; set; }
-        public int Site { get; set; }
-        public int Responsable { get; set; }
-        public string CT_Num { get; set; }
-        public int Type { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_PointageJournee JourneeNavigation { get; set; }
-    }
+public partial class API_T_PointageProjet
+{
+    public int id { get; set; }
+
+    public int Journee { get; set; }
+
+    public int Projet { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public int Site { get; set; }
+
+    public int Responsable { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public int Type { get; set; }
+
+    public virtual API_T_PointageJournee JourneeNavigation { get; set; }
 }

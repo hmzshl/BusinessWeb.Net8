@@ -3,57 +3,77 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_COMPTEA
 {
-    public partial class F_COMPTEA
-    {
-        public F_COMPTEA()
-        {
-            F_COMPTEAMEDIA = new HashSet<F_COMPTEAMEDIA>();
-            F_COMPTEGA = new HashSet<F_COMPTEGA>();
-            F_COMPTEGBUDGETA = new HashSet<F_COMPTEGBUDGETA>();
-            F_COMPTETF_COMPTEA = new HashSet<F_COMPTET>();
-            F_COMPTETF_COMPTEANavigation = new HashSet<F_COMPTET>();
-            F_CONTACTA = new HashSet<F_CONTACTA>();
-            F_ECRITUREA = new HashSet<F_ECRITUREA>();
-            F_ECRITURER = new HashSet<F_ECRITURER>();
-        }
+    public short N_Analytique { get; set; }
 
-        public short N_Analytique { get; set; }
-        public string CA_Num { get; set; }
-        public byte[] cbCA_Num { get; set; }
-        public string CA_Intitule { get; set; }
-        public short? CA_Type { get; set; }
-        public string CA_Classement { get; set; }
-        public byte[] cbCA_Classement { get; set; }
-        public string CA_Raccourci { get; set; }
-        public byte[] cbCA_Raccourci { get; set; }
-        public short? CA_Report { get; set; }
-        public short? N_Analyse { get; set; }
-        public short? CA_Saut { get; set; }
-        public short? CA_Sommeil { get; set; }
-        public short? CA_Domaine { get; set; }
-        public decimal? CA_Achat { get; set; }
-        public decimal? CA_Vente { get; set; }
-        public int? CO_No { get; set; }
-        public int? cbCO_No { get; set; }
-        public short? CA_Statut { get; set; }
-        public DateTime? CA_DateCreationAffaire { get; set; }
-        public DateTime? CA_DateAcceptAffaire { get; set; }
-        public DateTime? CA_DateDebutAffaire { get; set; }
-        public DateTime? CA_DateFinAffaire { get; set; }
-        public short? CA_ModeFacturation { get; set; }
-        public int cbMarq { get; set; }
+    public string CA_Num { get; set; }
 
-        public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
-        public virtual F_COMPTEABUDGET F_COMPTEABUDGET { get; set; }
-        public virtual ICollection<F_COMPTEAMEDIA> F_COMPTEAMEDIA { get; set; }
-        public virtual ICollection<F_COMPTEGA> F_COMPTEGA { get; set; }
-        public virtual ICollection<F_COMPTEGBUDGETA> F_COMPTEGBUDGETA { get; set; }
-        public virtual ICollection<F_COMPTET> F_COMPTETF_COMPTEA { get; set; }
-        public virtual ICollection<F_COMPTET> F_COMPTETF_COMPTEANavigation { get; set; }
-        public virtual ICollection<F_CONTACTA> F_CONTACTA { get; set; }
-        public virtual ICollection<F_ECRITUREA> F_ECRITUREA { get; set; }
-        public virtual ICollection<F_ECRITURER> F_ECRITURER { get; set; }
-    }
+    public byte[] cbCA_Num { get; set; }
+
+    public string CA_Intitule { get; set; }
+
+    public short? CA_Type { get; set; }
+
+    public string CA_Classement { get; set; }
+
+    public byte[] cbCA_Classement { get; set; }
+
+    public string CA_Raccourci { get; set; }
+
+    public byte[] cbCA_Raccourci { get; set; }
+
+    public short? CA_Report { get; set; }
+
+    public short? N_Analyse { get; set; }
+
+    public short? CA_Saut { get; set; }
+
+    public short? CA_Sommeil { get; set; }
+
+    public short? CA_Domaine { get; set; }
+
+    public decimal? CA_Achat { get; set; }
+
+    public decimal? CA_Vente { get; set; }
+
+    public int? CO_No { get; set; }
+
+    public int? cbCO_No { get; set; }
+
+    public short? CA_Statut { get; set; }
+
+    public DateTime? CA_DateCreationAffaire { get; set; }
+
+    public DateTime? CA_DateAcceptAffaire { get; set; }
+
+    public DateTime? CA_DateDebutAffaire { get; set; }
+
+    public DateTime? CA_DateFinAffaire { get; set; }
+
+    public short? CA_ModeFacturation { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public virtual F_COMPTEABUDGET F_COMPTEABUDGET { get; set; }
+
+    public virtual ICollection<F_COMPTEAMEDIA> F_COMPTEAMEDIA { get; set; } = new List<F_COMPTEAMEDIA>();
+
+    public virtual ICollection<F_COMPTEGA> F_COMPTEGA { get; set; } = new List<F_COMPTEGA>();
+
+    public virtual ICollection<F_COMPTEGBUDGETA> F_COMPTEGBUDGETA { get; set; } = new List<F_COMPTEGBUDGETA>();
+
+    public virtual ICollection<F_COMPTET> F_COMPTETF_COMPTEA { get; set; } = new List<F_COMPTET>();
+
+    public virtual ICollection<F_COMPTET> F_COMPTETF_COMPTEANavigation { get; set; } = new List<F_COMPTET>();
+
+    public virtual ICollection<F_CONTACTA> F_CONTACTA { get; set; } = new List<F_CONTACTA>();
+
+    public virtual ICollection<F_ECRITUREA> F_ECRITUREA { get; set; } = new List<F_ECRITUREA>();
+
+    public virtual ICollection<F_ECRITURER> F_ECRITURER { get; set; } = new List<F_ECRITURER>();
+
+    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
 }

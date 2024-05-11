@@ -3,28 +3,31 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_MODELE
 {
-    public partial class F_MODELE
-    {
-        public F_MODELE()
-        {
-            F_ARTMODELE = new HashSet<F_ARTMODELE>();
-            F_FAMMODELE = new HashSet<F_FAMMODELE>();
-        }
+    public int? MO_No { get; set; }
 
-        public int? MO_No { get; set; }
-        public string MO_Intitule { get; set; }
-        public byte[] cbMO_Intitule { get; set; }
-        public string MO_Calcul { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public string MO_Intitule { get; set; }
 
-        public virtual ICollection<F_ARTMODELE> F_ARTMODELE { get; set; }
-        public virtual ICollection<F_FAMMODELE> F_FAMMODELE { get; set; }
-    }
+    public byte[] cbMO_Intitule { get; set; }
+
+    public string MO_Calcul { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual ICollection<F_ARTMODELE> F_ARTMODELE { get; set; } = new List<F_ARTMODELE>();
+
+    public virtual ICollection<F_FAMMODELE> F_FAMMODELE { get; set; } = new List<F_FAMMODELE>();
 }

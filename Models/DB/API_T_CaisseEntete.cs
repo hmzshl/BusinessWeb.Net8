@@ -3,36 +3,49 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_CaisseEntete
 {
-    public partial class API_T_CaisseEntete
-    {
-        public API_T_CaisseEntete()
-        {
-            API_T_CaisseLigne = new HashSet<API_T_CaisseLigne>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public DateTime? Date { get; set; }
-        public string Numero { get; set; }
-        public string Libelle { get; set; }
-        public string CT_Num { get; set; }
-        public string CA_Num { get; set; }
-        public int Personnel { get; set; }
-        public int Materiel { get; set; }
-        public string MontantLettre { get; set; }
-        public int Type { get; set; }
-        public int Caisse { get; set; }
-        public decimal Montant { get; set; }
-        public int Site { get; set; }
-        public int Projet { get; set; }
-        public int Sense { get; set; }
-        public int Affectation { get; set; }
-        public int Representant { get; set; }
-        public string Remarque { get; set; }
-        public string Reference { get; set; }
+    public DateTime? Date { get; set; }
 
-        public virtual API_T_Caisse CaisseNavigation { get; set; }
-        public virtual ICollection<API_T_CaisseLigne> API_T_CaisseLigne { get; set; }
-    }
+    public string Numero { get; set; }
+
+    public string Libelle { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public int Personnel { get; set; }
+
+    public int Materiel { get; set; }
+
+    public string MontantLettre { get; set; }
+
+    public int Type { get; set; }
+
+    public int Caisse { get; set; }
+
+    public decimal Montant { get; set; }
+
+    public int Site { get; set; }
+
+    public int Projet { get; set; }
+
+    public int Sense { get; set; }
+
+    public int Affectation { get; set; }
+
+    public int Representant { get; set; }
+
+    public string Remarque { get; set; }
+
+    public string Reference { get; set; }
+
+    public virtual ICollection<API_T_CaisseLigne> API_T_CaisseLigne { get; set; } = new List<API_T_CaisseLigne>();
+
+    public virtual API_T_Caisse CaisseNavigation { get; set; }
 }

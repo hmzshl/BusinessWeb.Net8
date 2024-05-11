@@ -3,27 +3,43 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_CYCLECONS
 {
-    public partial class F_CYCLECONS
-    {
-        public string CY_Num { get; set; }
-        public byte[] cbCY_Num { get; set; }
-        public short? CC_Exercice { get; set; }
-        public string CO_Num { get; set; }
-        public byte[] cbCO_Num { get; set; }
-        public string CC_Reviseur { get; set; }
-        public DateTime? CC_DateRevis { get; set; }
-        public string CC_Controleur { get; set; }
-        public DateTime? CC_DateControl { get; set; }
-        public string CC_Commentaire { get; set; }
-        public short? CC_Annexe { get; set; }
-        public short? CC_Reponse { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
-    }
+    public string CY_Num { get; set; }
+
+    public byte[] cbCY_Num { get; set; }
+
+    public short? CC_Exercice { get; set; }
+
+    public string CO_Num { get; set; }
+
+    public byte[] cbCO_Num { get; set; }
+
+    public string CC_Reviseur { get; set; }
+
+    public DateTime? CC_DateRevis { get; set; }
+
+    public string CC_Controleur { get; set; }
+
+    public DateTime? CC_DateControl { get; set; }
+
+    public string CC_Commentaire { get; set; }
+
+    public short? CC_Annexe { get; set; }
+
+    public short? CC_Reponse { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 }

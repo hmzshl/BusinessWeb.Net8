@@ -3,13 +3,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_ARRONDI
 {
-    public partial class P_ARRONDI
-    {
-        public decimal? AR_Valeur { get; set; }
-        public short? AR_Type { get; set; }
-        public short? cbIndice { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public decimal? AR_Valeur { get; set; }
+
+    public short? AR_Type { get; set; }
+
+    public short? cbIndice { get; set; }
+
+    public int cbMarq { get; set; }
 }

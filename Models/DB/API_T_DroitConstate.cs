@@ -3,19 +3,25 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_DroitConstate
-    {
-        public int id { get; set; }
-        public int Projet { get; set; }
-        public DateTime? Date { get; set; }
-        public DateTime? DatePaiement { get; set; }
-        public int? EB_No { get; set; }
-        public decimal? PaiementP { get; set; }
-        public decimal? Montant { get; set; }
-        public string Fichier { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_Projet ProjetNavigation { get; set; }
-    }
+public partial class API_T_DroitConstate
+{
+    public int id { get; set; }
+
+    public int Projet { get; set; }
+
+    public DateTime? Date { get; set; }
+
+    public DateTime? DatePaiement { get; set; }
+
+    public int? EB_No { get; set; }
+
+    public decimal? PaiementP { get; set; }
+
+    public decimal? Montant { get; set; }
+
+    public string Fichier { get; set; }
+
+    public virtual API_T_Projet ProjetNavigation { get; set; }
 }

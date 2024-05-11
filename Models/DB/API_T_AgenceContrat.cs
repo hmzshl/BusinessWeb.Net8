@@ -3,45 +3,63 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_AgenceContrat
 {
-    public partial class API_T_AgenceContrat
-    {
-        public API_T_AgenceContrat()
-        {
-            API_T_AgenceContratDate = new HashSet<API_T_AgenceContratDate>();
-            API_T_AgenceContratLigne = new HashSet<API_T_AgenceContratLigne>();
-            API_T_AgenceOffre = new HashSet<API_T_AgenceOffre>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public DateTime? Date { get; set; }
-        public DateTime? DateDebut { get; set; }
-        public DateTime? DateFin { get; set; }
-        public int Tiers { get; set; }
-        public string CT_Num { get; set; }
-        public int Statut { get; set; }
-        public int Devise { get; set; }
-        public decimal Taux { get; set; }
-        public string Piece { get; set; }
-        public string Libelle { get; set; }
-        public string Fichier { get; set; }
-        public int Type { get; set; }
-        public string Reference { get; set; }
-        public int KidAgeEnd { get; set; }
-        public int Regime { get; set; }
-        public int InfantStart { get; set; }
-        public int InfantEnd { get; set; }
-        public int ChildStart { get; set; }
-        public int ChildEnd { get; set; }
-        public int AdultStart { get; set; }
-        public decimal RemiseInfant { get; set; }
-        public decimal RemiseChild { get; set; }
-        public decimal Tax { get; set; }
+    public DateTime? Date { get; set; }
 
-        public virtual F_COMPTET TiersNavigation { get; set; }
-        public virtual ICollection<API_T_AgenceContratDate> API_T_AgenceContratDate { get; set; }
-        public virtual ICollection<API_T_AgenceContratLigne> API_T_AgenceContratLigne { get; set; }
-        public virtual ICollection<API_T_AgenceOffre> API_T_AgenceOffre { get; set; }
-    }
+    public DateTime? DateDebut { get; set; }
+
+    public DateTime? DateFin { get; set; }
+
+    public int Tiers { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public int Statut { get; set; }
+
+    public int Devise { get; set; }
+
+    public decimal Taux { get; set; }
+
+    public string Piece { get; set; }
+
+    public string Libelle { get; set; }
+
+    public string Fichier { get; set; }
+
+    public int Type { get; set; }
+
+    public string Reference { get; set; }
+
+    public int KidAgeEnd { get; set; }
+
+    public int Regime { get; set; }
+
+    public int InfantStart { get; set; }
+
+    public int InfantEnd { get; set; }
+
+    public int ChildStart { get; set; }
+
+    public int ChildEnd { get; set; }
+
+    public int AdultStart { get; set; }
+
+    public decimal RemiseInfant { get; set; }
+
+    public decimal RemiseChild { get; set; }
+
+    public decimal Tax { get; set; }
+
+    public virtual ICollection<API_T_AgenceContratDate> API_T_AgenceContratDate { get; set; } = new List<API_T_AgenceContratDate>();
+
+    public virtual ICollection<API_T_AgenceContratLigne> API_T_AgenceContratLigne { get; set; } = new List<API_T_AgenceContratLigne>();
+
+    public virtual ICollection<API_T_AgenceOffre> API_T_AgenceOffre { get; set; } = new List<API_T_AgenceOffre>();
+
+    public virtual F_COMPTET TiersNavigation { get; set; }
 }

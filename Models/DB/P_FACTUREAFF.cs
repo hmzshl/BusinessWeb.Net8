@@ -3,214 +3,417 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_FACTUREAFF
 {
-    public partial class P_FACTUREAFF
-    {
-        public short? FA_ListeFact01 { get; set; }
-        public short? FA_ListeFact02 { get; set; }
-        public short? FA_ListeFact03 { get; set; }
-        public short? FA_ListeFact04 { get; set; }
-        public short? FA_ListeFact05 { get; set; }
-        public short? FA_ListeFact06 { get; set; }
-        public short? FA_ListeFact07 { get; set; }
-        public short? FA_ListeFact08 { get; set; }
-        public short? FA_ListeFact09 { get; set; }
-        public short? FA_ListeFact10 { get; set; }
-        public short? FA_ListeFact11 { get; set; }
-        public short? FA_ListeFact12 { get; set; }
-        public short? FA_ListeFact13 { get; set; }
-        public short? FA_ListeFact14 { get; set; }
-        public short? FA_ListeFact15 { get; set; }
-        public short? FA_ListeFact16 { get; set; }
-        public short? FA_ListeFact17 { get; set; }
-        public short? FA_ListeFact18 { get; set; }
-        public short? FA_ListeFact19 { get; set; }
-        public short? FA_ListeFact20 { get; set; }
-        public short? FA_ListeFact21 { get; set; }
-        public short? FA_ListeFact22 { get; set; }
-        public short? FA_ListeFact23 { get; set; }
-        public short? FA_ListeFact24 { get; set; }
-        public short? FA_ListeFact25 { get; set; }
-        public short? FA_ListeFact26 { get; set; }
-        public short? FA_ListeFact27 { get; set; }
-        public short? FA_ListeFact28 { get; set; }
-        public short? FA_ListeFact29 { get; set; }
-        public short? FA_ListeFact30 { get; set; }
-        public short? FA_ListeFact31 { get; set; }
-        public short? FA_ListeFact32 { get; set; }
-        public short? FA_ListeFact33 { get; set; }
-        public short? FA_ListeFact34 { get; set; }
-        public short? FA_ListeFact35 { get; set; }
-        public short? FA_ListeFact36 { get; set; }
-        public short? FA_ListeFact37 { get; set; }
-        public short? FA_ListeFact38 { get; set; }
-        public short? FA_ListeFact39 { get; set; }
-        public short? FA_ListeFact40 { get; set; }
-        public short? FA_ListeFact41 { get; set; }
-        public short? FA_ListeFact42 { get; set; }
-        public short? FA_ListeFact43 { get; set; }
-        public short? FA_ListeFact44 { get; set; }
-        public short? FA_ListeFact45 { get; set; }
-        public short? FA_ListeFact46 { get; set; }
-        public short? FA_ListeFact47 { get; set; }
-        public short? FA_ListeFact48 { get; set; }
-        public short? FA_ListeFact49 { get; set; }
-        public short? FA_ListeFact50 { get; set; }
-        public short? FA_ListeFact51 { get; set; }
-        public short? FA_ListeFact52 { get; set; }
-        public short? FA_ListeFact53 { get; set; }
-        public short? FA_ListeFact54 { get; set; }
-        public short? FA_ListeFact55 { get; set; }
-        public short? FA_ListeFact56 { get; set; }
-        public short? FA_ListeFact57 { get; set; }
-        public short? FA_ListeFact58 { get; set; }
-        public short? FA_ListeFact59 { get; set; }
-        public short? FA_ListeFact60 { get; set; }
-        public short? FA_ListeFact61 { get; set; }
-        public short? FA_ListeFact62 { get; set; }
-        public short? FA_ListeFact63 { get; set; }
-        public short? FA_ListeFact64 { get; set; }
-        public short? FA_ListeFact65 { get; set; }
-        public short? FA_ListeFact66 { get; set; }
-        public short? FA_ListeFact67 { get; set; }
-        public short? FA_ListeFact68 { get; set; }
-        public short? FA_ListeFact69 { get; set; }
-        public short? FA_ListeFact70 { get; set; }
-        public short? FA_ListeFact71 { get; set; }
-        public short? FA_ListeFact72 { get; set; }
-        public short? FA_ListeFact73 { get; set; }
-        public short? FA_ListeFact74 { get; set; }
-        public short? FA_ListeFact75 { get; set; }
-        public short? FA_ListeFact76 { get; set; }
-        public short? FA_ListeFact77 { get; set; }
-        public short? FA_ListeFact78 { get; set; }
-        public short? FA_ListeFact79 { get; set; }
-        public short? FA_ListeFact80 { get; set; }
-        public short? FA_ListeFact81 { get; set; }
-        public short? FA_ListeFact82 { get; set; }
-        public short? FA_ListeFact83 { get; set; }
-        public short? FA_ListeFact84 { get; set; }
-        public short? FA_ListeFact85 { get; set; }
-        public short? FA_ListeFact86 { get; set; }
-        public short? FA_ListeFact87 { get; set; }
-        public short? FA_ListeFact88 { get; set; }
-        public short? FA_ListeFact89 { get; set; }
-        public short? FA_ListeFact90 { get; set; }
-        public short? FA_ListeFact91 { get; set; }
-        public short? FA_ListeFact92 { get; set; }
-        public short? FA_ListeFact93 { get; set; }
-        public short? FA_ListeFact94 { get; set; }
-        public short? FA_ListeFact95 { get; set; }
-        public short? FA_ListeFact96 { get; set; }
-        public short? FA_DetailFact01 { get; set; }
-        public short? FA_DetailFact02 { get; set; }
-        public short? FA_DetailFact03 { get; set; }
-        public short? FA_DetailFact04 { get; set; }
-        public short? FA_DetailFact05 { get; set; }
-        public short? FA_DetailFact06 { get; set; }
-        public short? FA_DetailFact07 { get; set; }
-        public short? FA_DetailFact08 { get; set; }
-        public short? FA_DetailFact09 { get; set; }
-        public short? FA_DetailFact10 { get; set; }
-        public short? FA_DetailFact11 { get; set; }
-        public short? FA_DetailFact12 { get; set; }
-        public short? FA_DetailFact13 { get; set; }
-        public short? FA_DetailFact14 { get; set; }
-        public short? FA_DetailFact15 { get; set; }
-        public short? FA_DetailFact16 { get; set; }
-        public short? FA_DetailFact17 { get; set; }
-        public short? FA_DetailFact18 { get; set; }
-        public short? FA_DetailFact19 { get; set; }
-        public short? FA_DetailFact20 { get; set; }
-        public short? FA_DetailFact21 { get; set; }
-        public short? FA_DetailFact22 { get; set; }
-        public short? FA_DetailFact23 { get; set; }
-        public short? FA_DetailFact24 { get; set; }
-        public short? FA_DetailFact25 { get; set; }
-        public short? FA_DetailFact26 { get; set; }
-        public short? FA_DetailFact27 { get; set; }
-        public short? FA_DetailFact28 { get; set; }
-        public short? FA_DetailFact29 { get; set; }
-        public short? FA_DetailFact30 { get; set; }
-        public short? FA_DetailFact31 { get; set; }
-        public short? FA_DetailFact32 { get; set; }
-        public short? FA_DetailFact33 { get; set; }
-        public short? FA_DetailFact34 { get; set; }
-        public short? FA_DetailFact35 { get; set; }
-        public short? FA_DetailFact36 { get; set; }
-        public short? FA_DetailFact37 { get; set; }
-        public short? FA_DetailFact38 { get; set; }
-        public short? FA_DetailFact39 { get; set; }
-        public short? FA_DetailFact40 { get; set; }
-        public short? FA_DetailFact41 { get; set; }
-        public short? FA_DetailFact42 { get; set; }
-        public short? FA_DetailFact43 { get; set; }
-        public short? FA_DetailFact44 { get; set; }
-        public short? FA_DetailFact45 { get; set; }
-        public short? FA_DetailFact46 { get; set; }
-        public short? FA_DetailFact47 { get; set; }
-        public short? FA_DetailFact48 { get; set; }
-        public short? FA_DetailFact49 { get; set; }
-        public short? FA_DetailFact50 { get; set; }
-        public short? FA_DetailFact51 { get; set; }
-        public short? FA_DetailFact52 { get; set; }
-        public short? FA_DetailFact53 { get; set; }
-        public short? FA_DetailFact54 { get; set; }
-        public short? FA_DetailFact55 { get; set; }
-        public short? FA_DetailFact56 { get; set; }
-        public short? FA_DetailFact57 { get; set; }
-        public short? FA_DetailFact58 { get; set; }
-        public short? FA_DetailFact59 { get; set; }
-        public short? FA_DetailFact60 { get; set; }
-        public short? FA_DetailFact61 { get; set; }
-        public short? FA_DetailFact62 { get; set; }
-        public short? FA_DetailFact63 { get; set; }
-        public short? FA_DetailFact64 { get; set; }
-        public short? FA_DetailFact65 { get; set; }
-        public short? FA_DetailFact66 { get; set; }
-        public short? FA_DetailFact67 { get; set; }
-        public short? FA_DetailFact68 { get; set; }
-        public short? FA_DetailFact69 { get; set; }
-        public short? FA_DetailFact70 { get; set; }
-        public short? FA_DetailFact71 { get; set; }
-        public short? FA_DetailFact72 { get; set; }
-        public short? FA_DetailFact73 { get; set; }
-        public short? FA_DetailFact74 { get; set; }
-        public short? FA_DetailFact75 { get; set; }
-        public short? FA_DetailFact76 { get; set; }
-        public short? FA_DetailFact77 { get; set; }
-        public short? FA_DetailFact78 { get; set; }
-        public short? FA_DetailFact79 { get; set; }
-        public short? FA_DetailFact80 { get; set; }
-        public short? FA_DetailFact81 { get; set; }
-        public short? FA_DetailFact82 { get; set; }
-        public short? FA_DetailFact83 { get; set; }
-        public short? FA_DetailFact84 { get; set; }
-        public short? FA_DetailFact85 { get; set; }
-        public short? FA_DetailFact86 { get; set; }
-        public short? FA_DetailFact87 { get; set; }
-        public short? FA_DetailFact88 { get; set; }
-        public short? FA_DetailFact89 { get; set; }
-        public short? FA_DetailFact90 { get; set; }
-        public short? FA_DetailFact91 { get; set; }
-        public short? FA_DetailFact92 { get; set; }
-        public short? FA_DetailFact93 { get; set; }
-        public short? FA_DetailFact94 { get; set; }
-        public short? FA_DetailFact95 { get; set; }
-        public short? FA_DetailFact96 { get; set; }
-        public short? FA_DetailFact97 { get; set; }
-        public short? FA_DetailFact98 { get; set; }
-        public short? FA_DetailFact99 { get; set; }
-        public short? FA_DetailFact100 { get; set; }
-        public short? FA_DetailFact101 { get; set; }
-        public short? FA_DetailFact102 { get; set; }
-        public short? FA_DetailFact103 { get; set; }
-        public short? FA_DetailFact104 { get; set; }
-        public short? FA_DetailFact105 { get; set; }
-        public short? FA_DetailFact106 { get; set; }
-        public short? FA_DetailFact107 { get; set; }
-        public short? FA_DetailFact108 { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public short? FA_ListeFact01 { get; set; }
+
+    public short? FA_ListeFact02 { get; set; }
+
+    public short? FA_ListeFact03 { get; set; }
+
+    public short? FA_ListeFact04 { get; set; }
+
+    public short? FA_ListeFact05 { get; set; }
+
+    public short? FA_ListeFact06 { get; set; }
+
+    public short? FA_ListeFact07 { get; set; }
+
+    public short? FA_ListeFact08 { get; set; }
+
+    public short? FA_ListeFact09 { get; set; }
+
+    public short? FA_ListeFact10 { get; set; }
+
+    public short? FA_ListeFact11 { get; set; }
+
+    public short? FA_ListeFact12 { get; set; }
+
+    public short? FA_ListeFact13 { get; set; }
+
+    public short? FA_ListeFact14 { get; set; }
+
+    public short? FA_ListeFact15 { get; set; }
+
+    public short? FA_ListeFact16 { get; set; }
+
+    public short? FA_ListeFact17 { get; set; }
+
+    public short? FA_ListeFact18 { get; set; }
+
+    public short? FA_ListeFact19 { get; set; }
+
+    public short? FA_ListeFact20 { get; set; }
+
+    public short? FA_ListeFact21 { get; set; }
+
+    public short? FA_ListeFact22 { get; set; }
+
+    public short? FA_ListeFact23 { get; set; }
+
+    public short? FA_ListeFact24 { get; set; }
+
+    public short? FA_ListeFact25 { get; set; }
+
+    public short? FA_ListeFact26 { get; set; }
+
+    public short? FA_ListeFact27 { get; set; }
+
+    public short? FA_ListeFact28 { get; set; }
+
+    public short? FA_ListeFact29 { get; set; }
+
+    public short? FA_ListeFact30 { get; set; }
+
+    public short? FA_ListeFact31 { get; set; }
+
+    public short? FA_ListeFact32 { get; set; }
+
+    public short? FA_ListeFact33 { get; set; }
+
+    public short? FA_ListeFact34 { get; set; }
+
+    public short? FA_ListeFact35 { get; set; }
+
+    public short? FA_ListeFact36 { get; set; }
+
+    public short? FA_ListeFact37 { get; set; }
+
+    public short? FA_ListeFact38 { get; set; }
+
+    public short? FA_ListeFact39 { get; set; }
+
+    public short? FA_ListeFact40 { get; set; }
+
+    public short? FA_ListeFact41 { get; set; }
+
+    public short? FA_ListeFact42 { get; set; }
+
+    public short? FA_ListeFact43 { get; set; }
+
+    public short? FA_ListeFact44 { get; set; }
+
+    public short? FA_ListeFact45 { get; set; }
+
+    public short? FA_ListeFact46 { get; set; }
+
+    public short? FA_ListeFact47 { get; set; }
+
+    public short? FA_ListeFact48 { get; set; }
+
+    public short? FA_ListeFact49 { get; set; }
+
+    public short? FA_ListeFact50 { get; set; }
+
+    public short? FA_ListeFact51 { get; set; }
+
+    public short? FA_ListeFact52 { get; set; }
+
+    public short? FA_ListeFact53 { get; set; }
+
+    public short? FA_ListeFact54 { get; set; }
+
+    public short? FA_ListeFact55 { get; set; }
+
+    public short? FA_ListeFact56 { get; set; }
+
+    public short? FA_ListeFact57 { get; set; }
+
+    public short? FA_ListeFact58 { get; set; }
+
+    public short? FA_ListeFact59 { get; set; }
+
+    public short? FA_ListeFact60 { get; set; }
+
+    public short? FA_ListeFact61 { get; set; }
+
+    public short? FA_ListeFact62 { get; set; }
+
+    public short? FA_ListeFact63 { get; set; }
+
+    public short? FA_ListeFact64 { get; set; }
+
+    public short? FA_ListeFact65 { get; set; }
+
+    public short? FA_ListeFact66 { get; set; }
+
+    public short? FA_ListeFact67 { get; set; }
+
+    public short? FA_ListeFact68 { get; set; }
+
+    public short? FA_ListeFact69 { get; set; }
+
+    public short? FA_ListeFact70 { get; set; }
+
+    public short? FA_ListeFact71 { get; set; }
+
+    public short? FA_ListeFact72 { get; set; }
+
+    public short? FA_ListeFact73 { get; set; }
+
+    public short? FA_ListeFact74 { get; set; }
+
+    public short? FA_ListeFact75 { get; set; }
+
+    public short? FA_ListeFact76 { get; set; }
+
+    public short? FA_ListeFact77 { get; set; }
+
+    public short? FA_ListeFact78 { get; set; }
+
+    public short? FA_ListeFact79 { get; set; }
+
+    public short? FA_ListeFact80 { get; set; }
+
+    public short? FA_ListeFact81 { get; set; }
+
+    public short? FA_ListeFact82 { get; set; }
+
+    public short? FA_ListeFact83 { get; set; }
+
+    public short? FA_ListeFact84 { get; set; }
+
+    public short? FA_ListeFact85 { get; set; }
+
+    public short? FA_ListeFact86 { get; set; }
+
+    public short? FA_ListeFact87 { get; set; }
+
+    public short? FA_ListeFact88 { get; set; }
+
+    public short? FA_ListeFact89 { get; set; }
+
+    public short? FA_ListeFact90 { get; set; }
+
+    public short? FA_ListeFact91 { get; set; }
+
+    public short? FA_ListeFact92 { get; set; }
+
+    public short? FA_ListeFact93 { get; set; }
+
+    public short? FA_ListeFact94 { get; set; }
+
+    public short? FA_ListeFact95 { get; set; }
+
+    public short? FA_ListeFact96 { get; set; }
+
+    public short? FA_DetailFact01 { get; set; }
+
+    public short? FA_DetailFact02 { get; set; }
+
+    public short? FA_DetailFact03 { get; set; }
+
+    public short? FA_DetailFact04 { get; set; }
+
+    public short? FA_DetailFact05 { get; set; }
+
+    public short? FA_DetailFact06 { get; set; }
+
+    public short? FA_DetailFact07 { get; set; }
+
+    public short? FA_DetailFact08 { get; set; }
+
+    public short? FA_DetailFact09 { get; set; }
+
+    public short? FA_DetailFact10 { get; set; }
+
+    public short? FA_DetailFact11 { get; set; }
+
+    public short? FA_DetailFact12 { get; set; }
+
+    public short? FA_DetailFact13 { get; set; }
+
+    public short? FA_DetailFact14 { get; set; }
+
+    public short? FA_DetailFact15 { get; set; }
+
+    public short? FA_DetailFact16 { get; set; }
+
+    public short? FA_DetailFact17 { get; set; }
+
+    public short? FA_DetailFact18 { get; set; }
+
+    public short? FA_DetailFact19 { get; set; }
+
+    public short? FA_DetailFact20 { get; set; }
+
+    public short? FA_DetailFact21 { get; set; }
+
+    public short? FA_DetailFact22 { get; set; }
+
+    public short? FA_DetailFact23 { get; set; }
+
+    public short? FA_DetailFact24 { get; set; }
+
+    public short? FA_DetailFact25 { get; set; }
+
+    public short? FA_DetailFact26 { get; set; }
+
+    public short? FA_DetailFact27 { get; set; }
+
+    public short? FA_DetailFact28 { get; set; }
+
+    public short? FA_DetailFact29 { get; set; }
+
+    public short? FA_DetailFact30 { get; set; }
+
+    public short? FA_DetailFact31 { get; set; }
+
+    public short? FA_DetailFact32 { get; set; }
+
+    public short? FA_DetailFact33 { get; set; }
+
+    public short? FA_DetailFact34 { get; set; }
+
+    public short? FA_DetailFact35 { get; set; }
+
+    public short? FA_DetailFact36 { get; set; }
+
+    public short? FA_DetailFact37 { get; set; }
+
+    public short? FA_DetailFact38 { get; set; }
+
+    public short? FA_DetailFact39 { get; set; }
+
+    public short? FA_DetailFact40 { get; set; }
+
+    public short? FA_DetailFact41 { get; set; }
+
+    public short? FA_DetailFact42 { get; set; }
+
+    public short? FA_DetailFact43 { get; set; }
+
+    public short? FA_DetailFact44 { get; set; }
+
+    public short? FA_DetailFact45 { get; set; }
+
+    public short? FA_DetailFact46 { get; set; }
+
+    public short? FA_DetailFact47 { get; set; }
+
+    public short? FA_DetailFact48 { get; set; }
+
+    public short? FA_DetailFact49 { get; set; }
+
+    public short? FA_DetailFact50 { get; set; }
+
+    public short? FA_DetailFact51 { get; set; }
+
+    public short? FA_DetailFact52 { get; set; }
+
+    public short? FA_DetailFact53 { get; set; }
+
+    public short? FA_DetailFact54 { get; set; }
+
+    public short? FA_DetailFact55 { get; set; }
+
+    public short? FA_DetailFact56 { get; set; }
+
+    public short? FA_DetailFact57 { get; set; }
+
+    public short? FA_DetailFact58 { get; set; }
+
+    public short? FA_DetailFact59 { get; set; }
+
+    public short? FA_DetailFact60 { get; set; }
+
+    public short? FA_DetailFact61 { get; set; }
+
+    public short? FA_DetailFact62 { get; set; }
+
+    public short? FA_DetailFact63 { get; set; }
+
+    public short? FA_DetailFact64 { get; set; }
+
+    public short? FA_DetailFact65 { get; set; }
+
+    public short? FA_DetailFact66 { get; set; }
+
+    public short? FA_DetailFact67 { get; set; }
+
+    public short? FA_DetailFact68 { get; set; }
+
+    public short? FA_DetailFact69 { get; set; }
+
+    public short? FA_DetailFact70 { get; set; }
+
+    public short? FA_DetailFact71 { get; set; }
+
+    public short? FA_DetailFact72 { get; set; }
+
+    public short? FA_DetailFact73 { get; set; }
+
+    public short? FA_DetailFact74 { get; set; }
+
+    public short? FA_DetailFact75 { get; set; }
+
+    public short? FA_DetailFact76 { get; set; }
+
+    public short? FA_DetailFact77 { get; set; }
+
+    public short? FA_DetailFact78 { get; set; }
+
+    public short? FA_DetailFact79 { get; set; }
+
+    public short? FA_DetailFact80 { get; set; }
+
+    public short? FA_DetailFact81 { get; set; }
+
+    public short? FA_DetailFact82 { get; set; }
+
+    public short? FA_DetailFact83 { get; set; }
+
+    public short? FA_DetailFact84 { get; set; }
+
+    public short? FA_DetailFact85 { get; set; }
+
+    public short? FA_DetailFact86 { get; set; }
+
+    public short? FA_DetailFact87 { get; set; }
+
+    public short? FA_DetailFact88 { get; set; }
+
+    public short? FA_DetailFact89 { get; set; }
+
+    public short? FA_DetailFact90 { get; set; }
+
+    public short? FA_DetailFact91 { get; set; }
+
+    public short? FA_DetailFact92 { get; set; }
+
+    public short? FA_DetailFact93 { get; set; }
+
+    public short? FA_DetailFact94 { get; set; }
+
+    public short? FA_DetailFact95 { get; set; }
+
+    public short? FA_DetailFact96 { get; set; }
+
+    public short? FA_DetailFact97 { get; set; }
+
+    public short? FA_DetailFact98 { get; set; }
+
+    public short? FA_DetailFact99 { get; set; }
+
+    public short? FA_DetailFact100 { get; set; }
+
+    public short? FA_DetailFact101 { get; set; }
+
+    public short? FA_DetailFact102 { get; set; }
+
+    public short? FA_DetailFact103 { get; set; }
+
+    public short? FA_DetailFact104 { get; set; }
+
+    public short? FA_DetailFact105 { get; set; }
+
+    public short? FA_DetailFact106 { get; set; }
+
+    public short? FA_DetailFact107 { get; set; }
+
+    public short? FA_DetailFact108 { get; set; }
+
+    public int cbMarq { get; set; }
 }

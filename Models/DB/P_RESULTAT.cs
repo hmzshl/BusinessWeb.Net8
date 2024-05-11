@@ -3,15 +3,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_RESULTAT
 {
-    public partial class P_RESULTAT
-    {
-        public short? R_Genere { get; set; }
-        public string CG_NumResultat { get; set; }
-        public string CG_NumImposition { get; set; }
-        public string CG_NumContrepartie { get; set; }
-        public short? cbIndice { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public short? R_Genere { get; set; }
+
+    public string CG_NumResultat { get; set; }
+
+    public string CG_NumImposition { get; set; }
+
+    public string CG_NumContrepartie { get; set; }
+
+    public short? cbIndice { get; set; }
+
+    public int cbMarq { get; set; }
 }

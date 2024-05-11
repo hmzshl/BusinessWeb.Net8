@@ -3,28 +3,43 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_Caution
-    {
-        public int id { get; set; }
-        public int EB_No { get; set; }
-        public int Projet { get; set; }
-        public int? Type { get; set; }
-        public DateTime? Date { get; set; }
-        public decimal? Taux { get; set; }
-        public decimal? MontantMarche { get; set; }
-        public decimal? Montant { get; set; }
-        public DateTime? DateRetraitBanque { get; set; }
-        public DateTime? DateRetourBanque { get; set; }
-        public DateTime? DateDepotClient { get; set; }
-        public DateTime? DateAnnulationPrevue { get; set; }
-        public string Reference { get; set; }
-        public string Fichier { get; set; }
-        public decimal? MontantEstime { get; set; }
-        public string Banque { get; set; }
-        public int? Etape { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_Projet ProjetNavigation { get; set; }
-    }
+public partial class API_T_Caution
+{
+    public int id { get; set; }
+
+    public int EB_No { get; set; }
+
+    public int Projet { get; set; }
+
+    public int? Type { get; set; }
+
+    public DateTime? Date { get; set; }
+
+    public decimal? Taux { get; set; }
+
+    public decimal? MontantMarche { get; set; }
+
+    public decimal? Montant { get; set; }
+
+    public DateTime? DateRetraitBanque { get; set; }
+
+    public DateTime? DateRetourBanque { get; set; }
+
+    public DateTime? DateDepotClient { get; set; }
+
+    public DateTime? DateAnnulationPrevue { get; set; }
+
+    public string Reference { get; set; }
+
+    public string Fichier { get; set; }
+
+    public decimal? MontantEstime { get; set; }
+
+    public string Banque { get; set; }
+
+    public int? Etape { get; set; }
+
+    public virtual API_T_Projet ProjetNavigation { get; set; }
 }

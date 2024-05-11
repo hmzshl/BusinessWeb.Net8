@@ -3,17 +3,23 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_DOSSIERCIAL
 {
-    public partial class P_DOSSIERCIAL
-    {
-        public string D_RaisonS { get; set; }
-        public string D_FormatQte { get; set; }
-        public string D_FormatPrix { get; set; }
-        public short? N_DeviseCompte { get; set; }
-        public short? N_DeviseEquival { get; set; }
-        public DateTime? D_ArchivePeriod { get; set; }
-        public short? D_ValiditePeriod { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public string D_RaisonS { get; set; }
+
+    public string D_FormatQte { get; set; }
+
+    public string D_FormatPrix { get; set; }
+
+    public short? N_DeviseCompte { get; set; }
+
+    public short? N_DeviseEquival { get; set; }
+
+    public DateTime? D_ArchivePeriod { get; set; }
+
+    public short? D_ValiditePeriod { get; set; }
+
+    public int cbMarq { get; set; }
 }

@@ -3,20 +3,27 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_COMPTEGNOTE
-    {
-        public string CG_Num { get; set; }
-        public byte[] cbCG_Num { get; set; }
-        public string CG_Note { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_COMPTEG CG_NumNavigation { get; set; }
-    }
+public partial class F_COMPTEGNOTE
+{
+    public string CG_Num { get; set; }
+
+    public byte[] cbCG_Num { get; set; }
+
+    public string CG_Note { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_COMPTEG CG_NumNavigation { get; set; }
 }

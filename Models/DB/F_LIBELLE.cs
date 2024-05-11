@@ -3,19 +3,27 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_LIBELLE
 {
-    public partial class F_LIBELLE
-    {
-        public string LB_Intitule { get; set; }
-        public byte[] cbLB_Intitule { get; set; }
-        public string LB_Raccourci { get; set; }
-        public byte[] cbLB_Raccourci { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
-    }
+    public string LB_Intitule { get; set; }
+
+    public byte[] cbLB_Intitule { get; set; }
+
+    public string LB_Raccourci { get; set; }
+
+    public byte[] cbLB_Raccourci { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 }

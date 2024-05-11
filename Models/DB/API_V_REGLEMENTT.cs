@@ -3,24 +3,37 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_V_REGLEMENTT
 {
-    public partial class API_V_REGLEMENTT
-    {
-        public string CT_Num { get; set; }
-        public short? N_Reglement { get; set; }
-        public short? RT_Condition { get; set; }
-        public short? RT_NbJour { get; set; }
-        public short? RT_JourTb01 { get; set; }
-        public short? RT_JourTb02 { get; set; }
-        public short? RT_JourTb03 { get; set; }
-        public short? RT_JourTb04 { get; set; }
-        public short? RT_JourTb05 { get; set; }
-        public short? RT_JourTb06 { get; set; }
-        public short? RT_TRepart { get; set; }
-        public decimal? RT_VRepart { get; set; }
-        public int cbMarq { get; set; }
-        public string CT_Intitule { get; set; }
-        public string R_Intitule { get; set; }
-    }
+    public string CT_Num { get; set; }
+
+    public short? N_Reglement { get; set; }
+
+    public short? RT_Condition { get; set; }
+
+    public short? RT_NbJour { get; set; }
+
+    public short? RT_JourTb01 { get; set; }
+
+    public short? RT_JourTb02 { get; set; }
+
+    public short? RT_JourTb03 { get; set; }
+
+    public short? RT_JourTb04 { get; set; }
+
+    public short? RT_JourTb05 { get; set; }
+
+    public short? RT_JourTb06 { get; set; }
+
+    public short? RT_TRepart { get; set; }
+
+    public decimal? RT_VRepart { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string CT_Intitule { get; set; }
+
+    public string R_Intitule { get; set; }
 }

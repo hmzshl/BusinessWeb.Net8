@@ -3,24 +3,37 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_V_FRAISENTETE
 {
-    public partial class API_V_FRAISENTETE
-    {
-        public int id { get; set; }
-        public int Type { get; set; }
-        public string Piece { get; set; }
-        public DateTime? Date { get; set; }
-        public string Libelle { get; set; }
-        public int Beneficiaire { get; set; }
-        public int Materiel { get; set; }
-        public int Projet { get; set; }
-        public int CO_No { get; set; }
-        public string CT_Num { get; set; }
-        public string CA_Num { get; set; }
-        public decimal Montant { get; set; }
-        public string CT_Intitule { get; set; }
-        public string CA_Intitule { get; set; }
-        public string CO_Nom { get; set; }
-    }
+    public int id { get; set; }
+
+    public int Type { get; set; }
+
+    public string Piece { get; set; }
+
+    public DateTime? Date { get; set; }
+
+    public string Libelle { get; set; }
+
+    public int Beneficiaire { get; set; }
+
+    public int Materiel { get; set; }
+
+    public int Projet { get; set; }
+
+    public int CO_No { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public decimal Montant { get; set; }
+
+    public string CT_Intitule { get; set; }
+
+    public string CA_Intitule { get; set; }
+
+    public string CO_Nom { get; set; }
 }

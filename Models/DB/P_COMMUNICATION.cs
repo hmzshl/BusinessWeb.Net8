@@ -3,29 +3,47 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_COMMUNICATION
 {
-    public partial class P_COMMUNICATION
-    {
-        public short? N_CatTarif { get; set; }
-        public short? N_CatCompta { get; set; }
-        public short? CO_SoucheSite { get; set; }
-        public int? DE_No { get; set; }
-        public string AR_RefAttente { get; set; }
-        public string CO_CdeLast { get; set; }
-        public string CO_Modele { get; set; }
-        public short? CO_Accuse { get; set; }
-        public string CO_NomSite { get; set; }
-        public string CO_MotPasseSite { get; set; }
-        public short? N_Condition { get; set; }
-        public short? N_Expedition { get; set; }
-        public short? N_Period { get; set; }
-        public short? CO_Statut { get; set; }
-        public short? CO_Regime { get; set; }
-        public short? CO_Transaction { get; set; }
-        public short? CO_NbFacture { get; set; }
-        public short? CO_Colisage { get; set; }
-        public short? CO_TypeColis { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public short? N_CatTarif { get; set; }
+
+    public short? N_CatCompta { get; set; }
+
+    public short? CO_SoucheSite { get; set; }
+
+    public int? DE_No { get; set; }
+
+    public string AR_RefAttente { get; set; }
+
+    public string CO_CdeLast { get; set; }
+
+    public string CO_Modele { get; set; }
+
+    public short? CO_Accuse { get; set; }
+
+    public string CO_NomSite { get; set; }
+
+    public string CO_MotPasseSite { get; set; }
+
+    public short? N_Condition { get; set; }
+
+    public short? N_Expedition { get; set; }
+
+    public short? N_Period { get; set; }
+
+    public short? CO_Statut { get; set; }
+
+    public short? CO_Regime { get; set; }
+
+    public short? CO_Transaction { get; set; }
+
+    public short? CO_NbFacture { get; set; }
+
+    public short? CO_Colisage { get; set; }
+
+    public short? CO_TypeColis { get; set; }
+
+    public int cbMarq { get; set; }
 }

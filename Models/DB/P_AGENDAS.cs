@@ -3,14 +3,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_AGENDAS
 {
-    public partial class P_AGENDAS
-    {
-        public string A_Intitule { get; set; }
-        public short? A_Fichier { get; set; }
-        public short? A_Indisponible { get; set; }
-        public short? cbIndice { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public string A_Intitule { get; set; }
+
+    public short? A_Fichier { get; set; }
+
+    public short? A_Indisponible { get; set; }
+
+    public short? cbIndice { get; set; }
+
+    public int cbMarq { get; set; }
 }

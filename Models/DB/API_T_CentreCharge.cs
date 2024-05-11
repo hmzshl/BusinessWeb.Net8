@@ -3,15 +3,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_CentreCharge
 {
-    public partial class API_T_CentreCharge
-    {
-        public int id { get; set; }
-        public string Intitule { get; set; }
-        public int? Type { get; set; }
-        public int Periode { get; set; }
-        public decimal Montant { get; set; }
-        public int Cible { get; set; }
-    }
+    public int id { get; set; }
+
+    public string Intitule { get; set; }
+
+    public int? Type { get; set; }
+
+    public int Periode { get; set; }
+
+    public decimal Montant { get; set; }
+
+    public int Cible { get; set; }
 }

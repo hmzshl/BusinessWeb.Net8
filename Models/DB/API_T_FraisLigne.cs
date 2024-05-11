@@ -3,16 +3,19 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_FraisLigne
-    {
-        public int id { get; set; }
-        public int Entete { get; set; }
-        public int Affectation { get; set; }
-        public string Libelle { get; set; }
-        public decimal Montant { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_FraisEntete EnteteNavigation { get; set; }
-    }
+public partial class API_T_FraisLigne
+{
+    public int id { get; set; }
+
+    public int Entete { get; set; }
+
+    public int Affectation { get; set; }
+
+    public string Libelle { get; set; }
+
+    public decimal Montant { get; set; }
+
+    public virtual API_T_FraisEntete EnteteNavigation { get; set; }
 }

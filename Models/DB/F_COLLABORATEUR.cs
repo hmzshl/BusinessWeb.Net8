@@ -3,79 +3,103 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_COLLABORATEUR
 {
-    public partial class F_COLLABORATEUR
-    {
-        public F_COLLABORATEUR()
-        {
-            F_ABOENTETE = new HashSet<F_ABOENTETE>();
-            F_ABOLIGNE = new HashSet<F_ABOLIGNE>();
-            F_BONAPAYERHISTO = new HashSet<F_BONAPAYERHISTO>();
-            F_CAISSECAISSIER = new HashSet<F_CAISSECAISSIER>();
-            F_CAISSEcbCO_NoCaissierNavigation = new HashSet<F_CAISSE>();
-            F_CAISSEcbCO_NoNavigation = new HashSet<F_CAISSE>();
-            F_CLAVIER = new HashSet<F_CLAVIER>();
-            F_COMPTEA = new HashSet<F_COMPTEA>();
-            F_COMPTET = new HashSet<F_COMPTET>();
-            F_CREGLEMENT = new HashSet<F_CREGLEMENT>();
-            F_DOCENTETEcbCO_NoCaissierNavigation = new HashSet<F_DOCENTETE>();
-            F_DOCENTETEcbCO_NoNavigation = new HashSet<F_DOCENTETE>();
-            F_DOCLIGNE = new HashSet<F_DOCLIGNE>();
-            F_DRECOUVREMENT = new HashSet<F_DRECOUVREMENT>();
-            F_LIGNEARCHIVE = new HashSet<F_LIGNEARCHIVE>();
-            F_REPCOM = new HashSet<F_REPCOM>();
-            F_TICKETARCHIVE = new HashSet<F_TICKETARCHIVE>();
-        }
+    public int? CO_No { get; set; }
 
-        public int? CO_No { get; set; }
-        public string CO_Nom { get; set; }
-        public byte[] cbCO_Nom { get; set; }
-        public string CO_Prenom { get; set; }
-        public byte[] cbCO_Prenom { get; set; }
-        public string CO_Fonction { get; set; }
-        public byte[] cbCO_Fonction { get; set; }
-        public string CO_Adresse { get; set; }
-        public string CO_Complement { get; set; }
-        public string CO_CodePostal { get; set; }
-        public string CO_Ville { get; set; }
-        public string CO_CodeRegion { get; set; }
-        public string CO_Pays { get; set; }
-        public string CO_Service { get; set; }
-        public short? CO_Vendeur { get; set; }
-        public short? CO_Caissier { get; set; }
-        public short? CO_Acheteur { get; set; }
-        public string CO_Telephone { get; set; }
-        public string CO_Telecopie { get; set; }
-        public string CO_EMail { get; set; }
-        public short? CO_Receptionnaire { get; set; }
-        public int? PROT_No { get; set; }
-        public int? cbPROT_No { get; set; }
-        public string CO_TelPortable { get; set; }
-        public short? CO_ChargeRecouvr { get; set; }
-        public string CO_Matricule { get; set; }
-        public byte[] cbCO_Matricule { get; set; }
-        public short? CO_Financier { get; set; }
-        public short? CO_Transmission { get; set; }
-        public int cbMarq { get; set; }
+    public string CO_Nom { get; set; }
 
-        public virtual F_PROTECTIONCPTA cbPROT_NoNavigation { get; set; }
-        public virtual ICollection<F_ABOENTETE> F_ABOENTETE { get; set; }
-        public virtual ICollection<F_ABOLIGNE> F_ABOLIGNE { get; set; }
-        public virtual ICollection<F_BONAPAYERHISTO> F_BONAPAYERHISTO { get; set; }
-        public virtual ICollection<F_CAISSECAISSIER> F_CAISSECAISSIER { get; set; }
-        public virtual ICollection<F_CAISSE> F_CAISSEcbCO_NoCaissierNavigation { get; set; }
-        public virtual ICollection<F_CAISSE> F_CAISSEcbCO_NoNavigation { get; set; }
-        public virtual ICollection<F_CLAVIER> F_CLAVIER { get; set; }
-        public virtual ICollection<F_COMPTEA> F_COMPTEA { get; set; }
-        public virtual ICollection<F_COMPTET> F_COMPTET { get; set; }
-        public virtual ICollection<F_CREGLEMENT> F_CREGLEMENT { get; set; }
-        public virtual ICollection<F_DOCENTETE> F_DOCENTETEcbCO_NoCaissierNavigation { get; set; }
-        public virtual ICollection<F_DOCENTETE> F_DOCENTETEcbCO_NoNavigation { get; set; }
-        public virtual ICollection<F_DOCLIGNE> F_DOCLIGNE { get; set; }
-        public virtual ICollection<F_DRECOUVREMENT> F_DRECOUVREMENT { get; set; }
-        public virtual ICollection<F_LIGNEARCHIVE> F_LIGNEARCHIVE { get; set; }
-        public virtual ICollection<F_REPCOM> F_REPCOM { get; set; }
-        public virtual ICollection<F_TICKETARCHIVE> F_TICKETARCHIVE { get; set; }
-    }
+    public byte[] cbCO_Nom { get; set; }
+
+    public string CO_Prenom { get; set; }
+
+    public byte[] cbCO_Prenom { get; set; }
+
+    public string CO_Fonction { get; set; }
+
+    public byte[] cbCO_Fonction { get; set; }
+
+    public string CO_Adresse { get; set; }
+
+    public string CO_Complement { get; set; }
+
+    public string CO_CodePostal { get; set; }
+
+    public string CO_Ville { get; set; }
+
+    public string CO_CodeRegion { get; set; }
+
+    public string CO_Pays { get; set; }
+
+    public string CO_Service { get; set; }
+
+    public short? CO_Vendeur { get; set; }
+
+    public short? CO_Caissier { get; set; }
+
+    public short? CO_Acheteur { get; set; }
+
+    public string CO_Telephone { get; set; }
+
+    public string CO_Telecopie { get; set; }
+
+    public string CO_EMail { get; set; }
+
+    public short? CO_Receptionnaire { get; set; }
+
+    public int? PROT_No { get; set; }
+
+    public int? cbPROT_No { get; set; }
+
+    public string CO_TelPortable { get; set; }
+
+    public short? CO_ChargeRecouvr { get; set; }
+
+    public string CO_Matricule { get; set; }
+
+    public byte[] cbCO_Matricule { get; set; }
+
+    public short? CO_Financier { get; set; }
+
+    public short? CO_Transmission { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public virtual ICollection<F_ABOENTETE> F_ABOENTETE { get; set; } = new List<F_ABOENTETE>();
+
+    public virtual ICollection<F_ABOLIGNE> F_ABOLIGNE { get; set; } = new List<F_ABOLIGNE>();
+
+    public virtual ICollection<F_BONAPAYERHISTO> F_BONAPAYERHISTO { get; set; } = new List<F_BONAPAYERHISTO>();
+
+    public virtual ICollection<F_CAISSECAISSIER> F_CAISSECAISSIER { get; set; } = new List<F_CAISSECAISSIER>();
+
+    public virtual ICollection<F_CAISSE> F_CAISSEcbCO_NoCaissierNavigation { get; set; } = new List<F_CAISSE>();
+
+    public virtual ICollection<F_CAISSE> F_CAISSEcbCO_NoNavigation { get; set; } = new List<F_CAISSE>();
+
+    public virtual ICollection<F_CLAVIER> F_CLAVIER { get; set; } = new List<F_CLAVIER>();
+
+    public virtual ICollection<F_COMPTEA> F_COMPTEA { get; set; } = new List<F_COMPTEA>();
+
+    public virtual ICollection<F_COMPTET> F_COMPTET { get; set; } = new List<F_COMPTET>();
+
+    public virtual ICollection<F_CREGLEMENT> F_CREGLEMENT { get; set; } = new List<F_CREGLEMENT>();
+
+    public virtual ICollection<F_DOCENTETE> F_DOCENTETEcbCO_NoCaissierNavigation { get; set; } = new List<F_DOCENTETE>();
+
+    public virtual ICollection<F_DOCENTETE> F_DOCENTETEcbCO_NoNavigation { get; set; } = new List<F_DOCENTETE>();
+
+    public virtual ICollection<F_DOCLIGNE> F_DOCLIGNE { get; set; } = new List<F_DOCLIGNE>();
+
+    public virtual ICollection<F_DRECOUVREMENT> F_DRECOUVREMENT { get; set; } = new List<F_DRECOUVREMENT>();
+
+    public virtual ICollection<F_LIGNEARCHIVE> F_LIGNEARCHIVE { get; set; } = new List<F_LIGNEARCHIVE>();
+
+    public virtual ICollection<F_REPCOM> F_REPCOM { get; set; } = new List<F_REPCOM>();
+
+    public virtual ICollection<F_TICKETARCHIVE> F_TICKETARCHIVE { get; set; } = new List<F_TICKETARCHIVE>();
+
+    public virtual F_PROTECTIONCPTA cbPROT_NoNavigation { get; set; }
 }

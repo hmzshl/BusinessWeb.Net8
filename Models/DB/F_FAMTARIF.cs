@@ -3,27 +3,43 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_FAMTARIF
 {
-    public partial class F_FAMTARIF
-    {
-        public string FA_CodeFamille { get; set; }
-        public byte[] cbFA_CodeFamille { get; set; }
-        public short? FT_Categorie { get; set; }
-        public decimal? FT_Coef { get; set; }
-        public short? FT_PrixTTC { get; set; }
-        public short? FT_Arrondi { get; set; }
-        public short? FT_QteMont { get; set; }
-        public short? EG_Champ { get; set; }
-        public short? FT_Devise { get; set; }
-        public decimal? FT_Remise { get; set; }
-        public short? FT_Calcul { get; set; }
-        public short? FT_TypeRem { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
-    }
+    public string FA_CodeFamille { get; set; }
+
+    public byte[] cbFA_CodeFamille { get; set; }
+
+    public short? FT_Categorie { get; set; }
+
+    public decimal? FT_Coef { get; set; }
+
+    public short? FT_PrixTTC { get; set; }
+
+    public short? FT_Arrondi { get; set; }
+
+    public short? FT_QteMont { get; set; }
+
+    public short? EG_Champ { get; set; }
+
+    public short? FT_Devise { get; set; }
+
+    public decimal? FT_Remise { get; set; }
+
+    public short? FT_Calcul { get; set; }
+
+    public short? FT_TypeRem { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 }

@@ -3,20 +3,29 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_V_BALANCEAGEEFOURNISSEUR
 {
-    public partial class API_V_BALANCEAGEEFOURNISSEUR
-    {
-        public string CT_Num { get; set; }
-        public string CT_Intitule { get; set; }
-        public string CO_Nom { get; set; }
-        public string CT_Ville { get; set; }
-        public decimal? Encours { get; set; }
-        public decimal? AN { get; set; }
-        public decimal? _30J { get; set; }
-        public decimal? _60J { get; set; }
-        public decimal? _90J { get; set; }
-        public decimal? _120J { get; set; }
-        public decimal? _150J { get; set; }
-    }
+    public string CT_Num { get; set; }
+
+    public string CT_Intitule { get; set; }
+
+    public string CO_Nom { get; set; }
+
+    public string CT_Ville { get; set; }
+
+    public decimal? Encours { get; set; }
+
+    public decimal? AN { get; set; }
+
+    public decimal? _30J { get; set; }
+
+    public decimal? _60J { get; set; }
+
+    public decimal? _90J { get; set; }
+
+    public decimal? _120J { get; set; }
+
+    public decimal? _150J { get; set; }
 }

@@ -3,16 +3,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_AuditLog
 {
-    public partial class API_T_AuditLog
-    {
-        public int id { get; set; }
-        public string EntityName { get; set; }
-        public string Action { get; set; }
-        public string OldValues { get; set; }
-        public string NewValues { get; set; }
-        public DateTime? Timestamp { get; set; }
-        public string UserName { get; set; }
-    }
+    public int id { get; set; }
+
+    public string EntityName { get; set; }
+
+    public string Action { get; set; }
+
+    public string OldValues { get; set; }
+
+    public string NewValues { get; set; }
+
+    public DateTime? Timestamp { get; set; }
+
+    public string UserName { get; set; }
 }

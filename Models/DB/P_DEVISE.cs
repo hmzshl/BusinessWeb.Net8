@@ -3,29 +3,47 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_DEVISE
 {
-    public partial class P_DEVISE
-    {
-        public string D_Intitule { get; set; }
-        public string D_Format { get; set; }
-        public decimal? D_Cours { get; set; }
-        public decimal? D_CoursP { get; set; }
-        public string D_Monnaie { get; set; }
-        public string D_SousMonnaie { get; set; }
-        public string D_CodeISO { get; set; }
-        public string D_Sigle { get; set; }
-        public short? D_Mode { get; set; }
-        public short? N_DeviseCot { get; set; }
-        public decimal? D_CoursClot { get; set; }
-        public DateTime? D_AncDate { get; set; }
-        public decimal? D_AncCours { get; set; }
-        public short? D_AncMode { get; set; }
-        public short? N_DeviseAncCot { get; set; }
-        public short? D_CodeRemise { get; set; }
-        public short? D_Euro { get; set; }
-        public string D_CodeISONum { get; set; }
-        public short? cbIndice { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public string D_Intitule { get; set; }
+
+    public string D_Format { get; set; }
+
+    public decimal? D_Cours { get; set; }
+
+    public decimal? D_CoursP { get; set; }
+
+    public string D_Monnaie { get; set; }
+
+    public string D_SousMonnaie { get; set; }
+
+    public string D_CodeISO { get; set; }
+
+    public string D_Sigle { get; set; }
+
+    public short? D_Mode { get; set; }
+
+    public short? N_DeviseCot { get; set; }
+
+    public decimal? D_CoursClot { get; set; }
+
+    public DateTime? D_AncDate { get; set; }
+
+    public decimal? D_AncCours { get; set; }
+
+    public short? D_AncMode { get; set; }
+
+    public short? N_DeviseAncCot { get; set; }
+
+    public short? D_CodeRemise { get; set; }
+
+    public short? D_Euro { get; set; }
+
+    public string D_CodeISONum { get; set; }
+
+    public short? cbIndice { get; set; }
+
+    public int cbMarq { get; set; }
 }

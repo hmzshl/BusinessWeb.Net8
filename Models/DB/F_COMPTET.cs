@@ -3,191 +3,309 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_COMPTET
 {
-    public partial class F_COMPTET
-    {
-        public F_COMPTET()
-        {
-            API_T_AgenceContrat = new HashSet<API_T_AgenceContrat>();
-            F_ABOENTETECT_NumCentraleNavigation = new HashSet<F_ABOENTETE>();
-            F_ABOENTETECT_NumPayeurNavigation = new HashSet<F_ABOENTETE>();
-            F_ABONNEMENT = new HashSet<F_ABONNEMENT>();
-            F_ARTCLIENT = new HashSet<F_ARTCLIENT>();
-            F_ARTFOURNISS = new HashSet<F_ARTFOURNISS>();
-            F_CAISSE = new HashSet<F_CAISSE>();
-            F_COMPTETG = new HashSet<F_COMPTETG>();
-            F_COMPTETINFOS = new HashSet<F_COMPTETINFOS>();
-            F_COMPTETMEDIA = new HashSet<F_COMPTETMEDIA>();
-            F_COMPTETMODELE = new HashSet<F_COMPTETMODELE>();
-            F_COMPTETRAPPEL = new HashSet<F_COMPTETRAPPEL>();
-            F_CONTACTT = new HashSet<F_CONTACTT>();
-            F_CREGLEMENTCT_NumPayeurNavigation = new HashSet<F_CREGLEMENT>();
-            F_CREGLEMENTCT_NumPayeurOrigNavigation = new HashSet<F_CREGLEMENT>();
-            F_DOCENTETECT_NumCentraleNavigation = new HashSet<F_DOCENTETE>();
-            F_DOCENTETECT_NumPayeurNavigation = new HashSet<F_DOCENTETE>();
-            F_DRECOUVREMENT = new HashSet<F_DRECOUVREMENT>();
-            F_ECRITUREC = new HashSet<F_ECRITUREC>();
-            F_FAMCLIENT = new HashSet<F_FAMCLIENT>();
-            F_FAMFOURNISS = new HashSet<F_FAMFOURNISS>();
-            F_LIVRAISON = new HashSet<F_LIVRAISON>();
-            F_REGLEMENTT = new HashSet<F_REGLEMENTT>();
-            F_REGTAXE = new HashSet<F_REGTAXE>();
-            F_TARIF = new HashSet<F_TARIF>();
-            F_TICKETARCHIVE = new HashSet<F_TICKETARCHIVE>();
-        }
+    public string CT_Num { get; set; }
 
-        public string CT_Num { get; set; }
-        public byte[] cbCT_Num { get; set; }
-        public string CT_Intitule { get; set; }
-        public short? CT_Type { get; set; }
-        public string CG_NumPrinc { get; set; }
-        public string CT_Qualite { get; set; }
-        public string CT_Classement { get; set; }
-        public byte[] cbCT_Classement { get; set; }
-        public string CT_Contact { get; set; }
-        public string CT_Adresse { get; set; }
-        public string CT_Complement { get; set; }
-        public string CT_CodePostal { get; set; }
-        public byte[] cbCT_CodePostal { get; set; }
-        public string CT_Ville { get; set; }
-        public string CT_CodeRegion { get; set; }
-        public string CT_Pays { get; set; }
-        public string CT_Raccourci { get; set; }
-        public byte[] cbCT_Raccourci { get; set; }
-        public short? BT_Num { get; set; }
-        public short? N_Devise { get; set; }
-        public string CT_Ape { get; set; }
-        public string CT_Identifiant { get; set; }
-        public string CT_Siret { get; set; }
-        public string CT_Statistique01 { get; set; }
-        public string CT_Statistique02 { get; set; }
-        public string CT_Statistique03 { get; set; }
-        public string CT_Statistique04 { get; set; }
-        public string CT_Statistique05 { get; set; }
-        public string CT_Statistique06 { get; set; }
-        public string CT_Statistique07 { get; set; }
-        public string CT_Statistique08 { get; set; }
-        public string CT_Statistique09 { get; set; }
-        public string CT_Statistique10 { get; set; }
-        public string CT_Commentaire { get; set; }
-        public decimal? CT_Encours { get; set; }
-        public decimal? CT_Assurance { get; set; }
-        public string CT_NumPayeur { get; set; }
-        public byte[] cbCT_NumPayeur { get; set; }
-        public short? N_Risque { get; set; }
-        public int? CO_No { get; set; }
-        public int? cbCO_No { get; set; }
-        public short? N_CatTarif { get; set; }
-        public decimal? CT_Taux01 { get; set; }
-        public decimal? CT_Taux02 { get; set; }
-        public decimal? CT_Taux03 { get; set; }
-        public decimal? CT_Taux04 { get; set; }
-        public short? N_CatCompta { get; set; }
-        public short? N_Period { get; set; }
-        public short? CT_Facture { get; set; }
-        public short? CT_BLFact { get; set; }
-        public short? CT_Langue { get; set; }
-        public short? N_Expedition { get; set; }
-        public short? N_Condition { get; set; }
-        public short? CT_Saut { get; set; }
-        public short? CT_Lettrage { get; set; }
-        public short? CT_ValidEch { get; set; }
-        public short? CT_Sommeil { get; set; }
-        public int? DE_No { get; set; }
-        public int? cbDE_No { get; set; }
-        public short? CT_ControlEnc { get; set; }
-        public short? CT_NotRappel { get; set; }
-        public short? N_Analytique { get; set; }
-        public short? cbN_Analytique { get; set; }
-        public string CA_Num { get; set; }
-        public byte[] cbCA_Num { get; set; }
-        public string CT_Telephone { get; set; }
-        public string CT_Telecopie { get; set; }
-        public string CT_EMail { get; set; }
-        public string CT_Site { get; set; }
-        public string CT_Coface { get; set; }
-        public short? CT_Surveillance { get; set; }
-        public DateTime? CT_SvDateCreate { get; set; }
-        public string CT_SvFormeJuri { get; set; }
-        public string CT_SvEffectif { get; set; }
-        public decimal? CT_SvCA { get; set; }
-        public decimal? CT_SvResultat { get; set; }
-        public short? CT_SvIncident { get; set; }
-        public DateTime? CT_SvDateIncid { get; set; }
-        public short? CT_SvPrivil { get; set; }
-        public string CT_SvRegul { get; set; }
-        public string CT_SvCotation { get; set; }
-        public DateTime? CT_SvDateMaj { get; set; }
-        public string CT_SvObjetMaj { get; set; }
-        public DateTime? CT_SvDateBilan { get; set; }
-        public short? CT_SvNbMoisBilan { get; set; }
-        public short? N_AnalytiqueIFRS { get; set; }
-        public short? cbN_AnalytiqueIFRS { get; set; }
-        public string CA_NumIFRS { get; set; }
-        public short? CT_PrioriteLivr { get; set; }
-        public short? CT_LivrPartielle { get; set; }
-        public int? MR_No { get; set; }
-        public int? cbMR_No { get; set; }
-        public short? CT_NotPenal { get; set; }
-        public int? EB_No { get; set; }
-        public int? cbEB_No { get; set; }
-        public string CT_NumCentrale { get; set; }
-        public byte[] cbCT_NumCentrale { get; set; }
-        public DateTime? CT_DateFermeDebut { get; set; }
-        public DateTime? CT_DateFermeFin { get; set; }
-        public short? CT_FactureElec { get; set; }
-        public short? CT_TypeNIF { get; set; }
-        public string CT_RepresentInt { get; set; }
-        public string CT_RepresentNIF { get; set; }
-        public short? CT_EdiCodeType { get; set; }
-        public string CT_EdiCode { get; set; }
-        public string CT_EdiCodeSage { get; set; }
-        public short? CT_ProfilSoc { get; set; }
-        public short? CT_StatutContrat { get; set; }
-        public DateTime? CT_DateMAJ { get; set; }
-        public short? CT_EchangeRappro { get; set; }
-        public short? CT_EchangeCR { get; set; }
-        public int? PI_NoEchange { get; set; }
-        public int? cbPI_NoEchange { get; set; }
-        public short? CT_BonAPayer { get; set; }
-        public short? CT_DelaiTransport { get; set; }
-        public short? CT_DelaiAppro { get; set; }
-        public string CT_LangueISO2 { get; set; }
-        public int cbMarq { get; set; }
+    public byte[] cbCT_Num { get; set; }
 
-        public virtual F_COMPTEG CG_NumPrincNavigation { get; set; }
-        public virtual F_COMPTEA F_COMPTEA { get; set; }
-        public virtual F_COMPTEA F_COMPTEANavigation { get; set; }
-        public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
-        public virtual F_DEPOT cbDE_NoNavigation { get; set; }
-        public virtual F_MODELER cbMR_NoNavigation { get; set; }
-        public virtual F_PIECE cbPI_NoEchangeNavigation { get; set; }
-        public virtual ICollection<API_T_AgenceContrat> API_T_AgenceContrat { get; set; }
-        public virtual ICollection<F_ABOENTETE> F_ABOENTETECT_NumCentraleNavigation { get; set; }
-        public virtual ICollection<F_ABOENTETE> F_ABOENTETECT_NumPayeurNavigation { get; set; }
-        public virtual ICollection<F_ABONNEMENT> F_ABONNEMENT { get; set; }
-        public virtual ICollection<F_ARTCLIENT> F_ARTCLIENT { get; set; }
-        public virtual ICollection<F_ARTFOURNISS> F_ARTFOURNISS { get; set; }
-        public virtual ICollection<F_CAISSE> F_CAISSE { get; set; }
-        public virtual ICollection<F_COMPTETG> F_COMPTETG { get; set; }
-        public virtual ICollection<F_COMPTETINFOS> F_COMPTETINFOS { get; set; }
-        public virtual ICollection<F_COMPTETMEDIA> F_COMPTETMEDIA { get; set; }
-        public virtual ICollection<F_COMPTETMODELE> F_COMPTETMODELE { get; set; }
-        public virtual ICollection<F_COMPTETRAPPEL> F_COMPTETRAPPEL { get; set; }
-        public virtual ICollection<F_CONTACTT> F_CONTACTT { get; set; }
-        public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCT_NumPayeurNavigation { get; set; }
-        public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCT_NumPayeurOrigNavigation { get; set; }
-        public virtual ICollection<F_DOCENTETE> F_DOCENTETECT_NumCentraleNavigation { get; set; }
-        public virtual ICollection<F_DOCENTETE> F_DOCENTETECT_NumPayeurNavigation { get; set; }
-        public virtual ICollection<F_DRECOUVREMENT> F_DRECOUVREMENT { get; set; }
-        public virtual ICollection<F_ECRITUREC> F_ECRITUREC { get; set; }
-        public virtual ICollection<F_FAMCLIENT> F_FAMCLIENT { get; set; }
-        public virtual ICollection<F_FAMFOURNISS> F_FAMFOURNISS { get; set; }
-        public virtual ICollection<F_LIVRAISON> F_LIVRAISON { get; set; }
-        public virtual ICollection<F_REGLEMENTT> F_REGLEMENTT { get; set; }
-        public virtual ICollection<F_REGTAXE> F_REGTAXE { get; set; }
-        public virtual ICollection<F_TARIF> F_TARIF { get; set; }
-        public virtual ICollection<F_TICKETARCHIVE> F_TICKETARCHIVE { get; set; }
-    }
+    public string CT_Intitule { get; set; }
+
+    public short? CT_Type { get; set; }
+
+    public string CG_NumPrinc { get; set; }
+
+    public string CT_Qualite { get; set; }
+
+    public string CT_Classement { get; set; }
+
+    public byte[] cbCT_Classement { get; set; }
+
+    public string CT_Contact { get; set; }
+
+    public string CT_Adresse { get; set; }
+
+    public string CT_Complement { get; set; }
+
+    public string CT_CodePostal { get; set; }
+
+    public byte[] cbCT_CodePostal { get; set; }
+
+    public string CT_Ville { get; set; }
+
+    public string CT_CodeRegion { get; set; }
+
+    public string CT_Pays { get; set; }
+
+    public string CT_Raccourci { get; set; }
+
+    public byte[] cbCT_Raccourci { get; set; }
+
+    public short? BT_Num { get; set; }
+
+    public short? N_Devise { get; set; }
+
+    public string CT_Ape { get; set; }
+
+    public string CT_Identifiant { get; set; }
+
+    public string CT_Siret { get; set; }
+
+    public string CT_Statistique01 { get; set; }
+
+    public string CT_Statistique02 { get; set; }
+
+    public string CT_Statistique03 { get; set; }
+
+    public string CT_Statistique04 { get; set; }
+
+    public string CT_Statistique05 { get; set; }
+
+    public string CT_Statistique06 { get; set; }
+
+    public string CT_Statistique07 { get; set; }
+
+    public string CT_Statistique08 { get; set; }
+
+    public string CT_Statistique09 { get; set; }
+
+    public string CT_Statistique10 { get; set; }
+
+    public string CT_Commentaire { get; set; }
+
+    public decimal? CT_Encours { get; set; }
+
+    public decimal? CT_Assurance { get; set; }
+
+    public string CT_NumPayeur { get; set; }
+
+    public byte[] cbCT_NumPayeur { get; set; }
+
+    public short? N_Risque { get; set; }
+
+    public int? CO_No { get; set; }
+
+    public int? cbCO_No { get; set; }
+
+    public short? N_CatTarif { get; set; }
+
+    public decimal? CT_Taux01 { get; set; }
+
+    public decimal? CT_Taux02 { get; set; }
+
+    public decimal? CT_Taux03 { get; set; }
+
+    public decimal? CT_Taux04 { get; set; }
+
+    public short? N_CatCompta { get; set; }
+
+    public short? N_Period { get; set; }
+
+    public short? CT_Facture { get; set; }
+
+    public short? CT_BLFact { get; set; }
+
+    public short? CT_Langue { get; set; }
+
+    public short? N_Expedition { get; set; }
+
+    public short? N_Condition { get; set; }
+
+    public short? CT_Saut { get; set; }
+
+    public short? CT_Lettrage { get; set; }
+
+    public short? CT_ValidEch { get; set; }
+
+    public short? CT_Sommeil { get; set; }
+
+    public int? DE_No { get; set; }
+
+    public int? cbDE_No { get; set; }
+
+    public short? CT_ControlEnc { get; set; }
+
+    public short? CT_NotRappel { get; set; }
+
+    public short? N_Analytique { get; set; }
+
+    public short? cbN_Analytique { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public byte[] cbCA_Num { get; set; }
+
+    public string CT_Telephone { get; set; }
+
+    public string CT_Telecopie { get; set; }
+
+    public string CT_EMail { get; set; }
+
+    public string CT_Site { get; set; }
+
+    public string CT_Coface { get; set; }
+
+    public short? CT_Surveillance { get; set; }
+
+    public DateTime? CT_SvDateCreate { get; set; }
+
+    public string CT_SvFormeJuri { get; set; }
+
+    public string CT_SvEffectif { get; set; }
+
+    public decimal? CT_SvCA { get; set; }
+
+    public decimal? CT_SvResultat { get; set; }
+
+    public short? CT_SvIncident { get; set; }
+
+    public DateTime? CT_SvDateIncid { get; set; }
+
+    public short? CT_SvPrivil { get; set; }
+
+    public string CT_SvRegul { get; set; }
+
+    public string CT_SvCotation { get; set; }
+
+    public DateTime? CT_SvDateMaj { get; set; }
+
+    public string CT_SvObjetMaj { get; set; }
+
+    public DateTime? CT_SvDateBilan { get; set; }
+
+    public short? CT_SvNbMoisBilan { get; set; }
+
+    public short? N_AnalytiqueIFRS { get; set; }
+
+    public short? cbN_AnalytiqueIFRS { get; set; }
+
+    public string CA_NumIFRS { get; set; }
+
+    public short? CT_PrioriteLivr { get; set; }
+
+    public short? CT_LivrPartielle { get; set; }
+
+    public int? MR_No { get; set; }
+
+    public int? cbMR_No { get; set; }
+
+    public short? CT_NotPenal { get; set; }
+
+    public int? EB_No { get; set; }
+
+    public int? cbEB_No { get; set; }
+
+    public string CT_NumCentrale { get; set; }
+
+    public byte[] cbCT_NumCentrale { get; set; }
+
+    public DateTime? CT_DateFermeDebut { get; set; }
+
+    public DateTime? CT_DateFermeFin { get; set; }
+
+    public short? CT_FactureElec { get; set; }
+
+    public short? CT_TypeNIF { get; set; }
+
+    public string CT_RepresentInt { get; set; }
+
+    public string CT_RepresentNIF { get; set; }
+
+    public short? CT_EdiCodeType { get; set; }
+
+    public string CT_EdiCode { get; set; }
+
+    public string CT_EdiCodeSage { get; set; }
+
+    public short? CT_ProfilSoc { get; set; }
+
+    public short? CT_StatutContrat { get; set; }
+
+    public DateTime? CT_DateMAJ { get; set; }
+
+    public short? CT_EchangeRappro { get; set; }
+
+    public short? CT_EchangeCR { get; set; }
+
+    public int? PI_NoEchange { get; set; }
+
+    public int? cbPI_NoEchange { get; set; }
+
+    public short? CT_BonAPayer { get; set; }
+
+    public short? CT_DelaiTransport { get; set; }
+
+    public short? CT_DelaiAppro { get; set; }
+
+    public string CT_LangueISO2 { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public virtual ICollection<API_T_AgenceContrat> API_T_AgenceContrat { get; set; } = new List<API_T_AgenceContrat>();
+
+    public virtual F_COMPTEG CG_NumPrincNavigation { get; set; }
+
+    public virtual ICollection<F_ABOENTETE> F_ABOENTETECT_NumCentraleNavigation { get; set; } = new List<F_ABOENTETE>();
+
+    public virtual ICollection<F_ABOENTETE> F_ABOENTETECT_NumPayeurNavigation { get; set; } = new List<F_ABOENTETE>();
+
+    public virtual ICollection<F_ABONNEMENT> F_ABONNEMENT { get; set; } = new List<F_ABONNEMENT>();
+
+    public virtual ICollection<F_ARTCLIENT> F_ARTCLIENT { get; set; } = new List<F_ARTCLIENT>();
+
+    public virtual ICollection<F_ARTFOURNISS> F_ARTFOURNISS { get; set; } = new List<F_ARTFOURNISS>();
+
+    public virtual ICollection<F_CAISSE> F_CAISSE { get; set; } = new List<F_CAISSE>();
+
+    public virtual F_COMPTEA F_COMPTEA { get; set; }
+
+    public virtual F_COMPTEA F_COMPTEANavigation { get; set; }
+
+    public virtual ICollection<F_COMPTETG> F_COMPTETG { get; set; } = new List<F_COMPTETG>();
+
+    public virtual ICollection<F_COMPTETINFOS> F_COMPTETINFOS { get; set; } = new List<F_COMPTETINFOS>();
+
+    public virtual ICollection<F_COMPTETMEDIA> F_COMPTETMEDIA { get; set; } = new List<F_COMPTETMEDIA>();
+
+    public virtual ICollection<F_COMPTETMODELE> F_COMPTETMODELE { get; set; } = new List<F_COMPTETMODELE>();
+
+    public virtual ICollection<F_COMPTETRAPPEL> F_COMPTETRAPPEL { get; set; } = new List<F_COMPTETRAPPEL>();
+
+    public virtual ICollection<F_CONTACTT> F_CONTACTT { get; set; } = new List<F_CONTACTT>();
+
+    public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCT_NumPayeurNavigation { get; set; } = new List<F_CREGLEMENT>();
+
+    public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCT_NumPayeurOrigNavigation { get; set; } = new List<F_CREGLEMENT>();
+
+    public virtual ICollection<F_DOCENTETE> F_DOCENTETECT_NumCentraleNavigation { get; set; } = new List<F_DOCENTETE>();
+
+    public virtual ICollection<F_DOCENTETE> F_DOCENTETECT_NumPayeurNavigation { get; set; } = new List<F_DOCENTETE>();
+
+    public virtual ICollection<F_DRECOUVREMENT> F_DRECOUVREMENT { get; set; } = new List<F_DRECOUVREMENT>();
+
+    public virtual ICollection<F_ECRITUREC> F_ECRITUREC { get; set; } = new List<F_ECRITUREC>();
+
+    public virtual ICollection<F_FAMCLIENT> F_FAMCLIENT { get; set; } = new List<F_FAMCLIENT>();
+
+    public virtual ICollection<F_FAMFOURNISS> F_FAMFOURNISS { get; set; } = new List<F_FAMFOURNISS>();
+
+    public virtual ICollection<F_LIVRAISON> F_LIVRAISON { get; set; } = new List<F_LIVRAISON>();
+
+    public virtual ICollection<F_REGLEMENTT> F_REGLEMENTT { get; set; } = new List<F_REGLEMENTT>();
+
+    public virtual ICollection<F_REGTAXE> F_REGTAXE { get; set; } = new List<F_REGTAXE>();
+
+    public virtual ICollection<F_TARIF> F_TARIF { get; set; } = new List<F_TARIF>();
+
+    public virtual ICollection<F_TICKETARCHIVE> F_TICKETARCHIVE { get; set; } = new List<F_TICKETARCHIVE>();
+
+    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
+
+    public virtual F_DEPOT cbDE_NoNavigation { get; set; }
+
+    public virtual F_MODELER cbMR_NoNavigation { get; set; }
+
+    public virtual F_PIECE cbPI_NoEchangeNavigation { get; set; }
 }

@@ -3,29 +3,47 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_CONTACTB
 {
-    public partial class F_CONTACTB
-    {
-        public int BQ_No { get; set; }
-        public string CB_Nom { get; set; }
-        public byte[] cbCB_Nom { get; set; }
-        public string CB_Prenom { get; set; }
-        public byte[] cbCB_Prenom { get; set; }
-        public short? N_Service { get; set; }
-        public string CB_Fonction { get; set; }
-        public string CB_Telephone { get; set; }
-        public string CB_TelPortable { get; set; }
-        public string CB_Telecopie { get; set; }
-        public string CB_EMail { get; set; }
-        public short? CB_Civilite { get; set; }
-        public short? N_Contact { get; set; }
-        public int? CB_No { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
-    }
+    public int BQ_No { get; set; }
+
+    public string CB_Nom { get; set; }
+
+    public byte[] cbCB_Nom { get; set; }
+
+    public string CB_Prenom { get; set; }
+
+    public byte[] cbCB_Prenom { get; set; }
+
+    public short? N_Service { get; set; }
+
+    public string CB_Fonction { get; set; }
+
+    public string CB_Telephone { get; set; }
+
+    public string CB_TelPortable { get; set; }
+
+    public string CB_Telecopie { get; set; }
+
+    public string CB_EMail { get; set; }
+
+    public short? CB_Civilite { get; set; }
+
+    public short? N_Contact { get; set; }
+
+    public int? CB_No { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 }

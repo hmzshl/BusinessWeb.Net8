@@ -3,28 +3,43 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_CONDITION
-    {
-        public string AR_Ref { get; set; }
-        public byte[] cbAR_Ref { get; set; }
-        public int? CO_No { get; set; }
-        public string EC_Enumere { get; set; }
-        public byte[] cbEC_Enumere { get; set; }
-        public decimal? EC_Quantite { get; set; }
-        public string CO_Ref { get; set; }
-        public byte[] cbCO_Ref { get; set; }
-        public string CO_CodeBarre { get; set; }
-        public byte[] cbCO_CodeBarre { get; set; }
-        public short? CO_Principal { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_ARTICLE AR_RefNavigation { get; set; }
-    }
+public partial class F_CONDITION
+{
+    public string AR_Ref { get; set; }
+
+    public byte[] cbAR_Ref { get; set; }
+
+    public int? CO_No { get; set; }
+
+    public string EC_Enumere { get; set; }
+
+    public byte[] cbEC_Enumere { get; set; }
+
+    public decimal? EC_Quantite { get; set; }
+
+    public string CO_Ref { get; set; }
+
+    public byte[] cbCO_Ref { get; set; }
+
+    public string CO_CodeBarre { get; set; }
+
+    public byte[] cbCO_CodeBarre { get; set; }
+
+    public short? CO_Principal { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_ARTICLE AR_RefNavigation { get; set; }
 }

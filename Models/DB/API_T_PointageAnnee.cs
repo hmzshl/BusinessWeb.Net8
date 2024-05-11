@@ -3,21 +3,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_PointageAnnee
 {
-    public partial class API_T_PointageAnnee
-    {
-        public API_T_PointageAnnee()
-        {
-            API_T_PointageJournee = new HashSet<API_T_PointageJournee>();
-            API_T_PointageMois = new HashSet<API_T_PointageMois>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public int Annee { get; set; }
-        public bool Cloture { get; set; }
+    public int Annee { get; set; }
 
-        public virtual ICollection<API_T_PointageJournee> API_T_PointageJournee { get; set; }
-        public virtual ICollection<API_T_PointageMois> API_T_PointageMois { get; set; }
-    }
+    public bool Cloture { get; set; }
+
+    public virtual ICollection<API_T_PointageJournee> API_T_PointageJournee { get; set; } = new List<API_T_PointageJournee>();
+
+    public virtual ICollection<API_T_PointageMois> API_T_PointageMois { get; set; } = new List<API_T_PointageMois>();
 }

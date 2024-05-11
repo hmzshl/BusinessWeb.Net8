@@ -3,35 +3,59 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_V_AFFAIRE
 {
-    public partial class API_V_AFFAIRE
-    {
-        public short N_Analytique { get; set; }
-        public string CA_Num { get; set; }
-        public string CA_Intitule { get; set; }
-        public short? CA_Type { get; set; }
-        public string CA_Classement { get; set; }
-        public string CA_Raccourci { get; set; }
-        public short? CA_Report { get; set; }
-        public short? N_Analyse { get; set; }
-        public short? CA_Saut { get; set; }
-        public short? CA_Sommeil { get; set; }
-        public short? CA_Domaine { get; set; }
-        public decimal? CA_Achat { get; set; }
-        public decimal? CA_Vente { get; set; }
-        public int? CO_No { get; set; }
-        public short? CA_Statut { get; set; }
-        public DateTime? CA_DateCreationAffaire { get; set; }
-        public DateTime? CA_DateAcceptAffaire { get; set; }
-        public DateTime? CA_DateDebutAffaire { get; set; }
-        public DateTime? CA_DateFinAffaire { get; set; }
-        public short? CA_ModeFacturation { get; set; }
-        public int cbMarq { get; set; }
-        public decimal? CADE { get; set; }
-        public decimal? CABL { get; set; }
-        public decimal? ResteCA { get; set; }
-        public decimal? EcartCA { get; set; }
-        public decimal? Avancement { get; set; }
-    }
+    public short N_Analytique { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public string CA_Intitule { get; set; }
+
+    public short? CA_Type { get; set; }
+
+    public string CA_Classement { get; set; }
+
+    public string CA_Raccourci { get; set; }
+
+    public short? CA_Report { get; set; }
+
+    public short? N_Analyse { get; set; }
+
+    public short? CA_Saut { get; set; }
+
+    public short? CA_Sommeil { get; set; }
+
+    public short? CA_Domaine { get; set; }
+
+    public decimal? CA_Achat { get; set; }
+
+    public decimal? CA_Vente { get; set; }
+
+    public int? CO_No { get; set; }
+
+    public short? CA_Statut { get; set; }
+
+    public DateTime? CA_DateCreationAffaire { get; set; }
+
+    public DateTime? CA_DateAcceptAffaire { get; set; }
+
+    public DateTime? CA_DateDebutAffaire { get; set; }
+
+    public DateTime? CA_DateFinAffaire { get; set; }
+
+    public short? CA_ModeFacturation { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public decimal? CADE { get; set; }
+
+    public decimal? CABL { get; set; }
+
+    public decimal? ResteCA { get; set; }
+
+    public decimal? EcartCA { get; set; }
+
+    public decimal? Avancement { get; set; }
 }

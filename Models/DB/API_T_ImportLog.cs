@@ -3,14 +3,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_ImportLog
 {
-    public partial class API_T_ImportLog
-    {
-        public int id { get; set; }
-        public DateTime? Date { get; set; }
-        public string Libelle { get; set; }
-        public string TableName { get; set; }
-        public int TableID { get; set; }
-    }
+    public int id { get; set; }
+
+    public DateTime? Date { get; set; }
+
+    public string Libelle { get; set; }
+
+    public string TableName { get; set; }
+
+    public int TableID { get; set; }
 }

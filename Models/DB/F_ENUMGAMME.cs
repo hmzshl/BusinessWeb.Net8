@@ -3,20 +3,29 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_ENUMGAMME
 {
-    public partial class F_ENUMGAMME
-    {
-        public short? EG_Champ { get; set; }
-        public short? EG_Ligne { get; set; }
-        public string EG_Enumere { get; set; }
-        public byte[] cbEG_Enumere { get; set; }
-        public decimal? EG_BorneSup { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
-    }
+    public short? EG_Champ { get; set; }
+
+    public short? EG_Ligne { get; set; }
+
+    public string EG_Enumere { get; set; }
+
+    public byte[] cbEG_Enumere { get; set; }
+
+    public decimal? EG_BorneSup { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 }

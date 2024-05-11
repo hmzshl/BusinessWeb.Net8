@@ -3,25 +3,37 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_REGREVISION
-    {
-        public int EC_No { get; set; }
-        public DateTime? RR_Debut { get; set; }
-        public DateTime? RR_Fin { get; set; }
-        public string RR_Reviseur { get; set; }
-        public string RR_Commentaire { get; set; }
-        public string RR_Controleur { get; set; }
-        public DateTime? RR_DateRev { get; set; }
-        public DateTime? RR_DateCont { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_ECRITUREC EC_NoNavigation { get; set; }
-    }
+public partial class F_REGREVISION
+{
+    public int EC_No { get; set; }
+
+    public DateTime? RR_Debut { get; set; }
+
+    public DateTime? RR_Fin { get; set; }
+
+    public string RR_Reviseur { get; set; }
+
+    public string RR_Commentaire { get; set; }
+
+    public string RR_Controleur { get; set; }
+
+    public DateTime? RR_DateRev { get; set; }
+
+    public DateTime? RR_DateCont { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_ECRITUREC EC_NoNavigation { get; set; }
 }

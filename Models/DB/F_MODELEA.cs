@@ -3,34 +3,45 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_MODELEA
 {
-    public partial class F_MODELEA
-    {
-        public F_MODELEA()
-        {
-            F_EMODELEA = new HashSet<F_EMODELEA>();
-        }
+    public int MA_No { get; set; }
 
-        public int MA_No { get; set; }
-        public string MA_Intitule { get; set; }
-        public byte[] cbMA_Intitule { get; set; }
-        public string JO_Num { get; set; }
-        public byte[] cbJO_Num { get; set; }
-        public DateTime? MA_Debut { get; set; }
-        public DateTime? MA_Fin { get; set; }
-        public short? MA_TPeriod { get; set; }
-        public short? MA_VPeriod { get; set; }
-        public int PI_No { get; set; }
-        public string MA_Piece { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public string MA_Intitule { get; set; }
 
-        public virtual F_PIECE PI_NoNavigation { get; set; }
-        public virtual ICollection<F_EMODELEA> F_EMODELEA { get; set; }
-    }
+    public byte[] cbMA_Intitule { get; set; }
+
+    public string JO_Num { get; set; }
+
+    public byte[] cbJO_Num { get; set; }
+
+    public DateTime? MA_Debut { get; set; }
+
+    public DateTime? MA_Fin { get; set; }
+
+    public short? MA_TPeriod { get; set; }
+
+    public short? MA_VPeriod { get; set; }
+
+    public int PI_No { get; set; }
+
+    public string MA_Piece { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual ICollection<F_EMODELEA> F_EMODELEA { get; set; } = new List<F_EMODELEA>();
+
+    public virtual F_PIECE PI_NoNavigation { get; set; }
 }

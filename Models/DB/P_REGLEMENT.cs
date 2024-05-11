@@ -3,20 +3,29 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_REGLEMENT
 {
-    public partial class P_REGLEMENT
-    {
-        public string R_Intitule { get; set; }
-        public string R_Code { get; set; }
-        public short? R_ModePaieDebit { get; set; }
-        public short? R_ModePaieCredit { get; set; }
-        public string IB_AFBDecaissPrinc { get; set; }
-        public string IB_AFBEncaissPrinc { get; set; }
-        public int? EB_NoDecaiss { get; set; }
-        public int? EB_NoEncaiss { get; set; }
-        public string R_EdiCode { get; set; }
-        public short? cbIndice { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public string R_Intitule { get; set; }
+
+    public string R_Code { get; set; }
+
+    public short? R_ModePaieDebit { get; set; }
+
+    public short? R_ModePaieCredit { get; set; }
+
+    public string IB_AFBDecaissPrinc { get; set; }
+
+    public string IB_AFBEncaissPrinc { get; set; }
+
+    public int? EB_NoDecaiss { get; set; }
+
+    public int? EB_NoEncaiss { get; set; }
+
+    public string R_EdiCode { get; set; }
+
+    public short? cbIndice { get; set; }
+
+    public int cbMarq { get; set; }
 }

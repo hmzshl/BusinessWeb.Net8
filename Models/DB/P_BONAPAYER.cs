@@ -3,14 +3,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_BONAPAYER
 {
-    public partial class P_BONAPAYER
-    {
-        public short? B_Autorisation { get; set; }
-        public int? CO_No { get; set; }
-        public short? B_Facture { get; set; }
-        public decimal? B_Seuil { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public short? B_Autorisation { get; set; }
+
+    public int? CO_No { get; set; }
+
+    public short? B_Facture { get; set; }
+
+    public decimal? B_Seuil { get; set; }
+
+    public int cbMarq { get; set; }
 }

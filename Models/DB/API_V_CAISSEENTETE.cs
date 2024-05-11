@@ -3,39 +3,67 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_V_CAISSEENTETE
 {
-    public partial class API_V_CAISSEENTETE
-    {
-        public int id { get; set; }
-        public DateTime? Date { get; set; }
-        public string Numero { get; set; }
-        public string Libelle { get; set; }
-        public string CT_NumProjet { get; set; }
-        public string CA_Num { get; set; }
-        public string CA_Intitule { get; set; }
-        public int Personnel { get; set; }
-        public int Materiel { get; set; }
-        public string MontantLettre { get; set; }
-        public int Type { get; set; }
-        public int Caisse { get; set; }
-        public decimal Montant { get; set; }
-        public int Site { get; set; }
-        public int Projet { get; set; }
-        public int Sense { get; set; }
-        public string CT_Intitule { get; set; }
-        public string Objet { get; set; }
-        public string CT_Num { get; set; }
-        public string NumeroMarche { get; set; }
-        public string PersonnelIntitule { get; set; }
-        public string CIN { get; set; }
-        public string Telephone { get; set; }
-        public DateTime? DateNaissance { get; set; }
-        public string Matricule { get; set; }
-        public string MaterielIntitule { get; set; }
-        public string Immatricule { get; set; }
-        public string AffectationIntitule { get; set; }
-        public string Remarque { get; set; }
-        public string Reference { get; set; }
-    }
+    public int id { get; set; }
+
+    public DateTime? Date { get; set; }
+
+    public string Numero { get; set; }
+
+    public string Libelle { get; set; }
+
+    public string CT_NumProjet { get; set; }
+
+    public string CA_Num { get; set; }
+
+    public string CA_Intitule { get; set; }
+
+    public int Personnel { get; set; }
+
+    public int Materiel { get; set; }
+
+    public string MontantLettre { get; set; }
+
+    public int Type { get; set; }
+
+    public int Caisse { get; set; }
+
+    public decimal Montant { get; set; }
+
+    public int Site { get; set; }
+
+    public int Projet { get; set; }
+
+    public int Sense { get; set; }
+
+    public string CT_Intitule { get; set; }
+
+    public string Objet { get; set; }
+
+    public string CT_Num { get; set; }
+
+    public string NumeroMarche { get; set; }
+
+    public string PersonnelIntitule { get; set; }
+
+    public string CIN { get; set; }
+
+    public string Telephone { get; set; }
+
+    public DateTime? DateNaissance { get; set; }
+
+    public string Matricule { get; set; }
+
+    public string MaterielIntitule { get; set; }
+
+    public string Immatricule { get; set; }
+
+    public string AffectationIntitule { get; set; }
+
+    public string Remarque { get; set; }
+
+    public string Reference { get; set; }
 }

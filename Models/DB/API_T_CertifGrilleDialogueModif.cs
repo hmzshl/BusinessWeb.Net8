@@ -3,17 +3,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class API_T_CertifGrilleDialogueModif
-    {
-        public int id { get; set; }
-        public int Dialogue { get; set; }
-        public DateTime? Date { get; set; }
-        public string Nature { get; set; }
-        public string Responsable { get; set; }
-        public string Libelle { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual API_T_CertifGrilleDialogue DialogueNavigation { get; set; }
-    }
+public partial class API_T_CertifGrilleDialogueModif
+{
+    public int id { get; set; }
+
+    public int Dialogue { get; set; }
+
+    public DateTime? Date { get; set; }
+
+    public string Nature { get; set; }
+
+    public string Responsable { get; set; }
+
+    public string Libelle { get; set; }
+
+    public virtual API_T_CertifGrilleDialogue DialogueNavigation { get; set; }
 }

@@ -3,22 +3,31 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_DOCLIGNEEMPL
-    {
-        public int DL_No { get; set; }
-        public int DP_No { get; set; }
-        public decimal? DL_Qte { get; set; }
-        public decimal? DL_QteAControler { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_DOCLIGNE DL_NoNavigation { get; set; }
-        public virtual F_DEPOTEMPL DP_NoNavigation { get; set; }
-    }
+public partial class F_DOCLIGNEEMPL
+{
+    public int DL_No { get; set; }
+
+    public int DP_No { get; set; }
+
+    public decimal? DL_Qte { get; set; }
+
+    public decimal? DL_QteAControler { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_DOCLIGNE DL_NoNavigation { get; set; }
+
+    public virtual F_DEPOTEMPL DP_NoNavigation { get; set; }
 }

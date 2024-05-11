@@ -3,43 +3,63 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_BordereauDetail
 {
-    public partial class API_T_BordereauDetail
-    {
-        public API_T_BordereauDetail()
-        {
-            API_T_AttachementDetail = new HashSet<API_T_AttachementDetail>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public int Bordereau { get; set; }
-        public int? Article { get; set; }
-        public string AR_Ref { get; set; }
-        public decimal? QteMarche { get; set; }
-        public decimal? PUMarche { get; set; }
-        public decimal? MontantMarche { get; set; }
-        public decimal? PU { get; set; }
-        public decimal? CoutU { get; set; }
-        public decimal? MargeU { get; set; }
-        public string Unite { get; set; }
-        public string Consistance { get; set; }
-        public string Libelle { get; set; }
-        public decimal? Montant { get; set; }
-        public decimal? CoutTotal { get; set; }
-        public decimal? MargeTotale { get; set; }
-        public decimal? MargeP { get; set; }
-        public string NumeroPrix { get; set; }
-        public int Ordre { get; set; }
-        public decimal? QteCumul { get; set; }
-        public decimal? QteReste { get; set; }
-        public decimal? MontantCumul { get; set; }
-        public decimal? MontantReste { get; set; }
-        public decimal? MontantTTC { get; set; }
-        public decimal? PUTTC { get; set; }
-        public decimal? Taxe { get; set; }
+    public int Bordereau { get; set; }
 
-        public virtual API_T_Bordereau BordereauNavigation { get; set; }
-        public virtual ICollection<API_T_AttachementDetail> API_T_AttachementDetail { get; set; }
-    }
+    public int? Article { get; set; }
+
+    public string AR_Ref { get; set; }
+
+    public decimal? QteMarche { get; set; }
+
+    public decimal? PUMarche { get; set; }
+
+    public decimal? MontantMarche { get; set; }
+
+    public decimal? PU { get; set; }
+
+    public decimal? CoutU { get; set; }
+
+    public decimal? MargeU { get; set; }
+
+    public string Unite { get; set; }
+
+    public string Consistance { get; set; }
+
+    public string Libelle { get; set; }
+
+    public decimal? Montant { get; set; }
+
+    public decimal? CoutTotal { get; set; }
+
+    public decimal? MargeTotale { get; set; }
+
+    public decimal? MargeP { get; set; }
+
+    public string NumeroPrix { get; set; }
+
+    public int Ordre { get; set; }
+
+    public decimal? QteCumul { get; set; }
+
+    public decimal? QteReste { get; set; }
+
+    public decimal? MontantCumul { get; set; }
+
+    public decimal? MontantReste { get; set; }
+
+    public decimal? MontantTTC { get; set; }
+
+    public decimal? PUTTC { get; set; }
+
+    public decimal? Taxe { get; set; }
+
+    public virtual ICollection<API_T_AttachementDetail> API_T_AttachementDetail { get; set; } = new List<API_T_AttachementDetail>();
+
+    public virtual API_T_Bordereau BordereauNavigation { get; set; }
 }

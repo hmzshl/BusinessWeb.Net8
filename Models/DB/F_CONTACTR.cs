@@ -3,38 +3,63 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_CONTACTR
-    {
-        public string DR_Num { get; set; }
-        public byte[] cbDR_Num { get; set; }
-        public string CR_Nom { get; set; }
-        public byte[] cbCR_Nom { get; set; }
-        public string CR_Prenom { get; set; }
-        public byte[] cbCR_Prenom { get; set; }
-        public short? N_Service { get; set; }
-        public string CR_Fonction { get; set; }
-        public string CR_Telephone { get; set; }
-        public string CR_TelPortable { get; set; }
-        public string CR_Telecopie { get; set; }
-        public string CR_EMail { get; set; }
-        public short? CR_Civilite { get; set; }
-        public short? N_Contact { get; set; }
-        public string CR_Adresse { get; set; }
-        public string CR_Complement { get; set; }
-        public string CR_CodePostal { get; set; }
-        public string CR_Ville { get; set; }
-        public int? CR_No { get; set; }
-        public string CR_CodeRegion { get; set; }
-        public string CR_Pays { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_DRECOUVREMENT DR_NumNavigation { get; set; }
-    }
+public partial class F_CONTACTR
+{
+    public string DR_Num { get; set; }
+
+    public byte[] cbDR_Num { get; set; }
+
+    public string CR_Nom { get; set; }
+
+    public byte[] cbCR_Nom { get; set; }
+
+    public string CR_Prenom { get; set; }
+
+    public byte[] cbCR_Prenom { get; set; }
+
+    public short? N_Service { get; set; }
+
+    public string CR_Fonction { get; set; }
+
+    public string CR_Telephone { get; set; }
+
+    public string CR_TelPortable { get; set; }
+
+    public string CR_Telecopie { get; set; }
+
+    public string CR_EMail { get; set; }
+
+    public short? CR_Civilite { get; set; }
+
+    public short? N_Contact { get; set; }
+
+    public string CR_Adresse { get; set; }
+
+    public string CR_Complement { get; set; }
+
+    public string CR_CodePostal { get; set; }
+
+    public string CR_Ville { get; set; }
+
+    public int? CR_No { get; set; }
+
+    public string CR_CodeRegion { get; set; }
+
+    public string CR_Pays { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_DRECOUVREMENT DR_NumNavigation { get; set; }
 }

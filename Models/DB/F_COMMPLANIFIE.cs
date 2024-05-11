@@ -3,62 +3,113 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_COMMPLANIFIE
 {
-    public partial class F_COMMPLANIFIE
-    {
-        public short? CP_Type { get; set; }
-        public short? CP_Moyen { get; set; }
-        public string CP_Intitule { get; set; }
-        public byte[] cbCP_Intitule { get; set; }
-        public short? CP_Frequence { get; set; }
-        public short? CP_Jour { get; set; }
-        public string CP_Heure { get; set; }
-        public short? CP_Demarrage { get; set; }
-        public string DE_IntituleDe { get; set; }
-        public string DE_IntituleA { get; set; }
-        public short? CP_ValideArt { get; set; }
-        public short? CP_ValideCli { get; set; }
-        public short? CP_ValideInven { get; set; }
-        public short? CP_ValideRglt { get; set; }
-        public short? CP_TypeArt { get; set; }
-        public string FA_CodeFamilleDe { get; set; }
-        public string FA_CodeFamilleA { get; set; }
-        public string AR_RefDe { get; set; }
-        public string AR_RefA { get; set; }
-        public DateTime? AR_DateCreationDe { get; set; }
-        public DateTime? AR_DateCreationA { get; set; }
-        public DateTime? AR_DateModifDe { get; set; }
-        public DateTime? AR_DateModifA { get; set; }
-        public short? CP_Transmission { get; set; }
-        public string CT_NumDe { get; set; }
-        public string CT_NumA { get; set; }
-        public DateTime? CT_DateCreateDe { get; set; }
-        public DateTime? CT_DateCreateA { get; set; }
-        public DateTime? CP_DateInven { get; set; }
-        public short? CP_TypeInven { get; set; }
-        public short? CP_ReajusteInven { get; set; }
-        public short? CP_ArtRecept { get; set; }
-        public short? CP_CliRecept { get; set; }
-        public short? CP_ReajusteRecept { get; set; }
-        public short? CP_SuppRecept { get; set; }
-        public short? CP_TypeRglt { get; set; }
-        public short? CP_EtatRglt { get; set; }
-        public DateTime? CP_DateRgltDe { get; set; }
-        public DateTime? CP_DateRgltA { get; set; }
-        public short? CP_TransBCRglt { get; set; }
-        public short? CP_SuppBCRglt { get; set; }
-        public short? CP_CptaRglt { get; set; }
-        public int? CP_No { get; set; }
-        public short? CP_Origine { get; set; }
-        public short? CP_EtatStockInven { get; set; }
-        public short? CP_TypeTransmissionInven { get; set; }
-        public short? CP_DetEmplacementInven { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
-    }
+    public short? CP_Type { get; set; }
+
+    public short? CP_Moyen { get; set; }
+
+    public string CP_Intitule { get; set; }
+
+    public byte[] cbCP_Intitule { get; set; }
+
+    public short? CP_Frequence { get; set; }
+
+    public short? CP_Jour { get; set; }
+
+    public string CP_Heure { get; set; }
+
+    public short? CP_Demarrage { get; set; }
+
+    public string DE_IntituleDe { get; set; }
+
+    public string DE_IntituleA { get; set; }
+
+    public short? CP_ValideArt { get; set; }
+
+    public short? CP_ValideCli { get; set; }
+
+    public short? CP_ValideInven { get; set; }
+
+    public short? CP_ValideRglt { get; set; }
+
+    public short? CP_TypeArt { get; set; }
+
+    public string FA_CodeFamilleDe { get; set; }
+
+    public string FA_CodeFamilleA { get; set; }
+
+    public string AR_RefDe { get; set; }
+
+    public string AR_RefA { get; set; }
+
+    public DateTime? AR_DateCreationDe { get; set; }
+
+    public DateTime? AR_DateCreationA { get; set; }
+
+    public DateTime? AR_DateModifDe { get; set; }
+
+    public DateTime? AR_DateModifA { get; set; }
+
+    public short? CP_Transmission { get; set; }
+
+    public string CT_NumDe { get; set; }
+
+    public string CT_NumA { get; set; }
+
+    public DateTime? CT_DateCreateDe { get; set; }
+
+    public DateTime? CT_DateCreateA { get; set; }
+
+    public DateTime? CP_DateInven { get; set; }
+
+    public short? CP_TypeInven { get; set; }
+
+    public short? CP_ReajusteInven { get; set; }
+
+    public short? CP_ArtRecept { get; set; }
+
+    public short? CP_CliRecept { get; set; }
+
+    public short? CP_ReajusteRecept { get; set; }
+
+    public short? CP_SuppRecept { get; set; }
+
+    public short? CP_TypeRglt { get; set; }
+
+    public short? CP_EtatRglt { get; set; }
+
+    public DateTime? CP_DateRgltDe { get; set; }
+
+    public DateTime? CP_DateRgltA { get; set; }
+
+    public short? CP_TransBCRglt { get; set; }
+
+    public short? CP_SuppBCRglt { get; set; }
+
+    public short? CP_CptaRglt { get; set; }
+
+    public int? CP_No { get; set; }
+
+    public short? CP_Origine { get; set; }
+
+    public short? CP_EtatStockInven { get; set; }
+
+    public short? CP_TypeTransmissionInven { get; set; }
+
+    public short? CP_DetEmplacementInven { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 }

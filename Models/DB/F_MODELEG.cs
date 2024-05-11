@@ -3,28 +3,33 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_MODELEG
 {
-    public partial class F_MODELEG
-    {
-        public F_MODELEG()
-        {
-            F_EMODELEG = new HashSet<F_EMODELEG>();
-        }
+    public int MG_No { get; set; }
 
-        public int MG_No { get; set; }
-        public short? MG_Type { get; set; }
-        public string MG_Intitule { get; set; }
-        public byte[] cbMG_Intitule { get; set; }
-        public string MG_Raccourci { get; set; }
-        public byte[] cbMG_Raccourci { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public short? MG_Type { get; set; }
 
-        public virtual ICollection<F_EMODELEG> F_EMODELEG { get; set; }
-    }
+    public string MG_Intitule { get; set; }
+
+    public byte[] cbMG_Intitule { get; set; }
+
+    public string MG_Raccourci { get; set; }
+
+    public byte[] cbMG_Raccourci { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual ICollection<F_EMODELEG> F_EMODELEG { get; set; } = new List<F_EMODELEG>();
 }

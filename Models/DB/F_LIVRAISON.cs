@@ -3,43 +3,61 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_LIVRAISON
 {
-    public partial class F_LIVRAISON
-    {
-        public F_LIVRAISON()
-        {
-            F_ABOENTETE = new HashSet<F_ABOENTETE>();
-            F_DOCENTETE = new HashSet<F_DOCENTETE>();
-        }
+    public int LI_No { get; set; }
 
-        public int LI_No { get; set; }
-        public string CT_Num { get; set; }
-        public byte[] cbCT_Num { get; set; }
-        public string LI_Intitule { get; set; }
-        public byte[] cbLI_Intitule { get; set; }
-        public string LI_Adresse { get; set; }
-        public string LI_Complement { get; set; }
-        public string LI_CodePostal { get; set; }
-        public string LI_Ville { get; set; }
-        public string LI_CodeRegion { get; set; }
-        public string LI_Pays { get; set; }
-        public string LI_Contact { get; set; }
-        public short? N_Expedition { get; set; }
-        public short? N_Condition { get; set; }
-        public short? LI_Principal { get; set; }
-        public string LI_Telephone { get; set; }
-        public string LI_Telecopie { get; set; }
-        public string LI_EMail { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public string CT_Num { get; set; }
 
-        public virtual F_COMPTET CT_NumNavigation { get; set; }
-        public virtual ICollection<F_ABOENTETE> F_ABOENTETE { get; set; }
-        public virtual ICollection<F_DOCENTETE> F_DOCENTETE { get; set; }
-    }
+    public byte[] cbCT_Num { get; set; }
+
+    public string LI_Intitule { get; set; }
+
+    public byte[] cbLI_Intitule { get; set; }
+
+    public string LI_Adresse { get; set; }
+
+    public string LI_Complement { get; set; }
+
+    public string LI_CodePostal { get; set; }
+
+    public string LI_Ville { get; set; }
+
+    public string LI_CodeRegion { get; set; }
+
+    public string LI_Pays { get; set; }
+
+    public string LI_Contact { get; set; }
+
+    public short? N_Expedition { get; set; }
+
+    public short? N_Condition { get; set; }
+
+    public short? LI_Principal { get; set; }
+
+    public string LI_Telephone { get; set; }
+
+    public string LI_Telecopie { get; set; }
+
+    public string LI_EMail { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_COMPTET CT_NumNavigation { get; set; }
+
+    public virtual ICollection<F_ABOENTETE> F_ABOENTETE { get; set; } = new List<F_ABOENTETE>();
+
+    public virtual ICollection<F_DOCENTETE> F_DOCENTETE { get; set; } = new List<F_DOCENTETE>();
 }

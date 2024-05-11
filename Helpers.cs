@@ -628,7 +628,74 @@ namespace BusinessWeb
             result = Regex.Replace(serie, "\\d+", m => (int.Parse(m.Value) + 1).ToString(new string('0', m.Value.Length)));
             return result;
         }
-        public void DisableTriggers(DB db, string Table, string Operation)
+		public string IncrementString(string input)
+		{
+			// Regular expression to match a numeric part at the end of the string
+			var regex = new Regex(@"^(.*?)(\d*)$");
+			var match = regex.Match(input);
+
+			if (match.Success)
+			{
+				// Extract the non-numeric prefix and the numeric part
+				string prefix = match.Groups[1].Value;
+				string numericPart = match.Groups[2].Value;
+
+				if (string.IsNullOrEmpty(numericPart))
+				{
+					// If the string doesn't end with a numeric part, append "1"
+					return prefix + "1";
+				}
+				else
+				{
+					// Convert the numeric part to an integer and increment it
+					int number = int.Parse(numericPart) + 1;
+
+					// Replace the old numeric part with the incremented one
+					string incrementedPart = number.ToString().PadLeft(numericPart.Length, '0');
+					return prefix + incrementedPart;
+				}
+			}
+			else
+			{
+				// If the string doesn't match the pattern, return the original string
+				return input;
+			}
+		}
+		public void DisableAllTriggers(DB db, string Table)
+        {
+            string q1 = @"DECLARE @tableName NVARCHAR(MAX);"+
+                            @"SET @tableName = '"+Table+"';"+
+
+                            @"DECLARE @disableTriggerScript NVARCHAR(MAX) = '';
+
+                            SELECT @disableTriggerScript = @disableTriggerScript + 
+                                'DISABLE TRIGGER ' + name + ' ON ' + @tableName + ';' + CHAR(13)
+                            FROM sys.triggers
+                            WHERE parent_class = 1 -- Table object
+                                AND parent_id = OBJECT_ID(@tableName);
+
+                            EXEC(@disableTriggerScript);
+                            ";
+			db.Database.ExecuteSqlRaw(q1);
+		}
+		public void EnableAllTriggers(DB db, string Table)
+		{
+			string q1 = @"DECLARE @tableName NVARCHAR(MAX);" +
+							@"SET @tableName = '" + Table + "';" +
+
+							@"DECLARE @disableTriggerScript NVARCHAR(MAX) = '';
+
+                            SELECT @disableTriggerScript = @disableTriggerScript + 
+                                'ENABLE TRIGGER ' + name + ' ON ' + @tableName + ';' + CHAR(13)
+                            FROM sys.triggers
+                            WHERE parent_class = 1 -- Table object
+                                AND parent_id = OBJECT_ID(@tableName);
+
+                            EXEC(@disableTriggerScript);
+                            ";
+			db.Database.ExecuteSqlRaw(q1);
+		}
+		public void DisableTriggers(DB db, string Table, string Operation)
         {
             if (Table == "F_CREGLEMENT" && Operation == "UPD")
             {

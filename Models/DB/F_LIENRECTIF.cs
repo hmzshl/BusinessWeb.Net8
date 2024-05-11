@@ -3,20 +3,29 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_LIENRECTIF
 {
-    public partial class F_LIENRECTIF
-    {
-        public short? DO_Domaine { get; set; }
-        public string LR_Rectifiee { get; set; }
-        public byte[] cbLR_Rectifiee { get; set; }
-        public string LR_Rectificative { get; set; }
-        public byte[] cbLR_Rectificative { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
-    }
+    public short? DO_Domaine { get; set; }
+
+    public string LR_Rectifiee { get; set; }
+
+    public byte[] cbLR_Rectifiee { get; set; }
+
+    public string LR_Rectificative { get; set; }
+
+    public byte[] cbLR_Rectificative { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 }

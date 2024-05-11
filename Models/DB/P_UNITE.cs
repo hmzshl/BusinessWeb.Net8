@@ -3,16 +3,21 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class P_UNITE
 {
-    public partial class P_UNITE
-    {
-        public string U_Intitule { get; set; }
-        public short? U_Correspondance { get; set; }
-        public short? U_NbUnite { get; set; }
-        public short? U_UniteTemps { get; set; }
-        public string U_EdiCode { get; set; }
-        public short? cbIndice { get; set; }
-        public int cbMarq { get; set; }
-    }
+    public string U_Intitule { get; set; }
+
+    public short? U_Correspondance { get; set; }
+
+    public short? U_NbUnite { get; set; }
+
+    public short? U_UniteTemps { get; set; }
+
+    public string U_EdiCode { get; set; }
+
+    public short? cbIndice { get; set; }
+
+    public int cbMarq { get; set; }
 }

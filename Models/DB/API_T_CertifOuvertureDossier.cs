@@ -3,31 +3,39 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class API_T_CertifOuvertureDossier
 {
-    public partial class API_T_CertifOuvertureDossier
-    {
-        public API_T_CertifOuvertureDossier()
-        {
-            API_T_CertifDocument = new HashSet<API_T_CertifDocument>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public string Numero { get; set; }
-        public DateTime? Date { get; set; }
-        public int CO_No { get; set; }
-        public string Intitule { get; set; }
-        public string Interlocuteur { get; set; }
-        public string Service { get; set; }
-        public string Telephone { get; set; }
-        public string Fax { get; set; }
-        public string Email { get; set; }
-        public string Adresse { get; set; }
-        public string Commentaire { get; set; }
-        public string NumeroDossier { get; set; }
-        public DateTime? DateOuverture { get; set; }
-        public int Statut { get; set; }
+    public string Numero { get; set; }
 
-        public virtual ICollection<API_T_CertifDocument> API_T_CertifDocument { get; set; }
-    }
+    public DateTime? Date { get; set; }
+
+    public int CO_No { get; set; }
+
+    public string Intitule { get; set; }
+
+    public string Interlocuteur { get; set; }
+
+    public string Service { get; set; }
+
+    public string Telephone { get; set; }
+
+    public string Fax { get; set; }
+
+    public string Email { get; set; }
+
+    public string Adresse { get; set; }
+
+    public string Commentaire { get; set; }
+
+    public string NumeroDossier { get; set; }
+
+    public DateTime? DateOuverture { get; set; }
+
+    public int Statut { get; set; }
+
+    public virtual ICollection<API_T_CertifDocument> API_T_CertifDocument { get; set; } = new List<API_T_CertifDocument>();
 }

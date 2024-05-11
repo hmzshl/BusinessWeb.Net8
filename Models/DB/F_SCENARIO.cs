@@ -3,25 +3,27 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
+namespace BusinessWeb.Models.DB;
+
+public partial class F_SCENARIO
 {
-    public partial class F_SCENARIO
-    {
-        public F_SCENARIO()
-        {
-            F_ESCENARIO = new HashSet<F_ESCENARIO>();
-        }
+    public int? SC_No { get; set; }
 
-        public int? SC_No { get; set; }
-        public string SC_Intitule { get; set; }
-        public byte[] cbSC_Intitule { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+    public string SC_Intitule { get; set; }
 
-        public virtual ICollection<F_ESCENARIO> F_ESCENARIO { get; set; }
-    }
+    public byte[] cbSC_Intitule { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual ICollection<F_ESCENARIO> F_ESCENARIO { get; set; } = new List<F_ESCENARIO>();
 }

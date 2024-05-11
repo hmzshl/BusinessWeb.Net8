@@ -3,23 +3,33 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_PROJETLIGNE
-    {
-        public string PF_Num { get; set; }
-        public byte[] cbPF_Num { get; set; }
-        public int? DL_No { get; set; }
-        public short? PL_Ordre { get; set; }
-        public short? PF_Type { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_DOCLIGNE DL_NoNavigation { get; set; }
-        public virtual F_PROJETFABRICATION PF_NumNavigation { get; set; }
-    }
+public partial class F_PROJETLIGNE
+{
+    public string PF_Num { get; set; }
+
+    public byte[] cbPF_Num { get; set; }
+
+    public int? DL_No { get; set; }
+
+    public short? PL_Ordre { get; set; }
+
+    public short? PF_Type { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_DOCLIGNE DL_NoNavigation { get; set; }
+
+    public virtual F_PROJETFABRICATION PF_NumNavigation { get; set; }
 }

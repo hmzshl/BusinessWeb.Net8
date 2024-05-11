@@ -3,33 +3,53 @@
 using System;
 using System.Collections.Generic;
 
-namespace BusinessWeb.Models.DB
-{
-    public partial class F_LOTSERIE
-    {
-        public string AR_Ref { get; set; }
-        public byte[] cbAR_Ref { get; set; }
-        public string LS_NoSerie { get; set; }
-        public byte[] cbLS_NoSerie { get; set; }
-        public DateTime? LS_Peremption { get; set; }
-        public DateTime? LS_Fabrication { get; set; }
-        public decimal? LS_Qte { get; set; }
-        public decimal? LS_QteRestant { get; set; }
-        public decimal? LS_QteRes { get; set; }
-        public short? LS_LotEpuise { get; set; }
-        public int DE_No { get; set; }
-        public int? DL_NoIn { get; set; }
-        public int? DL_NoOut { get; set; }
-        public short? LS_MvtStock { get; set; }
-        public string LS_Complement { get; set; }
-        public short? cbProt { get; set; }
-        public int cbMarq { get; set; }
-        public string cbCreateur { get; set; }
-        public DateTime? cbModification { get; set; }
-        public int? cbReplication { get; set; }
-        public short? cbFlag { get; set; }
+namespace BusinessWeb.Models.DB;
 
-        public virtual F_ARTICLE AR_RefNavigation { get; set; }
-        public virtual F_DEPOT DE_NoNavigation { get; set; }
-    }
+public partial class F_LOTSERIE
+{
+    public string AR_Ref { get; set; }
+
+    public byte[] cbAR_Ref { get; set; }
+
+    public string LS_NoSerie { get; set; }
+
+    public byte[] cbLS_NoSerie { get; set; }
+
+    public DateTime? LS_Peremption { get; set; }
+
+    public DateTime? LS_Fabrication { get; set; }
+
+    public decimal? LS_Qte { get; set; }
+
+    public decimal? LS_QteRestant { get; set; }
+
+    public decimal? LS_QteRes { get; set; }
+
+    public short? LS_LotEpuise { get; set; }
+
+    public int DE_No { get; set; }
+
+    public int? DL_NoIn { get; set; }
+
+    public int? DL_NoOut { get; set; }
+
+    public short? LS_MvtStock { get; set; }
+
+    public string LS_Complement { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public virtual F_ARTICLE AR_RefNavigation { get; set; }
+
+    public virtual F_DEPOT DE_NoNavigation { get; set; }
 }
