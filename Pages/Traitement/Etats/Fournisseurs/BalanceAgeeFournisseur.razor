@@ -159,7 +159,7 @@
                                  <Template>
                                      @{
                                         var item = (context as API_V_BALANCEAGEEFOURNISSEUR);
-                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_30J"))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item._30J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_30J"))" Shade="Shade.Darker" Variant="Variant.Text" Visible=@(item._30J != 0) Text="@((item._30J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Secondary" />
                                     }
                                 </Template>
                             </GridColumn>
@@ -167,7 +167,7 @@
                                  <Template>
                                      @{
                                         var item = (context as API_V_BALANCEAGEEFOURNISSEUR);
-                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_60J"))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item._60J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_60J"))" Shade="Shade.Darker" Variant="Variant.Text" Visible=@(item._60J != 0) Text="@((item._60J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Secondary" />
                                     }
                                 </Template>
                             </GridColumn>
@@ -175,7 +175,7 @@
                                  <Template>
                                      @{
                                         var item = (context as API_V_BALANCEAGEEFOURNISSEUR);
-                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_90J"))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item._90J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_90J"))" Shade="Shade.Darker" Variant="Variant.Text" Visible=@(item._90J != 0) Text="@((item._90J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Secondary" />
                                     }
                                 </Template>
                             </GridColumn>
@@ -183,7 +183,7 @@
                                  <Template>
                                      @{
                                         var item = (context as API_V_BALANCEAGEEFOURNISSEUR);
-                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_120J"))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item._120J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_120J"))" Shade="Shade.Darker" Variant="Variant.Text" Visible=@(item._120J != 0) Text="@((item._120J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Secondary" />
                                     }
                                 </Template>
                             </GridColumn>
@@ -191,7 +191,7 @@
                                  <Template>
                                      @{
                                         var item = (context as API_V_BALANCEAGEEFOURNISSEUR);
-                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_150J"))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item._150J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"_150J"))" Shade="Shade.Darker" Variant="Variant.Text" Visible=@(item._150J != 0) Text="@((item._150J ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Secondary" />
                                     }
                                 </Template>
                             </GridColumn>
@@ -199,7 +199,7 @@
                                  <Template>
                                      @{
                                         var item = (context as API_V_BALANCEAGEEFOURNISSEUR);
-                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"AN"))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item.AN ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"AN"))" Shade="Shade.Darker" Variant="Variant.Text" Visible=@(item.AN != 0) Text="@((item.AN ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Secondary" />
                                     }
                                 </Template>
                             </GridColumn>
@@ -207,7 +207,7 @@
                                  <Template>
                                      @{
                                         var item = (context as API_V_BALANCEAGEEFOURNISSEUR);
-                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"Encours"))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item.Encours ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowDetail(item.CT_Num,"Encours"))" Shade="Shade.Darker" Variant="Variant.Text" Visible=@(item.Encours != 0) Text="@((item.Encours ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Secondary" />
                                     }
                                 </Template>
                             </GridColumn>

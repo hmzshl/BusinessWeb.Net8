@@ -11,7 +11,7 @@
                         <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
                             <Template>
                                 <div style="margin-left: 5px; margin-right: 10px;" id="debut">
-                                    <SfDatePicker Placeholder="Date Début" Width="130px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
+                                    <SfDatePicker Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
                                      <DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
                                  </SfDatePicker>
                              </div>
@@ -21,7 +21,7 @@
                      <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
                          <Template>
                              <div style="margin-left: 5px; margin-right: 10px;" id="fin">
-                                 <SfDatePicker Placeholder="Date Fin" Width="130px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
+                                 <SfDatePicker Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
                                      <DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
                                  </SfDatePicker>
                              </div>
@@ -112,13 +112,15 @@
                             <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_CREGLEMENT.Echeance)" HeaderText="Statut" />
 
                         </GridColumns>
-                        <SfSpinner @bind-Visible="@loading">
-                        </SfSpinner>
                     </SfGrid>
                 </div>
 
             </div>
         </RadzenContent>
+        <MudBlazor.MudOverlay Style="margin-bottom: 0px; height: 100vh;" @bind-Visible="loading" DarkBackground="true" Absolute="true">
+            <SfSpinner Label="Chargement..." Visible="true">
+            </SfSpinner>
+        </MudBlazor.MudOverlay>
     </Card_1>
 }
 else
@@ -176,6 +178,8 @@ else
     }
     private async Task UpdateGrid()
     {
+        loading = true;
+        await Task.Delay(100);
         items = db.API_V_AUDIT_F_CREGLEMENT
         .Where(a => (
             (date1 != null && a.Timestamp >= date1) || date1 == null)
@@ -184,7 +188,9 @@ else
                && (selected_operation == null || (a.Operation == selected_operation))
                 )
                 .OrderByDescending(a => a.Timestamp)
-                .ToList();        
+                .ToList();
+        loading = false;
+        await Task.Delay(100);
     }
 
 

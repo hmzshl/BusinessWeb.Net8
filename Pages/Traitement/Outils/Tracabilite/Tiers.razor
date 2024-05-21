@@ -5,7 +5,7 @@
                 <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
                     <Template>
                         <div style="margin-left: 5px; margin-right: 10px;" id="debut">
-                            <SfDatePicker Placeholder="Date Début" Width="130px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
+                            <SfDatePicker Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
                                 <DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
                             </SfDatePicker>
                         </div>
@@ -15,7 +15,7 @@
                 <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
                     <Template>
                         <div style="margin-left: 5px; margin-right: 10px;" id="fin">
-                            <SfDatePicker Placeholder="Date Fin" Width="130px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
+                            <SfDatePicker Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
                                 <DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
                             </SfDatePicker>
                         </div>
@@ -107,13 +107,15 @@
                     <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique03)" HeaderText="Stat 3"></GridColumn>
                     <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique04)" HeaderText="Stat 4"></GridColumn>
                 </GridColumns>
-                <SfSpinner @bind-Visible="@loading">
-                </SfSpinner>
             </SfGrid>
         </div>
 
     </div>
 </RadzenContent>
+<MudBlazor.MudOverlay Style="margin-bottom: 0px; height: 100vh;" @bind-Visible="loading" DarkBackground="true" Absolute="true">
+    <SfSpinner Label="Chargement..." Visible="true">
+    </SfSpinner>
+</MudBlazor.MudOverlay>
 
 
 
@@ -161,6 +163,8 @@
     }
     private async Task UpdateGrid()
     {
+        loading = true;
+        await Task.Delay(100);
         items = db.API_V_AUDIT_F_COMPTET
         .Where(a => a.CT_Type == CT_Type)
         .Where(a => (
@@ -171,6 +175,9 @@
                 )
                 .OrderByDescending(a => a.Timestamp)
                 .ToList();
+
+        loading = false;
+        await Task.Delay(100);
     }
 
 

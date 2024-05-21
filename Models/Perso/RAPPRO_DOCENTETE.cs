@@ -10,7 +10,8 @@ namespace BusinessWeb.Models.Perso
         public int? DE_No2 { get; set; }
         public DateTime?  DO_Date2 { get; set; }
         public Decimal? DO_TotalHT2 { get; set; }
-        public int Statut { get; set; }
+		public Decimal? DO_TotalTTC2 { get; set; }
+		public string Statut { get; set; }
     }
 }
 

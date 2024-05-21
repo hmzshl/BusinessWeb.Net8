@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting.WindowsServices;
 using Microsoft.OData.ModelBuilder;
+using MudBlazor.Services;
 using Radzen;
 using Syncfusion.Blazor;
 using Syncfusion.Blazor.Popups;
@@ -25,6 +26,7 @@ builder.Host.UseWindowsService();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddAntDesign();
+builder.Services.AddMudServices();
 builder.Services.AddSyncfusionBlazor();
 builder.Services.AddScoped<SfDialogService>();
 builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
@@ -75,6 +77,13 @@ builder.Services.AddCors(opts => opts.AddDefaultPolicy(bld =>
         .WithExposedHeaders("*")
     ;
 }));
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("NewPolicy", builder =>
+    builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader());
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMvc(e => e.EnableEndpointRouting = false);
@@ -118,6 +127,7 @@ app.UseHttpsRedirection();
 app.UseHeaderPropagation();
 app.UseAuthentication();
 app.UseRouting();
+app.UseCors("NewPolicy");
 app.UseAuthorization();
 app.UseAntiforgery();
 app.UseEndpoints(endpoints =>

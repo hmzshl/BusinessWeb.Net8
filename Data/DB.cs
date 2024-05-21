@@ -2199,6 +2199,9 @@ public partial class DB : DbContext
             entity.Property(e => e.ModeLivraisonExpedition)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.NaturePrestationAutre)
+                .HasMaxLength(100)
+                .IsUnicode(false);
             entity.Property(e => e.Numero)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2512,7 +2515,7 @@ public partial class DB : DbContext
             entity.Property(e => e.Computer)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.DateOP).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateOP).HasColumnType("datetime");
             entity.Property(e => e.SessionWindows)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2565,8 +2568,8 @@ public partial class DB : DbContext
             entity.Property(e => e.BDG)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.CarteGriseDebut).HasColumnType("smalldatetime");
-            entity.Property(e => e.CarteGriseFin).HasColumnType("smalldatetime");
+            entity.Property(e => e.CarteGriseDebut).HasColumnType("datetime");
+            entity.Property(e => e.CarteGriseFin).HasColumnType("datetime");
             entity.Property(e => e.Chassis)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2579,8 +2582,8 @@ public partial class DB : DbContext
             entity.Property(e => e.DR)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.DateAchat).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateLocation).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateAchat).HasColumnType("datetime");
+            entity.Property(e => e.DateLocation).HasColumnType("datetime");
             entity.Property(e => e.Fournisseur)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2937,16 +2940,16 @@ public partial class DB : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.CoutMarchePrevisionnel).HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DateEnregistrement).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateEnregistrementCPS).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateEnregistrementExemplaire).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateExemplaireUnique).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateOrdreNotification).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateOrdreService).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateOuverturePils).HasColumnType("smalldatetime");
-            entity.Property(e => e.DatePublication).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateReceptionDefinitiveEffective).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateReceptionDefinitivePrevue).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateEnregistrement).HasColumnType("datetime");
+            entity.Property(e => e.DateEnregistrementCPS).HasColumnType("datetime");
+            entity.Property(e => e.DateEnregistrementExemplaire).HasColumnType("datetime");
+            entity.Property(e => e.DateExemplaireUnique).HasColumnType("datetime");
+            entity.Property(e => e.DateOrdreNotification).HasColumnType("datetime");
+            entity.Property(e => e.DateOrdreService).HasColumnType("datetime");
+            entity.Property(e => e.DateOuverturePils).HasColumnType("datetime");
+            entity.Property(e => e.DatePublication).HasColumnType("datetime");
+            entity.Property(e => e.DateReceptionDefinitiveEffective).HasColumnType("datetime");
+            entity.Property(e => e.DateReceptionDefinitivePrevue).HasColumnType("datetime");
             entity.Property(e => e.MontantAppelOffreEstime).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantRetenueGarantie).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.NumeroAppelOffre)
@@ -7159,49 +7162,7 @@ public partial class DB : DbContext
                     tb.HasTrigger("TG_UPD_F_ARTICLE");
                 });
 
-            entity.HasIndex(e => e.AR_Substitut, "FKIA_F_ARTICLE_AR_Ref");
-
-            entity.HasIndex(e => e.cbCL_No1, "FKIA_F_ARTICLE_CL_No1");
-
-            entity.HasIndex(e => e.cbCL_No2, "FKIA_F_ARTICLE_CL_No2");
-
-            entity.HasIndex(e => e.cbCL_No3, "FKIA_F_ARTICLE_CL_No3");
-
-            entity.HasIndex(e => e.cbCL_No4, "FKIA_F_ARTICLE_CL_No4");
-
-            entity.HasIndex(e => e.RP_CodeDefaut, "FKIA_F_ARTICLE_RP_Code");
-
-            entity.HasIndex(e => e.cbAR_CodeBarre, "IAR_CBARRE");
-
-            entity.HasIndex(e => new { e.cbAR_Design, e.cbAR_Ref }, "IAR_DESIGN");
-
-            entity.HasIndex(e => new { e.AR_Nomencl, e.cbAR_Design, e.cbAR_Ref }, "IAR_DESIGNNOMENCL");
-
-            entity.HasIndex(e => new { e.AR_Sommeil, e.cbAR_Design, e.cbAR_Ref }, "IAR_DESIGNSOM");
-
-            entity.HasIndex(e => new { e.CL_No1, e.cbAR_Ref }, "IAR_EMPL1");
-
-            entity.HasIndex(e => new { e.CL_No2, e.cbAR_Ref }, "IAR_EMPL2");
-
-            entity.HasIndex(e => new { e.CL_No3, e.cbAR_Ref }, "IAR_EMPL3");
-
-            entity.HasIndex(e => new { e.CL_No4, e.cbAR_Ref }, "IAR_EMPL4");
-
-            entity.HasIndex(e => new { e.cbFA_CodeFamille, e.cbAR_Ref }, "IAR_FAMILLE");
-
-            entity.HasIndex(e => new { e.AR_Sommeil, e.cbFA_CodeFamille, e.cbAR_Ref }, "IAR_FAMILLESOM");
-
-            entity.HasIndex(e => e.cbAR_Raccourci, "IAR_RACC");
-
             entity.HasIndex(e => e.cbAR_Ref, "IAR_REF").IsUnique();
-
-            entity.HasIndex(e => new { e.AR_Nomencl, e.cbAR_Ref }, "IAR_REFNOMENCL");
-
-            entity.HasIndex(e => new { e.AR_Sommeil, e.cbAR_Ref }, "IAR_REFSOM");
-
-            entity.HasIndex(e => e.cbAR_Substitut, "IAR_SUBSTITUT");
-
-            entity.HasIndex(e => new { e.AR_Type, e.cbAR_Ref }, "IAR_TYPEREF");
 
             entity.HasIndex(e => e.AR_Ref, "UKA_F_ARTICLE_AR_Ref").IsUnique();
 
@@ -7214,8 +7175,8 @@ public partial class DB : DbContext
             entity.Property(e => e.AR_Coef).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.AR_CoefNouv).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.AR_CoutStd).HasColumnType("numeric(24, 6)");
-            entity.Property(e => e.AR_DateApplication).HasColumnType("smalldatetime");
-            entity.Property(e => e.AR_DateModif).HasColumnType("smalldatetime");
+            entity.Property(e => e.AR_DateApplication).HasColumnType("datetime");
+            entity.Property(e => e.AR_DateModif).HasColumnType("datetime");
             entity.Property(e => e.AR_Design)
                 .HasMaxLength(69)
                 .IsUnicode(false);
@@ -10493,9 +10454,9 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Contact)
                 .HasMaxLength(35)
                 .IsUnicode(false);
-            entity.Property(e => e.CT_DateFermeDebut).HasColumnType("smalldatetime");
-            entity.Property(e => e.CT_DateFermeFin).HasColumnType("smalldatetime");
-            entity.Property(e => e.CT_DateMAJ).HasColumnType("smalldatetime");
+            entity.Property(e => e.CT_DateFermeDebut).HasColumnType("datetime");
+            entity.Property(e => e.CT_DateFermeFin).HasColumnType("datetime");
+            entity.Property(e => e.CT_DateMAJ).HasColumnType("datetime");
             entity.Property(e => e.CT_EMail)
                 .HasMaxLength(69)
                 .IsUnicode(false);
@@ -10580,10 +10541,10 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_SvCotation)
                 .HasMaxLength(5)
                 .IsUnicode(false);
-            entity.Property(e => e.CT_SvDateBilan).HasColumnType("smalldatetime");
-            entity.Property(e => e.CT_SvDateCreate).HasColumnType("smalldatetime");
-            entity.Property(e => e.CT_SvDateIncid).HasColumnType("smalldatetime");
-            entity.Property(e => e.CT_SvDateMaj).HasColumnType("smalldatetime");
+            entity.Property(e => e.CT_SvDateBilan).HasColumnType("datetime");
+            entity.Property(e => e.CT_SvDateCreate).HasColumnType("datetime");
+            entity.Property(e => e.CT_SvDateIncid).HasColumnType("datetime");
+            entity.Property(e => e.CT_SvDateMaj).HasColumnType("datetime");
             entity.Property(e => e.CT_SvEffectif)
                 .HasMaxLength(11)
                 .IsUnicode(false);
@@ -11873,45 +11834,7 @@ public partial class DB : DbContext
                     tb.HasTrigger("TG_UPD_F_DOCENTETE");
                 });
 
-            entity.HasIndex(e => e.cbCA_No, "FKIA_F_DOCENTETE_CA_No");
-
-            entity.HasIndex(e => e.cbDE_No, "FKIA_F_DOCENTETE_DE_No");
-
-            entity.HasIndex(e => e.cbCA_Num, "IDO_ANAL");
-
-            entity.HasIndex(e => new { e.CA_No, e.DO_Attente, e.DO_Date, e.DO_Heure, e.cbDO_Tiers }, "IDO_CAISSE");
-
-            entity.HasIndex(e => e.CO_NoCaissier, "IDO_CAISSIER");
-
-            entity.HasIndex(e => e.cbCT_NumCentrale, "IDO_CENTRALE");
-
-            entity.HasIndex(e => e.cbCG_Num, "IDO_CGNUM");
-
-            entity.HasIndex(e => new { e.DO_Cloture, e.DO_Type, e.DO_Date }, "IDO_CLOTURE");
-
-            entity.HasIndex(e => new { e.DO_Domaine, e.DO_Date, e.cbDO_Tiers, e.DO_Type, e.cbDO_Piece }, "IDO_DATE");
-
-            entity.HasIndex(e => e.DE_No, "IDO_DEPOT");
-
-            entity.HasIndex(e => e.LI_No, "IDO_DEPOTCL");
-
-            entity.HasIndex(e => new { e.DO_Domaine, e.DO_Souche }, "IDO_DOMSOUCHE");
-
-            entity.HasIndex(e => e.cbDO_FactureFrs, "IDO_FACTURE");
-
-            entity.HasIndex(e => e.cbCT_NumPayeur, "IDO_NUM");
-
-            entity.HasIndex(e => e.CO_No, "IDO_REPRESENT");
-
-            entity.HasIndex(e => new { e.DO_Type, e.DO_Souche, e.cbDO_Piece }, "IDO_SOUCHE");
-
-            entity.HasIndex(e => new { e.DO_Type, e.DO_Date, e.cbDO_Tiers, e.DE_No, e.cbDO_Piece }, "IDO_TDATE");
-
-            entity.HasIndex(e => new { e.DO_Domaine, e.cbDO_Tiers, e.DO_Date, e.DO_Type, e.cbDO_Piece }, "IDO_TIERS");
-
             entity.HasIndex(e => new { e.DO_Type, e.cbDO_Piece }, "IDO_TPIECE").IsUnique();
-
-            entity.HasIndex(e => new { e.DO_Type, e.cbDO_Tiers, e.DO_Date, e.cbDO_Piece }, "IDO_TTIERS");
 
             entity.Property(e => e.CA_Num)
                 .HasMaxLength(13)
@@ -11959,18 +11882,18 @@ public partial class DB : DbContext
                 .HasMaxLength(25)
                 .IsUnicode(false);
             entity.Property(e => e.DO_Cours).HasColumnType("numeric(24, 6)");
-            entity.Property(e => e.DO_Date).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_DateExpedition).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_DateLivr).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_DateLivrRealisee).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_DebutAbo).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_DebutPeriod).HasColumnType("smalldatetime");
+            entity.Property(e => e.DO_Date).HasColumnType("datetime");
+            entity.Property(e => e.DO_DateExpedition).HasColumnType("datetime");
+            entity.Property(e => e.DO_DateLivr).HasColumnType("datetime");
+            entity.Property(e => e.DO_DateLivrRealisee).HasColumnType("datetime");
+            entity.Property(e => e.DO_DebutAbo).HasColumnType("datetime");
+            entity.Property(e => e.DO_DebutPeriod).HasColumnType("datetime");
             entity.Property(e => e.DO_Ecart).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DO_FactureFrs)
                 .HasMaxLength(35)
                 .IsUnicode(false);
-            entity.Property(e => e.DO_FinAbo).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_FinPeriod).HasColumnType("smalldatetime");
+            entity.Property(e => e.DO_FinAbo).HasColumnType("datetime");
+            entity.Property(e => e.DO_FinPeriod).HasColumnType("datetime");
             entity.Property(e => e.DO_Heure)
                 .HasMaxLength(9)
                 .IsUnicode(false)
@@ -11978,6 +11901,7 @@ public partial class DB : DbContext
             entity.Property(e => e.DO_Motif)
                 .HasMaxLength(69)
                 .IsUnicode(false);
+            entity.Property(e => e.DO_NetAPayer).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.DO_NoWeb)
                 .HasMaxLength(17)
                 .IsUnicode(false);
@@ -11997,6 +11921,8 @@ public partial class DB : DbContext
                 .HasMaxLength(17)
                 .IsUnicode(false);
             entity.Property(e => e.DO_TotalHT).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.DO_TotalHTNet).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.DO_TotalTTC).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.DO_TxEscompte).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DO_ValFrais).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DO_ValFranco).HasColumnType("numeric(24, 6)");
@@ -12191,49 +12117,7 @@ public partial class DB : DbContext
                     tb.HasTrigger("TG_UPD_F_DOCLIGNE");
                 });
 
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_DOCLIGNE_AR_Ref");
-
-            entity.HasIndex(e => e.cbDE_No, "FKIA_F_DOCLIGNE_DE_No");
-
-            entity.HasIndex(e => e.cbDL_NoLink, "FKIA_F_DOCLIGNE_DL_NoLink");
-
-            entity.HasIndex(e => e.RP_Code, "FKIA_F_DOCLIGNE_RP_Code");
-
-            entity.HasIndex(e => e.cbCA_Num, "IDL_ANAL");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No1, e.AG_No2 }, "IDL_ARTGAM");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No2 }, "IDL_ARTGAM2");
-
-            entity.HasIndex(e => new { e.DO_Type, e.cbDO_Piece, e.cbAR_RefCompose }, "IDL_COMPOSE");
-
-            entity.HasIndex(e => new { e.DE_No, e.cbAR_Ref, e.AG_No1, e.AG_No2, e.DO_Type }, "IDL_DEPOT");
-
-            entity.HasIndex(e => new { e.DO_Type, e.cbDO_Piece, e.DL_TRemPied, e.DL_Ligne }, "IDL_LIGNE");
-
             entity.HasIndex(e => e.DL_No, "IDL_NO").IsUnique();
-
-            entity.HasIndex(e => e.DL_NoLink, "IDL_NOLINK");
-
-            entity.HasIndex(e => new { e.DO_Domaine, e.cbDL_PieceBC }, "IDL_PIECECOM");
-
-            entity.HasIndex(e => new { e.DO_Domaine, e.DL_TypePL, e.cbDL_PieceBL }, "IDL_PIECELIVR");
-
-            entity.HasIndex(e => new { e.DO_Domaine, e.cbDL_PiecePL }, "IDL_PIECEPL");
-
-            entity.HasIndex(e => e.cbPF_Num, "IDL_PROJET");
-
-            entity.HasIndex(e => new { e.DO_Type, e.cbDO_Piece, e.cbAR_Ref, e.AG_No1, e.AG_No2, e.DL_NoRef }, "IDL_REF");
-
-            entity.HasIndex(e => new { e.DO_Type, e.cbDO_Piece, e.cbAF_RefFourniss }, "IDL_REFFOUR");
-
-            entity.HasIndex(e => e.CO_No, "IDL_REPRESENT");
-
-            entity.HasIndex(e => e.cbRP_Code, "IDL_RESSOURCE");
-
-            entity.HasIndex(e => new { e.DE_No, e.cbAR_Ref, e.AG_No1, e.AG_No2, e.DL_MvtStock, e.DL_DateBL }, "IDL_STOCK");
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.DO_Date }, "IDL_TIERS");
 
             entity.Property(e => e.AC_RefClient)
                 .HasMaxLength(19)
@@ -12263,10 +12147,10 @@ public partial class DB : DbContext
             entity.Property(e => e.DL_CodeTaxe3)
                 .HasMaxLength(5)
                 .IsUnicode(false);
-            entity.Property(e => e.DL_DateAvancement).HasColumnType("smalldatetime");
-            entity.Property(e => e.DL_DateBC).HasColumnType("smalldatetime");
-            entity.Property(e => e.DL_DateBL).HasColumnType("smalldatetime");
-            entity.Property(e => e.DL_DatePL).HasColumnType("smalldatetime");
+            entity.Property(e => e.DL_DateAvancement).HasColumnType("datetime");
+            entity.Property(e => e.DL_DateBC).HasColumnType("datetime");
+            entity.Property(e => e.DL_DateBL).HasColumnType("datetime");
+            entity.Property(e => e.DL_DatePL).HasColumnType("datetime");
             entity.Property(e => e.DL_Design)
                 .HasMaxLength(69)
                 .IsUnicode(false);
@@ -12303,8 +12187,8 @@ public partial class DB : DbContext
             entity.Property(e => e.DL_Taxe1).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_Taxe2).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_Taxe3).HasColumnType("numeric(24, 6)");
-            entity.Property(e => e.DO_Date).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_DateLivr).HasColumnType("smalldatetime");
+            entity.Property(e => e.DO_Date).HasColumnType("datetime");
+            entity.Property(e => e.DO_DateLivr).HasColumnType("datetime");
             entity.Property(e => e.DO_Piece)
                 .IsRequired()
                 .HasMaxLength(9)

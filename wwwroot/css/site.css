@@ -879,7 +879,7 @@ body {
 }
 
 .e-grid .e-gridheader .e-fltr-icon .e-sortfilterdiv {
-    margin: -13px 11px -12px 8px;
+    margin: -9px 11px -12px 8px;
 }
 
 .e-grid .e-gridheader .e-sortfilter .e-fltr-icon .e-headercelldiv {
@@ -2413,4 +2413,11 @@ th {
 }
 input {
     padding-left: 5px !important;
+}
+.e-grid .e-filtermenudiv {
+    margin: -10px -2px -12px 8px !important;
+}
+.rz-label {
+    margin-top: 5px !important;
+    font-weight: 700 !important;
 }

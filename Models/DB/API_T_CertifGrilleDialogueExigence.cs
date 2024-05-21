@@ -25,5 +25,11 @@ public partial class API_T_CertifGrilleDialogueExigence
 
     public string Utilisateur { get; set; }
 
+    public int Jugement { get; set; }
+
+    public int RegleDecision { get; set; }
+
+    public int ErreurMaximalTolere { get; set; }
+
     public virtual API_T_CertifGrilleDialogue DialogueNavigation { get; set; }
 }

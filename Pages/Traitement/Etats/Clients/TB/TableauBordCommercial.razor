@@ -31,7 +31,7 @@
                                 <Template>
                                     <RadzenLabel Text="JOURNEE" Component="journee"/>
                                     <div style="margin-left: 15px;" id="journee">
-                                        <SfDatePicker Width="130px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date" ShowTodayButton>
+                                        <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date" ShowTodayButton>
                                          <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
                                      </SfDatePicker>
                                     </div>
@@ -75,7 +75,7 @@
                             <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
                                 <Template>
                                     <div style="margin-left: 15px;" id="debut">
-                                        <SfDatePicker Placeholder="Date Début" Width="130px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
+                                        <SfDatePicker Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
                                          <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
                                      </SfDatePicker>
                                  </div>
@@ -86,7 +86,7 @@
                             <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
                                 <Template>
                                     <div style="margin-left: 15px;" id="fin">
-                                        <SfDatePicker Placeholder="Date Fin" Width="130px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
+                                        <SfDatePicker Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
                                          <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
                                      </SfDatePicker>
                                  </div>
@@ -172,7 +172,7 @@
                                             <Template>
                                                 @{
                                                     var item = (context as API_V_MARGE);
-                                                    <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 4px !important; padding-right: 4px !important;" Click="@(args => ShowClient(item))" Shade="Shade.Darker" Variant="Variant.Text" Text="@item.CT_Num" ButtonStyle="ButtonStyle.Info" />
+                                                    <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 4px !important; padding-right: 4px !important;" Click="@(args => ShowClient(item))" Shade="Shade.Darker" Variant="Variant.Text" Text="@item.CT_Num" ButtonStyle="ButtonStyle.Secondary" />
                                                 }
                                             </Template>
                                         </GridColumn>
@@ -255,7 +255,7 @@
                                                                                         <Template>
                                                 @{
                                                     var item = (context as API_V_MARGE);
-                                                    <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 4px !important; padding-right: 4px !important;" Click="@(args => ShowArticle(item))" Shade="Shade.Darker" Variant="Variant.Text" Text="@item.AR_Ref" ButtonStyle="ButtonStyle.Info" />
+                                                    <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 4px !important; padding-right: 4px !important;" Click="@(args => ShowArticle(item))" Shade="Shade.Darker" Variant="Variant.Text" Text="@item.AR_Ref" ButtonStyle="ButtonStyle.Secondary" />
                                                 }
                                             </Template>
                                         </GridColumn>

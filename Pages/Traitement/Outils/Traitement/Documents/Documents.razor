@@ -8,7 +8,7 @@
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
 							<Template>
 								<div style="margin-left: 5px; margin-right: 10px;" id="debut">
-									<SfDatePicker Placeholder="Date Début" Width="130px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
+									<SfDatePicker Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
 										<DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
 									</SfDatePicker>
 								</div>
@@ -18,7 +18,7 @@
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
 							<Template>
 								<div style="margin-left: 5px; margin-right: 10px;" id="fin">
-									<SfDatePicker Placeholder="Date Fin" Width="130px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
+									<SfDatePicker Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
 										<DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
 									</SfDatePicker>
 								</div>
@@ -109,20 +109,24 @@
 							<GridColumn Width="180" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CT_Intitule)" HeaderText="@(fn.getTiers(domaine))"></GridColumn>
 							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CA_Num)" HeaderText="Affaire"></GridColumn>
 							<GridColumn Width="150" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CA_Intitule)" HeaderText="Intitulé Affaire"></GridColumn>
-							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_TotalHT)" HeaderText="Total HT" Format="N2"></GridColumn>
+							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_TotalHT)" HeaderText="HT" Format="N2"></GridColumn>
+							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" HeaderText="TTC" Format="N2"></GridColumn>
 							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CO_Nom)" HeaderText="Collaborateur"></GridColumn>
 							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CG_Num)" HeaderText="Compte"></GridColumn>
 							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Coord01)" HeaderText="Entete 1"></GridColumn>
 							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Coord02)" HeaderText="Entete 2"></GridColumn>
 
 						</GridColumns>
-						<SfSpinner @bind-Visible="@loading">
-						</SfSpinner>
+
 					</SfGrid>
 				</div>
 
 			</div>
 		</RadzenContent>
+		<MudBlazor.MudOverlay Style="margin-bottom: 0px; height: 100vh;" @bind-Visible="loading" DarkBackground="true" Absolute="true">
+			<SfSpinner Label="Chargement..." Visible="true">
+			</SfSpinner>
+</MudBlazor.MudOverlay>
 	</Card_1>
 
 	<SfDialog Target="#target" Width="250px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_date" CloseOnEscape>
@@ -183,10 +187,11 @@ else
 	[Parameter] public string title { get; set; } = "";
 	private SfGrid<API_V_DOCENTETE> DefaultGrid;
 	bool IsLoaded = false;
+	bool loading = false;
 	DateTime? date1 = DateTime.Today;
 	DateTime? date2;
 	private List<API_V_DOCENTETE> items = new List<API_V_DOCENTETE>();
-	bool loading = false;
+
 
 	List<string> domaines = new List<string>();
 	List<string> types = new List<string>();
@@ -224,6 +229,8 @@ else
 	}
 	private async Task UpdateGrid()
 	{
+		loading = true;
+		await Task.Delay(100);
 		items = db.API_V_DOCENTETE
 		.Where(a => (
 			(date1 != null && a.DO_Date >= date1) || date1 == null)
@@ -234,6 +241,9 @@ else
 				)
 				.OrderByDescending(a => a.DO_Date)
 				.ToList();
+		loading = false;
+		await Task.Delay(100);
+
 	}
 	private List<object> contextMenu()
 	{
@@ -245,7 +255,7 @@ else
 								 new ContextMenuItemModel { Text = "Changer le "+fn.getTiers(domaine)?.ToLower(), Target = ".e-content", Id = "tiers", IconCss = "e-icons e-people" }
 							 };
 		rs.Add(new ContextMenuItemModel { Text = "Dé-comptabiliser", Target = ".e-content", Id = "decomptabiliser", IconCss = "e-icons e-protect-workbook" });
-		rs.Add(new ContextMenuItemModel { Text = "Dé-valider",  Target = ".e-content", Id = "devalider", IconCss = "e-icons e-lock" });
+		rs.Add(new ContextMenuItemModel { Text = "Dé-valider", Target = ".e-content", Id = "devalider", IconCss = "e-icons e-lock" });
 
 		return rs;
 	}

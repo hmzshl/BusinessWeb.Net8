@@ -109,6 +109,8 @@ public partial class API_T_CertifGrilleDialogue
 
     public string PointsEtalonnageAutre { get; set; }
 
+    public string NaturePrestationAutre { get; set; }
+
     public virtual ICollection<API_T_CertifGrilleDialogueExigence> API_T_CertifGrilleDialogueExigence { get; set; } = new List<API_T_CertifGrilleDialogueExigence>();
 
     public virtual ICollection<API_T_CertifGrilleDialogueModif> API_T_CertifGrilleDialogueModif { get; set; } = new List<API_T_CertifGrilleDialogueModif>();

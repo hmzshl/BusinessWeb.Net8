@@ -32,6 +32,7 @@ namespace BusinessWeb.Middleware
                 && (!context.Request.Path.StartsWithSegments("/api/BoldReportsMAUI")) 
                 && (!context.Request.Path.StartsWithSegments("/api/BoldReportsSQL"))
                 && (!context.Request.Path.StartsWithSegments("/api/swagger"))
+                && (!context.Request.Path.StartsWithSegments("/api/BoldReportsAPI"))
                 )
             {
                 TLicense row = new TLicense();

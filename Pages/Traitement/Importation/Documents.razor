@@ -56,7 +56,7 @@
 
                          <GridEvents TValue="RAPPRO_DOCENTETE"></GridEvents>
                          <GridPageSettings PageSize="100"></GridPageSettings>
-                         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Excel"></GridFilterSettings>
+                         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                          <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"/>
                          <GridTemplates>
                              <EmptyRecordTemplate>
@@ -101,7 +101,8 @@
                                         </Template>
                                     </GridColumn>
 
-                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalHT" Format="N2" HeaderText="Montant HT" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalHT" Format="N2" HeaderText="HT" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalTTC" Format="N2" HeaderText="TTC" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                                 </GridColumns>
                             </GridColumn>
 
@@ -111,7 +112,7 @@
                                         <Template>
                                             @{
                                                 var item = (context as RAPPRO_DOCENTETE);
-                                                if(item.Statut != 0)
+                                                if (item.Statut != "A Ajouter")
                                                 {
                                                     <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowPiece(db2,item.DO_Piece, item.DO_Type))" Shade="Shade.Darker" Variant="Variant.Text" Text="@(item.DO_Piece)" ButtonStyle="ButtonStyle.Info" />
                                                 }
@@ -137,22 +138,23 @@
                                             }
                                         </Template>
                                     </GridColumn>
-                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalHT2" Format="N2" HeaderText="Montant HT" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalHT2" Format="N2" HeaderText="HT" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalTTC2" Format="N2" HeaderText="TTC" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
 
 
                                 </GridColumns>
                             </GridColumn>
-                            <GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                            <GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Statut">
                                 <Template>
                                     @{
                                         var dt = (context as RAPPRO_DOCENTETE);
-                                        if (dt.Statut == 0)
+                                        if (dt.Statut == "A Ajouter")
                                         {
                                             <div style="text-align: center;">
                                                 <span class="statustxt e-inactivecolor">A Ajouter</span>
                                             </div>
                                         }
-                                        else if (dt.Statut == 1)
+                                        else if (dt.Statut == "A Modifier")
                                         {
                                             <div style="text-align: center;">
                                                 <span class="statustxt e-infocolor">A Modifier</span>
@@ -169,12 +171,14 @@
                                 </Template>
                             </GridColumn>
                         </GridColumns>
-                        <SfSpinner @bind-Visible="@loading" Label="Veuillez patientez s'il vous plait...">
-                        </SfSpinner>
                     </SfGrid>
                 </div>
             </div>
         </RadzenContent>
+        <MudBlazor.MudOverlay Style="margin-bottom: 0px; height: 100vh;" @bind-Visible="loading" DarkBackground="true" Absolute="true">
+            <SfSpinner Label="Chargement..." Visible="true">
+            </SfSpinner>
+        </MudBlazor.MudOverlay>
     </Card_1>
 
 
@@ -255,6 +259,8 @@ else
     }
     private async Task Compare() 
     {
+        loading = true;
+        await Task.Delay(100);
         if(ste1 != null && ste2 != null) 
         {
             if(ste1.id != 0 && ste2.id != 0)
@@ -282,6 +288,7 @@ else
                                         DO_Type = a.DO_Type,
                                         DO_Date = a.DO_Date,
                                         DO_TotalHT = a.DO_TotalHT,
+                                        DO_TotalTTC = a.DO_TotalTTC,
                                         DE_No = a.DE_No,
                                         DO_Ref = a.DO_Ref,
                                         DO_Tiers = a.DO_Tiers,
@@ -289,11 +296,12 @@ else
                                         DO_Type2 = lb?.DO_Type,
                                         DO_Date2 = lb?.DO_Date,
                                         DO_TotalHT2 = lb?.DO_TotalHT,
+                                        DO_TotalTTC2 = lb?.DO_TotalTTC,
                                         DE_No2 = lb?.DE_No,
                                         DO_Ref2 = lb?.DO_Ref,
                                         DO_Tiers2 = lb?.DO_Tiers,
 
-                                        Statut = Statut(lb?.DO_Piece, a.DO_Type, lb?.DO_Type, a.DO_Date, lb?.DO_Date, a.DO_TotalHT, lb?.DO_TotalHT)//getStatut(a.DO_Type == lb?.DO_Type && a.DO_Date == lb?.DO_Date && a.DO_TotalHT == lb?.DO_TotalHT)
+                                        Statut = Statut(lb?.DO_Piece, a.DO_Type, lb?.DO_Type, a.DO_Date, lb?.DO_Date, a.DO_TotalHT, lb?.DO_TotalHT, a.DO_TotalTTC, lb?.DO_TotalTTC)//getStatut(a.DO_Type == lb?.DO_Type && a.DO_Date == lb?.DO_Date && a.DO_TotalHT == lb?.DO_TotalHT)
                                     })
                               .Union(from b in ListB
                                      join a in ListA on b.DO_Piece equals a.DO_Piece into temp
@@ -305,6 +313,7 @@ else
                                              DO_Type = la?.DO_Type,
                                              DO_Date = la?.DO_Date,
                                              DO_TotalHT = la?.DO_TotalHT,
+                                             DO_TotalTTC = la?.DO_TotalTTC,
                                              DE_No = la?.DE_No,
                                              DO_Ref = la?.DO_Ref,
                                              DO_Tiers = la?.DO_Tiers,
@@ -312,35 +321,36 @@ else
                                              DO_Type2 = b.DO_Type,
                                              DO_Date2 = b.DO_Date,
                                              DO_TotalHT2 = b.DO_TotalHT,
+                                             DO_TotalTTC2 = b.DO_TotalTTC,
                                              DE_No2 = b.DE_No,
                                              DO_Ref2 = b.DO_Ref,
                                              DO_Tiers2 = b.DO_Tiers,
 
-                                             Statut = Statut(b.DO_Piece, la?.DO_Type, b.DO_Type, la?.DO_Date, b.DO_Date, la?.DO_TotalHT, b.DO_TotalHT) //getStatut(b.DO_Type == la?.DO_Type && b.DO_Date == la?.DO_Date && b.DO_TotalHT == la?.DO_TotalHT)
+                                             Statut = Statut(b.DO_Piece, la?.DO_Type, b.DO_Type, la?.DO_Date, b.DO_Date, la?.DO_TotalHT, b.DO_TotalHT, la?.DO_TotalTTC, b.DO_TotalTTC) //getStatut(b.DO_Type == la?.DO_Type && b.DO_Date == la?.DO_Date && b.DO_TotalHT == la?.DO_TotalHT)
                                          });
 
                 items = fullJoin.OrderBy(a => a.DO_Piece).ToList();
 
-                loading = false;
-                await Task.Delay(1);
             }
         }
-
+        loading = false;
+        await Task.Delay(100);
 
 
     }
-    private int Statut(string piece, short? type1, short? type2, DateTime? date1, DateTime? date2, Decimal? ht1, Decimal? ht2)
+
+    private string Statut(string piece, short? type1, short? type2, DateTime? date1, DateTime? date2, Decimal? ht1, Decimal? ht2, Decimal? ttc1, Decimal? ttc2)
     {
-        int rs = 0;
+        string rs = "A Ajouter";
         if(piece != null)
         {
-            if(type1 == type2 && date1 == date2 && ht1 == ht2) 
+            if (type1 == type2 && date1 == date2 && ht1 == ht2 && ttc1 == ttc2)
             {
-                rs = 2;
+                rs = "Identique";
             } 
             else
             {
-                rs = 1;
+                rs = "A Modifier";
             }
         }
 
@@ -397,14 +407,12 @@ else
         bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment transferer les éléments selectionnés?");
         if(isConfirm)
         {
-            transfering = true;
+            loading = true;
             await Task.Delay(100);
             await TransferTask();
-
-
-            transfering = false;
-            await Task.Delay(100);
             await Compare();
+            loading = false;
+            await Task.Delay(100);
         }
     }
     private async Task TransferTask()

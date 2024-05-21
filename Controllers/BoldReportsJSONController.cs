@@ -9,6 +9,7 @@ using System.Collections.Generic;
 namespace BusinessWeb.Controllers
 {
     [Route("api/{controller}/{action}/{id?}")]
+    [ApiController]
     public class BoldReportsJSON : ControllerBase, IReportController
     {
         // Report viewer requires a memory cache to store the information of consecutive client requests and

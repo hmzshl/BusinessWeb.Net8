@@ -167,14 +167,14 @@ else
     {
         await DialogService.OpenAsync<GrillesFiche>(args.RowData.Numero,
         new Dictionary<string, object>() { { "id", args.RowData.id } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = false, Width = "1024px", Height = "98%" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = false, Width = "85%", Height = "98%" });
         await UpdateGrid();
     }
     private async Task Add()
     {
         await DialogService.OpenAsync<GrillesFiche>("Ajouter un élément",
         new Dictionary<string, object>() { { "id", 0 } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = false, Width = "1024px", Height = "98%" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = false, Width = "85%", Height = "98%" });
         await UpdateGrid();
     }
 

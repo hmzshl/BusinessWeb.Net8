@@ -1792,7 +1792,8 @@ namespace BusinessWeb
 
             list.Add(new Items { Id = 0, Name = "Etalonnage" });
             list.Add(new Items { Id = 1, Name = "Verification" });
-            list.Add(new Items { Id = 3, Name = "Autre" });
+            list.Add(new Items { Id = 2, Name = "Laboratoire AFROLAB" });
+            list.Add(new Items { Id = 3, Name = "Spécifique" });
 
             return list;
         }
@@ -1822,7 +1823,7 @@ namespace BusinessWeb
 
             list.Add(new Items { Id = 0, Name = "Ajustage" });
             list.Add(new Items { Id = 1, Name = "Calibration" });
-            list.Add(new Items { Id = 3, Name = "Les deux" });
+            list.Add(new Items { Id = 3, Name = "Ajustage & Calibration" });
 
             return list;
         }
@@ -1835,7 +1836,35 @@ namespace BusinessWeb
 
 			return list;
 		}
-		public List<Items> GetMois()
+        public List<Items> ErreurMaximalTolere()
+        {
+            List<Items> list = new List<Items>();
+
+            list.Add(new Items { Id = 0, Name = "Utilisateur" });
+            list.Add(new Items { Id = 1, Name = "Normative Classe" });
+            list.Add(new Items { Id = 3, Name = "Autre" });
+
+            return list;
+        }
+        public List<Items> RegleDecision()
+        {
+            List<Items> list = new List<Items>();
+
+            list.Add(new Items { Id = 0, Name = "Avec incertitude" });
+            list.Add(new Items { Id = 1, Name = "Sans incertitude" });
+
+            return list;
+        }
+        public List<Items> JugementConformite()
+        {
+            List<Items> list = new List<Items>();
+
+            list.Add(new Items { Id = 0, Name = "Oui" });
+            list.Add(new Items { Id = 1, Name = "Non" });
+
+            return list;
+        }
+        public List<Items> GetMois()
         {
             List<Items> list = new List<Items>();
 
