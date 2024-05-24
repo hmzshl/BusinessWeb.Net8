@@ -220,4 +220,16 @@ public partial class API_V_DOCENTETE
     public DateTime? DateEcheance { get; set; }
 
     public string Echeance { get; set; }
+
+    public string PROT_User { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public decimal? DO_TotalTTC { get; set; }
+
+    public decimal? DO_NetAPayer { get; set; }
+
+    public decimal? DO_TotalHTNet { get; set; }
 }

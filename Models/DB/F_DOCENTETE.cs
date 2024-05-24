@@ -229,6 +229,10 @@ public partial class F_DOCENTETE
 
     public decimal? DO_NetAPayer { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTEG CG_NumNavigation { get; set; }
 
     public virtual F_COMPTET CT_NumCentraleNavigation { get; set; }

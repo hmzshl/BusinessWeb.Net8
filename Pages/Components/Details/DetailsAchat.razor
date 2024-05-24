@@ -2,7 +2,7 @@
 @if (IsLoaded)
 {
     <div style="height: @Height;">
-        <SfGrid Height="100%" AllowGrouping=@(grouped != 0) AllowSelection EnableHover DataSource="@(items)" AllowPaging Toolbar="@(new List<object>() { "Print","ExcelExport","Search",new ToolbarItem() { Type = ItemType.Input,Template = Grouped, Id = "Grouper par", TooltipText = "Grouper par", Align = ItemAlign.Right}})" AllowSorting AllowFiltering>
+        <SfGrid AllowReordering EnablePersistence ShowColumnChooser ID="DetailAchatGRID" Height="100%" AllowGrouping=@(grouped != 0) AllowSelection EnableHover DataSource="@(items)" AllowPaging Toolbar="@(new List<object>() { "ColumnChooser","Print","ExcelExport","Search",new ToolbarItem() { Type = ItemType.Input,Template = Grouped, Id = "Grouper par", TooltipText = "Grouper par", Align = ItemAlign.Right}})" AllowSorting AllowFiltering>
              <GridPageSettings PageSize="100" />
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
          <GridGroupSettings Columns="@(getGroups())" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates EnableLazyLoading>
@@ -79,7 +79,7 @@
                 </GridAggregate>
             </GridAggregates>
             <GridColumns>
-                <GridColumn Format="d" Width="@(getDateWidth())" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ACHAT.DO_Date)" HeaderText="Date" />
+                <GridColumn Format="dd/MM/yy" Width="@(getDateWidth())" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ACHAT.DO_Date)" HeaderText="Date" />
                 <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ACHAT.DO_Piece)" HeaderText="Pièce" />
                 <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ACHAT.CT_Num)" HeaderText="N° Tiers" Visible=@(CT_Num == null) />
                 <GridColumn Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ACHAT.CT_Intitule)" HeaderText="Tiers" Visible=@(CT_Num == null) />

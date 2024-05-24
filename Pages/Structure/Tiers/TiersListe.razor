@@ -1,189 +1,135 @@
-﻿<RadzenContent Container="main">
-    <div class="grid-90">
-        <SfToolbar>
-            <ToolbarItems>
-                @if (session.IsMobile)
-                {
-                    <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Left" Overflow="OverflowOption.Show" Type="ItemType.Input">
+﻿
+
+@if (IsLoaded)
+{
+    <RadzenContent Container="main">
+        <div class="grid-90">
+            <SfToolbar>
+                <ToolbarItems>
+                    <ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+                    <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+                    <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
                         <Template>
-                            <div>
-                                <SfTextBox Width="220px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
-                            </div>
-                            
+                            <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap">
+                                <RadzenLabel Text="SOMMEIL" />
+                                <SfMultiSelect Width="140px" @bind-Value=@selected_sommeils ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(sommeils)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                                    <MultiSelectFieldSettings Text="SommeilIntitule" Value="SommeilIntitule"></MultiSelectFieldSettings>
+                                    <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                                </SfMultiSelect>
+                            </RadzenStack>
                         </Template>
                     </ToolbarItem>
-                }
-                else 
-                {
-                                   <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
-                    <Template>
-                        <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap">
-                            <RadzenLabel Text="SOMMEIL" />
-                            <SfMultiSelect Width="140px" @bind-Value=@selected_sommeils ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(sommeils)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
-                                 <MultiSelectFieldSettings Text="SommeilIntitule" Value="SommeilIntitule"></MultiSelectFieldSettings>
-                                 <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
-                             </SfMultiSelect>
-                         </RadzenStack>
-                     </Template>
-                 </ToolbarItem>
-                 
-                 <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
-
-                     <Template>
-                         <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap">
-                             <RadzenLabel Text="STATUT" />
-                             <SfMultiSelect Width="230px" @bind-Value=@selected_etats ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(etats)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
-                                 <MultiSelectFieldSettings Text="EtatSolde" Value="EtatSolde"></MultiSelectFieldSettings>
-                                 <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
-                             </SfMultiSelect>
-                         </RadzenStack>
-
-                     </Template>
-                 </ToolbarItem>
-
-
-                 <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
-                     <Template>
-                         <SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
-                     </Template>
-                 </ToolbarItem>
-                 <ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+                    <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                        <Template>
+                            <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap">
+                                <RadzenLabel Text="STATUT" />
+                                <SfMultiSelect Width="230px" @bind-Value=@selected_etats ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(etats)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                                    <MultiSelectFieldSettings Text="EtatSolde" Value="EtatSolde"></MultiSelectFieldSettings>
+                                    <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                                </SfMultiSelect>
+                            </RadzenStack>
+                        </Template>
+                    </ToolbarItem>
+                    <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                        <Template>
+                            <SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+                        </Template>
+                    </ToolbarItem>
+                    <ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
                     <ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
-                }
-
-             </ToolbarItems>
-         </SfToolbar>
-         <div class="grid-84">
-             <SfGrid Height="100%" AllowResizing AllowSorting AllowFiltering AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items">
-                 <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="false" AllowDeleting="false" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-                 <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="RowDoubleClicked" TValue="API_V_COMPTET"></GridEvents>
-                 <GridPageSettings PageSize="100"></GridPageSettings>
-                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                 <GridTemplates>
-                     <EmptyRecordTemplate>
-                         <Empty></Empty>
-                     </EmptyRecordTemplate>
-                 </GridTemplates>
-                 <GridAggregates>
-                     <GridAggregate>
-                         <GridAggregateColumns>
-                             <GridAggregateColumn Field="@nameof(API_V_COMPTET.CT_Intitule)" Type="AggregateType.Count" Format="N0">
-                                 <FooterTemplate>
-                                     @{
-                                        var Value = (context as AggregateTemplateContext);
-                                        <div style="text-align: center;">
-                                            @Value.Count
-                                        </div>
-                                    }
-                                </FooterTemplate>
-                            </GridAggregateColumn>
-                            <GridAggregateColumn Field="@nameof(API_V_COMPTET.DL_MontantHT)" Type="AggregateType.Sum" Format="N2">
-                                <FooterTemplate>
-                                    @{
-                                        var Value = (context as AggregateTemplateContext);
-                                        <div>
-                                            @Value.Sum
-                                        </div>
-                                    }
-                                </FooterTemplate>
-                            </GridAggregateColumn>
-                            <GridAggregateColumn Field="@nameof(API_V_COMPTET.DL_MontantTTC)" Type="AggregateType.Sum" Format="N2">
-                                <FooterTemplate>
-                                    @{
-                                        var Value = (context as AggregateTemplateContext);
-                                        <div>
-                                            @Value.Sum
-                                        </div>
-                                    }
-                                </FooterTemplate>
-                            </GridAggregateColumn>
-                            <GridAggregateColumn Field="@nameof(API_V_COMPTET.SoldeCommercial)" Type="AggregateType.Sum" Format="N2">
-                                <FooterTemplate>
-                                    @{
-                                        var Value = (context as AggregateTemplateContext);
-                                        <div>
-                                            @Value.Sum
-                                        </div>
-                                    }
-                                </FooterTemplate>
-                            </GridAggregateColumn>
-                            <GridAggregateColumn Field="@nameof(API_V_COMPTET.SoldeComptable)" Type="AggregateType.Sum" Format="N2">
-                                <FooterTemplate>
-                                    @{
-                                        var Value = (context as AggregateTemplateContext);
-                                        <div>
-                                            @Value.Sum
-                                        </div>
-                                    }
-                                </FooterTemplate>
-                            </GridAggregateColumn>
-                            <GridAggregateColumn Field="@nameof(API_V_COMPTET.RG_Montant)" Type="AggregateType.Sum" Format="N2">
-                                <FooterTemplate>
-                                    @{
-                                        var Value = (context as AggregateTemplateContext);
-                                        <div>
-                                            @Value.Sum
-                                        </div>
-                                    }
-                                </FooterTemplate>
-                            </GridAggregateColumn>
-                        </GridAggregateColumns>
-                    </GridAggregate>
-                </GridAggregates>
-                <GridColumns>
-
-                    @if (session.IsMobile)
-                    {
-                        <GridColumn HeaderText="Client" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
-                            <Template>
-                                @{
-                                    var dt = (context as API_V_COMPTET);
-                                    <div style="padding: 5px;">
-                                        <table>
-                                            <Tr Title="Intitulé" TitleClass="tr-intitule" ContentClass="tr-intitule">@dt.CT_Intitule</Tr>
-                                            <Tr Title="Numéro">@dt.CT_Num</Tr>
-                                            <Tr Title="Téléphone">@dt.CT_Telephone</Tr>
-                                            <Tr Title="Ville">@dt.CT_Ville</Tr>
-                                            <Tr Title="CodePostale">@dt.CT_CodePostal</Tr>
-                                            <Tr Title="CA TTC" Align="right">@dt.DL_MontantTTC?.ToString("N2")</Tr>
-                                            <Tr Title="Réglements" Align="right">
-                                                @if ((dt.RG_Montant ?? 0) != 0)
-                                                {
-                                                <div style="text-align: right;">
-                                                    <span class="statustxt e-activecolor">@dt.RG_Montant?.ToString("### ### ##0.00;-### ### ##0.00;#")</span>
-                                                </div>
-                                                }
-                                            </Tr>
-                                            <Tr Title="Solde" Align="right">
-                                                @if ((dt.SoldeCommercial ?? 0) != 0)
-                                                {
-                                                <div style="text-align: right;">
-                                                    <span class="statustxt e-infocolor">@dt.SoldeCommercial?.ToString("### ### ##0.00;-### ### ##0.00;#")</span>
-                                                </div>
-                                                }
-                                            </Tr>
-                                        </table>
-                                    </div>
-
-                                }
-                            </Template>
-                        </GridColumn>
-                    }
-                    else
-                    {
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Num" HeaderText="Numéro" Visible="@(CTNum)">
+                </ToolbarItems>
+            </SfToolbar>
+            <div class="grid-84">
+                <SfGrid ID="TiersGRID" EnablePersistence Height="100%" AllowResizing AllowSorting AllowFiltering AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items">
+                    <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="false" AllowDeleting="false" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                    <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="RowDoubleClicked" TValue="API_V_COMPTET"></GridEvents>
+                    <GridPageSettings PageSize="100"></GridPageSettings>
+                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                    <GridTemplates>
+                        <EmptyRecordTemplate>
+                            <Empty></Empty>
+                        </EmptyRecordTemplate>
+                    </GridTemplates>
+                    <GridAggregates>
+                        <GridAggregate>
+                            <GridAggregateColumns>
+                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.CT_Intitule)" Type="AggregateType.Count" Format="N0">
+                                    <FooterTemplate>
+                                        @{
+                                            var Value = (context as AggregateTemplateContext);
+                                            <div style="text-align: center;">
+                                                @Value.Count
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.DL_MontantHT)" Type="AggregateType.Sum" Format="N2">
+                                    <FooterTemplate>
+                                        @{
+                                            var Value = (context as AggregateTemplateContext);
+                                            <div>
+                                                @Value.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.DL_MontantTTC)" Type="AggregateType.Sum" Format="N2">
+                                    <FooterTemplate>
+                                        @{
+                                            var Value = (context as AggregateTemplateContext);
+                                            <div>
+                                                @Value.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.SoldeCommercial)" Type="AggregateType.Sum" Format="N2">
+                                    <FooterTemplate>
+                                        @{
+                                            var Value = (context as AggregateTemplateContext);
+                                            <div>
+                                                @Value.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.SoldeComptable)" Type="AggregateType.Sum" Format="N2">
+                                    <FooterTemplate>
+                                        @{
+                                            var Value = (context as AggregateTemplateContext);
+                                            <div>
+                                                @Value.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.RG_Montant)" Type="AggregateType.Sum" Format="N2">
+                                    <FooterTemplate>
+                                        @{
+                                            var Value = (context as AggregateTemplateContext);
+                                            <div>
+                                                @Value.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+                                </GridAggregateColumn>
+                            </GridAggregateColumns>
+                        </GridAggregate>
+                    </GridAggregates>
+                    <GridColumns>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Num" HeaderText="Numéro">
                         </GridColumn>
 
-                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Intitule" HeaderText="Intitule" Width="250" Visible="@(CTIntitule)"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Ville" HeaderText="Ville" Visible="@(CTVille)"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.CT_CodeRegion)" HeaderText="Région" Visible="@(CTVille)"></GridColumn>
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Intitule" HeaderText="Intitule" Width="250"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Ville" HeaderText="Ville"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.CT_CodeRegion)" HeaderText="Région"></GridColumn>
                         <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.CT_CodePostal)" HeaderText="Code Postal"></GridColumn>
-                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Adresse" HeaderText="Adresse" Width="250" Visible="@(CTAdresse)"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Telephone" HeaderText="Téléphone" Visible="@(CTTelephone)"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_EMail" HeaderText="Email" Visible="@(CTEMail)"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT" HeaderText="CA HT" Visible="@(DLMontantHT)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC" HeaderText="CA TTC" Visible="@(DLMontantTTC)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="RG_Montant" HeaderText="Régl." Visible="@(RGMontant)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Adresse" HeaderText="Adresse" Width="250"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Telephone" HeaderText="Téléphone"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_EMail" HeaderText="Email"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT" HeaderText="CA HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC" HeaderText="CA TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="RG_Montant" HeaderText="Régl." Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                             <Template>
                                 @{
                                     var dt = (context as API_V_COMPTET);
@@ -196,7 +142,7 @@
                                 }
                             </Template>
                         </GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="SoldeCommercial" HeaderText="Solde" Visible="@(SoldeCommercial)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="SoldeCommercial" HeaderText="Solde" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                             <Template>
                                 @{
                                     var dt = (context as API_V_COMPTET);
@@ -213,28 +159,41 @@
                         <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Encours" HeaderText="Plafond" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                         <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="R_Intitule" HeaderText="Mode.P"></GridColumn>
                         <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="RT_NbJour" HeaderText="Echéance" Format="N0" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL" HeaderText="Der. Vte" Visible="@(DLDateBL)" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DelaiSommeil" HeaderText="Inactivité" Visible="@(DelaiSommeil)" Format="N0" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Taux" HeaderText="%" Visible="@(Taux)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="NbrArticles" HeaderText="Nbr Articles" Visible="@(NbrArticles)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="NbrDocuments" HeaderText="Nbr Documents" Visible="@(NbrDocuments)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL" HeaderText="Der. Vte" Format="dd/MM/yy" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DelaiSommeil" HeaderText="Inactivité" Format="N0" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Taux" HeaderText="%" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        @*
+                    <GridColumn ShowInColumnChooser="false" AllowEditing="false" Width="35" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                    <Template>
+                    @{
+                    var dt = (context as API_V_COMPTET);
                     }
+                    <RadzenButton Click=@(args => PDFReport()) Icon="print" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                    </Template>
+                    </GridColumn>
+                        *@
+
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.PROT_User)" HeaderText="User" Visible="false"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.cbCreation)" HeaderText="Creation" Visible="false" Format="dd/MM/yy"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.cbModification)" HeaderText="Modification" Visible="false" Format="dd/MM/yy"></GridColumn>
+                    </GridColumns>
+                    <SfSpinner @bind-Visible="@loading">
+                    </SfSpinner>
+                </SfGrid>
+            </div>
+
+        </div>
 
 
 
-                </GridColumns>
-                <SfSpinner @bind-Visible="@loading">
-                </SfSpinner>
-            </SfGrid>
-         </div>
-
+    </RadzenContent>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
     </div>
-
-    
-
-</RadzenContent>
-
-
+}
 
 @code
 {
@@ -290,17 +249,23 @@
     List<string> selected_etats = new List<string>();
     List<string> sommeils = new List<string>();
     List<string> selected_sommeils = new List<string>();
-
+    bool IsLoaded = false;
     protected override async Task OnInitializedAsync()
     {
+        await Task.Delay(1);
+        
         db = session.db;
         etats = db.API_V_COMPTET.Select(a => a.EtatSolde).Distinct().ToList();
         sommeils = db.API_V_COMPTET.Select(a => a.SommeilIntitule).Distinct().ToList();
         selected_etats = etats;
         selected_sommeils = db.API_V_COMPTET.Where(a => a.SommeilIntitule == "Actif").Select(a => a.SommeilIntitule).Distinct().ToList();
         await UpdateGrid();
+        IsLoaded = true;
     }
-
+    public async void PDFReport()
+    {
+        JSRuntime.InvokeVoidAsync("downloadFile");
+    }
     private async Task UpdateGrid()
     {
         loading = true;

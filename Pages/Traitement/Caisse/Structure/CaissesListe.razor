@@ -20,7 +20,7 @@
                 <GridColumns>
                     <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Caisse.C_Nom) HeaderText="Intitulé"></GridColumn>
                     <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Caisse.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
-                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Caisse.C_DateInitial) HeaderText="Date Initialisation" Format="d" EditType="EditType.DatePickerEdit"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Caisse.C_DateInitial) HeaderText="Date Initialisation" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
                     <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Caisse.C_SoldeInitial) HeaderText="Solde Initial" Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(parameters)"></GridColumn>
                     <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Caisse.CG_Num) HeaderText="N° Compte">
                         <Template>

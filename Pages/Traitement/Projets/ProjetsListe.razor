@@ -22,9 +22,9 @@
                 </GridColumn>
                     @if(!IsAppelOffre) 
                     {
-                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="d" Field="@nameof(API_V_PROJET.DateOrdreService)" HeaderText="Ord.Ser"></GridColumn>
-                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="d" Field="@nameof(API_V_PROJET.DateEnregistrement)" HeaderText="Enregi."></GridColumn>
-                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="d" Field="@nameof(API_V_PROJET.DateOrdreNotification)" HeaderText="Ord.Noti"></GridColumn>
+                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="dd/MM/yy" Field="@nameof(API_V_PROJET.DateOrdreService)" HeaderText="Ord.Ser"></GridColumn>
+                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="dd/MM/yy" Field="@nameof(API_V_PROJET.DateEnregistrement)" HeaderText="Enregi."></GridColumn>
+                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="dd/MM/yy" Field="@nameof(API_V_PROJET.DateOrdreNotification)" HeaderText="Ord.Noti"></GridColumn>
                     <GridColumn AllowSorting="false" AllowFiltering="false" Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PROJET.TypeMarcheIntitule)" HeaderText="Type">
                     </GridColumn>
                     <GridColumn AllowSorting="false" AllowFiltering="false" Width="85" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"  Field="@nameof(API_V_PROJET.SituationMarcheIntitule)" HeaderText="Situation">
@@ -36,8 +36,8 @@
                 else
                 {
                                       <GridColumn AllowSorting="false" AllowFiltering="false" Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PROJET.NumeroAppelOffre)" HeaderText="N°AP.Offre"></GridColumn>
-                                                          <GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="d" Field="@nameof(API_V_PROJET.DatePublication)" HeaderText="Publication"></GridColumn>
-                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="d" Field="@nameof(API_V_PROJET.DateOuverturePils)" HeaderText="Ouver. Pils"></GridColumn>
+                                                          <GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="dd/MM/yy" Field="@nameof(API_V_PROJET.DatePublication)" HeaderText="Publication"></GridColumn>
+                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Format="dd/MM/yy" Field="@nameof(API_V_PROJET.DateOuverturePils)" HeaderText="Ouver. Pils"></GridColumn>
                 }
             </GridColumns>
             <SfSpinner @bind-Visible="@loading">

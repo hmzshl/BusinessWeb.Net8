@@ -39,6 +39,8 @@ public partial class F_PROTECTIONCIAL
 
     public int cbMarq { get; set; }
 
+    public Guid? PROT_Guid { get; set; }
+
     public virtual ICollection<F_EPROTECTIONCIAL> F_EPROTECTIONCIAL { get; set; } = new List<F_EPROTECTIONCIAL>();
 
     public virtual ICollection<F_PROTECTIONCIAL> InversecbPROT_UserProfilNavigation { get; set; } = new List<F_PROTECTIONCIAL>();

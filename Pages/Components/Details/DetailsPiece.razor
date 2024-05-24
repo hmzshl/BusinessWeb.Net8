@@ -139,7 +139,7 @@
 											<GridCol Xs="24" Md="24">
 												<Card>
 													<div class="grid-50">
-														<SfGrid Height="100%" @ref=@MainGrid AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
+														<SfGrid Height="100%" EnablePersistence AllowTextWrap ID="LignesGRID" @ref=@MainGrid AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes" Toolbar="@(new List<object>() { "ColumnChooser"})">
 															<GridEvents QueryCellInfo="CustomizeCell" TValue="API_V_DOCLIGNE"></GridEvents>
 															<GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
 															<GridEditSettings ShowDeleteConfirmDialog Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" AllowNextRowEdit>
@@ -151,27 +151,45 @@
 															</GridTemplates>
 															<GridColumns>
 																<GridColumn AllowEditing="false" Width="10" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="cbMarq" HeaderText="#" Visible="false" IsPrimaryKey="true" />
-																<GridColumn AllowEditing="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_Ref" HeaderText="Référence" />
+																<GridColumn AllowEditing="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_Ref" HeaderText="Réf.Article" />
+																
 																<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Design" HeaderText="Désignation" />
 																<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.EU_Enumere)" HeaderText="Unité">
 																</GridColumn>
-
-																<GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Dépot" Field="@nameof(API_V_DOCLIGNE.DE_Intitule)">
+																<GridColumn AllowEditing="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Ref" Visible="false" HeaderText="Réf" />
+																<GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Dépot" Visible="false" Field="@nameof(API_V_DOCLIGNE.DE_Intitule)">
 																</GridColumn>
-																<GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affaire" Field="@nameof(API_V_DOCLIGNE.CA_Intitule)">
+																<GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affaire" Visible="false" Field="@nameof(API_V_DOCLIGNE.CA_Intitule)">
 																</GridColumn>
-																<GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Collaborateur" EditType="EditType.DropDownEdit" Field="@nameof(API_V_DOCLIGNE.CO_Nom)">
+																<GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Collaborateur" Visible="false" EditType="EditType.DropDownEdit" Field="@nameof(API_V_DOCLIGNE.CO_Nom)">
 																</GridColumn>
-																<GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Qte" HeaderText="Qté" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-																<GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PrixUnitaire" HeaderText="PU" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+																<GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Qte" HeaderText="Qté" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+																<GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PrixUnitaire" HeaderText="PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
 																<GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_CodeTaxe1" HeaderText="Taxe">
 																</GridColumn>
-																<GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PUTTC" HeaderText="PU TTC" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-																<GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Remise01REM_Valeur" HeaderText="Remise" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-																<GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="PU Net" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Field="@nameof(API_V_DOCLIGNE.PUNet)">
+																<GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PUTTC" HeaderText="PU TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+																<GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Remise01REM_Valeur" HeaderText="Remise" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+																<GridColumn Width="70" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="PU Net" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Field="@nameof(API_V_DOCLIGNE.PUNet)">
 																</GridColumn>
-																<GridColumn AllowEditing="false" Width="70" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT" HeaderText="HT" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-																<GridColumn AllowEditing="false" Width="70" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC" HeaderText="TTC" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+																<GridColumn AllowEditing="false" Width="70" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT" HeaderText="HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+																<GridColumn AllowEditing="false" Width="70" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="MontantTVA" HeaderText="TVA" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+																<GridColumn AllowEditing="false" Width="70" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC" HeaderText="TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+																<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="PieceBC"
+																		 Field="@nameof(API_V_DOCLIGNE.DL_PieceBC)" Visible="false"/>
+																<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="DateBC"
+																			Format="dd/MM/yy" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Field="@nameof(API_V_DOCLIGNE.DL_DateBC)" Visible="false" />
+																<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="PiecePL"
+																		 Field="@nameof(API_V_DOCLIGNE.DL_PiecePL)" />
+																<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="DatePL"
+																			Format="dd/MM/yy" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Field="@nameof(API_V_DOCLIGNE.DL_DatePL)" Visible="false" />
+																<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="PieceBL"
+																		 Field="@nameof(API_V_DOCLIGNE.DL_PieceBL)" />
+																<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="DateBL"
+																			Format="dd/MM/yy" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Field="@nameof(API_V_DOCLIGNE.DL_DateBL)" Visible="false" />
+																<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.PROT_User)" HeaderText="User" Visible="false"></GridColumn>
+																<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.cbCreation)" HeaderText="Creation" Visible="false" Format="dd/MM/yy"></GridColumn>
+																<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.cbModification)" HeaderText="Modification" Visible="false" Format="dd/MM/yy"></GridColumn>
+
 															</GridColumns>
 
 
@@ -235,7 +253,7 @@ else
 	DB db = new DB();
 	bool IsLoaded = false;
 	public API_V_DOCENTETE row = new API_V_DOCENTETE();
-	NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
+	NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "### ### ##0.00;-### ### ##0.00;#" } };
 	SfGrid<API_V_DOCLIGNE> MainGrid;
 	List<F_COMPTET> tiers = new List<F_COMPTET>();
 	List<F_COMPTEA> affaires = new List<F_COMPTEA>();

@@ -67,7 +67,7 @@
                                      <GridCol Xs="24" Md="14">
                                          <Card title="CA PAR ARTICLE">
                                              <div style="height: 50vh;" class="no-border small-grid">
-                                                 <SfGrid AllowPaging="true" Height="100%" DataSource="@(dt_article)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
+                                                 <SfGrid AllowTextWrap AllowPaging="true" Height="100%" DataSource="@(dt_article)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
                                                      <GridAggregates>
                                                          <GridAggregate>
                                                              <GridAggregateColumns>
@@ -232,7 +232,7 @@
                                 </ChildContent>
                                 <ContentTemplate>
                                     <div class="no-border small-grid">
-                                        <DetailsEntete Height="78vh" CT_Num="@row.CT_Num"></DetailsEntete>
+                                        <DetailsEntete Height="78vh" CT_Num="@row.CT_Num" DO_Domaine="row.CT_Type"></DetailsEntete>
                                     </div>
 
                                 </ContentTemplate>
@@ -243,7 +243,7 @@
                                 </ChildContent>
                                 <ContentTemplate>
                                     <div class="no-border small-grid">
-                                        <DetailsReglement Height="78vh" CT_Num="@row.CT_Num"></DetailsReglement>
+                                        <DetailsReglement Height="78vh" CT_Num="@row.CT_Num" DO_Domaine="row.CT_Type"></DetailsReglement>
                                     </div>
 
                                 </ContentTemplate>

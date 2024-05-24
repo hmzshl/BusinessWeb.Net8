@@ -2,6 +2,8 @@
     <div class="grid-90">
         <SfToolbar>
             <ToolbarItems>
+                <ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+                <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
                 <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
                     <Template>
                         <div style="margin-left: 5px; margin-right: 10px;" id="debut">
@@ -54,7 +56,7 @@
              </ToolbarItems>
          </SfToolbar>
          <div class="grid-84">
-             <SfGrid AllowFiltering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
+            <SfGrid AllowFiltering EnablePersistence AllowReordering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="TR_TiersGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
                 <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                 <GridPageSettings PageSize="100"></GridPageSettings>
@@ -64,7 +66,7 @@
                     </EmptyRecordTemplate>
                 </GridTemplates>
                 <GridColumns>
-                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Timestamp)" HeaderText="Heure"></GridColumn>
+                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Timestamp)" HeaderText="Heure" Index="0"></GridColumn>
                     <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Operation)" HeaderText="Operation">
                         <Template>
                             @{
@@ -100,12 +102,12 @@
                     <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Telephone)" HeaderText="Téléphone"></GridColumn>
                     <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_EMail)" HeaderText="Email"></GridColumn>
                     <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Pays)" HeaderText="Pays"></GridColumn>
-                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Controle)" HeaderText="Controle"></GridColumn>
+                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Controle)" Visible="false" HeaderText="Controle"></GridColumn>
                     <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.SommeilIntitule)" HeaderText="Statut"></GridColumn>
-                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique01)" HeaderText="Stat 1"></GridColumn>
-                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique02)" HeaderText="Stat 2"></GridColumn>
-                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique03)" HeaderText="Stat 3"></GridColumn>
-                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique04)" HeaderText="Stat 4"></GridColumn>
+                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique01)" Visible="false" HeaderText="Stat 1"></GridColumn>
+                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique02)" Visible="false" HeaderText="Stat 2"></GridColumn>
+                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique03)" Visible="false" HeaderText="Stat 3"></GridColumn>
+                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique04)" Visible="false" HeaderText="Stat 4"></GridColumn>
                 </GridColumns>
             </SfGrid>
         </div>

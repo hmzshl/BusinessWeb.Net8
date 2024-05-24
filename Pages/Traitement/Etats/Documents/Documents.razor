@@ -5,6 +5,8 @@
 			<div class="grid-90">
 				<SfToolbar>
 					<ToolbarItems>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
 							<Template>
 								<div style="margin-left: 5px; margin-right: 10px;" id="debut">
@@ -59,7 +61,7 @@
 					</ToolbarItems>
 				</SfToolbar>
 				<div class="grid-84">
-					<SfGrid AllowFiltering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
+					<SfGrid AllowReordering EnablePersistence AllowFiltering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="ReleveDocumentGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
 						<GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
 						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 						<GridPageSettings PageSize="100"></GridPageSettings>
@@ -111,7 +113,7 @@
 						<GridColumns>
 
 
-							<GridColumn Width="70" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DO_Date)" HeaderText="Date" Format="d"></GridColumn>
+							<GridColumn Width="70" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DO_Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
 							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DO_Piece)" HeaderText="Pièce"></GridColumn>
 							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.TypeIntitule)" HeaderText="Type"></GridColumn>
 							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DE_Intitule)" HeaderText="Dépot"></GridColumn>
@@ -151,7 +153,7 @@
 								</Template>
 							</GridColumn>
 							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.RT_NbJour)" HeaderText="Delai" Format="#"></GridColumn>
-							<GridColumn Width="70" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DateEcheance)" HeaderText="Ech.Prévu" Format="d"></GridColumn>
+							<GridColumn Width="70" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DateEcheance)" HeaderText="Ech.Prévu" Format="dd/MM/yy"></GridColumn>
 							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.Jours)" HeaderText="Jrs" Format="#"></GridColumn>
 
 

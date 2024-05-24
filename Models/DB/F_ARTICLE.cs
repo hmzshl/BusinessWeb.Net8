@@ -219,6 +219,10 @@ public partial class F_ARTICLE
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_ARTICLE AR_SubstitutNavigation { get; set; }
 
     public virtual ICollection<F_ABOLIGNE> F_ABOLIGNE { get; set; } = new List<F_ABOLIGNE>();

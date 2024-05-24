@@ -182,8 +182,8 @@
                                                                             </SfDropDownList>
                                                                         </EditTemplate>
                                                                     </GridColumn>
-                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80" Field=@nameof(API_T_Caution.DateRetraitBanque) HeaderText="Retrait" Format="d" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80" Field=@nameof(API_T_Caution.DateRetourBanque) HeaderText="Retour" Format="d" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80" Field=@nameof(API_T_Caution.DateRetraitBanque) HeaderText="Retrait" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80" Field=@nameof(API_T_Caution.DateRetourBanque) HeaderText="Retour" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
                                                                     <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="180" Field=@nameof(API_T_Caution.Banque) HeaderText="Banque"></GridColumn>
                                                                     <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80" Field=@nameof(API_T_Caution.MontantEstime) HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" EditorSettings="@fn.cellParams()"></GridColumn>
                                                                     <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120" Field=@nameof(API_T_Caution.Reference) HeaderText="Réf"></GridColumn>
@@ -311,10 +311,10 @@
                                                                                     </SfDropDownList>
                                                                                 </EditTemplate>
                                                                             </GridColumn>
-                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateRetraitBanque) HeaderText="Retrait" Format="d" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateRetourBanque) HeaderText="Retour" Format="d" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateDepotClient) HeaderText="D.Client" Format="d" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateAnnulationPrevue) HeaderText="Annul" Format="d" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateRetraitBanque) HeaderText="Retrait" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateRetourBanque) HeaderText="Retour" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateDepotClient) HeaderText="D.Client" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateAnnulationPrevue) HeaderText="Annul" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
                                                                             <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120" Field=@nameof(API_T_Caution.Banque) HeaderText="Banque"></GridColumn>
                                                                             <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.MontantEstime) HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" EditorSettings="@fn.cellParams()"></GridColumn>
                                                                             <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.Taux) HeaderText="Taux" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" EditorSettings="@fn.cellParams()"></GridColumn>
@@ -407,8 +407,8 @@
                                                                     </SfDropDownList>
                                                                 </EditTemplate>
                                                             </GridColumn>
-                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Assurance.DateDebut) HeaderText="Date Début" Format="d" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Assurance.DateFin) HeaderText="Date Fin" Format="d" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Assurance.DateDebut) HeaderText="Date Début" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Assurance.DateFin) HeaderText="Date Fin" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
                                                             <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                                                 <Template Context="cs">
                                                                     @{
@@ -450,7 +450,7 @@
                                                     <GridColumns>
                                                         <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetPlanningDecompte.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
                                                         <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetPlanningDecompte.Description) HeaderText="Description"></GridColumn>
-                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetPlanningDecompte.DatePrevue) HeaderText="Date Prévue" Format="d" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetPlanningDecompte.DatePrevue) HeaderText="Date Prévue" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
                                                             <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                                                 <Template Context="cs">
                                                                     @{
@@ -495,7 +495,7 @@
                                                                     </SfDropDownList>
                                                                 </EditTemplate>
                                                             </GridColumn>
-                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetReception.DateReception) HeaderText="Date Récéption" Format="d" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetReception.DateReception) HeaderText="Date Récéption" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
                                                                                                                         <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                                                 <Template Context="cs">
                                                                     @{
@@ -523,8 +523,8 @@
                                                             <GridEvents OnActionBegin="UpdateProjetDate" TValue="API_T_ProjetDate"></GridEvents>
                                                             <GridColumns>
                                                                 <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetDate.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
-                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetDate.DateArret) HeaderText="Date Arrét" Format="d" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetDate.DateReprise) HeaderText="Date Reprise" Format="d" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetDate.DateArret) HeaderText="Date Arrét" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetDate.DateReprise) HeaderText="Date Reprise" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
                                                                 <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetDate.Motif) HeaderText="Motif"></GridColumn>
                                                                 <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                                                     <Template Context="cs">
@@ -554,7 +554,7 @@
                                                                     </HeaderTemplate>
                                                                 </GridColumn>
                                                                 <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetAvenant.Libelle) HeaderText="Libellé"></GridColumn>
-                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetAvenant.DateAvenant) HeaderText="Date" Format="d" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetAvenant.DateAvenant) HeaderText="Date" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
                                                                 <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetAvenant.MontantAvenant) HeaderText="Montant" Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(parameters)"></GridColumn>
                                                                 <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                                                     <Template Context="cs">

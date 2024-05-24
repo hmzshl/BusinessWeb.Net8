@@ -121,6 +121,10 @@ public partial class F_CREGLEMENT
 
     public string Remarque { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTEG CG_NumContNavigation { get; set; }
 
     public virtual F_COMPTEG CG_NumEcartNavigation { get; set; }

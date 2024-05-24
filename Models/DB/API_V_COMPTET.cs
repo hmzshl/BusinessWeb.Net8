@@ -224,4 +224,10 @@ public partial class API_V_COMPTET
     public string R_Intitule { get; set; }
 
     public string D_Intitule { get; set; }
+
+    public string PROT_User { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public DateTime? cbModification { get; set; }
 }

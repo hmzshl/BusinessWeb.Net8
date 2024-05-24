@@ -5,6 +5,8 @@
 			<div class="grid-90">
 				<SfToolbar>
 					<ToolbarItems>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
 							<Template>
 								<div style="margin-left: 5px; margin-right: 10px;" id="debut">
@@ -15,6 +17,7 @@
 
 							</Template>
 						</ToolbarItem>
+						
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
 							<Template>
 								<div style="margin-left: 5px; margin-right: 10px;" id="fin">
@@ -52,13 +55,14 @@
 								<SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
 							</Template>
 						</ToolbarItem>
+
 						<ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
 						<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
 						<ToolbarItem OnClick=@(args => (UpdateGrid())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
 					</ToolbarItems>
 				</SfToolbar>
 				<div class="grid-84">
-					<SfGrid AllowFiltering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging ContextMenuItems="@(contextMenu())">
+					<SfGrid AllowFiltering AllowReordering EnablePersistence AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="DocumentGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging ContextMenuItems="@(contextMenu())">
 						<GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
 						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 						<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
@@ -102,19 +106,24 @@
 							</GridColumn>
 							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DomaineIntitule)" HeaderText="Domaine"></GridColumn>
 							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.TypeIntitule)" HeaderText="Type"></GridColumn>
-							<GridColumn Width="70" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Date)" HeaderText="Date" Format="d"></GridColumn>
+							<GridColumn Width="70" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
 							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Piece)" HeaderText="Pièce"></GridColumn>
 							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DE_Intitule)" HeaderText="Dépot"></GridColumn>
 							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Tiers)" HeaderText="N° Tiers"></GridColumn>
 							<GridColumn Width="180" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CT_Intitule)" HeaderText="@(fn.getTiers(domaine))"></GridColumn>
-							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CA_Num)" HeaderText="Affaire"></GridColumn>
-							<GridColumn Width="150" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CA_Intitule)" HeaderText="Intitulé Affaire"></GridColumn>
+							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CA_Num)" HeaderText="Affaire" Visible="false"></GridColumn>
+							<GridColumn Width="150" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CA_Intitule)" HeaderText="Intitulé Affaire" Visible="false"></GridColumn>
 							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_TotalHT)" HeaderText="HT" Format="N2"></GridColumn>
 							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" HeaderText="TTC" Format="N2"></GridColumn>
 							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CO_Nom)" HeaderText="Collaborateur"></GridColumn>
-							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CG_Num)" HeaderText="Compte"></GridColumn>
-							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Coord01)" HeaderText="Entete 1"></GridColumn>
-							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Coord02)" HeaderText="Entete 2"></GridColumn>
+							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CG_Num)" HeaderText="Compte" Visible="false"></GridColumn>
+							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Coord01)" HeaderText="Entete 1" Visible="false"></GridColumn>
+							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Coord02)" HeaderText="Entete 2" Visible="false"></GridColumn>
+							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Coord03)" HeaderText="Entete 3" Visible="false"></GridColumn>
+							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Coord04)" HeaderText="Entete 4" Visible="false"></GridColumn>
+							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.PROT_User)" HeaderText="User" Visible="false"></GridColumn>
+							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.cbCreation)" HeaderText="Creation" Visible="false" Format="dd/MM/yy"></GridColumn>
+							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.cbModification)" HeaderText="Modification" Visible="false" Format="dd/MM/yy"></GridColumn>
 
 						</GridColumns>
 

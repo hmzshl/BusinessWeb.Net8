@@ -24,7 +24,7 @@
             <GridColumns>
                 @if(IsConsommation)
                 {
-                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Date" HeaderText="Date" Visible="@(DODate)" Format="d"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Date" HeaderText="Date" Visible="@(DODate)" Format="dd/MM/yy"></GridColumn>
                     <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Piece" HeaderText="Pièce" Visible="@(DOPiece)"></GridColumn>
                     <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Tiers" HeaderText="Numéro" Visible="@(DOTiers)"></GridColumn>
                     <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Intitule" HeaderText="Maitre D'ouvrage" Width="150" Visible="@(CTIntitule)"></GridColumn>
@@ -39,7 +39,7 @@
                 }
                 else
                 {
-                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Date" HeaderText="Date" Visible="@(DODate)" Format="d"></GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Date" HeaderText="Date" Visible="@(DODate)" Format="dd/MM/yy"></GridColumn>
                     <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Piece" HeaderText="Pièce" Visible="@(DOPiece)"></GridColumn>
                     <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Tiers" HeaderText="Numéro" Visible="@(DOTiers)"></GridColumn>
                     <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Intitule" HeaderText="Intitulé" Width="150" Visible="@(CTIntitule)"></GridColumn>

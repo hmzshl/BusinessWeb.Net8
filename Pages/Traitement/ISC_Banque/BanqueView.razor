@@ -72,7 +72,7 @@
                 </GridAggregate>
             </GridAggregates>
             <GridColumns>
-                <GridColumn Format="d" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Date)" HeaderText="Date" />
+                <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Date)" HeaderText="Date" />
                 <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Piece)" HeaderText="Pièce" />
                 <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.R_Intitule)" HeaderText="Type" />
                 <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Num)" HeaderText="Numéro" Visible="@(CT_Num == null)" />
@@ -81,7 +81,7 @@
                 <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.JO_Intitule)" HeaderText="Journal" Visible="@(JO_Num == null)" />
                 <GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Libelle)" HeaderText="Libellé" />
                 <GridColumn Width="105" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Montant)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                <GridColumn Format="d" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_DateEcheance)" HeaderText="Ech" />
+                <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_DateEcheance)" HeaderText="Ech" />
 
                 <GridColumn Width="105" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut" Visible="@(IsMettreEnBanque)">
                     <Template>
@@ -101,7 +101,7 @@
                         }
                     </Template>
                 </GridColumn>
-                <GridColumn Format="d" Width="105" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.DateDepot)" HeaderText="Dépot" Visible="@(IsMettreEnBanque)">
+                <GridColumn Format="dd/MM/yy" Width="105" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.DateDepot)" HeaderText="Dépot" Visible="@(IsMettreEnBanque)">
                     <Template>
                         @{
                             var dt = (context as API_V_CREGLEMENT);
@@ -147,7 +147,7 @@
                         }
                     </Template>
                 </GridColumn>
-                <GridColumn Format="d" Width="105" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.DatePaie)" HeaderText="Paiement" Visible=@(IsEnBanque)>
+                <GridColumn Format="dd/MM/yy" Width="105" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.DatePaie)" HeaderText="Paiement" Visible=@(IsEnBanque)>
                     <Template>
                         @{
                             var dt = (context as API_V_CREGLEMENT);

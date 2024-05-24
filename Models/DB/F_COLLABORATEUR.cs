@@ -67,6 +67,12 @@ public partial class F_COLLABORATEUR
 
     public int cbMarq { get; set; }
 
+    public DateTime? cbModification { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual ICollection<F_ABOENTETE> F_ABOENTETE { get; set; } = new List<F_ABOENTETE>();
 
     public virtual ICollection<F_ABOLIGNE> F_ABOLIGNE { get; set; } = new List<F_ABOLIGNE>();

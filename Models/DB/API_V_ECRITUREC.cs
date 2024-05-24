@@ -124,4 +124,10 @@ public partial class API_V_ECRITUREC
     public decimal? Debit { get; set; }
 
     public decimal? Credit { get; set; }
+
+    public string PROT_User { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public DateTime? cbModification { get; set; }
 }

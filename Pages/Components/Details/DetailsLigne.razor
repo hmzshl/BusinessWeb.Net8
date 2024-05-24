@@ -2,7 +2,7 @@
 @if (IsLoaded)
 {
     <div style="height: @Height; padding: 8px;" class="small-grid">
-        <SfGrid Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowPaging Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting AllowFiltering>
+        <SfGrid EnablePersistence AllowReordering Height="100%" AllowSelection EnableHover ShowColumnChooser ID="DetailLigneGRID" DataSource="@(items)" AllowPaging Toolbar="@(new List<object>() { "ColumnChooser","Print","ExcelExport","Search"})" AllowSorting AllowFiltering>
              <GridPageSettings PageSize="100" />
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
              <GridAggregates>
@@ -32,7 +32,7 @@
                 </GridAggregate>
             </GridAggregates>
             <GridColumns>
-                <GridColumn Format="d" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DO_Date)" HeaderText="Date" />
+                <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DO_Date)" HeaderText="Date" />
                 <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DO_Piece)" HeaderText="Pièce" />
                 <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.TypeIntitule)" HeaderText="Type" />
                 <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.CT_Num)" HeaderText="Numéro" Visible="@(CT_Num == null)" />

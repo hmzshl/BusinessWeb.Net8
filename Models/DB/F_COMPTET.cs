@@ -243,6 +243,12 @@ public partial class F_COMPTET
 
     public int cbMarq { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
     public virtual ICollection<API_T_AgenceContrat> API_T_AgenceContrat { get; set; } = new List<API_T_AgenceContrat>();
 
     public virtual F_COMPTEG CG_NumPrincNavigation { get; set; }

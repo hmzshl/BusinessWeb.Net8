@@ -3150,7 +3150,7 @@ public partial class DB : DbContext
             entity.Property(e => e.DL_MontantTVA).HasColumnType("numeric(25, 6)");
             entity.Property(e => e.DL_Qte).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_Taxe1).HasColumnType("numeric(24, 6)");
-            entity.Property(e => e.DO_Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.DO_Date).HasColumnType("datetime");
             entity.Property(e => e.DO_Piece)
                 .IsRequired()
                 .HasMaxLength(9)
@@ -3199,7 +3199,12 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.CA_Vente).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.EcartCA).HasColumnType("numeric(38, 6)");
+            entity.Property(e => e.PROT_User)
+                .HasMaxLength(35)
+                .IsUnicode(false);
             entity.Property(e => e.ResteCA).HasColumnType("numeric(38, 6)");
+            entity.Property(e => e.cbCreation).HasColumnType("datetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<API_V_AFFAIREAVANCEMENT>(entity =>
@@ -3500,8 +3505,8 @@ public partial class DB : DbContext
             entity.Property(e => e.CL_Num)
                 .HasMaxLength(17)
                 .IsUnicode(false);
-            entity.Property(e => e.DL_DateBL_Achat).HasColumnType("smalldatetime");
-            entity.Property(e => e.DL_DateBL_Vente).HasColumnType("smalldatetime");
+            entity.Property(e => e.DL_DateBL_Achat).HasColumnType("datetime");
+            entity.Property(e => e.DL_DateBL_Vente).HasColumnType("datetime");
             entity.Property(e => e.DL_Dernier_MontantHT_Achat).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.DL_Dernier_MontantHT_Vente).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.DL_Dernier_MontantTTC_Achat).HasColumnType("numeric(38, 6)");
@@ -3540,6 +3545,9 @@ public partial class DB : DbContext
             entity.Property(e => e.FR_Num)
                 .HasMaxLength(17)
                 .IsUnicode(false);
+            entity.Property(e => e.PROT_User)
+                .HasMaxLength(35)
+                .IsUnicode(false);
             entity.Property(e => e.QteCD).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.RP_CodeDefaut)
                 .HasMaxLength(11)
@@ -3554,6 +3562,8 @@ public partial class DB : DbContext
             entity.Property(e => e.U_Intitule)
                 .HasMaxLength(21)
                 .IsUnicode(false);
+            entity.Property(e => e.cbCreation).HasColumnType("datetime");
+            entity.Property(e => e.cbModification).HasColumnType("smalldatetime");
         });
 
         modelBuilder.Entity<API_V_ARTICLEMVT>(entity =>
@@ -4570,8 +4580,13 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.MontantFrais).HasColumnType("decimal(38, 6)");
             entity.Property(e => e.MontantTTC).HasColumnType("numeric(38, 6)");
+            entity.Property(e => e.PROT_User)
+                .HasMaxLength(35)
+                .IsUnicode(false);
             entity.Property(e => e.cbCO_Fonction).HasMaxLength(36);
             entity.Property(e => e.cbCO_Matricule).HasMaxLength(12);
+            entity.Property(e => e.cbCreation).HasColumnType("datetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<API_V_COMPTET>(entity =>
@@ -4732,7 +4747,7 @@ public partial class DB : DbContext
             entity.Property(e => e.Controle)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-            entity.Property(e => e.DL_DateBL).HasColumnType("smalldatetime");
+            entity.Property(e => e.DL_DateBL).HasColumnType("datetime");
             entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.D_Intitule)
@@ -4741,6 +4756,9 @@ public partial class DB : DbContext
             entity.Property(e => e.EtatSolde)
                 .IsRequired()
                 .HasMaxLength(9)
+                .IsUnicode(false);
+            entity.Property(e => e.PROT_User)
+                .HasMaxLength(35)
                 .IsUnicode(false);
             entity.Property(e => e.RG_Montant).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.R_Intitule)
@@ -4752,6 +4770,8 @@ public partial class DB : DbContext
                 .IsRequired()
                 .HasMaxLength(10)
                 .IsUnicode(false);
+            entity.Property(e => e.cbCreation).HasColumnType("datetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<API_V_CREGLEMENT>(entity =>
@@ -4813,6 +4833,9 @@ public partial class DB : DbContext
             entity.Property(e => e.M12).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.Mois).HasMaxLength(4000);
             entity.Property(e => e.MoisAnnee).HasMaxLength(4000);
+            entity.Property(e => e.PROT_User)
+                .HasMaxLength(35)
+                .IsUnicode(false);
             entity.Property(e => e.RG_Date).HasColumnType("smalldatetime");
             entity.Property(e => e.RG_DateEcheance).HasMaxLength(4000);
             entity.Property(e => e.RG_Libelle)
@@ -4832,6 +4855,8 @@ public partial class DB : DbContext
             entity.Property(e => e.Remarque)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.cbCreation).HasColumnType("datetime");
+            entity.Property(e => e.cbModification).HasColumnType("smalldatetime");
         });
 
         modelBuilder.Entity<API_V_DOCENTETE>(entity =>
@@ -4898,18 +4923,18 @@ public partial class DB : DbContext
                 .HasMaxLength(25)
                 .IsUnicode(false);
             entity.Property(e => e.DO_Cours).HasColumnType("numeric(24, 6)");
-            entity.Property(e => e.DO_Date).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_DateExpedition).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_DateLivr).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_DateLivrRealisee).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_DebutAbo).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_DebutPeriod).HasColumnType("smalldatetime");
+            entity.Property(e => e.DO_Date).HasColumnType("datetime");
+            entity.Property(e => e.DO_DateExpedition).HasColumnType("datetime");
+            entity.Property(e => e.DO_DateLivr).HasColumnType("datetime");
+            entity.Property(e => e.DO_DateLivrRealisee).HasColumnType("datetime");
+            entity.Property(e => e.DO_DebutAbo).HasColumnType("datetime");
+            entity.Property(e => e.DO_DebutPeriod).HasColumnType("datetime");
             entity.Property(e => e.DO_Ecart).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DO_FactureFrs)
                 .HasMaxLength(35)
                 .IsUnicode(false);
-            entity.Property(e => e.DO_FinAbo).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_FinPeriod).HasColumnType("smalldatetime");
+            entity.Property(e => e.DO_FinAbo).HasColumnType("datetime");
+            entity.Property(e => e.DO_FinPeriod).HasColumnType("datetime");
             entity.Property(e => e.DO_Heure)
                 .HasMaxLength(9)
                 .IsUnicode(false)
@@ -4917,6 +4942,7 @@ public partial class DB : DbContext
             entity.Property(e => e.DO_Motif)
                 .HasMaxLength(69)
                 .IsUnicode(false);
+            entity.Property(e => e.DO_NetAPayer).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.DO_NoWeb)
                 .HasMaxLength(17)
                 .IsUnicode(false);
@@ -4936,10 +4962,12 @@ public partial class DB : DbContext
                 .HasMaxLength(17)
                 .IsUnicode(false);
             entity.Property(e => e.DO_TotalHT).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.DO_TotalHTNet).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.DO_TotalTTC).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.DO_TxEscompte).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DO_ValFrais).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DO_ValFranco).HasColumnType("numeric(24, 6)");
-            entity.Property(e => e.DateEcheance).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateEcheance).HasColumnType("datetime");
             entity.Property(e => e.DomaineIntitule)
                 .IsRequired()
                 .HasMaxLength(8)
@@ -4956,6 +4984,9 @@ public partial class DB : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Objet).HasColumnType("text");
+            entity.Property(e => e.PROT_User)
+                .HasMaxLength(35)
+                .IsUnicode(false);
             entity.Property(e => e.RC_Montant).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.Reste).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.TF_Intitule)
@@ -4963,8 +4994,10 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.TypeIntitule)
                 .IsRequired()
-                .HasMaxLength(16)
+                .HasMaxLength(65)
                 .IsUnicode(false);
+            entity.Property(e => e.cbCreation).HasColumnType("datetime");
+            entity.Property(e => e.cbModification).HasColumnType("smalldatetime");
         });
 
         modelBuilder.Entity<API_V_DOCLIGNE>(entity =>
@@ -5013,10 +5046,10 @@ public partial class DB : DbContext
             entity.Property(e => e.DL_CodeTaxe3)
                 .HasMaxLength(5)
                 .IsUnicode(false);
-            entity.Property(e => e.DL_DateAvancement).HasColumnType("smalldatetime");
-            entity.Property(e => e.DL_DateBC).HasColumnType("smalldatetime");
-            entity.Property(e => e.DL_DateBL).HasColumnType("smalldatetime");
-            entity.Property(e => e.DL_DatePL).HasColumnType("smalldatetime");
+            entity.Property(e => e.DL_DateAvancement).HasColumnType("datetime");
+            entity.Property(e => e.DL_DateBC).HasColumnType("datetime");
+            entity.Property(e => e.DL_DateBL).HasColumnType("datetime");
+            entity.Property(e => e.DL_DatePL).HasColumnType("datetime");
             entity.Property(e => e.DL_Design)
                 .HasMaxLength(69)
                 .IsUnicode(false);
@@ -5052,8 +5085,8 @@ public partial class DB : DbContext
             entity.Property(e => e.DL_Taxe1).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_Taxe2).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_Taxe3).HasColumnType("numeric(24, 6)");
-            entity.Property(e => e.DO_Date).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_DateLivr).HasColumnType("smalldatetime");
+            entity.Property(e => e.DO_Date).HasColumnType("datetime");
+            entity.Property(e => e.DO_DateLivr).HasColumnType("datetime");
             entity.Property(e => e.DO_Piece)
                 .IsRequired()
                 .HasMaxLength(9)
@@ -5074,6 +5107,9 @@ public partial class DB : DbContext
                 .IsRequired()
                 .HasMaxLength(9)
                 .IsUnicode(false);
+            entity.Property(e => e.PROT_User)
+                .HasMaxLength(35)
+                .IsUnicode(false);
             entity.Property(e => e.PUNet).HasColumnType("numeric(38, 14)");
             entity.Property(e => e.PUTTC).HasColumnType("numeric(38, 14)");
             entity.Property(e => e.QteMvt).HasColumnType("numeric(24, 6)");
@@ -5083,8 +5119,10 @@ public partial class DB : DbContext
             entity.Property(e => e.Remise).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.TypeIntitule)
                 .IsRequired()
-                .HasMaxLength(16)
+                .HasMaxLength(65)
                 .IsUnicode(false);
+            entity.Property(e => e.cbCreation).HasColumnType("datetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<API_V_ECRITUREC>(entity =>
@@ -5159,9 +5197,14 @@ public partial class DB : DbContext
                 .HasMaxLength(7)
                 .IsUnicode(false);
             entity.Property(e => e.MV_Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.PROT_User)
+                .HasMaxLength(35)
+                .IsUnicode(false);
             entity.Property(e => e.TA_Code)
                 .HasMaxLength(5)
                 .IsUnicode(false);
+            entity.Property(e => e.cbCreation).HasColumnType("datetime");
+            entity.Property(e => e.cbModification).HasColumnType("smalldatetime");
         });
 
         modelBuilder.Entity<API_V_FRAISENTETE>(entity =>
@@ -5273,7 +5316,7 @@ public partial class DB : DbContext
             entity.Property(e => e.DL_MontantTVA).HasColumnType("numeric(25, 6)");
             entity.Property(e => e.DL_Qte).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_Taxe1).HasColumnType("numeric(24, 6)");
-            entity.Property(e => e.DO_Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.DO_Date).HasColumnType("datetime");
             entity.Property(e => e.DO_Piece)
                 .IsRequired()
                 .HasMaxLength(9)
@@ -7274,6 +7317,9 @@ public partial class DB : DbContext
                 .IsUnicode(false)
                 .HasDefaultValueSql("('CSQL')")
                 .IsFixedLength();
+            entity.Property(e => e.cbCreation)
+                .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
+                .HasColumnType("datetime");
             entity.Property(e => e.cbFA_CodeFamille)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),[FA_CodeFamille]))", false);
@@ -8780,6 +8826,12 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCO_Prenom)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([CO_Prenom],'')))", false);
+            entity.Property(e => e.cbCreation)
+                .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
+                .HasColumnType("datetime");
+            entity.Property(e => e.cbModification)
+                .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
+                .HasColumnType("datetime");
 
             entity.HasOne(d => d.cbPROT_NoNavigation).WithMany(p => p.F_COLLABORATEUR)
                 .HasPrincipalKey(p => p.PROT_No)
@@ -8939,6 +8991,12 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCA_Raccourci)
                 .HasMaxLength(8)
                 .HasComputedColumnSql("(CONVERT([varbinary](8),isnull([CA_Raccourci],'')))", false);
+            entity.Property(e => e.cbCreation)
+                .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
+                .HasColumnType("datetime");
+            entity.Property(e => e.cbModification)
+                .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
+                .HasColumnType("datetime");
 
             entity.HasOne(d => d.cbCO_NoNavigation).WithMany(p => p.F_COMPTEA)
                 .HasPrincipalKey(p => p.CO_No)
@@ -10592,6 +10650,12 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCT_Raccourci)
                 .HasMaxLength(8)
                 .HasComputedColumnSql("(CONVERT([varbinary](8),isnull([CT_Raccourci],'')))", false);
+            entity.Property(e => e.cbCreation)
+                .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
+                .HasColumnType("datetime");
+            entity.Property(e => e.cbModification)
+                .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
+                .HasColumnType("datetime");
 
             entity.HasOne(d => d.CG_NumPrincNavigation).WithMany(p => p.F_COMPTET)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -11453,6 +11517,9 @@ public partial class DB : DbContext
                 .IsUnicode(false)
                 .HasDefaultValueSql("('CSQL')")
                 .IsFixedLength();
+            entity.Property(e => e.cbCreation)
+                .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
+                .HasColumnType("datetime");
             entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
@@ -11946,6 +12013,9 @@ public partial class DB : DbContext
                 .IsUnicode(false)
                 .HasDefaultValueSql("('CSQL')")
                 .IsFixedLength();
+            entity.Property(e => e.cbCreation)
+                .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
+                .HasColumnType("datetime");
             entity.Property(e => e.cbDO_FactureFrs)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([DO_FactureFrs],'')))", false);
@@ -12222,6 +12292,9 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCT_Num)
                 .HasMaxLength(18)
                 .HasComputedColumnSql("(CONVERT([varbinary](18),isnull([CT_Num],'')))", false);
+            entity.Property(e => e.cbCreation)
+                .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
+                .HasColumnType("datetime");
             entity.Property(e => e.cbDL_PieceBC)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len(isnull([DL_PieceBC],''))+(1)))+isnull([DL_PieceBC],'')))", false);
@@ -12234,6 +12307,9 @@ public partial class DB : DbContext
             entity.Property(e => e.cbDO_Piece)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len([DO_Piece])+(1)))+[DO_Piece]))", false);
+            entity.Property(e => e.cbModification)
+                .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
+                .HasColumnType("datetime");
             entity.Property(e => e.cbPF_Num)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len([PF_Num])+(1)))+[PF_Num]))", false);
@@ -12949,6 +13025,9 @@ public partial class DB : DbContext
                 .IsUnicode(false)
                 .HasDefaultValueSql("('CSQL')")
                 .IsFixedLength();
+            entity.Property(e => e.cbCreation)
+                .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
+                .HasColumnType("datetime");
             entity.Property(e => e.cbEC_Piece)
                 .HasMaxLength(14)
                 .HasComputedColumnSql("(CONVERT([varbinary](14),space((14)-(len(isnull([EC_Piece],''))+(1)))+isnull([EC_Piece],'')))", false);

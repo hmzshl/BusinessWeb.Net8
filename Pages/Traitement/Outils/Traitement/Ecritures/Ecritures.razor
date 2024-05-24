@@ -8,6 +8,8 @@
             <div class="grid-90">
                 <SfToolbar>
                     <ToolbarItems>
+                        <ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
                         <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
                             <Template>
                                 <div style="margin-left: 5px; margin-right: 10px;" id="debut">
@@ -39,7 +41,7 @@
                      </ToolbarItems>
                  </SfToolbar>
                  <div class="grid-84">
-                 <SfGrid AllowFiltering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging ContextMenuItems="@(contextMenu())">
+                 <SfGrid ID="EcritureGRID" AllowFiltering AllowReordering EnablePersistence AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging ContextMenuItems="@(contextMenu())">
                          <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
                          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                          <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
@@ -66,12 +68,12 @@
                                     }
                                 </Template>
                             </GridColumn>
-                            <GridColumn Format="d" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.MV_Date)" HeaderText="Date" />
-                            <GridColumn Format="d" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Echeance)" HeaderText="Date Ech" />
+                            <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.MV_Date)" HeaderText="Date" />
+                            <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Echeance)" HeaderText="Date Ech" />
                             <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.JO_Num)" HeaderText="N° Jou" />
                             <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.JO_Intitule)" HeaderText="Journal" />
                             <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CG_Num)" HeaderText="Compte" />
-                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CG_Intitule)" HeaderText="Intitulé Compte" />
+                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CG_Intitule)" Visible="false" HeaderText="Intitulé Compte" />
                             <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Piece)" HeaderText="Pièce" />
                             <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_RefPiece)" HeaderText="Numéro" />
                             <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CT_Num)" HeaderText="N° Tiers" />
@@ -91,9 +93,9 @@
                                     }
                                 </Template>
                             </GridColumn>
-                            <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Lettrage)" HeaderText="Lettre" />
-                            <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_DateRappro)" Format="d" HeaderText="DT Rap" />
-                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_TresoPiece)" HeaderText="N° Rap" />
+                            <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Lettrage)" HeaderText="Lettre" Visible="false" />
+                            <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_DateRappro)" Format="dd/MM/yy" HeaderText="DT Rap"  Visible="false"/>
+                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_TresoPiece)" HeaderText="N° Rap" Visible="false" />
 
                         </GridColumns>
                     </SfGrid>

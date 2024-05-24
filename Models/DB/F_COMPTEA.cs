@@ -57,6 +57,12 @@ public partial class F_COMPTEA
 
     public int cbMarq { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
     public virtual F_COMPTEABUDGET F_COMPTEABUDGET { get; set; }
 
     public virtual ICollection<F_COMPTEAMEDIA> F_COMPTEAMEDIA { get; set; } = new List<F_COMPTEAMEDIA>();

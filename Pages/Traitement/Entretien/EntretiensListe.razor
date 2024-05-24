@@ -41,7 +41,7 @@
                         </GridAggregate>
                     </GridAggregates>
                     <GridColumns>
-                        <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Date)" HeaderText="Date" Format="d"></GridColumn>
+                        <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
                         <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Piece)" HeaderText="Piece"></GridColumn>
                         <GridColumn AllowFiltering="false" AllowSorting="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Fournisseur)" HeaderText="Fournisseur"></GridColumn>
                         @if (IsList)
@@ -68,7 +68,7 @@
                         {
                             <GridColumn AllowFiltering="false" AllowSorting="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Annee)" HeaderText="Année" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
 
-                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="dd/MM/yy"></GridColumn>
                             <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                             <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                 <Template>
@@ -88,7 +88,7 @@
                         @if (type == "2")
                         {
                             <GridColumn AllowFiltering="false" AllowSorting="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Annee)" HeaderText="Année" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
-                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="dd/MM/yy"></GridColumn>
                             <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                             <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                 <Template>
@@ -108,7 +108,7 @@
                         @if (type == "3")
                         {
                             <GridColumn AllowFiltering="false" AllowSorting="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Annee)" HeaderText="Année" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
-                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="dd/MM/yy"></GridColumn>
                             <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                             <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                 <Template>
@@ -204,8 +204,8 @@
                         @if (type == "10")
                         {
                             <GridColumn AllowFiltering="false" AllowSorting="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Annee)" HeaderText="Année" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
-                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateDebut)" HeaderText="Date Début" Format="d"></GridColumn>
-                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateFin)" HeaderText="Date Fin" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateDebut)" HeaderText="Date Début" Format="dd/MM/yy"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateFin)" HeaderText="Date Fin" Format="dd/MM/yy"></GridColumn>
                             <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                 <Template>
                                     @{
@@ -223,7 +223,7 @@
                         @if (type == "11")
                         {
                             <GridColumn AllowFiltering="false" AllowSorting="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Annee)" HeaderText="Année" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
-                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="dd/MM/yy"></GridColumn>
                             <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                             <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                 <Template>
@@ -241,8 +241,8 @@
                         }
                         @if (type == "12")
                         {
-                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DatePaiement)" HeaderText="Date paiement" Format="d"></GridColumn>
-                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DatePaiement)" HeaderText="Date paiement" Format="dd/MM/yy"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="dd/MM/yy"></GridColumn>
                             <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.NumeroQuittance)" HeaderText="N° Quittance"></GridColumn>
                             <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                             <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
@@ -261,8 +261,8 @@
                         }
                         @if (type == "13")
                         {
-                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateDebut)" HeaderText="Date début" Format="d"></GridColumn>
-                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="d"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateDebut)" HeaderText="Date début" Format="dd/MM/yy"></GridColumn>
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.DateValidite)" HeaderText="Date validité" Format="dd/MM/yy"></GridColumn>
                             <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                             <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                 <Template>

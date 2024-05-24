@@ -195,6 +195,12 @@ public partial class F_DOCLIGNE
 
     public int cbMarq { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 
     public virtual F_TAXE DL_CodeTaxe1Navigation { get; set; }

@@ -41,7 +41,7 @@
 
          </ToolbarItems>
      </SfToolbar>
-     <SfGrid Height="100%" AllowGrouping AllowSelection EnableHover DataSource="@(items)" @ref=DefaultGrid AllowSorting AllowFiltering="false" AllowExcelExport>
+     <SfGrid AllowTextWrap EnablePersistence ID="EcheanceGRID" Height="100%" AllowGrouping AllowSelection EnableHover DataSource="@(items)" @ref=DefaultGrid AllowSorting AllowFiltering="false" AllowExcelExport>
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
             <GridGroupSettings Columns="@(new string[] { "CT_Intitule" })" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates EnableLazyLoading>
                 <CaptionTemplate>
@@ -293,10 +293,10 @@
             </GridAggregates>
             <GridColumns>
             <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Intitule)" HeaderText="@(getTiers())" Visible="@(CT_Num == null)" />
-                <GridColumn Width="240" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Libelle)" HeaderText="Libellé" />
+                <GridColumn Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Libelle)" HeaderText="Libellé" />
                 <GridColumn Width="85" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Num)" HeaderText="Numéro" Visible="@(CT_Num == null)" />
-                <GridColumn Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Date)" HeaderText="Date" Format="d" />
-                <GridColumn Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.DateEcheance)" HeaderText="Echéance" Format="d" />
+                <GridColumn Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Date)" HeaderText="Date" Format="dd/MM/yy" />
+                <GridColumn Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.DateEcheance)" HeaderText="Echéance" Format="dd/MM/yy" />
                 
                 <GridColumn Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Piece)" HeaderText="Pièce" />
                 <GridColumn Width="75" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.R_Intitule)" HeaderText="Mode" />

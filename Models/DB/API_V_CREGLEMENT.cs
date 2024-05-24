@@ -98,4 +98,10 @@ public partial class API_V_CREGLEMENT
     public decimal? M11 { get; set; }
 
     public decimal? M12 { get; set; }
+
+    public string PROT_User { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public DateTime? cbModification { get; set; }
 }

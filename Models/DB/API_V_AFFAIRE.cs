@@ -58,4 +58,10 @@ public partial class API_V_AFFAIRE
     public decimal? EcartCA { get; set; }
 
     public decimal? Avancement { get; set; }
+
+    public string PROT_User { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public DateTime? cbModification { get; set; }
 }

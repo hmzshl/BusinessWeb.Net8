@@ -23,13 +23,13 @@
                     <GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Chassis)" HeaderText="N° Chassis"></GridColumn>
                     <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Modele)" HeaderText="Modéle"></GridColumn>
                     <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Puissance)" HeaderText="Puis Fisc."></GridColumn>
-                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.DateAchat)" HeaderText="Date Achat" Format="d"></GridColumn>
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.DateAchat)" HeaderText="Date Achat" Format="dd/MM/yy"></GridColumn>
                     <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Fournisseur)" HeaderText="Fournisseur"></GridColumn>
                     <GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Nom)" HeaderText="Conducteur"></GridColumn>
                     <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.PermisType)" HeaderText="Type Permis"></GridColumn>
                     <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.PermisNum)" HeaderText="N° Permis"></GridColumn>
-                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.PermisDateDebut)" HeaderText="Date Début" Format="d"></GridColumn>
-                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.PermisDateFin)" HeaderText="Date Fin" Format="d"></GridColumn>
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.PermisDateDebut)" HeaderText="Date Début" Format="dd/MM/yy"></GridColumn>
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.PermisDateFin)" HeaderText="Date Fin" Format="dd/MM/yy"></GridColumn>
                 </GridColumns>
                 <SfSpinner @bind-Visible="@loading">
                 </SfSpinner>

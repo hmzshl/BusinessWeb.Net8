@@ -2,26 +2,6 @@
 @attribute [Authorize(Roles = "Super Admin,Admin,Direction,Commercial")]
 
 
-
-@if (IsLoaded)
-{
-    <Card_1 Title="LISTE DES CLIENTS">
-        <TiersListe CT_Type="0" Title="Clients" />
-    </Card_1>
-}
-else
-{
-    <div class="center-screen">
-        <Loading_1 />
-    </div>
-}
-
-
-@code {
-    bool IsLoaded = false;
-    protected override async Task OnInitializedAsync()
-    {
-        await Task.Delay(1);
-        IsLoaded = true;
-    }
-}
+<Card_1 Title="LISTE DES CLIENTS">
+    <TiersListe CT_Type="0" Title="Clients" />
+</Card_1>

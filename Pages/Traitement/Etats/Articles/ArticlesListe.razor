@@ -7,8 +7,6 @@
             <div class="grid-90">
                 <SfToolbar CssClass="btns">
                     <ToolbarItems>
-
-
                         <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
 
                             <Template>
@@ -31,7 +29,7 @@
                     </ToolbarItems>
                 </SfToolbar>
                 <div class="grid-84">
-                    <SfGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowResizing AllowFiltering AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
+                    <SfGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowResizing AllowFiltering AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="ArticleGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
                         <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="false" AllowDeleting="false" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
                         <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_V_ARTICLE"></GridEvents>
                         <GridPageSettings PageSize="100"></GridPageSettings>
@@ -190,7 +188,7 @@
                                             </GridColumn>
                                             <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC_Achat" HeaderText="Ach.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                             </GridColumn>
-                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL_Achat" HeaderText="Date.Ach" Format="d"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL_Achat" HeaderText="Date.Ach" Format="dd/MM/yy"></GridColumn>
                                             <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_Qte_Achat" HeaderText="Der.Qte" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                                             <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PUA_chat" HeaderText="Der.PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                                             <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantHT_Achat" HeaderText="Der.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
@@ -212,7 +210,7 @@
                                             <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC_Vente" HeaderText="CA.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
 
                                             </GridColumn>
-                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL_Vente" HeaderText="Der.Date" Format="d"></GridColumn>
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL_Vente" HeaderText="Der.Date" Format="dd/MM/yy"></GridColumn>
                                             <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_Qte_Vente" HeaderText="Der.Qte" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                                             <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PU_Vente" HeaderText="Der.PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                                             <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantHTVente" HeaderText="Der.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
