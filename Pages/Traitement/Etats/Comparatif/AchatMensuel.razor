@@ -31,7 +31,13 @@
                     <GridCol Xs="24" Md="9">
                         <Card Title="Fournisseurs">
                             <div style="height: 72vh;">
-                             <SfPivotView TValue="API_V_ACHAT" Height="100%" ShowFieldList=false Target="document" AllowDeferLayoutUpdate="true" ExportAllPages=false
+                                <SfToolbar CssClass="btns">
+                                    <ToolbarItems>
+                                        <ToolbarItem OnClick=@(args => (FRsfPivot.ExportToPdfAsync())) TooltipText="Export PDF" Text="Export PDF" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-pdf"></ToolbarItem>
+                                        <ToolbarItem OnClick=@(args => (FRsfPivot.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+                                    </ToolbarItems>
+                                </SfToolbar>
+                             <SfPivotView @ref=@FRsfPivot TValue="API_V_ACHAT" Height="100%" ShowFieldList=false Target="document" AllowDeferLayoutUpdate="true" ExportAllPages=false
                                           EnableVirtualization="false" ShowToolbar=true AllowNumberFormatting=true AllowConditionalFormatting=true
                                           AllowCalculatedField=true AllowPdfExport=true AllowExcelExport=true ShowGroupingBar="false" AllowGrouping=true EnableValueSorting=true ShowTooltip=false MaxNodeLimitInMemberEditor="50">
                                      <PivotViewDisplayOption Primary="Primary.Table" View="View.Both"></PivotViewDisplayOption>
@@ -55,7 +61,7 @@
                                      <PivotViewGridSettings AllowSelection=true ColumnWidth="80" RowHeight="23">
                                          <PivotViewSelectionSettings Mode="Syncfusion.Blazor.PivotView.SelectionMode.Row" Type="PivotTableSelectionType.Single" CellSelectionMode="PivotCellSelectionMode.Flow"></PivotViewSelectionSettings>
                                      </PivotViewGridSettings>
-                                     <PivotViewEvents TValue="API_V_ACHAT"></PivotViewEvents>
+                                    <PivotViewEvents TValue="API_V_ACHAT" BeforeColumnsRender="FRColummRender"></PivotViewEvents>
                                  </SfPivotView>
                             </div>
                         
@@ -64,7 +70,13 @@
                  <GridCol Xs="24" Md="15">
                      <Card Title="Articles">
                          <div style="height: 72vh;">
-                             <SfPivotView TValue="API_V_ACHAT" Height="100%" ShowFieldList=false Target="document" AllowDeferLayoutUpdate="true" ExportAllPages=false
+                                <SfToolbar CssClass="btns">
+                                    <ToolbarItems>
+                                        <ToolbarItem OnClick=@(args => (ARsfPivot.ExportToPdfAsync())) TooltipText="Export PDF" Text="Export PDF" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-pdf"></ToolbarItem>
+                                        <ToolbarItem OnClick=@(args => (ARsfPivot.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+                                    </ToolbarItems>
+                                </SfToolbar>
+                             <SfPivotView @ref=ARsfPivot TValue="API_V_ACHAT" Height="100%" ShowFieldList=false Target="document" AllowDeferLayoutUpdate="true" ExportAllPages=false
                                           EnableVirtualization="false" ShowToolbar=true AllowNumberFormatting=true AllowConditionalFormatting=true
                                           AllowCalculatedField=true AllowPdfExport=true AllowExcelExport=true ShowGroupingBar="false" AllowGrouping=true EnableValueSorting=true ShowTooltip=false MaxNodeLimitInMemberEditor="50">
                                  <PivotViewDisplayOption Primary="Primary.Table" View="View.Both"></PivotViewDisplayOption>
@@ -90,7 +102,7 @@
                                  <PivotViewGridSettings AllowSelection=true ColumnWidth="80" RowHeight="23">
                                      <PivotViewSelectionSettings Mode="Syncfusion.Blazor.PivotView.SelectionMode.Row" Type="PivotTableSelectionType.Single" CellSelectionMode="PivotCellSelectionMode.Flow"></PivotViewSelectionSettings>
                                  </PivotViewGridSettings>
-                                 <PivotViewEvents TValue="API_V_ACHAT"></PivotViewEvents>
+                                    <PivotViewEvents TValue="API_V_ACHAT" BeforeColumnsRender="ARColummRender"></PivotViewEvents>
                              </SfPivotView>
                          </div>
 
@@ -142,6 +154,18 @@ else
         IsLoaded = true;
         await Task.Delay(300);
 
+    }
+    SfPivotView<API_V_ACHAT> FRsfPivot;
+    public void FRColummRender(ColumnRenderEventArgs args)
+    {
+        args.Columns[0].Width = "350";
+        FRsfPivot.LayoutRefreshAsync();
+    }
+    SfPivotView<API_V_ACHAT> ARsfPivot;
+    public void ARColummRender(ColumnRenderEventArgs args)
+    {
+        args.Columns[0].Width = "450";
+        ARsfPivot.LayoutRefreshAsync();
     }
     protected async Task ShowDetail(RecordDoubleClickEventArgs<API_V_ACHAT> args)
     {
