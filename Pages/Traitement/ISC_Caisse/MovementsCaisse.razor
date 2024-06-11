@@ -138,7 +138,7 @@
         await Task.Delay(1);
         items = new List<V_MovementCaisse>();
         Decimal solde = 0;
-        data = db.API_V_CAISSEENTETE.Where(a => a.Caisse == caisse && a.Date >= (date1??new DateTime(1900,1,1)) && a.Date <= (date2??new DateTime(2900,12,31))).OrderBy(a => a.Date).ToList();
+        data = db.API_V_CAISSEENTETE.Where(a => a.Caisse == caisse && a.Date >= (date1??new DateTime(1900,1,1)) && a.Date <= (date2??new DateTime(2070,12,31))).OrderBy(a => a.Date).ToList();
         var reports = db.API_V_CAISSEENTETE.Where(a => a.Caisse == caisse && a.Date < (date1 ?? new DateTime(1900, 1, 1))).ToList();
         solde = reports.Where(a => a.Type == 0).Sum(a => a.Montant) - reports.Where(a => a.Type == 1).Sum(a => a.Montant);
 

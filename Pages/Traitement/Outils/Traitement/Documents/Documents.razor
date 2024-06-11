@@ -339,11 +339,13 @@ else
 					{
 						db.Database.ExecuteSqlRaw("update f_docentete set cbHashOrder = null, cbHashDate = null, cbHashVersion = 1, cbHash = null, DO_Valide = 0,do_type = 16 where do_piece = {0} AND do_type = 17", item.DO_Piece);
 						db.Database.ExecuteSqlRaw("update f_docligne set do_type = 16 where do_piece = {0} AND do_type = 17", item.DO_Piece);
+						db.Database.ExecuteSqlRaw("update F_DOCREGL set do_type = 16 where do_piece = {0} AND do_type = 17", item.DO_Piece);
 					}
 					if (item.DO_Type == 7)
 					{
 						db.Database.ExecuteSqlRaw("update f_docentete set cbHashOrder = null, cbHashDate = null, cbHashVersion = 1, cbHash = null, DO_Valide = 0,do_type = 6 where do_piece = {0} AND do_type = 7", item.DO_Piece);
 						db.Database.ExecuteSqlRaw("update f_docligne set do_type = 6 where do_piece = {0} AND do_type = 7", item.DO_Piece);
+						db.Database.ExecuteSqlRaw("update F_DOCREGL set do_type = 6 where do_piece = {0} AND do_type = 7", item.DO_Piece);
 					}
 				}
 				fn.EnableTriggers(db, "F_DOCENTETE", "UPD");

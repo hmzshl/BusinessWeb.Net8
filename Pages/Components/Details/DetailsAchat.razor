@@ -2,9 +2,10 @@
 @if (IsLoaded)
 {
     <div style="height: @Height;">
-        <SfGrid AllowReordering EnablePersistence ShowColumnChooser ID="DetailAchatGRID" Height="100%" AllowGrouping=@(grouped != 0) AllowSelection EnableHover DataSource="@(items)" AllowPaging Toolbar="@(new List<object>() { "ColumnChooser","Print","ExcelExport","Search",new ToolbarItem() { Type = ItemType.Input,Template = Grouped, Id = "Grouper par", TooltipText = "Grouper par", Align = ItemAlign.Right}})" AllowSorting AllowFiltering>
+        <SfGrid @ref=DefaultGrid AllowExcelExport AllowReordering EnablePersistence ShowColumnChooser ID="DetailAchatGRID" Height="100%" AllowGrouping=@(grouped != 0) AllowSelection EnableHover DataSource="@(items)" AllowPaging Toolbar="@(new List<object>() { "ColumnChooser","Print","ExcelExport","Search",new ToolbarItem() { Type = ItemType.Input,Template = Grouped, Id = "Grouper par", TooltipText = "Grouper par", Align = ItemAlign.Right}})" AllowSorting AllowFiltering>
              <GridPageSettings PageSize="100" />
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="API_V_ACHAT"></GridEvents>
          <GridGroupSettings Columns="@(getGroups())" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates EnableLazyLoading>
              <CaptionTemplate>
                  @{
@@ -137,6 +138,14 @@ else
         db = session.db;
         await UpdateGrid();
         IsLoaded = true;
+    }
+    private SfGrid<API_V_ACHAT> DefaultGrid;
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "DetailAchatGRID_excelexport") //Id is combination of Grid's ID and itemname
+        {
+            await this.DefaultGrid.ExcelExport();
+        }
     }
     int[] liv = { 3, 4, 5, 6, 7, 13, 14, 15, 16, 17 };
     private async Task UpdateGrid()

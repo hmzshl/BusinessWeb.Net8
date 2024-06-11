@@ -33,7 +33,8 @@ namespace BusinessWeb.Middleware
                 && (!context.Request.Path.StartsWithSegments("/api/BoldReportsSQL"))
                 && (!context.Request.Path.StartsWithSegments("/api/swagger"))
                 && (!context.Request.Path.StartsWithSegments("/api/BoldReportsAPI"))
-                )
+				&& (!context.Request.Path.StartsWithSegments("/api/BoldReportsWriter"))
+				)
             {
                 TLicense row = new TLicense();
                 var dt = dbContext.TLicenses.OrderBy(a => a.id).ToList();

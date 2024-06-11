@@ -1,8 +1,9 @@
 ﻿@if (IsLoaded)
 {
 	<div style="height: @Height;">
-		<SfGrid Height="100%" AllowGrouping=@(grouped != 0) AllowSelection EnableHover DataSource="@(items)" AllowPaging ShowColumnChooser AllowReordering EnablePersistence Toolbar="@(new List<object>() { "ColumnChooser","Print","ExcelExport","Search",new ToolbarItem() { Type = ItemType.Input,Template = Grouped, Id = "Grouper par", TooltipText = "Grouper par", Align = ItemAlign.Right}})" AllowSorting AllowFiltering>
+		<SfGrid @ref=DefaultGrid ID="DetailMargeGRID" AllowExcelExport Height="100%" AllowGrouping=@(grouped != 0) AllowSelection EnableHover DataSource="@(items)" AllowPaging ShowColumnChooser AllowReordering EnablePersistence Toolbar="@(new List<object>() { "ColumnChooser","Print","ExcelExport","Search",new ToolbarItem() { Type = ItemType.Input,Template = Grouped, Id = "Grouper par", TooltipText = "Grouper par", Align = ItemAlign.Right}})" AllowSorting AllowFiltering>
 			<GridPageSettings PageSize="100" />
+			<GridEvents OnToolbarClick="ToolbarClickHandler" TValue="API_V_MARGE"></GridEvents>
 			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 			<GridGroupSettings Columns="@(getGroups())" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates EnableLazyLoading>
 				<CaptionTemplate>
@@ -213,6 +214,14 @@ else
 		db = session.db;
 		await UpdateGrid();
 		IsLoaded = true;
+	}
+	private SfGrid<API_V_MARGE> DefaultGrid;
+	public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+	{
+		if (args.Item.Id == "DetailMargeGRID_excelexport") //Id is combination of Grid's ID and itemname
+		{
+			await this.DefaultGrid.ExcelExport();
+		}
 	}
 	int[] liv = { 3, 4, 5, 6, 7, 13, 14, 15, 16, 17 };
 	private async Task UpdateGrid()
