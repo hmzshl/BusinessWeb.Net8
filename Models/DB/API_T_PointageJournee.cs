@@ -17,6 +17,22 @@ public partial class API_T_PointageJournee
 
     public bool Cloture { get; set; }
 
+    public DateTime? Creation { get; set; }
+
+    public DateTime? Modification { get; set; }
+
+    public string CreationIP { get; set; }
+
+    public string ModificationIP { get; set; }
+
+    public string CreationHost { get; set; }
+
+    public string ModificationHost { get; set; }
+
+    public string CreationUser { get; set; }
+
+    public string ModificationUser { get; set; }
+
     public virtual ICollection<API_T_AvancementDetail> API_T_AvancementDetail { get; set; } = new List<API_T_AvancementDetail>();
 
     public virtual ICollection<API_T_AvancementHorsBD> API_T_AvancementHorsBD { get; set; } = new List<API_T_AvancementHorsBD>();

@@ -22,4 +22,20 @@ public partial class API_T_HistoriqueConnexion
     public string TypeOP { get; set; }
 
     public string CB_Type { get; set; }
+
+    public DateTime? Creation { get; set; }
+
+    public DateTime? Modification { get; set; }
+
+    public string CreationIP { get; set; }
+
+    public string ModificationIP { get; set; }
+
+    public string CreationHost { get; set; }
+
+    public string ModificationHost { get; set; }
+
+    public string CreationUser { get; set; }
+
+    public string ModificationUser { get; set; }
 }

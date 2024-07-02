@@ -30,7 +30,7 @@
                     string q1 = @"SELECT a.* FROM AspNetRoles a WHERE Id IN (SELECT a.RoleId FROM AspNetUserRoles a WHERE a.UserId = {0})";
                 }
                 <div style="height: 45vh;">
-                    <SfGrid Height="100%" DataSource="@(sdb.AspNetRoles.FromSqlRaw(q1,sc.User.Id))">
+                    <SfGrid  Height="100%" DataSource="@(sdb.AspNetRoles.FromSqlRaw(q1,sc.User.Id))">
                         <GridColumns>
                             <GridColumn HeaderText="Nom" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(AspNetRole.Name)" />
                         </GridColumns>

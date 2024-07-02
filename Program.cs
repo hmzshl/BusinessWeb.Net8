@@ -6,6 +6,7 @@ using BusinessWeb.Models;
 using BusinessWeb.Pages;
 using JBSystem;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -50,6 +51,7 @@ builder.Services.AddHttpClient("BusinessWeb").AddHeaderPropagation(o => o.Header
 builder.Services.AddHeaderPropagation(o => o.Headers.Add("Cookie"));
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<ClientInfoService>();
 builder.Services.AddSingleton<BusinessWebService>();
 builder.Services.AddScoped<BusinessWeb.SecurityService>();
 builder.Services.AddHttpContextAccessor();
@@ -57,7 +59,7 @@ builder.Services.AddDbContext<ApplicationIdentityDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"), o => o.UseCompatibilityLevel(100));
 }, ServiceLifetime.Transient);
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<ApplicationIdentityDbContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationIdentityDbContext>().AddDefaultTokenProviders();
 builder.Services.AddControllers().AddOData(o =>
 {
     var oDataBuilder = new ODataConventionModelBuilder();
@@ -68,6 +70,12 @@ builder.Services.AddControllers().AddOData(o =>
     oDataBuilder.EntitySet<ApplicationRole>("ApplicationRoles");
     o.AddRouteComponents("odata/Identity", oDataBuilder.GetEdmModel()).Count().Filter().OrderBy().Expand().Select().SetMaxTop(null).TimeZone = TimeZoneInfo.Utc;
 });
+// Add data protection services
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(@"C:\keys"))
+		.SetApplicationName("BusinessWeb");
+
+
 builder.Services.AddCors(opts => opts.AddDefaultPolicy(bld =>
 {
     bld

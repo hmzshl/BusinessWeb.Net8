@@ -65,6 +65,7 @@ AS
 
 				WHERE a.DL_Valorise = 1 
 				AND a.DO_Type IN (13,14,15,16,17)");
+
             migrationBuilder.Sql(@"ALTER VIEW [dbo].[API_V_AFFAIRE]
                                             AS
                                             SELECT 
@@ -383,6 +384,7 @@ AS
 				  ) cd ON a.AR_Ref = cd.AR_Ref
 
 				  LEFT JOIN F_PROTECTIONCIAL uti ON a.cbCreationUser = uti.PROT_Guid");
+
             migrationBuilder.Sql(@"ALTER VIEW [dbo].[API_V_COLLABORATEUR]
                                             AS
                                             SELECT  a.CO_No
@@ -443,6 +445,7 @@ AS
                                             GROUP BY a.CO_No
                                               ) fr ON a.CO_No = fr.CO_No
 											  				  LEFT JOIN F_PROTECTIONCIAL uti ON a.cbCreationUser = uti.PROT_Guid");
+
             migrationBuilder.Sql(@"ALTER VIEW [dbo].[API_V_COMPTET]
 				AS
 				SELECT 
@@ -1046,6 +1049,9 @@ SELECT
   LEFT JOIN F_COMPTET ct ON a.CT_Num = ct.CT_Num
   LEFT JOIN F_JOURNAUX jr ON a.JO_Num = jr.JO_Num
   LEFT JOIN F_COMPTEG cg ON a.CG_Num = cg.CG_Num");
+
+
+
             migrationBuilder.Sql(@"ALTER VIEW [dbo].[API_V_MARGE]
 				AS
 				SELECT 

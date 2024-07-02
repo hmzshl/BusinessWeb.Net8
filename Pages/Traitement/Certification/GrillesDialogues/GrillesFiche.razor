@@ -215,10 +215,10 @@
                             </GridCol>
                             <GridCol Xs="24" Md="24">
                                 <Card Title="Axe Technique">
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Nature de préstation" LabelColSpan="8">
+                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Nature de préstation" LabelColSpan="6">
 
                                         <RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
-                                            <SfDropDownList Readonly="@(row.Statut != 0)" Width="170px" TValue="int" TItem="Items" DataSource="@fn.NaturePrestation()" @bind-Value="@row.NaturePrestation">
+                                            <SfDropDownList Readonly="@(row.Statut != 0)" Width="240px" TValue="int" TItem="Items" DataSource="@fn.NaturePrestation()" @bind-Value="@row.NaturePrestation">
                                                 <DropDownListEvents TValue="int" TItem="Items" />
                                                 <DropDownListFieldSettings Text="Name" Value="Id" />
                                             </SfDropDownList>
@@ -228,7 +228,7 @@
                                             }
                                         </RadzenStack>
                                     </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Methode Etalonnage" LabelColSpan="8">
+                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Methode Etalonnage" LabelColSpan="6">
                                         <RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
                                             <SfDropDownList Readonly="@(row.Statut != 0)" Width="170px" TValue="int" TItem="Items" DataSource="@fn.MethodeEtalonnage()" @bind-Value="@row.MethodeEtalonnange">
                                                 <DropDownListEvents TValue="int" TItem="Items" />
@@ -241,14 +241,14 @@
                                         </RadzenStack>
 
                                     </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Avis sur la pertinence de la méthode" LabelColSpan="8">
+                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Avis sur la pertinence de la méthode" LabelColSpan="6">
                                         <SfDropDownList Readonly="@(row.Statut != 0)" Width="170px" TValue="int" TItem="Items" DataSource="@fn.PertinenceMethode()" @bind-Value="@row.AvisPertinenceMethode">
                                             <DropDownListEvents TValue="int" TItem="Items" />
                                             <DropDownListFieldSettings Text="Name" Value="Id" />
                                         </SfDropDownList>
                                     </FormItem>
 
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Points d’étalonnage" LabelColSpan="8">
+                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Points d’étalonnage" LabelColSpan="6">
                                         <RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
                                             <SfDropDownList Readonly="@(row.Statut != 0)" Width="170px" TValue="int" TItem="Items" DataSource="@fn.PointsEtalonnage()" @bind-Value="@row.PointsEtalonnage">
                                                 <DropDownListEvents TValue="int" TItem="Items" />
@@ -262,10 +262,10 @@
                                         </RadzenStack>
 
                                     </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Capacité et disponibilité des ressources nécessaires" LabelColSpan="8">
+                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Capacité et disponibilité des ressources nécessaires" LabelColSpan="6">
                                         <SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.CapaciteDisponibiliteRessourcesNecessaires"></SfSwitch>
                                     </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Commentaire" LabelColSpan="8">
+                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Commentaire" LabelColSpan="6">
                                         <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Commentaire" />
                                     </FormItem>
                                 </Card>
@@ -279,7 +279,7 @@
                     </ChildContent>
                     <ContentTemplate>
                         <div style="height: 70vh;" class="no-border">
-                            <SfGrid Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(modifs)">
+                            <SfGrid AllowTextWrap  Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(modifs)">
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                                 <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(row.Statut == 0)" AllowDeleting="@(row.Statut == 0)" AllowEditing="@(row.Statut == 0)" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
                                     <HeaderTemplate>
@@ -304,7 +304,7 @@
                     </ChildContent>
                     <ContentTemplate>
                         <div style="height: 70vh;" class="no-border">
-                            <SfGrid Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(exigences)">
+                            <SfGrid AllowTextWrap  Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(exigences)">
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                                 <GridEditSettings Dialog=@(DialogParams) ShowDeleteConfirmDialog="true" AllowAdding="@(row.Statut == 0)" AllowDeleting="@(row.Statut == 0)" AllowEditing="@(row.Statut == 0)" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
                                     <HeaderTemplate>
@@ -314,10 +314,10 @@
                                 <GridEvents OnActionBegin="EditExigence" TValue="API_T_CertifGrilleDialogueExigence"></GridEvents>
                                 <GridColumns>
                                     <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
-                                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.AR_Ref) HeaderText="Code">
+                                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.AR_Ref) HeaderText="Ref">
                                         <EditTemplate></EditTemplate>
                                     </GridColumn>
-                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Designation">
+                                    <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Designation">
                                         <Template>
                                             @{
                                                 var dt = db.F_ARTICLE.Where(a => a.AR_Ref == (context as API_T_CertifGrilleDialogueExigence).AR_Ref).SingleOrDefault();
@@ -331,7 +331,9 @@
                                             </SfDropDownList>
                                         </EditTemplate>
                                     </GridColumn>
-                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="180" HeaderText="Jugement de conformité">
+                                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.Code) HeaderText="Code"/>
+                                    <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.PointsEtalonnage) HeaderText="Points Etalonnage" />
+                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" HeaderText="Jugement de conformité">
                                         <Template>
                                             @{
                                                 var dt = fn.JugementConformite().Where(a => a.Id == (context as API_T_CertifGrilleDialogueExigence).Jugement).SingleOrDefault();
@@ -359,7 +361,7 @@
                                             </SfDropDownList>
                                         </EditTemplate>
                                     </GridColumn>
-                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="180" Field=@nameof(API_T_CertifGrilleDialogueExigence.Normative) HeaderText="Erreur maximal toleré" EditType="EditType.BooleanEdit">
+                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="140" Field=@nameof(API_T_CertifGrilleDialogueExigence.Normative) HeaderText="Erreur maximal toleré" EditType="EditType.BooleanEdit">
                                         <Template>
                                             @{
                                                 var dt = fn.ErreurMaximalTolere().Where(a => a.Id == (context as API_T_CertifGrilleDialogueExigence).ErreurMaximalTolere).SingleOrDefault();
@@ -373,7 +375,9 @@
                                             </SfDropDownList>
                                         </EditTemplate>
                                     </GridColumn>
-                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.AutreSpecification) HeaderText="Autre Spécification"></GridColumn>
+                                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.Classe) HeaderText="Erreur toleré utilisateur" />
+                                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.Classe) HeaderText="Classe" />
+                                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.AutreSpecification) HeaderText="Autre Spécification"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </div>

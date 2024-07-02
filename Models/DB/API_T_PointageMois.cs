@@ -19,6 +19,22 @@ public partial class API_T_PointageMois
 
     public string Description { get; set; }
 
+    public DateTime? Creation { get; set; }
+
+    public DateTime? Modification { get; set; }
+
+    public string CreationIP { get; set; }
+
+    public string ModificationIP { get; set; }
+
+    public string CreationHost { get; set; }
+
+    public string ModificationHost { get; set; }
+
+    public string CreationUser { get; set; }
+
+    public string ModificationUser { get; set; }
+
     public virtual ICollection<API_T_PointageJournee> API_T_PointageJournee { get; set; } = new List<API_T_PointageJournee>();
 
     public virtual API_T_PointageAnnee Annee { get; set; }

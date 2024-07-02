@@ -45,6 +45,22 @@ public partial class API_T_CaisseEntete
 
     public string Reference { get; set; }
 
+    public DateTime? Creation { get; set; }
+
+    public DateTime? Modification { get; set; }
+
+    public string CreationIP { get; set; }
+
+    public string ModificationIP { get; set; }
+
+    public string CreationHost { get; set; }
+
+    public string ModificationHost { get; set; }
+
+    public string CreationUser { get; set; }
+
+    public string ModificationUser { get; set; }
+
     public virtual ICollection<API_T_CaisseLigne> API_T_CaisseLigne { get; set; } = new List<API_T_CaisseLigne>();
 
     public virtual API_T_Caisse CaisseNavigation { get; set; }

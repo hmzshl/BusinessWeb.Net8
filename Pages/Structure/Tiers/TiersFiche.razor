@@ -69,7 +69,7 @@
 												<div style="height: 50vh;" class="no-border small-grid">
 													@if (row.CT_Type == 0)
 													{
-														<SfGrid AllowTextWrap AllowPaging="true" Height="100%" DataSource="@(dt_article)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
+														<SfGrid  AllowTextWrap Height="100%" DataSource="@(dt_article)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
 															<GridAggregates>
 																<GridAggregate>
 																	<GridAggregateColumns>
@@ -171,7 +171,7 @@
 													}
 													@if (row.CT_Type == 1)
 													{
-														<SfGrid AllowTextWrap AllowPaging="true" Height="100%" DataSource="@(achat_dt_article)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
+														<SfGrid  AllowTextWrap Height="100%" DataSource="@(achat_dt_article)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
 															<GridAggregates>
 																<GridAggregate>
 																	<GridAggregateColumns>
@@ -371,7 +371,7 @@ else
 	private async Task LoadData()
 	{
 		items = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.CT_Num == row.CT_Num).ToList();
-		dt_mois = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.CT_Num == row.CT_Num).GroupBy(a => new { a.MoisAnnee })
+		dt_mois = items.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.CT_Num == row.CT_Num).GroupBy(a => new { a.MoisAnnee })
 		.Select(a => new API_V_MARGE
 		 {
 			 MoisAnnee = a.Key.MoisAnnee,
@@ -381,7 +381,7 @@ else
 			 CMUPMarge = a.Sum(a => a.CMUPMarge),
 			 CMUPMargeP = a.Sum(a => a.DL_MontantHT) != 0.0m ? a.Sum(a => a.CMUPMarge) / a.Sum(a => a.DL_MontantHT) : 0.0m
 		 }).OrderByDescending(a => a.MoisAnnee).Take(12).ToList();
-		dt_annee = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.CT_Num == row.CT_Num).GroupBy(a => new { a.Annee })
+		dt_annee = items.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.CT_Num == row.CT_Num).GroupBy(a => new { a.Annee })
 	.Select(a => new API_V_MARGE
 		{
 			Annee = a.Key.Annee,
@@ -405,21 +405,21 @@ else
 		   }).OrderByDescending(a => a.DL_MontantTTC).ToList();
 
 		achat_items = db.API_V_ACHAT.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.CT_Num == row.CT_Num).ToList();
-		achat_dt_mois = db.API_V_ACHAT.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.CT_Num == row.CT_Num).GroupBy(a => new { a.MoisAnnee })
+		achat_dt_mois = achat_items.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.CT_Num == row.CT_Num).GroupBy(a => new { a.MoisAnnee })
 		.Select(a => new API_V_ACHAT
 		 {
 			 MoisAnnee = a.Key.MoisAnnee,
 			 DL_MontantHT = a.Sum(a => a.DL_MontantHT),
 			 DL_MontantTTC = a.Sum(a => a.DL_MontantTTC)
 		 }).OrderByDescending(a => a.MoisAnnee).Take(12).ToList();
-		achat_dt_annee = db.API_V_ACHAT.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.CT_Num == row.CT_Num).GroupBy(a => new { a.Annee })
+		achat_dt_annee = achat_items.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.CT_Num == row.CT_Num).GroupBy(a => new { a.Annee })
 	.Select(a => new API_V_ACHAT
 		{
 			Annee = a.Key.Annee,
 			DL_MontantHT = a.Sum(a => a.DL_MontantHT),
 			DL_MontantTTC = a.Sum(a => a.DL_MontantTTC)
 		}).OrderByDescending(a => a.Annee).Take(12).ToList();
-		achat_dt_article = db.API_V_ACHAT.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.CT_Num == row.CT_Num).GroupBy(a => new { a.AR_Design, a.AR_Ref })
+		achat_dt_article = achat_items.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.CT_Num == row.CT_Num).GroupBy(a => new { a.AR_Design, a.AR_Ref })
 				.Select(a => new API_V_ACHAT
 		   {
 			   AR_Ref = a.Key.AR_Ref,

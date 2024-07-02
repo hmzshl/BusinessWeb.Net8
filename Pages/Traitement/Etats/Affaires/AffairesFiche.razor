@@ -58,7 +58,7 @@
                                     <GridCol Xs="24" Md="24">
                                         <Card title="Devis">
                                             <div style="height: 60vh;" class="small-grid no-border">
-                                                <SfGrid Height="100%" AllowSelection="false" EnableHover="false" DataSource="@(db.API_V_DOCLIGNE.Where(a => a.CA_Num == CA_Num && a.DO_Type == 0 && a.DL_Valorise == 1).OrderBy(a => a.DL_Ligne))">
+                                                <SfGrid  Height="100%" AllowSelection="false" EnableHover="false" DataSource="@(db.API_V_DOCLIGNE.Where(a => a.CA_Num == CA_Num && a.DO_Type == 0 && a.DL_Valorise == 1).OrderBy(a => a.DL_Ligne))">
                                                      <GridAggregates>
                                                         <GridAggregate>
                                                             <GridAggregateColumns>
@@ -115,7 +115,7 @@
                             </ChildContent>
                             <ContentTemplate>
                                 <div style="height: 78vh; padding: 8px;" class="small-grid">
-                                    <SfGrid Height="100%" AllowSelection="false" EnableHover="false" DataSource="@(db.API_V_AFFAIREAVANCEMENT.Where(a => a.CA_Num == CA_Num).OrderBy(a => a.AR_Design))">
+                                    <SfGrid  Height="100%" AllowSelection="false" EnableHover="false" DataSource="@(db.API_V_AFFAIREAVANCEMENT.Where(a => a.CA_Num == CA_Num).OrderBy(a => a.AR_Design))">
                                         <GridAggregates>
                                             <GridAggregate>
                                                 <GridAggregateColumns>

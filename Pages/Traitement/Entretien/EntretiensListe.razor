@@ -8,7 +8,7 @@
     <Card_1 Title="@(fn.TypeEntretien().Where(a => a.Id == Int16.Parse(type)).SingleOrDefault().Name)" IsDetail="@IsDetail">
         <RadzenContent Container="main">
             <div class="@grid_class">
-                <SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPaging="@(IsList)" DataSource="@items"
+                <SfGrid  Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPaging="@(IsList)" DataSource="@items"
                         Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete"})">
                     <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
                     <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_MATERIELENTRETIEN"></GridEvents>

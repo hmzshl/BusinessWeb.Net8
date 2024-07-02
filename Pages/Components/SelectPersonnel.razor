@@ -1,4 +1,4 @@
-﻿<SfGrid AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items"
+﻿<SfGrid  AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items"
         Toolbar="@(new List<object>() {  "Search"})">
 
     <GridEvents OnRecordDoubleClick="@(args => Submit(args.RowData))" TValue="API_V_PERSONNEL"></GridEvents>

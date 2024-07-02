@@ -5,7 +5,7 @@
 <Card_1 Title="LISTE DES OFFRES SPECIALS">
     <RadzenContent Container="main">
         <div class="grid-90">
-            <SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)" AllowPaging>
+            <SfGrid  Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)" AllowPaging>
                 <GridPageSettings PageSize="100"></GridPageSettings>
                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                 <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">

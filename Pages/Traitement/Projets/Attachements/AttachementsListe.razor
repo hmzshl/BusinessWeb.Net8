@@ -1,6 +1,6 @@
 ﻿<RadzenContent Container="main">
     <div style="height: @grid_height;">
-        <SfGrid Height="100%" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+        <SfGrid  Height="100%" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
                 Toolbar="@(new List<object>() { "Search", "Print","Add", "Delete"})">
             <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@IsAttachement" AllowDeleting="@IsAttachement" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
             <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_ATTACHEMENT"></GridEvents>

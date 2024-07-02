@@ -136,7 +136,7 @@
         <GridCol Xs="24" Md="6">
            <Card Title="ITEMS">
                 <div style="height: 45vh;">
-                    <SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
+                    <SfGrid  Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
                         <GridEvents TValue="API_T_AgenceBookingDetail" OnActionBegin="OnActionBeginDetail"></GridEvents>
                         <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
                         <GridEditSettings AllowAdding AllowDeleting ShowDeleteConfirmDialog AllowEditing Mode="Syncfusion.Blazor.Grids.EditMode.Normal" AllowNextRowEdit>
@@ -187,7 +187,7 @@
         <GridCol Xs="24" Md="6">
             <Card Title="PAX">
                 <div style="height: 45vh;">
-                    <SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@pax">
+                    <SfGrid  Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@pax">
                         <GridEvents OnActionBegin="OnActionBeginSPO" TValue="API_T_AgenceBookingPax"></GridEvents>
                         <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
                         <GridEditSettings AllowAdding AllowDeleting ShowDeleteConfirmDialog AllowEditing Mode="Syncfusion.Blazor.Grids.EditMode.Normal" AllowNextRowEdit>
@@ -224,7 +224,7 @@
                                <GridCol Xs="24" Md="14">
                                   <Card Title="Prix Calculés">
                                         <div style="height: 41vh;">
-                                            <SfGrid Height="100%" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
+                                            <SfGrid  Height="100%" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
                                                 <GridEvents TValue="API_T_AgenceBookingDetail" OnActionBegin="OnActionBeginDetail"></GridEvents>
                                                 <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
                                                 <GridEditSettings ShowDeleteConfirmDialog Mode="Syncfusion.Blazor.Grids.EditMode.Normal" AllowNextRowEdit>
@@ -276,7 +276,7 @@
                                 <GridCol Xs="24" Md="10">
                                     <Card Title="SPO Appliqués">
                                         <div style="height: 41vh;">
-                                            <SfGrid Height="100%" @ref=@MainGrid AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@offres">
+                                            <SfGrid  Height="100%" @ref=@MainGrid AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@offres">
                                                 <GridEvents OnActionBegin="OnActionBegin" QueryCellInfo="CustomizeCell" TValue="API_T_AgenceBookingOffre"></GridEvents>
                                                 <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
                                                 <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Normal" AllowNextRowEdit>

@@ -1,9 +1,10 @@
 ﻿.st {
     padding-top: 5px;
     padding-bottom: 5px;
-    border-radius: 0px !important;
+    border-radius: 15px !important;
     margin-left: 5px;
     margin-right: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 
 .st-title-white .ant-statistic-title {
@@ -67,4 +68,7 @@
 .st-white {
     background: white;
     color: black;
+}
+.ant-statistic-title {
+    font-size: 13px;
 }

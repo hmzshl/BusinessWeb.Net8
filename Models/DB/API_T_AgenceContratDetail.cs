@@ -27,6 +27,22 @@ public partial class API_T_AgenceContratDetail
 
     public int Article { get; set; }
 
+    public DateTime? Creation { get; set; }
+
+    public DateTime? Modification { get; set; }
+
+    public string CreationIP { get; set; }
+
+    public string ModificationIP { get; set; }
+
+    public string CreationHost { get; set; }
+
+    public string ModificationHost { get; set; }
+
+    public string CreationUser { get; set; }
+
+    public string ModificationUser { get; set; }
+
     public virtual API_T_AgenceContratLigne LigneNavigation { get; set; }
 
     public virtual API_T_AgenceContratDate PeriodeNavigation { get; set; }

@@ -2,7 +2,7 @@
 @attribute [Authorize(Roles = "Super Admin,Admin")]
 <h1>ATTRIBUTES</h1>
 <Divider></Divider>
-<SfGrid class="table-vh" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)">
+<SfGrid  class="table-vh" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)">
                                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                                                 <GridEditSettings ShowDeleteConfirmDialog AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
                                                              <HeaderTemplate>

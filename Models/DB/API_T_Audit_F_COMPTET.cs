@@ -212,4 +212,20 @@ public partial class API_T_Audit_F_COMPTET
     public string CT_LangueISO2 { get; set; }
 
     public short? CT_AnnulationCR { get; set; }
+
+    public DateTime? Creation { get; set; }
+
+    public DateTime? Modification { get; set; }
+
+    public string CreationIP { get; set; }
+
+    public string ModificationIP { get; set; }
+
+    public string CreationHost { get; set; }
+
+    public string ModificationHost { get; set; }
+
+    public string CreationUser { get; set; }
+
+    public string ModificationUser { get; set; }
 }

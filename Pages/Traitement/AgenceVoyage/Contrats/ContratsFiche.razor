@@ -125,7 +125,7 @@
         </GridCol>
         <GridCol Xs="24" Md="24">
             <div style="height: 35vh;">
-                <SfGrid Height="100%" @ref=@MainGrid Toolbar="@(new List<object>() { "Add", "Delete",
+                <SfGrid  Height="100%" @ref=@MainGrid Toolbar="@(new List<object>() { "Add", "Delete",
                         #pragma warning disable BL0005
                         new ToolbarItem() {Id = "add_periode", TooltipText = "Ajouter une période", Align = ItemAlign.Right,PrefixIcon = "e-icons e-adjustment" }
                         })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
@@ -221,7 +221,7 @@
         <GridCol Xs="24" Md="24">
             <Card Title="SPO">
                 <div style="height: 30vh;">
-                    <SfGrid Height="100%" Toolbar="@(new List<object>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@spos">
+                    <SfGrid  Height="100%" Toolbar="@(new List<object>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@spos">
                         <GridEvents OnActionBegin="OnActionBeginSPO" TValue="API_T_AgenceOffre"></GridEvents>
                         <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
                         <GridEditSettings AllowAdding AllowDeleting ShowDeleteConfirmDialog AllowEditing Mode="Syncfusion.Blazor.Grids.EditMode.Normal" AllowNextRowEdit>

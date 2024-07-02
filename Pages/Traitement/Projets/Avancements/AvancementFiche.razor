@@ -6,7 +6,7 @@
             </ChildContent>
             <ContentTemplate>
                 <div class="grid-80">
-                    <SfGrid Height="100%" DataSource="@(lignes)" class="no-border">
+                    <SfGrid  Height="100%" DataSource="@(lignes)" class="no-border">
                         <GridEditSettings AllowEditing=@EditAllowed() Mode="Syncfusion.Blazor.Grids.EditMode.Batch" AllowNextRowEdit="false" />
                         <GridEvents CellSaved="CellSaveHandler" TValue="API_T_AvancementDetail"></GridEvents>
                         <GridTemplates>
@@ -71,7 +71,7 @@
             </ChildContent>
             <ContentTemplate>
                 <div class="grid-80">
-                    <SfGrid Height="100%" class="no-border" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(hors_bds)">
+                    <SfGrid  Height="100%" class="no-border" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(hors_bds)">
                         <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
                         </GridEditSettings>
                         <GridEvents TValue="API_T_AvancementHorsBD"></GridEvents>

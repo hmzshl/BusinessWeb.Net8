@@ -109,7 +109,7 @@ input, .rz-dropdown {
 }
 
 .rz-dialog {
-    border-radius: 0px;
+    border-radius: 15px 15px 0px 0px;
 }
 
 .footer {
@@ -462,10 +462,6 @@ body {
     background: #3a474d;
 }
 
-.e-tab.e-fill .e-tab-header .e-toolbar-item.e-active .e-tab-wrap {
-    background: #3a474d;
-}
-
 .e-band-cell {
     border-width: 1px 0px 0px 1px !important;
     font-weight: bold !important;
@@ -588,7 +584,7 @@ td {
 }
 
 .rz-button {
-    border-radius: 0px !important;
+    border-radius: 15px !important;
 }
 
 .rz-button-sm {
@@ -797,7 +793,7 @@ body {
     font-weight: Bold;
     font-size: 13px;
     background: unset;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 0px solid #f0f0f0;
     border-radius: 0px 0px 0 0;
 }
 
@@ -2077,7 +2073,7 @@ td.e-rowcell .statustxt.e-infocolor {
 }
 
 .e-btn, .e-css.e-btn {
-    border-radius: 0px;
+    border-radius: 15px !important;
     padding: 4px 8px;
 }
 
@@ -2282,8 +2278,8 @@ td .rz-button {
 }
 
 .e-headercelldiv, .e-grid .e-gridheader tr:first-child th, .e-grid.e-default .e-gridheader th.e-firstcell, .e-grid.e-default .e-gridheader th.e-laststackcell {
-    background: #dee0e3 !important;
-    background-color: rgb(220 225 235) !important;
+    background: rgb(217 227 236) !important;
+    background-color: rgb(217 227 236) !important;
     color: #434445 !important;
 }
 
@@ -2364,7 +2360,7 @@ th {
 }
 
 .e-grid .e-summaryrow .e-summarycell, .e-grid .e-summaryrow .e-templatecell, .e-grid .e-summarycontent .e-indentcell, .e-grid .e-indentcell.e-detailindentcelltop, .e-grid .e-groupfooterrow.e-summaryrow .e-indentcell.e-indentcelltop {
-    background: #dce1eb !important;
+    background: rgb(252 252 252) !important;
 }
 
 .e-toolbar .e-toolbar-items {
@@ -2420,4 +2416,13 @@ input {
 .rz-label {
     margin-top: 5px !important;
     font-weight: 700 !important;
+}
+.e-grid .e-toolbar {
+    border-top: 1px solid rgb(240 245 242);
+}
+.e-grid {
+    border-color: rgb(240 245 242);
+}
+.e-pager .e-currentitem.e-active {
+    border-width: inherit;
 }

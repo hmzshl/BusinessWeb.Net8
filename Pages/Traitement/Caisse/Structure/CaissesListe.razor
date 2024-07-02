@@ -4,7 +4,7 @@
 <Card_1 Title="LISTE DES CAISSES">
     <RadzenContent Container="main">
         <div class="grid-90">
-            <SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)">
+            <SfGrid  Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)">
                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                 <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
                     <HeaderTemplate>

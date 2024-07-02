@@ -47,6 +47,22 @@ public partial class API_T_AgenceBooking
 
     public decimal NbrPaxInfant { get; set; }
 
+    public DateTime? Creation { get; set; }
+
+    public DateTime? Modification { get; set; }
+
+    public string CreationIP { get; set; }
+
+    public string ModificationIP { get; set; }
+
+    public string CreationHost { get; set; }
+
+    public string ModificationHost { get; set; }
+
+    public string CreationUser { get; set; }
+
+    public string ModificationUser { get; set; }
+
     public virtual ICollection<API_T_AgenceBookingDetail> API_T_AgenceBookingDetail { get; set; } = new List<API_T_AgenceBookingDetail>();
 
     public virtual ICollection<API_T_AgenceBookingOffre> API_T_AgenceBookingOffre { get; set; } = new List<API_T_AgenceBookingOffre>();

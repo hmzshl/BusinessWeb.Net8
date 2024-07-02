@@ -139,7 +139,7 @@
 											<GridCol Xs="24" Md="24">
 												<Card>
 													<div class="grid-50">
-														<SfGrid Height="100%" EnablePersistence AllowTextWrap ID="LignesGRID" @ref=@MainGrid AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes" Toolbar="@(new List<object>() { "ColumnChooser"})">
+														<SfGrid  Height="100%" AllowTextWrap ID="LignesGRID" @ref=@MainGrid AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes" Toolbar="@(new List<object>() { "ColumnChooser"})">
 															<GridEvents QueryCellInfo="CustomizeCell" TValue="API_V_DOCLIGNE"></GridEvents>
 															<GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
 															<GridEditSettings ShowDeleteConfirmDialog Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" AllowNextRowEdit>

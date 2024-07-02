@@ -19,5 +19,21 @@ public partial class API_T_Pointage
 
     public string Libelle { get; set; }
 
+    public DateTime? Creation { get; set; }
+
+    public DateTime? Modification { get; set; }
+
+    public string CreationIP { get; set; }
+
+    public string ModificationIP { get; set; }
+
+    public string CreationHost { get; set; }
+
+    public string ModificationHost { get; set; }
+
+    public string CreationUser { get; set; }
+
+    public string ModificationUser { get; set; }
+
     public virtual ICollection<API_T_PointageLigne> API_T_PointageLigne { get; set; } = new List<API_T_PointageLigne>();
 }

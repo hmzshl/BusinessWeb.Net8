@@ -9,11 +9,10 @@ namespace BusinessWeb.Data;
 
 public partial class DB : DbContext
 {
-    public DB()
-    {
-
-    }
-    public DB(DbContextOptions<DB> options)
+	public DB()
+	{
+	}
+	public DB(DbContextOptions<DB> options)
         : base(options)
     {
     }
@@ -762,18 +761,32 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Affectation_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Intitule)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
         });
 
         modelBuilder.Entity<API_T_AgenceArticle>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_AgenceArticle_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Designation)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
         });
 
         modelBuilder.Entity<API_T_AgenceBooking>(entity =>
@@ -782,8 +795,15 @@ public partial class DB : DbContext
 
             entity.Property(e => e.ArrivalDateEnd).HasColumnType("smalldatetime");
             entity.Property(e => e.ArrivalDateStart).HasColumnType("smalldatetime");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.NbrPax).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.NbrPaxAdult).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.NbrPaxChild).HasColumnType("decimal(24, 6)");
@@ -805,12 +825,19 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_AgenceBookingDetail_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.LibelleFA)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.PUDevise_CL).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PUDevise_FR).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PU_CL).HasColumnType("decimal(24, 6)");
@@ -829,6 +856,13 @@ public partial class DB : DbContext
 
             entity.Property(e => e.ArrivalDateEnd).HasColumnType("smalldatetime");
             entity.Property(e => e.ArrivalDateStart).HasColumnType("smalldatetime");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Remise).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.SellingDateEnd).HasColumnType("smalldatetime");
             entity.Property(e => e.SellingDateStart).HasColumnType("smalldatetime");
@@ -849,9 +883,16 @@ public partial class DB : DbContext
             entity.Property(e => e.CIN)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Naissance).HasColumnType("smalldatetime");
             entity.Property(e => e.Nom)
                 .HasMaxLength(100)
@@ -882,12 +923,19 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.ChildEnd).HasDefaultValueSql("((5))");
             entity.Property(e => e.ChildStart).HasDefaultValueSql("((2))");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("datetime");
             entity.Property(e => e.DateDebut).HasColumnType("datetime");
             entity.Property(e => e.DateFin).HasColumnType("datetime");
             entity.Property(e => e.Fichier).HasColumnType("text");
             entity.Property(e => e.InfantEnd).HasDefaultValueSql("((1))");
             entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Piece)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -909,8 +957,15 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_AgenceContratDate_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateDebut).HasColumnType("smalldatetime");
             entity.Property(e => e.DateFin).HasColumnType("smalldatetime");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
 
             entity.HasOne(d => d.ContratNavigation).WithMany(p => p.API_T_AgenceContratDate)
                 .HasForeignKey(d => d.Contrat)
@@ -925,9 +980,16 @@ public partial class DB : DbContext
             entity.Property(e => e.CL_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.FR_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PUDevise).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Taux).HasColumnType("decimal(24, 6)");
@@ -947,8 +1009,15 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_AgenceContratLigne_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Libelle).HasColumnType("text");
             entity.Property(e => e.LibelleFA).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PUDevise).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Reference)
@@ -973,12 +1042,19 @@ public partial class DB : DbContext
 
             entity.Property(e => e.ArrivalDateEnd).HasColumnType("smalldatetime");
             entity.Property(e => e.ArrivalDateStart).HasColumnType("smalldatetime");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Cumulative)
                 .IsRequired()
                 .HasDefaultValueSql("((1))");
             entity.Property(e => e.Intitule)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Remise).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.SellingDateEnd).HasColumnType("smalldatetime");
@@ -999,6 +1075,10 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Assurance_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateDebut).HasColumnType("smalldatetime");
             entity.Property(e => e.DateFin).HasColumnType("smalldatetime");
             entity.Property(e => e.Fichier).HasColumnType("text");
@@ -1008,6 +1088,9 @@ public partial class DB : DbContext
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.NouvelleDateFin).HasColumnType("smalldatetime");
             entity.Property(e => e.Prolongement).HasColumnType("decimal(24, 6)");
@@ -1017,11 +1100,18 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Attachement_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.DateDebut).HasColumnType("smalldatetime");
             entity.Property(e => e.DateDecompte).HasColumnType("smalldatetime");
             entity.Property(e => e.DateFin).HasColumnType("smalldatetime");
             entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantCumul).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantMarche).HasColumnType("decimal(24, 6)");
@@ -1053,10 +1143,17 @@ public partial class DB : DbContext
             entity.Property(e => e.Consistance)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateExecution).HasColumnType("smalldatetime");
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantCumul).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantMarche).HasColumnType("decimal(24, 6)");
@@ -1103,10 +1200,17 @@ public partial class DB : DbContext
             entity.Property(e => e.Consistance)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateExecution).HasColumnType("smalldatetime");
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
@@ -1123,10 +1227,17 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Attribute_id_0");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Intitule)
                 .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.TableName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -1136,8 +1247,15 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Attribute_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateValue).HasColumnType("smalldatetime");
             entity.Property(e => e.DecimalValue).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.TableName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -1152,6 +1270,13 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_AttributeTable_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.TextValue).IsRequired();
 
             entity.HasOne(d => d.Parent).WithMany(p => p.API_T_AttributeTable)
@@ -1167,9 +1292,16 @@ public partial class DB : DbContext
             entity.Property(e => e.Action)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.EntityName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.NewValues).HasColumnType("text");
             entity.Property(e => e.OldValues).HasColumnType("text");
             entity.Property(e => e.Timestamp).HasColumnType("datetime");
@@ -1197,9 +1329,16 @@ public partial class DB : DbContext
                 .HasMaxLength(7)
                 .IsUnicode(false);
             entity.Property(e => e.CA_Vente).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Host_Name)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Operation)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -1232,9 +1371,16 @@ public partial class DB : DbContext
             entity.Property(e => e.CR_Num)
                 .HasMaxLength(13)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Host_Name)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Operation)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -1401,9 +1547,16 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Ville)
                 .HasMaxLength(69)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Host_Name)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Operation)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -1435,6 +1588,10 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_NumPayeurOrig)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Host_Name)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -1445,6 +1602,9 @@ public partial class DB : DbContext
             entity.Property(e => e.JO_NumEcart)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Operation)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -1496,6 +1656,10 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_NumPayeur)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DO_CodeTaxe1)
                 .HasMaxLength(5)
                 .IsUnicode(false);
@@ -1565,6 +1729,9 @@ public partial class DB : DbContext
             entity.Property(e => e.Host_Name)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Operation)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -1599,6 +1766,10 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DL_CMUP).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_CodeTaxe1)
                 .HasMaxLength(5)
@@ -1672,6 +1843,9 @@ public partial class DB : DbContext
             entity.Property(e => e.Host_Name)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Operation)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -1708,6 +1882,10 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_NumCont)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.EC_Date).HasColumnType("datetime");
             entity.Property(e => e.EC_DateCloture).HasColumnType("datetime");
             entity.Property(e => e.EC_DateOp).HasColumnType("datetime");
@@ -1753,6 +1931,9 @@ public partial class DB : DbContext
                 .IsRequired()
                 .HasMaxLength(10)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Operation)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -1772,12 +1953,19 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Audit_F_REGLECH_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DO_Piece)
                 .HasMaxLength(20)
                 .IsUnicode(false);
             entity.Property(e => e.Host_Name)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Operation)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -1795,6 +1983,13 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Authorize_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.SelectedAPP).HasDefaultValueSql("((0))");
             entity.Property(e => e.Url).HasMaxLength(100);
             entity.Property(e => e.UserID).HasMaxLength(450);
@@ -1810,8 +2005,15 @@ public partial class DB : DbContext
             entity.Property(e => e.Consistance)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateExecution).HasColumnType("smalldatetime");
             entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantCumul).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantMarche).HasColumnType("decimal(24, 6)");
@@ -1853,10 +2055,17 @@ public partial class DB : DbContext
             entity.Property(e => e.Consistance)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateExecution).HasColumnType("smalldatetime");
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
@@ -1880,12 +2089,19 @@ public partial class DB : DbContext
             entity.HasKey(e => e.id).HasName("Pk_API_T_Bordereau_id");
 
             entity.Property(e => e.CoutTotale).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Marge).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MargeP).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantMarche).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantTTC)
@@ -1913,10 +2129,17 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.CoutTotal).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.CoutU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Libelle).HasColumnType("text");
             entity.Property(e => e.MargeP).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MargeTotale).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MargeU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantCumul).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantMarche).HasColumnType("decimal(24, 6)");
@@ -1972,9 +2195,16 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.C_Solde).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.C_SoldeInitial).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.JO_Num)
                 .HasMaxLength(40)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
         });
 
         modelBuilder.Entity<API_T_CaisseEntete>(entity =>
@@ -1987,8 +2217,15 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantLettre)
                 .HasMaxLength(100)
@@ -2013,9 +2250,16 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CaisseLigne_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
@@ -2030,6 +2274,13 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Caisse_User_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.User)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2039,8 +2290,15 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CarteDisque_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateDebut).HasColumnType("smalldatetime");
             entity.Property(e => e.DateFin).HasColumnType("smalldatetime");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.MaterielNavigation).WithMany(p => p.API_T_CarteDisque)
@@ -2056,6 +2314,10 @@ public partial class DB : DbContext
             entity.Property(e => e.Banque)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.DateAnnulationPrevue).HasColumnType("smalldatetime");
             entity.Property(e => e.DateDepotClient).HasColumnType("smalldatetime");
@@ -2063,6 +2325,9 @@ public partial class DB : DbContext
             entity.Property(e => e.DateRetraitBanque).HasColumnType("smalldatetime");
             entity.Property(e => e.Etape).HasDefaultValueSql("((0))");
             entity.Property(e => e.Fichier).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantEstime).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantMarche).HasColumnType("decimal(24, 6)");
@@ -2081,9 +2346,16 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CentreCharge_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Intitule)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(27, 6)");
         });
 
@@ -2091,6 +2363,13 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CentreChargeDetail_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(27, 6)");
         });
 
@@ -2098,7 +2377,14 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CertifDocument_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Numero)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -2125,6 +2411,10 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.DateLivraison).HasColumnType("smalldatetime");
             entity.Property(e => e.FactureDate).HasColumnType("smalldatetime");
@@ -2134,6 +2424,9 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.IsFacture).HasDefaultValueSql("((0))");
             entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.NumeroDossier)
                 .HasMaxLength(100)
@@ -2151,6 +2444,14 @@ public partial class DB : DbContext
         modelBuilder.Entity<API_T_CertifFiche>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CertifFiche_id");
+
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
         });
 
         modelBuilder.Entity<API_T_CertifGrilleDialogue>(entity =>
@@ -2172,6 +2473,10 @@ public partial class DB : DbContext
             entity.Property(e => e.Commentaire)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.DateSouhaiteePrestation).HasColumnType("smalldatetime");
             entity.Property(e => e.DateTransmissionDocuments).HasColumnType("smalldatetime");
@@ -2199,6 +2504,9 @@ public partial class DB : DbContext
             entity.Property(e => e.ModeLivraisonExpedition)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.NaturePrestationAutre)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2245,6 +2553,22 @@ public partial class DB : DbContext
             entity.Property(e => e.Classe)
                 .HasMaxLength(40)
                 .IsUnicode(false);
+            entity.Property(e => e.Code)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ErreurMaximalTolereUtilisateur)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
+            entity.Property(e => e.PointsEtalonnage)
+                .HasMaxLength(100)
+                .IsUnicode(false);
             entity.Property(e => e.Utilisateur)
                 .HasMaxLength(40)
                 .IsUnicode(false);
@@ -2259,8 +2583,15 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CertifGrilleDialogueModif_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Nature)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2284,6 +2615,10 @@ public partial class DB : DbContext
             entity.Property(e => e.AR_Ref)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DL_CodeTaxe)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2303,6 +2638,9 @@ public partial class DB : DbContext
                 .HasDefaultValueSql("((0))")
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.QL_Qte)
                 .HasDefaultValueSql("((0))")
@@ -2323,6 +2661,14 @@ public partial class DB : DbContext
         modelBuilder.Entity<API_T_CertifMission>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CertifMission_id");
+
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
         });
 
         modelBuilder.Entity<API_T_CertifOuvertureDossier>(entity =>
@@ -2335,6 +2681,10 @@ public partial class DB : DbContext
             entity.Property(e => e.Commentaire)
                 .HasMaxLength(255)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.DateOuverture).HasColumnType("smalldatetime");
             entity.Property(e => e.Email)
@@ -2349,6 +2699,9 @@ public partial class DB : DbContext
             entity.Property(e => e.Intitule)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Numero)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2371,16 +2724,30 @@ public partial class DB : DbContext
             entity.Property(e => e.BL_BalanceFournisseur).HasDefaultValueSql("((1))");
             entity.Property(e => e.BL_Marge).HasDefaultValueSql("((1))");
             entity.Property(e => e.BL_Releve).HasDefaultValueSql("((1))");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.FA_BalanceClient).HasDefaultValueSql("((1))");
             entity.Property(e => e.FA_BalanceFournisseur).HasDefaultValueSql("((1))");
             entity.Property(e => e.FA_Marge).HasDefaultValueSql("((1))");
             entity.Property(e => e.FA_Releve).HasDefaultValueSql("((1))");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
         });
 
         modelBuilder.Entity<API_T_Depot_User>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Depot_User_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.User)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2396,6 +2763,10 @@ public partial class DB : DbContext
             entity.Property(e => e.CG_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.JO_Num)
                 .HasMaxLength(100)
@@ -2403,6 +2774,9 @@ public partial class DB : DbContext
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.MontantHT).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.MontantTTC).HasColumnType("decimal(27, 6)");
         });
@@ -2417,6 +2791,10 @@ public partial class DB : DbContext
             entity.Property(e => e.CAPI_T_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DL_CodeTaxe1)
                 .HasMaxLength(10)
                 .IsUnicode(false);
@@ -2448,6 +2826,9 @@ public partial class DB : DbContext
                 .HasMaxLength(20)
                 .IsUnicode(false);
             entity.Property(e => e.MargeLibre).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Superficie).HasColumnType("decimal(27, 6)");
 
             entity.HasOne(d => d.EnteteNavigation).WithMany(p => p.API_T_DocumentLigne)
@@ -2459,9 +2840,16 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_DroitConstate_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.DatePaiement).HasColumnType("smalldatetime");
             entity.Property(e => e.Fichier).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PaiementP).HasColumnType("decimal(24, 6)");
 
@@ -2481,8 +2869,15 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Piece)
                 .HasMaxLength(100)
@@ -2493,7 +2888,14 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_FraisLigne_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.EnteteNavigation).WithMany(p => p.API_T_FraisLigne)
@@ -2515,7 +2917,14 @@ public partial class DB : DbContext
             entity.Property(e => e.Computer)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateOP).HasColumnType("datetime");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.SessionWindows)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2532,7 +2941,14 @@ public partial class DB : DbContext
             entity.HasKey(e => e.id).HasName("Pk_API_T_HistoriquePiece_id");
 
             entity.Property(e => e.CreatedAt).HasColumnType("smalldatetime");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Piece)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2545,8 +2961,15 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_ImportLog_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.TableName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2556,6 +2979,13 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Information_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Valeur)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2576,6 +3006,10 @@ public partial class DB : DbContext
             entity.Property(e => e.Consommation)
                 .HasDefaultValueSql("((0))")
                 .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DMC)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2606,6 +3040,9 @@ public partial class DB : DbContext
             entity.Property(e => e.Modele)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.NumeroContrat)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2649,6 +3086,10 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.DateDebut).HasColumnType("smalldatetime");
             entity.Property(e => e.DateFin).HasColumnType("smalldatetime");
@@ -2662,6 +3103,9 @@ public partial class DB : DbContext
             entity.Property(e => e.Kilometrage).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.KilometrageSuivant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.NumeroQuittance)
                 .HasMaxLength(100)
@@ -2675,9 +3119,16 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_MaterielEntretienDetail_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
@@ -2694,9 +3145,16 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Nantissement_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateDebut).HasColumnType("smalldatetime");
             entity.Property(e => e.DateFin).HasColumnType("smalldatetime");
             entity.Property(e => e.Fichier).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_Nantissement)
                 .HasForeignKey(d => d.Projet)
@@ -2739,6 +3197,10 @@ public partial class DB : DbContext
             entity.Property(e => e.CompteID)
                 .HasMaxLength(16)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateEmbauche).HasColumnType("smalldatetime");
             entity.Property(e => e.DateEmbouche).HasColumnType("smalldatetime");
             entity.Property(e => e.DateNaissance).HasColumnType("smalldatetime");
@@ -2763,6 +3225,9 @@ public partial class DB : DbContext
             entity.Property(e => e.Matricule)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Nom)
                 .IsRequired()
                 .HasMaxLength(100)
@@ -2811,14 +3276,29 @@ public partial class DB : DbContext
         modelBuilder.Entity<API_T_PersonnelEquipe>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_PersonnelEquipe_id");
+
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
         });
 
         modelBuilder.Entity<API_T_PersonnelMateriel>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_PersonnelMateriel_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateDebut).HasColumnType("smalldatetime");
             entity.Property(e => e.DateFin).HasColumnType("smalldatetime");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
         });
 
         modelBuilder.Entity<API_T_Pointage>(entity =>
@@ -2827,9 +3307,16 @@ public partial class DB : DbContext
 
             entity.Property(e => e.Annee).HasDefaultValueSql("((0))");
             entity.Property(e => e.Cloture).HasDefaultValueSql("((0))");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Mois).HasDefaultValueSql("((0))");
             entity.Property(e => e.Type).HasDefaultValueSql("((0))");
         });
@@ -2837,12 +3324,27 @@ public partial class DB : DbContext
         modelBuilder.Entity<API_T_PointageAnnee>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_PointageAnnee_id");
+
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
         });
 
         modelBuilder.Entity<API_T_PointageDetail>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_PointageDetail_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.NbrHeure).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
@@ -2862,7 +3364,14 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_PointageJournee_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
 
             entity.HasOne(d => d.Annee).WithMany(p => p.API_T_PointageJournee)
                 .HasForeignKey(d => d.AnneeID)
@@ -2882,6 +3391,13 @@ public partial class DB : DbContext
             entity.Property(e => e.CA_Num)
                 .HasMaxLength(30)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.NbrHeure).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.PointageNavigation).WithMany(p => p.API_T_PointageLigne)
@@ -2894,12 +3410,19 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_PointageMois_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Description)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Intitule)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
 
             entity.HasOne(d => d.Annee).WithMany(p => p.API_T_PointageMois)
                 .HasForeignKey(d => d.AnneeID)
@@ -2917,6 +3440,13 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(40)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
 
             entity.HasOne(d => d.JourneeNavigation).WithMany(p => p.API_T_PointageProjet)
                 .HasForeignKey(d => d.Journee)
@@ -2940,6 +3470,10 @@ public partial class DB : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.CoutMarchePrevisionnel).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateEnregistrement).HasColumnType("datetime");
             entity.Property(e => e.DateEnregistrementCPS).HasColumnType("datetime");
             entity.Property(e => e.DateEnregistrementExemplaire).HasColumnType("datetime");
@@ -2950,6 +3484,9 @@ public partial class DB : DbContext
             entity.Property(e => e.DatePublication).HasColumnType("datetime");
             entity.Property(e => e.DateReceptionDefinitiveEffective).HasColumnType("datetime");
             entity.Property(e => e.DateReceptionDefinitivePrevue).HasColumnType("datetime");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.MontantAppelOffreEstime).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantRetenueGarantie).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.NumeroAppelOffre)
@@ -2979,9 +3516,16 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_ProjetAvenanAPI_T_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateAvenant).HasColumnType("smalldatetime");
             entity.Property(e => e.Fichier).HasColumnType("text");
             entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.MontantAvenant).HasColumnType("decimal(27, 6)");
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_ProjetAvenant)
@@ -2993,9 +3537,16 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_ProjetDates_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateArret).HasColumnType("smalldatetime");
             entity.Property(e => e.DateReprise).HasColumnType("smalldatetime");
             entity.Property(e => e.Fichier).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Motif).HasColumnType("text");
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_ProjetDate)
@@ -3007,9 +3558,16 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_PlanningDecompte_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DatePrevue).HasColumnType("smalldatetime");
             entity.Property(e => e.Description).HasColumnType("text");
             entity.Property(e => e.Fichier).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_ProjetPlanningDecompte)
                 .HasForeignKey(d => d.Projet)
@@ -3020,8 +3578,15 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_ProjetReception_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateReception).HasColumnType("smalldatetime");
             entity.Property(e => e.Fichier).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Nature).HasColumnType("text");
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_ProjetReception)
@@ -3036,12 +3601,19 @@ public partial class DB : DbContext
             entity.Property(e => e.CAPI_T_Num)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.DateAlerte).HasColumnType("smalldatetime");
             entity.Property(e => e.Etape)
                 .IsRequired()
                 .HasMaxLength(20)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Remarque)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -3053,6 +3625,14 @@ public partial class DB : DbContext
         modelBuilder.Entity<API_T_RevisionPrix>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_RevisionPrix_id");
+
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_RevisionPrix)
                 .HasForeignKey(d => d.Projet)
@@ -3067,10 +3647,17 @@ public partial class DB : DbContext
             entity.Property(e => e.Adresse)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Intitule)
                 .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Ville)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -3080,6 +3667,13 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Site_User_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.User)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -3089,8 +3683,15 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_TaxeTonnage_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DatePaiement).HasColumnType("smalldatetime");
             entity.Property(e => e.DateValidite).HasColumnType("smalldatetime");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
 
             entity.HasOne(d => d.MaterielNavigation).WithMany(p => p.API_T_TaxeTonnage)
                 .HasForeignKey(d => d.Materiel)
@@ -3102,10 +3703,17 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Ville_id");
 
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Intitule)
                 .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Region)
                 .HasMaxLength(100)
                 .IsUnicode(false);

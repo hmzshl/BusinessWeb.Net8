@@ -2,7 +2,7 @@
 @if (IsLoaded)
 {
     <div style="height: @Height; padding: 8px;" class="small-grid">
-        <SfGrid AllowExcelExport EnablePersistence AllowReordering Height="100%" AllowSelection EnableHover ShowColumnChooser ID="DetailLigneGRID" DataSource="@(items)" AllowPaging Toolbar="@(new List<object>() { "ColumnChooser","Print","ExcelExport","Search"})" AllowSorting AllowFiltering>
+        <SfGrid  AllowExcelExport EnablePersistence AllowReordering Height="100%" AllowSelection EnableHover ShowColumnChooser ID="DetailLigneGRID" DataSource="@(items)" Toolbar="@(new List<object>() { "ColumnChooser","Print","ExcelExport","Search"})" AllowSorting AllowFiltering>
              <GridPageSettings PageSize="100" />
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
              <GridAggregates>

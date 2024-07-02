@@ -1,4 +1,4 @@
-﻿<SfGrid AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+﻿<SfGrid  AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
                                     Toolbar="@(new List<object>() { "ColumnChooser", "Search"})" >
 
                 <GridEvents  OnRecordDoubleClick="@(args => RowSelected(args.RowData))" TValue="API_V_ARTICLE"></GridEvents>

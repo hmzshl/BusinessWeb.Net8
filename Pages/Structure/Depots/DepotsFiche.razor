@@ -35,7 +35,7 @@
                                     <GridCol Xs="24" Md="24">
                                         <Card Title="Utilisateurs">
                                             <div style="height: 30vh;">
-                                                <SfGrid Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(users)">
+                                                <SfGrid  Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(users)">
                                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                                                     <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog"></GridEditSettings>
                                                     <GridEvents OnActionBegin="UpdateUsers" TValue="API_T_Depot_User"></GridEvents>

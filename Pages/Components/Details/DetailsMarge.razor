@@ -1,7 +1,7 @@
 ﻿@if (IsLoaded)
 {
 	<div style="height: @Height;">
-		<SfGrid @ref=DefaultGrid ID="DetailMargeGRID" AllowExcelExport Height="100%" AllowGrouping=@(grouped != 0) AllowSelection EnableHover DataSource="@(items)" AllowPaging ShowColumnChooser AllowReordering EnablePersistence Toolbar="@(new List<object>() { "ColumnChooser","Print","ExcelExport","Search",new ToolbarItem() { Type = ItemType.Input,Template = Grouped, Id = "Grouper par", TooltipText = "Grouper par", Align = ItemAlign.Right}})" AllowSorting AllowFiltering>
+		<SfGrid  @ref=DefaultGrid ID="DetailMargeGRID" AllowExcelExport Height="100%" AllowGrouping=@(grouped != 0) AllowSelection EnableHover DataSource="@(items)" ShowColumnChooser AllowReordering Toolbar="@(new List<object>() { "ColumnChooser","Print","ExcelExport","Search",new ToolbarItem() { Type = ItemType.Input,Template = Grouped, Id = "Grouper par", TooltipText = "Grouper par", Align = ItemAlign.Right}})" AllowSorting AllowFiltering>
 			<GridPageSettings PageSize="100" />
 			<GridEvents OnToolbarClick="ToolbarClickHandler" TValue="API_V_MARGE"></GridEvents>
 			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
@@ -200,7 +200,7 @@ else
 	[Parameter] public DateTime? Date1 { get; set; }
 	[Parameter] public DateTime? Date2 { get; set; }
 	bool IsLoaded = false;
-	int grouped = 1;
+	int grouped = 2;
 	private List<API_V_MARGE> items = new List<API_V_MARGE>();
 	private RenderFragment Grouped =>
 	@<SfDropDownList PopupHeight="300px" Width="160px" Placeholder="Grouper par" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="int" TItem="Items" DataSource="@(fn.GroupedBy())" @bind-Value="@grouped">

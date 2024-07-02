@@ -82,7 +82,7 @@ else
 									</ChildContent>
 									<ContentTemplate>
 										<div style="height: 65vh;">
-											<SfGrid Height="100%" class="small-grid no-border" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(lignes)">
+											<SfGrid  Height="100%" class="small-grid no-border" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(lignes)">
 												<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(db.API_T_Attachement.Where(a => a.Projet == row.Projet && a.id > this.id).Count() == 0 && IsAttachement)" AllowDeleting="@(db.API_T_Attachement.Where(a => a.Projet == row.Projet && a.id > this.id).Count() == 0 && IsAttachement)" AllowEditing="@(db.API_T_Attachement.Where(a => a.Projet == row.Projet && a.id > this.id).Count() == 0 && IsAttachement)" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
 												</GridEditSettings>
 												<GridEvents OnActionBegin="UpdateListe" TValue="API_T_AttachementDetail"></GridEvents>
@@ -171,7 +171,7 @@ else
 													</ChildContent>
 													<ContentTemplate>
 														<div style="height: 65vh;">
-															<SfGrid Height="100%" class="small-grid no-border" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(hors_bds)">
+															<SfGrid  Height="100%" class="small-grid no-border" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(hors_bds)">
 															<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
 															</GridEditSettings>
 															<GridEvents OnActionBegin="UpdateHorsBDS" TValue="API_T_AttachementHorsBD"></GridEvents>

@@ -55,6 +55,22 @@ public partial class API_T_AgenceContrat
 
     public decimal Tax { get; set; }
 
+    public DateTime? Creation { get; set; }
+
+    public DateTime? Modification { get; set; }
+
+    public string CreationIP { get; set; }
+
+    public string ModificationIP { get; set; }
+
+    public string CreationHost { get; set; }
+
+    public string ModificationHost { get; set; }
+
+    public string CreationUser { get; set; }
+
+    public string ModificationUser { get; set; }
+
     public virtual ICollection<API_T_AgenceContratDate> API_T_AgenceContratDate { get; set; } = new List<API_T_AgenceContratDate>();
 
     public virtual ICollection<API_T_AgenceContratLigne> API_T_AgenceContratLigne { get; set; } = new List<API_T_AgenceContratLigne>();

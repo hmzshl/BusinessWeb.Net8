@@ -144,7 +144,7 @@
         <GridCol Xs="24" Md="24">
             <Card>
                 <div style="height: 48vh;">
-                    <SfGrid Height="100%" @ref=@MainGrid AllowRowDragAndDrop="true" Toolbar="@(new List<string>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
+                    <SfGrid  Height="100%" @ref=@MainGrid AllowRowDragAndDrop="true" Toolbar="@(new List<string>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
                         <GridEvents OnActionBegin="OnActionBegin" QueryCellInfo="CustomizeCell" RowDropped="RowDropHandler" TValue="F_DOCLIGNE" OnActionComplete="Edit" RowSelecting="RowSelect"></GridEvents>
                         <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
                         <GridEditSettings AllowAdding AllowDeleting ShowDeleteConfirmDialog AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" AllowNextRowEdit>

@@ -198,4 +198,20 @@ public partial class API_T_Audit_F_DOCENTETE
     public decimal? DO_TotalHT { get; set; }
 
     public short? DO_StatutBAP { get; set; }
+
+    public DateTime? Creation { get; set; }
+
+    public DateTime? Modification { get; set; }
+
+    public string CreationIP { get; set; }
+
+    public string ModificationIP { get; set; }
+
+    public string CreationHost { get; set; }
+
+    public string ModificationHost { get; set; }
+
+    public string CreationUser { get; set; }
+
+    public string ModificationUser { get; set; }
 }

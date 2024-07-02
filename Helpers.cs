@@ -1792,8 +1792,7 @@ namespace BusinessWeb
 
             list.Add(new Items { Id = 0, Name = "Etalonnage" });
             list.Add(new Items { Id = 1, Name = "Verification" });
-            list.Add(new Items { Id = 2, Name = "Laboratoire AFROLAB" });
-            list.Add(new Items { Id = 3, Name = "Spécifique" });
+            list.Add(new Items { Id = 2, Name = "Etalonnage & Verification" });
 
             return list;
         }
@@ -1839,10 +1838,9 @@ namespace BusinessWeb
         public List<Items> ErreurMaximalTolere()
         {
             List<Items> list = new List<Items>();
-
-            list.Add(new Items { Id = 0, Name = "Utilisateur" });
-            list.Add(new Items { Id = 1, Name = "Normative Classe" });
-            list.Add(new Items { Id = 3, Name = "Autre" });
+            list.Add(new Items { Id = 0, Name = "Normative" });
+            list.Add(new Items { Id = 1, Name = "Utilisateur" });
+            
 
             return list;
         }

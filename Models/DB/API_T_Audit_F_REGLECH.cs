@@ -34,4 +34,20 @@ public partial class API_T_Audit_F_REGLECH
     public decimal? RC_Montant { get; set; }
 
     public short? RG_TypeReg { get; set; }
+
+    public DateTime? Creation { get; set; }
+
+    public DateTime? Modification { get; set; }
+
+    public string CreationIP { get; set; }
+
+    public string ModificationIP { get; set; }
+
+    public string CreationHost { get; set; }
+
+    public string ModificationHost { get; set; }
+
+    public string CreationUser { get; set; }
+
+    public string ModificationUser { get; set; }
 }
