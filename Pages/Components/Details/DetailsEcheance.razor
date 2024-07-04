@@ -1,46 +1,47 @@
 ﻿
 @if (IsLoaded)
 {
+    <SfToolbar CssClass="btns">
+        <ToolbarItems>
+
+            <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                <Template>
+                    <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
+                        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+                    </SfDatePicker>
+                </Template>
+            </ToolbarItem>
+            <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                <Template>
+                    <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
+                        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+                    </SfDatePicker>
+                </Template>
+            </ToolbarItem>
+
+            <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                <Template>
+                    <SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+                </Template>
+            </ToolbarItem>
+            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                <Template>
+                    <RadzenLabel Text="EXERCICE" Component="exercice" />
+                    <div style="padding-left: 10px; margin-right: 0px;" id="exercice">
+                        <SfDropDownList Width="100px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@exercices" TValue="string" TItem="string" @bind-Value="@selected_exercice">
+                            <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
+                        </SfDropDownList>
+                    </div>
+                </Template>
+            </ToolbarItem>
+            <ToolbarItem OnClick=@(()=>{ _visible = true; }) TooltipText="Filtrer" Text="Filtrer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-filter"></ToolbarItem>
+            <ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+            <ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+
+        </ToolbarItems>
+    </SfToolbar>
     <div style="height: @Height;">
-        <SfToolbar CssClass="btns">
-            <ToolbarItems>
 
-                 <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
-                     <Template>
-                         <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
-                         <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
-                     </SfDatePicker>
-                 </Template>
-             </ToolbarItem>
-                <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
-                 <Template>
-                     <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
-                         <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
-                     </SfDatePicker>
-                 </Template>
-             </ToolbarItem>
-
-             <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
-                 <Template>
-                     <SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
-                 </Template>
-             </ToolbarItem>
-                <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-                    <Template>
-                        <RadzenLabel Text="EXERCICE" Component="exercice" />
-                        <div style="padding-left: 10px; margin-right: 0px;" id="exercice">
-                            <SfDropDownList Width="100px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@exercices" TValue="string" TItem="string" @bind-Value="@selected_exercice">
-                                <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
-                            </SfDropDownList>
-                        </div>
-                    </Template>
-                </ToolbarItem>
-                <ToolbarItem OnClick=@(()=>{ _visible = true; }) TooltipText="Filtrer" Text="Filtrer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-filter"></ToolbarItem>
-             <ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
-             <ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
-
-         </ToolbarItems>
-     </SfToolbar>
         <SfGrid  AllowTextWrap ID="EcheanceGRID" Height="100%" AllowGrouping AllowSelection EnableHover DataSource="@(items)" @ref=DefaultGrid AllowSorting AllowFiltering="false" AllowExcelExport>
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
             <GridGroupSettings Columns="@(new string[] { "CT_Intitule" })" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates EnableLazyLoading>
@@ -84,7 +85,7 @@
                             <GroupCaptionTemplate>
                                 @{
                                     var value = (context as AggregateTemplateContext);
-                                    <div class="sm-sum">
+                                    <div>
                                         @value.Sum
                                     </div>
                                 }
@@ -102,7 +103,7 @@
                             <GroupCaptionTemplate>
                                 @{
                                     var value = (context as AggregateTemplateContext);
-                                    <div class="sm-sum">
+                                    <div>
                                         @value.Sum
                                     </div>
                                 }
@@ -120,7 +121,7 @@
                             <GroupCaptionTemplate>
                                 @{
                                     var value = (context as AggregateTemplateContext);
-                                    <div class="sm-sum">
+                                    <div>
                                         @value.Sum
                                     </div>
                                 }
@@ -138,7 +139,7 @@
                             <GroupCaptionTemplate>
                                 @{
                                     var value = (context as AggregateTemplateContext);
-                                    <div class="sm-sum">
+                                    <div>
                                         @value.Sum
                                     </div>
                                 }
@@ -156,7 +157,7 @@
                             <GroupCaptionTemplate>
                                 @{
                                     var value = (context as AggregateTemplateContext);
-                                    <div class="sm-sum">
+                                    <div>
                                         @value.Sum
                                     </div>
                                 }
@@ -174,7 +175,7 @@
                             <GroupCaptionTemplate>
                                 @{
                                     var value = (context as AggregateTemplateContext);
-                                    <div class="sm-sum">
+                                    <div>
                                         @value.Sum
                                     </div>
                                 }
@@ -192,7 +193,7 @@
                             <GroupCaptionTemplate>
                                 @{
                                     var value = (context as AggregateTemplateContext);
-                                    <div class="sm-sum">
+                                    <div>
                                         @value.Sum
                                     </div>
                                 }
@@ -210,7 +211,7 @@
                             <GroupCaptionTemplate>
                                 @{
                                     var value = (context as AggregateTemplateContext);
-                                    <div class="sm-sum">
+                                    <div>
                                         @value.Sum
                                     </div>
                                 }
@@ -228,7 +229,7 @@
                             <GroupCaptionTemplate>
                                 @{
                                     var value = (context as AggregateTemplateContext);
-                                    <div class="sm-sum">
+                                    <div>
                                         @value.Sum
                                     </div>
                                 }
@@ -246,7 +247,7 @@
                             <GroupCaptionTemplate>
                                 @{
                                     var value = (context as AggregateTemplateContext);
-                                    <div class="sm-sum">
+                                    <div>
                                         @value.Sum
                                     </div>
                                 }
@@ -264,7 +265,7 @@
                             <GroupCaptionTemplate>
                                 @{
                                     var value = (context as AggregateTemplateContext);
-                                    <div class="sm-sum">
+                                    <div>
                                         @value.Sum
                                     </div>
                                 }
@@ -282,7 +283,7 @@
                             <GroupCaptionTemplate>
                                 @{
                                     var value = (context as AggregateTemplateContext);
-                                    <div class="sm-sum">
+                                    <div>
                                         @value.Sum
                                     </div>
                                 }

@@ -1,7 +1,7 @@
 ﻿.st {
     padding-top: 5px;
     padding-bottom: 5px;
-    border-radius: 15px !important;
+    border-radius: 8px !important;
     margin-left: 5px;
     margin-right: 5px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
@@ -50,19 +50,19 @@
 }
 
 .st-blue {
-    background: #b2cef9;
+
     color: #063c8d;
 }
 .st-green {
-    background: #dfefe4;
+
     color: #3a6159;
 }
 .st-red {
-    background: #ede0e9;
+
     color: #85031d;
 }
 .st-orange {
-    background: #ffd8be;
+
     color: #873e01;
 }
 .st-white {
@@ -71,4 +71,7 @@
 }
 .ant-statistic-title {
     font-size: 13px;
+    border-bottom: solid;
+    border-bottom-color: #d9d6d6;
+    border-bottom-width: thin;
 }

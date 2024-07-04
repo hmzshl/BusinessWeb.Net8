@@ -1395,7 +1395,9 @@ div#main-text {
     border-bottom: 1px solid;
     border-color: #e0e0e0 !important;
 }
-
+.e-toolbar .e-input-group:not(.e-float-icon-left), .e-toolbar .e-input-group.e-control-wrapper:not(.e-float-icon-left) {
+    border-color: #959da7 !important;
+}
 .ant-card-head {
     font-family: "Ubuntu","Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont";
     font-size: 12px;
@@ -1406,7 +1408,7 @@ div#main-text {
 }
 
 .e-tab.e-fill .e-tab-header {
-    border-bottom: 1px Solid #4E1D07;
+    border-bottom: 1px Solid #d9d6d6;
 }
 
 
@@ -1569,12 +1571,11 @@ div#main-text {
 h1, .e-gird, th, td, ul, li, label, input, button, .e-toolbar-item, .rz-navigation-item-text, .e-dlg-header, .rz-dialog-title,
 .ant-card-head-title, .e-tab-text, .e-tbar-btn-text, .ant-statistic-title, .ant-statistic-content-value-int, .e-label, .ant-steps-item-title,
 .rz-button-text, .rz-text-body1, h2, .rz-text-caption, .e-summarycell {
-    font-family: "Ubuntu",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
+    font-family: "Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
 }
 
-    input::placeholder, th, label, input, .e-tab-text, .ant-statistic-title, .ant-statistic-content-value-int, .e-label,.content-1 .title
-    {
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+    input::placeholder, th, label, input, .e-tab-text, .ant-statistic-title, .ant-statistic-content-value-int, .e-label, .content-1 .title {
+        font-family: "Segoe UI",'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
     }
 
 .rz-navigation-item-text, h1, .e-dlg-header, .rz-dialog-title, .e-headertext, .ant-tabs-tab-btn, .ant-steps-item-title, .rz-navigation-item-link {
@@ -1672,10 +1673,6 @@ td .e-numerictextbox {
     text-align: right !important;
 }
 
-.e-input-group:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left), .e-input-group.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-float-icon-left), .e-input-group.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-float-input.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap, .e-float-input.e-control-wrapper.e-float-icon-left:not(.e-success):not(.e-warning):not(.e-error) .e-input-in-wrap {
-    border-color: #f2f2f8 !important;
-}
-
 .ant-form-item-label label {
     font-size: 11px !important;
     padding: 4px 8px !important;
@@ -1683,7 +1680,7 @@ td .e-numerictextbox {
     color: rgba(0, 0, 0, 0.87) !important;
     border-bottom-left-radius: 20px !important;
     border-top-left-radius: 20px !important;
-    font-family: "Ubuntu",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
+    font-family: "Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
     font-weight: 600 !important;
     letter-spacing: 0.01rem !important;
     font-style: normal !important;
@@ -1712,11 +1709,6 @@ td .e-numerictextbox {
 
 .e-pager .e-numericitem {
     height: unset;
-}
-
-.e-pager .e-currentitem.e-active {
-    width: 15px;
-    min-width: 15px;
 }
 
 .e-grid .e-pager {
@@ -1789,10 +1781,13 @@ td .e-numerictextbox {
 .rz-dialog-titlebar {
     color: #000000 !important;
     padding: 10px !important;
-    padding-top: 2px !important;
-    padding-bottom: 2px !important;
+    padding-top: 10px !important;
+    padding-bottom: 5px !important;
     background: #ffffff;
     font-size: 15px;
+    border-bottom: solid;
+    border-bottom-color: #d9d6d6;
+    border-bottom-width: thin;
 }
 
 .rz-dialog-titlebar-close .rzi-times:hover {
@@ -1959,7 +1954,7 @@ td.e-rowcell .statustxt.e-inactivecolor {
 }
 
 .e-grid .e-altrow {
-    background-color: #F8F9FA;
+    background-color: #fcfcfc;
 }
 
 .e-rowcell i.rzi {
@@ -1973,8 +1968,8 @@ td.e-rowcell .statustxt.e-inactivecolor {
 }
 
 td.e-rowcell .statustxt.e-activecolor {
-    color: #2f544d;
-    background-color: #a9ecbf;
+    color: #108f76;
+    background-color: #dffbe8;
     border-radius: 10px;
     padding-left: 5px;
     padding-right: 5px;
@@ -1988,8 +1983,8 @@ td.e-rowcell .statustxt.e-activecolor {
 }
 
 td.e-rowcell .statustxt.e-inactivecolor {
-    color: #85031d;
-    background-color: #f3bbe1;
+    color: #f30938;
+    background-color: #f5e7f1;
     border-radius: 10px;
     padding-left: 5px;
     padding-right: 5px;
@@ -2052,12 +2047,6 @@ td.e-rowcell .statustxt.e-infocolor {
     align-items: center;
     text-align: center;
     min-height: 80vh;
-}
-
-.rz-menu:not(.rz-profile-menu) .rz-navigation-item-wrapper .rz-navigation-item-link {
-    padding: 5px;
-    font-size: 12px;
-    font-weight: 500;
 }
 
 .e-tab-text {
@@ -2174,25 +2163,6 @@ input::placeholder {
 .rz-series-data-label {
     font-size: 11px;
     font-weight: 600;
-}
-
-.small-grid .e-grid .e-rowcell {
-    font-size: 10px;
-    line-height: 16px;
-}
-
-.small-grid .e-grid .e-gridcontent tr:first-child td {
-    height: 16px !important;
-}
-
-.small-grid .e-summarycell {
-    font-size: 10px !important;
-    font-weight: 700 !important;
-    height: 20px !important;
-}
-
-.small-grid .e-headertext {
-    font-size: 10px;
 }
 
 .e-toolbar .e-toolbar-item.e-separator {
@@ -2387,10 +2357,6 @@ th {
 .e-grid .e-gridcontent .e-rowdragdrop.e-lastrowcell, .e-grid .e-gridcontent .e-recordpluscollapse.e-lastrowcell, .e-grid .e-gridcontent .e-indentcell.e-lastrowcell, .e-grid .e-gridcontent .e-groupcaption.e-lastrowcell {
     border-bottom-width: 0px;
 }
-.sm-sum {
-    font-weight: 600 !important;
-    color: #444427 !important;
-}
 .e-dialog {
     border-radius: 0px;
 }
@@ -2425,4 +2391,11 @@ input {
 }
 .e-pager .e-currentitem.e-active {
     border-width: inherit;
+}
+.e-ddl.e-input-group.e-input-focus {
+    box-shadow: unset;
+    border-color: unset;
+}
+.e-ddl.e-input-group:not(.e-rtl) .e-input-group-icon {
+    border-left: unset; 
 }

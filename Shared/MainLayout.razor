@@ -599,17 +599,17 @@
                                                                         <div>
                                                                             <Card_2 Title="@title">
                                                                                 <RadzenStack Style="padding: 15px;" class="main-btns" JustifyContent="JustifyContent.Start" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Gap="10px" Wrap="FlexWrap.Wrap">
-                                                                                    @foreach (TAuthorize item in session?.Authorizes?.Where(a => a.Title == title))
+                                                                                    @foreach (TAuthorize item in session?.Authorizes?.Where(a => a.Title == title).Select(a => new TAuthorize { Url = a.Url, Title = a.Title, Description = a.Description}).Distinct())
                                                                                     {
                                                                                         string inputString = @item.Description ?? "";
                                                                                         string[] words = inputString.Split(' ');
                                                                                         string lastWord = words[words.Length - 1];
                                                                                         string restOfString = inputString.Substring(0, inputString.LastIndexOf(lastWord)).Trim();
                                                                                         <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => NavigationManager.NavigateTo(item.Url))">
-                                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card" Style="padding: 10px;width: 80px; height: 80px;display: flex;justify-content: center;align-items: center;">
+                                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card" Style="padding: 8px;width: 90px; height: 90px;display: flex;justify-content: center;align-items: center;">
 
-                                                                                                <div style="color: black;text-align: center; text-wrap: pretty; font-size: 10px; font-weight: 500;   white-space: pre-wrap; word-wrap: break-word;overflow-wrap: break-word;">
-                                                                                                    @restOfString <div style="font-size: 10px;font-weight: 800 !important; text-transform: capitalize;">@lastWord</div>
+                                                                                                <div style="color: black;text-align: center; text-wrap: pretty; font-size: 11px; font-weight: 500;   white-space: pre-wrap; word-wrap: break-word;overflow-wrap: break-word; font-family: 'Ubuntu' !important;">
+                                                                                                    @restOfString <div style="color: black;font-size: 11px;font-weight: 700 !important; text-transform: capitalize; font-family: 'Ubuntu' !important;">@lastWord</div>
                                                                                                 </div>
                                                                                             </RadzenCard>
                                                                                         </Button>
@@ -664,17 +664,17 @@
                                                                 <div>
                                                                     <Card_2 Title="@title">
                                                                         <RadzenStack Style="padding: 15px;" class="main-btns" JustifyContent="JustifyContent.Start" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Gap="10px" Wrap="FlexWrap.Wrap">
-                                                                            @foreach (TAuthorize item in session?.Authorizes?.Where(a => a.Title == title).Distinct())
+                                                                            @foreach (TAuthorize item in session?.Authorizes?.Where(a => a.Title == title).Select(a => new TAuthorize { Url = a.Url, Title = a.Title, Description = a.Description}).Distinct())
                                                                             {
                                                                                 string inputString = @item.Description ?? "";
                                                                                 string[] words = inputString.Split(' ');
                                                                                 string lastWord = words[words.Length - 1];
                                                                                 string restOfString = inputString.Substring(0, inputString.LastIndexOf(lastWord)).Trim();
                                                                                 <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => NavigationManager.NavigateTo(item.Url))">
-                                                                                    <RadzenCard class="ant-card-hoverable green-card sh-card" Style="padding: 10px;width: 95px; height: 95px;display: flex;justify-content: center;align-items: center;">
+                                                                                    <RadzenCard class="ant-card-hoverable green-card sh-card" Style="padding: 8px;width: 90px; height: 90px;display: flex;justify-content: center;align-items: center;">
 
-                                                                                        <div style="color: black;text-align: center; text-wrap: pretty; font-size: 11px; font-weight: 500;   white-space: pre-wrap; word-wrap: break-word;overflow-wrap: break-word;">
-                                                                                            @restOfString <div style="font-size: 12px;font-weight: 700 !important; text-transform: capitalize;">@lastWord</div>
+                                                                                        <div style="color: black;text-align: center; text-wrap: pretty; font-size: 11px; font-weight: 500;   white-space: pre-wrap; word-wrap: break-word;overflow-wrap: break-word; font-family: 'Ubuntu' !important;">
+                                                                                            @restOfString <div style="color: black;font-size: 11px;font-weight: 700 !important; text-transform: capitalize; font-family: 'Ubuntu' !important;">@lastWord</div>
                                                                                         </div>
                                                                                     </RadzenCard>
                                                                                 </Button>

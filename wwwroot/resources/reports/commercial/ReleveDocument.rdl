@@ -2244,6 +2244,15 @@
       </Query>
     </DataSet>
   </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="Receiver">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Receiver</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+  </ReportParameters>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
   <rd:PageUnit>Px</rd:PageUnit>
 </Report>

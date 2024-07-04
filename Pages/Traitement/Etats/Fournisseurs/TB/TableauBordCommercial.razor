@@ -226,7 +226,7 @@
                             <div class="no-border grid-34">
 
 
-                                <SfChart Title="C.A par acheteur" Width="90%" Theme="Theme.Fluent" Height="100%">
+                                <SfChart Title="Top 10 acheteurs" Width="90%" Theme="Theme.Fluent" Height="100%">
                                     <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
                                         <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
@@ -239,7 +239,7 @@
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartLegendSettings Visible="true" EnableHighlight="true"></ChartLegendSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dt_chart" XName="CO_Nom" YName="DL_MontantHT" Name="C.A HT" Width="2" ColumnSpacing="0.1" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Bar">
+                                        <ChartSeries DataSource="@dt_chart.Take(10)" XName="CO_Nom" YName="DL_MontantHT" Name="C.A HT" Width="2" ColumnSpacing="0.1" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Bar">
                                             <ChartMarker>
                                                 <ChartDataLabel Visible="true" Position="Syncfusion.Blazor.Charts.LabelPosition.Outer" Alignment="Syncfusion.Blazor.Charts.Alignment.Near">
                                                     <ChartDataLabelFont FontWeight="700" Size="11"></ChartDataLabelFont>
@@ -256,7 +256,7 @@
                                     <AccumulationChartBorder Color="transparent"></AccumulationChartBorder>
                                     <AccumulationChartTooltipSettings Enable="true" Format="${point.x}"></AccumulationChartTooltipSettings>
                                     <AccumulationChartSeriesCollection>
-                                        <AccumulationChartSeries DataSource="@rg_chart" Radius="80%" XName="R_Intitule" YName="RG_Montant" InnerRadius="40%">
+                                        <AccumulationChartSeries DataSource="@rg_chart.Take(10)" Radius="80%" XName="R_Intitule" YName="RG_Montant" InnerRadius="40%">
                                             <AccumulationChartSeriesBorder Width="3"></AccumulationChartSeriesBorder>
                                             <AccumulationDataLabelSettings Visible="true" Name="R_Intitule" Position="AccumulationLabelPosition.Outside">
                                                 <AccumulationChartConnector Length="10px" Type="ConnectorType.Curve"></AccumulationChartConnector>

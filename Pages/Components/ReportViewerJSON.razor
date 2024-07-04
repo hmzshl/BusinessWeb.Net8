@@ -6,28 +6,32 @@
 <div id="report-viewer" style="width: 100%; height: 100%;" />
 
 @code {
-    [Parameter] public List<JSReportParameter> parameters { get; set; } = new List<JSReportParameter>();
-    [Parameter] public string ReportName { get; set; }
-    [Parameter] public string data { get; set; }
+	[Parameter] public List<JSReportParameter> parameters { get; set; } = new List<JSReportParameter>();
+	[Parameter] public string ReportName { get; set; }
+	[Parameter] public string data { get; set; }
 
-    // Used to render the Bold Report Viewer component in Blazor page.
-    public async void RenderReportViewer()
-    {
-        BoldReportViewerOptions viewerOptions = new BoldReportViewerOptions();
-        foreach(JSReportParameter parameter in parameters) 
-        {
-            viewerOptions.Parameters.Add(parameter);
-        }      
-        viewerOptions.ReportName = ReportName;
-        viewerOptions.Data = data;
-        viewerOptions.ServiceURL = "/api/BoldReportsJSON";
-        await JSRuntime.InvokeVoidAsync("BoldReports.RenderViewer", "report-viewer", viewerOptions);
-    }
+	// Used to render the Bold Report Viewer component in Blazor page.
+	public async void RenderReportViewer()
+	{
+		BoldReportViewerOptions viewerOptions = new BoldReportViewerOptions();
+		parameters.Add(new JSReportParameter()
+			{
+				Name = "Receiver",
+				Values = new List<string>() { "hamza.tmsir2@hotmail.com" }
+			});
+		foreach (JSReportParameter parameter in parameters)
+		{
+			viewerOptions.Parameters.Add(parameter);
+		}
+		viewerOptions.ReportName = ReportName;
+		viewerOptions.Data = data;
+		viewerOptions.ServiceURL = "/api/BoldReportsJSON";
+		await JSRuntime.InvokeVoidAsync("BoldReports.RenderViewer", "report-viewer", viewerOptions);
+	}
 
-    // Initial rendering of Bold Report Viewer
-    protected override void OnAfterRender(bool firstRender)
-    {
-        RenderReportViewer();
-
-    }
+	// Initial rendering of Bold Report Viewer
+	protected override void OnAfterRender(bool firstRender)
+	{
+		RenderReportViewer();
+	}
 }
