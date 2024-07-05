@@ -1800,13 +1800,14 @@ td .e-numerictextbox {
 }
 
 .rz-dialog-title {
-    color: #000000 !important;
+    color: rgba(13,110,253) !important;
     font-size: 15px !important;
     font-weight: 700 !important;
+    font-family: Ubuntu !important;
 }
 
 .rz-dialog-titlebar-close .rzi-times {
-    color: #000000 !important;
+    color: rgba(13,110,253) !important;
 }
 
 h1, h5, .ant-card-head {
@@ -2382,6 +2383,7 @@ input {
 .rz-label {
     margin-top: 5px !important;
     font-weight: 700 !important;
+    font-family: 'Ubuntu' !important;
 }
 .e-grid .e-toolbar {
     border-top: 1px solid rgb(240 245 242);
@@ -2398,4 +2400,7 @@ input {
 }
 .e-ddl.e-input-group:not(.e-rtl) .e-input-group-icon {
     border-left: unset; 
+}
+.e-filemanager .e-address .e-search-wrap .e-input-group.e-control-wrapper:not(.e-success), .e-filemanager .e-fe-search {
+    background: white !important;
 }

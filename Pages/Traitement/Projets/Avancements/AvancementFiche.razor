@@ -8,7 +8,7 @@
                 <div class="grid-80">
                     <SfGrid  Height="100%" DataSource="@(lignes)" class="no-border">
                         <GridEditSettings AllowEditing=@EditAllowed() Mode="Syncfusion.Blazor.Grids.EditMode.Batch" AllowNextRowEdit="false" />
-                        <GridEvents CellSaved="CellSaveHandler" TValue="API_T_AvancementDetail"></GridEvents>
+                        <GridEvents TValue="API_T_AvancementDetail"></GridEvents>
                         <GridTemplates>
                             <EmptyRecordTemplate>
                                 <Empty></Empty>

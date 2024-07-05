@@ -55,7 +55,14 @@ window.Radzen = {
               }
               return formatted;
           }
+
+          var start = el.selectionStart != el.value.length ? el.selectionStart : -1;
+          var end = el.selectionEnd != el.value.length ? el.selectionEnd : -1;
+
           el.value = format(el.value, mask, pattern, characterPattern);
+
+          el.selectionStart = start != -1 ? start : el.selectionStart;
+          el.selectionEnd = end != -1 ? end : el.selectionEnd;
       }
   },
   addContextMenu: function (id, ref) {
@@ -318,6 +325,7 @@ window.Radzen = {
     if (Radzen[id].keyPress && Radzen[id].paste) {
         for (var i = 0; i < inputs.length; i++) {
             inputs[i].removeEventListener('keypress', Radzen[id].keyPress);
+            inputs[i].removeEventListener('keydown', Radzen[id].keyDown);
             inputs[i].removeEventListener('paste', Radzen[id].paste);
         }
         delete Radzen[id].keyPress;
@@ -358,18 +366,19 @@ window.Radzen = {
           }
       }
       Radzen[id].keyPress = function (e) {
-          var ch = String.fromCharCode(e.charCode);
+          var keyCode = e.data ? e.data.charCodeAt(0) : e.which;
+          var ch = e.data || String.fromCharCode(e.which);
 
           if (e.metaKey ||
               e.ctrlKey ||
-              e.keyCode == 9 ||
-              e.keyCode == 8 ||
-              e.keyCode == 13
+              keyCode == 9 ||
+              keyCode == 8 ||
+              keyCode == 13
           ) {
               return;
           }
 
-          if (isNumber && (e.which < 48 || e.which > 57)) {
+          if (isNumber && (keyCode < 48 || keyCode > 57)) {
               e.preventDefault();
               return;
           }
@@ -391,8 +400,26 @@ window.Radzen = {
           }
       }
 
+      Radzen[id].keyDown = function (e) {
+          var keyCode = e.data ? e.data.charCodeAt(0) : e.which;
+          if (keyCode == 8) {
+              e.currentTarget.value = '';
+
+              var value = inputs.map(i => i.value).join('').trim();
+              hidden.value = value;
+
+              ref.invokeMethodAsync('RadzenSecurityCode.OnValueChange', value);
+
+              var index = inputs.indexOf(e.currentTarget);
+              if (index > 0) {
+                  inputs[index - 1].focus();
+              }
+          }
+      }
+
       for (var i = 0; i < inputs.length; i++) {
-          inputs[i].addEventListener('keypress', Radzen[id].keyPress);
+          inputs[i].addEventListener(navigator.userAgent.match(/Android/i) ? 'textInput' : 'keypress', Radzen[id].keyPress);
+          inputs[i].addEventListener(navigator.userAgent.match(/Android/i) ? 'textInput' : 'keydown', Radzen[id].keyDown);
           inputs[i].addEventListener('paste', Radzen[id].paste);
       }
   },
@@ -966,6 +993,7 @@ window.Radzen = {
       }
   },
   createDatePicker(el, popupId) {
+      if(!el) return;
       var handler = function (e, condition) {
           if (condition) {
               Radzen.togglePopup(e.currentTarget.parentNode, popupId, false, null, null, true, false);
@@ -1009,7 +1037,7 @@ window.Radzen = {
 
       var top = parentRect.bottom + scrollTop;
 
-      if (top + rect.height > window.innerHeight && parentRect.top > rect.height) {
+      if (top + rect.height > window.innerHeight + scrollTop && parentRect.top > rect.height) {
           top = parentRect.top - rect.height + scrollTop;
       }
 
@@ -1343,7 +1371,10 @@ window.Radzen = {
             }
 
             if (options.autoFocusFirstElement) {
-                if (lastDialog.querySelectorAll('.rz-html-editor-content').length) {
+                var focusable = Radzen.getFocusableElements(lastDialog);
+                var editor = lastDialog.querySelector('.rz-html-editor');
+
+                if (editor && !focusable.includes(editor.previousElementSibling)) {
                     var editable = lastDialog.querySelector('.rz-html-editor-content');
                     if (editable) {
                         var selection = window.getSelection();
@@ -1512,7 +1543,7 @@ window.Radzen = {
 
     return readAsDataURL(fileInput);
   },
-  toggleMenuItem: function (target, event, defaultActive) {
+  toggleMenuItem: function (target, event, defaultActive, clickToOpen) {
     var item = target.closest('.rz-navigation-item');
 
     var active = defaultActive != undefined ? defaultActive : !item.classList.contains('rz-navigation-item-active');
@@ -1535,6 +1566,10 @@ window.Radzen = {
         icon.style.transform = 'rotate(' + deg + ')';
       }
     }
+
+    if (clickToOpen === false && item.parentElement && item.parentElement.closest('.rz-navigation-item') && !defaultActive) {
+        return;
+    };
 
     toggle(active);
 
