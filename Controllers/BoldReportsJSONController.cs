@@ -9,11 +9,12 @@ using System.Collections.Generic;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text.Json.Nodes;
-
+using BusinessWeb.Models.Perso;
+using BoldReports.Writer;
+using BoldReports.RDL.DOM;
 namespace BusinessWeb.Controllers
 {
     [Route("api/{controller}/{action}/{id?}")]
-    [ApiController]
     public class BoldReportsJSON : ControllerBase, IReportController
     {
         // Report viewer requires a memory cache to store the information of consecutive client requests and
@@ -24,7 +25,6 @@ namespace BusinessWeb.Controllers
         private IWebHostEnvironment _hostingEnvironment;
         Dictionary<string, object> jsonResult = null;
         private string reportData;
-        private List<BoldReports.Web.ReportParameter> _parameters = new List<BoldReports.Web.ReportParameter>();
         public BoldReportsJSON(IMemoryCache memoryCache, IWebHostEnvironment hostingEnvironment)
         {
             _cache = memoryCache;
@@ -55,19 +55,6 @@ namespace BusinessWeb.Controllers
         // Method will be called when report is loaded internally to start the layout process with ReportHelper.
         public void OnReportLoaded(ReportViewerOptions reportOption)
         {
-            var reportParameters = ReportHelper.GetParameters(jsonResult, this, _cache);
-            if (reportParameters != null)
-            {
-                foreach (var rptParameter in reportParameters)
-                {
-                    _parameters.Add(new BoldReports.Web.ReportParameter()
-                    {
-                        Name = rptParameter.Name,
-                        Values = rptParameter.Values.ToList()
-                    });
-                }
-            }
-
               List<DataSourceInfo> datasources = ReportHelper.GetDataSources(jsonResult, this, _cache);
 
             foreach (DataSourceInfo item in datasources)
@@ -120,60 +107,105 @@ namespace BusinessWeb.Controllers
             }
             return ReportHelper.ProcessReport(jsonArray, this, this._cache);
         }
-        public object SendEmail([FromBody] Dictionary<string, object> jsonResult)
+		public object SendEmail([FromBody] Dictionary<string, object> jsonResult)
+		{
+			string _token = jsonResult["reportViewerToken"].ToString();
+			var stream = ReportHelper.GetReport(_token, jsonResult["exportType"].ToString(), this, _cache);
+			stream.Position = 0;
+
+			EmailConfiguration emailConfig = new EmailConfiguration
+			{
+				SmtpServer = jsonResult["smtpServer"].ToString(),
+				Port = int.Parse(jsonResult["port"].ToString()),
+				SenderEmail = jsonResult["senderEmail"].ToString(),
+				Password = jsonResult["password"].ToString(),
+				RecipientEmail = jsonResult["recipientEmail"].ToString(),
+                Objet = jsonResult["objet"].ToString(),
+                FileName = jsonResult["fileName"].ToString()
+            };
+
+			if (!ComposeEmail(stream, jsonResult["ReportName"].ToString(), emailConfig))
+			{
+				return new { success = false, message = "E-mail non envoyé !!!" };
+			}
+
+			return new { success = true, message = "E-mail envoyé avec succès !!!" };
+		}
+		public bool ComposeEmail(Stream stream, string reportName, EmailConfiguration emailConfig)
+		{
+			try
+			{
+				MailMessage mail = new MailMessage
+				{
+					IsBodyHtml = true,
+					From = new MailAddress(emailConfig.SenderEmail),
+					Subject = emailConfig.Objet
+				};
+				mail.To.Add(emailConfig.RecipientEmail);
+
+				stream.Position = 0;
+				if (stream != null)
+				{
+					ContentType ct = new ContentType
+					{
+						Name = emailConfig.FileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf"
+					};
+					System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(stream, ct);
+					mail.Attachments.Add(attachment);
+				}
+
+				SmtpClient SmtpServer = new SmtpClient(emailConfig.SmtpServer)
+				{
+					Port = emailConfig.Port,
+					Credentials = new System.Net.NetworkCredential(emailConfig.SenderEmail, emailConfig.Password),
+					EnableSsl = true
+				};
+
+				SmtpServer.Send(mail);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+        public class ExportRequest
         {
-            string _token = jsonResult["reportViewerToken"].ToString();
-            var stream = ReportHelper.GetReport(_token, jsonResult["exportType"].ToString(), this, _cache);
-            stream.Position = 0;
-
-            if (!ComposeEmail(stream, jsonResult["ReportName"].ToString()))
-            {
-                return "Mail not sent !!!";
-            }
-
-            return "Mail Sent !!!";
+            public string ReportName { get; set; }
+            public string Data { get; set; }
         }
-        public bool ComposeEmail(Stream stream, string reportName)
+        public IActionResult Export([FromBody] Dictionary<string, object> jsonResult)
         {
-            try
-            {
-                var dt = _parameters;
-                if(dt.Count() != 0)
-                {
-                    MailMessage mail = new MailMessage();
-                    SmtpClient SmtpServer = new SmtpClient("mail.privateemail.com");     // Change the Smtp server based on your mail
-                    mail.IsBodyHtml = true;
-                    mail.From = new MailAddress("info@aica.ma");                   //add the sender mail id
-                    mail.To.Add(dt?.First()?.Values?.First());                                 //add the receiver mail id
-                    mail.Subject = "Report Name : " + reportName;
-                    stream.Position = 0;
+            string reportName = jsonResult["reportName"].ToString();
+            string basePath = _hostingEnvironment.WebRootPath;
+            //reportOption.ReportModel.ProcessingMode = BoldReports.Web.ReportViewer.ProcessingMode.Local;
+            // Here, we have loaded the sales-order-detail.rdl report from application the folder wwwroot\Resources. sales-order-detail.rdl should be there in wwwroot\Resources application folder.
+            FileStream inputStream = new FileStream(basePath + @"\Resources\" + reportName + ".rdl", FileMode.Open, FileAccess.Read);
+            MemoryStream reportStream = new MemoryStream();
+            inputStream.CopyTo(reportStream);
+            reportStream.Position = 0;
+            inputStream.Close();
+            BoldReports.Writer.ReportWriter writer = new BoldReports.Writer.ReportWriter();
 
-                    if (stream != null)
-                    {
-                        ContentType ct = new ContentType();
-                        ct.Name = reportName + DateTime.Now.ToString() + ".pdf";
-                        System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(stream, ct);
-                        mail.Attachments.Add(attachment);
-                    }
+            string fileName = null;
+            WriterFormat format;
+            string type = null;
 
-                    SmtpServer.Port = 587;                                                                                //change the Port number based on your mail
-                    SmtpServer.Credentials = new System.Net.NetworkCredential("info@aica.ma", "Aicha2000"); //give the sender mail id and it application password
-                    SmtpServer.EnableSsl = true;
-                    SmtpServer.Send(mail);
-                    SmtpServer.UseDefaultCredentials = true;
-                }
+            fileName = "sales-order-detail.pdf";
+            type = "pdf";
+            format = WriterFormat.PDF;
 
+            writer.LoadReport(reportStream);
+            MemoryStream memoryStream = new MemoryStream();
+            writer.Save(memoryStream, format);
 
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return false;
+            // Download the generated export document to the client side.
+            memoryStream.Position = 0;
+            FileStreamResult fileStreamResult = new FileStreamResult(memoryStream, "application/" + type);
+            fileStreamResult.FileDownloadName = fileName;
+            return fileStreamResult;
         }
+
     }
 
 }

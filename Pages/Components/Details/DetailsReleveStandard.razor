@@ -269,8 +269,43 @@ else
         }
         string data = JsonSerializer.Serialize(dt);
 
+        var emailConfig = new EmailConfiguration
+            {
+                SmtpServer = "mail.privateemail.com",
+                Port = 587,
+                SenderEmail = "info@aica.ma",
+                Password = "Aicha2000",
+                RecipientEmail = "hamza.tmsir2@hotmail.com",
+                Visible = true,
+                FileName = "ReleveStandard",
+                Objet = "ReleveStandard"
+            };
+
         await DialogService.OpenAsync<ReportViewerJSON>("",
-        new Dictionary<string, object>() { { "ReportName", "reports\\commercial\\ReleveStandard" }, { "data", data } },
+        new Dictionary<string, object>() { { "ReportName", "reports\\commercial\\ReleveStandard" }, { "data", data }, { "emailConfig", emailConfig } },
         new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
+    }
+    protected async Task Download()
+    {
+        try
+        {
+            List<JSReportParameter> parameters = new List<JSReportParameter>();
+            var dt = new List<API_V_RELEVE>();
+            foreach (V_ReleveStandard item in items)
+            {
+                var ln = new API_V_RELEVE();
+                fn.CopyData(item, ln);
+                {
+                    dt.Add(ln);
+                }
+            }
+            string data = JsonSerializer.Serialize(dt);
+            await JSRuntime.InvokeVoidAsync("downloadFile", "reports\\commercial\\ReleveStandard",data);
+        }
+        catch(Exception ex)
+        {
+            await Message.Error(ex.ToString(), 20);
+        }
+
     }
 }
