@@ -1452,6 +1452,15 @@ namespace BusinessWeb
 
             return list;
         }
+        public List<Items> CaisseMV()
+        {
+            List<Items> list = new List<Items>();
+
+            list.Add(new Items { Id = 0, Name = "Recette" });
+            list.Add(new Items { Id = 1, Name = "Dépense" });
+
+            return list;
+        }
         public List<Items> Consistance()
         {
             List<Items> list = new List<Items>();

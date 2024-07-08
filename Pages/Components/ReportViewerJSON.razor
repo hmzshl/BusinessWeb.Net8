@@ -24,7 +24,7 @@
 		viewerOptions.ReportName = ReportName;
 		viewerOptions.Data = data;
 		viewerOptions.ServiceURL = "/api/BoldReportsJSON";
-		if (emailConfig.Visible)
+		if ((emailConfig?.Visible)??false)
 		{
 
 			await JSRuntime.InvokeVoidAsync("BoldReports.RenderViewerEmail", "report-viewer", viewerOptions, emailConfig);

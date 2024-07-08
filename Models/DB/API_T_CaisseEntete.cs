@@ -61,6 +61,10 @@ public partial class API_T_CaisseEntete
 
     public string ModificationUser { get; set; }
 
+    public bool Valide { get; set; }
+
+    public DateTime? ValideDate { get; set; }
+
     public virtual ICollection<API_T_CaisseLigne> API_T_CaisseLigne { get; set; } = new List<API_T_CaisseLigne>();
 
     public virtual API_T_Caisse CaisseNavigation { get; set; }

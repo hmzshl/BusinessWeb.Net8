@@ -1,6 +1,6 @@
 ﻿<RadzenContent Container="main">
     <div class="grid-90">
-        <SfGrid  Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+        <SfGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items"
                 Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete",new ToolbarItem() {Id = "incorporer", TooltipText = "Incorporer des pièces", Align = ItemAlign.Left,PrefixIcon = "e-icons e-upload-1" },new ToolbarItem() { Template = Caisses, Id = "caisse", TooltipText = "Caisse", Align = ItemAlign.Right}
                     ,new ToolbarItem() { Type = ItemType.Input,Template = Date1, Id = "date1", TooltipText = "Date Début", Align = ItemAlign.Right}
                     ,new ToolbarItem() { Type = ItemType.Input,Template = Date2, Id = "date2", TooltipText = "Date Fin", Align = ItemAlign.Right}})">
@@ -36,21 +36,34 @@
                 <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CAISSEENTETE.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
                 <GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CAISSEENTETE.Numero)" HeaderText="Piece"></GridColumn>
                 <GridColumn AllowSorting="false" AllowFiltering="false" Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CAISSEENTETE.Libelle)" HeaderText="Motif"></GridColumn>
-                <GridColumn AllowSorting="false" AllowFiltering="false" Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CAISSEENTETE.Reference)" HeaderText="Reference"></GridColumn>
-                <GridColumn AllowSorting="false" AllowFiltering="false" Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CAISSEENTETE.Remarque)" HeaderText="Remarque"></GridColumn>
                 <GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Bénéficiaire" Field="@nameof(API_V_CAISSEENTETE.PersonnelIntitule)"></GridColumn>
                 <GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affectation" Field="@nameof(API_V_CAISSEENTETE.AffectationIntitule)"></GridColumn>
                 <GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° Tiers" Field="@nameof(API_V_CAISSEENTETE.CT_NumProjet)"></GridColumn>
                 <GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Tiers" Field="@nameof(API_V_CAISSEENTETE.CT_Intitule)"></GridColumn>
                 <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Aff" Field="@nameof(API_V_CAISSEENTETE.CA_Num)"></GridColumn>
                 <GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affaire" Field="@nameof(API_V_CAISSEENTETE.CA_Intitule)"></GridColumn>
-                
+
                 <GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CAISSEENTETE.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                <GridColumn Width="35px" AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="VL" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                    <Template>
+                        @{
+                            var dt = (context as API_V_CAISSEENTETE);
+                        }
+                        @if (dt.Valide)
+                        {
+                            <RadzenIcon Icon="lock" style="font-weight: 400; color: limegreen;" />
+                        }
+                        else
+                        {
+                            <RadzenIcon Icon="lock_clock" style="font-weight: 400;" />
+                        }
+                    </Template>
+                </GridColumn>
             </GridColumns>
             <SfSpinner @bind-Visible="@loading">
             </SfSpinner>
         </SfGrid>
-     </div>    
+    </div>
 </RadzenContent>
 
 
@@ -60,6 +73,7 @@
     [CascadingParameter]
     public SessionDT session { get; set; } = new SessionDT();
     DB db = new DB();
+
     [Parameter] public int type { get; set; }
     [Parameter] public bool IsList { get; set; } = true;
     [Parameter] public int Projet { get; set; } = 0;
@@ -79,7 +93,7 @@
     bool loading = false;
     List<API_T_Caisse> caisses = new List<API_T_Caisse>();
     int caisse = 0;
-    DateTime? date1 = new DateTime(DateTime.Today.Year, DateTime.Today.Month,1);
+    DateTime? date1 = new DateTime(DateTime.Today.Year, 1,1);
     DateTime? date2;
     IList<API_V_CAISSEENTETE> selecteditems;
     private SfDropDownList<int, API_T_Caisse> CaisseDrop;

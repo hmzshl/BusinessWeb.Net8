@@ -93,6 +93,32 @@
             </TabItem>
             <TabItem>
                 <ChildContent>
+                    <TabHeader Text="Email"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <GridRow>
+                        <GridCol Xs="24" Md="24">
+                            <Card>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Serveur SMTP" LabelColSpan="8">
+                                    <SfTextBox @bind-Value="@config.EmailSmtpServer" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Port" LabelColSpan="8">
+                                    <SfTextBox @bind-Value="@config.EmailPort" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Email" LabelColSpan="8">
+                                    <SfTextBox @bind-Value="@config.EmailSenderEmail" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Mot de passe" LabelColSpan="8">
+                                    <SfTextBox Type="InputType.Password" @bind-Value="@config.EmailPassword" />
+                                </FormItem>
+                            </Card>
+
+                        </GridCol>
+                    </GridRow>
+                </ContentTemplate>
+            </TabItem>
+            <TabItem>
+                <ChildContent>
                     <TabHeader Text="Configurations"></TabHeader>
                 </ChildContent>
                 <ContentTemplate>

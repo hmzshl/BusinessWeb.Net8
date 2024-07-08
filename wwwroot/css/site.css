@@ -1386,7 +1386,9 @@ div#main-text {
 .ant-form-item {
     height: 25px;
 }
-
+.multiline .ant-form-item {
+    height: 60px;
+}
 .e-control input.e-input, .e-control .e-input-group input, .e-control .e-input-group input.e-input, .e-control .e-input-group.e-control-wrapper input, .e-control .e-input-group.e-control-wrapper input.e-input, .e-control .e-float-input input, .e-control .e-float-input.e-control-wrapper input, .e-control.e-input-group input, .e-control.e-input-group input.e-input, .e-control.e-input-group.e-control-wrapper input, .e-control.e-input-group.e-control-wrapper input.e-input, .e-control.e-float-input input, .e-control.e-float-input.e-control-wrapper input {
     height: inherit;
 }
@@ -2403,4 +2405,7 @@ input {
 }
 .e-filemanager .e-address .e-search-wrap .e-input-group.e-control-wrapper:not(.e-success), .e-filemanager .e-fe-search {
     background: white !important;
+}
+.rz-button-sm .rzi {
+    color: rgba(13, 110, 253);
 }

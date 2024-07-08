@@ -284,9 +284,28 @@ else
     {
         List<JSReportParameter> parameters = new List<JSReportParameter>();
         string data = JsonSerializer.Serialize(items);
+        var emailConfig = new EmailConfiguration();
+        var stes = db.API_T_Config;
+        if (stes.Any())
+        {
+            var ste = stes.First();
+            emailConfig = new EmailConfiguration
+                {
+                    SmtpServer = ste.EmailSmtpServer,
+                    Port = ste.EmailPort,
+                    SenderEmail = ste.EmailSenderEmail,
+                    Password = ste.EmailPassword,
+                    RecipientEmail = db.F_COMPTET.Where(a => a.CT_Num == CT_Num).SingleOrDefault()?.CT_EMail,
+                    Visible = true,
+                    FileName = "Extrait de compte",
+                    Objet = "Extrait de compte"
+                };
+        }
+
+
 
         await DialogService.OpenAsync<ReportViewerJSON>("",
-        new Dictionary<string, object>() { { "ReportName", "reports\\commercial\\ReleveDocument" }, { "data", data } },
+        new Dictionary<string, object>() { { "ReportName", "reports\\commercial\\ReleveDocument" }, { "data", data }, { "emailConfig", emailConfig } },
         new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
     }
 }

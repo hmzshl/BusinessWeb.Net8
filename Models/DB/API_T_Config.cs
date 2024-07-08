@@ -40,4 +40,14 @@ public partial class API_T_Config
     public string CreationUser { get; set; }
 
     public string ModificationUser { get; set; }
+
+    public string EmailSmtpServer { get; set; }
+
+    public string EmailPort { get; set; }
+
+    public string EmailSenderEmail { get; set; }
+
+    public string EmailPassword { get; set; }
+
+    public string EmailReleveObjet { get; set; }
 }

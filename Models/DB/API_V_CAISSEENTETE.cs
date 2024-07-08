@@ -66,4 +66,6 @@ public partial class API_V_CAISSEENTETE
     public string Remarque { get; set; }
 
     public string Reference { get; set; }
+
+    public bool Valide { get; set; }
 }

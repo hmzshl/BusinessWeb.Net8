@@ -9,10 +9,11 @@ namespace BusinessWeb.Data;
 
 public partial class DB : DbContext
 {
-	public DB()
-	{
-	}
-	public DB(DbContextOptions<DB> options)
+    public DB()
+    {
+
+    }
+    public DB(DbContextOptions<DB> options)
         : base(options)
     {
     }
@@ -2239,6 +2240,7 @@ public partial class DB : DbContext
             entity.Property(e => e.Remarque)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.ValideDate).HasColumnType("smalldatetime");
 
             entity.HasOne(d => d.CaisseNavigation).WithMany(p => p.API_T_CaisseEntete)
                 .HasForeignKey(d => d.Caisse)
@@ -2728,6 +2730,21 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.EmailPassword)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.EmailPort)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.EmailReleveObjet)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.EmailSenderEmail)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.EmailSmtpServer)
+                .HasMaxLength(100)
+                .IsUnicode(false);
             entity.Property(e => e.FA_BalanceClient).HasDefaultValueSql("((1))");
             entity.Property(e => e.FA_BalanceFournisseur).HasDefaultValueSql("((1))");
             entity.Property(e => e.FA_Marge).HasDefaultValueSql("((1))");

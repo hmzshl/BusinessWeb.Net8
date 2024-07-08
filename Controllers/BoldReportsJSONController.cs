@@ -116,7 +116,7 @@ namespace BusinessWeb.Controllers
 			EmailConfiguration emailConfig = new EmailConfiguration
 			{
 				SmtpServer = jsonResult["smtpServer"].ToString(),
-				Port = int.Parse(jsonResult["port"].ToString()),
+				Port = jsonResult["port"].ToString(),
 				SenderEmail = jsonResult["senderEmail"].ToString(),
 				Password = jsonResult["password"].ToString(),
 				RecipientEmail = jsonResult["recipientEmail"].ToString(),
@@ -156,7 +156,7 @@ namespace BusinessWeb.Controllers
 
 				SmtpClient SmtpServer = new SmtpClient(emailConfig.SmtpServer)
 				{
-					Port = emailConfig.Port,
+					Port = Int16.Parse(emailConfig.Port),
 					Credentials = new System.Net.NetworkCredential(emailConfig.SenderEmail, emailConfig.Password),
 					EnableSsl = true
 				};
