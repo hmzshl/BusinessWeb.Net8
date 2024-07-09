@@ -218,11 +218,18 @@
                                     {
                                         <RadzenMenuItem Text="Ventes" Icon="people" Visible=@(TitleIsVisible("Ventes"))>
                                             <RadzenMenuItem Text="Liste des clients" Path="/clients" Visible=@(IsVisible("clients"))></RadzenMenuItem>
-
-                                            <RadzenMenuItem Text="Relevé documents ventes" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
+                                            <RadzenMenuItem Text="Documents">
+                                                <RadzenMenuItem Text="Devis" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
+                                                <RadzenMenuItem Text="Commandes" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
+                                                <RadzenMenuItem Text="Livraisons/Factures" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
+                                            </RadzenMenuItem>
+                                            
                                             <RadzenMenuItem Text="Balance agée" Path="/et-balanceagee-client" Visible=@(IsVisible("et-balanceagee-client"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Réglements clients" Path="/reglements-clients" Visible=@(IsVisible("reglements-clients"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Echéances clients" Path="/et-echeances-clients" Visible=@(IsVisible("et-echeances-clients"))></RadzenMenuItem>
+                                            <RadzenMenuItem Text="Réglements">
+                                                <RadzenMenuItem Text="Réglements clients" Path="/reglements-clients" Visible=@(IsVisible("reglements-clients"))></RadzenMenuItem>
+                                                <RadzenMenuItem Text="Echéances clients" Path="/et-echeances-clients" Visible=@(IsVisible("et-echeances-clients"))></RadzenMenuItem>
+                                            </RadzenMenuItem>
+
                                             <RadzenMenuItem Text="Tableau de bord">
                                                 <RadzenMenuItem Text="Journalier" Path="/tb-commercial-journalier" Visible=@(IsVisible("tb-commercial-journalier"))></RadzenMenuItem>
                                                 <RadzenMenuItem Text="Mensuel" Path="/tb-commercial-mensuel" Visible=@(IsVisible("tb-commercial-mensuel"))></RadzenMenuItem>
@@ -250,10 +257,17 @@
                                         </RadzenMenuItem>
                                         <RadzenMenuItem Text="Achats" Icon="shopping_cart_checkout" Visible=@(TitleIsVisible("Achats"))>
                                             <RadzenMenuItem Text="Liste des fournisseurs" Path="/fournisseurs" Visible=@(IsVisible("fournisseurs"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Relevé documents achats" Path="/releve-achats" Visible=@(IsVisible("releve-achats"))></RadzenMenuItem>
+                                            <RadzenMenuItem Text="Documents">
+                                                <RadzenMenuItem Text="Commandes" Path="/releve-achats" Visible=@(IsVisible("releve-achats"))></RadzenMenuItem>
+                                                <RadzenMenuItem Text="Livraisons/Factures" Path="/releve-achats" Visible=@(IsVisible("releve-achats"))></RadzenMenuItem>
+                                            </RadzenMenuItem>
+                                            
                                             <RadzenMenuItem Text="Balance agée" Path="/et-balanceagee-fournisseur" Visible=@(IsVisible("et-balanceagee-fournisseur"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Réglements fournisseurs" Path="/reglements-fournisseurs" Visible=@(IsVisible("reglements-fournisseurs"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Echéances fournisseurs" Path="/et-echeances-fournisseurs" Visible=@(IsVisible("et-echeances-fournisseurs"))></RadzenMenuItem>
+                                            <RadzenMenuItem Text="Réglements">
+                                                <RadzenMenuItem Text="Réglements fournisseurs" Path="/reglements-fournisseurs" Visible=@(IsVisible("reglements-fournisseurs"))></RadzenMenuItem>
+                                                <RadzenMenuItem Text="Echéances fournisseurs" Path="/et-echeances-fournisseurs" Visible=@(IsVisible("et-echeances-fournisseurs"))></RadzenMenuItem>
+                                            </RadzenMenuItem>
+
                                             <RadzenMenuItem Text="Tableau de bord">
                                                 <RadzenMenuItem Text="Journalier" Path="/tb-achat-journalier" Visible=@(IsVisible("tb-achat-journalier"))></RadzenMenuItem>
                                                 <RadzenMenuItem Text="Mensuel" Path="/tb-achat-mensuel" Visible=@(IsVisible("tb-achat-mensuel"))></RadzenMenuItem>

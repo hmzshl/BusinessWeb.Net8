@@ -127,6 +127,8 @@ public partial class API_T_CertifGrilleDialogue
 
     public string ModificationUser { get; set; }
 
+    public virtual ICollection<API_T_CertifAutoclaves> API_T_CertifAutoclaves { get; set; } = new List<API_T_CertifAutoclaves>();
+
     public virtual ICollection<API_T_CertifGrilleDialogueExigence> API_T_CertifGrilleDialogueExigence { get; set; } = new List<API_T_CertifGrilleDialogueExigence>();
 
     public virtual ICollection<API_T_CertifGrilleDialogueModif> API_T_CertifGrilleDialogueModif { get; set; } = new List<API_T_CertifGrilleDialogueModif>();

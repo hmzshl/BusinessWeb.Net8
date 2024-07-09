@@ -1,571 +1,1059 @@
 <SfToolbar CssClass="btns">
-    <ToolbarItems>
-        <ToolbarItem Align="ItemAlign.Right">
-            <Template>
-                <SfButton OnClick="Archiver" IconCss="e-icons e-export" Disabled=@(row.Statut != 0)>Archiver</SfButton>
-            </Template>
-        </ToolbarItem>
-        <ToolbarItem Align="ItemAlign.Right">
-            <Template>
-                <SfButton OnClick="Ouverture" IconCss="e-icons e-send" Disabled=@(row.Statut != 0)>Ouverture Dossier</SfButton>
-            </Template>
-        </ToolbarItem>
-        <ToolbarItem Align="ItemAlign.Right">
-            <Template>
-                <SfButton OnClick="Print" IconCss="e-icons e-print">Imprimer</SfButton>
-            </Template>
-        </ToolbarItem>
-        <ToolbarItem Align="ItemAlign.Right">
-            <Template>
-                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args =>Submit(true))">Enregistrer</SfButton>
-            </Template>
-        </ToolbarItem>
-    </ToolbarItems>
+	<ToolbarItems>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton OnClick="Archiver" IconCss="e-icons e-export" Disabled=@(row.Statut != 0)>Archiver</SfButton>
+			</Template>
+		</ToolbarItem>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton OnClick="Ouverture" IconCss="e-icons e-send" Disabled=@(row.Statut != 0)>Ouverture Dossier</SfButton>
+			</Template>
+		</ToolbarItem>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton OnClick="Print" IconCss="e-icons e-print">Imprimer</SfButton>
+			</Template>
+		</ToolbarItem>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args =>Submit(true))">Enregistrer</SfButton>
+			</Template>
+		</ToolbarItem>
+	</ToolbarItems>
 </SfToolbar>
 <div>
-    <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="FormContext">
-        <SfTab CssClass="e-fill">
-            <TabEvents Selecting="@(args => fn.DisableTabSelect(args))" />
-            <TabItems>
-                <TabItem>
-                    <ChildContent>
-                        <TabHeader Text="Identification"></TabHeader>
-                    </ChildContent>
-                    <ContentTemplate>
-                        <GridRow>
-                            <GridCol Xs="24" Md="24">
-                                <Card Title="Identification">
-                                    <GridRow>
-                                        <GridCol Xs="24" Md="6">
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro d’enregistrement" LabelColSpan="14">
-                                                <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Numero" />
-                                            </FormItem>
+	<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="FormContext">
+		<SfTab CssClass="e-fill">
+			<TabEvents Selecting="@(args => fn.DisableTabSelect(args))" />
+			<TabItems>
+				<TabItem>
+					<ChildContent>
+						<TabHeader Text="Identification"></TabHeader>
+					</ChildContent>
+					<ContentTemplate>
+						<GridRow>
+							<GridCol Xs="24" Md="24">
+								<Card Title="Identification">
+									<GridRow>
+										<GridCol Xs="24" Md="6">
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro d’enregistrement" LabelColSpan="14">
+												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Numero" />
+											</FormItem>
 
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="14">
-                                                <SfDatePicker Readonly="@(row.Statut != 0)" TValue="DateTime?" @bind-Value="@row.Date" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Tél./ Fax" LabelColSpan="14">
-                                                <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Telephone" />
-                                            </FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="14">
+												<SfDatePicker Readonly="@(row.Statut != 0)" TValue="DateTime?" @bind-Value="@row.Date" />
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Tél./ Fax" LabelColSpan="14">
+												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Telephone" />
+											</FormItem>
 
-                                        </GridCol>
-                                        <GridCol Xs="24" Md="12">
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Raison sociale" LabelColSpan="5">
-                                                <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.RaisonSocial" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse" LabelColSpan="5">
-                                                <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Adresse" />
-                                            </FormItem>
+										</GridCol>
+										<GridCol Xs="24" Md="12">
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Raison sociale" LabelColSpan="5">
+												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.RaisonSocial" />
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse" LabelColSpan="5">
+												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Adresse" />
+											</FormItem>
 
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Interlocuteur" LabelColSpan="5">
-                                                <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Interlocuteur" />
-                                            </FormItem>
-                                            @if (row.DemandePar == 3)
-                                            {
-                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Autre" LabelColSpan="5">
-                                                    <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.DemandeParAutre" />
-                                                </FormItem>
-                                            }
-                                        </GridCol>
-                                        <GridCol Xs="24" Md="6">
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Demande réceptionnée par" LabelColSpan="14">
-                                                <SfDropDownList Readonly="@(row.Statut != 0)" TValue="int" TItem="Items" DataSource="@fn.DemandePar()" @bind-Value="@row.DemandePar">
-                                                    <DropDownListEvents TValue="int" TItem="Items" />
-                                                    <DropDownListFieldSettings Text="Name" Value="Id" />
-                                                </SfDropDownList>
-                                            </FormItem>
-                                        </GridCol>
-                                    </GridRow>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Interlocuteur" LabelColSpan="5">
+												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Interlocuteur" />
+											</FormItem>
+											@if (row.DemandePar == 3)
+											{
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Autre" LabelColSpan="5">
+													<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.DemandeParAutre" />
+												</FormItem>
+											}
+										</GridCol>
+										<GridCol Xs="24" Md="6">
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Demande réceptionnée par" LabelColSpan="14">
+												<SfDropDownList Readonly="@(row.Statut != 0)" TValue="int" TItem="Items" DataSource="@fn.DemandePar()" @bind-Value="@row.DemandePar">
+													<DropDownListEvents TValue="int" TItem="Items" />
+													<DropDownListFieldSettings Text="Name" Value="Id" />
+												</SfDropDownList>
+											</FormItem>
+										</GridCol>
+									</GridRow>
 
-                                </Card>
-                            </GridCol>
-                            <GridCol Xs="24" Md="24">
-                                <Card Title=" Axe Qualité">
-                                    <GridRow>
-                                        <GridCol Xs="24" Md="8">
-                                            <label class="ant-form-item-label">Identification des besoins client</label>
-                                        </GridCol>
-                                        <GridCol Xs="24" Md="4">
-                                            <label class="ant-form-item-label">Spécification client</label>
-                                        </GridCol>
-                                        <GridCol Xs="24" Md="12">
-                                            <label class="ant-form-item-label">Réponse laboratoire</label>
-                                        </GridCol>
-                                        <GridCol Xs="24" Md="24">
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Voulez-vous nos Preuves de raccordement?" LabelColSpan="8">
-                                                <GridRow>
-                                                    <GridCol Xs="24" Md="6">
-                                                        <SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.PreuvesRaccord"></SfSwitch>
-                                                    </GridCol>
-                                                    <GridCol Xs="24" Md="16">
-                                                        <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PreuvesRaccordChar" />
-                                                    </GridCol>
-                                                </GridRow>
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Voulez-vous notre liste de personnel qualifié?" LabelColSpan="8">
-                                                <GridRow>
-                                                    <GridCol Xs="24" Md="6">
-                                                        <SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row._ListePersonnelQualifie"></SfSwitch>
-                                                    </GridCol>
-                                                    <GridCol Xs="24" Md="16">
-                                                        <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.ListePersonnelQualifieChar" />
-                                                    </GridCol>
-                                                </GridRow>
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Voulez vous faire un audit au laboratoire?" LabelColSpan="8">
-                                                <GridRow>
-                                                    <GridCol Xs="24" Md="6">
-                                                        <SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row._AuditAuLaboratoire"></SfSwitch>
-                                                    </GridCol>
-                                                    <GridCol Xs="24" Md="16">
-                                                        <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.AuditAuLaboratoireChar" />
-                                                    </GridCol>
-                                                </GridRow>
+								</Card>
+							</GridCol>
+							<GridCol Xs="24" Md="24">
+								<Card Title=" Axe Qualité">
+									<GridRow>
+										<GridCol Xs="24" Md="8">
+											<label class="ant-form-item-label">Identification des besoins client</label>
+										</GridCol>
+										<GridCol Xs="24" Md="4">
+											<label class="ant-form-item-label">Spécification client</label>
+										</GridCol>
+										<GridCol Xs="24" Md="12">
+											<label class="ant-form-item-label">Réponse laboratoire</label>
+										</GridCol>
+										<GridCol Xs="24" Md="24">
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Voulez-vous nos Preuves de raccordement?" LabelColSpan="8">
+												<GridRow>
+													<GridCol Xs="24" Md="6">
+														<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.PreuvesRaccord"></SfSwitch>
+													</GridCol>
+													<GridCol Xs="24" Md="16">
+														<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PreuvesRaccordChar" />
+													</GridCol>
+												</GridRow>
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Voulez-vous notre liste de personnel qualifié?" LabelColSpan="8">
+												<GridRow>
+													<GridCol Xs="24" Md="6">
+														<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row._ListePersonnelQualifie"></SfSwitch>
+													</GridCol>
+													<GridCol Xs="24" Md="16">
+														<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.ListePersonnelQualifieChar" />
+													</GridCol>
+												</GridRow>
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Voulez vous faire un audit au laboratoire?" LabelColSpan="8">
+												<GridRow>
+													<GridCol Xs="24" Md="6">
+														<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row._AuditAuLaboratoire"></SfSwitch>
+													</GridCol>
+													<GridCol Xs="24" Md="16">
+														<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.AuditAuLaboratoireChar" />
+													</GridCol>
+												</GridRow>
 
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Vous voulez consultez notre PMQ? " LabelColSpan="8">
-                                                <GridRow>
-                                                    <GridCol Xs="24" Md="6">
-                                                        <SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.PMQ"></SfSwitch>
-                                                    </GridCol>
-                                                    <GridCol Xs="24" Md="16">
-                                                        <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PMQChar" />
-                                                    </GridCol>
-                                                </GridRow>
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Vous voulez notre procédure de traitement de réclamation?" LabelColSpan="8">
-                                                <GridRow>
-                                                    <GridCol Xs="24" Md="6">
-                                                        <SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.ProcedureTraitementReclamation"></SfSwitch>
-                                                    </GridCol>
-                                                    <GridCol Xs="24" Md="16">
-                                                        <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.ProcedureTraitementReclamationChar" />
-                                                    </GridCol>
-                                                </GridRow>
-                                            </FormItem>
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Vous voulez consultez notre PMQ? " LabelColSpan="8">
+												<GridRow>
+													<GridCol Xs="24" Md="6">
+														<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.PMQ"></SfSwitch>
+													</GridCol>
+													<GridCol Xs="24" Md="16">
+														<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PMQChar" />
+													</GridCol>
+												</GridRow>
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Vous voulez notre procédure de traitement de réclamation?" LabelColSpan="8">
+												<GridRow>
+													<GridCol Xs="24" Md="6">
+														<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.ProcedureTraitementReclamation"></SfSwitch>
+													</GridCol>
+													<GridCol Xs="24" Md="16">
+														<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.ProcedureTraitementReclamationChar" />
+													</GridCol>
+												</GridRow>
+											</FormItem>
 
-                                        </GridCol>
-                                    </GridRow>
+										</GridCol>
+									</GridRow>
 
-                                </Card>
-                            </GridCol>
-                            <GridCol Xs="24" Md="24">
-                                <Card Title="Axe logistique">
-                                    <GridRow>
-                                        <GridCol Xs="24" Md="11">
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Lieu de prestation" LabelColSpan="13">
-                                                <SfDropDownList Readonly="@(row.Statut != 0)" TValue="int" TItem="Items" DataSource="@fn.LieuPrestation()" @bind-Value="@row.LieuPrestationInt">
-                                                    <DropDownListEvents TValue="int" TItem="Items" />
-                                                    <DropDownListFieldSettings Text="Name" Value="Id" />
-                                                </SfDropDownList>
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Les opérations attendues" LabelColSpan="13">
-                                                <SfDropDownList Readonly="@(row.Statut != 0)" TValue="int" TItem="Items" DataSource="@fn.OperationAttendues()" @bind-Value="@row.OperationsAttenduesInt">
-                                                    <DropDownListEvents TValue="int" TItem="Items" />
-                                                    <DropDownListFieldSettings Text="Name" Value="Id" />
-                                                </SfDropDownList>
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Périodicité étalonnage étiquettes" LabelColSpan="13">
-                                                <RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
-                                                    <SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.PeriodiciteEtalonnageEtiquettes"></SfSwitch>
-                                                    @if (@row.PeriodiciteEtalonnageEtiquettes)
-                                                    {
-                                                        <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PeriodiciteEtalonnageEtiquettesPeriode" />
-                                                    }
+								</Card>
+							</GridCol>
+							<GridCol Xs="24" Md="24">
+								<Card Title="Axe logistique">
+									<GridRow>
+										<GridCol Xs="24" Md="11">
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Lieu de prestation" LabelColSpan="13">
+												<SfDropDownList Readonly="@(row.Statut != 0)" TValue="int" TItem="Items" DataSource="@fn.LieuPrestation()" @bind-Value="@row.LieuPrestationInt">
+													<DropDownListEvents TValue="int" TItem="Items" />
+													<DropDownListFieldSettings Text="Name" Value="Id" />
+												</SfDropDownList>
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Les opérations attendues" LabelColSpan="13">
+												<SfDropDownList Readonly="@(row.Statut != 0)" TValue="int" TItem="Items" DataSource="@fn.OperationAttendues()" @bind-Value="@row.OperationsAttenduesInt">
+													<DropDownListEvents TValue="int" TItem="Items" />
+													<DropDownListFieldSettings Text="Name" Value="Id" />
+												</SfDropDownList>
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Périodicité étalonnage étiquettes" LabelColSpan="13">
+												<RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
+													<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.PeriodiciteEtalonnageEtiquettes"></SfSwitch>
+													@if (@row.PeriodiciteEtalonnageEtiquettes)
+													{
+														<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PeriodiciteEtalonnageEtiquettesPeriode" />
+													}
 
-                                                </RadzenStack>
-                                                
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Périodicité étalonnage rapports" LabelColSpan="13">
-                                                <RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
-                                                    <SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.PeriodiciteEtalonnageRapports"></SfSwitch>
-                                                    @if (@row.PeriodiciteEtalonnageRapports)
-                                                    {
-                                                        <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PeriodiciteEtalonnageRapportsPeriode" />
-                                                    }
+												</RadzenStack>
 
-                                                </RadzenStack>
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Relance pour l’étalonnage annuel" LabelColSpan="13">
-                                                <SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.RelanceEtalonnageAnnuel"></SfSwitch>
-                                            </FormItem>
-                                        </GridCol>
-                                        <GridCol Xs="24" Md="13">
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date souhaitée de la prestation" LabelColSpan="12">
-                                                <SfDatePicker Readonly="@(row.Statut != 0)" TValue="DateTime?" @bind-Value="@row.DateSouhaiteePrestation" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date de transmission des documents" LabelColSpan="12">
-                                                <SfDatePicker Readonly="@(row.Statut != 0)" TValue="DateTime?" @bind-Value="@row.DateTransmissionDocuments" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse de livraison /expédition" LabelColSpan="12">
-                                                <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.AdresseLivraisonExpedition" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Mode de livraison /expédition" LabelColSpan="12">
-                                                <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.ModeLivraisonExpedition" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Prise en charge du transport" LabelColSpan="12">
-                                                <SfDropDownList Readonly="@(row.Statut != 0)" TValue="int" TItem="Items" DataSource="@fn.PriseChargeTransport()" @bind-Value="@row.PriseChargeTransportInt">
-                                                    <DropDownListEvents TValue="int" TItem="Items" />
-                                                    <DropDownListFieldSettings Text="Name" Value="Id" />
-                                                </SfDropDownList>
-                                            </FormItem>
-                                        </GridCol>
-                                    </GridRow>
-                                </Card>
-                            </GridCol>
-                            <GridCol Xs="24" Md="24">
-                                <Card Title="Axe Technique">
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Nature de préstation" LabelColSpan="6">
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Périodicité étalonnage rapports" LabelColSpan="13">
+												<RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
+													<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.PeriodiciteEtalonnageRapports"></SfSwitch>
+													@if (@row.PeriodiciteEtalonnageRapports)
+													{
+														<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PeriodiciteEtalonnageRapportsPeriode" />
+													}
 
-                                        <RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
-                                            <SfDropDownList Readonly="@(row.Statut != 0)" Width="240px" TValue="int" TItem="Items" DataSource="@fn.NaturePrestation()" @bind-Value="@row.NaturePrestation">
-                                                <DropDownListEvents TValue="int" TItem="Items" />
-                                                <DropDownListFieldSettings Text="Name" Value="Id" />
-                                            </SfDropDownList>
-                                            @if (row.NaturePrestation == 3)
-                                            {
-                                                <SfTextBox @bind-Value=@row.NaturePrestationAutre/>
-                                            }
-                                        </RadzenStack>
-                                    </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Methode Etalonnage" LabelColSpan="6">
-                                        <RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
-                                            <SfDropDownList Readonly="@(row.Statut != 0)" Width="170px" TValue="int" TItem="Items" DataSource="@fn.MethodeEtalonnage()" @bind-Value="@row.MethodeEtalonnange">
-                                                <DropDownListEvents TValue="int" TItem="Items" />
-                                                <DropDownListFieldSettings Text="Name" Value="Id" />
-                                            </SfDropDownList>
-                                            @if (row.MethodeEtalonnange == 3)
-                                            {
-                                                <SfTextBox @bind-Value="@row.MethodeEtalonnageAutre" />
-                                            }
-                                        </RadzenStack>
+												</RadzenStack>
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Relance pour l’étalonnage annuel" LabelColSpan="13">
+												<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.RelanceEtalonnageAnnuel"></SfSwitch>
+											</FormItem>
+										</GridCol>
+										<GridCol Xs="24" Md="13">
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date souhaitée de la prestation" LabelColSpan="12">
+												<SfDatePicker Readonly="@(row.Statut != 0)" TValue="DateTime?" @bind-Value="@row.DateSouhaiteePrestation" />
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date de transmission des documents" LabelColSpan="12">
+												<SfDatePicker Readonly="@(row.Statut != 0)" TValue="DateTime?" @bind-Value="@row.DateTransmissionDocuments" />
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse de livraison /expédition" LabelColSpan="12">
+												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.AdresseLivraisonExpedition" />
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Mode de livraison /expédition" LabelColSpan="12">
+												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.ModeLivraisonExpedition" />
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Prise en charge du transport" LabelColSpan="12">
+												<SfDropDownList Readonly="@(row.Statut != 0)" TValue="int" TItem="Items" DataSource="@fn.PriseChargeTransport()" @bind-Value="@row.PriseChargeTransportInt">
+													<DropDownListEvents TValue="int" TItem="Items" />
+													<DropDownListFieldSettings Text="Name" Value="Id" />
+												</SfDropDownList>
+											</FormItem>
+										</GridCol>
+									</GridRow>
+								</Card>
+							</GridCol>
+							<GridCol Xs="24" Md="24">
+								<Card Title="Axe Technique">
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Nature de préstation" LabelColSpan="6">
 
-                                    </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Avis sur la pertinence de la méthode" LabelColSpan="6">
-                                        <SfDropDownList Readonly="@(row.Statut != 0)" Width="170px" TValue="int" TItem="Items" DataSource="@fn.PertinenceMethode()" @bind-Value="@row.AvisPertinenceMethode">
-                                            <DropDownListEvents TValue="int" TItem="Items" />
-                                            <DropDownListFieldSettings Text="Name" Value="Id" />
-                                        </SfDropDownList>
-                                    </FormItem>
+										<RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
+											<SfDropDownList Readonly="@(row.Statut != 0)" Width="240px" TValue="int" TItem="Items" DataSource="@fn.NaturePrestation()" @bind-Value="@row.NaturePrestation">
+												<DropDownListEvents TValue="int" TItem="Items" />
+												<DropDownListFieldSettings Text="Name" Value="Id" />
+											</SfDropDownList>
+											@if (row.NaturePrestation == 3)
+											{
+												<SfTextBox @bind-Value=@row.NaturePrestationAutre />
+											}
+										</RadzenStack>
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Methode Etalonnage" LabelColSpan="6">
+										<RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
+											<SfDropDownList Readonly="@(row.Statut != 0)" Width="170px" TValue="int" TItem="Items" DataSource="@fn.MethodeEtalonnage()" @bind-Value="@row.MethodeEtalonnange">
+												<DropDownListEvents TValue="int" TItem="Items" />
+												<DropDownListFieldSettings Text="Name" Value="Id" />
+											</SfDropDownList>
+											@if (row.MethodeEtalonnange == 3)
+											{
+												<SfTextBox @bind-Value="@row.MethodeEtalonnageAutre" />
+											}
+										</RadzenStack>
 
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Points d’étalonnage" LabelColSpan="6">
-                                        <RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
-                                            <SfDropDownList Readonly="@(row.Statut != 0)" Width="170px" TValue="int" TItem="Items" DataSource="@fn.PointsEtalonnage()" @bind-Value="@row.PointsEtalonnage">
-                                                <DropDownListEvents TValue="int" TItem="Items" />
-                                                <DropDownListFieldSettings Text="Name" Value="Id" />
-                                            </SfDropDownList>
-                                            @if (@row.PointsEtalonnage == 3)
-                                            {
-                                                <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PointsEtalonnageAutre" />
-                                            }
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Avis sur la pertinence de la méthode" LabelColSpan="6">
+										<SfDropDownList Readonly="@(row.Statut != 0)" Width="170px" TValue="int" TItem="Items" DataSource="@fn.PertinenceMethode()" @bind-Value="@row.AvisPertinenceMethode">
+											<DropDownListEvents TValue="int" TItem="Items" />
+											<DropDownListFieldSettings Text="Name" Value="Id" />
+										</SfDropDownList>
+									</FormItem>
 
-                                        </RadzenStack>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Points d’étalonnage" LabelColSpan="6">
+										<RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
+											<SfDropDownList Readonly="@(row.Statut != 0)" Width="170px" TValue="int" TItem="Items" DataSource="@fn.PointsEtalonnage()" @bind-Value="@row.PointsEtalonnage">
+												<DropDownListEvents TValue="int" TItem="Items" />
+												<DropDownListFieldSettings Text="Name" Value="Id" />
+											</SfDropDownList>
+											@if (@row.PointsEtalonnage == 3)
+											{
+												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PointsEtalonnageAutre" />
+											}
 
-                                    </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Capacité et disponibilité des ressources nécessaires" LabelColSpan="6">
-                                        <SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.CapaciteDisponibiliteRessourcesNecessaires"></SfSwitch>
-                                    </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Commentaire" LabelColSpan="6">
-                                        <SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Commentaire" />
-                                    </FormItem>
-                                </Card>
-                            </GridCol>
-                        </GridRow>
-                    </ContentTemplate>
-                </TabItem>
-                <TabItem>
-                    <ChildContent>
-                        <TabHeader Text="Modifications"></TabHeader>
-                    </ChildContent>
-                    <ContentTemplate>
-                        <div style="height: 70vh;" class="no-border">
-                            <SfGrid AllowTextWrap  Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(modifs)">
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                                <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(row.Statut == 0)" AllowDeleting="@(row.Statut == 0)" AllowEditing="@(row.Statut == 0)" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
-                                    <HeaderTemplate>
+										</RadzenStack>
 
-                                    </HeaderTemplate>
-                                </GridEditSettings>
-                                <GridEvents OnActionBegin="EditModif" TValue="API_T_CertifGrilleDialogueModif"></GridEvents>
-                                <GridColumns>
-                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueModif.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
-                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="90" Field=@nameof(API_T_CertifGrilleDialogueModif.Date) HeaderText="Date" EditType="EditType.DatePickerEdit" Format="dd/MM/yy"></GridColumn>
-                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="110" Field=@nameof(API_T_CertifGrilleDialogueModif.Nature) HeaderText="Nature"></GridColumn>
-                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="110" Field=@nameof(API_T_CertifGrilleDialogueModif.Responsable) HeaderText="Responsable"></GridColumn>
-                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueModif.Libelle) HeaderText="Discussion avec le client"></GridColumn>
-                                </GridColumns>
-                            </SfGrid>
-                        </div>
-                    </ContentTemplate>
-                </TabItem>
-                <TabItem>
-                    <ChildContent>
-                        <TabHeader Text="Tableau spécifique des exigences clients"></TabHeader>
-                    </ChildContent>
-                    <ContentTemplate>
-                        <div style="height: 70vh;" class="no-border">
-                            <SfGrid AllowTextWrap  Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(exigences)">
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                                <GridEditSettings Dialog=@(DialogParams) ShowDeleteConfirmDialog="true" AllowAdding="@(row.Statut == 0)" AllowDeleting="@(row.Statut == 0)" AllowEditing="@(row.Statut == 0)" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
-                                    <HeaderTemplate>
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Capacité et disponibilité des ressources nécessaires" LabelColSpan="6">
+										<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.CapaciteDisponibiliteRessourcesNecessaires"></SfSwitch>
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Commentaire" LabelColSpan="6">
+										<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Commentaire" />
+									</FormItem>
+								</Card>
+							</GridCol>
+						</GridRow>
+					</ContentTemplate>
+				</TabItem>
+				<TabItem>
+					<ChildContent>
+						<TabHeader Text="Modifications"></TabHeader>
+					</ChildContent>
+					<ContentTemplate>
+						<div style="height: 70vh;" class="no-border">
+							<SfGrid AllowTextWrap Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(modifs)">
+								<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+								<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(row.Statut == 0)" AllowDeleting="@(row.Statut == 0)" AllowEditing="@(row.Statut == 0)" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+									<HeaderTemplate>
 
-                                    </HeaderTemplate>
-                                </GridEditSettings>
-                                <GridEvents OnActionBegin="EditExigence" TValue="API_T_CertifGrilleDialogueExigence"></GridEvents>
-                                <GridColumns>
-                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
-                                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.AR_Ref) HeaderText="Ref">
-                                        <EditTemplate></EditTemplate>
-                                    </GridColumn>
-                                    <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Designation">
-                                        <Template>
-                                            @{
-                                                var dt = db.F_ARTICLE.Where(a => a.AR_Ref == (context as API_T_CertifGrilleDialogueExigence).AR_Ref).SingleOrDefault();
-                                                <div>@dt?.AR_Design</div>
-                                            }
-                                        </Template>
-                                        <EditTemplate>
-                                            <SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Designation" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(articles.OrderBy(a => a.AR_Design))" TValue="string" TItem="F_ARTICLE" @bind-Value="@((context as API_T_CertifGrilleDialogueExigence).AR_Ref)">
-                                                <DropDownListEvents TValue="string" TItem="F_ARTICLE" />
-                                                <DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
-                                            </SfDropDownList>
-                                        </EditTemplate>
-                                    </GridColumn>
-                                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.Code) HeaderText="Code"/>
-                                    <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.PointsEtalonnage) HeaderText="Points Etalonnage" />
-                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" HeaderText="Jugement de conformité">
-                                        <Template>
-                                            @{
-                                                var dt = fn.JugementConformite().Where(a => a.Id == (context as API_T_CertifGrilleDialogueExigence).Jugement).SingleOrDefault();
-                                                <div>@dt?.Name</div>
-                                            }
-                                        </Template>
-                                        <EditTemplate>
-                                            <SfDropDownList Placeholder="Jugement de conformité" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.JugementConformite())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifGrilleDialogueExigence).Jugement)">
-                                                <DropDownListEvents TValue="int" TItem="Items" />
-                                                <DropDownListFieldSettings Text="Name" Value="Id" />
-                                            </SfDropDownList>
-                                        </EditTemplate>
-                                    </GridColumn>
-                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="180" HeaderText="Règle de décision">
-                                        <Template>
-                                            @{
-                                                var dt = fn.RegleDecision().Where(a => a.Id == (context as API_T_CertifGrilleDialogueExigence).Jugement).SingleOrDefault();
-                                                <div>@dt?.Name</div>
-                                            }
-                                        </Template>
-                                        <EditTemplate>
-                                            <SfDropDownList Placeholder="Règle de décision" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.RegleDecision())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifGrilleDialogueExigence).RegleDecision)">
-                                                <DropDownListEvents TValue="int" TItem="Items" />
-                                                <DropDownListFieldSettings Text="Name" Value="Id" />
-                                            </SfDropDownList>
-                                        </EditTemplate>
-                                    </GridColumn>
-                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="140" Field=@nameof(API_T_CertifGrilleDialogueExigence.Normative) HeaderText="Erreur maximal toleré" EditType="EditType.BooleanEdit">
-                                        <Template>
-                                            @{
-                                                var dt = fn.ErreurMaximalTolere().Where(a => a.Id == (context as API_T_CertifGrilleDialogueExigence).ErreurMaximalTolere).SingleOrDefault();
-                                                <div>@dt?.Name</div>
-                                            }
-                                        </Template>
-                                        <EditTemplate>
-                                            <SfDropDownList Placeholder="Erreur maximal toleré" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.ErreurMaximalTolere())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifGrilleDialogueExigence).ErreurMaximalTolere)">
-                                                <DropDownListEvents TValue="int" TItem="Items" />
-                                                <DropDownListFieldSettings Text="Name" Value="Id" />
-                                            </SfDropDownList>
-                                        </EditTemplate>
-                                    </GridColumn>
-                                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.ErreurMaximalTolereUtilisateur) HeaderText="Erreur toleré utilisateur" />
-                                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.Classe) HeaderText="Classe" />
-                                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.AutreSpecification) HeaderText="Autre Spécification"></GridColumn>
-                                </GridColumns>
-                            </SfGrid>
-                        </div>
-                    </ContentTemplate>
-                </TabItem>
-                <TabItem>
-                    <ChildContent>
-                        <TabHeader Text="Annexe des exigences clients (Autoclaves)"></TabHeader>
-                    </ChildContent>
-                    <ContentTemplate>
-                        <div style="height: 70vh;" class="no-border">
+									</HeaderTemplate>
+								</GridEditSettings>
+								<GridEvents OnActionBegin="EditModif" TValue="API_T_CertifGrilleDialogueModif"></GridEvents>
+								<GridColumns>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueModif.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="90" Field=@nameof(API_T_CertifGrilleDialogueModif.Date) HeaderText="Date" EditType="EditType.DatePickerEdit" Format="dd/MM/yy"></GridColumn>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="110" Field=@nameof(API_T_CertifGrilleDialogueModif.Nature) HeaderText="Nature"></GridColumn>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="110" Field=@nameof(API_T_CertifGrilleDialogueModif.Responsable) HeaderText="Responsable"></GridColumn>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueModif.Libelle) HeaderText="Discussion avec le client"></GridColumn>
+								</GridColumns>
+							</SfGrid>
+						</div>
+					</ContentTemplate>
+				</TabItem>
+				<TabItem>
+					<ChildContent>
+						<TabHeader Text="Tableau spécifique des exigences clients"></TabHeader>
+					</ChildContent>
+					<ContentTemplate>
+						<div style="height: 70vh;" class="no-border">
+							<SfGrid AllowTextWrap Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(exigences)">
+								<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+								<GridEditSettings Dialog=@(DialogParams) ShowDeleteConfirmDialog="true" AllowAdding="@(row.Statut == 0)" AllowDeleting="@(row.Statut == 0)" AllowEditing="@(row.Statut == 0)" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+									<HeaderTemplate>
 
-                        </div>
-                    </ContentTemplate>
-                </TabItem>
-            </TabItems>
-        </SfTab>
+									</HeaderTemplate>
+								</GridEditSettings>
+								<GridEvents OnActionBegin="EditExigence" TValue="API_T_CertifGrilleDialogueExigence"></GridEvents>
+								<GridColumns>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+									<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.AR_Ref) HeaderText="Ref">
+										<EditTemplate></EditTemplate>
+									</GridColumn>
+									<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Designation">
+										<Template>
+											@{
+												var dt = articles.Where(a => a.AR_Ref == (context as API_T_CertifGrilleDialogueExigence).AR_Ref).SingleOrDefault();
+												<div>@dt?.AR_Design</div>
+											}
+										</Template>
+										<EditTemplate>
+											<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Designation" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(articles.OrderBy(a => a.AR_Design))" TValue="string" TItem="F_ARTICLE" @bind-Value="@((context as API_T_CertifGrilleDialogueExigence).AR_Ref)">
+												<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
+												<DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
+											</SfDropDownList>
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.Code) HeaderText="Code" />
+									<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.PointsEtalonnage) HeaderText="Points Etalonnage" />
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" HeaderText="Jugement de conformité">
+										<Template>
+											@{
+												var dt = fn.JugementConformite().Where(a => a.Id == (context as API_T_CertifGrilleDialogueExigence).Jugement).SingleOrDefault();
+												<div>@dt?.Name</div>
+											}
+										</Template>
+										<EditTemplate>
+											<SfDropDownList Placeholder="Jugement de conformité" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.JugementConformite())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifGrilleDialogueExigence).Jugement)">
+												<DropDownListEvents TValue="int" TItem="Items" />
+												<DropDownListFieldSettings Text="Name" Value="Id" />
+											</SfDropDownList>
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="180" HeaderText="Règle de décision">
+										<Template>
+											@{
+												var dt = fn.RegleDecision().Where(a => a.Id == (context as API_T_CertifGrilleDialogueExigence).Jugement).SingleOrDefault();
+												<div>@dt?.Name</div>
+											}
+										</Template>
+										<EditTemplate>
+											<SfDropDownList Placeholder="Règle de décision" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.RegleDecision())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifGrilleDialogueExigence).RegleDecision)">
+												<DropDownListEvents TValue="int" TItem="Items" />
+												<DropDownListFieldSettings Text="Name" Value="Id" />
+											</SfDropDownList>
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="140" Field=@nameof(API_T_CertifGrilleDialogueExigence.Normative) HeaderText="Erreur maximal toleré" EditType="EditType.BooleanEdit">
+										<Template>
+											@{
+												var dt = fn.ErreurMaximalTolere().Where(a => a.Id == (context as API_T_CertifGrilleDialogueExigence).ErreurMaximalTolere).SingleOrDefault();
+												<div>@dt?.Name</div>
+											}
+										</Template>
+										<EditTemplate>
+											<SfDropDownList Placeholder="Erreur maximal toleré" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.ErreurMaximalTolere())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifGrilleDialogueExigence).ErreurMaximalTolere)">
+												<DropDownListEvents TValue="int" TItem="Items" />
+												<DropDownListFieldSettings Text="Name" Value="Id" />
+											</SfDropDownList>
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.ErreurMaximalTolereUtilisateur) HeaderText="Erreur toleré utilisateur" />
+									<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.Classe) HeaderText="Classe" />
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifGrilleDialogueExigence.AutreSpecification) HeaderText="Autre Spécification"></GridColumn>
+								</GridColumns>
+							</SfGrid>
+						</div>
+					</ContentTemplate>
+				</TabItem>
+				<TabItem>
+					<ChildContent>
+						<TabHeader Text="Annexe des exigences clients (Autoclaves)"></TabHeader>
+					</ChildContent>
+					<ContentTemplate>
+						<div style="height: 70vh;" class="no-border">
+							<SfGrid AllowTextWrap Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(autoclaves)">
+								<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+								<GridEditSettings Dialog=@(DialogParams) ShowDeleteConfirmDialog="true" AllowAdding="@(row.Statut == 0)" AllowDeleting="@(row.Statut == 0)" AllowEditing="@(row.Statut == 0)" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+									<HeaderTemplate>
 
-    </Form>
+									</HeaderTemplate>
+								</GridEditSettings>
+								<GridEvents OnActionBegin="EditAutoclaves" TValue="API_T_CertifAutoclaves"></GridEvents>
+								<GridColumns>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifAutoclaves.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+									<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Designation">
+										<Template>
+											@{
+												var dt = articles.Where(a => a.AR_Ref == (context as API_T_CertifAutoclaves).AR_Ref).SingleOrDefault();
+												<div>@dt?.AR_Design</div>
+											}
+										</Template>
+										<EditTemplate>
+											<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Designation" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(articles.OrderBy(a => a.AR_Design))" TValue="string" TItem="F_ARTICLE" @bind-Value="@((context as API_T_CertifAutoclaves).AR_Ref)">
+												<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
+												<DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
+											</SfDropDownList>
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifAutoclaves.Code) HeaderText="Code" />
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifAutoclaves.Essai) HeaderText="Essai">
+										<Template>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<div>
+													@row.Essai
+												</div>
+												<div style="text-align: left;">
+													@if (row.EssaiJuge == 0)
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-activecolor">Oui</span>
+														</div>
+
+													}
+													else
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-inactivecolor">Non</span>
+														</div>
+
+													}
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap">
+													<div>
+														<SfTextBox Width="450px" FloatLabelType="FloatLabelType.Always" @bind-Value=@((context as API_T_CertifAutoclaves).Essai) Placeholder="Essai"></SfTextBox>
+													</div>
+													<div style="width: 100px;">
+														<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Jugement" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.JugementConformite())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifAutoclaves).EssaiJuge)">
+															<DropDownListEvents TValue="int" TItem="Items" />
+															<DropDownListFieldSettings Text="Name" Value="Id" />
+														</SfDropDownList>
+													</div>
+												</RadzenStack>
+											}
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifAutoclaves.TemperatureSterilisation) HeaderText="Temperature Sterilisation">
+										<Template>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<div>
+													@row.TemperatureSterilisation
+												</div>
+												<div style="text-align: left;">
+													@if (row.TemperatureSterilisationJuge == 0)
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-activecolor">Oui</span>
+														</div>
+
+													}
+													else
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-inactivecolor">Non</span>
+														</div>
+
+													}
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap">
+													<div>
+														<SfTextBox Width="450px" FloatLabelType="FloatLabelType.Always" @bind-Value=@((context as API_T_CertifAutoclaves).TemperatureSterilisation) Placeholder="Temperature Sterilisation"></SfTextBox>
+													</div>
+													<div style="width: 100px;">
+														<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Jugement" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.JugementConformite())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifAutoclaves).TemperatureSterilisationJuge)">
+															<DropDownListEvents TValue="int" TItem="Items" />
+															<DropDownListFieldSettings Text="Name" Value="Id" />
+														</SfDropDownList>
+													</div>
+												</RadzenStack>
+											}
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifAutoclaves.Tolerance) HeaderText="Tolerance">
+										<Template>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<div>
+													@row.Tolerance
+												</div>
+												<div style="text-align: left;">
+													@if (row.ToleranceJuge == 0)
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-activecolor">Oui</span>
+														</div>
+
+													}
+													else
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-inactivecolor">Non</span>
+														</div>
+
+													}
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap">
+													<div>
+														<SfTextBox Width="450px" FloatLabelType="FloatLabelType.Always" @bind-Value=@((context as API_T_CertifAutoclaves).Tolerance) Placeholder="Tolerance"></SfTextBox>
+													</div>
+													<div style="width: 100px;">
+														<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Jugement" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.JugementConformite())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifAutoclaves).ToleranceJuge)">
+															<DropDownListEvents TValue="int" TItem="Items" />
+															<DropDownListFieldSettings Text="Name" Value="Id" />
+														</SfDropDownList>
+													</div>
+												</RadzenStack>
+											}
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifAutoclaves.TempsSterilisation) HeaderText="Temps  Sterilisation">
+										<Template>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<div>
+													@row.TempsSterilisation
+												</div>
+												<div style="text-align: left;">
+													@if (row.TempsSterilisationJuge == 0)
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-activecolor">Oui</span>
+														</div>
+
+													}
+													else
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-inactivecolor">Non</span>
+														</div>
+
+													}
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap">
+													<div>
+														<SfTextBox Width="450px" FloatLabelType="FloatLabelType.Always" @bind-Value=@((context as API_T_CertifAutoclaves).TempsSterilisation) Placeholder="Temps Sterilisation"></SfTextBox>
+													</div>
+													<div style="width: 100px;">
+														<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Jugement" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.JugementConformite())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifAutoclaves).TempsSterilisationJuge)">
+															<DropDownListEvents TValue="int" TItem="Items" />
+															<DropDownListFieldSettings Text="Name" Value="Id" />
+														</SfDropDownList>
+													</div>
+												</RadzenStack>
+											}
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifAutoclaves.TempsEquilibrage) HeaderText="TempsEquilibrage">
+										<Template>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<div>
+													@row.TempsEquilibrage
+												</div>
+												<div style="text-align: left;">
+													@if (row.TempsEquilibrageJuge == 0)
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-activecolor">Oui</span>
+														</div>
+
+													}
+													else
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-inactivecolor">Non</span>
+														</div>
+
+													}
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap">
+													<div>
+														<SfTextBox Width="450px" FloatLabelType="FloatLabelType.Always" @bind-Value=@((context as API_T_CertifAutoclaves).TempsEquilibrage) Placeholder="Temps Equilibrage"></SfTextBox>
+													</div>
+													<div style="width: 100px;">
+														<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Jugement" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.JugementConformite())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifAutoclaves).TempsEquilibrageJuge)">
+															<DropDownListEvents TValue="int" TItem="Items" />
+															<DropDownListFieldSettings Text="Name" Value="Id" />
+														</SfDropDownList>
+													</div>
+												</RadzenStack>
+											}
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifAutoclaves.Stabilite) HeaderText="Stabilite">
+										<Template>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<div>
+													@row.Stabilite
+												</div>
+												<div style="text-align: left;">
+													@if (row.StabiliteJuge == 0)
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-activecolor">Oui</span>
+														</div>
+
+													}
+													else
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-inactivecolor">Non</span>
+														</div>
+
+													}
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap">
+													<div>
+														<SfTextBox Width="450px" FloatLabelType="FloatLabelType.Always" @bind-Value=@((context as API_T_CertifAutoclaves).Stabilite) Placeholder="Stabilite"></SfTextBox>
+													</div>
+													<div style="width: 100px;">
+														<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Jugement" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.JugementConformite())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifAutoclaves).StabiliteJuge)">
+															<DropDownListEvents TValue="int" TItem="Items" />
+															<DropDownListFieldSettings Text="Name" Value="Id" />
+														</SfDropDownList>
+													</div>
+												</RadzenStack>
+											}
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifAutoclaves.Homogeneite) HeaderText="Homogeneite">
+										<Template>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<div>
+													@row.Homogeneite
+												</div>
+												<div style="text-align: left;">
+													@if (row.HomogeneiteJuge == 0)
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-activecolor">Oui</span>
+														</div>
+
+													}
+													else
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-inactivecolor">Non</span>
+														</div>
+
+													}
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap">
+													<div>
+														<SfTextBox Width="450px" FloatLabelType="FloatLabelType.Always" @bind-Value=@((context as API_T_CertifAutoclaves).Homogeneite) Placeholder="Homogeneite"></SfTextBox>
+													</div>
+													<div style="width: 100px;">
+														<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Jugement" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.JugementConformite())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifAutoclaves).HomogeneiteJuge)">
+															<DropDownListEvents TValue="int" TItem="Items" />
+															<DropDownListFieldSettings Text="Name" Value="Id" />
+														</SfDropDownList>
+													</div>
+												</RadzenStack>
+											}
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifAutoclaves.Pression) HeaderText="Pression">
+										<Template>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<div>
+													@row.Pression
+												</div>
+												<div style="text-align: left;">
+													@if (row.PressionJuge == 0)
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-activecolor">Oui</span>
+														</div>
+
+													}
+													else
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-inactivecolor">Non</span>
+														</div>
+
+													}
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap">
+													<div>
+														<SfTextBox Width="450px" FloatLabelType="FloatLabelType.Always" @bind-Value=@((context as API_T_CertifAutoclaves).Pression) Placeholder="Pression"></SfTextBox>
+													</div>
+													<div style="width: 100px;">
+														<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Jugement" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.JugementConformite())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifAutoclaves).PressionJuge)">
+															<DropDownListEvents TValue="int" TItem="Items" />
+															<DropDownListFieldSettings Text="Name" Value="Id" />
+														</SfDropDownList>
+													</div>
+												</RadzenStack>
+											}
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifAutoclaves.ValeurSterilisatrice) HeaderText="Valeur Sterilisatrice">
+										<Template>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<div>
+													@row.ValeurSterilisatrice
+												</div>
+												<div style="text-align: left;">
+													@if (row.ValeurSterilisatriceJuge == 0)
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-activecolor">Oui</span>
+														</div>
+
+													}
+													else
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-inactivecolor">Non</span>
+														</div>
+
+													}
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap">
+													<div>
+														<SfTextBox Width="450px" FloatLabelType="FloatLabelType.Always" @bind-Value=@((context as API_T_CertifAutoclaves).ValeurSterilisatrice) Placeholder="Valeur Sterilisatrice"></SfTextBox>
+													</div>
+													<div style="width: 100px;">
+														<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Jugement" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.JugementConformite())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifAutoclaves).ValeurSterilisatriceJuge)">
+															<DropDownListEvents TValue="int" TItem="Items" />
+															<DropDownListFieldSettings Text="Name" Value="Id" />
+														</SfDropDownList>
+													</div>
+												</RadzenStack>
+											}
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifAutoclaves.EntreeSondes) HeaderText="Entrée Sondes">
+										<Template>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<div>
+													@row.EntreeSondes
+												</div>
+												<div style="text-align: left;">
+													@if (row.EntreeSondesJuge == 0)
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-activecolor">Oui</span>
+														</div>
+
+													}
+													else
+													{
+														<div style="text-align: left;">
+															Jugement: <span class="statustxt e-inactivecolor">Non</span>
+														</div>
+
+													}
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var row = (context as API_T_CertifAutoclaves);
+												<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap">
+													<div>
+														<SfTextBox Width="450px" FloatLabelType="FloatLabelType.Always" @bind-Value=@((context as API_T_CertifAutoclaves).EntreeSondes) Placeholder="Entrée Sondes"></SfTextBox>
+													</div>
+													<div style="width: 100px;">
+														<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Jugement" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.JugementConformite())" TValue="int" TItem="Items" @bind-Value="@((context as API_T_CertifAutoclaves).EntreeSondesJuge)">
+															<DropDownListEvents TValue="int" TItem="Items" />
+															<DropDownListFieldSettings Text="Name" Value="Id" />
+														</SfDropDownList>
+													</div>
+												</RadzenStack>
+											}
+										</EditTemplate>
+									</GridColumn>
+								</GridColumns>
+							</SfGrid>
+						</div>
+					</ContentTemplate>
+				</TabItem>
+			</TabItems>
+		</SfTab>
+
+	</Form>
 </div>
 
 
 
 
 @code {
-    [CascadingParameter]
-    public SessionDT session { get; set; } = new SessionDT();
-    DB db = new DB();
-    [Parameter] public int id { get; set; } = 0;
-    public API_T_CertifGrilleDialogue row { get; set; }
-    List<API_T_CertifGrilleDialogueModif> modifs = new List<API_T_CertifGrilleDialogueModif>();
-    List<API_T_CertifGrilleDialogueExigence> exigences = new List<API_T_CertifGrilleDialogueExigence>();
-    private DialogSettings DialogParams = new DialogSettings { Width = "550px" };
-    private List<F_ARTICLE> articles = new List<F_ARTICLE>();
-    private void LoadData()
-    {
+	[CascadingParameter]
+	public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	[Parameter] public int id { get; set; } = 0;
+	public API_T_CertifGrilleDialogue row { get; set; }
+	List<API_T_CertifGrilleDialogueModif> modifs = new List<API_T_CertifGrilleDialogueModif>();
+	List<API_T_CertifGrilleDialogueExigence> exigences = new List<API_T_CertifGrilleDialogueExigence>();
+	List<API_T_CertifAutoclaves> autoclaves = new List<API_T_CertifAutoclaves>();
+	private DialogSettings DialogParams = new DialogSettings { Width = "650px" };
+	private List<F_ARTICLE> articles = new List<F_ARTICLE>();
+	private void LoadData()
+	{
 
-    }
+	}
+	protected override async Task OnInitializedAsync()
+	{
+		db = session.db;
+		articles = db.F_ARTICLE.ToList();
+		if (id == 0)
+		{
+			row = new API_T_CertifGrilleDialogue();
+			row.Date = DateTime.Today;
 
-    protected override async Task OnInitializedAsync()
-    {
-        db = session.db;
-        articles = db.F_ARTICLE.ToList();
-        if (id == 0)
-        {
-            row = new API_T_CertifGrilleDialogue();
-            row.Date = DateTime.Today;
+		}
+		else
+		{
+			row = db.API_T_CertifGrilleDialogue.Where(a => a.id == id).SingleOrDefault();
+			await UpdateExigence();
+			await UpdateModif();
+			await UpdateAutoclaves();
+		}
+		LoadData();
+	}
+	private async Task UpdateModif()
+	{
+		modifs = db.API_T_CertifGrilleDialogueModif.Where(a => a.Dialogue == id).OrderBy(a => a.Date).ToList();
+	}
+	private async Task UpdateExigence()
+	{
+		exigences = db.API_T_CertifGrilleDialogueExigence.Where(a => a.Dialogue == id).OrderBy(a => a.id).ToList();
+	}
+	private async Task UpdateAutoclaves()
+	{
+		autoclaves = db.API_T_CertifAutoclaves.Where(a => a.Dialogue == id).OrderBy(a => a.id).ToList();
+	}
+	private async Task Print()
+	{
 
-        }
-        else
-        {
-            row = db.API_T_CertifGrilleDialogue.Where(a => a.id == id).SingleOrDefault();
-            await UpdateExigence();
-            await UpdateModif();
-        }
-        LoadData();
-    }
-    private async Task UpdateModif()
-    {
-        modifs = db.API_T_CertifGrilleDialogueModif.Where(a => a.Dialogue == id).OrderBy(a => a.Date).ToList();
-    }
-    private async Task UpdateExigence()
-    {
-        exigences = db.API_T_CertifGrilleDialogueExigence.Where(a => a.Dialogue == id).OrderBy(a => a.id).ToList();
-    }
-    private async Task Print()
-    {
+	}
+	private async Task Ouverture()
+	{
+		bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment ouvrir un dossier?");
+		if (isConfirm)
+		{
+			var ln = new API_T_CertifOuvertureDossier();
+			ln.Adresse = row.Adresse;
+			ln.Telephone = row.Telephone;
+			ln.Interlocuteur = row.Interlocuteur;
+			ln.Date = DateTime.Today;
+			ln.Intitule = row.RaisonSocial;
+			ln.DateOuverture = DateTime.Today;
+			db.Add(ln);
+			row.Statut = 1;
+			db.SaveChanges();
+		}
+	}
+	private async Task Archiver()
+	{
+		bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment archiver cet élément?");
+		if (isConfirm)
+		{
+			row.Statut = 2;
+			db.SaveChanges();
+		}
+	}
+	private async Task Submit(bool close)
+	{
+		if (id == 0)
+		{
+			db.API_T_CertifGrilleDialogue.Add(row);
+			db.SaveChanges();
+			id = row.id;
+		}
+		else
+		{
+			db.SaveChanges();
+		}
+		if (close)
+		{
+			DialogService.Close();
+		}
+	}
+	public async Task EditModif(ActionEventArgs<API_T_CertifGrilleDialogueModif> args)
+	{
 
-    }
-    private async Task Ouverture()
-    {
-        bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment ouvrir un dossier?");
-        if (isConfirm)
-        {
-            var ln = new API_T_CertifOuvertureDossier();
-            ln.Adresse = row.Adresse;
-            ln.Telephone = row.Telephone;
-            ln.Interlocuteur = row.Interlocuteur;
-            ln.Date = DateTime.Today;
-            ln.Intitule = row.RaisonSocial;
-            ln.DateOuverture = DateTime.Today;
-            db.Add(ln);
-            row.Statut = 1;
-            db.SaveChanges();
-        }
-    }
-    private async Task Archiver()
-    {
-        bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment archiver cet élément?");
-        if (isConfirm)
-        {
-            row.Statut = 2;
-            db.SaveChanges();
-        }
-    }
-
-    private async Task Submit(bool close)
-    {
-        if (id == 0)
-        {
-            db.API_T_CertifGrilleDialogue.Add(row);
-            db.SaveChanges();
-            id = row.id;
-        }
-        else
-        {
-            db.SaveChanges();
-        }
-        if (close)
-        {
-            DialogService.Close();
-        }
-    }
-    public async Task EditModif(ActionEventArgs<API_T_CertifGrilleDialogueModif> args)
-    {
-
-        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
-        {
-            await Submit(false);
-            if (args.Action == "Add")
-            {
-                API_T_CertifGrilleDialogueModif item = args.Data;
-                item.Dialogue = row.id;
-                db.Add(item);
-                db.SaveChanges();
-                F_COMPTET ct = new F_COMPTET();
-            }
-            if (args.Action != "Add")
-            {
-                var local = db.Set<API_T_CertifGrilleDialogueModif>().Local.FirstOrDefault(a => a.id == args.Data.id);
-                if (local != null)
-                {
-                    db.Entry(local).State = EntityState.Detached;
-                }
-                db.Entry(args.Data).State = EntityState.Modified;
-                db.SaveChanges();
-
-
-            }
-
-        }
-        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
-        {
-            var local = db.Set<API_T_CertifGrilleDialogueModif>().Local.FirstOrDefault(a => a.id == args.Data.id);
-            if (local != null)
-            {
-                db.Entry(local).State = EntityState.Detached;
-            }
-            db.Entry(args.Data).State = EntityState.Deleted;
-            db.SaveChanges();
-        }
-    }
-    public async Task EditExigence(ActionEventArgs<API_T_CertifGrilleDialogueExigence> args)
-    {
-        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
-        {
-            await Submit(false);
-            if (args.Action == "Add")
-            {
-                API_T_CertifGrilleDialogueExigence item = args.Data;
-                item.Dialogue = row.id;
-                db.Add(item);
-                db.SaveChanges();
-                F_COMPTET ct = new F_COMPTET();
-            }
-            if (args.Action != "Add")
-            {
-                var local = db.Set<API_T_CertifGrilleDialogueExigence>().Local.FirstOrDefault(a => a.id == args.Data.id);
-                if (local != null)
-                {
-                    db.Entry(local).State = EntityState.Detached;
-                }
-                db.Entry(args.Data).State = EntityState.Modified;
-                db.SaveChanges();
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+			await Submit(false);
+			if (args.Action == "Add")
+			{
+				API_T_CertifGrilleDialogueModif item = args.Data;
+				item.Dialogue = row.id;
+				db.Add(item);
+				db.SaveChanges();
+				F_COMPTET ct = new F_COMPTET();
+			}
+			if (args.Action != "Add")
+			{
+				var local = db.Set<API_T_CertifGrilleDialogueModif>().Local.FirstOrDefault(a => a.id == args.Data.id);
+				if (local != null)
+				{
+					db.Entry(local).State = EntityState.Detached;
+				}
+				db.Entry(args.Data).State = EntityState.Modified;
+				db.SaveChanges();
 
 
-            }
+			}
 
-        }
-        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
-        {
-            var local = db.Set<API_T_CertifGrilleDialogueExigence>().Local.FirstOrDefault(a => a.id == args.Data.id);
-            if (local != null)
-            {
-                db.Entry(local).State = EntityState.Detached;
-            }
-            db.Entry(args.Data).State = EntityState.Deleted;
-            db.SaveChanges();
-        }
-    }
+		}
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			var local = db.Set<API_T_CertifGrilleDialogueModif>().Local.FirstOrDefault(a => a.id == args.Data.id);
+			if (local != null)
+			{
+				db.Entry(local).State = EntityState.Detached;
+			}
+			db.Entry(args.Data).State = EntityState.Deleted;
+			db.SaveChanges();
+		}
+	}
+	public async Task EditExigence(ActionEventArgs<API_T_CertifGrilleDialogueExigence> args)
+	{
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+			await Submit(false);
+			if (args.Action == "Add")
+			{
+				API_T_CertifGrilleDialogueExigence item = args.Data;
+				item.Dialogue = row.id;
+				db.Add(item);
+				db.SaveChanges();
+				F_COMPTET ct = new F_COMPTET();
+			}
+			if (args.Action != "Add")
+			{
+				var local = db.Set<API_T_CertifGrilleDialogueExigence>().Local.FirstOrDefault(a => a.id == args.Data.id);
+				if (local != null)
+				{
+					db.Entry(local).State = EntityState.Detached;
+				}
+				db.Entry(args.Data).State = EntityState.Modified;
+				db.SaveChanges();
+
+
+			}
+
+		}
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			var local = db.Set<API_T_CertifGrilleDialogueExigence>().Local.FirstOrDefault(a => a.id == args.Data.id);
+			if (local != null)
+			{
+				db.Entry(local).State = EntityState.Detached;
+			}
+			db.Entry(args.Data).State = EntityState.Deleted;
+			db.SaveChanges();
+		}
+	}
+	public async Task EditAutoclaves(ActionEventArgs<API_T_CertifAutoclaves> args)
+	{
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+			await Submit(false);
+			if (args.Action == "Add")
+			{
+				API_T_CertifAutoclaves item = args.Data;
+				item.Dialogue = row.id;
+				db.Add(item);
+				db.SaveChanges();
+				//F_COMPTET ct = new F_COMPTET();
+			}
+			if (args.Action != "Add")
+			{
+				var local = db.Set<API_T_CertifAutoclaves>().Local.FirstOrDefault(a => a.id == args.Data.id);
+				if (local != null)
+				{
+					db.Entry(local).State = EntityState.Detached;
+				}
+				db.Entry(args.Data).State = EntityState.Modified;
+				db.SaveChanges();
+
+
+			}
+
+		}
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			var local = db.Set<API_T_CertifAutoclaves>().Local.FirstOrDefault(a => a.id == args.Data.id);
+			if (local != null)
+			{
+				db.Entry(local).State = EntityState.Detached;
+			}
+			db.Entry(args.Data).State = EntityState.Deleted;
+			db.SaveChanges();
+		}
+	}
 }

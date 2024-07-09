@@ -98,6 +98,8 @@ public partial class DB : DbContext
 
     public virtual DbSet<API_T_CentreChargeDetail> API_T_CentreChargeDetail { get; set; }
 
+    public virtual DbSet<API_T_CertifAutoclaves> API_T_CertifAutoclaves { get; set; }
+
     public virtual DbSet<API_T_CertifDocument> API_T_CertifDocument { get; set; }
 
     public virtual DbSet<API_T_CertifEntete> API_T_CertifEntete { get; set; }
@@ -2373,6 +2375,60 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(27, 6)");
+        });
+
+        modelBuilder.Entity<API_T_CertifAutoclaves>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_CertifFiche_id_0");
+
+            entity.Property(e => e.AR_Ref)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Code)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.EntreeSondes)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Essai)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Homogeneite)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
+            entity.Property(e => e.Pression)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Stabilite)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.TemperatureSterilisation)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.TempsEquilibrage)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.TempsSterilisation)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Tolerance)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.ValeurSterilisatrice)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.DialogueNavigation).WithMany(p => p.API_T_CertifAutoclaves)
+                .HasForeignKey(d => d.Dialogue)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_api_t_certifautoclaves");
         });
 
         modelBuilder.Entity<API_T_CertifDocument>(entity =>
