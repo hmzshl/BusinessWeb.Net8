@@ -61,106 +61,116 @@
 					</ToolbarItems>
 				</SfToolbar>
 				<div class="grid-84">
-					<SfGrid  AllowReordering  AllowFiltering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="ReleveDocumentGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
-						<GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-						<GridPageSettings PageSize="100"></GridPageSettings>
-						<GridEvents OnRecordDoubleClick="@(args => ShowPiece(args.RowData.DO_Piece,args.RowData.DO_Type))" TValue="API_V_RELEVE"></GridEvents>
-						<GridTemplates>
-							<EmptyRecordTemplate>
-								<Empty></Empty>
-							</EmptyRecordTemplate>
-						</GridTemplates>
-						<GridAggregates>
-							<GridAggregate>
-								<GridAggregateColumns>
-									<GridAggregateColumn Field="@nameof(API_V_RELEVE.MontantTTC)" Type="AggregateType.Sum" Format="N2">
-										<FooterTemplate>
-											@{
-												var SumValue = (context as AggregateTemplateContext);
-												<div>
-													@SumValue.Sum
+					@if (loading)
+					{
+						<div class="center-screen">
+							<Loading_1 />
+						</div>
+					}
+					else
+					{
+						<SfGrid AllowReordering AllowFiltering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="ReleveDocumentGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
+							<GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+							<GridPageSettings PageSize="100"></GridPageSettings>
+							<GridEvents OnRecordDoubleClick="@(args => ShowPiece(args.RowData.DO_Piece,args.RowData.DO_Type))" TValue="API_V_RELEVE"></GridEvents>
+							<GridTemplates>
+								<EmptyRecordTemplate>
+									<Empty></Empty>
+								</EmptyRecordTemplate>
+							</GridTemplates>
+							<GridAggregates>
+								<GridAggregate>
+									<GridAggregateColumns>
+										<GridAggregateColumn Field="@nameof(API_V_RELEVE.MontantTTC)" Type="AggregateType.Sum" Format="N2">
+											<FooterTemplate>
+												@{
+													var SumValue = (context as AggregateTemplateContext);
+													<div>
+														@SumValue.Sum
+													</div>
+												}
+											</FooterTemplate>
+
+										</GridAggregateColumn>
+										<GridAggregateColumn Field="@nameof(API_V_RELEVE.MontantRegle)" Type="AggregateType.Sum" Format="N2">
+											<FooterTemplate>
+												@{
+													var SumValue = (context as AggregateTemplateContext);
+													<div>
+														@SumValue.Sum
+													</div>
+												}
+											</FooterTemplate>
+
+										</GridAggregateColumn>
+										<GridAggregateColumn Field="@nameof(API_V_RELEVE.Reste)" Type="AggregateType.Sum" Format="N2">
+											<FooterTemplate>
+												@{
+													var SumValue = (context as AggregateTemplateContext);
+													<div>
+														@SumValue.Sum
+													</div>
+												}
+											</FooterTemplate>
+
+										</GridAggregateColumn>
+									</GridAggregateColumns>
+								</GridAggregate>
+							</GridAggregates>
+							<GridColumns>
+
+
+								<GridColumn Width="70" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DO_Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
+								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DO_Piece)" HeaderText="Pièce"></GridColumn>
+								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.TypeIntitule)" HeaderText="Type"></GridColumn>
+								<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DE_Intitule)" HeaderText="Dépot"></GridColumn>
+								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.CT_Num)" HeaderText="N° Tiers"></GridColumn>
+								<GridColumn Width="180" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.CT_Intitule)" HeaderText="@(fn.getTiers(domaine))"></GridColumn>
+								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.CA_Num)" HeaderText="Affaire"></GridColumn>
+								<GridColumn Width="150" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.CA_Intitule)" HeaderText="Intitulé Affaire"></GridColumn>
+								<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.CO_Nom)" HeaderText="Collaborateur"></GridColumn>
+								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.MontantTTC)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#"></GridColumn>
+								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.MontantRegle)" HeaderText="Reglé" Format="### ### ##0.00;-### ### ##0.00;#"></GridColumn>
+								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.Reste)" HeaderText="Reste" Format="### ### ##0.00;-### ### ##0.00;#"></GridColumn>
+								<GridColumn Width="90" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Etat">
+									<Template>
+										@{
+											var dt = (context as API_V_RELEVE);
+											if (dt.EtatReglement == "Réglé")
+											{
+												<div style="text-align: left;">
+													<span class="statustxt e-activecolor">Réglé</span>
+												</div>
+
+											}
+											else if (dt.EtatReglement == "Regl. Parciel")
+											{
+												<div style="text-align: left;">
+													<span class="statustxt e-infocolor">Régl. Parciel</span>
 												</div>
 											}
-										</FooterTemplate>
-
-									</GridAggregateColumn>
-									<GridAggregateColumn Field="@nameof(API_V_RELEVE.MontantRegle)" Type="AggregateType.Sum" Format="N2">
-										<FooterTemplate>
-											@{
-												var SumValue = (context as AggregateTemplateContext);
-												<div>
-													@SumValue.Sum
+											else
+											{
+												<div style="text-align: left;">
+													<span class="statustxt e-inactivecolor">Non réglé</span>
 												</div>
+
 											}
-										</FooterTemplate>
-
-									</GridAggregateColumn>
-									<GridAggregateColumn Field="@nameof(API_V_RELEVE.Reste)" Type="AggregateType.Sum" Format="N2">
-										<FooterTemplate>
-											@{
-												var SumValue = (context as AggregateTemplateContext);
-												<div>
-													@SumValue.Sum
-												</div>
-											}
-										</FooterTemplate>
-
-									</GridAggregateColumn>
-								</GridAggregateColumns>
-							</GridAggregate>
-						</GridAggregates>
-						<GridColumns>
-
-
-							<GridColumn Width="70" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DO_Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
-							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DO_Piece)" HeaderText="Pièce"></GridColumn>
-							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.TypeIntitule)" HeaderText="Type"></GridColumn>
-							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DE_Intitule)" HeaderText="Dépot"></GridColumn>
-							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.CT_Num)" HeaderText="N° Tiers"></GridColumn>
-							<GridColumn Width="180" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.CT_Intitule)" HeaderText="@(fn.getTiers(domaine))"></GridColumn>
-							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.CA_Num)" HeaderText="Affaire"></GridColumn>
-							<GridColumn Width="150" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.CA_Intitule)" HeaderText="Intitulé Affaire"></GridColumn>
-							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.CO_Nom)" HeaderText="Collaborateur"></GridColumn>
-							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.MontantTTC)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#"></GridColumn>
-							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.MontantRegle)" HeaderText="Reglé" Format="### ### ##0.00;-### ### ##0.00;#"></GridColumn>
-							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.Reste)" HeaderText="Reste" Format="### ### ##0.00;-### ### ##0.00;#"></GridColumn>
-							<GridColumn Width="90" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Etat">
-								<Template>
-									@{
-										var dt = (context as API_V_RELEVE);
-										if (dt.EtatReglement == "Réglé")
-										{
-											<div style="text-align: left;">
-												<span class="statustxt e-activecolor">Réglé</span>
-											</div>
-
 										}
-										else if (dt.EtatReglement == "Regl. Parciel")
-										{
-											<div style="text-align: left;">
-												<span class="statustxt e-infocolor">Régl. Parciel</span>
-											</div>
-										}
-										else
-										{
-											<div style="text-align: left;">
-												<span class="statustxt e-inactivecolor">Non réglé</span>
-											</div>
-
-										}
-									}
-								</Template>
-							</GridColumn>
-							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.RT_NbJour)" HeaderText="Delai" Format="#"></GridColumn>
-							<GridColumn Width="70" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DateEcheance)" HeaderText="Ech.Prévu" Format="dd/MM/yy"></GridColumn>
-							<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.Jours)" HeaderText="Jrs" Format="#"></GridColumn>
+									</Template>
+								</GridColumn>
+								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.RT_NbJour)" HeaderText="Delai" Format="#"></GridColumn>
+								<GridColumn Width="70" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DateEcheance)" HeaderText="Ech.Prévu" Format="dd/MM/yy"></GridColumn>
+								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.Jours)" HeaderText="Jrs" Format="#"></GridColumn>
 
 
-						</GridColumns>
-						<SfSpinner @bind-Visible="@loading">
-						</SfSpinner>
-					</SfGrid>
+							</GridColumns>
+							<SfSpinner @bind-Visible="@loading">
+							</SfSpinner>
+						</SfGrid>
+					}
+
 				</div>
 
 			</div>
@@ -190,7 +200,7 @@ else
 	[Parameter] public string title { get; set; } = "";
 	private SfGrid<API_V_RELEVE> DefaultGrid;
 	bool IsLoaded = false;
-	DateTime? date1 = DateTime.Today;
+	DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
 	DateTime? date2;
 	private List<API_V_RELEVE> items = new List<API_V_RELEVE>();
 	bool loading = false;
@@ -208,7 +218,7 @@ else
 	bool dg_tiers = false;
 	bool dg_numero = false;
 
-	DateTime date = DateTime.Today;
+	DateTime date = new DateTime(DateTime.Today.Year,1,1);
 	string tiers;
 	List<F_COMPTET> list_tiers = new List<F_COMPTET>();
 	protected override async Task OnInitializedAsync()
@@ -232,16 +242,24 @@ else
 	}
 	private async Task UpdateGrid()
 	{
+		loading = true;
+		await Task.Delay(100);
 		items = db.API_V_RELEVE
 		.Where(a => (
 			(date1 != null && a.DO_Date >= date1) || date1 == null)
 			&& ((date2 != null && a.DO_Date <= date2) || date2 == null)
 						&& a.DO_Domaine == domaine
-			&& ((selected_types != null && selected_types.Contains(a.TypeIntitule)))
-			&& ((selected_statuts != null && selected_statuts.Contains(a.EtatReglement)))
 				)
 				.OrderByDescending(a => a.DO_Date)
 				.ToList();
+
+		if (selected_types != null)
+			items = items.Where(a => selected_types.Contains(a.TypeIntitule)).ToList();
+
+		if (selected_statuts != null)
+			items = items.Where(a => selected_statuts.Contains(a.EtatReglement)).ToList();
+		loading = false;
+		await Task.Delay(100);
 	}
 
 	private async Task ShowNotification(NotificationMessage message)

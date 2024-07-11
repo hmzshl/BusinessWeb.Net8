@@ -56,68 +56,74 @@
              </ToolbarItems>
          </SfToolbar>
          <div class="grid-84">
-            <SfGrid  AllowFiltering  AllowReordering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="TR_TiersGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
-                <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                <GridPageSettings PageSize="100"></GridPageSettings>
-                <GridTemplates>
-                    <EmptyRecordTemplate>
-                        <Empty></Empty>
-                    </EmptyRecordTemplate>
-                </GridTemplates>
-                <GridColumns>
-                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Timestamp)" HeaderText="Heure" Index="0"></GridColumn>
-                    <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Operation)" HeaderText="Operation">
-                        <Template>
-                            @{
-                                var dt = (context as API_V_AUDIT_F_COMPTET);
-                                if (dt.Operation == "Insertion")
-                                {
-                                    <div style="text-align: left;">
-                                        <span class="statustxt e-activecolor">@dt.Operation</span>
-                                    </div>
+             @if(loading){
+                <div class="center-screen">
+                    <Loading_1 />
+                </div>
+             }
+            else
+            {
+                <SfGrid AllowFiltering AllowReordering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="TR_TiersGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
+                    <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                    <GridPageSettings PageSize="100"></GridPageSettings>
+                    <GridTemplates>
+                        <EmptyRecordTemplate>
+                            <Empty></Empty>
+                        </EmptyRecordTemplate>
+                    </GridTemplates>
+                    <GridColumns>
+                        <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Timestamp)" HeaderText="Heure" Index="0"></GridColumn>
+                        <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Operation)" HeaderText="Operation">
+                            <Template>
+                                @{
+                                    var dt = (context as API_V_AUDIT_F_COMPTET);
+                                    if (dt.Operation == "Insertion")
+                                    {
+                                        <div style="text-align: left;">
+                                            <span class="statustxt e-activecolor">@dt.Operation</span>
+                                        </div>
+                                    }
+                                    else if (dt.Operation == "Suppression")
+                                    {
+                                        <div style="text-align: left;">
+                                            <span class="statustxt e-inactivecolor">@dt.Operation</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div style="text-align: left;">
+                                            <span class="statustxt e-infocolor">@dt.Operation</span>
+                                        </div>
+                                    }
                                 }
-                                else if (dt.Operation == "Suppression")
-                                {
-                                    <div style="text-align: left;">
-                                        <span class="statustxt e-inactivecolor">@dt.Operation</span>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div style="text-align: left;">
-                                        <span class="statustxt e-infocolor">@dt.Operation</span>
-                                    </div>
-                                }
-                            }
-                        </Template>
-                    </GridColumn>
-                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Sage_Name)" HeaderText="User"></GridColumn>
-                    <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Host_Name)" HeaderText="Host"></GridColumn>
-                    <GridColumn Width="140" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Suser_Name)" HeaderText="Session"></GridColumn>
-                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Num)" HeaderText="Numéro"/>
-                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Intitule)" HeaderText="Intitule" Width="250"></GridColumn>
-                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Ville)" HeaderText="Ville"></GridColumn>
-                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Adresse)" HeaderText="Adresse" Width="250"></GridColumn>
-                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Telephone)" HeaderText="Téléphone"></GridColumn>
-                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_EMail)" HeaderText="Email"></GridColumn>
-                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Pays)" HeaderText="Pays"></GridColumn>
-                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Controle)" Visible="false" HeaderText="Controle"></GridColumn>
-                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.SommeilIntitule)" HeaderText="Statut"></GridColumn>
-                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique01)" Visible="false" HeaderText="Stat 1"></GridColumn>
-                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique02)" Visible="false" HeaderText="Stat 2"></GridColumn>
-                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique03)" Visible="false" HeaderText="Stat 3"></GridColumn>
-                    <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique04)" Visible="false" HeaderText="Stat 4"></GridColumn>
-                </GridColumns>
-            </SfGrid>
+                            </Template>
+                        </GridColumn>
+                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Sage_Name)" HeaderText="User"></GridColumn>
+                        <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Host_Name)" HeaderText="Host"></GridColumn>
+                        <GridColumn Width="140" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Suser_Name)" HeaderText="Session"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Num)" HeaderText="Numéro" />
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Intitule)" HeaderText="Intitule" Width="250"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Ville)" HeaderText="Ville"></GridColumn>
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Adresse)" HeaderText="Adresse" Width="250"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Telephone)" HeaderText="Téléphone"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_EMail)" HeaderText="Email"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Pays)" HeaderText="Pays"></GridColumn>
+                        <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.Controle)" Visible="false" HeaderText="Controle"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.SommeilIntitule)" HeaderText="Statut"></GridColumn>
+                        <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique01)" Visible="false" HeaderText="Stat 1"></GridColumn>
+                        <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique02)" Visible="false" HeaderText="Stat 2"></GridColumn>
+                        <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique03)" Visible="false" HeaderText="Stat 3"></GridColumn>
+                        <GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_COMPTET.CT_Statistique04)" Visible="false" HeaderText="Stat 4"></GridColumn>
+                    </GridColumns>
+                </SfGrid>
+            }
+
         </div>
 
     </div>
 </RadzenContent>
-<MudBlazor.MudOverlay Style="margin-bottom: 0px; height: 100vh;" @bind-Visible="loading" DarkBackground="true" Absolute="true">
-    <SfSpinner Label="Chargement..." Visible="true">
-    </SfSpinner>
-</MudBlazor.MudOverlay>
+
 
 
 

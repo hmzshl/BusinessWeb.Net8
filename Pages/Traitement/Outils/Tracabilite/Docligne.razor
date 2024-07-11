@@ -83,83 +83,88 @@
                      </ToolbarItems>
                  </SfToolbar>
                 <div class="grid-84">
-                    <SfGrid  AllowReordering  Height="100%" AllowFiltering AllowSorting AllowResizing AllowSelection ShowColumnChooser="true" ID="TR_LigneGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
-                     <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                     <GridPageSettings PageSize="100"></GridPageSettings>
-                     <GridTemplates>
-                         <EmptyRecordTemplate>
-                             <Empty></Empty>
-                         </EmptyRecordTemplate>
-                     </GridTemplates>
-                     <GridColumns>
-                         <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.Timestamp)" HeaderText="Heure" Index="0"></GridColumn>
-                         <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.Operation)" HeaderText="Operation">
-                             <Template>
-                                 @{
-                                        var dt = (context as API_V_AUDIT_F_DOCLIGNE);
-                                        if (dt.Operation == "Insertion")
-                                        {
-                                            <div style="text-align: left;">
-                                                <span class="statustxt e-activecolor">@dt.Operation</span>
-                                            </div>
+                    @if(loading){
+                        <div class="center-screen">
+                            <Loading_1 />
+                        </div>
+                    }
+                    else
+                    {
+                        <SfGrid AllowReordering Height="100%" AllowFiltering AllowSorting AllowResizing AllowSelection ShowColumnChooser="true" ID="TR_LigneGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
+                            <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                            <GridPageSettings PageSize="100"></GridPageSettings>
+                            <GridTemplates>
+                                <EmptyRecordTemplate>
+                                    <Empty></Empty>
+                                </EmptyRecordTemplate>
+                            </GridTemplates>
+                            <GridColumns>
+                                <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.Timestamp)" HeaderText="Heure" Index="0"></GridColumn>
+                                <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.Operation)" HeaderText="Operation">
+                                    <Template>
+                                        @{
+                                            var dt = (context as API_V_AUDIT_F_DOCLIGNE);
+                                            if (dt.Operation == "Insertion")
+                                            {
+                                                <div style="text-align: left;">
+                                                    <span class="statustxt e-activecolor">@dt.Operation</span>
+                                                </div>
+                                            }
+                                            else if (dt.Operation == "Suppression")
+                                            {
+                                                <div style="text-align: left;">
+                                                    <span class="statustxt e-inactivecolor">@dt.Operation</span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div style="text-align: left;">
+                                                    <span class="statustxt e-infocolor">@dt.Operation</span>
+                                                </div>
+                                            }
                                         }
-                                        else if (dt.Operation == "Suppression")
-                                        {
-                                            <div style="text-align: left;">
-                                                <span class="statustxt e-inactivecolor">@dt.Operation</span>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div style="text-align: left;">
-                                                <span class="statustxt e-infocolor">@dt.Operation</span>
-                                            </div>
-                                        }
-                                    }
-                                </Template>
-                            </GridColumn>
-                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.Sage_Name)" HeaderText="User"></GridColumn>
-                            <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.Host_Name)" HeaderText="Host"></GridColumn>
-                            <GridColumn Width="140" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.Suser_Name)" HeaderText="Session"></GridColumn>
-                            <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DomaineIntitule)" HeaderText="Domaine"></GridColumn>
-                            <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.TypeIntitule)" HeaderText="Type"></GridColumn>
-                            <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DO_Date)" HeaderText="Date" />
-                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DO_Piece)" HeaderText="Pièce" />
-                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.CT_Num)" HeaderText="Numéro" />
-                            <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.CT_Intitule)" HeaderText="Tiers Intitulé" />
-                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.AR_Ref)" HeaderText="Référence"  />
-                            <GridColumn Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_Design)" HeaderText="Désignation" />
-                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.EU_Enumere)" HeaderText="Unité" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" />
-                            <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_Qte)" HeaderText="Qté" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                            <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_PrixUnitaire)" HeaderText="PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                            <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_CodeTaxe1)" HeaderText="Taxe" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" />
-                            <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_PUTTC)" HeaderText="PU TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                            <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_Remise01REM_Valeur)" HeaderText="Remise" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                            <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.PUNet)" HeaderText="PU Net" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_MontantHT)" HeaderText="MNT HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_MontantTTC)" HeaderText="MNT TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DE_Intitule)" HeaderText="Dépot" Visible="false" />
-                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.CA_Num)" HeaderText="N° Affaire" />
-                            <GridColumn Width="190" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.CA_Intitule)" Visible="false" HeaderText="Affaire" />
-                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_PieceBC)" Visible="false" HeaderText="N° BC" />
-                            <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_DateBC)" Visible="false" HeaderText="DT BC" />
-                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_PiecePL)" Visible="false" HeaderText="N° PL" />
-                            <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_DatePL)" Visible="false" HeaderText="DT PL" />
-                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_PieceBL)" Visible="false" HeaderText="N° BL" />
-                            <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_DateBL)" Visible="false" HeaderText="DT BL" />
+                                    </Template>
+                                </GridColumn>
+                                <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.Sage_Name)" HeaderText="User"></GridColumn>
+                                <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.Host_Name)" HeaderText="Host"></GridColumn>
+                                <GridColumn Width="140" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.Suser_Name)" HeaderText="Session"></GridColumn>
+                                <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DomaineIntitule)" HeaderText="Domaine"></GridColumn>
+                                <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.TypeIntitule)" HeaderText="Type"></GridColumn>
+                                <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DO_Date)" HeaderText="Date" />
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DO_Piece)" HeaderText="Pièce" />
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.CT_Num)" HeaderText="Numéro" />
+                                <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.CT_Intitule)" HeaderText="Tiers Intitulé" />
+                                <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.AR_Ref)" HeaderText="Référence" />
+                                <GridColumn Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_Design)" HeaderText="Désignation" />
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.EU_Enumere)" HeaderText="Unité" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" />
+                                <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_Qte)" HeaderText="Qté" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_PrixUnitaire)" HeaderText="PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_CodeTaxe1)" HeaderText="Taxe" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" />
+                                <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_PUTTC)" HeaderText="PU TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_Remise01REM_Valeur)" HeaderText="Remise" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.PUNet)" HeaderText="PU Net" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_MontantHT)" HeaderText="MNT HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_MontantTTC)" HeaderText="MNT TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DE_Intitule)" HeaderText="Dépot" Visible="false" />
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.CA_Num)" HeaderText="N° Affaire" />
+                                <GridColumn Width="190" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.CA_Intitule)" Visible="false" HeaderText="Affaire" />
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_PieceBC)" Visible="false" HeaderText="N° BC" />
+                                <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_DateBC)" Visible="false" HeaderText="DT BC" />
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_PiecePL)" Visible="false" HeaderText="N° PL" />
+                                <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_DatePL)" Visible="false" HeaderText="DT PL" />
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_PieceBL)" Visible="false" HeaderText="N° BL" />
+                                <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DL_DateBL)" Visible="false" HeaderText="DT BL" />
 
 
-                        </GridColumns>
-                    </SfGrid>
+                            </GridColumns>
+                        </SfGrid>
+                    }
+
                 </div>
 
             </div>
         </RadzenContent>
-        <MudBlazor.MudOverlay Style="margin-bottom: 0px; height: 100vh;" @bind-Visible="loading" DarkBackground="true" Absolute="true">
-            <SfSpinner Label="Chargement..." Visible="true">
-            </SfSpinner>
-        </MudBlazor.MudOverlay>
     </Card_1>
 }
 else

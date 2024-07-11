@@ -1,186 +1,192 @@
-﻿@if (IsLoaded) 
+﻿@if (IsLoaded)
 {
-    <Card_1 Title="@title">
-        <RadzenContent Container="main">
-            <div class="grid-90">
-                <SfToolbar>
-                    <ToolbarItems>
-                        <ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
-                        <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
-                        <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
-                            <Template>
-                                <div style="margin-left: 5px; margin-right: 10px;" id="debut">
-                                    <SfDatePicker Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
-                                     <DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
-                                 </SfDatePicker>
-                             </div>
+	<Card_1 Title="@title">
+		<RadzenContent Container="main">
+			<div class="grid-90">
+				<SfToolbar>
+					<ToolbarItems>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+							<Template>
+								<div style="margin-left: 5px; margin-right: 10px;" id="debut">
+									<SfDatePicker Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
+										<DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
+									</SfDatePicker>
+								</div>
 
-                         </Template>
-                     </ToolbarItem>
-                     <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
-                         <Template>
-                             <div style="margin-left: 5px; margin-right: 10px;" id="fin">
-                                 <SfDatePicker Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
-                                     <DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
-                                 </SfDatePicker>
-                             </div>
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+							<Template>
+								<div style="margin-left: 5px; margin-right: 10px;" id="fin">
+									<SfDatePicker Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
+										<DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
+									</SfDatePicker>
+								</div>
 
-                         </Template>
-                     </ToolbarItem>
-                     <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-                         <Template>
-                             <RadzenLabel Text="TYPE" Component="type" />
-                             <div style="padding-left: 10px; margin-right: 0px;" id="type">
-                                 <SfDropDownList ShowClearButton Width="140px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@types" TValue="string" TItem="string" @bind-Value="@selected_type">
-                                         <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
-                                     </SfDropDownList>
-                                 </div>
-                             </Template>
-                         </ToolbarItem>
-                         
-                         <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
-                             <Template>
-                                 <SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
-                             </Template>
-                         </ToolbarItem>
-                         <ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
-                         <ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
-                         <ToolbarItem OnClick=@(args => (UpdateGrid())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
-                     </ToolbarItems>
-                 </SfToolbar>
-                 <div class="grid-84">
-                    <SfGrid  AllowReordering  Height="100%" AllowFiltering AllowSorting AllowResizing AllowSelection ShowColumnChooser="true" ID="ReglementGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging ContextMenuItems="@(contextMenu())">
-                         <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-                         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
-                         <GridPageSettings PageSize="100"></GridPageSettings>
-                         <GridEvents ContextMenuItemClicked="OnContextMenuClick" TValue="API_V_CREGLEMENT"></GridEvents>
-                         <GridTemplates>
-                             <EmptyRecordTemplate>
-                                 <Empty></Empty>
-                             </EmptyRecordTemplate>
-                         </GridTemplates>
-                         <GridColumns>
-                             <GridColumn Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Sta">
-                                 <Template>
-                                     @{
-                                        var dt = (context as API_V_CREGLEMENT);
-                                        if (dt.RG_Cloture == 1)
-                                        {
-                                            <RadzenIcon Icon="lock" IconStyle="IconStyle.Success" />
-                                        }
-                                        else
-                                        {
-                                            <RadzenIcon Icon="lock_open" IconStyle="IconStyle.Primary" />
-                                        }
-                                    }
-                                </Template>
-                            </GridColumn>
-                            <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Date)" HeaderText="Date" />
-                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Piece)" HeaderText="Pièce" />
-                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.R_Intitule)" HeaderText="Type" />
-                            <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Num)" HeaderText="Numéro" />
-                            <GridColumn Width="220" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Intitule)" HeaderText="@(fn.getTiers(domaine))" />
-                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.JO_Num)" HeaderText="N° Jo." />
-                            <GridColumn Width="210" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.JO_Intitule)" HeaderText="Journal" />
-                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Libelle)" HeaderText="Libellé" />
-                            <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Montant)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                            <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_DateEcheance)" HeaderText="Ech" />
-                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.Echeance)" HeaderText="Statut" />
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+							<Template>
+								<RadzenLabel Text="TYPE" Component="type" />
+								<div style="padding-left: 10px; margin-right: 0px;" id="type">
+									<SfDropDownList ShowClearButton Width="140px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@types" TValue="string" TItem="string" @bind-Value="@selected_type">
+										<DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
+									</SfDropDownList>
+								</div>
+							</Template>
+						</ToolbarItem>
 
-                        </GridColumns>
-                    </SfGrid>
-                </div>
+						<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+							<Template>
+								<SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+						<ToolbarItem OnClick=@(args => (UpdateGrid())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
+					</ToolbarItems>
+				</SfToolbar>
+				<div class="grid-84">
+					@if (loading)
+					{
+						<div class="center-screen">
+							<Loading_1 />
+						</div>
+					}
+					else
+					{
+						<SfGrid AllowReordering Height="100%" AllowFiltering AllowSorting AllowResizing AllowSelection ShowColumnChooser="true" ID="ReglementGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging ContextMenuItems="@(contextMenu())">
+							<GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+							<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
+							<GridPageSettings PageSize="100"></GridPageSettings>
+							<GridEvents ContextMenuItemClicked="OnContextMenuClick" TValue="API_V_CREGLEMENT"></GridEvents>
+							<GridTemplates>
+								<EmptyRecordTemplate>
+									<Empty></Empty>
+								</EmptyRecordTemplate>
+							</GridTemplates>
+							<GridColumns>
+								<GridColumn Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Sta">
+									<Template>
+										@{
+											var dt = (context as API_V_CREGLEMENT);
+											if (dt.RG_Cloture == 1)
+											{
+												<RadzenIcon Icon="lock" IconStyle="IconStyle.Success" />
+											}
+											else
+											{
+												<RadzenIcon Icon="lock_open" IconStyle="IconStyle.Primary" />
+											}
+										}
+									</Template>
+								</GridColumn>
+								<GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Date)" HeaderText="Date" />
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Piece)" HeaderText="Pièce" />
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.R_Intitule)" HeaderText="Type" />
+								<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Num)" HeaderText="Numéro" />
+								<GridColumn Width="220" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Intitule)" HeaderText="@(fn.getTiers(domaine))" />
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.JO_Num)" HeaderText="N° Jo." />
+								<GridColumn Width="210" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.JO_Intitule)" HeaderText="Journal" />
+								<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Libelle)" HeaderText="Libellé" />
+								<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Montant)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+								<GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_DateEcheance)" HeaderText="Ech" />
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.Echeance)" HeaderText="Statut" />
 
-            </div>
-        </RadzenContent>
-        <MudBlazor.MudOverlay Style="margin-bottom: 0px; height: 100vh;" @bind-Visible="loading" DarkBackground="true" Absolute="true">
-            <SfSpinner Label="Chargement..." Visible="true">
-            </SfSpinner>
-        </MudBlazor.MudOverlay>
-    </Card_1>
-  
-<SfDialog Target="#target" Width="250px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_date" CloseOnEscape>
-    <DialogTemplates>
-        <Header>
-            Date
-        </Header>
-        <Content>
-            <SfDatePicker TValue="DateTime"
-                          @bind-Value="@date" />
-        </Content>
-    </DialogTemplates>
-    <DialogAnimationSettings></DialogAnimationSettings>
-    <DialogEvents></DialogEvents>
-    <DialogButtons>
-         <DialogButton Content="OK" IsPrimary="true" OnClick="SubmitDate"></DialogButton>
-        <DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_date = false)"></DialogButton>
-    </DialogButtons>
- </SfDialog>
+							</GridColumns>
+						</SfGrid>
+					}
 
-    <SfDialog Target="#target" Width="380px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_tiers" CloseOnEscape>
-     <DialogTemplates>
-         <Header>
-             @(fn.getTiers(domaine)?.ToLower())
-         </Header>
-         <Content>
-                <SfDropDownList Query="@fn.LocalDataQuery" ShowClearButton Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == domaine).OrderBy(a=> a.CT_Intitule))" TValue="string" TItem="F_COMPTET" @bind-Value="@tiers">
-                     <DropDownListEvents TValue="string" TItem="F_COMPTET" />
-                     <DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
-                 </SfDropDownList>
-         </Content>
-     </DialogTemplates>
-     <DialogAnimationSettings></DialogAnimationSettings>
-     <DialogEvents></DialogEvents>
-     <DialogButtons>
-             <DialogButton Content="OK" IsPrimary="true" OnClick="SubmitTiers"></DialogButton>
-             <DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_tiers = false)"></DialogButton>
-     </DialogButtons>
- </SfDialog>
-    <SfDialog Target="#target" Width="380px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_mode" CloseOnEscape>
-     <DialogTemplates>
-         <Header>
-             Mode de paiement
-            </Header>
-            <Content>
-                <SfDropDownList Query="@fn.LocalDataQuery" ShowClearButton Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(db.P_REGLEMENT.Where(a => a.R_Intitule != ""))" TValue="int" TItem="P_REGLEMENT" @bind-Value="@mode">
-                     <DropDownListEvents TValue="int" TItem="P_REGLEMENT" />
-                     <DropDownListFieldSettings Text="R_Intitule" Value="cbIndice" />
-                 </SfDropDownList>
-             </Content>
-         </DialogTemplates>
-         <DialogAnimationSettings></DialogAnimationSettings>
-         <DialogEvents></DialogEvents>
-         <DialogButtons>
-             <DialogButton Content="OK" IsPrimary="true" OnClick="SubmitMode"></DialogButton>
-             <DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_mode = false)"></DialogButton>
-         </DialogButtons>
-     </SfDialog>
-    <SfDialog Target="#target" Width="380px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_journal" CloseOnEscape>
-     <DialogTemplates>
-         <Header>
-             Journal
-            </Header>
-            <Content>
-                <SfDropDownList Query="@fn.LocalDataQuery" ShowClearButton Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(db.F_JOURNAUX.Where(a => a.JO_Type == 2))" TValue="string" TItem="F_JOURNAUX" @bind-Value="@journal">
-                     <DropDownListEvents TValue="string" TItem="F_JOURNAUX" />
-                     <DropDownListFieldSettings Text="JO_Intitule" Value="JO_Num" />
-                 </SfDropDownList>
-             </Content>
-         </DialogTemplates>
-         <DialogAnimationSettings></DialogAnimationSettings>
-         <DialogEvents></DialogEvents>
-         <DialogButtons>
-             <DialogButton Content="OK" IsPrimary="true" OnClick="SubmitJournal"></DialogButton>
-             <DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_journal = false)"></DialogButton>
-         </DialogButtons>
-     </SfDialog>
+				</div>
+
+			</div>
+		</RadzenContent>
+	</Card_1>
+
+	<SfDialog Target="#target" Width="250px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_date" CloseOnEscape>
+		<DialogTemplates>
+			<Header>
+				Date
+			</Header>
+			<Content>
+				<SfDatePicker TValue="DateTime"
+							  @bind-Value="@date" />
+			</Content>
+		</DialogTemplates>
+		<DialogAnimationSettings></DialogAnimationSettings>
+		<DialogEvents></DialogEvents>
+		<DialogButtons>
+			<DialogButton Content="OK" IsPrimary="true" OnClick="SubmitDate"></DialogButton>
+			<DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_date = false)"></DialogButton>
+		</DialogButtons>
+	</SfDialog>
+
+	<SfDialog Target="#target" Width="380px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_tiers" CloseOnEscape>
+		<DialogTemplates>
+			<Header>
+				@(fn.getTiers(domaine)?.ToLower())
+			</Header>
+			<Content>
+				<SfDropDownList Query="@fn.LocalDataQuery" ShowClearButton Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == domaine).OrderBy(a=> a.CT_Intitule))" TValue="string" TItem="F_COMPTET" @bind-Value="@tiers">
+					<DropDownListEvents TValue="string" TItem="F_COMPTET" />
+					<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+				</SfDropDownList>
+			</Content>
+		</DialogTemplates>
+		<DialogAnimationSettings></DialogAnimationSettings>
+		<DialogEvents></DialogEvents>
+		<DialogButtons>
+			<DialogButton Content="OK" IsPrimary="true" OnClick="SubmitTiers"></DialogButton>
+			<DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_tiers = false)"></DialogButton>
+		</DialogButtons>
+	</SfDialog>
+	<SfDialog Target="#target" Width="380px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_mode" CloseOnEscape>
+		<DialogTemplates>
+			<Header>
+				Mode de paiement
+			</Header>
+			<Content>
+				<SfDropDownList Query="@fn.LocalDataQuery" ShowClearButton Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(db.P_REGLEMENT.Where(a => a.R_Intitule != ""))" TValue="int" TItem="P_REGLEMENT" @bind-Value="@mode">
+					<DropDownListEvents TValue="int" TItem="P_REGLEMENT" />
+					<DropDownListFieldSettings Text="R_Intitule" Value="cbIndice" />
+				</SfDropDownList>
+			</Content>
+		</DialogTemplates>
+		<DialogAnimationSettings></DialogAnimationSettings>
+		<DialogEvents></DialogEvents>
+		<DialogButtons>
+			<DialogButton Content="OK" IsPrimary="true" OnClick="SubmitMode"></DialogButton>
+			<DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_mode = false)"></DialogButton>
+		</DialogButtons>
+	</SfDialog>
+	<SfDialog Target="#target" Width="380px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_journal" CloseOnEscape>
+		<DialogTemplates>
+			<Header>
+				Journal
+			</Header>
+			<Content>
+				<SfDropDownList Query="@fn.LocalDataQuery" ShowClearButton Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(db.F_JOURNAUX.Where(a => a.JO_Type == 2))" TValue="string" TItem="F_JOURNAUX" @bind-Value="@journal">
+					<DropDownListEvents TValue="string" TItem="F_JOURNAUX" />
+					<DropDownListFieldSettings Text="JO_Intitule" Value="JO_Num" />
+				</SfDropDownList>
+			</Content>
+		</DialogTemplates>
+		<DialogAnimationSettings></DialogAnimationSettings>
+		<DialogEvents></DialogEvents>
+		<DialogButtons>
+			<DialogButton Content="OK" IsPrimary="true" OnClick="SubmitJournal"></DialogButton>
+			<DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_journal = false)"></DialogButton>
+		</DialogButtons>
+	</SfDialog>
 }
 else
 {
-    <div class="center-screen">
-        <Loading_1 />
-    </div>
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
 }
 
 
@@ -189,184 +195,187 @@ else
 @code
 {
 
-    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
-    DB db = new DB();
-    //Components
-    [Parameter] public int domaine { get; set; } = 0;
-    [Parameter] public string title { get; set; } = "";
-    private SfGrid<API_V_CREGLEMENT> DefaultGrid;
-    bool IsLoaded = false;
-    DateTime? date1 = DateTime.Today;
-    DateTime? date2;
-    private List<API_V_CREGLEMENT> items = new List<API_V_CREGLEMENT>();
-    bool loading = false;
+	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	//Components
+	[Parameter] public int domaine { get; set; } = 0;
+	[Parameter] public string title { get; set; } = "";
+	private SfGrid<API_V_CREGLEMENT> DefaultGrid;
+	bool IsLoaded = false;
+	DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
+	DateTime? date2;
+	private List<API_V_CREGLEMENT> items = new List<API_V_CREGLEMENT>();
+	bool loading = false;
 
-    List<string> domaines = new List<string>();
-    List<string> types = new List<string>();
+	List<string> domaines = new List<string>();
+	List<string> types = new List<string>();
 
-    string selected_domaine;
-    string selected_type;
+	string selected_domaine;
+	string selected_type;
 
-    bool dg_date = false;
-    bool dg_tiers = false;
-    bool dg_numero = false;
-    bool dg_mode = false;
-    bool dg_journal = false;
+	bool dg_date = false;
+	bool dg_tiers = false;
+	bool dg_numero = false;
+	bool dg_mode = false;
+	bool dg_journal = false;
 
-    DateTime date = DateTime.Today;
-    string tiers;
-    int mode;
-    string journal;
+	DateTime date = DateTime.Today;
+	string tiers;
+	int mode;
+	string journal;
 
-    protected override async Task OnInitializedAsync()
-    {
-        await Task.Delay(1);
-        db = session.db;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(1);
+		db = session.db;
 
-        types = db.API_V_CREGLEMENT.Where(a => a.RG_Type == domaine).Select(a => a.R_Intitule).Distinct().ToList();
+		types = db.API_V_CREGLEMENT.Where(a => a.RG_Type == domaine).Select(a => a.R_Intitule).Distinct().ToList();
 
-        await UpdateGrid();
-        IsLoaded = true;
+		await UpdateGrid();
+		IsLoaded = true;
 
-    }
-    private async Task UpdateTypes()
-    {       
-        await UpdateGrid();
-    }
-    private async Task UpdateGrid()
-    {
-        loading = true;
-        await Task.Delay(100);
-        items = db.API_V_CREGLEMENT
-        .Where(a => (
-            (date1 != null && a.RG_Date >= date1) || date1 == null)
-         && ((date2 != null && a.RG_Date <= date2) || date2 == null)
-               && a.RG_Type == domaine
-               && (selected_type == null || (a.R_Intitule == selected_type))
-                )
-                .OrderByDescending(a => a.RG_Date)
-                .ToList();
-        loading = false;
-        await Task.Delay(100);
-    }
-    private List<object> contextMenu()
-    {
-        var dt = DefaultGrid?.GetSelectedRecordsAsync()?.Result;
-        return new List<object>() {
-                                 new ContextMenuItemModel { Text = "Changer la date", Target = ".e-content", Id = "date", IconCss = "e-icons e-timeline-today" },
-                                 new ContextMenuItemModel { Text = "Changer le "+fn.getTiers(domaine)?.ToLower(), Target = ".e-content", Id = "tiers", IconCss = "e-icons e-people" } ,
-                                 new ContextMenuItemModel { Text = "Changer le mode de paiement", Target = ".e-content", Id = "mode", IconCss = "e-icons e-date-occurring" } ,
-                                 new ContextMenuItemModel { Text = "Changer le journal", Target = ".e-content", Id = "journal", IconCss = "e-icons e-changes-accept" } ,
-                                 new ContextMenuItemModel {Separator = true},
-                                 new ContextMenuItemModel { Text = "Dé-valider", Target = ".e-content", Id = "devalider", IconCss = "e-icons e-lock" } ,
-                             };
-    } 
-
-
-    public async Task OnContextMenuClick(ContextMenuClickEventArgs<API_V_CREGLEMENT> args)
-    {
-
-        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
-        if (args.Item.Id == "date")
-        {
-            dg_date = true;
-        }
-        if (args.Item.Id == "mode")
-        {
-            dg_mode = true;
-        }
-        if (args.Item.Id == "journal")
-        {
-            dg_journal = true;
-        }
-        if (args.Item.Id == "numero")
-        {
-            bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment changer les numéros des éléments selectionnés?");
-            if (isConfirm)
-            {
-                await UpdateGrid();
-                await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
-            }
-        }
-        if (args.Item.Id == "tiers")
-        {
-            dg_tiers = true;
-        }
-        if (args.Item.Id == "fusionner")
-        {
-            bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment fusionner les éléments selectionnés?");
-            if (isConfirm)
-            {
-                await UpdateGrid();
-                await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
-            }
-        }
-        if (args.Item.Id == "devalider")
-        {
-            bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment dévalider les éléments selectionnés?");
-            if (isConfirm)
-            {
-                fn.DisableTriggers(db, "F_CREGLEMENT", "UPD");
-                foreach (API_V_CREGLEMENT item in dt)
-                {
-                    db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET RG_Cloture = 0, RG_Valide = 0, cbHash = null, cbHashDate = null, cbHashOrder = null, RG_Compta = 0, EC_No = 0 WHERE cbMarq = {0}", item.cbMarq);                    
-                }
-                fn.EnableTriggers(db, "F_CREGLEMENT", "UPD");
-                await UpdateGrid();
-                await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
-            }
-        }
-
-    }
-    private async Task ShowNotification(NotificationMessage message)
-    {
-        NotificationService.Notify(message);
-    }
-    private async Task SubmitDate()
-    {
-        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
-        foreach(API_V_CREGLEMENT item in dt)
-        {
-            db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET RG_Date = {0} WHERE cbMarq = {1}", date, item.cbMarq);
-        }
-        dg_date = false;
-        await UpdateGrid();
-        await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
-    }
-    private async Task SubmitTiers()
-    {
-        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
-        foreach (API_V_CREGLEMENT item in dt)
-        {
-            db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET CT_NumPayeur = {0} WHERE cbMarq = {1}", tiers, item.cbMarq);
-        }
-        dg_tiers = false;
-        await UpdateGrid();
-        await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+	}
+	private async Task UpdateTypes()
+	{
+		await UpdateGrid();
+	}
+	private async Task UpdateGrid()
+	{
+		loading = true;
+		await Task.Delay(100);
+		items = db.API_V_CREGLEMENT
+		.Where(a => (
+			(date1 != null && a.RG_Date >= date1) || date1 == null)
+			&& ((date2 != null && a.RG_Date <= date2) || date2 == null)
+						&& a.RG_Type == domaine
+				)
+				.OrderByDescending(a => a.RG_Date)
+				.ToList();
+		if (selected_type != null)
+		{
+			items = items.Where(a => a.R_Intitule == selected_type).ToList();
+		}
+		loading = false;
+		await Task.Delay(100);
+	}
+	private List<object> contextMenu()
+	{
+		var dt = DefaultGrid?.GetSelectedRecordsAsync()?.Result;
+		return new List<object>() {
+								 new ContextMenuItemModel { Text = "Changer la date", Target = ".e-content", Id = "date", IconCss = "e-icons e-timeline-today" },
+								 new ContextMenuItemModel { Text = "Changer le "+fn.getTiers(domaine)?.ToLower(), Target = ".e-content", Id = "tiers", IconCss = "e-icons e-people" } ,
+								 new ContextMenuItemModel { Text = "Changer le mode de paiement", Target = ".e-content", Id = "mode", IconCss = "e-icons e-date-occurring" } ,
+								 new ContextMenuItemModel { Text = "Changer le journal", Target = ".e-content", Id = "journal", IconCss = "e-icons e-changes-accept" } ,
+								 new ContextMenuItemModel {Separator = true},
+								 new ContextMenuItemModel { Text = "Dé-valider", Target = ".e-content", Id = "devalider", IconCss = "e-icons e-lock" } ,
+							 };
+	}
 
 
-    }
-    private async Task SubmitMode()
-    {
-        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
-        foreach (API_V_CREGLEMENT item in dt)
-        {
-            db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET N_Reglement = {0} WHERE cbMarq = {1}", mode, item.cbMarq);
-        }
-        dg_mode = false;
-        await UpdateGrid();
-        await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
-    }
-    private async Task SubmitJournal()
-    {
-        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
-        foreach (API_V_CREGLEMENT item in dt)
-        {
-            db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET JO_Num = {0} WHERE cbMarq = {1}", journal, item.cbMarq);
-        }
-        dg_journal = false;
-        await UpdateGrid();
-        await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
-    }
+	public async Task OnContextMenuClick(ContextMenuClickEventArgs<API_V_CREGLEMENT> args)
+	{
+
+		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+		if (args.Item.Id == "date")
+		{
+			dg_date = true;
+		}
+		if (args.Item.Id == "mode")
+		{
+			dg_mode = true;
+		}
+		if (args.Item.Id == "journal")
+		{
+			dg_journal = true;
+		}
+		if (args.Item.Id == "numero")
+		{
+			bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment changer les numéros des éléments selectionnés?");
+			if (isConfirm)
+			{
+				await UpdateGrid();
+				await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+			}
+		}
+		if (args.Item.Id == "tiers")
+		{
+			dg_tiers = true;
+		}
+		if (args.Item.Id == "fusionner")
+		{
+			bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment fusionner les éléments selectionnés?");
+			if (isConfirm)
+			{
+				await UpdateGrid();
+				await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+			}
+		}
+		if (args.Item.Id == "devalider")
+		{
+			bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment dévalider les éléments selectionnés?");
+			if (isConfirm)
+			{
+				fn.DisableTriggers(db, "F_CREGLEMENT", "UPD");
+				foreach (API_V_CREGLEMENT item in dt)
+				{
+					db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET RG_Cloture = 0, RG_Valide = 0, cbHash = null, cbHashDate = null, cbHashOrder = null, RG_Compta = 0, EC_No = 0 WHERE cbMarq = {0}", item.cbMarq);
+				}
+				fn.EnableTriggers(db, "F_CREGLEMENT", "UPD");
+				await UpdateGrid();
+				await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+			}
+		}
+
+	}
+	private async Task ShowNotification(NotificationMessage message)
+	{
+		NotificationService.Notify(message);
+	}
+	private async Task SubmitDate()
+	{
+		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+		foreach (API_V_CREGLEMENT item in dt)
+		{
+			db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET RG_Date = {0} WHERE cbMarq = {1}", date, item.cbMarq);
+		}
+		dg_date = false;
+		await UpdateGrid();
+		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+	}
+	private async Task SubmitTiers()
+	{
+		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+		foreach (API_V_CREGLEMENT item in dt)
+		{
+			db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET CT_NumPayeur = {0} WHERE cbMarq = {1}", tiers, item.cbMarq);
+		}
+		dg_tiers = false;
+		await UpdateGrid();
+		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+
+
+	}
+	private async Task SubmitMode()
+	{
+		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+		foreach (API_V_CREGLEMENT item in dt)
+		{
+			db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET N_Reglement = {0} WHERE cbMarq = {1}", mode, item.cbMarq);
+		}
+		dg_mode = false;
+		await UpdateGrid();
+		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+	}
+	private async Task SubmitJournal()
+	{
+		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+		foreach (API_V_CREGLEMENT item in dt)
+		{
+			db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET JO_Num = {0} WHERE cbMarq = {1}", journal, item.cbMarq);
+		}
+		dg_journal = false;
+		await UpdateGrid();
+		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+	}
 
 }
