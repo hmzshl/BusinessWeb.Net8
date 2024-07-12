@@ -10,7 +10,7 @@
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
 							<Template>
 								<div style="margin-left: 5px; margin-right: 10px;" id="debut">
-									<SfDatePicker Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
+									<SfDatePicker ShowClearButton Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1"  ShowTodayButton>
 										<DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
 									</SfDatePicker>
 								</div>
@@ -21,7 +21,7 @@
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
 							<Template>
 								<div style="margin-left: 5px; margin-right: 10px;" id="fin">
-									<SfDatePicker Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
+									<SfDatePicker ShowClearButton Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2"  ShowTodayButton>
 										<DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
 									</SfDatePicker>
 								</div>
@@ -32,7 +32,7 @@
 							<Template>
 								<RadzenLabel Text="Type" Component="type" />
 								<div style="padding-left: 10px; margin-right: 10px;" id="type">
-									<SfMultiSelect Width="200px" @bind-Value=@selected_types ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(types)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+									<SfMultiSelect Width="200px" @bind-Value=@selected_types  TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(types)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
 										<MultiSelectFieldSettings Text="TypeIntitule" Value="TypeIntitule"></MultiSelectFieldSettings>
 										<MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
 									</SfMultiSelect>
@@ -43,7 +43,7 @@
 							<Template>
 								<RadzenLabel Text="Etat" Component="etat" />
 								<div style="padding-left: 10px; margin-right: 10px;" id="etat">
-									<SfMultiSelect Width="140px" @bind-Value=@selected_statuts ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(statuts)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+									<SfMultiSelect Width="140px" @bind-Value=@selected_statuts  TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(statuts)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
 										<MultiSelectFieldSettings Text="EtatReglement" Value="EtatReglement"></MultiSelectFieldSettings>
 										<MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
 									</SfMultiSelect>
@@ -161,14 +161,51 @@
 			<DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_date = false)"></DialogButton>
 		</DialogButtons>
 	</SfDialog>
-
+	<SfDialog Target="#target" Width="250px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_souche" CloseOnEscape>
+		<DialogTemplates>
+			<Header>
+				Souche
+			</Header>
+			<Content>
+				<SfDropDownList Query="@fn.LocalDataQuery"  Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(list_souches)" TValue="short?" TItem="P_SOUCHEVENTE" @bind-Value="@souche">
+					<DropDownListEvents TValue="short?" TItem="P_SOUCHEVENTE" />
+					<DropDownListFieldSettings Text="S_Intitule" Value="cbIndice" />
+				</SfDropDownList>
+			</Content>
+		</DialogTemplates>
+		<DialogAnimationSettings></DialogAnimationSettings>
+		<DialogEvents></DialogEvents>
+		<DialogButtons>
+			<DialogButton Content="OK" IsPrimary="true" OnClick="SubmitSouche"></DialogButton>
+			<DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_souche = false)"></DialogButton>
+		</DialogButtons>
+	</SfDialog>
+	<SfDialog Target="#target" Width="320px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_interne" CloseOnEscape>
+		<DialogTemplates>
+			<Header>
+				Document interne
+			</Header>
+			<Content>
+				<SfDropDownList Query="@fn.LocalDataQuery" Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(list_internes)" TValue="short?" TItem="P_INTERNE" @bind-Value="@interne">
+					<DropDownListEvents TValue="short?" TItem="P_INTERNE" />
+					<DropDownListFieldSettings Text="D_Intitule" Value="cbIndice" />
+				</SfDropDownList>
+			</Content>
+		</DialogTemplates>
+		<DialogAnimationSettings></DialogAnimationSettings>
+		<DialogEvents></DialogEvents>
+		<DialogButtons>
+			<DialogButton Content="OK" IsPrimary="true" OnClick="SubmitInterne"></DialogButton>
+			<DialogButton Content="Annuler" IsPrimary="true" OnClick="@(args => dg_interne = false)"></DialogButton>
+		</DialogButtons>
+	</SfDialog>
 	<SfDialog Target="#target" Width="380px" ShowCloseIcon="true" IsModal="true" @bind-Visible="@dg_tiers" CloseOnEscape>
 		<DialogTemplates>
 			<Header>
 				@(fn.getTiers(domaine))
 			</Header>
 			<Content>
-				<SfDropDownList Query="@fn.LocalDataQuery" ShowClearButton Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(list_tiers)" TValue="string" TItem="F_COMPTET" @bind-Value="@tiers">
+				<SfDropDownList Query="@fn.LocalDataQuery"  Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(list_tiers)" TValue="string" TItem="F_COMPTET" @bind-Value="@tiers">
 					<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 					<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
 				</SfDropDownList>
@@ -219,10 +256,16 @@ else
 	bool dg_date = false;
 	bool dg_tiers = false;
 	bool dg_numero = false;
+	bool dg_souche = false;
+	bool dg_interne = false;
 
 	DateTime date = DateTime.Today;
 	string tiers;
+	short? souche = 1;
+	short? interne = 5;
 	List<F_COMPTET> list_tiers = new List<F_COMPTET>();
+	List<P_SOUCHEVENTE> list_souches = new List<P_SOUCHEVENTE>();
+	List<P_INTERNE> list_internes = new List<P_INTERNE>();
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(1);
@@ -233,6 +276,8 @@ else
 		selected_types = types;
 		selected_statuts = statuts;
 		list_tiers = db.F_COMPTET.Where(a => a.CT_Type == domaine).Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule }).OrderBy(a => a.CT_Intitule).ToList();
+		list_souches = db.P_SOUCHEVENTE.Where(a => a.S_Intitule != "").ToList();
+		list_internes = db.P_INTERNE.Where(a => a.D_Intitule != "" && a.D_MvtStock == 2).ToList();
 
 		await UpdateGrid();
 		IsLoaded = true;
@@ -273,15 +318,15 @@ else
 
 		rs = new List<object>() {
 								 new ContextMenuItemModel { Text = "Changer la date", Target = ".e-content", Id = "date", IconCss = "e-icons e-timeline-today" },
-								 new ContextMenuItemModel { Text = "Changer le "+fn.getTiers(domaine)?.ToLower(), Target = ".e-content", Id = "tiers", IconCss = "e-icons e-people" }
+								 new ContextMenuItemModel { Text = "Changer le "+fn.getTiers(domaine)?.ToLower(), Target = ".e-content", Id = "tiers", IconCss = "e-icons e-people" },
+								 new ContextMenuItemModel { Text = "Changer la souche", Target = ".e-content", Id = "souche", IconCss = "e-icons e-level-4" },
+								 new ContextMenuItemModel { Text = "Transformer en document interne", Target = ".e-content", Id = "interne", IconCss = "e-icons e-undo" },
 							 };
 		rs.Add(new ContextMenuItemModel { Text = "Dé-comptabiliser", Target = ".e-content", Id = "decomptabiliser", IconCss = "e-icons e-protect-workbook" });
 		rs.Add(new ContextMenuItemModel { Text = "Dé-valider", Target = ".e-content", Id = "devalider", IconCss = "e-icons e-lock" });
 
 		return rs;
 	}
-
-
 	public async Task OnContextMenuClick(ContextMenuClickEventArgs<API_V_DOCENTETE> args)
 	{
 
@@ -302,6 +347,14 @@ else
 		if (args.Item.Id == "tiers")
 		{
 			dg_tiers = true;
+		}
+		if (args.Item.Id == "souche")
+		{
+			dg_souche = true;
+		}
+		if (args.Item.Id == "interne")
+		{
+			dg_interne = true;
 		}
 		if (args.Item.Id == "fusionner")
 		{
@@ -374,6 +427,9 @@ else
 	}
 	private async Task SubmitDate()
 	{
+		dg_date = false;
+		await Task.Delay(1);
+
 		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
 		fn.DisableTriggers(db, "F_DOCENTETE", "UPD");
 		fn.DisableTriggers(db, "F_DOCLIGNE", "UPD");
@@ -388,12 +444,57 @@ else
 		}
 		fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
 		fn.EnableTriggers(db, "F_DOCLIGNE", "UPD");
-		dg_date = false;
+		await UpdateGrid();
+		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+	}
+	private async Task SubmitSouche()
+	{
+		dg_souche = false;
+		await Task.Delay(1);
+		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+		fn.DisableTriggers(db, "F_DOCENTETE", "UPD");
+		foreach (API_V_DOCENTETE item in dt)
+		{
+
+
+			db.Database.ExecuteSqlRaw("UPDATE F_DOCENTETE SET DO_Souche = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", souche, item.DO_Piece, item.DO_Type);
+
+
+		}
+		fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
+		
+		await UpdateGrid();
+		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+	}
+	private async Task SubmitInterne()
+	{
+		dg_interne = false;
+		await Task.Delay(1);
+		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+		fn.DisableTriggers(db, "F_DOCENTETE", "UPD");
+		fn.DisableTriggers(db, "F_DOCLIGNE", "UPD");
+		fn.DisableTriggers(db, "F_DOCREGL", "UPD");
+		foreach (API_V_DOCENTETE item in dt)
+		{
+
+
+			db.Database.ExecuteSqlRaw("UPDATE F_DOCENTETE SET DO_Domaine = 4, DO_Type = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", 39 + interne, item.DO_Piece, item.DO_Type);
+			db.Database.ExecuteSqlRaw("UPDATE F_DOCLIGNE SET DO_Domaine = 4, DO_Type = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", 39 + interne, item.DO_Piece, item.DO_Type);
+			db.Database.ExecuteSqlRaw("UPDATE F_DOCREGL SET DO_Domaine = 4, DO_Type = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", 39 + interne, item.DO_Piece, item.DO_Type);
+
+
+		}
+		fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
+		fn.EnableTriggers(db, "F_DOCLIGNE", "UPD");
+		fn.EnableTriggers(db, "F_DOCREGL", "UPD");
 		await UpdateGrid();
 		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
 	}
 	private async Task SubmitTiers()
 	{
+		dg_tiers = false;
+		await Task.Delay(1);
+
 		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
 		fn.DisableTriggers(db, "F_DOCENTETE", "UPD");
 		fn.DisableTriggers(db, "F_DOCLIGNE", "UPD");
@@ -404,7 +505,6 @@ else
 		}
 		fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
 		fn.EnableTriggers(db, "F_DOCLIGNE", "UPD");
-		dg_tiers = false;
 		await UpdateGrid();
 		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
 	}

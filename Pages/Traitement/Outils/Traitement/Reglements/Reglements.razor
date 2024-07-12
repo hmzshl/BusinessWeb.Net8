@@ -10,7 +10,7 @@
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
 							<Template>
 								<div style="margin-left: 5px; margin-right: 10px;" id="debut">
-									<SfDatePicker Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
+									<SfDatePicker ShowClearButton Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1"  ShowTodayButton>
 										<DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
 									</SfDatePicker>
 								</div>
@@ -20,7 +20,7 @@
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
 							<Template>
 								<div style="margin-left: 5px; margin-right: 10px;" id="fin">
-									<SfDatePicker Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
+									<SfDatePicker ShowClearButton Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2"  ShowTodayButton>
 										<DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
 									</SfDatePicker>
 								</div>
@@ -31,7 +31,7 @@
 							<Template>
 								<RadzenLabel Text="TYPE" Component="type" />
 								<div style="padding-left: 10px; margin-right: 0px;" id="type">
-									<SfDropDownList ShowClearButton Width="140px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@types" TValue="string" TItem="string" @bind-Value="@selected_type">
+									<SfDropDownList  Width="140px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@types" TValue="string" TItem="string" @bind-Value="@selected_type">
 										<DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
 									</SfDropDownList>
 								</div>
@@ -130,7 +130,7 @@
 				@(fn.getTiers(domaine)?.ToLower())
 			</Header>
 			<Content>
-				<SfDropDownList Query="@fn.LocalDataQuery" ShowClearButton Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == domaine).OrderBy(a=> a.CT_Intitule))" TValue="string" TItem="F_COMPTET" @bind-Value="@tiers">
+				<SfDropDownList Query="@fn.LocalDataQuery"  Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == domaine).OrderBy(a=> a.CT_Intitule))" TValue="string" TItem="F_COMPTET" @bind-Value="@tiers">
 					<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 					<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
 				</SfDropDownList>
@@ -149,7 +149,7 @@
 				Mode de paiement
 			</Header>
 			<Content>
-				<SfDropDownList Query="@fn.LocalDataQuery" ShowClearButton Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(db.P_REGLEMENT.Where(a => a.R_Intitule != ""))" TValue="int" TItem="P_REGLEMENT" @bind-Value="@mode">
+				<SfDropDownList Query="@fn.LocalDataQuery"  Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(db.P_REGLEMENT.Where(a => a.R_Intitule != ""))" TValue="int" TItem="P_REGLEMENT" @bind-Value="@mode">
 					<DropDownListEvents TValue="int" TItem="P_REGLEMENT" />
 					<DropDownListFieldSettings Text="R_Intitule" Value="cbIndice" />
 				</SfDropDownList>
@@ -168,7 +168,7 @@
 				Journal
 			</Header>
 			<Content>
-				<SfDropDownList Query="@fn.LocalDataQuery" ShowClearButton Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(db.F_JOURNAUX.Where(a => a.JO_Type == 2))" TValue="string" TItem="F_JOURNAUX" @bind-Value="@journal">
+				<SfDropDownList Query="@fn.LocalDataQuery"  Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(db.F_JOURNAUX.Where(a => a.JO_Type == 2))" TValue="string" TItem="F_JOURNAUX" @bind-Value="@journal">
 					<DropDownListEvents TValue="string" TItem="F_JOURNAUX" />
 					<DropDownListFieldSettings Text="JO_Intitule" Value="JO_Num" />
 				</SfDropDownList>
@@ -333,23 +333,29 @@ else
 	}
 	private async Task SubmitDate()
 	{
+		dg_date = false;
+		await Task.Delay(1);
+
 		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
 		foreach (API_V_CREGLEMENT item in dt)
 		{
 			db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET RG_Date = {0} WHERE cbMarq = {1}", date, item.cbMarq);
 		}
-		dg_date = false;
+
 		await UpdateGrid();
 		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
 	}
 	private async Task SubmitTiers()
 	{
+		dg_tiers = false;
+		await Task.Delay(1);
+
 		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
 		foreach (API_V_CREGLEMENT item in dt)
 		{
 			db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET CT_NumPayeur = {0} WHERE cbMarq = {1}", tiers, item.cbMarq);
 		}
-		dg_tiers = false;
+
 		await UpdateGrid();
 		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
 
@@ -357,23 +363,29 @@ else
 	}
 	private async Task SubmitMode()
 	{
+		dg_mode = false;
+		await Task.Delay(1);
+
 		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
 		foreach (API_V_CREGLEMENT item in dt)
 		{
 			db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET N_Reglement = {0} WHERE cbMarq = {1}", mode, item.cbMarq);
 		}
-		dg_mode = false;
+
 		await UpdateGrid();
 		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
 	}
 	private async Task SubmitJournal()
 	{
+		dg_journal = false;
+		await Task.Delay(1);
+
 		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
 		foreach (API_V_CREGLEMENT item in dt)
 		{
 			db.Database.ExecuteSqlRaw("UPDATE F_CREGLEMENT SET JO_Num = {0} WHERE cbMarq = {1}", journal, item.cbMarq);
 		}
-		dg_journal = false;
+
 		await UpdateGrid();
 		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
 	}

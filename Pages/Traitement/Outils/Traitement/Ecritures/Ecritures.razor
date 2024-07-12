@@ -13,7 +13,7 @@
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
 							<Template>
 								<div style="margin-left: 5px; margin-right: 10px;" id="debut">
-									<SfDatePicker Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
+									<SfDatePicker ShowClearButton Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1"  ShowTodayButton>
 										<DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
 									</SfDatePicker>
 								</div>
@@ -23,7 +23,7 @@
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
 							<Template>
 								<div style="margin-left: 5px; margin-right: 10px;" id="fin">
-									<SfDatePicker Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
+									<SfDatePicker ShowClearButton Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2"  ShowTodayButton>
 										<DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
 									</SfDatePicker>
 								</div>
@@ -153,7 +153,7 @@
 				Tiers
 			</Header>
 			<Content>
-				<SfDropDownList Query="@fn.LocalDataQuery" ShowClearButton Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(list_tiers)" TValue="string" TItem="F_COMPTET" @bind-Value="@tiers">
+				<SfDropDownList Query="@fn.LocalDataQuery"  Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(list_tiers)" TValue="string" TItem="F_COMPTET" @bind-Value="@tiers">
 					<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 					<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
 				</SfDropDownList>
@@ -173,7 +173,7 @@
 				Compte
 			</Header>
 			<Content>
-				<SfDropDownList Query="@fn.LocalDataQuery" ShowClearButton Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(list_compte)" TValue="string" TItem="F_COMPTEG" @bind-Value="@compte">
+				<SfDropDownList Query="@fn.LocalDataQuery"  Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(list_compte)" TValue="string" TItem="F_COMPTEG" @bind-Value="@compte">
 					<DropDownListEvents TValue="string" TItem="F_COMPTEG" />
 					<DropDownListFieldSettings Text="CG_Intitule" Value="CG_Num" />
 				</SfDropDownList>
@@ -331,6 +331,7 @@ else
 	}
 	private async Task SubmitDate()
 	{
+		await Task.Delay(1);
 		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
 		foreach (API_V_ECRITUREC item in dt)
 		{
@@ -341,45 +342,55 @@ else
 	}
 	private async Task SubmitTiers()
 	{
+		dg_tiers = false;
+		await Task.Delay(1);
+
 		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
 		foreach (API_V_ECRITUREC item in dt)
 		{
 			db.Database.ExecuteSqlRaw("UPDATE F_ECRITUREC SET CT_Num = {0} WHERE cbMarq = {1}", tiers, item.cbMarq);
 		}
-		dg_tiers = false;
 		await UpdateGrid();
 		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
 	}
 	private async Task SubmitLibelle()
 	{
+		dg_libelle = false;
+		await Task.Delay(1);
+
 		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
 		foreach (API_V_ECRITUREC item in dt)
 		{
 			db.Database.ExecuteSqlRaw("UPDATE F_ECRITUREC SET EC_Intitule = {0} WHERE cbMarq = {1}", libelle, item.cbMarq);
 		}
-		dg_libelle = false;
+
 		await UpdateGrid();
 		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
 	}
 	private async Task SubmitPiece()
 	{
+		dg_piece = false;
+		await Task.Delay(1);
+
 		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
 		foreach (API_V_ECRITUREC item in dt)
 		{
 			db.Database.ExecuteSqlRaw("UPDATE F_ECRITUREC SET EC_Piece = {0} WHERE cbMarq = {1}", piece, item.cbMarq);
 		}
-		dg_piece = false;
+
 		await UpdateGrid();
 		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
 	}
 	private async Task SubmitCompte()
 	{
+
+		dg_compte = false;
+		await Task.Delay(1);
 		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
 		foreach (API_V_ECRITUREC item in dt)
 		{
 			db.Database.ExecuteSqlRaw("UPDATE F_ECRITUREC SET CG_Num = {0} WHERE cbMarq = {1}", compte, item.cbMarq);
 		}
-		dg_compte = false;
 		await UpdateGrid();
 		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
 	}
