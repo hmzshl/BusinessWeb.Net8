@@ -1,5 +1,5 @@
 ﻿<RadzenContent Container="main">
-    <div class="grid-90">
+    <div class="grid-90" style="zoom: @session.zoomLevel;">
         <SfGrid  Height="100%" AllowResizing AllowSorting AllowReordering AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
                 Toolbar="@(new List<object>() { "Search", "ExcelExport","Add", "Delete"})">
             <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />

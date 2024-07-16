@@ -1,7 +1,29 @@
 ﻿@if (IsLoaded)
 {
-	<div style="height: @Height;">
-		<SfGrid  @ref=DefaultGrid ID="DetailMargeGRID" AllowExcelExport Height="100%" AllowGrouping=@(grouped != 0) AllowSelection EnableHover DataSource="@(items)" ShowColumnChooser AllowReordering Toolbar="@(new List<object>() { "ColumnChooser","Print","ExcelExport","Search",new ToolbarItem() { Type = ItemType.Input,Template = Grouped, Id = "Grouper par", TooltipText = "Grouper par", Align = ItemAlign.Right}})" AllowSorting AllowFiltering>
+	<SfToolbar CssClass="btns">
+		<ToolbarItems>
+			<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+			<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+			<ToolbarItem Align="ItemAlign.Right">
+				<Template>
+					<SfDropDownList PopupHeight="300px" Width="160px" Placeholder="Grouper par" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="int" TItem="Items" DataSource="@(groupes)" @bind-Value="@grouped">
+						<DropDownListEvents TValue="int" TItem="Items" />
+						<DropDownListFieldSettings Text="Name" Value="Id" />
+					</SfDropDownList>
+				</Template>
+			</ToolbarItem>
+			<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+				<Template>
+					<SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+				</Template>
+			</ToolbarItem>
+			<ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+			<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+
+		</ToolbarItems>
+	</SfToolbar>
+	<div style="height: @Height; zoom: @session.zoomLevel;">
+		<SfGrid  @ref=DefaultGrid ID="DetailMargeGRID" AllowExcelExport Height="100%" AllowGrouping=@(grouped > 0) AllowSelection EnableHover DataSource="@(items)" ShowColumnChooser AllowReordering AllowSorting AllowFiltering>
 			<GridPageSettings PageSize="100" />
 			<GridEvents OnToolbarClick="ToolbarClickHandler" TValue="API_V_MARGE"></GridEvents>
 			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
@@ -115,13 +137,16 @@
 				</GridAggregate>
 			</GridAggregates>
 			<GridColumns>
-				<GridColumn Format="dd/MM/yy" Width="@(getDateWidth())" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DO_Date)" HeaderText="Date" />
+
+				<GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CT_Intitule)" HeaderText="Tiers" Visible=@(CT_Num == null) />
+				<GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.AR_Design)" HeaderText="Désignation" Visible=@(AR_Ref == null) />
+				<GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CA_Intitule)" HeaderText="Affaire" Visible=@(CA_Num == null) />
+				<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CO_Nom)" HeaderText="Collaborateur" />
 				<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DO_Piece)" HeaderText="Pièce" />
 				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CT_Num)" HeaderText="N° Tiers" Visible=@(CT_Num == null) />
-				<GridColumn Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CT_Intitule)" HeaderText="Tiers" Visible=@(CT_Num == null) />
-				<GridColumn Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CO_Nom)" HeaderText="Collaborateur" Visible=@(CO_No == 0) />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CA_Num)" HeaderText="N° Affaire" Visible=@(CA_Num == null) />
 				<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.AR_Ref)" HeaderText="Référence" Visible=@(AR_Ref == null) />
-				<GridColumn Width="350" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.AR_Design)" HeaderText="Désignation" Visible=@(AR_Ref == null) />
+				<GridColumn Format="dd/MM/yy" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DO_Date)" HeaderText="Date" />
 				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_Qte)" HeaderText="Qté" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
 				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.PUNet)" HeaderText="PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
 				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_MontantHT)" HeaderText="HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
@@ -199,19 +224,16 @@ else
 	[Parameter] public string Periode { get; set; }
 	[Parameter] public DateTime? Date1 { get; set; }
 	[Parameter] public DateTime? Date2 { get; set; }
+	List<Items> groupes = new List<Items>();
 	bool IsLoaded = false;
-	int grouped = 2;
+	int grouped = 0;
 	private List<API_V_MARGE> items = new List<API_V_MARGE>();
-	private RenderFragment Grouped =>
-	@<SfDropDownList PopupHeight="300px" Width="160px" Placeholder="Grouper par" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="int" TItem="Items" DataSource="@(fn.GroupedBy())" @bind-Value="@grouped">
-			<DropDownListEvents TValue="int" TItem="Items" />
-			<DropDownListFieldSettings Text="Name" Value="Id" />
-		</SfDropDownList>
-	;
+
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(100);
 		db = session.db;
+		groupes = fn.GroupedBy();
 		await UpdateGrid();
 		IsLoaded = true;
 	}
@@ -231,6 +253,7 @@ else
 			&& ((a.Annee == Annee && Annee != null) || (Annee == null))
 			&& ((a.MoisAnnee == MoisAnnee && MoisAnnee != null) || (MoisAnnee == null))
 			&& ((a.AR_Ref == AR_Ref && AR_Ref != null) || (AR_Ref == null))
+						&& ((a.CA_Num == CA_Num && CA_Num != null) || (CA_Num == null))
 						&& ((a.CO_Nom == CO_Nom && CO_Nom != null) || (CO_Nom == null))
 												&& ((a.CT_CodeRegion == CT_CodeRegion && CT_CodeRegion != null) || (CT_CodeRegion == null))
 			&& ((Date1 != null && a.DO_Date >= Date1) || Date1 == null)
@@ -253,7 +276,7 @@ else
 	}
 	private string getDateWidth()
 	{
-		if (grouped == 0)
+		if (!(grouped > 0))
 		{
 			return "80px";
 		}
@@ -281,6 +304,10 @@ else
 		if (grouped == 4)
 		{
 			rs = new string[] { "CO_Nom" };
+		}
+		if (grouped == 5)
+		{
+			rs = new string[] { "CA_Intitule" };
 		}
 		return rs;
 	}

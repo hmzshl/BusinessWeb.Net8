@@ -219,8 +219,8 @@
                                         <RadzenMenuItem Text="Ventes" Icon="people" Visible=@(TitleIsVisible("Ventes"))>
                                             <RadzenMenuItem Text="Liste des clients" Path="/clients" Visible=@(IsVisible("clients"))></RadzenMenuItem>
                                             <RadzenMenuItem Text="Documents">
-                                                <RadzenMenuItem Text="Devis" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Commandes" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
+                                                <RadzenMenuItem Disabled Text="Devis" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
+                                                <RadzenMenuItem Disabled Text="Commandes" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
                                                 <RadzenMenuItem Text="Livraisons/Factures" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
                                             </RadzenMenuItem>
                                             
@@ -247,6 +247,7 @@
                                                 <RadzenMenuItem Text="Par Représentant" Path="/et-ca-representant" Visible=@(IsVisible("et-ca-representant"))></RadzenMenuItem>
                                                 <RadzenMenuItem Text="Par Famille" Path="/et-ca-famille" Visible=@(IsVisible("et-ca-famille"))></RadzenMenuItem>
                                                 <RadzenMenuItem Text="Par Region" Path="/et-ca-region" Visible=@(IsVisible("et-ca-region"))></RadzenMenuItem>
+                                                <RadzenMenuItem Text="Par Affaire" Path="/et-ca-affaire" Visible=@(IsVisible("et-ca-affaire"))></RadzenMenuItem>
                                             </RadzenMenuItem>
                                             <RadzenMenuItem Text="Comparatif">
                                                 <RadzenMenuItem Text="Par Année" Path="/et-vente-annuel" Visible=@(IsVisible("et-vente-annuel"))></RadzenMenuItem>
@@ -258,7 +259,7 @@
                                         <RadzenMenuItem Text="Achats" Icon="shopping_cart_checkout" Visible=@(TitleIsVisible("Achats"))>
                                             <RadzenMenuItem Text="Liste des fournisseurs" Path="/fournisseurs" Visible=@(IsVisible("fournisseurs"))></RadzenMenuItem>
                                             <RadzenMenuItem Text="Documents">
-                                                <RadzenMenuItem Text="Commandes" Path="/releve-achats" Visible=@(IsVisible("releve-achats"))></RadzenMenuItem>
+                                                <RadzenMenuItem Disabled Text="Commandes" Path="/releve-achats" Visible=@(IsVisible("releve-achats"))></RadzenMenuItem>
                                                 <RadzenMenuItem Text="Livraisons/Factures" Path="/releve-achats" Visible=@(IsVisible("releve-achats"))></RadzenMenuItem>
                                             </RadzenMenuItem>
                                             
@@ -281,6 +282,7 @@
                                                 <RadzenMenuItem Text="Par Article" Path="/et-achat-article" Visible=@(IsVisible("et-achat-article"))></RadzenMenuItem>
                                                 <RadzenMenuItem Text="Par Acheteur" Path="/et-achat-representant" Visible=@(IsVisible("et-achat-representant"))></RadzenMenuItem>
                                                 <RadzenMenuItem Text="Par Famille" Path="/et-achat-famille" Visible=@(IsVisible("et-achat-famille"))></RadzenMenuItem>
+                                                <RadzenMenuItem Text="Par Affaire" Path="/et-achat-affaire" Visible=@(IsVisible("et-achat-affaire"))></RadzenMenuItem>
                                             </RadzenMenuItem>
                                             <RadzenMenuItem Text="Comparatif">
                                                 <RadzenMenuItem Text="Par Année" Path="/et-achat-annuel" Visible=@(IsVisible("et-achat-annuel"))></RadzenMenuItem>
@@ -759,6 +761,43 @@ else
     </div>
 }
 
+<style>
+    .grid-80 {
+        height: @(setGridHeight(80));
+    }
+
+    .grid-90 {
+        height: 88vh;
+    }
+
+    .grid-84 {
+        height: @(setGridHeight(84));
+    }
+
+    .grid-70 {
+        height: @(setGridHeight(70));
+    }
+
+    .grid-67 {
+        height: @(setGridHeight(67));
+    }
+
+    .grid-34 {
+        height: @(setGridHeight(34));
+    }
+
+    .grid-50 {
+        height: @(setGridHeight(50));
+    }
+
+    .grid-45 {
+        height: @(setGridHeight(45));
+    }
+
+    .grid-40 {
+        height: @(setGridHeight(40));
+    }
+</style>
 
 
 
@@ -770,6 +809,8 @@ else
     bool IsLoaded = false;
     bool loading = false;
     RadzenMenu MainMenu;
+    double scaleLevel = 1;
+    string gridHeight = "80vh";
     private CryptoLicense license = new CryptoLicense();
     string macAddr = (
                 from nic in NetworkInterface.GetAllNetworkInterfaces()
@@ -779,7 +820,6 @@ else
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(1);
-
         TLicense row = new TLicense();
         var dt = sdb.TLicenses.AsNoTracking().OrderBy(a => a.id).ToList();
         if (dt.Count() != 0)
@@ -808,7 +848,19 @@ else
         IsLoaded = true;
 
     }
-
+    string setGridHeight(double height)
+    {
+        string rs = "";
+        if(scaleLevel == 1)
+        {
+            rs = ((height)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh"; ;
+        }
+        else 
+        {
+            rs = (((scaleLevel - 0.05) * height)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh";
+        }
+        return rs;
+    }
     private bool IsVisible(string url)
     {
         return (session?.Authorizes?.Where(a => a.Visible).Select(a => a.Url)?.Contains(url))??false;
@@ -844,7 +896,21 @@ else
         {
             session.Societe = societes?.First();
         }
+
         await UpdateAuth();
+        try
+        {
+            scaleLevel = (await JSRuntime.InvokeAsync<double>("getScaleLevel"));
+            session.scaleLevel = scaleLevel;
+            session.zoomLevel = (1 / (scaleLevel)).ToString(System.Globalization.CultureInfo.InvariantCulture);
+            session.gridHeight = ((scaleLevel-0.15)*100).ToString(System.Globalization.CultureInfo.InvariantCulture)+"%";
+            gridHeight = (1 / (scaleLevel)).ToString(System.Globalization.CultureInfo.InvariantCulture);
+
+        }
+        catch (Exception ex)
+        {
+            await Message.Error(ex.ToString(), 20);
+        }
     }
     private string getURL()
     {
@@ -990,7 +1056,7 @@ else
     {
         await DialogService.OpenAsync<ReportViewer>("Pointage des personnels",
         new Dictionary<string, object>() { { "ReportName", "reports\\personnels\\PointagePersonnel" } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
     }
     ErrorBoundary errorBoundary;
     void ShowNotification(Exception ex)

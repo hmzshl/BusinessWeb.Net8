@@ -7,8 +7,8 @@
 {
     <Card_1 Title="Movements de caisse">
         <RadzenContent Container="main">
-            <div class="grid-90">
-                <SfGrid  Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+    <div class="grid-90" style="zoom: @session.zoomLevel;">
+        <SfGrid  Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
                         Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete",new ToolbarItem() { Type = ItemType.Input,Template = Caisses, Id = "caisse", TooltipText = "Caisse", Align = ItemAlign.Right}
                     ,new ToolbarItem() { Type = ItemType.Input,Template = Date1, Id = "date1", TooltipText = "Date Début", Align = ItemAlign.Right}
                     ,new ToolbarItem() { Type = ItemType.Input,Template = Date2, Id = "date2", TooltipText = "Date Fin", Align = ItemAlign.Right}})">

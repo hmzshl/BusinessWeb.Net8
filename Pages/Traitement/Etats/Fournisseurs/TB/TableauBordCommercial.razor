@@ -118,7 +118,7 @@
 
                  <GridCol Xs="24" Md="9">
                         <Card title="CA PAR FOURNISSEUR">
-                            <div class="no-border grid-67">
+                            <div class="no-border grid-67" style="zoom: @session.zoomLevel;">
                                 <SfGrid  AllowTextWrap Height="100%" DataSource="@(dt_client)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
                                     <GridAggregates>
                                         <GridAggregate>
@@ -171,7 +171,7 @@
                  </GridCol>
                  <GridCol Xs="24" Md="9">
                         <Card title="CA PAR ARTICLE">
-                            <div class="no-border grid-67">
+                            <div class="no-border grid-67" style="zoom: @session.zoomLevel;">
                                 <SfGrid  AllowTextWrap Height="100%" DataSource="@(dt_article)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
                                     <GridAggregates>
                                         <GridAggregate>
@@ -223,7 +223,7 @@
                  </GridCol>
                  <GridCol Xs="24" Md="6">
                         <Card>
-                            <div class="no-border grid-34">
+                            <div class="no-border grid-34" style="zoom: @session.zoomLevel;">
 
 
                                 <SfChart Title="Top 10 acheteurs" Width="90%" Theme="Theme.Fluent" Height="100%">
@@ -251,7 +251,7 @@
                           </div>
                     </Card>
                         <Card>
-                            <div class="no-border grid-34">
+                            <div class="no-border grid-34" style="zoom: @session.zoomLevel;">
                                 <SfAccumulationChart Title="Répartition des décaissements" EnableAnimation="true" Width="100%" Height="100%" Theme="Theme.Fluent" EnableBorderOnMouseMove="false" EnableSmartLabels="true">
                                     <AccumulationChartBorder Color="transparent"></AccumulationChartBorder>
                                     <AccumulationChartTooltipSettings Enable="true" Format="${point.x}"></AccumulationChartTooltipSettings>
@@ -407,14 +407,14 @@ else
         if (type == "article")
         {
             await DialogService.OpenAsync<DetailsAchat>(args.RowData.AR_Design,
-      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "AR_Ref", args.RowData.AR_Ref }, { "Height", "85vh" }, { "Annee", annee }, { "MoisAnnee", mois } },
-      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "95%" });
+      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "AR_Ref", args.RowData.AR_Ref }, { "Height", "82vh" }, { "Annee", annee }, { "MoisAnnee", mois } },
+      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         }
         if (type == "client")
         {
             await DialogService.OpenAsync<DetailsAchat>(args.RowData.CT_Intitule,
-      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CT_Num", args.RowData.CT_Num }, { "Height", "85vh" }, { "Annee", annee }, { "MoisAnnee", mois } },
-      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "95%" });
+      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CT_Num", args.RowData.CT_Num }, { "Height", "82vh" }, { "Annee", annee }, { "MoisAnnee", mois } },
+      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         }
 
     }
@@ -423,13 +423,13 @@ else
         int? cbMarq = db.F_COMPTET.Where(a => a.CT_Num == args.CT_Num).SingleOrDefault()?.cbMarq;
         await DialogService.OpenAsync<BusinessWeb.Pages.Structure.Tiers.TiersFiche>(args.CT_Intitule,
      new Dictionary<string, object>() { { "cbMarq", cbMarq } },
-     new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+     new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
     }
     private async Task ShowArticle(API_V_ACHAT args)
     {
         int? cbMarq = db.F_ARTICLE.Where(a => a.AR_Ref == args.AR_Ref).SingleOrDefault()?.cbMarq;
         await DialogService.OpenAsync<BusinessWeb.Pages.Traitement.Etats.Articles.ArticlesFiche>(args.AR_Design,
         new Dictionary<string, object>() { { "cbMarq", cbMarq } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
     }
 }

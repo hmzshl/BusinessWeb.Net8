@@ -51,7 +51,7 @@
 
                     </ToolbarItems>
                 </SfToolbar>
-                <div class="grid-84">
+                <div class="grid-84" style="zoom: @session.zoomLevel;">
                      <SfGrid  @ref=@DefaultGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
 
                          <GridEvents TValue="RAPPRO_DOCENTETE"></GridEvents>
@@ -742,7 +742,7 @@ else
     {
         await DialogService.OpenAsync<DetailsPiece>(DO_Piece,
      new Dictionary<string, object>() { { "DO_Piece", DO_Piece }, { "DO_Type", DO_Type }, { "db2", db2 } },
-     new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+     new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
     }
 
 }

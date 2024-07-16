@@ -9,7 +9,7 @@
     <Divider></Divider>
 }
 <RadzenContent Container="main">
-    <div class="grid-80">
+    <div class="grid-80" style="zoom: @session.zoomLevel;">
         <SfGrid  Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
                 Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete"})">
             <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(!IsProjet)" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
@@ -175,7 +175,7 @@
         else {
             await DialogService.OpenAsync<DocumentsFiche>(args.RowData.DO_Piece,
 new Dictionary<string, object>() { { "cbMarq", args.RowData.cbMarq }, { "DO_Type", Int32.Parse(type) }, { "IsConsommation", IsConsommation } },
-new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         }
 
 
@@ -194,7 +194,7 @@ new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "9
         {
             await DialogService.OpenAsync<DocumentsFiche>($"Ajouter un élément",
      new Dictionary<string, object>() { { "cbMarq", 0 }, { "DO_Type", Int32.Parse(type) }, { "IsConsommation", IsConsommation } },
-     new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+     new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         }
 
 

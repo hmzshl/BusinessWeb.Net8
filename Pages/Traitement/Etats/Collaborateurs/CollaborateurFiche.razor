@@ -287,7 +287,7 @@
                                 </ChildContent>
                                 <ContentTemplate>
                                     <div class="no-border small-grid">
-                                        <BusinessWeb.Pages.Traitement.Gestion.Frais.FraisView CO_No="@CO_No" grid_class="grid-80"></BusinessWeb.Pages.Traitement.Gestion.Frais.FraisView>
+                                        <BusinessWeb.Pages.Traitement.Gestion.Frais.FraisView CO_No="@CO_No" grid_class="grid-80" style="zoom: @session.zoomLevel;"></BusinessWeb.Pages.Traitement.Gestion.Frais.FraisView>
                                     </div>
                                 </ContentTemplate>
                             </TabItem>
@@ -386,14 +386,14 @@ else
         if(type == "article")
         {
             await DialogService.OpenAsync<DetailsMarge>(args.RowData.AR_Design,
-      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "AR_Ref", args.RowData.AR_Ref }, { "CO_Nom", row.Intitule }, { "Height", "85vh" } },
-      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "95%" });
+      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "AR_Ref", args.RowData.AR_Ref }, { "CO_Nom", row.Intitule }, { "Height", "82vh" } },
+      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         }
         if (type == "client")
         {
             await DialogService.OpenAsync<DetailsMarge>(args.RowData.CT_Intitule,
-      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CT_Num", args.RowData.CT_Num }, { "CO_Nom", row.Intitule }, { "Height", "85vh" } },
-      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "95%" });
+      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CT_Num", args.RowData.CT_Num }, { "CO_Nom", row.Intitule }, { "Height", "82vh" } },
+      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         }
            
     }

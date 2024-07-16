@@ -1,6 +1,6 @@
 ﻿@if (IsLoaded)
 {
-	<div style="height: @Height;">
+	<div style="height: @Height; zoom: @session.zoomLevel;">
 		<SfToolbar CssClass="btns">
 			<ToolbarItems>
 				<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>

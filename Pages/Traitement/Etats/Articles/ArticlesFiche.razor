@@ -78,7 +78,7 @@
                                                 <Divider/>
                                      <GridCol Xs="24" Md="14">
                                          <Card title="CA PAR CLIENT">
-                                            <div style="height: 54vh;" class="no-border small-grid">
+                                            <div style="zoom: @session.zoomLevel" class="no-border small-grid grid-50">
                                                 <SfGrid  AllowTextWrap Height="100%" DataSource="@(dt_article)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
                                                      <GridAggregates>
                                                          <GridAggregate>
@@ -194,34 +194,161 @@
                                         </GridCol>
                                         <GridCol Xs="24" Md="10">
                                         <Card Title="CA PAR ANNEE">
-                                            <div style="height: 54vh" class="no-border small-grid">
-                                                <SfPivotView TValue="API_V_MARGE" Height="100%" ShowFieldList=false Target="document" AllowDeferLayoutUpdate="true" ExportAllPages=false
-                                                             EnableVirtualization="false" ShowToolbar=true AllowNumberFormatting=true AllowConditionalFormatting=true
-                                                             AllowCalculatedField=true AllowPdfExport=true AllowExcelExport=true ShowGroupingBar="false" AllowGrouping=true EnableValueSorting=true ShowTooltip=false MaxNodeLimitInMemberEditor="50">
-                                                    <PivotViewDisplayOption Primary="Primary.Table" View="View.Both"></PivotViewDisplayOption>
-                                                    <PivotViewDataSourceSettings DataSource="@items">
-                                                        <PivotViewColumns>
-                                                            <PivotViewColumn Name="@nameof(API_V_MARGE.Annee)"></PivotViewColumn>
-                                                        </PivotViewColumns>
-                                                        <PivotViewRows>
-                                                            <PivotViewRow Name="@nameof(API_V_MARGE.Mois)" Caption="Mois"></PivotViewRow>
-                                                        </PivotViewRows>
-                                                        <PivotViewValues>
-                                                            <PivotViewValue Name="@nameof(API_V_MARGE.DL_Qte)" Caption="Qté"></PivotViewValue>
-                                                            <PivotViewValue Name="@nameof(API_V_MARGE.DL_MontantHT)" Caption="HT"></PivotViewValue>
-                                                            <PivotViewValue Name="@nameof(API_V_MARGE.DL_MontantTTC)" Caption="TTC"></PivotViewValue>
-                                                        </PivotViewValues>
-                                                        <PivotViewFormatSettings>
-                                                            <PivotViewFormatSetting Name="@nameof(API_V_MARGE.DL_Qte)" Format="### ### ##0.00;-### ### ##0.00;#"></PivotViewFormatSetting>
-                                                            <PivotViewFormatSetting Name="@nameof(API_V_MARGE.DL_MontantHT)" Format="### ### ##0.00;-### ### ##0.00;#"></PivotViewFormatSetting>
-                                                            <PivotViewFormatSetting Name="@nameof(API_V_MARGE.DL_MontantTTC)" Format="### ### ##0.00;-### ### ##0.00;#"></PivotViewFormatSetting>
-                                                        </PivotViewFormatSettings>
-                                                    </PivotViewDataSourceSettings>
-                                                    <PivotViewGridSettings AllowSelection=true ColumnWidth="70" RowHeight="23">
-                                                        <PivotViewSelectionSettings Mode="Syncfusion.Blazor.PivotView.SelectionMode.Row" Type="PivotTableSelectionType.Single" CellSelectionMode="PivotCellSelectionMode.Flow"></PivotViewSelectionSettings>
-                                                    </PivotViewGridSettings>
-                                                    <PivotViewEvents TValue="API_V_MARGE"></PivotViewEvents>
-                                                </SfPivotView>
+                                            <div style="zoom: @session.zoomLevel;" class="no-border small-grid grid-50">
+                                                <SfGrid GridLines="GridLine.Both" AllowTextWrap Height="100%" DataSource="@(dt_mois)" EnableHover="false">
+                                                    <GridEvents TValue="API_V_MARGE"></GridEvents>
+                                                    <GridAggregates>
+                                                        <GridAggregate>
+                                                            <GridAggregateColumns>
+                                                                @foreach (string item in annees)
+                                                                {
+                                                                    <GridAggregateColumn Field="@(item+"_CA")" Type="AggregateType.Custom" Format="N2">
+                                                                        <FooterTemplate>
+                                                                            @{
+
+                                                                                <div style="text-align: right; font-weight: 700;">
+
+                                                                                    @items.Where(a => a.Annee == item).Sum(a => a.DL_MontantHT)?.ToString("### ### ##0.00;-### ### ##0.00;#")
+                                                                                </div>
+                                                                            }
+                                                                        </FooterTemplate>
+
+                                                                    </GridAggregateColumn>
+                                                                    <GridAggregateColumn Field="@(item+"_Diff")" Type="AggregateType.Custom" Format="N2">
+                                                                        <FooterTemplate>
+                                                                            @{
+                                                                                var currentValue = items.Where(a => a.Annee == item).Sum(a => a.DL_MontantHT);
+
+                                                                                var previousYear = (int.Parse(item) - 1).ToString();
+                                                                                var previousValue = items.Where(a => a.Annee == previousYear).Sum(a => a.DL_MontantHT);
+                                                                                var differenceValue = currentValue - previousValue;
+                                                                            }
+                                                                            @if (@differenceValue > 0)
+                                                                            {
+                                                                                <div style="text-align: right;">
+                                                                                    <span class="statustxt e-activecolor">+@differenceValue?.ToString("N2")</span>
+                                                                                </div>
+                                                                            }
+                                                                            @if (@differenceValue < 0)
+                                                                            {
+                                                                                <div style="text-align: right;">
+                                                                                    <span class="statustxt e-inactivecolor">@differenceValue?.ToString("N2")</span>
+                                                                                </div>
+                                                                            }
+                                                                        </FooterTemplate>
+                                                                    </GridAggregateColumn>
+                                                                    <GridAggregateColumn Field="@(item+"_Per")" Type="AggregateType.Custom" Format="N2">
+                                                                        <FooterTemplate>
+                                                                            @{
+                                                                                var currentValue = items.Where(a => a.Annee == item).Sum(a => a.DL_MontantHT);
+                                                                                var previousYear = (int.Parse(item) - 1).ToString();
+                                                                                var previousValue = items.Where(a => a.Annee == previousYear).Sum(a => a.DL_MontantHT);
+                                                                                var differenceValue = currentValue - previousValue;
+                                                                                var percentageDifference = previousValue != 0 ? (differenceValue / previousValue) : (currentValue != 0 ? 1 : 0);
+                                                                            }
+                                                                            @if (@percentageDifference > 0)
+                                                                            {
+                                                                                <div style="text-align: right;">
+                                                                                    <span class="statustxt e-activecolor">+@percentageDifference?.ToString("P2")</span>
+                                                                                </div>
+                                                                            }
+                                                                            @if (@percentageDifference < 0)
+                                                                            {
+                                                                                <div style="text-align: right;">
+                                                                                    <span class="statustxt e-inactivecolor">@percentageDifference?.ToString("P2")</span>
+                                                                                </div>
+                                                                            }
+                                                                        </FooterTemplate>
+                                                                    </GridAggregateColumn>
+                                                                }
+                                                            </GridAggregateColumns>
+                                                        </GridAggregate>
+                                                    </GridAggregates>
+
+                                                    <GridColumns>
+                                                        <GridColumn MinWidth="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.Mois)" HeaderText="Mois">
+                                                            <Template>
+                                                                @{
+                                                                    var dt = (context as API_V_MARGE);
+                                                                    <div style="text-align: left;">@fn.GetFrenchMonth(dt.Mois)</div>
+                                                                }
+                                                            </Template>
+                                                        </GridColumn>
+                                                        @foreach (string item in annees)
+                                                        {
+
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="@(item)">
+                                                                <GridColumns>
+                                                                    <GridColumn Field="@(item+"_CA")" HeaderText="CA" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                                                        <Template>
+                                                                            @{
+                                                                                var dt = (context as API_V_MARGE);
+                                                                                var currentValue = items.Where(a => a.Mois == dt.Mois && a.Annee == item).Sum(a => a.DL_MontantHT);
+                                                                            }
+                                                                            <div style="text-align: right;">
+                                                                                @currentValue?.ToString("### ### ##0.00;-### ### ##0.00;#")
+                                                                            </div>
+                                                                        </Template>
+                                                                    </GridColumn>
+                                                                    <GridColumn Field="@(item+"_Diff")" HeaderText="Diff" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                                                        <Template>
+                                                                            @{
+                                                                                var dt = (context as API_V_MARGE);
+                                                                                var currentValue = items.Where(a => a.Mois == dt.Mois && a.Annee == item).Sum(a => a.DL_MontantHT);
+
+                                                                                var previousYear = (int.Parse(item) - 1).ToString();
+                                                                                var previousValue = items.Where(a => a.Mois == dt.Mois && a.Annee == previousYear).Sum(a => a.DL_MontantHT);
+                                                                                var differenceValue = currentValue - previousValue;
+                                                                            }
+                                                                            @if (@differenceValue > 0)
+                                                                            {
+                                                                                <div style="text-align: right;">
+                                                                                    <span class="statustxt e-activecolor">+@differenceValue?.ToString("N2")</span>
+                                                                                </div>
+                                                                            }
+                                                                            @if (@differenceValue < 0)
+                                                                            {
+                                                                                <div style="text-align: right;">
+                                                                                    <span class="statustxt e-inactivecolor">@differenceValue?.ToString("N2")</span>
+                                                                                </div>
+                                                                            }
+                                                                        </Template>
+                                                                    </GridColumn>
+                                                                    <GridColumn Field="@(item+"_Per")" HeaderText="%" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                                                        <Template>
+                                                                            @{
+                                                                                var dt = (context as API_V_MARGE);
+                                                                                var currentValue = items.Where(a => a.Mois == dt.Mois && a.Annee == item).Sum(a => a.DL_MontantHT);
+
+                                                                                var previousYear = (int.Parse(item) - 1).ToString();
+                                                                                var previousValue = items.Where(a => a.Mois == dt.Mois && a.Annee == previousYear).Sum(a => a.DL_MontantHT);
+
+                                                                                var differenceValue = currentValue - previousValue;
+                                                                                var percentageDifference = previousValue != 0 ? (differenceValue / previousValue) : (currentValue != 0 ? 1 : 0);
+                                                                            }
+
+                                                                            @if (@percentageDifference > 0)
+                                                                            {
+                                                                                <div style="text-align: right;">
+                                                                                    <span class="statustxt e-activecolor">+@percentageDifference?.ToString("P2")</span>
+                                                                                </div>
+                                                                            }
+                                                                            @if (@percentageDifference < 0)
+                                                                            {
+                                                                                <div style="text-align: right;">
+                                                                                    <span class="statustxt e-inactivecolor">@percentageDifference?.ToString("P2")</span>
+                                                                                </div>
+                                                                            }
+                                                                        </Template>
+                                                                    </GridColumn>
+                                                                </GridColumns>
+
+                                                            </GridColumn>
+                                                        }
+
+                                                    </GridColumns>
+
+                                                </SfGrid>
                                             </div>
                                             </Card>
                                         </GridCol>
@@ -292,6 +419,7 @@
     private List<API_V_MARGE> dt_mois = new List<API_V_MARGE>();
     private List<API_V_MARGE> dt_article = new List<API_V_MARGE>();
     private List<API_V_MARGE> dt_annee = new List<API_V_MARGE>();
+    private List<string> annees = new List<string>();
     private async Task LoadData()
     {
         unites = db.P_UNITE.Where(a => (a.U_Intitule ?? "") != "").ToList();
@@ -315,19 +443,20 @@
         nomencalures.Add(new Items { ShortId = 3, Name = "COMPOSANT" });
         nomencalures.Add(new Items { ShortId = 4, Name = "ARTICLE LIE" });
         items = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.AR_Ref == row.AR_Ref).ToList();
-        dt_mois = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.AR_Ref == row.AR_Ref).GroupBy(a => new { a.MoisAnnee })
+        annees = items.OrderBy(a => a.Annee).Select(a => a.Annee).Distinct().ToList();
+        dt_mois = items.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.AR_Ref == row.AR_Ref).GroupBy(a => new { a.Mois })
      .Select(a => new API_V_MARGE
          {
-             MoisAnnee = a.Key.MoisAnnee,
+             Mois = a.Key.Mois,
              DL_Qte = a.Sum(a => a.DL_Qte),
              DL_MontantHT = a.Sum(a => a.DL_MontantHT),
              DL_MontantTTC = a.Sum(a => a.DL_MontantTTC),
              CMUPCoutTotal = a.Sum(a => a.CMUPCoutTotal),
              CMUPMarge = a.Sum(a => a.CMUPMarge),
              CMUPMargeP = a.Sum(a => a.DL_MontantHT) != 0.0m ? a.Sum(a => a.CMUPMarge) / a.Sum(a => a.DL_MontantHT) : 0.0m
-         }).OrderByDescending(a => a.MoisAnnee).Take(12).ToList();
+         }).OrderBy(a => a.Mois).Take(12).ToList();
 
-        dt_annee = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.AR_Ref == row.AR_Ref).GroupBy(a => new { a.Annee })
+        dt_annee = items.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.AR_Ref == row.AR_Ref).GroupBy(a => new { a.Annee })
             .Select(a => new API_V_MARGE
             {
                     Annee = a.Key.Annee,
@@ -339,7 +468,7 @@
                 CMUPMargeP = a.Sum(a => a.DL_MontantHT) != 0.0m ? a.Sum(a => a.CMUPMarge) / a.Sum(a => a.DL_MontantHT) : 0.0m
                 }).OrderByDescending(a => a.Annee).Take(12).ToList();
 
-        dt_article = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.AR_Ref == row.AR_Ref).GroupBy(a => new { a.CT_Intitule, a.CT_Num })
+        dt_article = items.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null) && a.AR_Ref == row.AR_Ref).GroupBy(a => new { a.CT_Intitule, a.CT_Num })
        .Select(a => new API_V_MARGE
            {
                CT_Num = a.Key.CT_Num,
@@ -373,14 +502,14 @@
         if (type == "client")
         {
             await DialogService.OpenAsync<DetailsMarge>(args.RowData.CT_Intitule,
-      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CT_Num", args.RowData.CT_Num }, { "AR_Ref", row.AR_Ref }, { "Height", "85vh" } },
-      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "95%" });
+      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CT_Num", args.RowData.CT_Num }, { "AR_Ref", row.AR_Ref }, { "Height", "82vh" } },
+      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         }
         if (type == "mois")
         {
             await DialogService.OpenAsync<DetailsMarge>(args.RowData.MoisAnnee,
-      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "MoisAnnee", args.RowData.MoisAnnee }, { "AR_Ref", row.AR_Ref }, { "Height", "85vh" } },
-      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "95%" });
+      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "MoisAnnee", args.RowData.MoisAnnee }, { "AR_Ref", row.AR_Ref }, { "Height", "82vh" } },
+      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         }
 
     }

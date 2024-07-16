@@ -342,13 +342,13 @@
 		{
 			DialogService.OpenAsync<PdfViewer>(args.FileDetails.Name,
 				new Dictionary<string, object>() { { "DocumentPath", helpers.getPath(session.Societe.id.ToString(), "Projet", this.id.ToString()) + "/" + args.FileDetails.Name } },
-				new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+				new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
 		}
 		if (args.FileDetails.Name.ToUpper().EndsWith(".DOC") || args.FileDetails.Name.ToUpper().EndsWith(".DOCX") || args.FileDetails.Name.ToUpper().EndsWith(".TXT"))
 		{
 			DialogService.OpenAsync<WordViewer>(args.FileDetails.Name,
 				new Dictionary<string, object>() { { "DocumentPath", helpers.getPath(session.Societe.id.ToString(), "Projet", this.id.ToString()) + "/" + args.FileDetails.Name } },
-				new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+				new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
 		}
 
 	}

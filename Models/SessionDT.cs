@@ -38,6 +38,9 @@ namespace BusinessWeb
         public int SelectedAPP { get; set; }
         public CryptoLicense license { get; set; }
         public List<TAuthorize> Authorizes { get; set; }
+		public string zoomLevel { get; set; } = "1";
+        public double scaleLevel { get; set; } = 1;
+        public string gridHeight { get; set; } = "100%";
 
     }
 }

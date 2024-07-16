@@ -24,7 +24,34 @@ namespace BusinessWeb
             
             return rs;
         }
-        public List<AuthItems> AuthItems()
+		public string GetFrenchMonth(string monthCode)
+		{
+			var monthMap = new Dictionary<string, string>
+		{
+			{ "M01", "Janvier" },
+			{ "M02", "Février" },
+			{ "M03", "Mars" },
+			{ "M04", "Avril" },
+			{ "M05", "Mai" },
+			{ "M06", "Juin" },
+			{ "M07", "Juillet" },
+			{ "M08", "Août" },
+			{ "M09", "Septembre" },
+			{ "M10", "Octobre" },
+			{ "M11", "Novembre" },
+			{ "M12", "Décembre" }
+		};
+
+			if (monthMap.TryGetValue(monthCode, out var frenchMonth))
+			{
+				return frenchMonth;
+			}
+			else
+			{
+				throw new ArgumentException("Invalid month code");
+			}
+		}
+		public List<AuthItems> AuthItems()
         {
             List<AuthItems> list = new List<AuthItems>();
 
@@ -163,7 +190,7 @@ namespace BusinessWeb
             list.Add(new AuthItems { SelectedAPP = 13, Title = "Traitement", Description = "Payés", Url = "banque/isc/payes" });
 
 
-
+            //ETATS
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Liste des clients", Url = "clients" });
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Relevé documents ventes", Url = "releve-ventes" });
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Balance agée", Url = "et-balanceagee-client" });
@@ -179,6 +206,7 @@ namespace BusinessWeb
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Par Représentant", Url = "et-ca-representant" });
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Par Famille", Url = "et-ca-famille" });
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Par Region", Url = "et-ca-region" });
+            list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Par Affaire", Url = "et-ca-affaire" });
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Comparatif Par Année", Url = "et-vente-annuel" });
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Comparatif Par Mois", Url = "et-vente-mensuel" });
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Echéances Clients", Url = "et-echeances-clients" });
@@ -198,6 +226,7 @@ namespace BusinessWeb
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats Par Article", Url = "et-achat-article" });
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats Par Acheteur", Url = "et-achat-representant" });
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats Par Famille", Url = "et-achat-famille" });
+            list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats Par Affaire", Url = "et-achat-affaire" });
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Comparatif Par Année", Url = "et-achat-annuel" });
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Comparatif Par Mois", Url = "et-achat-mensuel" });
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Echéances Fournisseurs", Url = "et-echeances-fournisseurs" });
@@ -1648,7 +1677,8 @@ namespace BusinessWeb
             list.Add(new Items { Id = 2, Name = "Par Tiers" });
             list.Add(new Items { Id = 3, Name = "Par Article" });
             list.Add(new Items { Id = 4, Name = "Par Collaborateur" });
-            return list;
+			list.Add(new Items { Id = 5, Name = "Par Affaire" });
+			return list;
         }
         public List<Items> TypeSociete()
         {

@@ -4,7 +4,7 @@
  @if (IsLoaded)
 {
     <Card_1 Title="POINTAGE DES AVANCEMENTS">
-        <div class="grid-84">
+        <div class="grid-84" style="zoom: @session.zoomLevel;">
             <RadzenContent Container="main">
                 <SfToolbar CssClass="btns">
 
@@ -51,7 +51,7 @@
 
                     </GridCol>
                     <GridCol Xs="24" Md="19">
-                        <div class="grid-80">
+                        <div class="grid-80" style="zoom: @session.zoomLevel;">
                             <SfGrid  @ref=@DefaultGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
                                     Toolbar="@(new List<object>() { "ColumnChooser", "Search"})">
 

@@ -37,8 +37,8 @@
                     <ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
                 </ToolbarItems>
             </SfToolbar>
-            <div class="grid-84">
-                <SfGrid  Height="100%" AllowResizing AllowSorting AllowFiltering AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items">
+            <div class="grid-84" style="zoom: @session.zoomLevel;">
+                <SfGrid Height="100%" AllowResizing AllowSorting AllowFiltering AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items">
                     <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="false" AllowDeleting="false" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
                     <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="RowDoubleClicked" TValue="API_V_COMPTET"></GridEvents>
                     <GridPageSettings PageSize="100"></GridPageSettings>
@@ -280,14 +280,14 @@ else
     {
         await DialogService.OpenAsync<TiersFiche>(args.RowData.CT_Intitule,
         new Dictionary<string, object>() { { "cbMarq", args.RowData.cbMarq } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         await UpdateGrid();
     }
     protected async Task AddClick()
     {
         await DialogService.OpenAsync<TiersFiche>($"Ajouter une société",
         new Dictionary<string, object>() { { "cbMarq", 0 } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         await UpdateGrid();
     }
 

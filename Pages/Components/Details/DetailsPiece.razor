@@ -138,7 +138,7 @@
 											</GridCol>
 											<GridCol Xs="24" Md="24">
 												<Card>
-													<div class="grid-50">
+													<div class="grid-40" style="zoom: @session.zoomLevel;">
 														<SfGrid  Height="100%" AllowTextWrap ID="LignesGRID" @ref=@MainGrid AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes" Toolbar="@(new List<object>() { "ColumnChooser"})">
 															<GridEvents QueryCellInfo="CustomizeCell" TValue="API_V_DOCLIGNE"></GridEvents>
 															<GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
@@ -220,7 +220,7 @@
 										<TabHeader Text="Fichiers"></TabHeader>
 									</ChildContent>
 									<ContentTemplate>
-										<FilesManager height="65vh" table="Document" id="@row.cbMarq" societe="@session.Societe.id.ToString()"></FilesManager>
+										<FilesManager height="55vh" table="Document" id="@row.cbMarq" societe="@session.Societe.id.ToString()"></FilesManager>
 									</ContentTemplate>
 								</TabItem>
 

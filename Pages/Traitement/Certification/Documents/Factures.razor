@@ -4,8 +4,8 @@
 {
     <Card_1 Title="LISTE DES FACTURES">
         <RadzenContent Container="main">
-            <div class="grid-90">
-                <SfGrid  Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="@(sc.IsInRole("Admin"))" AllowExcelExport="@(sc.IsInRole("Admin"))" AllowPaging="true" DataSource="@items"
+    <div class="grid-90" style="zoom: @session.zoomLevel;">
+        <SfGrid  Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="@(sc.IsInRole("Admin"))" AllowExcelExport="@(sc.IsInRole("Admin"))" AllowPaging="true" DataSource="@items"
                          Toolbar="@(new List<object>() { "Search", "ExcelExport","Add", "Delete"
                     ,new ToolbarItem() { Type = ItemType.Input,Template = Date1, Id = "date1", TooltipText = "Date Début", Align = ItemAlign.Right}
                     ,new ToolbarItem() { Type = ItemType.Input,Template = Date2, Id = "date2", TooltipText = "Date Fin", Align = ItemAlign.Right}})">
@@ -201,7 +201,7 @@ else
     {
         await DialogService.OpenAsync<DetailsPiece>(args.RowData.DO_Piece,
        new Dictionary<string, object>() { { "DO_Piece", args.RowData.DO_Piece }, { "DO_Type", args.RowData.DO_Type } },
-   new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+   new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
     }
 
 

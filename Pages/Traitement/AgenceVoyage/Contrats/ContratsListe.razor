@@ -122,14 +122,14 @@
     {
         await DialogService.OpenAsync<ContratsFiche>(args.RowData.Piece,
         new Dictionary<string, object>() { { "id", args.RowData.id }, { "Type", Type }, { "cbMarq", cbMarq } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         await UpdateGrid();
     }
     protected async Task AddClick()
     {
         await DialogService.OpenAsync<ContratsFiche>($"Ajouter une élément",
         new Dictionary<string, object>() { { "id", 0 }, { "Type", Type }, { "cbMarq", cbMarq } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         await UpdateGrid();
     }
 

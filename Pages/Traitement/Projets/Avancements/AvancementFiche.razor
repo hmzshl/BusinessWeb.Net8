@@ -5,7 +5,7 @@
                 <TabHeader Text="Avancement"></TabHeader>
             </ChildContent>
             <ContentTemplate>
-                <div class="grid-80">
+                <div class="grid-80" style="zoom: @session.zoomLevel;">
                     <SfGrid  Height="100%" DataSource="@(lignes)" class="no-border">
                         <GridEditSettings AllowEditing=@EditAllowed() Mode="Syncfusion.Blazor.Grids.EditMode.Batch" AllowNextRowEdit="false" />
                         <GridEvents TValue="API_T_AvancementDetail"></GridEvents>
@@ -70,7 +70,7 @@
                 <TabHeader Text="Travaux hors BDS"></TabHeader>
             </ChildContent>
             <ContentTemplate>
-                <div class="grid-80">
+                <div class="grid-80" style="zoom: @session.zoomLevel;">
                     <SfGrid  Height="100%" class="no-border" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(hors_bds)">
                         <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
                         </GridEditSettings>

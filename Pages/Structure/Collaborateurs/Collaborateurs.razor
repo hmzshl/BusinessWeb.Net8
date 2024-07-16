@@ -4,8 +4,13 @@
 
 <Card_1 Title="LISTE DES COLLABORATEURS">
     <RadzenContent Container="main">
-         <div class="grid-84">
+         <div class="grid-84" style="zoom: @session.zoomLevel;">
 
          </div>
     </RadzenContent>
 </Card_1>
+
+@code{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+}

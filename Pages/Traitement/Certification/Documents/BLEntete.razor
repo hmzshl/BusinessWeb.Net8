@@ -4,8 +4,8 @@
 {
     <Card_1 Title="LISTE DES BONS DE LIVRAISONS">
         <RadzenContent Container="main">
-            <div class="grid-90">
-                <SfGrid  Height="100%" AllowFiltering RowRenderingMode="RowDirection.Horizontal" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="@(sc.IsInRole("Admin"))" AllowExcelExport="@(sc.IsInRole("Admin"))" AllowPaging="true" DataSource="@items"
+    <div class="grid-90" style="zoom: @session.zoomLevel;">
+        <SfGrid  Height="100%" AllowFiltering RowRenderingMode="RowDirection.Horizontal" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="@(sc.IsInRole("Admin"))" AllowExcelExport="@(sc.IsInRole("Admin"))" AllowPaging="true" DataSource="@items"
                          Toolbar="@(new List<object>() { "Search", "ExcelExport","Add", "Delete"
                     ,new ToolbarItem() { Type = ItemType.Input,Template = Date1, Id = "date1", TooltipText = "Date Début", Align = ItemAlign.Right}
                     ,new ToolbarItem() { Type = ItemType.Input,Template = Date2, Id = "date2", TooltipText = "Date Fin", Align = ItemAlign.Right}})">
@@ -142,7 +142,7 @@ else
         short? type = 6;
         await DialogService.OpenAsync<DetailsPiece>(DO_Piece,
      new Dictionary<string, object>() { { "DO_Piece", DO_Piece }, { "DO_Type", type } },
-     new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+     new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
     }
     private async Task UpdateGrid()
     {
@@ -199,14 +199,14 @@ else
     {
         await DialogService.OpenAsync<BLFiche>(args.RowData.Piece,
         new Dictionary<string, object>() { { "id", args.RowData.id } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "95%" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         await UpdateGrid();
     }
     private async Task Add()
     {
         await DialogService.OpenAsync<BLFiche>("Ajouter un élément",
         new Dictionary<string, object>() { { "id", 0 } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "95%" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         await UpdateGrid();
     }
 

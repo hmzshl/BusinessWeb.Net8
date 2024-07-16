@@ -1,7 +1,7 @@
 ﻿
 @if (IsLoaded)
 {
-    <div style="height: @Height;">
+    <div style="height: @Height; zoom: @session.zoomLevel;">
         @if (CT_Num != null || CO_No != 0)
         {
             <SfToolbar CssClass="btns">

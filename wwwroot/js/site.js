@@ -7,3 +7,6 @@ window.getBrowserDimension = function () {
         height: window.innerHeight
     };
 };
+window.getScaleLevel = function () {
+    return window.devicePixelRatio;
+};

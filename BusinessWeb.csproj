@@ -122,6 +122,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Update="Pages\Traitement\Etats\Clients\CAAffaires.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Update="Resources\SfResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SfResources.Designer.cs</LastGenOutput>

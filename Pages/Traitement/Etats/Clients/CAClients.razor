@@ -35,7 +35,7 @@
 
                     <GridCol Xs="24" Md="16">
                         <Card>
-                            <div class="grid-80">
+                            <div class="grid-80" style="zoom: @session.zoomLevel;">
                                 <SfGrid  Height="100%" DataSource="@(items)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
                                     <GridPageSettings PageSize="100" />
                                     <GridAggregates>
@@ -143,7 +143,7 @@
                     </GridCol>
                     <GridCol Xs="24" Md="8">
                         <Card>
-                            <div class="grid-80">
+                            <div class="grid-80" style="zoom: @session.zoomLevel;">
                                 <SfChart Title="CA des top 30 CLIENTS" Width="90%" Theme="Theme.Fluent" Height="100%">
                                     <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
@@ -237,8 +237,8 @@ else
     protected async Task ShowDetail(RecordDoubleClickEventArgs<API_V_MARGE> args)
     {
         await DialogService.OpenAsync<DetailsMarge>(args.RowData.CT_Intitule,
-        new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CT_Num", args.RowData.CT_Num }, { "Height", "85vh" } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CT_Num", args.RowData.CT_Num }, { "Height", "82vh" } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
     }
     public async Task CustomizeCell(Syncfusion.Blazor.Grids.QueryCellInfoEventArgs<API_V_MARGE> args)
     {

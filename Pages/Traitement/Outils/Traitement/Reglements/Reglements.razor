@@ -48,7 +48,7 @@
 						<ToolbarItem OnClick=@(args => (UpdateGrid())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
 					</ToolbarItems>
 				</SfToolbar>
-				<div class="grid-84">
+				<div class="grid-84" style="zoom: @session.zoomLevel;">
 					@if (loading)
 					{
 						<div class="center-screen">

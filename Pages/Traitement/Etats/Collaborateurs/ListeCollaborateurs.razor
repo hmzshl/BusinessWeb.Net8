@@ -4,8 +4,8 @@
 {
     <Card_1 Title="LISTE DES COLLABORATEURS">
         <RadzenContent Container="main">
-            <div class="grid-90">
-                <SfGrid  Height="100%" AllowResizing AllowFiltering AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+    <div class="grid-90" style="zoom: @session.zoomLevel;">
+        <SfGrid  Height="100%" AllowResizing AllowFiltering AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
                         Toolbar="@(new List<object>() {"Search", "ExcelExport"})">
                     <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
 
@@ -168,7 +168,7 @@ else
     {
         await DialogService.OpenAsync<CollaborateurFiche>(args.RowData.Intitule,
         new Dictionary<string, object>() { { "CO_No", args.RowData.CO_No } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         await UpdateGrid();
     }
     private async Task Add()

@@ -4,7 +4,7 @@
 
 <Card_1 Title="LISTE DES DEVISES">
          <RadzenContent Container="main">
-        <div class="grid-84">
+        <div class="grid-84" style="zoom: @session.zoomLevel;">
             <SfGrid  Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)" AllowPaging>
                 <GridPageSettings PageSize="100"></GridPageSettings>
                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>

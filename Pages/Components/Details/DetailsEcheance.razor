@@ -40,7 +40,7 @@
 
         </ToolbarItems>
     </SfToolbar>
-    <div style="height: @Height;">
+    <div style="height: @Height; zoom: @session.zoomLevel;">
 
         <SfGrid  AllowTextWrap ID="EcheanceGRID" Height="100%" AllowGrouping AllowSelection EnableHover DataSource="@(items)" @ref=DefaultGrid AllowSorting AllowFiltering="false" AllowExcelExport>
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>

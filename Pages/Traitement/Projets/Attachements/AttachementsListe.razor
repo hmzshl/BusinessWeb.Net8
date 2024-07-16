@@ -109,7 +109,7 @@
         {
             await DialogService.OpenAsync<AttachementsFiche>(args.RowData.Piece,
     new Dictionary<string, object>() { { "id", args.RowData.id }, { "type", Int32.Parse(type) }, { "IsAttachement", IsAttachement }, { "IsDecompte", IsDecompte } },
-new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         }
 
         else
@@ -126,7 +126,7 @@ new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "9
         {
             await DialogService.OpenAsync<AttachementsFiche>($"Ajouter un élément",
     new Dictionary<string, object>() { { "id", 0 }, { "type", Int32.Parse(type) }, { "IsAttachement", IsAttachement }, { "IsDecompte", IsDecompte } },
-    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         }
         else
         {
