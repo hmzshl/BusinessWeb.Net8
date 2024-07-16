@@ -3,89 +3,109 @@
 
 @if (IsLoaded)
 {
-    <Card_1 Title="HISTORIQUE CONNEXIONS">
-        <RadzenContent Container="main">
-    <div class="grid-90" style="zoom: @session.zoomLevel;">
-        <SfGrid  Height="100%" AllowFiltering AllowResizing AllowSorting AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
-                     <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                     <GridPageSettings PageSize="100"></GridPageSettings>
-                     <GridTemplates>
-                         <EmptyRecordTemplate>
-                             <Empty></Empty>
-                         </EmptyRecordTemplate>
-                     </GridTemplates>
-                     <GridColumns>
-                     <GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_HISTORIQUECONNEXION.DateOP)" HeaderText="Heure"></GridColumn>
-                         <GridColumn  HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_HISTORIQUECONNEXION.Utilisateur)" HeaderText="Utilisateur"></GridColumn>
-                     <GridColumn Width="110" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_HISTORIQUECONNEXION.TypeOP)" HeaderText="Operation">
-                         <Template>
-                             @{
-                                    var dt = (context as API_V_HISTORIQUECONNEXION);
-                                    if (dt.TypeOP == "Connexion")
-                                    {
-                                        <div style="text-align: left;">
-                                            <span class="statustxt e-activecolor">@dt.TypeOP</span>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div style="text-align: left;">
-                                            <span class="statustxt e-infocolor">@dt.TypeOP</span>
-                                        </div>
-                                    }
-                                }
-                            </Template>
-                        </GridColumn>
-                         <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_HISTORIQUECONNEXION.App)" HeaderText="Application"></GridColumn>
-                         <GridColumn Width="110" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_HISTORIQUECONNEXION.CB_Type)" HeaderText="Type"></GridColumn>
+	<Card_1 Title="HISTORIQUE CONNEXIONS">
+		<RadzenContent Container="main">
+			<div class="grid-90">
+				<SfToolbar>
+					<ToolbarItems>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
 
-                         <GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_HISTORIQUECONNEXION.Computer)" HeaderText="Ordinateur"></GridColumn>
-                         <GridColumn Width="180" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_HISTORIQUECONNEXION.SessionWindows)" HeaderText="Session"></GridColumn>
-                         
-                     </GridColumns>
-                     <SfSpinner @bind-Visible="@loading">
-                     </SfSpinner>
-                 </SfGrid>
-             </div>
-         </RadzenContent>
-     </Card_1>
+						<ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-print"></ToolbarItem>
+						<ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+
+
+						<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+							<Template>
+								<SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+							</Template>
+						</ToolbarItem>
+
+					</ToolbarItems>
+				</SfToolbar>
+				<div class="grid-84" style="zoom: @session.zoomLevel;">
+					<SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
+						<GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+						<GridPageSettings PageSize="100"></GridPageSettings>
+						<GridTemplates>
+							<EmptyRecordTemplate>
+								<Empty></Empty>
+							</EmptyRecordTemplate>
+						</GridTemplates>
+						<GridColumns>
+							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_HISTORIQUECONNEXION.DateOP)" HeaderText="Heure"></GridColumn>
+							<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_HISTORIQUECONNEXION.Utilisateur)" HeaderText="Utilisateur"></GridColumn>
+							<GridColumn Width="110" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_HISTORIQUECONNEXION.TypeOP)" HeaderText="Operation">
+								<Template>
+									@{
+										var dt = (context as API_V_HISTORIQUECONNEXION);
+										if (dt.TypeOP == "Connexion")
+										{
+											<div style="text-align: left;">
+												<span class="statustxt e-activecolor">@dt.TypeOP</span>
+											</div>
+										}
+										else
+										{
+											<div style="text-align: left;">
+												<span class="statustxt e-infocolor">@dt.TypeOP</span>
+											</div>
+										}
+									}
+								</Template>
+							</GridColumn>
+							<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_HISTORIQUECONNEXION.App)" HeaderText="Application"></GridColumn>
+							<GridColumn Width="110" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_HISTORIQUECONNEXION.CB_Type)" HeaderText="Type"></GridColumn>
+
+							<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_HISTORIQUECONNEXION.Computer)" HeaderText="Ordinateur"></GridColumn>
+							<GridColumn Width="180" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_HISTORIQUECONNEXION.SessionWindows)" HeaderText="Session"></GridColumn>
+
+						</GridColumns>
+						<SfSpinner @bind-Visible="@loading">
+						</SfSpinner>
+					</SfGrid>
+				</div>
+
+			</div>
+		</RadzenContent>
+	</Card_1>
 }
 else
 {
-    <div class="center-screen">
-        <Loading_1 />
-    </div>
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
 }
 
 
 
 
 
- @code
+@code
 {
 
-    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
-    DB db = new DB();
-    //Components
-    private SfGrid<API_V_HISTORIQUECONNEXION> DefaultGrid;
-    bool IsLoaded = false;
+	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	//Components
+	private SfGrid<API_V_HISTORIQUECONNEXION> DefaultGrid;
+	bool IsLoaded = false;
 
-    private List<API_V_HISTORIQUECONNEXION> items = new List<API_V_HISTORIQUECONNEXION>();
-    bool loading = false;
+	private List<API_V_HISTORIQUECONNEXION> items = new List<API_V_HISTORIQUECONNEXION>();
+	bool loading = false;
 
-    protected override async Task OnInitializedAsync()
-    {
-        await Task.Delay(1);
-        db = session.db;
-        await UpdateGrid();
-        IsLoaded = true;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(1);
+		db = session.db;
+		await UpdateGrid();
+		IsLoaded = true;
 
-    }
-    private async Task UpdateGrid()
-    {
-        items = session.db.API_V_HISTORIQUECONNEXION.OrderByDescending(a => a.DateOP).ToList();
-    }
+	}
+	private async Task UpdateGrid()
+	{
+		items = session.db.API_V_HISTORIQUECONNEXION.OrderByDescending(a => a.DateOP).ToList();
+	}
 
 
 }

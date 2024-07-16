@@ -167,7 +167,7 @@ else
     protected async Task ShowDetail(RecordDoubleClickEventArgs<API_V_ACHAT> args)
     {
         await DialogService.OpenAsync<DetailsAchat>(args.RowData.AR_Design,
-        new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CA_Num", args.RowData.AR_Ref }, { "Height", "82vh" } },
+        new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CA_Num", args.RowData.AR_Ref }, { "ClassHeight", "grid-80" } },
         new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
     }
 }

@@ -2,103 +2,139 @@
 @attribute [Authorize(Roles = "Super Admin,Admin,Direction,Caissier")]
 @if (IsLoaded)
 {
-    <Card_1 Title="MOUVEMENTS DE CAISSE">
-        <RadzenContent Container="main">
-    <div class="grid-90" style="zoom: @session.zoomLevel;">
-        <SfGrid @ref=DefaultGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items"
-                        Toolbar="@(new List<object>() { "ColumnChooser", "Search","Print", "ExcelExport","Add", "Delete",new ToolbarItem() { Type = ItemType.Input,Template = Caisses, Id = "caisse", TooltipText = "Caisse", Align = ItemAlign.Right}
-                    ,new ToolbarItem() { Type = ItemType.Input,Template = Date1, Id = "date1", TooltipText = "Date Début", Align = ItemAlign.Right}
-                    ,new ToolbarItem() { Type = ItemType.Input,Template = Date2, Id = "date2", TooltipText = "Date Fin", Align = ItemAlign.Right}})">
-                    <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" AllowAdding AllowDeleting ShowDeleteConfirmDialog>
+	<Card_1 Title="MOUVEMENTS DE CAISSE">
+		<RadzenContent Container="main">
+			<div class="grid-90">
+				<SfToolbar>
+					<ToolbarItems>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
 
-                    </GridEditSettings>
-                    <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" TValue="V_MovementCaisse" OnRecordDoubleClick="Edit"></GridEvents>
-                    <GridPageSettings PageSize="100"></GridPageSettings>
-                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                    <GridTemplates>
-                        <EmptyRecordTemplate>
-                            <Empty></Empty>
-                        </EmptyRecordTemplate>
-                    </GridTemplates>
-                    <GridAggregates>
-                        <GridAggregate>
-                            <GridAggregateColumns>
-                                <GridAggregateColumn Field="Debit" Type="AggregateType.Sum" Format="N2">
-                                    <FooterTemplate>
-                                        @{
-                                            var SumValue = (context as AggregateTemplateContext);
-                                            <div>
-                                                @SumValue.Sum
-                                            </div>
-                                        }
-                                    </FooterTemplate>
+						<ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-print"></ToolbarItem>
+						<ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+						
+						<ToolbarItem TooltipText="Supprimer" Text="Supprimer" OnClick=@(args => (DefaultGrid.DeleteRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-trash"></ToolbarItem>
+						<ToolbarItem TooltipText="Ajouter" Text="Ajouter" OnClick=@(args => (DefaultGrid.AddRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-circle-add"></ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
 
-                                </GridAggregateColumn>
-                                <GridAggregateColumn Field="Credit" Type="AggregateType.Sum" Format="N2">
-                                    <FooterTemplate>
-                                        @{
-                                            var SumValue = (context as AggregateTemplateContext);
-                                            <div>
-                                                @SumValue.Sum
-                                            </div>
-                                        }
-                                    </FooterTemplate>
 
-                                </GridAggregateColumn>
-                                <GridAggregateColumn Field="Solde" Type="AggregateType.Custom" Format="N2">
-                                    <FooterTemplate>
-                                        @{
-                                            var Value = (context as AggregateTemplateContext);
-                                            <div style="text-align: right;">
-                                                @((items.Sum(a => a.Debit) - items.Sum(a => a.Credit)).ToString("N2"))
-                                            </div>
-                                        }
-                                    </FooterTemplate>
-                                </GridAggregateColumn>
-                            </GridAggregateColumns>
-                        </GridAggregate>
-                    </GridAggregates>
-                    <GridColumns>
-                        <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_MovementCaisse.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
-                        <GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_MovementCaisse.Numero)" HeaderText="Piece"></GridColumn>
-                        <GridColumn AllowSorting="false" AllowFiltering="false" Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_MovementCaisse.Libelle)" HeaderText="Motif"></GridColumn>
-                        <GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Bénéficiaire" Field="@nameof(V_MovementCaisse.PersonnelIntitule)"></GridColumn>
-                        <GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affectation" Field="@nameof(V_MovementCaisse.AffectationIntitule)"></GridColumn>
-                        <GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° Tiers" Field="@nameof(V_MovementCaisse.CT_NumProjet)"></GridColumn>
-                        <GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Tiers" Field="@nameof(V_MovementCaisse.CT_Intitule)"></GridColumn>
-                        <GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Aff" Field="@nameof(V_MovementCaisse.CA_Num)"></GridColumn>
-                        <GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affaire" Field="@nameof(V_MovementCaisse.CA_Intitule)"></GridColumn>
-                        <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Débit" Field="@nameof(V_MovementCaisse.Debit)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                        <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Crédit" Field="@nameof(V_MovementCaisse.Credit)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                        <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Solde" Field="@nameof(V_MovementCaisse.Solde)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                        <GridColumn Width="35px" AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="VL" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
-                            <Template>
-                                @{
-                                    var dt = (context as V_MovementCaisse);
-                                }
-                                @if(dt.Valide)
-                                {
-                                    <RadzenIcon Icon="lock" style="font-weight: 400; color: limegreen;" />
-                                }
-                                else
-                                {
-                                    <RadzenIcon Icon="lock_clock" style="font-weight: 400;" />
-                                }
-                            </Template>
-                        </GridColumn>
-                    </GridColumns>
-                    <SfSpinner @bind-Visible="@loading">
-                    </SfSpinner>
-                </SfGrid>
-            </div>
-        </RadzenContent>
-    </Card_1>
+						<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+							<Template>
+								<SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+							<Template>
+								@Caisses
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+							<Template>
+								@Date1
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+							<Template>
+								@Date2
+							</Template>
+						</ToolbarItem>
+
+					</ToolbarItems>
+				</SfToolbar>
+				<div class="grid-84" style="zoom: @session.zoomLevel;">
+					<SfGrid @ref=DefaultGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting 
+					AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items">
+						<GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" AllowAdding AllowDeleting ShowDeleteConfirmDialog>
+
+						</GridEditSettings>
+						<GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" TValue="V_MovementCaisse" OnRecordDoubleClick="Edit"></GridEvents>
+						<GridPageSettings PageSize="100"></GridPageSettings>
+						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+						<GridTemplates>
+							<EmptyRecordTemplate>
+								<Empty></Empty>
+							</EmptyRecordTemplate>
+						</GridTemplates>
+						<GridAggregates>
+							<GridAggregate>
+								<GridAggregateColumns>
+									<GridAggregateColumn Field="Debit" Type="AggregateType.Sum" Format="N2">
+										<FooterTemplate>
+											@{
+												var SumValue = (context as AggregateTemplateContext);
+												<div>
+													@SumValue.Sum
+												</div>
+											}
+										</FooterTemplate>
+
+									</GridAggregateColumn>
+									<GridAggregateColumn Field="Credit" Type="AggregateType.Sum" Format="N2">
+										<FooterTemplate>
+											@{
+												var SumValue = (context as AggregateTemplateContext);
+												<div>
+													@SumValue.Sum
+												</div>
+											}
+										</FooterTemplate>
+
+									</GridAggregateColumn>
+									<GridAggregateColumn Field="Solde" Type="AggregateType.Custom" Format="N2">
+										<FooterTemplate>
+											@{
+												var Value = (context as AggregateTemplateContext);
+												<div style="text-align: right;">
+													@((items.Sum(a => a.Debit) - items.Sum(a => a.Credit)).ToString("N2"))
+												</div>
+											}
+										</FooterTemplate>
+									</GridAggregateColumn>
+								</GridAggregateColumns>
+							</GridAggregate>
+						</GridAggregates>
+						<GridColumns>
+							<GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_MovementCaisse.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
+							<GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_MovementCaisse.Numero)" HeaderText="Piece"></GridColumn>
+							<GridColumn AllowSorting="false" AllowFiltering="false" Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_MovementCaisse.Libelle)" HeaderText="Motif"></GridColumn>
+							<GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Bénéficiaire" Field="@nameof(V_MovementCaisse.PersonnelIntitule)"></GridColumn>
+							<GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affectation" Field="@nameof(V_MovementCaisse.AffectationIntitule)"></GridColumn>
+							<GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° Tiers" Field="@nameof(V_MovementCaisse.CT_NumProjet)"></GridColumn>
+							<GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Tiers" Field="@nameof(V_MovementCaisse.CT_Intitule)"></GridColumn>
+							<GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Aff" Field="@nameof(V_MovementCaisse.CA_Num)"></GridColumn>
+							<GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affaire" Field="@nameof(V_MovementCaisse.CA_Intitule)"></GridColumn>
+							<GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Débit" Field="@nameof(V_MovementCaisse.Debit)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+							<GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Crédit" Field="@nameof(V_MovementCaisse.Credit)" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+							<GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Solde" Field="@nameof(V_MovementCaisse.Solde)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+							<GridColumn Width="35px" AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="VL" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+								<Template>
+									@{
+										var dt = (context as V_MovementCaisse);
+									}
+									@if (dt.Valide)
+									{
+										<RadzenIcon Icon="lock" style="font-weight: 400; color: limegreen;" />
+									}
+									else
+									{
+										<RadzenIcon Icon="lock_clock" style="font-weight: 400;" />
+									}
+								</Template>
+							</GridColumn>
+						</GridColumns>
+						<SfSpinner @bind-Visible="@loading">
+						</SfSpinner>
+					</SfGrid>
+				</div>
+
+			</div>
+		</RadzenContent>
+	</Card_1>
 }
 else
 {
-    <div class="center-screen">
-        <Loading_1 />
-    </div>
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
 }
 
 
@@ -107,151 +143,151 @@ else
 
 @code
 {
-    [CascadingParameter]
-    public SessionDT session { get; set; } = new SessionDT();
-    DB db = new DB();
-    bool IsLoaded = false;
-    //Components
-    private SfGrid<V_MovementCaisse> DefaultGrid;
+	[CascadingParameter]
+	public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	bool IsLoaded = false;
+	//Components
+	private SfGrid<V_MovementCaisse> DefaultGrid;
 
-    //End components
+	//End components
 
-    private List<V_MovementCaisse> items = new List<V_MovementCaisse>();
-    private List<API_V_CAISSEENTETE> data = new List<API_V_CAISSEENTETE>();
-    string activekey = "0";
-    bool loading = false;
-    List<API_T_Caisse> caisses = new List<API_T_Caisse>();
-    int caisse = 0;
-    DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
-    DateTime? date2;
+	private List<V_MovementCaisse> items = new List<V_MovementCaisse>();
+	private List<API_V_CAISSEENTETE> data = new List<API_V_CAISSEENTETE>();
+	string activekey = "0";
+	bool loading = false;
+	List<API_T_Caisse> caisses = new List<API_T_Caisse>();
+	int caisse = 0;
+	DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
+	DateTime? date2;
 
 
-    private RenderFragment Caisses => @<SfDropDownList TValue="int" TItem="API_T_Caisse" Placeholder="CAISSE" DataSource=@(caisses) Width="250px" @bind-Value=@caisse>
-        <DropDownListFieldSettings Text="C_Nom" Value="id"> </DropDownListFieldSettings>
-        <DropDownListEvents TValue="int" TItem="API_T_Caisse" ValueChange="@(args => (UpdateGrid()))"></DropDownListEvents>
-    </SfDropDownList>;
-    private RenderFragment Date1 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date1" Width="120px" Placeholder="Date Début" TValue="DateTime?">
-        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
-    </SfDatePicker>;
-    private RenderFragment Date2 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date2" Width="120px" Placeholder="Date Fin" TValue="DateTime?">
-        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>  
-             </SfDatePicker>
-    ;
+	private RenderFragment Caisses => @<SfDropDownList TValue="int" TItem="API_T_Caisse" Placeholder="CAISSE" DataSource=@(caisses) Width="250px" @bind-Value=@caisse>
+		<DropDownListFieldSettings Text="C_Nom" Value="id"> </DropDownListFieldSettings>
+		<DropDownListEvents TValue="int" TItem="API_T_Caisse" ValueChange="@(args => (UpdateGrid()))"></DropDownListEvents>
+	</SfDropDownList>;
+	private RenderFragment Date1 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date1" Width="120px" Placeholder="Date Début" TValue="DateTime?">
+		<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+	</SfDatePicker>;
+	private RenderFragment Date2 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date2" Width="120px" Placeholder="Date Fin" TValue="DateTime?">
+		<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+	</SfDatePicker>
+	;
 
-    private async Task OnActionBegin(ActionEventArgs<V_MovementCaisse> args)
-    {
-        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
-    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
-    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
-        {
-            args.Cancel = true;
-        }
+	private async Task OnActionBegin(ActionEventArgs<V_MovementCaisse> args)
+	{
+		if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+	|| args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+	|| args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+		{
+			args.Cancel = true;
+		}
 
-        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
-        {
-            await Add();
-        }
-        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
-        {
-            db.Database.ExecuteSqlRaw("DELETE FROM API_T_CaisseLigne WHERE Entete = {0}", args.Data.id);
-            db.Database.ExecuteSqlRaw("DELETE FROM API_T_CaisseEntete WHERE id = {0}", args.Data.id);
-            db.SaveChanges();
-            await UpdateGrid();
-        }
-    }
-    private async Task Add()
-    {
-        await DialogService.OpenAsync<CaisseFiche>("",
-    new Dictionary<string, object>() { { "caisse", caisse }, { "id", 0 }, { "IsMV", true } },
-    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "600px", Height = "700px" });
-        await UpdateGrid();
-    }
-    protected override async Task OnInitializedAsync()
-    {
-        await Task.Delay(1);
-        db = session.db;
-        var cs = db.API_T_Caisse_User.Where(a => a.User == sc.User.Id).Select(a => a.Caisse);
-        if (cs.Count() != 0)
-        {
-            caisses = db.API_T_Caisse.Where(a => cs.Contains(a.id)).ToList();
-            if (caisses.Count() != 0)
-            {
-                caisse = caisses.First().id;
-            }
-        }
-        await UpdateGrid();
-        IsLoaded = true;
-    }
-    private async Task UpdateGrid()
-    {
+		if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+		{
+			await Add();
+		}
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			db.Database.ExecuteSqlRaw("DELETE FROM API_T_CaisseLigne WHERE Entete = {0}", args.Data.id);
+			db.Database.ExecuteSqlRaw("DELETE FROM API_T_CaisseEntete WHERE id = {0}", args.Data.id);
+			db.SaveChanges();
+			await UpdateGrid();
+		}
+	}
+	private async Task Add()
+	{
+		await DialogService.OpenAsync<CaisseFiche>("",
+	new Dictionary<string, object>() { { "caisse", caisse }, { "id", 0 }, { "IsMV", true } },
+	new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "600px", Height = "700px" });
+		await UpdateGrid();
+	}
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(1);
+		db = session.db;
+		var cs = db.API_T_Caisse_User.Where(a => a.User == sc.User.Id).Select(a => a.Caisse);
+		if (cs.Count() != 0)
+		{
+			caisses = db.API_T_Caisse.Where(a => cs.Contains(a.id)).ToList();
+			if (caisses.Count() != 0)
+			{
+				caisse = caisses.First().id;
+			}
+		}
+		await UpdateGrid();
+		IsLoaded = true;
+	}
+	private async Task UpdateGrid()
+	{
 
-        loading = true;
-        await Task.Delay(1);
-        items = new List<V_MovementCaisse>();
-        Decimal solde = 0;
-        data = db.API_V_CAISSEENTETE.Where(a => a.Caisse == caisse && a.Date >= (date1??new DateTime(1900,1,1)) && a.Date <= (date2??new DateTime(2070,12,31))).OrderBy(a => a.Date).ToList();
-        var reports = db.API_V_CAISSEENTETE.Where(a => a.Caisse == caisse && a.Date < (date1 ?? new DateTime(1900, 1, 1))).ToList();
-        solde = reports.Where(a => a.Type == 0).Sum(a => a.Montant) - reports.Where(a => a.Type == 1).Sum(a => a.Montant);
+		loading = true;
+		await Task.Delay(1);
+		items = new List<V_MovementCaisse>();
+		Decimal solde = 0;
+		data = db.API_V_CAISSEENTETE.Where(a => a.Caisse == caisse && a.Date >= (date1 ?? new DateTime(1900, 1, 1)) && a.Date <= (date2 ?? new DateTime(2070, 12, 31))).OrderBy(a => a.Date).ToList();
+		var reports = db.API_V_CAISSEENTETE.Where(a => a.Caisse == caisse && a.Date < (date1 ?? new DateTime(1900, 1, 1))).ToList();
+		solde = reports.Where(a => a.Type == 0).Sum(a => a.Montant) - reports.Where(a => a.Type == 1).Sum(a => a.Montant);
 
-        if(solde != 0)
-        {
-            var rp = new V_MovementCaisse();
-            rp.Libelle = "Solde reporté";
-            rp.Solde = solde;
-            if (solde < 0)
-            {
-                rp.Credit = -solde;
-            }
-            else
-            {
-                rp.Debit = solde;
-            }
-            items.Add(rp);
+		if (solde != 0)
+		{
+			var rp = new V_MovementCaisse();
+			rp.Libelle = "Solde reporté";
+			rp.Solde = solde;
+			if (solde < 0)
+			{
+				rp.Credit = -solde;
+			}
+			else
+			{
+				rp.Debit = solde;
+			}
+			items.Add(rp);
 
-        }
-        foreach (API_V_CAISSEENTETE item in data)
-        {
-            var ln = new V_MovementCaisse();
-            fn.CopyData(item,ln);
-            ln.id = item.id;
-            if(item.Type == 0)
-            {
-                ln.Debit = item.Montant;
-            }
-            if (item.Type == 1)
-            {
-                ln.Credit = item.Montant;
-            }
-            solde = ln.Debit - ln.Credit + solde;
-            ln.Solde = solde;
-            items.Add(ln);
-        }
-        loading = false;
-        await Task.Delay(1);
-    }
-    private async Task ValueChangeHandler(ChangeEventArgs<int, API_T_Caisse> args)
-    {
-        await UpdateGrid();
-    }
-    protected async Task Edit(RecordDoubleClickEventArgs<V_MovementCaisse> args)
-    {
-        await DialogService.OpenAsync<CaisseFiche>(args.RowData.Numero,
-    new Dictionary<string, object>() { { "caisse", caisse }, { "id", args.RowData.id } },
-    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "600px", Height = "700px" });
-        await UpdateGrid();
-    }
-    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
-    {
-        if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
-        {
-            await this.DefaultGrid.ExcelExport();
-        }
-        if (args.Item.Id == "Grid_pdfexport")  //Id is combination of Grid's ID and itemname
-        {
-            await this.DefaultGrid.PdfExport();
-        }
+		}
+		foreach (API_V_CAISSEENTETE item in data)
+		{
+			var ln = new V_MovementCaisse();
+			fn.CopyData(item, ln);
+			ln.id = item.id;
+			if (item.Type == 0)
+			{
+				ln.Debit = item.Montant;
+			}
+			if (item.Type == 1)
+			{
+				ln.Credit = item.Montant;
+			}
+			solde = ln.Debit - ln.Credit + solde;
+			ln.Solde = solde;
+			items.Add(ln);
+		}
+		loading = false;
+		await Task.Delay(1);
+	}
+	private async Task ValueChangeHandler(ChangeEventArgs<int, API_T_Caisse> args)
+	{
+		await UpdateGrid();
+	}
+	protected async Task Edit(RecordDoubleClickEventArgs<V_MovementCaisse> args)
+	{
+		await DialogService.OpenAsync<CaisseFiche>(args.RowData.Numero,
+	new Dictionary<string, object>() { { "caisse", caisse }, { "id", args.RowData.id } },
+	new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "600px", Height = "700px" });
+		await UpdateGrid();
+	}
+	public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+	{
+		if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
+		{
+			await this.DefaultGrid.ExcelExport();
+		}
+		if (args.Item.Id == "Grid_pdfexport")  //Id is combination of Grid's ID and itemname
+		{
+			await this.DefaultGrid.PdfExport();
+		}
 
-    }
+	}
 
 
 }

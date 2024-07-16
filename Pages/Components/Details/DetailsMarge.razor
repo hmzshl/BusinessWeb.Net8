@@ -22,7 +22,7 @@
 
 		</ToolbarItems>
 	</SfToolbar>
-	<div style="height: @Height; zoom: @session.zoomLevel;">
+	<div class="@ClassHeight" style=" zoom: @session.zoomLevel;">
 		<SfGrid  @ref=DefaultGrid ID="DetailMargeGRID" AllowExcelExport Height="100%" AllowGrouping=@(grouped > 0) AllowSelection EnableHover DataSource="@(items)" ShowColumnChooser AllowReordering AllowSorting AllowFiltering>
 			<GridPageSettings PageSize="100" />
 			<GridEvents OnToolbarClick="ToolbarClickHandler" TValue="API_V_MARGE"></GridEvents>
@@ -220,7 +220,7 @@ else
 	[Parameter] public string Annee { get; set; }
 	[Parameter] public int CO_No { get; set; } = 0;
 	[Parameter] public int DE_No { get; set; }
-	[Parameter] public string Height { get; set; }
+	[Parameter] public string ClassHeight { get; set; }
 	[Parameter] public string Periode { get; set; }
 	[Parameter] public DateTime? Date1 { get; set; }
 	[Parameter] public DateTime? Date2 { get; set; }

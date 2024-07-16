@@ -545,7 +545,7 @@
 								</ChildContent>
 								<ContentTemplate>
 									<div class="no-border small-grid">
-										<DetailsReleveStandard Height="78vh" CT_Num="@row.CT_Num" Periode="Encours"></DetailsReleveStandard>
+										<DetailsReleveStandard ClassHeight="grid-78" CT_Num="@row.CT_Num" Periode="Encours"></DetailsReleveStandard>
 									</div>
 
 								</ContentTemplate>
@@ -556,7 +556,7 @@
 								</ChildContent>
 								<ContentTemplate>
 									<div class="no-border small-grid">
-										<DetailsReleve Height="78vh" CT_Num="@row.CT_Num" Periode="Encours"></DetailsReleve>
+										<DetailsReleve ClassHeight="grid-78" CT_Num="@row.CT_Num" Periode="Encours"></DetailsReleve>
 									</div>
 
 								</ContentTemplate>
@@ -567,7 +567,7 @@
 								</ChildContent>
 								<ContentTemplate>
 									<div class="no-border small-grid">
-										<DetailsEntete Height="78vh" CT_Num="@row.CT_Num" DO_Domaine="row.CT_Type"></DetailsEntete>
+										<DetailsEntete ClassHeight="grid-78" CT_Num="@row.CT_Num" DO_Domaine="row.CT_Type"></DetailsEntete>
 									</div>
 
 								</ContentTemplate>
@@ -578,7 +578,7 @@
 								</ChildContent>
 								<ContentTemplate>
 									<div class="no-border small-grid">
-										<DetailsReglement Height="78vh" CT_Num="@row.CT_Num" DO_Domaine="row.CT_Type"></DetailsReglement>
+										<DetailsReglement Style="@("zoom: "+ @session.zoomLevel)" ClassHeight="grid-78" CT_Num="@row.CT_Num" DO_Domaine="row.CT_Type"></DetailsReglement>
 									</div>
 
 								</ContentTemplate>
@@ -735,13 +735,13 @@ else
 		if (type == "article")
 		{
 			await DialogService.OpenAsync<DetailsMarge>(args.RowData.AR_Design,
-			new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "AR_Ref", args.RowData.AR_Ref }, { "CT_Num", row.CT_Num }, { "Height", "82vh" } },
+			new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "AR_Ref", args.RowData.AR_Ref }, { "CT_Num", row.CT_Num }, { "ClassHeight", "grid-80" } },
 			new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
 		}
 		if (type == "mois")
 		{
 			await DialogService.OpenAsync<DetailsMarge>(args.RowData.MoisAnnee,
-			new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "MoisAnnee", args.RowData.MoisAnnee }, { "CT_Num", row.CT_Num }, { "Height", "82vh" } },
+			new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "MoisAnnee", args.RowData.MoisAnnee }, { "CT_Num", row.CT_Num }, { "ClassHeight", "grid-80" } },
 			new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
 		}
 
@@ -751,13 +751,13 @@ else
 		if (type == "article")
 		{
 			await DialogService.OpenAsync<DetailsAchat>(args.RowData.AR_Design,
-			new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "AR_Ref", args.RowData.AR_Ref }, { "CT_Num", row.CT_Num }, { "Height", "82vh" } },
+			new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "AR_Ref", args.RowData.AR_Ref }, { "CT_Num", row.CT_Num }, { "ClassHeight", "grid-80" } },
 			new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
 		}
 		if (type == "mois")
 		{
 			await DialogService.OpenAsync<DetailsAchat>(args.RowData.MoisAnnee,
-			new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "MoisAnnee", args.RowData.MoisAnnee }, { "CT_Num", row.CT_Num }, { "Height", "82vh" } },
+			new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "MoisAnnee", args.RowData.MoisAnnee }, { "CT_Num", row.CT_Num }, { "ClassHeight", "grid-80" } },
 			new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
 		}
 

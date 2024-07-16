@@ -1,7 +1,7 @@
 ﻿
 @if (IsLoaded)
 {
-    <div style="height: @Height; padding: 8px; zoom: @session.zoomLevel;" class="small-grid">
+    <div style=" padding: 8px; zoom: @session.zoomLevel;" class="small-grid @ClassHeight">
         <SfGrid  AllowExcelExport  AllowReordering Height="100%" AllowSelection EnableHover ShowColumnChooser ID="DetailLigneGRID" DataSource="@(items)" Toolbar="@(new List<object>() { "ColumnChooser","Print","ExcelExport","Search"})" AllowSorting AllowFiltering>
              <GridPageSettings PageSize="100" />
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
@@ -76,7 +76,7 @@ else
     [Parameter] public string AR_Ref { get; set; }
     [Parameter] public int CO_No { get; set; }
     [Parameter] public int DE_No { get; set; }
-    [Parameter] public string Height { get; set; }
+    [Parameter] public string ClassHeight { get; set; }
     bool IsLoaded = false;
     private List<API_V_DOCLIGNE> items = new List<API_V_DOCLIGNE>();
 

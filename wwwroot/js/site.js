@@ -10,3 +10,6 @@ window.getBrowserDimension = function () {
 window.getScaleLevel = function () {
     return window.devicePixelRatio;
 };
+window.getScreenHeight = function () {
+    return window.screen.height;
+};

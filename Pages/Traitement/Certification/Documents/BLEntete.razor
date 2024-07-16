@@ -4,87 +4,117 @@
 {
     <Card_1 Title="LISTE DES BONS DE LIVRAISONS">
         <RadzenContent Container="main">
-    <div class="grid-90" style="zoom: @session.zoomLevel;">
-        <SfGrid  Height="100%" AllowFiltering RowRenderingMode="RowDirection.Horizontal" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="@(sc.IsInRole("Admin"))" AllowExcelExport="@(sc.IsInRole("Admin"))" AllowPaging="true" DataSource="@items"
-                         Toolbar="@(new List<object>() { "Search", "ExcelExport","Add", "Delete"
-                    ,new ToolbarItem() { Type = ItemType.Input,Template = Date1, Id = "date1", TooltipText = "Date Début", Align = ItemAlign.Right}
-                    ,new ToolbarItem() { Type = ItemType.Input,Template = Date2, Id = "date2", TooltipText = "Date Fin", Align = ItemAlign.Right}})">
-                     <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+    <div class="grid-90">
+                <SfToolbar>
+                    <ToolbarItems>
+                        <ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
 
-                     </GridEditSettings>
-                     <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_V_CERTIFENTETE"></GridEvents>
-                     <GridPageSettings PageSize="100"></GridPageSettings>
-                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                     <GridTemplates>
-                         <EmptyRecordTemplate>
-                             <Empty></Empty>
-                         </EmptyRecordTemplate>
-                     </GridTemplates>
-                     <GridAggregates>
-                         <GridAggregate>
-                             <GridAggregateColumns>
-                                 <GridAggregateColumn Field="@nameof(API_V_CERTIFENTETE.Montant)" Type="AggregateType.Count" Format="N2">
-                                     <FooterTemplate>
-                                         @{
-                                            var SumValue = (context as AggregateTemplateContext);
-                                            <div>
-                                                @SumValue.Sum
+                        <ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-print"></ToolbarItem>
+                        <ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+
+                        <ToolbarItem TooltipText="Supprimer" Text="Supprimer" OnClick=@(args => (DefaultGrid.DeleteRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-trash"></ToolbarItem>
+                        <ToolbarItem TooltipText="Ajouter" Text="Ajouter" OnClick=@(args => (DefaultGrid.AddRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-circle-add"></ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+
+
+                        <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                            <Template>
+                                <SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                @Date1
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                @Date2
+                            </Template>
+                        </ToolbarItem>
+
+                    </ToolbarItems>
+                </SfToolbar>
+        <div class="grid-84" style="zoom: @session.zoomLevel;">
+                    <SfGrid Height="100%" AllowFiltering RowRenderingMode="RowDirection.Horizontal" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="@(sc.IsInRole("Admin"))" AllowExcelExport="@(sc.IsInRole("Admin"))" AllowPaging="true" DataSource="@items">
+                        <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+
+                        </GridEditSettings>
+                        <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_V_CERTIFENTETE"></GridEvents>
+                        <GridPageSettings PageSize="100"></GridPageSettings>
+                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <Empty></Empty>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                        <GridAggregates>
+                            <GridAggregate>
+                                <GridAggregateColumns>
+                                    <GridAggregateColumn Field="@nameof(API_V_CERTIFENTETE.Montant)" Type="AggregateType.Count" Format="N2">
+                                        <FooterTemplate>
+                                            @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div>
+                                                    @SumValue.Sum
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+
+                                    </GridAggregateColumn>
+                                </GridAggregateColumns>
+                            </GridAggregate>
+                        </GridAggregates>
+                        <GridColumns>
+
+                            <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
+                            <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.Piece)" HeaderText="Piece"></GridColumn>
+                            <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.DateLivraison)" HeaderText="Date.Livr" Format="dd/MM/yy"></GridColumn>
+                            <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.NumeroRapportMission)" HeaderText="Rapp Mission"></GridColumn>
+                            <GridColumn AllowFiltering Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.CO_Nom)" HeaderText="Chargé d'affaire"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.CT_Num)" HeaderText="N° Client"></GridColumn>
+                            <GridColumn AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.CT_Intitule)" HeaderText="Client"></GridColumn>
+                            <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.Statut)" HeaderText="Statut">
+                                <Template>
+                                    @{
+                                        var dt = (context as API_V_CERTIFENTETE);
+                                        if (dt.Statut == "Non Facturé")
+                                        {
+                                            <div style="text-align: left;">
+                                                <span class="statustxt e-inactivecolor">En attente</span>
                                             </div>
                                         }
-                                    </FooterTemplate>
+                                        else
+                                        {
+                                            <div style="text-align: left;">
+                                                <span class="statustxt e-activecolor">Transféré</span>
+                                            </div>
+                                        }
 
-                                </GridAggregateColumn>
-                            </GridAggregateColumns>
-                        </GridAggregate>
-                    </GridAggregates>
-                    <GridColumns>
-                        
-                        <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
-                        <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.Piece)" HeaderText="Piece"></GridColumn>
-                        <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.DateLivraison)" HeaderText="Date.Livr" Format="dd/MM/yy"></GridColumn>
-                        <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.NumeroRapportMission)" HeaderText="Rapp Mission"></GridColumn>
-                        <GridColumn AllowFiltering Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.CO_Nom)" HeaderText="Chargé d'affaire"></GridColumn>
-                         <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.CT_Num)" HeaderText="N° Client"></GridColumn>
-                         <GridColumn AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.CT_Intitule)" HeaderText="Client"></GridColumn>
-                         <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.Statut)" HeaderText="Statut">
-                             <Template>
-                                 @{
-                                    var dt = (context as API_V_CERTIFENTETE);
-                                    if (dt.Statut == "Non Facturé")
-                                    {
-                                        <div style="text-align: left;">
-                                            <span class="statustxt e-inactivecolor">En attente</span>
-                                        </div>
                                     }
-                                    else
-                                    {
-                                        <div style="text-align: left;">
-                                            <span class="statustxt e-activecolor">Transféré</span>
-                                        </div>
-                                    }
+                                </Template>
+                            </GridColumn>
+                            <GridColumn Visible="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.S_Intitule)" HeaderText="Souche"></GridColumn>
+                            <GridColumn Visible="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.FactureDate)" HeaderText="Date.Fact" Format="dd/MM/yy"></GridColumn>
+                            <GridColumn Visible="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.FactureNum)" HeaderText="N°.Fact">
+                                <Template>
+                                    @{
+                                        var item = (context as API_V_CERTIFENTETE);
+                                        if (item.FactureNum != null)
+                                        {
+                                            <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowPiece(item.FactureNum))" Shade="Shade.Darker" Variant="Variant.Text" Text="@(item.FactureNum)" ButtonStyle="ButtonStyle.Info" />
+                                        }
 
-                                }
-                            </Template>
-                         </GridColumn>
-                         <GridColumn Visible="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.S_Intitule)" HeaderText="Souche"></GridColumn>
-                         <GridColumn Visible="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.FactureDate)" HeaderText="Date.Fact" Format="dd/MM/yy"></GridColumn>
-                         <GridColumn Visible="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CERTIFENTETE.FactureNum)" HeaderText="N°.Fact">
-                            <Template>
-                                @{
-                                    var item = (context as API_V_CERTIFENTETE);
-                                    if (item.FactureNum != null)
-                                    {
-                                        <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowPiece(item.FactureNum))" Shade="Shade.Darker" Variant="Variant.Text" Text="@(item.FactureNum)" ButtonStyle="ButtonStyle.Info" />
                                     }
+                                </Template>
+                            </GridColumn>
+                        </GridColumns>
+                        <SfSpinner @bind-Visible="@loading">
+                        </SfSpinner>
+                    </SfGrid>
+        </div>
 
-                                }
-                            </Template>
-                         </GridColumn>
-                     </GridColumns>
-                     <SfSpinner @bind-Visible="@loading">
-                     </SfSpinner>
-                 </SfGrid>
              </div>
          </RadzenContent>
      </Card_1>

@@ -6,7 +6,7 @@
     <Card_1 Title="CHIFFRE D'AFFAIRE PAR REPRESENTANT">
 
         <RadzenContent>
-            <div class="grid-84" style="zoom: @session.zoomLevel;">
+            <div class="grid-container no-border">
                 <SfToolbar CssClass="btns">
                     <ToolbarItems>
                         <ToolbarItem Align="ItemAlign.Left">
@@ -34,7 +34,7 @@
 
                     <GridCol Xs="24" Md="16">
                         <Card>
-                            <div class="no-border grid-80">
+                            <div class="grid-80" style="zoom: @session.zoomLevel;">
                                 <SfGrid  Height="100%" DataSource="@(items)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
                                     <GridPageSettings PageSize="100" />
                                     <GridAggregates>
@@ -233,7 +233,7 @@ else
     protected async Task ShowDetail(RecordDoubleClickEventArgs<API_V_MARGE> args)
     {
         await DialogService.OpenAsync<DetailsMarge>(args.RowData.AR_Design,
-        new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "Height", "82vh" }, { "CO_Nom", args.RowData.CO_Nom } },
+        new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "ClassHeight", "grid-80" }, { "CO_Nom", args.RowData.CO_Nom } },
         new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
     }
 }

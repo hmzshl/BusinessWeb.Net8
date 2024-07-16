@@ -1,35 +1,37 @@
 ﻿@if (IsLoaded)
 {
-	<SfToolbar CssClass="btns">
-		<ToolbarItems>
-			<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
-			<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
-			<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
-				<Template>
-					<SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
-						<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
-					</SfDatePicker>
-				</Template>
-			</ToolbarItem>
-			<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
-				<Template>
-					<SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
-						<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
-					</SfDatePicker>
-				</Template>
-			</ToolbarItem>
+	<div style="@Style">
+		<SfToolbar CssClass="btns">
+			<ToolbarItems>
+				<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+				<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+				<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+					<Template>
+						<SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
+							<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+						</SfDatePicker>
+					</Template>
+				</ToolbarItem>
+				<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+					<Template>
+						<SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
+							<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+						</SfDatePicker>
+					</Template>
+				</ToolbarItem>
 
-			<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
-				<Template>
-					<SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
-				</Template>
-			</ToolbarItem>
-			<ToolbarItem OnClick=@(()=>{ _visible = true; }) TooltipText="Filtrer" Text="Filtrer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-filter"></ToolbarItem>
-			<ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
-			<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
-		</ToolbarItems>
-	</SfToolbar>
-	<div style="height: @Height; zoom: @session.zoomLevel;">
+				<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+					<Template>
+						<SfTextBox Width="180px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+					</Template>
+				</ToolbarItem>
+				<ToolbarItem OnClick=@(()=>{ _visible = true; }) TooltipText="Filtrer" Text="Filtrer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-filter"></ToolbarItem>
+				<ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+				<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+			</ToolbarItems>
+		</SfToolbar>
+	</div>
+	<div class="@ClassHeight" style=" zoom: @session.zoomLevel;">
 
 		<SfGrid  AllowReordering ID="DetailreglGRID" ShowColumnChooser Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowPaging="@(CT_Num == null)" @ref=DefaultGrid AllowSorting AllowFiltering AllowExcelExport>
 			<GridPageSettings PageSize="100" />
@@ -161,6 +163,7 @@ else
 	public SessionDT session { get; set; } = new SessionDT();
 	DB db = new DB();
 	bool IsLoaded = false;
+	[Parameter] public string Style { get; set; } = "";
 	[Parameter] public bool IsClients { get; set; } = false;
 	[Parameter] public bool IsFournisseurs { get; set; } = false;
 	[Parameter] public bool IsReleve { get; set; } = false;
@@ -174,7 +177,7 @@ else
 	[Parameter] public string Statut { get; set; }
 	[Parameter] public int CO_No { get; set; }
 	[Parameter] public int DE_No { get; set; }
-	[Parameter] public string Height { get; set; }
+	[Parameter] public string ClassHeight { get; set; }
 	bool _visible = false;
 	SfGrid<API_V_CREGLEMENT> DefaultGrid;
 	DateTime? date1;

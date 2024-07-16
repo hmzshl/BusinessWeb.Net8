@@ -9,1071 +9,1112 @@
 @using System.Net.NetworkInformation;
 @attribute [Authorize]
 
-@if (IsLoaded) 
+@if (IsLoaded)
 {
-   <ErrorBoundary @ref="errorBoundary">
-    <ChildContent>
-        <CascadingValue Value="@session">
-            <RadzenDialog />
-            <RadzenNotification />
-            <RadzenTooltip />
-            <RadzenContextMenu />
+	<ErrorBoundary @ref="errorBoundary">
+		<ChildContent>
+			<CascadingValue Value="@session">
+				<RadzenDialog />
+				<RadzenNotification />
+				<RadzenTooltip />
+				<RadzenContextMenu />
 
-                <Syncfusion.Blazor.Popups.SfDialogProvider />
-                <AntContainer />
-<MudBlazor.MudThemeProvider/>
-<MudBlazor.MudDialogProvider/>
-                <MudBlazor.MudSnackbarProvider />
-            <PageTitle>BusinessWeb</PageTitle>
+				<Syncfusion.Blazor.Popups.SfDialogProvider />
+				<AntContainer />
+				<MudBlazor.MudThemeProvider />
+				<MudBlazor.MudDialogProvider />
+				<MudBlazor.MudSnackbarProvider />
+				<PageTitle>BusinessWeb</PageTitle>
 
-            @if(sc.IsAuthenticated()) 
-            {
-                    <RadzenLayout style="grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body';">
-                        <RadzenHeader>
-                            <RadzenMenu class="ls-parent">
-                                <RadzenMenuItem Text="Applications" Icon="dashboard" Click="@(args => SelectAPP(0))" />
-                                <RadzenMenuItem Text="@APP()" Icon="@Icon()" Path="/" />
-                                @if (session.Societe.id > 0)
-                                {
-                                    /*Achats*/
-                                    if (session.SelectedAPP == 1)
-                                    {
-                                        <RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
-                                            <RadzenMenuItem Text="Fournisseurs" Path="/fournisseurs" Visible=@(IsVisible("fournisseurs"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Familles" Path="/familles" Visible=@(IsVisible("familles"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Articles" Path="/articles" Visible=@(IsVisible("articles"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Dépots" Path="/depots" Visible=@(IsVisible("depots"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Collaborateurs" Path="/collaborateurs" Visible=@(IsVisible("collaborateurs"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                        <RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
-                                            <RadzenMenuItem Text="Demande d'achat" Path="/achats/10" Visible=@(IsVisible("achats/10"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Préparation de commande" Path="/achats/11" Visible=@(IsVisible("achats/11"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Bon de commande" Path="/achats/12" Visible=@(IsVisible("achats/12"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Bon de livraison" Path="/achats/13" Visible=@(IsVisible("achats/13"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Bon de retour" Path="/achats/14" Visible=@(IsVisible("achats/14"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Facture" Path="/achats/16" Visible=@(IsVisible("achats/16"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Facture comptabilisée" Path="/achats/17" Visible=@(IsVisible("achats/17"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
+				@if (sc.IsAuthenticated())
+				{
+					<RadzenLayout style="grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body';">
+						<RadzenHeader>
+							<RadzenMenu class="ls-parent">
+								<RadzenMenuItem Text="Applications" Icon="dashboard" Click="@(args => SelectAPP(0))" />
+								<RadzenMenuItem Text="@APP()" Icon="@Icon()" Path="/" />
+								@if (session.Societe.id > 0)
+								{
+									/*Achats*/
+									if (session.SelectedAPP == 1)
+									{
+										<RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
+											<RadzenMenuItem Text="Fournisseurs" Path="/fournisseurs" Visible=@(IsVisible("fournisseurs"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Familles" Path="/familles" Visible=@(IsVisible("familles"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Articles" Path="/articles" Visible=@(IsVisible("articles"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Dépots" Path="/depots" Visible=@(IsVisible("depots"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Collaborateurs" Path="/collaborateurs" Visible=@(IsVisible("collaborateurs"))></RadzenMenuItem>
+										</RadzenMenuItem>
+										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
+											<RadzenMenuItem Text="Demande d'achat" Path="/achats/10" Visible=@(IsVisible("achats/10"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Préparation de commande" Path="/achats/11" Visible=@(IsVisible("achats/11"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Bon de commande" Path="/achats/12" Visible=@(IsVisible("achats/12"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Bon de livraison" Path="/achats/13" Visible=@(IsVisible("achats/13"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Bon de retour" Path="/achats/14" Visible=@(IsVisible("achats/14"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Facture" Path="/achats/16" Visible=@(IsVisible("achats/16"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Facture comptabilisée" Path="/achats/17" Visible=@(IsVisible("achats/17"))></RadzenMenuItem>
+										</RadzenMenuItem>
 
-                                    }
-                                    /*Ventes*/
-                                    if (session.SelectedAPP == 2)
-                                    {
-                                        <RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
-                                            <RadzenMenuItem Text="Clients" Path="/clients" Visible=@(IsVisible("clients"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Familles" Path="/familles" Visible=@(IsVisible("familles"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Articles" Path="/articles" Visible=@(IsVisible("articles"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Dépots" Path="/depots" Visible=@(IsVisible("depots"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Collaborateurs" Path="/collaborateurs" Visible=@(IsVisible("collaborateurs"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                        <RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
-                                            <RadzenMenuItem Text="Devis" Path="/ventes/0" Visible=@(IsVisible("ventes/0"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Bon de commande" Path="/ventes/1" Visible=@(IsVisible("ventes/1"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Préparation de livraison" Path="/ventes/2" Visible=@(IsVisible("ventes/2"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Bon de livraison" Path="/ventes/3" Visible=@(IsVisible("ventes/3"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Bon de retour" Path="/ventes/4" Visible=@(IsVisible("ventes/4"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Facture" Path="/ventes/6" Visible=@(IsVisible("ventes/6"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Facture comptabilisée" Path="/ventes/7" Visible=@(IsVisible("ventes/7"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
+									}
+									/*Ventes*/
+									if (session.SelectedAPP == 2)
+									{
+										<RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
+											<RadzenMenuItem Text="Clients" Path="/clients" Visible=@(IsVisible("clients"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Familles" Path="/familles" Visible=@(IsVisible("familles"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Articles" Path="/articles" Visible=@(IsVisible("articles"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Dépots" Path="/depots" Visible=@(IsVisible("depots"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Collaborateurs" Path="/collaborateurs" Visible=@(IsVisible("collaborateurs"))></RadzenMenuItem>
+										</RadzenMenuItem>
+										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
+											<RadzenMenuItem Text="Devis" Path="/ventes/0" Visible=@(IsVisible("ventes/0"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Bon de commande" Path="/ventes/1" Visible=@(IsVisible("ventes/1"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Préparation de livraison" Path="/ventes/2" Visible=@(IsVisible("ventes/2"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Bon de livraison" Path="/ventes/3" Visible=@(IsVisible("ventes/3"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Bon de retour" Path="/ventes/4" Visible=@(IsVisible("ventes/4"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Facture" Path="/ventes/6" Visible=@(IsVisible("ventes/6"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Facture comptabilisée" Path="/ventes/7" Visible=@(IsVisible("ventes/7"))></RadzenMenuItem>
+										</RadzenMenuItem>
 
-                                    }
-                                    /*Stock*/
-                                    if (session.SelectedAPP == 3)
-                                    {
-                                        <RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
-                                            <RadzenMenuItem Text="Familles" Path="/familles" Visible=@(IsVisible("familles"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Articles" Path="/articles" Visible=@(IsVisible("articles"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Dépots" Path="/depots" Visible=@(IsVisible("depots"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                        <RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
-                                            <RadzenMenuItem Text="Mouvement d'entrée" Path="/stocks/20" Visible=@(IsVisible("stocks/20"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Mouvement de sortie" Path="/stocks/21" Visible=@(IsVisible("stocks/21"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Mouvement de transfert" Path="/stocks/23" Visible=@(IsVisible("stocks/23"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
+									}
+									/*Stock*/
+									if (session.SelectedAPP == 3)
+									{
+										<RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
+											<RadzenMenuItem Text="Familles" Path="/familles" Visible=@(IsVisible("familles"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Articles" Path="/articles" Visible=@(IsVisible("articles"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Dépots" Path="/depots" Visible=@(IsVisible("depots"))></RadzenMenuItem>
+										</RadzenMenuItem>
+										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
+											<RadzenMenuItem Text="Mouvement d'entrée" Path="/stocks/20" Visible=@(IsVisible("stocks/20"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Mouvement de sortie" Path="/stocks/21" Visible=@(IsVisible("stocks/21"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Mouvement de transfert" Path="/stocks/23" Visible=@(IsVisible("stocks/23"))></RadzenMenuItem>
+										</RadzenMenuItem>
 
-                                    }
-                                    /*Materiels*/
-                                    if (session.SelectedAPP == 5)
-                                    {
+									}
+									/*Materiels*/
+									if (session.SelectedAPP == 5)
+									{
 
-                                        <RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
-                                            <RadzenMenuItem Text="Liste des materiels" Path="/materiels" Visible=@(IsVisible("materiels"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Pointage journalier" Path="/pointage-materiel" Visible=@(IsVisible("pointage-materiel"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Consommation gasoil" Path="/entretien/0" Visible=@(IsVisible("entretien/0"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Assurance" Path="/entretien/1" Visible=@(IsVisible("entretien/1"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Vignette" Path="/entretien/2" Visible=@(IsVisible("entretien/2"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Visite technique" Path="/entretien/3" Visible=@(IsVisible("entretien/3"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Vidange" Path="/entretien/6" Visible=@(IsVisible("entretien/6"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Entretien et réparation" Path="/entretien/7" Visible=@(IsVisible("entretien/7"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Carnet de circulation" Path="/entretien/10" Visible=@(IsVisible("entretien/10"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Carnet du disque" Path="/entretien/11" Visible=@(IsVisible("entretien/11"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Taxe sur tonnage" Path="/entretien/12" Visible=@(IsVisible("entretien/12"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Maintenance des extincteurs" Path="/entretien/13" Visible=@(IsVisible("entretien/13"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                    }
-                                    /*Personnels*/
-                                    if (session.SelectedAPP == 6)
-                                    {
+										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
+											<RadzenMenuItem Text="Liste des materiels" Path="/materiels" Visible=@(IsVisible("materiels"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Pointage journalier" Path="/pointage-materiel" Visible=@(IsVisible("pointage-materiel"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Consommation gasoil" Path="/entretien/0" Visible=@(IsVisible("entretien/0"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Assurance" Path="/entretien/1" Visible=@(IsVisible("entretien/1"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Vignette" Path="/entretien/2" Visible=@(IsVisible("entretien/2"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Visite technique" Path="/entretien/3" Visible=@(IsVisible("entretien/3"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Vidange" Path="/entretien/6" Visible=@(IsVisible("entretien/6"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Entretien et réparation" Path="/entretien/7" Visible=@(IsVisible("entretien/7"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Carnet de circulation" Path="/entretien/10" Visible=@(IsVisible("entretien/10"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Carnet du disque" Path="/entretien/11" Visible=@(IsVisible("entretien/11"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Taxe sur tonnage" Path="/entretien/12" Visible=@(IsVisible("entretien/12"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Maintenance des extincteurs" Path="/entretien/13" Visible=@(IsVisible("entretien/13"))></RadzenMenuItem>
+										</RadzenMenuItem>
+									}
+									/*Personnels*/
+									if (session.SelectedAPP == 6)
+									{
 
-                                        <RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
-                                            <RadzenMenuItem Text="Liste des personnels" Path="/personnels" Visible=@(IsVisible("personnels"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Pointage Personnels" Path="/pointage-personnel" Visible=@(IsVisible("pointage-personnel"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                        <RadzenMenuItem Text="Etats" Icon="pie_chart" Visible=@(TitleIsVisible("Etats"))>
-                                            <RadzenMenuItem Text="Pointage par personnel"></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Pointage par projet"></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Recap pointange par personnel"></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                    }
-                                    /*Caisse*/
-                                    if (session.SelectedAPP == 7)
-                                    {
-                                        <RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
-                                            <RadzenMenuItem Text="Caisse" Path="/caisses" Visible=@(IsVisible("fournisseurs"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                        <RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
-                                            <RadzenMenuItem Text="Demandes d'alimentation" Path="/caisse/demandes" Visible=@(IsVisible("caisse/demandes"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Alimentations de caisse" Path="/caisse/alimentations" Visible=@(IsVisible("caisse/alimentations"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Dépenses de caisse" Path="/caisse/depenses" Visible=@(IsVisible("caisse/depenses"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Movements de caisse" Path="/caisse/movements-caisse" Visible=@(IsVisible("caisse/movements-caisse"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                    }
-                                    /*Projets*/
-                                    if (session.SelectedAPP == 4)
-                                    {
-                                        <RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
-                                            <RadzenMenuItem Text="Maitres Ouvrage" Path="/pr-clients" Visible=@(IsVisible("pr-clients"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Fournisseurs" Path="/pr-fournisseurs" Visible=@(IsVisible("pr-fournisseurs"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Familles" Path="/familles" Visible=@(IsVisible("familles"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Articles" Path="/articles" Visible=@(IsVisible("articles"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Dépots" Path="/depots" Visible=@(IsVisible("depots"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Collaborateurs" Path="/collaborateurs" Visible=@(IsVisible("collaborateurs"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Personnels" Path="/personnels" Visible=@(IsVisible("personnels"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Materiels" Path="/materiels" Visible=@(IsVisible("materiels"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Zones" Path="/sites" Visible=@(IsVisible("sites"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Villes" Path="/villes" Visible=@(IsVisible("villes"))></RadzenMenuItem>
+										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
+											<RadzenMenuItem Text="Liste des personnels" Path="/personnels" Visible=@(IsVisible("personnels"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Pointage Personnels" Path="/pointage-personnel" Visible=@(IsVisible("pointage-personnel"))></RadzenMenuItem>
+										</RadzenMenuItem>
+										<RadzenMenuItem Text="Etats" Icon="pie_chart" Visible=@(TitleIsVisible("Etats"))>
+											<RadzenMenuItem Text="Pointage par personnel"></RadzenMenuItem>
+											<RadzenMenuItem Text="Pointage par projet"></RadzenMenuItem>
+											<RadzenMenuItem Text="Recap pointange par personnel"></RadzenMenuItem>
+										</RadzenMenuItem>
+									}
+									/*Caisse*/
+									if (session.SelectedAPP == 7)
+									{
+										<RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
+											<RadzenMenuItem Text="Caisse" Path="/caisses" Visible=@(IsVisible("fournisseurs"))></RadzenMenuItem>
+										</RadzenMenuItem>
+										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
+											<RadzenMenuItem Text="Demandes d'alimentation" Path="/caisse/demandes" Visible=@(IsVisible("caisse/demandes"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Alimentations de caisse" Path="/caisse/alimentations" Visible=@(IsVisible("caisse/alimentations"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Dépenses de caisse" Path="/caisse/depenses" Visible=@(IsVisible("caisse/depenses"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Movements de caisse" Path="/caisse/movements-caisse" Visible=@(IsVisible("caisse/movements-caisse"))></RadzenMenuItem>
+										</RadzenMenuItem>
+									}
+									/*Projets*/
+									if (session.SelectedAPP == 4)
+									{
+										<RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
+											<RadzenMenuItem Text="Maitres Ouvrage" Path="/pr-clients" Visible=@(IsVisible("pr-clients"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Fournisseurs" Path="/pr-fournisseurs" Visible=@(IsVisible("pr-fournisseurs"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Familles" Path="/familles" Visible=@(IsVisible("familles"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Articles" Path="/articles" Visible=@(IsVisible("articles"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Dépots" Path="/depots" Visible=@(IsVisible("depots"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Collaborateurs" Path="/collaborateurs" Visible=@(IsVisible("collaborateurs"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Personnels" Path="/personnels" Visible=@(IsVisible("personnels"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Materiels" Path="/materiels" Visible=@(IsVisible("materiels"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Zones" Path="/sites" Visible=@(IsVisible("sites"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Villes" Path="/villes" Visible=@(IsVisible("villes"))></RadzenMenuItem>
 
-                                        </RadzenMenuItem>
-                                        <RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
-                                            <RadzenMenuItem Text="Appels d'offre" Path="/appels-offre" Visible=@(IsVisible("appels-offre"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Marchés" Path="/marches" Visible=@(IsVisible("marches"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Bordereaux des prix" Path="/bordereaux-des-prix" Visible=@(IsVisible("bordereaux-des-prix"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Avancements" Path="/avancements" Visible=@(IsVisible("avancements"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Consommations chantiers" Path="/consommations-chantiers" Visible=@(IsVisible("consommations-chantiers"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Consommations gasoil" Path="/entretien/0" Visible=@(IsVisible("entretien/0"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Attachements" Path="/attachements" Visible=@(IsVisible("attachements"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Décomptes" Path="/decomptes" Visible=@(IsVisible("decomptes"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Factures" Path="/factures" Visible=@(IsVisible("factures"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Demandes d'achats" Path="/demandes-achats" Visible=@(IsVisible("demandes-achats"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Assurances" Path="/assurances" Visible=@(IsVisible("assurances"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Cautions" Path="/cautions" Visible=@(IsVisible("cautions"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                    }
-                                    /*Agence Voyage*/
-                                    if (session.SelectedAPP == 10)
-                                    {
-                                        <RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
-                                            <RadzenMenuItem Text="Clients" Path="/av-clients" Visible=@(IsVisible("av-clients"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Fournisseurs" Path="/av-fournisseurs" Visible=@(IsVisible("av-fournisseurs"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Devises" Path="/devises" Visible=@(IsVisible("devises"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Unités" Path="/unites" Visible=@(IsVisible("unites"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Articles" Path="/av-articles" Visible=@(IsVisible("av-articles"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                        <RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
-                                            <RadzenMenuItem Text="Contrats Fournisseurs" Path="/av-contrats-fournisseurs" Visible=@(IsVisible("av-contrats-fournisseurs"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Contrats Clients" Path="/av-contrats-clients" Visible=@(IsVisible("av-contrats-clients"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Bookings" Path="/av-bookings" Visible=@(IsVisible("av-bookings"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Factures" Path="/av-factures" Visible=@(IsVisible("av-factures"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                        <RadzenMenuItem Text="Etats" Icon="pie_chart" Visible=@(TitleIsVisible("Etats"))>
-                                            <RadzenMenuItem Text="Tableau de bord" Path="/av-tableau-bord" Visible=@(IsVisible("av-tableau-bord"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                    }
-                                    /*Caisse ISC*/
-                                    if (session.SelectedAPP == 12)
-                                    {
-                                        <RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
-                                            <RadzenMenuItem Disabled=@(!sc.IsInRole("Admin")) Click="CaissesListe" Text="Caisses"></RadzenMenuItem>
-                                            <RadzenMenuItem Click="BeneficiairesListe" Text="Bénéficiaires"></RadzenMenuItem>
-                                            <RadzenMenuItem Click="AffectationsListe" Text="Affectations"></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                        <RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
-                                            <RadzenMenuItem Text="Recettes de caisse" Path="/caisse/isc/recettes" Visible=@(IsVisible("caisse/isc/recettes"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Dépenses de caisse" Path="/caisse/isc/depenses" Visible=@(IsVisible("caisse/isc/depenses"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Movements de caisse" Path="/caisse/isc/movements-caisse" Visible=@(IsVisible("caisse/isc/movements-caisse"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                    }
-                                    /*Banque ISC*/
-                                    if (session.SelectedAPP == 13)
-                                    {
-                                        <RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
-                                            <RadzenMenuItem Text="A mettre en banque" Path="/banque/isc/mettre-en-banque" Visible=@(IsVisible("banque/isc/mettre-en-banque"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="En banque" Path="/banque/isc/en-banque" Visible=@(IsVisible("banque/isc/en-banque"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Impayés" Path="/banque/isc/impayes" Visible=@(IsVisible("banque/isc/impayes"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Payés" Path="/banque/isc/payes" Visible=@(IsVisible("banque/isc/payes"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                    }
-                                    /*Etats*/
-                                    if (session.SelectedAPP == 14)
-                                    {
-                                        <RadzenMenuItem Text="Ventes" Icon="people" Visible=@(TitleIsVisible("Ventes"))>
-                                            <RadzenMenuItem Text="Liste des clients" Path="/clients" Visible=@(IsVisible("clients"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Documents">
-                                                <RadzenMenuItem Disabled Text="Devis" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
-                                                <RadzenMenuItem Disabled Text="Commandes" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Livraisons/Factures" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
-                                            </RadzenMenuItem>
-                                            
-                                            <RadzenMenuItem Text="Balance agée" Path="/et-balanceagee-client" Visible=@(IsVisible("et-balanceagee-client"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Réglements">
-                                                <RadzenMenuItem Text="Réglements clients" Path="/reglements-clients" Visible=@(IsVisible("reglements-clients"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Echéances clients" Path="/et-echeances-clients" Visible=@(IsVisible("et-echeances-clients"))></RadzenMenuItem>
-                                            </RadzenMenuItem>
+										</RadzenMenuItem>
+										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
+											<RadzenMenuItem Text="Appels d'offre" Path="/appels-offre" Visible=@(IsVisible("appels-offre"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Marchés" Path="/marches" Visible=@(IsVisible("marches"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Bordereaux des prix" Path="/bordereaux-des-prix" Visible=@(IsVisible("bordereaux-des-prix"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Avancements" Path="/avancements" Visible=@(IsVisible("avancements"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Consommations chantiers" Path="/consommations-chantiers" Visible=@(IsVisible("consommations-chantiers"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Consommations gasoil" Path="/entretien/0" Visible=@(IsVisible("entretien/0"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Attachements" Path="/attachements" Visible=@(IsVisible("attachements"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Décomptes" Path="/decomptes" Visible=@(IsVisible("decomptes"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Factures" Path="/factures" Visible=@(IsVisible("factures"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Demandes d'achats" Path="/demandes-achats" Visible=@(IsVisible("demandes-achats"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Assurances" Path="/assurances" Visible=@(IsVisible("assurances"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Cautions" Path="/cautions" Visible=@(IsVisible("cautions"))></RadzenMenuItem>
+										</RadzenMenuItem>
+									}
+									/*Agence Voyage*/
+									if (session.SelectedAPP == 10)
+									{
+										<RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
+											<RadzenMenuItem Text="Clients" Path="/av-clients" Visible=@(IsVisible("av-clients"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Fournisseurs" Path="/av-fournisseurs" Visible=@(IsVisible("av-fournisseurs"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Devises" Path="/devises" Visible=@(IsVisible("devises"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Unités" Path="/unites" Visible=@(IsVisible("unites"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Articles" Path="/av-articles" Visible=@(IsVisible("av-articles"))></RadzenMenuItem>
+										</RadzenMenuItem>
+										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
+											<RadzenMenuItem Text="Contrats Fournisseurs" Path="/av-contrats-fournisseurs" Visible=@(IsVisible("av-contrats-fournisseurs"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Contrats Clients" Path="/av-contrats-clients" Visible=@(IsVisible("av-contrats-clients"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Bookings" Path="/av-bookings" Visible=@(IsVisible("av-bookings"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Factures" Path="/av-factures" Visible=@(IsVisible("av-factures"))></RadzenMenuItem>
+										</RadzenMenuItem>
+										<RadzenMenuItem Text="Etats" Icon="pie_chart" Visible=@(TitleIsVisible("Etats"))>
+											<RadzenMenuItem Text="Tableau de bord" Path="/av-tableau-bord" Visible=@(IsVisible("av-tableau-bord"))></RadzenMenuItem>
+										</RadzenMenuItem>
+									}
+									/*Caisse ISC*/
+									if (session.SelectedAPP == 12)
+									{
+										<RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
+											<RadzenMenuItem Disabled=@(!sc.IsInRole("Admin")) Click="CaissesListe" Text="Caisses"></RadzenMenuItem>
+											<RadzenMenuItem Click="BeneficiairesListe" Text="Bénéficiaires"></RadzenMenuItem>
+											<RadzenMenuItem Click="AffectationsListe" Text="Affectations"></RadzenMenuItem>
+										</RadzenMenuItem>
+										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
+											<RadzenMenuItem Text="Recettes de caisse" Path="/caisse/isc/recettes" Visible=@(IsVisible("caisse/isc/recettes"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Dépenses de caisse" Path="/caisse/isc/depenses" Visible=@(IsVisible("caisse/isc/depenses"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Movements de caisse" Path="/caisse/isc/movements-caisse" Visible=@(IsVisible("caisse/isc/movements-caisse"))></RadzenMenuItem>
+										</RadzenMenuItem>
+									}
+									/*Banque ISC*/
+									if (session.SelectedAPP == 13)
+									{
+										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
+											<RadzenMenuItem Text="A mettre en banque" Path="/banque/isc/mettre-en-banque" Visible=@(IsVisible("banque/isc/mettre-en-banque"))></RadzenMenuItem>
+											<RadzenMenuItem Text="En banque" Path="/banque/isc/en-banque" Visible=@(IsVisible("banque/isc/en-banque"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Impayés" Path="/banque/isc/impayes" Visible=@(IsVisible("banque/isc/impayes"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Payés" Path="/banque/isc/payes" Visible=@(IsVisible("banque/isc/payes"))></RadzenMenuItem>
+										</RadzenMenuItem>
+									}
+									/*Etats*/
+									if (session.SelectedAPP == 14)
+									{
+										<RadzenMenuItem Text="Ventes" Icon="people" Visible=@(TitleIsVisible("Ventes"))>
+											<RadzenMenuItem Text="Liste des clients" Path="/clients" Visible=@(IsVisible("clients"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Documents">
+												<RadzenMenuItem Disabled Text="Devis" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
+												<RadzenMenuItem Disabled Text="Commandes" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Livraisons/Factures" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
+											</RadzenMenuItem>
 
-                                            <RadzenMenuItem Text="Tableau de bord">
-                                                <RadzenMenuItem Text="Journalier" Path="/tb-commercial-journalier" Visible=@(IsVisible("tb-commercial-journalier"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Mensuel" Path="/tb-commercial-mensuel" Visible=@(IsVisible("tb-commercial-mensuel"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Annuel" Path="/tb-commercial-annuel" Visible=@(IsVisible("tb-commercial-annuel"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Global" Path="/tb-commercial-global" Visible=@(IsVisible("tb-commercial-global"))></RadzenMenuItem>
-                                            </RadzenMenuItem>
+											<RadzenMenuItem Text="Balance agée" Path="/et-balanceagee-client" Visible=@(IsVisible("et-balanceagee-client"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Réglements">
+												<RadzenMenuItem Text="Réglements clients" Path="/reglements-clients" Visible=@(IsVisible("reglements-clients"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Echéances clients" Path="/et-echeances-clients" Visible=@(IsVisible("et-echeances-clients"))></RadzenMenuItem>
+											</RadzenMenuItem>
 
-
-
-                                            <RadzenMenuItem Text="Chiffre d'affaire">
-                                                <RadzenMenuItem Text="Par Journée" Path="/et-ca-journee" Visible=@(IsVisible("et-ca-journee"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Mois" Path="/et-ca-mois" Visible=@(IsVisible("et-ca-mois"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Client" Path="/et-ca-client" Visible=@(IsVisible("et-ca-client"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Article" Path="/et-ca-article" Visible=@(IsVisible("et-ca-article"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Représentant" Path="/et-ca-representant" Visible=@(IsVisible("et-ca-representant"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Famille" Path="/et-ca-famille" Visible=@(IsVisible("et-ca-famille"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Region" Path="/et-ca-region" Visible=@(IsVisible("et-ca-region"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Affaire" Path="/et-ca-affaire" Visible=@(IsVisible("et-ca-affaire"))></RadzenMenuItem>
-                                            </RadzenMenuItem>
-                                            <RadzenMenuItem Text="Comparatif">
-                                                <RadzenMenuItem Text="Par Année" Path="/et-vente-annuel" Visible=@(IsVisible("et-vente-annuel"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Mois" Path="/et-vente-mensuel" Visible=@(IsVisible("et-vente-mensuel"))></RadzenMenuItem>
-                                            </RadzenMenuItem>
+											<RadzenMenuItem Text="Tableau de bord">
+												<RadzenMenuItem Text="Journalier" Path="/tb-commercial-journalier" Visible=@(IsVisible("tb-commercial-journalier"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Mensuel" Path="/tb-commercial-mensuel" Visible=@(IsVisible("tb-commercial-mensuel"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Annuel" Path="/tb-commercial-annuel" Visible=@(IsVisible("tb-commercial-annuel"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Global" Path="/tb-commercial-global" Visible=@(IsVisible("tb-commercial-global"))></RadzenMenuItem>
+											</RadzenMenuItem>
 
 
-                                        </RadzenMenuItem>
-                                        <RadzenMenuItem Text="Achats" Icon="shopping_cart_checkout" Visible=@(TitleIsVisible("Achats"))>
-                                            <RadzenMenuItem Text="Liste des fournisseurs" Path="/fournisseurs" Visible=@(IsVisible("fournisseurs"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Documents">
-                                                <RadzenMenuItem Disabled Text="Commandes" Path="/releve-achats" Visible=@(IsVisible("releve-achats"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Livraisons/Factures" Path="/releve-achats" Visible=@(IsVisible("releve-achats"))></RadzenMenuItem>
-                                            </RadzenMenuItem>
-                                            
-                                            <RadzenMenuItem Text="Balance agée" Path="/et-balanceagee-fournisseur" Visible=@(IsVisible("et-balanceagee-fournisseur"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Réglements">
-                                                <RadzenMenuItem Text="Réglements fournisseurs" Path="/reglements-fournisseurs" Visible=@(IsVisible("reglements-fournisseurs"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Echéances fournisseurs" Path="/et-echeances-fournisseurs" Visible=@(IsVisible("et-echeances-fournisseurs"))></RadzenMenuItem>
-                                            </RadzenMenuItem>
 
-                                            <RadzenMenuItem Text="Tableau de bord">
-                                                <RadzenMenuItem Text="Journalier" Path="/tb-achat-journalier" Visible=@(IsVisible("tb-achat-journalier"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Mensuel" Path="/tb-achat-mensuel" Visible=@(IsVisible("tb-achat-mensuel"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Annuel" Path="/tb-achat-annuel" Visible=@(IsVisible("tb-achat-annuel"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Global" Path="/tb-achat-global" Visible=@(IsVisible("tb-achat-global"))></RadzenMenuItem>
-                                            </RadzenMenuItem>
-                                            <RadzenMenuItem Text="Achats">
-                                                <RadzenMenuItem Text="Par Journée" Path="/et-achat-journee" Visible=@(IsVisible("et-achat-journee"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Mois" Path="/et-achat-mois" Visible=@(IsVisible("et-achat-mois"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Fournisseur" Path="/et-achat-client" Visible=@(IsVisible("et-achat-client"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Article" Path="/et-achat-article" Visible=@(IsVisible("et-achat-article"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Acheteur" Path="/et-achat-representant" Visible=@(IsVisible("et-achat-representant"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Famille" Path="/et-achat-famille" Visible=@(IsVisible("et-achat-famille"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Affaire" Path="/et-achat-affaire" Visible=@(IsVisible("et-achat-affaire"))></RadzenMenuItem>
-                                            </RadzenMenuItem>
-                                            <RadzenMenuItem Text="Comparatif">
-                                                <RadzenMenuItem Text="Par Année" Path="/et-achat-annuel" Visible=@(IsVisible("et-achat-annuel"))></RadzenMenuItem>
-                                                <RadzenMenuItem Text="Par Mois" Path="/et-achat-mensuel" Visible=@(IsVisible("et-achat-mensuel"))></RadzenMenuItem>
-                                            </RadzenMenuItem>
+											<RadzenMenuItem Text="Chiffre d'affaire">
+												<RadzenMenuItem Text="Par Journée" Path="/et-ca-journee" Visible=@(IsVisible("et-ca-journee"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Mois" Path="/et-ca-mois" Visible=@(IsVisible("et-ca-mois"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Client" Path="/et-ca-client" Visible=@(IsVisible("et-ca-client"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Article" Path="/et-ca-article" Visible=@(IsVisible("et-ca-article"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Représentant" Path="/et-ca-representant" Visible=@(IsVisible("et-ca-representant"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Famille" Path="/et-ca-famille" Visible=@(IsVisible("et-ca-famille"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Region" Path="/et-ca-region" Visible=@(IsVisible("et-ca-region"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Affaire" Path="/et-ca-affaire" Visible=@(IsVisible("et-ca-affaire"))></RadzenMenuItem>
+											</RadzenMenuItem>
+											<RadzenMenuItem Text="Comparatif">
+												<RadzenMenuItem Text="Par Année" Path="/et-vente-annuel" Visible=@(IsVisible("et-vente-annuel"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Mois" Path="/et-vente-mensuel" Visible=@(IsVisible("et-vente-mensuel"))></RadzenMenuItem>
+											</RadzenMenuItem>
 
 
-                                        </RadzenMenuItem>
-                                        <RadzenMenuItem Text="Articles" Icon="category" Visible=@(TitleIsVisible("Articles"))>
-                                            <RadzenMenuItem Text="Liste des articles" Path="/et-articles" Visible=@(IsVisible("et-articles"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="CA article" Path="/et-ca-article" Visible=@(IsVisible("et-ca-article"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                        <RadzenMenuItem Text="Collaborateurs" Icon="engineering" Visible=@(TitleIsVisible("Collaborateurs"))>
-                                            <RadzenMenuItem Text="Liste des collaborateurs" Path="/et-collaborateurs" Visible=@(IsVisible("et-collaborateurs"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="CA représentant" Path="/et-ca-representant" Visible=@(IsVisible("et-ca-representant"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Charges collaborateurs" Path="/et-frais" Visible=@(IsVisible("et-frais"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                        <RadzenMenuItem Text="Projets" Icon="card_travel" Visible=@(TitleIsVisible("Projets"))>
-                                            <RadzenMenuItem Text="Liste des projets" Path="/et-affaires" Visible=@(IsVisible("et-affaires"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Avancement travaux" Path="/"></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                    }
-                                    /*Outils*/
-                                    if (session.SelectedAPP == 9)
-                                    {
-                                        <RadzenMenuItem Text="Traitement" Icon="source" Visible=@(TitleIsVisible("Outils"))>
-                                            <RadzenMenuItem Text="Documents achats" Path="/ot-achats" Visible=@(IsVisible("ot-achats"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Documents ventes" Path="/ot-ventes" Visible=@(IsVisible("ot-ventes"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Réglements clients" Path="/ot-reglements-clients" Visible=@(IsVisible("ot-reglements-clients"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Réglements fournisseurs" Path="/ot-reglements-fournisseurs" Visible=@(IsVisible("ot-reglements-fournisseurs"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Ecritures comptables" Path="/ot-ecritures" Visible=@(IsVisible("ot-ecritures"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                    }
-                                    /*Utilisaturs*/
-                                    if (session.SelectedAPP == 18)
-                                    {
-                                        <RadzenMenuItem Text="Traitement" Icon="groups" Visible=@(TitleIsVisible("Utilisateurs"))>
-                                            <RadzenMenuItem Text="Utilisateurs connectés" Path="/utilisateurs-connectes" Visible=@(IsVisible("utilisateurs-connectes"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Historique des connexions" Path="/historique-connexions" Visible=@(IsVisible("historique-connexions"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Réinitialiser un mot de passe" Path="/reinitialiser-passe" Visible=@(IsVisible("reinitialiser-passe"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                    }
-                                    /*Tracabilite*/
-                                    if (session.SelectedAPP == 19)
-                                    {
-                                        <RadzenMenuItem Text="Traitement" Icon="history" Visible=@(TitleIsVisible("Traçabilité"))>
-                                            <RadzenMenuItem Text="Entetes documents" Path="/tr-entete" Visible=@(IsVisible("tr-entete"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Lignes documents" Path="/tr-ligne" Visible=@(IsVisible("tr-ligne"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Réglements" Path="/tr-reglement" Visible=@(IsVisible("tr-reglement"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Clients" Path="/tr-client" Visible=@(IsVisible("tr-client"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Fournisseurs" Path="/tr-fournisseur" Visible=@(IsVisible("tr-fournisseur"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Ecritures comptables" Path="/tr-ecriture" Visible=@(IsVisible("tr-ecriture"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                    }
+										</RadzenMenuItem>
+										<RadzenMenuItem Text="Achats" Icon="shopping_cart_checkout" Visible=@(TitleIsVisible("Achats"))>
+											<RadzenMenuItem Text="Liste des fournisseurs" Path="/fournisseurs" Visible=@(IsVisible("fournisseurs"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Documents">
+												<RadzenMenuItem Disabled Text="Commandes" Path="/releve-achats" Visible=@(IsVisible("releve-achats"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Livraisons/Factures" Path="/releve-achats" Visible=@(IsVisible("releve-achats"))></RadzenMenuItem>
+											</RadzenMenuItem>
 
-                                    /*Certification*/
-                                    @if (session.SelectedAPP == 15)
-                                    {
-                                        <RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
-                                            <RadzenMenuItem Text="Liste des clients" Path="/clients" Visible=@(IsVisible("clients"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Liste des articles" Path="/et-articles" Visible=@(IsVisible("et-articles"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Liste des collaborateurs" Path="/et-collaborateurs" Visible=@(IsVisible("et-collaborateurs"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                        <RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
-                                            <RadzenMenuItem Text="Grille de dialogue" Path="/cr-grille-dialogue" Visible=@(IsVisible("cr-grille-dialogue"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Ouverture dossier" Path="/cr-ouverture-dossier" Visible=@(IsVisible("cr-ouverture-dossier"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Réceptions instruments" Path="/cr-reception" Visible=@(IsVisible("cr-reception"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Décharges instruments" Path="/cr-decharge" Visible=@(IsVisible("cr-decharge"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Ordres de mission" Path="/cr-ordre-mission" Visible=@(IsVisible("cr-ordre-mission"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Rapports de mission" Path="/cr-rapport-mission" Visible=@(IsVisible("cr-rapport-mission"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Bons de livraisons" Path="/cr-bl" Visible=@(IsVisible("cr-bl"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Factures" Path="/cr-fa" Visible=@(IsVisible("cr-fa"))></RadzenMenuItem>
-                                        </RadzenMenuItem>
-                                    }
-                                    /*Synchronisation*/
-                                    @if (session.SelectedAPP == 16)
-                                    {
-                                        <RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
-                                            <RadzenMenuItem Text="Ventes" Path="imp-ventes" Visible=@(IsVisible("imp-ventes"))></RadzenMenuItem>
-                                            <RadzenMenuItem Text="Achats" Path="imp-achats" Visible=@(IsVisible("imp-achats"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Balance agée" Path="/et-balanceagee-fournisseur" Visible=@(IsVisible("et-balanceagee-fournisseur"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Réglements">
+												<RadzenMenuItem Text="Réglements fournisseurs" Path="/reglements-fournisseurs" Visible=@(IsVisible("reglements-fournisseurs"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Echéances fournisseurs" Path="/et-echeances-fournisseurs" Visible=@(IsVisible("et-echeances-fournisseurs"))></RadzenMenuItem>
+											</RadzenMenuItem>
 
-                                        </RadzenMenuItem>
-                                    }
-                                }
-
-                                <RadzenMenuItem class="ls-child-right" Visible="@sc.IsAuthenticated()" Text="@(session?.Societe?.Intitule)" Icon="home_filled">
-                                    @foreach (TSociete item in societes)
-                                    {
-                                        <RadzenMenuItem Text="@item.Intitule" Click="@(args => SocieteSelected(item))" />
-                                    }
-                                </RadzenMenuItem>
-                                @if (@sc.IsAuthenticated())
-                                {
-                                    <RadzenMenuItem Text="@("Connecté ("+sc.User?.Name+")")" Icon="account_circle">
-
-                                        <RadzenMenuItem Icon="settings" Click="Profile" Text="Profile" />
-                                        @if (sc.IsInRole("Admin"))
-                                        {
-                                            <RadzenMenuItem Click="UtilisateursListe" Icon="person" Text="Utilisateurs" />
-                                            <RadzenMenuItem Click="RolesListe" Icon="security" Text="Roles" />
-                                            <RadzenMenuItem Text="Sociétés" Icon="horizontal_split" Click="SocieteListe"></RadzenMenuItem>
-                                            <RadzenMenuItem Icon="info" Text="Activation" Click="CheckActivation" />
-                                        }
-                                        <RadzenMenuItem Click="@(args => security.Logout())" Text="Logout" Icon="power_settings_new" />
-                                    </RadzenMenuItem>
-                                }
-
-                            </RadzenMenu>
-
-                        </RadzenHeader>
-                        <RadzenBody>
-                            <ErrorBoundary @ref="errorBoundary">
-                                <ChildContent>
-                                    <div class="main-content" id="main-text">
-                                        <div class="sidebar-content">
-                                            @if (sc.IsAuthenticated())
-                                            {
-                                                @if (((license.Status == LicenseStatus.Valid || license.MachineCodeAsString == macAddr)) && (license.DateExpires.Date >= DateTime.UtcNow))
-                                                {
-                                                    @if (session.SelectedAPP == 0)
-                                                    {
-                                                        <div style="padding-top: 60px;">
-                                                            <RadzenStack class="main-btns" JustifyContent="JustifyContent.Center" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="5px" Wrap="FlexWrap.Wrap">
-                                                                @if (license.IsFeaturePresentEx(7))
-                                                                {
-                                                                    <div>
-                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(7))">
-                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card">
-                                                                                <RadzenImage Path="/images/recycle.png" Style="width: 70px; height: 70px;">
-                                                                                </RadzenImage>
-                                                                                
-                                                                                <h3 style="text-align: center;">Caisse</h3>
-                                                                            </RadzenCard>
-                                                                        </Button>
-                                                                    </div>
-                                                                }
-
-                                                                @if (license.IsFeaturePresentEx(4))
-                                                                {
-                                                                    <div>
-                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(4))">
-                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card">
-                                                                                <RadzenImage Path="/images/toolbox.png" Style="width: 70px; height: 70px;">
-                                                                                </RadzenImage>
-                                                                                
-                                                                                <h3 style="text-align: center;">Projets</h3>
-                                                                            </RadzenCard>
-                                                                        </Button>
-                                                                    </div>
-                                                                }
-
-                                                                @if (license.IsFeaturePresentEx(5))
-                                                                {
-                                                                    <div>
-                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(5))">
-                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card">
-                                                                                <RadzenImage Path="/images/taxi.png" Style="width: 70px; height: 70px;">
-                                                                                </RadzenImage>
-                                                                                
-                                                                                <h3 style="text-align: center;">Materiels</h3>
-                                                                            </RadzenCard>
-                                                                        </Button>
-                                                                    </div>
-                                                                }
-
-                                                                @if (license.IsFeaturePresentEx(6))
-                                                                {
-                                                                    <div>
-                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(6))">
-                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card">
-                                                                                <RadzenImage Path="/images/profile.png" Style="width: 70px; height: 70px;">
-                                                                                </RadzenImage>
-                                                                                
-                                                                                <h3 style="text-align: center;">Personnels</h3>
-                                                                            </RadzenCard>
-                                                                        </Button>
-                                                                    </div>
-                                                                }
-
-                                                                @if (license.IsFeaturePresentEx(10))
-                                                                {
-                                                                    <div>
-                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(10))">
-                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card">
-                                                                                <RadzenImage Path="/images/takeoff.png" Style="width: 70px; height: 70px;">
-                                                                                </RadzenImage>
-                                                                                
-                                                                                <h3 style="text-align: center;">Agence Voyage</h3>
-                                                                            </RadzenCard>
-                                                                        </Button>
-                                                                    </div>
-                                                                }
+											<RadzenMenuItem Text="Tableau de bord">
+												<RadzenMenuItem Text="Journalier" Path="/tb-achat-journalier" Visible=@(IsVisible("tb-achat-journalier"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Mensuel" Path="/tb-achat-mensuel" Visible=@(IsVisible("tb-achat-mensuel"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Annuel" Path="/tb-achat-annuel" Visible=@(IsVisible("tb-achat-annuel"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Global" Path="/tb-achat-global" Visible=@(IsVisible("tb-achat-global"))></RadzenMenuItem>
+											</RadzenMenuItem>
+											<RadzenMenuItem Text="Achats">
+												<RadzenMenuItem Text="Par Journée" Path="/et-achat-journee" Visible=@(IsVisible("et-achat-journee"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Mois" Path="/et-achat-mois" Visible=@(IsVisible("et-achat-mois"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Fournisseur" Path="/et-achat-client" Visible=@(IsVisible("et-achat-client"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Article" Path="/et-achat-article" Visible=@(IsVisible("et-achat-article"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Acheteur" Path="/et-achat-representant" Visible=@(IsVisible("et-achat-representant"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Famille" Path="/et-achat-famille" Visible=@(IsVisible("et-achat-famille"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Affaire" Path="/et-achat-affaire" Visible=@(IsVisible("et-achat-affaire"))></RadzenMenuItem>
+											</RadzenMenuItem>
+											<RadzenMenuItem Text="Comparatif">
+												<RadzenMenuItem Text="Par Année" Path="/et-achat-annuel" Visible=@(IsVisible("et-achat-annuel"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Par Mois" Path="/et-achat-mensuel" Visible=@(IsVisible("et-achat-mensuel"))></RadzenMenuItem>
+											</RadzenMenuItem>
 
 
-                                                                @if (license.IsFeaturePresentEx(14))
-                                                                {
-                                                                    <div>
-                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(14))">
-                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card">
-                                                                                <RadzenImage Path="/images/piechart.png" Style="width: 70px; height: 70px;">
-                                                                                </RadzenImage>
-                                                                                
-                                                                                <h3 style="text-align: center;">Analyse des données</h3>
-                                                                            </RadzenCard>
-                                                                        </Button>
-                                                                    </div>
-                                                                }
-                                                                @if (license.IsFeaturePresentEx(9))
-                                                                {
-                                                                    <div>
-                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(9))">
-                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card">
-                                                                                <RadzenImage Path="/images/tools.png" Style="width: 70px; height: 70px;">
-                                                                                </RadzenImage>
-                                                                                
-                                                                                <h3 style="text-align: center;">Outils</h3>
-                                                                            </RadzenCard>
-                                                                        </Button>
-                                                                    </div>
-                                                                }
-                                                                @if (license.IsFeaturePresentEx(18))
-                                                                {
-                                                                    <div>
-                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(18))">
-                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card">
-                                                                                <RadzenImage Path="/images/running.png" Style="width: 70px; height: 70px;">
-                                                                                </RadzenImage>
-                                                                                
-                                                                                <h3 style="text-align: center;">Utilisateurs</h3>
-                                                                            </RadzenCard>
-                                                                        </Button>
-                                                                    </div>
-                                                                }
-                                                                @if (license.IsFeaturePresentEx(19))
-                                                                {
-                                                                    <div>
-                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(19))">
-                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card">
-                                                                                <RadzenImage Path="/images/shoeprints.png" Style="width: 70px; height: 70px;">
-                                                                                </RadzenImage>
+										</RadzenMenuItem>
+										<RadzenMenuItem Text="Articles" Icon="category" Visible=@(TitleIsVisible("Articles"))>
+											<RadzenMenuItem Text="Liste des articles" Path="/et-articles" Visible=@(IsVisible("et-articles"))></RadzenMenuItem>
+											<RadzenMenuItem Text="CA article" Path="/et-ca-article" Visible=@(IsVisible("et-ca-article"))></RadzenMenuItem>
+										</RadzenMenuItem>
+										<RadzenMenuItem Text="Collaborateurs" Icon="engineering" Visible=@(TitleIsVisible("Collaborateurs"))>
+											<RadzenMenuItem Text="Liste des collaborateurs" Path="/et-collaborateurs" Visible=@(IsVisible("et-collaborateurs"))></RadzenMenuItem>
+											<RadzenMenuItem Text="CA représentant" Path="/et-ca-representant" Visible=@(IsVisible("et-ca-representant"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Charges collaborateurs" Path="/et-frais" Visible=@(IsVisible("et-frais"))></RadzenMenuItem>
+										</RadzenMenuItem>
+										<RadzenMenuItem Text="Projets" Icon="card_travel" Visible=@(TitleIsVisible("Projets"))>
+											<RadzenMenuItem Text="Liste des projets" Path="/et-affaires" Visible=@(IsVisible("et-affaires"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Avancement travaux" Path="/"></RadzenMenuItem>
+										</RadzenMenuItem>
+									}
+									/*Outils*/
+									if (session.SelectedAPP == 9)
+									{
+										<RadzenMenuItem Text="Traitement" Icon="source" Visible=@(TitleIsVisible("Outils"))>
+											<RadzenMenuItem Text="Documents achats" Path="/ot-achats" Visible=@(IsVisible("ot-achats"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Documents ventes" Path="/ot-ventes" Visible=@(IsVisible("ot-ventes"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Réglements clients" Path="/ot-reglements-clients" Visible=@(IsVisible("ot-reglements-clients"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Réglements fournisseurs" Path="/ot-reglements-fournisseurs" Visible=@(IsVisible("ot-reglements-fournisseurs"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Ecritures comptables" Path="/ot-ecritures" Visible=@(IsVisible("ot-ecritures"))></RadzenMenuItem>
+										</RadzenMenuItem>
+									}
+									/*Utilisaturs*/
+									if (session.SelectedAPP == 18)
+									{
+										<RadzenMenuItem Text="Traitement" Icon="groups" Visible=@(TitleIsVisible("Utilisateurs"))>
+											<RadzenMenuItem Text="Utilisateurs connectés" Path="/utilisateurs-connectes" Visible=@(IsVisible("utilisateurs-connectes"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Historique des connexions" Path="/historique-connexions" Visible=@(IsVisible("historique-connexions"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Réinitialiser un mot de passe" Path="/reinitialiser-passe" Visible=@(IsVisible("reinitialiser-passe"))></RadzenMenuItem>
+										</RadzenMenuItem>
+									}
+									/*Tracabilite*/
+									if (session.SelectedAPP == 19)
+									{
+										<RadzenMenuItem Text="Traitement" Icon="history" Visible=@(TitleIsVisible("Traçabilité"))>
+											<RadzenMenuItem Text="Entetes documents" Path="/tr-entete" Visible=@(IsVisible("tr-entete"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Lignes documents" Path="/tr-ligne" Visible=@(IsVisible("tr-ligne"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Réglements" Path="/tr-reglement" Visible=@(IsVisible("tr-reglement"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Clients" Path="/tr-client" Visible=@(IsVisible("tr-client"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Fournisseurs" Path="/tr-fournisseur" Visible=@(IsVisible("tr-fournisseur"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Ecritures comptables" Path="/tr-ecriture" Visible=@(IsVisible("tr-ecriture"))></RadzenMenuItem>
+										</RadzenMenuItem>
+									}
 
-                                                                                <h3 style="text-align: center;">Traçabilité</h3>
-                                                                            </RadzenCard>
-                                                                        </Button>
-                                                                    </div>
-                                                                }
+									/*Certification*/
+									@if (session.SelectedAPP == 15)
+									{
+										<RadzenMenuItem Text="Structure" Icon="extension" Visible=@(TitleIsVisible("Structure"))>
+											<RadzenMenuItem Text="Liste des clients" Path="/clients" Visible=@(IsVisible("clients"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Liste des articles" Path="/et-articles" Visible=@(IsVisible("et-articles"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Liste des collaborateurs" Path="/et-collaborateurs" Visible=@(IsVisible("et-collaborateurs"))></RadzenMenuItem>
+										</RadzenMenuItem>
+										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
+											<RadzenMenuItem Text="Grille de dialogue" Path="/cr-grille-dialogue" Visible=@(IsVisible("cr-grille-dialogue"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Ouverture dossier" Path="/cr-ouverture-dossier" Visible=@(IsVisible("cr-ouverture-dossier"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Réceptions instruments" Path="/cr-reception" Visible=@(IsVisible("cr-reception"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Décharges instruments" Path="/cr-decharge" Visible=@(IsVisible("cr-decharge"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Ordres de mission" Path="/cr-ordre-mission" Visible=@(IsVisible("cr-ordre-mission"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Rapports de mission" Path="/cr-rapport-mission" Visible=@(IsVisible("cr-rapport-mission"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Bons de livraisons" Path="/cr-bl" Visible=@(IsVisible("cr-bl"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Factures" Path="/cr-fa" Visible=@(IsVisible("cr-fa"))></RadzenMenuItem>
+										</RadzenMenuItem>
+									}
+									/*Synchronisation*/
+									@if (session.SelectedAPP == 16)
+									{
+										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
+											<RadzenMenuItem Text="Ventes" Path="imp-ventes" Visible=@(IsVisible("imp-ventes"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Achats" Path="imp-achats" Visible=@(IsVisible("imp-achats"))></RadzenMenuItem>
 
-                                                                @if (license.IsFeaturePresentEx(8))
-                                                                {
-                                                                    <div>
-                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(8))">
-                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card">
-                                                                                <RadzenImage Path="/images/camera.png" Style="width: 70px; height: 70px;">
-                                                                                </RadzenImage>
-                                                                                
-                                                                                <h3 style="text-align: center;">Comptabilité</h3>
-                                                                            </RadzenCard>
-                                                                        </Button>
-                                                                    </div>
-                                                                }
-                                                                @if (license.IsFeaturePresentEx(12))
-                                                                {
-                                                                    <div>
-                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(12))">
-                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card">
-                                                                                <RadzenImage Path="/images/recycle.png" Style="width: 70px; height: 70px;">
-                                                                                </RadzenImage>
-                                                                                
-                                                                                <h3 style="text-align: center;">Caisse</h3>
-                                                                            </RadzenCard>
-                                                                        </Button>
-                                                                    </div>
-                                                                }
-                                                                @if (license.IsFeaturePresentEx(13))
-                                                                {
-                                                                    <div>
-                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(13))">
-                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card">
-                                                                                <RadzenImage Path="/images/trends.png" Style="width: 70px; height: 70px;">
-                                                                                </RadzenImage>
-                                                                                
-                                                                                <h3 style="text-align: center;">Banque</h3>
-                                                                            </RadzenCard>
-                                                                        </Button>
-                                                                    </div>
-                                                                }
-                                                                @if (license.IsFeaturePresentEx(15))
-                                                                {
-                                                                    <div>
-                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(15))">
-                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card">
-                                                                                <RadzenImage Path="/images/map.png" Style="width: 70px; height: 70px;">
-                                                                                </RadzenImage>
-                                                                                
-                                                                                <h3 style="text-align: center;">Certification</h3>
-                                                                            </RadzenCard>
-                                                                        </Button>
-                                                                    </div>
-                                                                }
-                                                                @if (license.IsFeaturePresentEx(16))
-                                                                {
-                                                                    <div>
-                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(16))">
-                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card">
-                                                                                <RadzenImage Path="/images/polaroids.png" Style="width: 70px; height: 70px;">
-                                                                                </RadzenImage>
-                                                                                
-                                                                                <h3 style="text-align: center;">Transfert Données</h3>
-                                                                            </RadzenCard>
-                                                                        </Button>
-                                                                    </div>
-                                                                }
+										</RadzenMenuItem>
+									}
+								}
 
+								<RadzenMenuItem class="ls-child-right" Visible="@sc.IsAuthenticated()" Text="@(session?.Societe?.Intitule)" Icon="home_filled">
+									@foreach (TSociete item in societes)
+									{
+										<RadzenMenuItem Text="@item.Intitule" Click="@(args => SocieteSelected(item))" />
+									}
+								</RadzenMenuItem>
+								@if (@sc.IsAuthenticated())
+								{
+									<RadzenMenuItem Text="@("Connecté ("+sc.User?.Name+")")" Icon="account_circle">
 
-                                                            </RadzenStack>
-                                                        </div>
-                                                    }
-                                                    else
-                                                    {
-                                                        @if ((license.IsFeaturePresentEx(session.SelectedAPP)))
-                                                        {
+										<RadzenMenuItem Icon="settings" Click="Profile" Text="Profile" />
+										@if (sc.IsInRole("Admin"))
+										{
+											<RadzenMenuItem Click="UtilisateursListe" Icon="person" Text="Utilisateurs" />
+											<RadzenMenuItem Click="RolesListe" Icon="security" Text="Roles" />
+											<RadzenMenuItem Text="Sociétés" Icon="horizontal_split" Click="SocieteListe"></RadzenMenuItem>
+											<RadzenMenuItem Icon="info" Text="Activation" Click="CheckActivation" />
+										}
+										<RadzenMenuItem Click="@(args => security.Logout())" Text="Logout" Icon="power_settings_new" />
+									</RadzenMenuItem>
+								}
 
+							</RadzenMenu>
 
-                                                            @if (getURL() == "")
-                                                            {
+						</RadzenHeader>
+						<RadzenBody>
+							<ErrorBoundary @ref="errorBoundary">
+								<ChildContent>
+									<div class="main-content" id="main-text">
+										<div class="sidebar-content">
+											@if (sc.IsAuthenticated())
+											{
+												@if (((license.Status == LicenseStatus.Valid || license.MachineCodeAsString == macAddr)) && (license.DateExpires.Date >= DateTime.UtcNow))
+												{
+													@if (session.SelectedAPP == 0)
+													{
+														<div style="padding-top: 60px;">
+															<RadzenStack class="main-btns" JustifyContent="JustifyContent.Center" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="5px" Wrap="FlexWrap.Wrap">
+																@if (license.IsFeaturePresentEx(7))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(7))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/recycle.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
 
-                                                                <Card Style="margin: 15px;">
-                                                                    @foreach (string title in session?.Authorizes?.Where(a=> a.Url != null && a.Url != "null").Select(a => a.Title).Distinct())
-                                                                    {
-                                                                        <div>
-                                                                            <Card_2 Title="@title">
-                                                                                <RadzenStack Style="padding: 15px;" class="main-btns" JustifyContent="JustifyContent.Start" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Gap="10px" Wrap="FlexWrap.Wrap">
-                                                                                    @foreach (TAuthorize item in session?.Authorizes?.Where(a => a.Title == title).Select(a => new TAuthorize { Url = a.Url, Title = a.Title, Description = a.Description}).Distinct())
-                                                                                    {
-                                                                                        string inputString = @item.Description ?? "";
-                                                                                        string[] words = inputString.Split(' ');
-                                                                                        string lastWord = words[words.Length - 1];
-                                                                                        string restOfString = inputString.Substring(0, inputString.LastIndexOf(lastWord)).Trim();
-                                                                                        <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => NavigationManager.NavigateTo(item.Url))">
-                                                                                            <RadzenCard class="ant-card-hoverable green-card sh-card" Style="padding: 8px;width: 90px; height: 90px;display: flex;justify-content: center;align-items: center;">
+																				<h3 style="text-align: center;">Caisse</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
 
-                                                                                                <div style="color: black;text-align: center; text-wrap: pretty; font-size: 11px; font-weight: 500;   white-space: pre-wrap; word-wrap: break-word;overflow-wrap: break-word; font-family: 'Ubuntu' !important;">
-                                                                                                    @restOfString <div style="color: black;font-size: 11px;font-weight: 700 !important; text-transform: capitalize; font-family: 'Ubuntu' !important;">@lastWord</div>
-                                                                                                </div>
-                                                                                            </RadzenCard>
-                                                                                        </Button>
-                                                                                    }
-                                                                                </RadzenStack>
-                                                                            </Card_2>
-                                                                        </div>
-                                                                    }
-                                                                </Card>
+																@if (license.IsFeaturePresentEx(4))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(4))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/toolbox.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
 
-                                                            }
-                                                            else
-                                                            {
-                                                                @if (((session?.Authorizes?.Select(a => a.Url)?.Contains(getURL())) ?? false))
-                                                                {
-                                                                    @Body
-                                                                }
-                                                                else
-                                                                {
-                                                                    <div class="center-screen">
-                                                                        <Result Status="403" Title="403" SubTitle="Désolé, vous n'êtes pas autorisé à accéder à cette page.." />
-                                                                    </div>
-                                                                }
-                                                            }
+																				<h3 style="text-align: center;">Projets</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
 
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="center-screen">
-                                                                <Result Status="500" Title="License invalid" SubTitle="Merci de demander une license valide.." />
-                                                            </div>
-                                                        }
+																@if (license.IsFeaturePresentEx(5))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(5))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/taxi.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
 
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <div class="center-screen">
-                                                        <Result Status="500" Title="License invalid" SubTitle="Merci de demander une license valide.." />
-                                                    </div>
-                                                }
-                                            }
-                                            else
-                                            {
-                                                @if ((license.IsFeaturePresentEx(session.SelectedAPP)))
-                                                {
-                                                    @if (getURL() == "")
-                                                    {
-                                                        <Card Style="margin: 15px;">
-                                                            @foreach (string title in session?.Authorizes?.Select(a => a.Title).Distinct())
-                                                            {
-                                                                <div>
-                                                                    <Card_2 Title="@title">
-                                                                        <RadzenStack Style="padding: 15px;" class="main-btns" JustifyContent="JustifyContent.Start" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Gap="10px" Wrap="FlexWrap.Wrap">
-                                                                            @foreach (TAuthorize item in session?.Authorizes?.Where(a => a.Title == title).Select(a => new TAuthorize { Url = a.Url, Title = a.Title, Description = a.Description}).Distinct())
-                                                                            {
-                                                                                string inputString = @item.Description ?? "";
-                                                                                string[] words = inputString.Split(' ');
-                                                                                string lastWord = words[words.Length - 1];
-                                                                                string restOfString = inputString.Substring(0, inputString.LastIndexOf(lastWord)).Trim();
-                                                                                <Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => NavigationManager.NavigateTo(item.Url))">
-                                                                                    <RadzenCard class="ant-card-hoverable green-card sh-card" Style="padding: 8px;width: 90px; height: 90px;display: flex;justify-content: center;align-items: center;">
+																				<h3 style="text-align: center;">Materiels</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
 
-                                                                                        <div style="color: black;text-align: center; text-wrap: pretty; font-size: 11px; font-weight: 500;   white-space: pre-wrap; word-wrap: break-word;overflow-wrap: break-word; font-family: 'Ubuntu' !important;">
-                                                                                            @restOfString <div style="color: black;font-size: 11px;font-weight: 700 !important; text-transform: capitalize; font-family: 'Ubuntu' !important;">@lastWord</div>
-                                                                                        </div>
-                                                                                    </RadzenCard>
-                                                                                </Button>
-                                                                            }
-                                                                        </RadzenStack>
-                                                                    </Card_2>
-                                                                </div>
-                                                            }
-                                                        </Card>
-                                                    }
-                                                    else
-                                                    {
-                                                        @if (((session?.Authorizes?.Select(a => a.Url)?.Contains(getURL())) ?? false))
-                                                        {
-                                                            @Body
-                                                        }
-                                                        else
-                                                        {
-                                                            <div class="center-screen">
-                                                                <Result Status="403" Title="403" SubTitle="Désolé, vous n'êtes pas autorisé à accéder à cette page.." />
-                                                            </div>
-                                                        }
-                                                    }
+																@if (license.IsFeaturePresentEx(6))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(6))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/profile.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
 
-                                                }
-                                                else
-                                                {
-                                                    <div class="center-screen">
-                                                        <Result Status="500" Title="License invalid" SubTitle="Merci de demander une license valide.." />
-                                                    </div>
-                                                }
-                                            }
+																				<h3 style="text-align: center;">Personnels</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
 
-                                        </div>
-                                    </div>
-                                </ChildContent>
-                                <ErrorContent Context="ex">
-                                    @{
-                                        ShowNotification(ex);
-                                    }
-                                </ErrorContent>
-                            </ErrorBoundary>
-                        </RadzenBody>
-                    </RadzenLayout>
-            }
-            else
-            {
-                <BusinessWeb.Pages.Default.Login></BusinessWeb.Pages.Default.Login>
-            }
+																@if (license.IsFeaturePresentEx(10))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(10))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/takeoff.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
+
+																				<h3 style="text-align: center;">Agence Voyage</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
 
 
-            
+																@if (license.IsFeaturePresentEx(14))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(14))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/piechart.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
+
+																				<h3 style="text-align: center;">Analyse des données</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
+																@if (license.IsFeaturePresentEx(9))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(9))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/tools.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
+
+																				<h3 style="text-align: center;">Outils</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
+																@if (license.IsFeaturePresentEx(18))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(18))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/running.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
+
+																				<h3 style="text-align: center;">Utilisateurs</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
+																@if (license.IsFeaturePresentEx(19))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(19))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/shoeprints.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
+
+																				<h3 style="text-align: center;">Traçabilité</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
+
+																@if (license.IsFeaturePresentEx(8))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(8))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/camera.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
+
+																				<h3 style="text-align: center;">Comptabilité</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
+																@if (license.IsFeaturePresentEx(12))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(12))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/recycle.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
+
+																				<h3 style="text-align: center;">Caisse</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
+																@if (license.IsFeaturePresentEx(13))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(13))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/trends.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
+
+																				<h3 style="text-align: center;">Banque</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
+																@if (license.IsFeaturePresentEx(15))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(15))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/map.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
+
+																				<h3 style="text-align: center;">Certification</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
+																@if (license.IsFeaturePresentEx(16))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(16))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/polaroids.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
+
+																				<h3 style="text-align: center;">Transfert Données</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
 
 
-        </CascadingValue>
-    </ChildContent>
-    <ErrorContent Context="ex">
-        @{
-            ShowNotification(ex);
-        }
-    </ErrorContent>
-</ErrorBoundary>
+															</RadzenStack>
+														</div>
+													}
+													else
+													{
+														@if ((license.IsFeaturePresentEx(session.SelectedAPP)))
+														{
+
+
+															@if (getURL() == "")
+															{
+
+																<Card Style="margin: 15px;">
+																	@foreach (string title in session?.Authorizes?.Where(a => a.Url != null && a.Url != "null").Select(a => a.Title).Distinct())
+																	{
+																		<div>
+																			<Card_2 Title="@title">
+																				<RadzenStack Style="padding: 15px;" class="main-btns" JustifyContent="JustifyContent.Start" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Gap="10px" Wrap="FlexWrap.Wrap">
+																					@foreach (TAuthorize item in session?.Authorizes?.Where(a => a.Title == title).Select(a => new TAuthorize { Url = a.Url, Title = a.Title, Description = a.Description }).Distinct())
+																					{
+																						string inputString = @item.Description ?? "";
+																						string[] words = inputString.Split(' ');
+																						string lastWord = words[words.Length - 1];
+																						string restOfString = inputString.Substring(0, inputString.LastIndexOf(lastWord)).Trim();
+																						<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => NavigationManager.NavigateTo(item.Url))">
+																							<RadzenCard class="ant-card-hoverable green-card sh-card" Style="padding: 8px;width: 90px; height: 90px;display: flex;justify-content: center;align-items: center;">
+
+																								<div style="color: black;text-align: center; text-wrap: pretty; font-size: 11px; font-weight: 500;   white-space: pre-wrap; word-wrap: break-word;overflow-wrap: break-word; font-family: 'Ubuntu' !important;">
+																									@restOfString <div style="color: black;font-size: 11px;font-weight: 700 !important; text-transform: capitalize; font-family: 'Ubuntu' !important;">@lastWord</div>
+																								</div>
+																							</RadzenCard>
+																						</Button>
+																					}
+																				</RadzenStack>
+																			</Card_2>
+																		</div>
+																	}
+																</Card>
+
+															}
+															else
+															{
+																@if (((session?.Authorizes?.Select(a => a.Url)?.Contains(getURL())) ?? false))
+																{
+																	@Body
+																}
+																else
+																{
+																	<div class="center-screen">
+																		<Result Status="403" Title="403" SubTitle="Désolé, vous n'êtes pas autorisé à accéder à cette page.." />
+																	</div>
+																}
+															}
+
+														}
+														else
+														{
+															<div class="center-screen">
+																<Result Status="500" Title="License invalid" SubTitle="Merci de demander une license valide.." />
+															</div>
+														}
+
+													}
+												}
+												else
+												{
+													<div class="center-screen">
+														<Result Status="500" Title="License invalid" SubTitle="Merci de demander une license valide.." />
+													</div>
+												}
+											}
+											else
+											{
+												@if ((license.IsFeaturePresentEx(session.SelectedAPP)))
+												{
+													@if (getURL() == "")
+													{
+														<Card Style="margin: 15px;">
+															@foreach (string title in session?.Authorizes?.Select(a => a.Title).Distinct())
+															{
+																<div>
+																	<Card_2 Title="@title">
+																		<RadzenStack Style="padding: 15px;" class="main-btns" JustifyContent="JustifyContent.Start" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Gap="10px" Wrap="FlexWrap.Wrap">
+																			@foreach (TAuthorize item in session?.Authorizes?.Where(a => a.Title == title).Select(a => new TAuthorize { Url = a.Url, Title = a.Title, Description = a.Description }).Distinct())
+																			{
+																				string inputString = @item.Description ?? "";
+																				string[] words = inputString.Split(' ');
+																				string lastWord = words[words.Length - 1];
+																				string restOfString = inputString.Substring(0, inputString.LastIndexOf(lastWord)).Trim();
+																				<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => NavigationManager.NavigateTo(item.Url))">
+																					<RadzenCard class="ant-card-hoverable green-card sh-card" Style="padding: 8px;width: 90px; height: 90px;display: flex;justify-content: center;align-items: center;">
+
+																						<div style="color: black;text-align: center; text-wrap: pretty; font-size: 11px; font-weight: 500;   white-space: pre-wrap; word-wrap: break-word;overflow-wrap: break-word; font-family: 'Ubuntu' !important;">
+																							@restOfString <div style="color: black;font-size: 11px;font-weight: 700 !important; text-transform: capitalize; font-family: 'Ubuntu' !important;">@lastWord</div>
+																						</div>
+																					</RadzenCard>
+																				</Button>
+																			}
+																		</RadzenStack>
+																	</Card_2>
+																</div>
+															}
+														</Card>
+													}
+													else
+													{
+														@if (((session?.Authorizes?.Select(a => a.Url)?.Contains(getURL())) ?? false))
+														{
+															@Body
+														}
+														else
+														{
+															<div class="center-screen">
+																<Result Status="403" Title="403" SubTitle="Désolé, vous n'êtes pas autorisé à accéder à cette page.." />
+															</div>
+														}
+													}
+
+												}
+												else
+												{
+													<div class="center-screen">
+														<Result Status="500" Title="License invalid" SubTitle="Merci de demander une license valide.." />
+													</div>
+												}
+											}
+
+										</div>
+									</div>
+								</ChildContent>
+								<ErrorContent Context="ex">
+									@{
+										ShowNotification(ex);
+									}
+								</ErrorContent>
+							</ErrorBoundary>
+						</RadzenBody>
+					</RadzenLayout>
+				}
+				else
+				{
+					<BusinessWeb.Pages.Default.Login></BusinessWeb.Pages.Default.Login>
+				}
+
+
+
+
+
+			</CascadingValue>
+		</ChildContent>
+		<ErrorContent Context="ex">
+			@{
+				ShowNotification(ex);
+			}
+		</ErrorContent>
+	</ErrorBoundary>
 }
 else
 {
-    <div class="center-screen">
-        <Loading_1 />
-    </div>
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
 }
 
 <style>
-    .grid-80 {
-        height: @(setGridHeight(80));
-    }
+	.grid-80 {
+		height: @(setGridHeight(78));
+	}
 
-    .grid-90 {
-        height: 88vh;
-    }
+	.grid-90 {
+		height: 88vh;
+	}
 
-    .grid-84 {
-        height: @(setGridHeight(84));
-    }
+	.grid-84 {
+		height: @(setGridHeight(82));
+	}
 
-    .grid-70 {
-        height: @(setGridHeight(70));
-    }
+	.grid-78 {
+		height: @(setGridHeight(76));
+	}
 
-    .grid-67 {
-        height: @(setGridHeight(67));
-    }
+	.grid-70 {
+		height: @(setGridHeight(68));
+	}
 
-    .grid-34 {
-        height: @(setGridHeight(34));
-    }
+	.grid-67 {
+		height: @(setGridHeight(65));
+	}
 
-    .grid-50 {
-        height: @(setGridHeight(50));
-    }
+	.grid-34 {
+		height: @(setGridHeight(32));
+	}
 
-    .grid-45 {
-        height: @(setGridHeight(45));
-    }
+	.grid-50 {
+		height: @(setGridHeight(50));
+	}
 
-    .grid-40 {
-        height: @(setGridHeight(40));
-    }
+	.grid-45 {
+		height: @(setGridHeight(45));
+	}
+
+	.grid-40 {
+		height: @(setGridHeight(40));
+	}
 </style>
 
 
 
 @code {
 
-    bool sidebarExpanded = true;
-    [Parameter] public SessionDT session { get; set; } = new SessionDT();
-    private List<TSociete> societes = new List<TSociete>();
-    bool IsLoaded = false;
-    bool loading = false;
-    RadzenMenu MainMenu;
-    double scaleLevel = 1;
-    string gridHeight = "80vh";
-    private CryptoLicense license = new CryptoLicense();
-    string macAddr = (
-                from nic in NetworkInterface.GetAllNetworkInterfaces()
-                where nic.OperationalStatus == OperationalStatus.Up
-                select nic.GetPhysicalAddress().ToString()
-                ).FirstOrDefault();
-    protected override async Task OnInitializedAsync()
-    {
-        await Task.Delay(1);
-        TLicense row = new TLicense();
-        var dt = sdb.TLicenses.AsNoTracking().OrderBy(a => a.id).ToList();
-        if (dt.Count() != 0)
-        {
-            row = dt.First();
-        }
-        else
-        {
-            sdb.Add(row);
-            sdb.SaveChanges();
-        }
-        try
-        {
-            license = new CryptoLicense(row.Activation, fn.validationKey);
-            if ((license.Status == LicenseStatus.Valid || license.MachineCodeAsString == macAddr))
-            {
-                await Init();
-            }
-            session.license = license;
-        }
-        catch (Exception ex)
-        {
+	bool sidebarExpanded = true;
+	[Parameter] public SessionDT session { get; set; } = new SessionDT();
+	private List<TSociete> societes = new List<TSociete>();
+	bool IsLoaded = false;
+	bool loading = false;
+	RadzenMenu MainMenu;
+	double scaleLevel = 1;
+	string gridHeight = "80vh";
+	int screenHeight;
+	private CryptoLicense license = new CryptoLicense();
+	string macAddr = (
+				from nic in NetworkInterface.GetAllNetworkInterfaces()
+				where nic.OperationalStatus == OperationalStatus.Up
+				select nic.GetPhysicalAddress().ToString()
+				).FirstOrDefault();
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(1);
+		TLicense row = new TLicense();
+		var dt = sdb.TLicenses.AsNoTracking().OrderBy(a => a.id).ToList();
+		if (dt.Count() != 0)
+		{
+			row = dt.First();
+		}
+		else
+		{
+			sdb.Add(row);
+			sdb.SaveChanges();
+		}
+		try
+		{
+			license = new CryptoLicense(row.Activation, fn.validationKey);
+			if ((license.Status == LicenseStatus.Valid || license.MachineCodeAsString == macAddr))
+			{
+				await Init();
+			}
+			session.license = license;
+		}
+		catch (Exception ex)
+		{
 
-        }
+		}
 
-        IsLoaded = true;
+		IsLoaded = true;
 
-    }
-    string setGridHeight(double height)
-    {
-        string rs = "";
-        if(scaleLevel == 1)
-        {
-            rs = ((height)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh"; ;
-        }
-        else 
-        {
-            rs = (((scaleLevel - 0.05) * height)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh";
-        }
-        return rs;
-    }
-    private bool IsVisible(string url)
-    {
-        return (session?.Authorizes?.Where(a => a.Visible).Select(a => a.Url)?.Contains(url))??false;
-    }
-    private bool TitleIsVisible(string title)
-    {
-        return (session?.Authorizes?.Where(a => a.Visible && a.Title == title)?.Count() != 0);
-    }
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            session.IsMobile = await JSRuntime.InvokeAsync<bool>("isDevice");
-        }
-    }
-    private async Task Init()
-    {
-        societes = sdb.TSocietes.ToList();
-        if (sc.User != null)
-        {
-            var user = sdb.AspNetUsers.FromSqlRaw("SELECT a.* FROM AspNetUsers a WHERE a.Id = {0}", sc.User?.Id);
-            if (user.Count() != 0)
-            {
-                session.Societe = societes.Where(a => a.id == user.First().SelectedSociete).SingleOrDefault() ?? societes?.First();
-                session.SelectedAPP = user.First().SelectedAPP??0;
-            }
-            else
-            {
-                session.Societe = societes?.First();
-            }
-        }
-        else
-        {
-            session.Societe = societes?.First();
-        }
+	}
 
-        await UpdateAuth();
-        try
-        {
-            scaleLevel = (await JSRuntime.InvokeAsync<double>("getScaleLevel"));
-            session.scaleLevel = scaleLevel;
-            session.zoomLevel = (1 / (scaleLevel)).ToString(System.Globalization.CultureInfo.InvariantCulture);
-            session.gridHeight = ((scaleLevel-0.15)*100).ToString(System.Globalization.CultureInfo.InvariantCulture)+"%";
-            gridHeight = (1 / (scaleLevel)).ToString(System.Globalization.CultureInfo.InvariantCulture);
+	private bool IsVisible(string url)
+	{
+		return (session?.Authorizes?.Where(a => a.Visible).Select(a => a.Url)?.Contains(url)) ?? false;
+	}
+	private bool TitleIsVisible(string title)
+	{
+		return (session?.Authorizes?.Where(a => a.Visible && a.Title == title)?.Count() != 0);
+	}
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			session.IsMobile = await JSRuntime.InvokeAsync<bool>("isDevice");
+		}
+	}
+	private async Task Init()
+	{
+		societes = sdb.TSocietes.ToList();
+		if (sc.User != null)
+		{
+			var user = sdb.AspNetUsers.FromSqlRaw("SELECT a.* FROM AspNetUsers a WHERE a.Id = {0}", sc.User?.Id);
+			if (user.Count() != 0)
+			{
+				session.Societe = societes.Where(a => a.id == user.First().SelectedSociete).SingleOrDefault() ?? societes?.First();
+				session.SelectedAPP = user.First().SelectedAPP ?? 0;
+			}
+			else
+			{
+				session.Societe = societes?.First();
+			}
+		}
+		else
+		{
+			session.Societe = societes?.First();
+		}
 
-        }
-        catch (Exception ex)
-        {
-            await Message.Error(ex.ToString(), 20);
-        }
-    }
-    private string getURL()
-    {
-        string rs = "";
-        rs = (NavigationManager.Uri)?.Replace(NavigationManager.BaseUri, "");
-        return rs;
+		await UpdateAuth();
+		try
+		{
+			scaleLevel = (await JSRuntime.InvokeAsync<double>("getScaleLevel"));
+			session.scaleLevel = scaleLevel;
 
-    }
-    private string Icon()
-    {
-        string rs = "";
-        var dt = fn.getApps().Where(a => a.Id == session.SelectedAPP);
-        if (dt.Count() != 0)
-        {
-            rs = dt.First().Icon;
-        }
-        return rs;
-    }
-    private string APP()
-    {
-        string rs = "";
-        var dt = fn.getApps().Where(a => a.Id == session.SelectedAPP);
-        if (dt.Count() != 0)
-        {
-            rs = dt.First().Name;
-        }
-        return rs;
-    }
-    private async Task SelectAPP(int app)
-    {
-        session.SelectedAPP = app;
-        var user = sdb.AspNetUsers.Where(a => a.Id == sc.User.Id).SingleOrDefault();
-        if (user != null)
-        {
-            user.SelectedAPP = app;
-            sdb.SaveChanges();
-        }
-        await UpdateAuth();
-        NavigationManager.NavigateTo("/");
+			session.gridHeight = ((scaleLevel - 0.17) * 100).ToString(System.Globalization.CultureInfo.InvariantCulture) + "%";
+			gridHeight = (1 / (scaleLevel)).ToString(System.Globalization.CultureInfo.InvariantCulture);
+			screenHeight = await JSRuntime.InvokeAsync<int>("getScreenHeight");
+
+			if (screenHeight < 1080)
+			{
+				session.zoomLevel = ((1 / (scaleLevel)) * 0.9).ToString(System.Globalization.CultureInfo.InvariantCulture);
+			}
+			else
+			{
+				session.zoomLevel = (1 / (scaleLevel)).ToString(System.Globalization.CultureInfo.InvariantCulture);
+			}
+
+		}
+		catch (Exception ex)
+		{
+			await Message.Error(ex.ToString(), 20);
+		}
+	}
+	string setGridHeight(double height)
+	{
+		string rs = "";
+		if (screenHeight <= 768)
+		{
+			if (scaleLevel <= 1)
+			{
+				rs = ((height * 0.95)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh"; ;
+			}
+			else
+			{
+				rs = ((((scaleLevel - 0.04) ) * height * 0.95)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh";
+			}
+		}
+		else if (screenHeight < 1080)
+		{
+			if (scaleLevel <= 1)
+			{
+				rs = ((height*1.1)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh"; ;
+			}
+			else
+			{
+				rs = ((((scaleLevel - 0.04) * 1.1) * height)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh";
+			}
+		}
+		else
+		{
+			if (scaleLevel <= 1)
+			{
+				rs = ((height)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh"; ;
+			}
+			else
+			{
+				rs = (((scaleLevel - 0.04) * height)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh";
+			}
+		}
+
+		return rs;
+	}
+	private string getURL()
+	{
+		string rs = "";
+		rs = (NavigationManager.Uri)?.Replace(NavigationManager.BaseUri, "");
+		return rs;
+
+	}
+	private string Icon()
+	{
+		string rs = "";
+		var dt = fn.getApps().Where(a => a.Id == session.SelectedAPP);
+		if (dt.Count() != 0)
+		{
+			rs = dt.First().Icon;
+		}
+		return rs;
+	}
+	private string APP()
+	{
+		string rs = "";
+		var dt = fn.getApps().Where(a => a.Id == session.SelectedAPP);
+		if (dt.Count() != 0)
+		{
+			rs = dt.First().Name;
+		}
+		return rs;
+	}
+	private async Task SelectAPP(int app)
+	{
+		session.SelectedAPP = app;
+		var user = sdb.AspNetUsers.Where(a => a.Id == sc.User.Id).SingleOrDefault();
+		if (user != null)
+		{
+			user.SelectedAPP = app;
+			sdb.SaveChanges();
+		}
+		await UpdateAuth();
+		NavigationManager.NavigateTo("/");
 
 
-    }
-    protected async Task SocieteSelected(TSociete ste)
-    {
-        session.Societe = ste;
-        session.SelectedAPP = 0;
-        var user = sdb.AspNetUsers.Where(a => a.Id == sc.User.Id).SingleOrDefault();
-        if (user != null)
-        {
-            user.SelectedSociete = ste.id;
-            sdb.SaveChanges();
-        }
-        await UpdateAuth();
-        NavigationManager.NavigateTo("/");
-    }
-    private async Task UpdateAuth()
-    {
-        //await InitAuth();
-        if(session?.Societe != null && sc.User != null)
-        {
-            session.Authorizes = sdb.TAuthorizes.Where(a => a.Societe == session.Societe.id && a.UserID == sc.User.Id && a.SelectedAPP == session.SelectedAPP && a.Visible).ToList();
-        }
-        else
-        {
-            session.Authorizes = new List<TAuthorize>();
-        }
+	}
+	protected async Task SocieteSelected(TSociete ste)
+	{
+		session.Societe = ste;
+		session.SelectedAPP = 0;
+		var user = sdb.AspNetUsers.Where(a => a.Id == sc.User.Id).SingleOrDefault();
+		if (user != null)
+		{
+			user.SelectedSociete = ste.id;
+			sdb.SaveChanges();
+		}
+		await UpdateAuth();
+		NavigationManager.NavigateTo("/");
+	}
+	private async Task UpdateAuth()
+	{
+		//await InitAuth();
+		if (session?.Societe != null && sc.User != null)
+		{
+			session.Authorizes = sdb.TAuthorizes.Where(a => a.Societe == session.Societe.id && a.UserID == sc.User.Id && a.SelectedAPP == session.SelectedAPP && a.Visible).ToList();
+		}
+		else
+		{
+			session.Authorizes = new List<TAuthorize>();
+		}
 
-    }
+	}
 
-    private async Task CheckActivation()
-    {
-        await DialogService.OpenAsync<Activation>($"Activation",
-       new Dictionary<string, object>(),
-       new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "700px" });
-        await UpdateLicense();
+	private async Task CheckActivation()
+	{
+		await DialogService.OpenAsync<Activation>($"Activation",
+				new Dictionary<string, object>(),
+				new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "700px" });
+		await UpdateLicense();
 
-    }
-    private async Task UpdateLicense()
-    {
-        TLicense row = new TLicense();
-        var dt = sdb.TLicenses.AsNoTracking().OrderBy(a => a.id).ToList();
-        if (dt.Count() != 0)
-        {
-            row = dt.First();
-        }
-        else
-        {
-            sdb.Add(row);
-            sdb.SaveChanges();
-        }
-        try 
-        {
-            license = new CryptoLicense(row.Activation, fn.validationKey);
-        }
-        catch(Exception ex) 
-        {
+	}
+	private async Task UpdateLicense()
+	{
+		TLicense row = new TLicense();
+		var dt = sdb.TLicenses.AsNoTracking().OrderBy(a => a.id).ToList();
+		if (dt.Count() != 0)
+		{
+			row = dt.First();
+		}
+		else
+		{
+			sdb.Add(row);
+			sdb.SaveChanges();
+		}
+		try
+		{
+			license = new CryptoLicense(row.Activation, fn.validationKey);
+		}
+		catch (Exception ex)
+		{
 
-        }
-    }
-    private async Task BeneficiairesListe()
-    {
-        await DialogService.OpenAsync<BusinessWeb.Pages.Traitement.ISC_Caisse.Structure.Beneficiaires>($"Bénéficiaires",
-        new Dictionary<string, object>(),
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
-    }
-    private async Task CaissesListe()
-    {
-        await DialogService.OpenAsync<BusinessWeb.Pages.Traitement.ISC_Caisse.Structure.Caisses>($"Caisses",
-        new Dictionary<string, object>(),
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
-    }
-    private async Task AffectationsListe()
-    {
-        await DialogService.OpenAsync<BusinessWeb.Pages.Traitement.ISC_Caisse.Structure.Affectations>($"Affectations",
-        new Dictionary<string, object>(),
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
-    }
-    private async Task UtilisateursListe()
-    {
-        await DialogService.OpenAsync<Pages.Default.Users.UsersListe>($"Utilisateurs",
-        new Dictionary<string, object>(),
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
-    }
-    private async Task Profile()
-    {
-        await DialogService.OpenAsync<Pages.Default.Users.Profile>(sc.User?.UserName,
-        new Dictionary<string, object>(),
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "95%" });
-    }
-    private async Task RolesListe()
-    {
-        await DialogService.OpenAsync<Pages.Default.Roles.RolesListe>($"Profiles",
-        new Dictionary<string, object>(),
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
-    }
-    private async Task SocieteListe()
-    {
-        await DialogService.OpenAsync<Pages.Structure.Societes.SocietesListe>($"Sociétés",
-        new Dictionary<string, object>(),
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "90%" });
-    }
-    private async Task PrintPersonnelPointage()
-    {
-        await DialogService.OpenAsync<ReportViewer>("Pointage des personnels",
-        new Dictionary<string, object>() { { "ReportName", "reports\\personnels\\PointagePersonnel" } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
-    }
-    ErrorBoundary errorBoundary;
-    void ShowNotification(Exception ex)
-    {
-        SyncDialog.AlertAsync(ex.ToString());
-    }
+		}
+	}
+	private async Task BeneficiairesListe()
+	{
+		await DialogService.OpenAsync<BusinessWeb.Pages.Traitement.ISC_Caisse.Structure.Beneficiaires>($"Bénéficiaires",
+		new Dictionary<string, object>(),
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
+	}
+	private async Task CaissesListe()
+	{
+		await DialogService.OpenAsync<BusinessWeb.Pages.Traitement.ISC_Caisse.Structure.Caisses>($"Caisses",
+		new Dictionary<string, object>(),
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
+	}
+	private async Task AffectationsListe()
+	{
+		await DialogService.OpenAsync<BusinessWeb.Pages.Traitement.ISC_Caisse.Structure.Affectations>($"Affectations",
+		new Dictionary<string, object>(),
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
+	}
+	private async Task UtilisateursListe()
+	{
+		await DialogService.OpenAsync<Pages.Default.Users.UsersListe>($"Utilisateurs",
+		new Dictionary<string, object>(),
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
+	}
+	private async Task Profile()
+	{
+		await DialogService.OpenAsync<Pages.Default.Users.Profile>(sc.User?.UserName,
+		new Dictionary<string, object>(),
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "95%" });
+	}
+	private async Task RolesListe()
+	{
+		await DialogService.OpenAsync<Pages.Default.Roles.RolesListe>($"Profiles",
+		new Dictionary<string, object>(),
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
+	}
+	private async Task SocieteListe()
+	{
+		await DialogService.OpenAsync<Pages.Structure.Societes.SocietesListe>($"Sociétés",
+		new Dictionary<string, object>(),
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "90%" });
+	}
+	private async Task PrintPersonnelPointage()
+	{
+		await DialogService.OpenAsync<ReportViewer>("Pointage des personnels",
+		new Dictionary<string, object>() { { "ReportName", "reports\\personnels\\PointagePersonnel" } },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
+	}
+	ErrorBoundary errorBoundary;
+	void ShowNotification(Exception ex)
+	{
+		SyncDialog.AlertAsync(ex.ToString());
+	}
 }
 <style>
-    .main-btns .ant-btn {
-        height: unset;
-        padding: 0px;
-    }
+	.main-btns .ant-btn {
+		height: unset;
+		padding: 0px;
+	}
 
-    button:disabled .ant-card-hoverable,
-    button[disabled] .ant-card-hoverable {
-        background-color: transparent;
-        color: transparent;
-
-    }
+	button:disabled .ant-card-hoverable,
+	button[disabled] .ant-card-hoverable {
+		background-color: transparent;
+		color: transparent;
+	}
 </style>

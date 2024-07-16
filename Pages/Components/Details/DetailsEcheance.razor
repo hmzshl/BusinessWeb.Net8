@@ -40,7 +40,7 @@
 
         </ToolbarItems>
     </SfToolbar>
-    <div style="height: @Height; zoom: @session.zoomLevel;">
+    <div class="@ClassHeight" style=" zoom: @session.zoomLevel;">
 
         <SfGrid  AllowTextWrap ID="EcheanceGRID" Height="100%" AllowGrouping AllowSelection EnableHover DataSource="@(items)" @ref=DefaultGrid AllowSorting AllowFiltering="false" AllowExcelExport>
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
@@ -405,7 +405,7 @@ else
     [Parameter] public string Statut { get; set; }
     [Parameter] public int CO_No { get; set; }
     [Parameter] public int DE_No { get; set; }
-    [Parameter] public string Height { get; set; }
+    [Parameter] public string ClassHeight { get; set; }
     SfGrid<API_V_CREGLEMENT> DefaultGrid;
     DateTime? date1 = DateTime.Today;
     DateTime? date2;
