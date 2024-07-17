@@ -43,7 +43,7 @@
 											<Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="CA TTC" Value="@((row.DL_MontantTTC ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
 										</GridCol>
 										<GridCol Xs="12" Md="3">
-											<Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-blue" Title="Réglements" Value="@((row.RG_Montant ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+											<Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="Réglements" Value="@((row.RG_Montant ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
 										</GridCol>
 										<GridCol Xs="12" Md="3">
 											<Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="Solde Commercial" Value="@((row.SoldeCommercial ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />

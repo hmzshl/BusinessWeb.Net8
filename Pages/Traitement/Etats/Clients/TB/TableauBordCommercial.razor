@@ -106,7 +106,7 @@
                         <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="Marge HT" Value="@((dt?.Sum(a => a.CMUPMarge)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
                     </GridCol>
                      <GridCol Xs="12" Md="3">
-                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-green" Title="Marge %" Value="@((dt.Sum(a => a.DL_MontantHT) != 0.0m ? dt.Sum(a => a.CMUPMarge) / dt.Sum(a => a.DL_MontantHT) : 0.0m)?.ToString("### ### ##0.00 %;-### ### ##0.00 %;0.00"))" ValueStyle="color: #3f8600;" />
+                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="Marge %" Value="@((dt.Sum(a => a.DL_MontantHT) != 0.0m ? dt.Sum(a => a.CMUPMarge) / dt.Sum(a => a.DL_MontantHT) : 0.0m)?.ToString("### ### ##0.00 %;-### ### ##0.00 %;0.00"))" ValueStyle="color: #3f8600;" />
                     </GridCol>
                  <GridCol Xs="12" Md="3">
                         <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="CA TTC" Value="@((dt?.Sum(a => a.DL_MontantTTC)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
