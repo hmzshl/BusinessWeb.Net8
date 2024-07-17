@@ -1,0 +1,98 @@
+﻿@if (IsLoaded)
+{
+	<SfToolbar CssClass="btns">
+		<ToolbarItems>
+			<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+			<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+			<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+				<Template>
+					<SfTextBox Width="300px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+				</Template>
+			</ToolbarItem>
+			
+			
+
+		</ToolbarItems>
+	</SfToolbar>
+	<div class="@ClassHeight" style=" zoom: @session.zoomLevel;">
+		<SfGrid TValue="API_V_ARTICLEMVT" Height="100%" AllowSelection="true" EnableHover="true" DataSource="@details.OrderBy(a => a.DL_DateBL)" AllowTextWrap AllowExcelExport>
+			<GridEvents TValue="API_V_ARTICLEMVT"></GridEvents>
+			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox" />
+			<GridAggregates>
+				<GridAggregate>
+					<GridAggregateColumns>
+						<GridAggregateColumn Field="@nameof(API_V_ARTICLEMVT.Mvt)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+							<FooterTemplate>
+								@{
+									var SumValue = (context as AggregateTemplateContext);
+									<div>
+										@SumValue.Sum
+									</div>
+								}
+							</FooterTemplate>
+							<GroupCaptionTemplate>
+								@{
+									var SumValue = (context as AggregateTemplateContext);
+									<div>
+										@SumValue.Sum
+									</div>
+								}
+							</GroupCaptionTemplate>
+						</GridAggregateColumn>
+					</GridAggregateColumns>
+				</GridAggregate>
+			</GridAggregates>
+			<GridColumns>
+				
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLEMVT.DL_DateBL)" HeaderText="Date BL" Format="dd/MM/yy" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLEMVT.DO_Date)" HeaderText="Date" Format="dd/MM/yy" />
+				<GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLEMVT.DO_Piece)" HeaderText="Pièce" />
+				<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLEMVT.TypeIntitule)" HeaderText="Type" />
+				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLEMVT.CT_Num)" HeaderText="Numéro" />
+				<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLEMVT.TiersIntitule)" HeaderText="Tiers" />
+				<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLEMVT.DE_Intitule)" HeaderText="Dépot" />
+				<GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLEMVT.AR_Ref)" HeaderText="Référence" />
+				<GridColumn MinWidth="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLEMVT.AR_Design)" HeaderText="Article" />
+				<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLEMVT.Mvt)" HeaderText="Qté" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+
+			</GridColumns>
+		</SfGrid>
+	</div>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+@code
+{
+	[CascadingParameter]
+	public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	[Parameter] public List<API_V_ARTICLEMVT> details { get; set; }
+	[Parameter] public string ClassHeight { get; set; }
+	bool IsLoaded = false;
+
+	private List<API_V_MARGE> items = new List<API_V_MARGE>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(100);
+		db = session.db;
+		IsLoaded = true;
+	}
+	private SfGrid<API_V_MARGE> DefaultGrid;
+	public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+	{
+		if (args.Item.Id == "DetailMargeGRID_excelexport") //Id is combination of Grid's ID and itemname
+		{
+			await this.DefaultGrid.ExcelExport();
+		}
+	}
+	private async Task UpdateGrid()
+	{
+
+	}
+
+}

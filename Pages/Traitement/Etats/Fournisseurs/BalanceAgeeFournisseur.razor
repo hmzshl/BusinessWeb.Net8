@@ -319,7 +319,7 @@ else
     private async Task ShowDetail(string CT_Num, string col)
     {
         await DialogService.OpenAsync<DetailsReleve>(CT_Num,
-      new Dictionary<string, object>() { { "CT_Num", CT_Num }, { "Periode", col }, { "Height", "84vh" } },
-  new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "92%", Height = "95%" });
+      new Dictionary<string, object>() { { "CT_Num", CT_Num }, { "Periode", col }, { "ClassHeight", "grid-84" } },
+  new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
     }
 }

@@ -234,6 +234,7 @@ namespace BusinessWeb
 
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Articles", Description = "Liste des articles", Url = "et-articles" });
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Articles", Description = "CA article", Url = "et-ca-article" });
+            list.Add(new AuthItems { SelectedAPP = 14, Title = "Articles", Description = "Stock global par date", Url = "et-stock-global-article" });
 
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Collaborateurs", Description = "Liste des collaborateurs", Url = "et-collaborateurs" });
             list.Add(new AuthItems { SelectedAPP = 14, Title = "Collaborateurs", Description = "CA représentant", Url = "et-ca-representant" });

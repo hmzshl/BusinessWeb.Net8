@@ -136,7 +136,7 @@
     //Components
     private SfGrid<API_V_AUDIT_F_COMPTET> DefaultGrid;
     bool IsLoaded = false;
-    DateTime? date1 = DateTime.Today;
+    DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
     DateTime? date2;
     private List<API_V_AUDIT_F_COMPTET> items = new List<API_V_AUDIT_F_COMPTET>();
     bool loading = false;

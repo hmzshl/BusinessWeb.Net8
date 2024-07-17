@@ -1,0 +1,302 @@
+﻿@page "/et-stock-global-article"
+@attribute [Authorize]
+
+@if (IsLoaded)
+{
+	<Card_1 Title="STOCK GLOBAL PAR DATE">
+
+		<RadzenContent>
+			<div class="grid-90">
+				<SfToolbar CssClass="btns">
+					<ToolbarItems>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+						<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+							<Template>
+								<SfTextBox Width="300px" Placeholder="CHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+							<Template>
+								<SfDropDownList ShowClearButton Width="230px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@depots" TValue="int?" TItem="F_DEPOT" @bind-Value="@depot">
+									<DropDownListEvents TValue="int?" TItem="F_DEPOT" ValueChange="@(args => LoadData())" />
+									<DropDownListFieldSettings Text="DE_Intitule" Value="DE_No" />
+								</SfDropDownList>
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+							<Template>
+								<SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
+									<DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
+								</SfDatePicker>
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+							<Template>
+								<SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
+									<DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
+								</SfDatePicker>
+							</Template>
+						</ToolbarItem>
+						
+					</ToolbarItems>
+				</SfToolbar>
+				<div class="grid-84" style="zoom: @session.zoomLevel;">
+					@if (Loading)
+					{
+						<div class="center-screen">
+							<Loading_1 />
+						</div>
+					}
+					else
+					{
+						<SfGrid Height="100%" DataSource="@(items)" AllowTextWrap EnableHover="false" AllowPaging AllowGrouping AllowExcelExport @ref=@DefaultGrid>
+							<GridPageSettings PageSize="500" PageCount="10" />
+							<GridEvents TValue="V_StockGlobal"></GridEvents>
+							<GridGroupSettings Columns="@(new string[] { "FA_Intitule" })" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates>
+								<CaptionTemplate>
+									@{
+										var ag = (context as CaptionTemplateContext);
+										<div style="margin-left: 5px;">@ag.Key</div>
+									}
+								</CaptionTemplate>
+							</GridGroupSettings>
+							<GridColumns>
+								<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.FA_Intitule)" HeaderText="Famille" />
+								<GridColumn MinWidth="240" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.AR_Design)" HeaderText="Désignation" />
+								<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.AR_Ref)" HeaderText="Référence" />
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.U_Intitule)" HeaderText="Unité" />
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Initial)" HeaderText="Stock Initial" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+									<Template>
+										@{
+											var dt = (context as V_StockGlobal);
+											<div style="font-weight: 700 !important;">
+												@dt.Initial.ToString("### ### ##0.00;-### ### ##0.00;#")
+											</div>
+										}
+									</Template>
+								</GridColumn>
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Achat)" HeaderText="Achats" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+									<Template>
+										@{
+											var dt = (context as V_StockGlobal);
+											if (dt.Achat > 0)
+											{
+												<RadzenButton Click="@(args => ShowDetail(dt.AR_Ref, 1, 0))" Variant="Variant.Text" Text="@dt.Achat.ToString("### ### ##0.00;-### ### ##0.00;#")" ButtonStyle="ButtonStyle.Success" />
+											}
+											if (dt.Achat < 0)
+											{
+												<RadzenButton Click="@(args => ShowDetail(dt.AR_Ref, 1, 0))" Variant="Variant.Text" Text="@dt.Achat.ToString("### ### ##0.00;-### ### ##0.00;#")" ButtonStyle="ButtonStyle.Danger" />
+											}
+										}
+									</Template>
+								</GridColumn>
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Vente)" HeaderText="Ventes" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+									<Template>
+										@{
+											var dt = (context as V_StockGlobal);
+											if (dt.Vente > 0)
+											{
+												<RadzenButton Click="@(args => ShowDetail(dt.AR_Ref, 0, 0))" Variant="Variant.Text" Text="@dt.Vente.ToString("### ### ##0.00;-### ### ##0.00;#")" ButtonStyle="ButtonStyle.Success" />
+											}
+											if (dt.Vente < 0)
+											{
+												<RadzenButton Click="@(args => ShowDetail(dt.AR_Ref, 0, 0))" Variant="Variant.Text" Text="@dt.Vente.ToString("### ### ##0.00;-### ### ##0.00;#")" ButtonStyle="ButtonStyle.Danger" />
+											}
+										}
+									</Template>
+								</GridColumn>
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Entree)" HeaderText="Mouvements Entrées" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+									<Template>
+										@{
+											var dt = (context as V_StockGlobal);
+											if (dt.Entree > 0)
+											{
+												<RadzenButton Click="@(args => ShowDetail(dt.AR_Ref, 2, 20))" Variant="Variant.Text" Text="@dt.Entree.ToString("### ### ##0.00;-### ### ##0.00;#")" ButtonStyle="ButtonStyle.Success" />
+											}
+											if (dt.Entree < 0)
+											{
+												<RadzenButton Click="@(args => ShowDetail(dt.AR_Ref, 2, 20))" Variant="Variant.Text" Text="@dt.Entree.ToString("### ### ##0.00;-### ### ##0.00;#")" ButtonStyle="ButtonStyle.Danger" />
+											}
+										}
+									</Template>
+								</GridColumn>
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Sortie)" HeaderText="Mouvements Sorties" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+									<Template>
+										@{
+											var dt = (context as V_StockGlobal);
+											if (dt.Sortie > 0)
+											{
+												<RadzenButton Click="@(args => ShowDetail(dt.AR_Ref, 2, 21))" Variant="Variant.Text" Text="@dt.Sortie.ToString("### ### ##0.00;-### ### ##0.00;#")" ButtonStyle="ButtonStyle.Success" />
+											}
+											if (dt.Sortie < 0)
+											{
+												<RadzenButton Click="@(args => ShowDetail(dt.AR_Ref, 2, 21))" Variant="Variant.Text" Text="@dt.Sortie.ToString("### ### ##0.00;-### ### ##0.00;#")" ButtonStyle="ButtonStyle.Danger" />
+											}
+										}
+									</Template>
+								</GridColumn>
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Transfert)" HeaderText="Mouvements Transferts" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+									<Template>
+										@{
+											var dt = (context as V_StockGlobal);
+											if (dt.Transfert > 0)
+											{
+												<RadzenButton Click="@(args => ShowDetail(dt.AR_Ref, 2, 23))" Variant="Variant.Text" Text="@dt.Transfert.ToString("### ### ##0.00;-### ### ##0.00;#")" ButtonStyle="ButtonStyle.Success" />
+											}
+											if (dt.Transfert < 0)
+											{
+												<RadzenButton Click="@(args => ShowDetail(dt.AR_Ref, 2, 23))" Variant="Variant.Text" Text="@dt.Transfert.ToString("### ### ##0.00;-### ### ##0.00;#")" ButtonStyle="ButtonStyle.Danger" />
+											}
+										}
+									</Template>
+								</GridColumn>
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Interne)" HeaderText="Documents Internes" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+									<Template>
+										@{
+											var dt = (context as V_StockGlobal);
+											if (dt.Interne > 0)
+											{
+												<RadzenButton Click="@(args => ShowDetail(dt.AR_Ref, 4, 0))" Variant="Variant.Text" Text="@dt.Interne.ToString("### ### ##0.00;-### ### ##0.00;#")" ButtonStyle="ButtonStyle.Success" />
+											}
+											if (dt.Interne < 0)
+											{
+												<RadzenButton Click="@(args => ShowDetail(dt.AR_Ref, 4, 0))" Variant="Variant.Text" Text="@dt.Interne.ToString("### ### ##0.00;-### ### ##0.00;#")" ButtonStyle="ButtonStyle.Danger" />
+											}
+										}
+									</Template>
+								</GridColumn>
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Theorique)" HeaderText="Stock Final" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+									<Template>
+										@{
+											var dt = (context as V_StockGlobal);
+											<div style="font-weight: 700 !important;">
+												@dt.Theorique.ToString("### ### ##0.00;-### ### ##0.00;#")
+											</div>
+										}
+									</Template>
+								</GridColumn>
+								<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.StockStatus)" HeaderText="Etat">
+									<Template>
+										@{
+											var dt = (context as V_StockGlobal);
+											if (dt.Theorique > 0)
+											{
+												<div style="text-align: left;">
+													<span class="statustxt e-activecolor">@dt.StockStatus</span>
+												</div>
+											}
+											if (dt.Theorique < 0)
+											{
+												<div style="text-align: left;">
+													<span class="statustxt e-inactivecolor">@dt.StockStatus</span>
+												</div>
+											}
+											if (dt.Theorique == 0)
+											{
+												<div style="text-align: left;">
+													<span class="statustxt e-infocolor">@dt.StockStatus</span>
+												</div>
+											}
+										}
+									</Template>
+								</GridColumn>
+							</GridColumns>
+
+						</SfGrid>
+					}
+
+				</div>
+			</div>
+
+		</RadzenContent>
+	</Card_1>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+
+@code
+{
+	[CascadingParameter]
+	public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	private List<API_V_ARTICLEMVT> data = new List<API_V_ARTICLEMVT>();
+	private List<API_V_ARTICLEMVT> data_2 = new List<API_V_ARTICLEMVT>();
+	private List<API_V_ARTICLEMVT> details = new List<API_V_ARTICLEMVT>();
+	private List<API_V_ARTICLEMVT> initial = new List<API_V_ARTICLEMVT>();
+	private List<V_StockGlobal> items = new List<V_StockGlobal>();
+	private List<API_V_ARTICLEMVT> chart_items = new List<API_V_ARTICLEMVT>();
+	private List<F_DEPOT> depots = new List<F_DEPOT>();
+	DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
+	DateTime? date2 = new DateTime(DateTime.Today.Year, 12, 31);
+	private SfDialog Dialog { get; set; }
+	bool _visible = false;
+	bool IsLoaded = false;
+	bool Loading = false;
+	int? depot;
+	private SfGrid<V_StockGlobal> DefaultGrid;
+	protected override async Task OnInitializedAsync()
+	{
+		db = session.db;
+		await Task.Delay(1);
+		depots = db.F_DEPOT.ToList();
+		if (depots.Where(a => a.DP_NoDefaut == 1).Any())
+		{
+			depot = depots.Where(a => a.DP_NoDefaut == 1).First().DE_No;
+		}
+		
+		await LoadData();
+		IsLoaded = true;
+	}
+	private async Task LoadData()
+	{
+		Loading = true;
+		await Task.Delay(100);
+		data = db.API_V_ARTICLEMVT
+		.Where(a => (((date2 != null && a.DO_Date <= date2) || date2 == null)) && (a.DE_No == depot || depot == null))
+		.OrderBy(a => a.AR_Design)
+		.ToList();
+		data_2 = data.Where(a => (a.DL_DateBL >= date1 || date1 == null)).ToList();
+		items = data.
+		GroupBy(a => new { a.AR_Ref, a.AR_Design, a.FA_CodeFamille, a.FA_Intitule })
+					.Select(a => new V_StockGlobal
+						{
+							AR_Ref = a.Key.AR_Ref,
+							AR_Design = a.Key.AR_Design,
+							FA_CodeFamille = a.Key.FA_CodeFamille,
+							FA_Intitule = a.Key.FA_Intitule,
+
+							Initial = a.Where(a => a.DL_DateBL < date1).Sum(a => a.Mvt) ?? 0,
+							Achat = a.Where(a => a.DO_Domaine == 1 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
+							Vente = a.Where(a => a.DO_Domaine == 0 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
+							Entree = a.Where(a => a.DO_Type == 20 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
+							Sortie = a.Where(a => a.DO_Type == 21 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
+							Transfert = a.Where(a => a.DO_Type == 23 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
+							Interne = a.Where(a => a.DO_Domaine == 4 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
+
+							Theorique = a.Sum(a => a.Mvt) ?? 0
+						}).ToList();
+		Loading = false;
+		await Task.Delay(100);
+
+	}
+	private async Task ShowDetail(string AR_Ref, short? DO_Domaine, short DO_Type)
+	{
+		if(DO_Domaine != 2)
+		{
+			details = data_2.Where(a => a.AR_Ref == AR_Ref && a.DO_Domaine == DO_Domaine).ToList();
+		}
+		else
+		{
+			details = data_2.Where(a => a.AR_Ref == AR_Ref && a.DO_Type == DO_Type).ToList();
+		}
+		await DialogService.OpenAsync<DetailsMVT>("",
+	new Dictionary<string, object>() { { "details", details }, { "ClassHeight", "grid-84" } },
+	new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
+	}
+}

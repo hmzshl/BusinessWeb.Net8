@@ -502,13 +502,13 @@
         if (type == "client")
         {
             await DialogService.OpenAsync<DetailsMarge>(args.RowData.CT_Intitule,
-      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CT_Num", args.RowData.CT_Num }, { "AR_Ref", row.AR_Ref }, { "ClassHeight", "grid-80" } },
+      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CT_Num", args.RowData.CT_Num }, { "AR_Ref", row.AR_Ref }, { "ClassHeight", "grid-84" } },
       new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         }
         if (type == "mois")
         {
             await DialogService.OpenAsync<DetailsMarge>(args.RowData.MoisAnnee,
-      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "MoisAnnee", args.RowData.MoisAnnee }, { "AR_Ref", row.AR_Ref }, { "ClassHeight", "grid-80" } },
+      new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "MoisAnnee", args.RowData.MoisAnnee }, { "AR_Ref", row.AR_Ref }, { "ClassHeight", "grid-84" } },
       new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         }
 

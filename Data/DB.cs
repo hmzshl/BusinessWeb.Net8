@@ -4266,12 +4266,12 @@ public partial class DB : DbContext
                 .IsRequired()
                 .HasMaxLength(35)
                 .IsUnicode(false);
-            entity.Property(e => e.DL_DateBL).HasColumnType("smalldatetime");
+            entity.Property(e => e.DL_DateBL).HasColumnType("datetime");
             entity.Property(e => e.DL_PieceBL)
                 .HasMaxLength(9)
                 .IsUnicode(false);
             entity.Property(e => e.DL_Qte).HasColumnType("numeric(24, 6)");
-            entity.Property(e => e.DO_Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.DO_Date).HasColumnType("datetime");
             entity.Property(e => e.DO_Piece)
                 .IsRequired()
                 .HasMaxLength(9)
@@ -4279,6 +4279,13 @@ public partial class DB : DbContext
             entity.Property(e => e.DomaineIntitule)
                 .IsRequired()
                 .HasMaxLength(8)
+                .IsUnicode(false);
+            entity.Property(e => e.FA_CodeFamille)
+                .IsRequired()
+                .HasMaxLength(11)
+                .IsUnicode(false);
+            entity.Property(e => e.FA_Intitule)
+                .HasMaxLength(35)
                 .IsUnicode(false);
             entity.Property(e => e.Mvt).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.Sense)
@@ -4291,6 +4298,9 @@ public partial class DB : DbContext
             entity.Property(e => e.TypeIntitule)
                 .IsRequired()
                 .HasMaxLength(16)
+                .IsUnicode(false);
+            entity.Property(e => e.U_Intitule)
+                .HasMaxLength(21)
                 .IsUnicode(false);
         });
 

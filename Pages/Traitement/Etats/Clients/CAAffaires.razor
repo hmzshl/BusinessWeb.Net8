@@ -238,7 +238,7 @@ else
     protected async Task ShowDetail(RecordDoubleClickEventArgs<API_V_MARGE> args)
     {
         await DialogService.OpenAsync<DetailsMarge>(args.RowData.CA_Intitule,
-        new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CA_Num", args.RowData.CA_Num }, { "ClassHeight", "grid-80" } },
+        new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CA_Num", args.RowData.CA_Num }, { "ClassHeight", "grid-84" } },
         new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
     }
 }

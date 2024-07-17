@@ -36,4 +36,14 @@ public partial class API_V_ARTICLEMVT
     public decimal? Mvt { get; set; }
 
     public string Sense { get; set; }
+
+    public string FA_CodeFamille { get; set; }
+
+    public string FA_Intitule { get; set; }
+
+    public short DO_Type { get; set; }
+
+    public short? DO_Domaine { get; set; }
+
+    public string U_Intitule { get; set; }
 }
