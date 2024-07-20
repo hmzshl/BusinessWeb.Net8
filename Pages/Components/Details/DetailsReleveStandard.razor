@@ -173,7 +173,8 @@ else
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(100);
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         types = db.API_V_RELEVE.OrderBy(a => a.TypeIntitule).Select(a => a.TypeIntitule).Distinct().ToList();
         await UpdateGrid();
         IsLoaded = true;

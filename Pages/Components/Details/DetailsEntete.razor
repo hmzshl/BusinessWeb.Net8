@@ -146,7 +146,8 @@ else
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(100);
-		db = session.db;
+		        db = session.db;
+        GC.Collect();
 		data = db.API_V_DOCENTETE.Where(a => a.DO_Domaine == DO_Domaine
 	&& ((a.CA_Num == CA_Num && CA_Num != null) || (CA_Num == null))
 	&& ((a.DO_Tiers == CT_Num && CT_Num != null) || (CT_Num == null))

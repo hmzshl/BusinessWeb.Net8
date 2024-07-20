@@ -172,7 +172,8 @@
     protected override async Task OnInitializedAsync()
     {
         InitCol();
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         await Task.Run(LoadData);    
     }
     private async Task LoadData()

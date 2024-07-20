@@ -266,7 +266,8 @@ else
 	List<API_T_Projet> projets = new List<API_T_Projet>();
 	protected override void OnInitialized()
 	{
-		db = session.db;
+		        db = session.db;
+        GC.Collect();
 		projets = db.API_T_Projet.ToList();
 		if (id != 0)
 		{

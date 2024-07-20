@@ -424,7 +424,8 @@ else
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(100);
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         types = db.API_V_CREGLEMENT.OrderBy(a => a.R_Intitule).Select(a => a.R_Intitule).Distinct().ToList();
         statut = db.API_V_CREGLEMENT.OrderBy(a => a.Echeance).Select(a => a.Echeance).Distinct().ToList();
         affectation = db.API_V_CREGLEMENT.OrderBy(a => a.EtatReglement).Select(a => a.EtatReglement).Distinct().ToList();

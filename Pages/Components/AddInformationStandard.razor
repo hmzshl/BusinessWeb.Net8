@@ -14,7 +14,8 @@
     DB db = new DB();
     protected override void OnInitialized()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
     }
     private void Submit()
     {

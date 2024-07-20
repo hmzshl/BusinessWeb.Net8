@@ -209,7 +209,8 @@ else
     bool IsLoaded = false;
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         await Task.Delay(1);
         await LoadData();
         IsLoaded = true;

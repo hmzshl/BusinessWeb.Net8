@@ -200,7 +200,8 @@
 
     protected override void OnInitialized()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
 
         if (id == 0)
         {

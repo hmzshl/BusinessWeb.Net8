@@ -634,7 +634,8 @@ else
 
 
 		await Task.Delay(100);
-		db = session.db;
+		        db = session.db;
+        GC.Collect();
 		if (cbMarq != 0)
 		{
 			row = db.API_V_COMPTET.Where(a => a.cbMarq == cbMarq).SingleOrDefault();

@@ -33,7 +33,8 @@
     List<API_T_Affectation> items = new List<API_T_Affectation>();
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         items = db.API_T_Affectation.OrderBy(a => a.Intitule).ToList();
     }
     public void UpdateListe(ActionEventArgs<API_T_Affectation> args)

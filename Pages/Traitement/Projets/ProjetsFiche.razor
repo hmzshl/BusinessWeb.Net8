@@ -776,7 +776,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         clients = db.F_COMPTET.Where(a => a.CT_Type == 0).Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Intitule + " (" + a.CT_Num + ")" }).ToList();
         zones = db.API_T_Site.ToList();
         villes = db.API_T_Ville.ToList();

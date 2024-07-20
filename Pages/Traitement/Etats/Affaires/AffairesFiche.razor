@@ -292,7 +292,8 @@
     private Func<double, string> _fortmat1 = (p) => $"{(p / 100).ToString("### ### ##0 %")}";
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         row = db.API_V_AFFAIRE.Where(a => a.CA_Num == CA_Num).SingleOrDefault();
         var dt = db.F_DOCLIGNE.Where(a => a.DO_Domaine == 0 && a.CA_Num == CA_Num);
         if(dt.Count() != 0)

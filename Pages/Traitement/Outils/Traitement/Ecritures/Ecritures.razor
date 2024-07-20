@@ -232,7 +232,8 @@ else
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(1);
-		db = session.db;
+		        db = session.db;
+        GC.Collect();
 		list_compte = db.F_COMPTEG.Select(a => new F_COMPTEG { CG_Num = a.CG_Num, CG_Intitule = a.CG_Num + " - " + a.CG_Intitule }).OrderBy(a => a.CG_Intitule).ToList();
 		list_tiers = db.F_COMPTET.Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule }).OrderBy(a => a.CT_Intitule).ToList();
 		await UpdateGrid();

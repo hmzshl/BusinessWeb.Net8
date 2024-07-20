@@ -147,7 +147,8 @@
 
     protected override async Task OnInitializedAsync() 
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         attributes = db.API_T_Attribute.Where(a => a.TableIndex == TableIndex).ToList();
         foreach(API_T_Attribute attr in attributes) 
         {

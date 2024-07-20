@@ -485,7 +485,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         row = db.API_V_ARTICLE.Where(a => a.cbMarq == cbMarq).SingleOrDefault();
         await LoadData();
         

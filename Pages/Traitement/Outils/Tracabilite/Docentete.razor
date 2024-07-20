@@ -241,7 +241,8 @@ else
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(1);
-		db = session.db;
+		        db = session.db;
+        GC.Collect();
 
 		domaines = db.API_V_AUDIT_F_DOCENTETE.Select(a => a.DomaineIntitule).Distinct().ToList();
 		users = db.API_V_AUDIT_F_DOCENTETE.Select(a => a.Sage_Name).Distinct().ToList();

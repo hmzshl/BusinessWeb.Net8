@@ -99,7 +99,8 @@
     }
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         await UpdateGrid();
     }
     private async Task UpdateGrid()

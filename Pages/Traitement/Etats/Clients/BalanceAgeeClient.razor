@@ -271,7 +271,8 @@ else
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(1);
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         villes = db.API_V_BALANCEAGEECLIENT.Select(a => a.CT_Ville).Distinct().ToList();
         collaborateurs = db.API_V_BALANCEAGEECLIENT.Select(a => a.CO_Nom).Distinct().ToList();
         selected_villes = villes;

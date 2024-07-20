@@ -865,7 +865,8 @@
 	}
 	protected override async Task OnInitializedAsync()
 	{
-		db = session.db;
+		        db = session.db;
+        GC.Collect();
 		articles = db.F_ARTICLE.ToList();
 		if (id == 0)
 		{

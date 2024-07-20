@@ -197,7 +197,8 @@
 	private List<F_COMPTEA> affaires = new List<F_COMPTEA>();
 	protected override async Task OnInitializedAsync()
 	{
-		db = session.db;
+		        db = session.db;
+        GC.Collect();
 		collab = db.F_COLLABORATEUR.OrderBy(a => a.CO_Prenom).Select(a => new F_COLLABORATEUR { CO_No = a.CO_No, CO_Nom = a.CO_Prenom + " " + a.CO_Nom }).ToList();
 		tiers = db.F_COMPTET.Where(a => a.CT_Type == type).OrderBy(a => a.CT_Intitule).Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule }).ToList();
 		affaires = db.F_COMPTEA.OrderBy(a => a.CA_Num).Select(a => new F_COMPTEA { CA_Num = a.CA_Num, CA_Intitule = a.CA_Num + " - " + a.CA_Intitule }).ToList();

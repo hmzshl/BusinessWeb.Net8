@@ -140,7 +140,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         if (cbMarq != 0)
         {
             row = db.F_COMPTET.Where(a => a.cbMarq == cbMarq).SingleOrDefault();

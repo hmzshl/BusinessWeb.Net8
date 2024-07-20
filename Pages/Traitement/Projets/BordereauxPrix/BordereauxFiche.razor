@@ -282,7 +282,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         projets = db.API_T_Projet.ToList();
         articles_list = db.F_ARTICLE.Select(a => new F_ARTICLE { AR_Ref = a.AR_Ref, AR_Design = a.AR_Design + " (" + a.AR_Ref + ")" }).OrderBy(a => a.AR_Design).ToList();
         if (id != 0)

@@ -102,7 +102,8 @@
         types.Add(new Items { Id = 5, Name = "Table" });
         types.Add(new Items { Id = 6, Name = "Model" });
 
-        db = session.db;
+                db = session.db;
+        GC.Collect();
 
         items = db.API_T_Attribute.AsNoTracking().ToList();
     }

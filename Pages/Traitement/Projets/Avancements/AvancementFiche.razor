@@ -150,7 +150,8 @@
     NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
     protected override async Task OnInitializedAsync() 
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         if (id == 0)
         {
             row = new API_T_Projet();

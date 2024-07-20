@@ -218,7 +218,8 @@ else
     {
         await Task.Delay(100);
 
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         ste1 = session.Societe;
         societes = sdb.TSocietes.Where(a => a.id != (ste1 ?? (new TSociete())).id).ToList();
         if(societes.Count() != 0)

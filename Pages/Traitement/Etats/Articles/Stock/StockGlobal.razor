@@ -242,7 +242,8 @@ else
 	private SfGrid<V_StockGlobal> DefaultGrid;
 	protected override async Task OnInitializedAsync()
 	{
-		db = session.db;
+		        db = session.db;
+        GC.Collect();
 		await Task.Delay(1);
 		depots = db.F_DEPOT.ToList();
 		if (depots.Where(a => a.DP_NoDefaut == 1).Any())

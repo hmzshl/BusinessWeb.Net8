@@ -26,7 +26,8 @@
 
 	protected override async Task OnInitializedAsync() 
 	{
-		db = session.db;
+		        db = session.db;
+        GC.Collect();
 		attributes = db.API_T_Attribute.Where(a => a.TableName == TableName).ToList() ;
 		details = db.API_T_AttributeDetail.Where(a => a.ChildID == ChildID && a.TableName == TableName).ToList();
 

@@ -205,7 +205,8 @@ else
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(1);
-		db = session.db;
+		        db = session.db;
+        GC.Collect();
 		var cs = db.API_T_Caisse_User.Where(a => a.User == sc.User.Id).Select(a => a.Caisse);
 		if (cs.Count() != 0)
 		{

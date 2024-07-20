@@ -39,7 +39,8 @@
     NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         items = session.db.API_T_Information.Where(a => (a.Valeur ?? "") != "" && a.Tab == 11).ToList();
     }
     public void UpdateListe(ActionEventArgs<API_T_Information> args)

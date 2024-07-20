@@ -348,7 +348,8 @@
     }
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         var zn = db.API_T_Site_User.Where(a => a.User == sc.User.Id).Select(a => a.Site);
         if (zn.Count() != 0)
         {

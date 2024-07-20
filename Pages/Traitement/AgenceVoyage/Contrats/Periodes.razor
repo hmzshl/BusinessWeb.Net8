@@ -32,7 +32,8 @@
     List<API_T_AgenceContratDate> items = new List<API_T_AgenceContratDate>();
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         items = db.API_T_AgenceContratDate.Where(a => a.Contrat == contrat).OrderBy(a => a.DateFin).ToList();
     }
     public async Task UpdateListe(ActionEventArgs<API_T_AgenceContratDate> args)

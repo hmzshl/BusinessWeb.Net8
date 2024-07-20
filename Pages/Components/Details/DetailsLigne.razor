@@ -84,7 +84,8 @@ else
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(100);
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         await UpdateGrid();
         IsLoaded = true;
     }

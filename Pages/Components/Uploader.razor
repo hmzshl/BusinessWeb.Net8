@@ -19,7 +19,8 @@
     SfUploader sfUploader;
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
     }
     private async Task Import(Syncfusion.Blazor.Inputs.UploadChangeEventArgs args)
     {

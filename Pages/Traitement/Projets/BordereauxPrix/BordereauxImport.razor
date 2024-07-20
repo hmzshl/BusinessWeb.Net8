@@ -15,7 +15,8 @@
     bool loading = true;
     protected override void OnInitialized()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
     }
     private void OnUploadSuccess(Syncfusion.Blazor.Inputs.SuccessEventArgs args)
     {

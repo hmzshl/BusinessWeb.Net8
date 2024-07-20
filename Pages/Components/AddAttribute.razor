@@ -39,7 +39,8 @@
 	public API_T_Attribute row { get; set; } = new API_T_Attribute();
 	protected override void OnInitialized() 
 	{
-		db = session.db;
+		        db = session.db;
+        GC.Collect();
 	}
 	private void Submit()
 	{

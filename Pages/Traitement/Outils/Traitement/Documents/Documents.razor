@@ -269,7 +269,8 @@ else
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(1);
-		db = session.db;
+		        db = session.db;
+        GC.Collect();
 
 		types = db.API_V_DOCENTETE.Where(a => a.DO_Domaine == domaine).Select(a => a.TypeIntitule).Distinct().ToList();
 		statuts = db.API_V_DOCENTETE.Where(a => a.DO_Domaine == domaine).Select(a => a.EtatReglement).Distinct().ToList();

@@ -96,7 +96,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         if (id == 0)
         {
             row = new API_T_Caisse();

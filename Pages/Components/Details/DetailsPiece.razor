@@ -279,7 +279,8 @@ else
 		}
 		else
 		{
-			db = session.db;
+			        db = session.db;
+        GC.Collect();
 		}
 		row = db.API_V_DOCENTETE.Where(a => a.DO_Type == DO_Type && a.DO_Piece == DO_Piece).SingleOrDefault();
 		await UpdateLignes();

@@ -177,7 +177,8 @@
     private List<API_T_AgenceContrat> contrats = new List<API_T_AgenceContrat>();
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         contrats = db.API_T_AgenceContrat.ToList();
     }
 }

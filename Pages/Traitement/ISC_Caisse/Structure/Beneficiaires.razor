@@ -35,7 +35,8 @@
     List<API_T_Personnel> items = new List<API_T_Personnel>();
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         items = db.API_T_Personnel.OrderBy(a => a.Nom).ToList();
     }
     public void UpdateListe(ActionEventArgs<API_T_Personnel> args)

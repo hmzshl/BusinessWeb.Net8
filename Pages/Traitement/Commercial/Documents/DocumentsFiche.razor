@@ -418,7 +418,8 @@
     }
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         if(IsConsommation) 
         {
             tiers = db.F_COMPTET.Where(a => a.CT_Type == 0).OrderBy(a => a.CT_Intitule).ToList();

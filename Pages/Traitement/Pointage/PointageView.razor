@@ -142,7 +142,8 @@
     List<API_T_Site> sites = new  List<API_T_Site>();
     protected override async Task OnInitializedAsync()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         await InitAnnees();
         await InitAnnees();
         await InitMois();

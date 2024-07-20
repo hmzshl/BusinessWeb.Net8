@@ -252,7 +252,8 @@ else
     {
         await Task.Delay(1);
         
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         etats = db.API_V_COMPTET.Select(a => a.EtatSolde).Distinct().ToList();
         sommeils = db.API_V_COMPTET.Select(a => a.SommeilIntitule).Distinct().ToList();
         selected_etats = etats;

@@ -155,7 +155,8 @@
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(1);
-        db = session.db;
+                db = session.db;
+        GC.Collect();
 
         users = db.API_V_AUDIT_F_COMPTET.Where(a => a.CT_Type == CT_Type).Select(a => a.Sage_Name).Distinct().ToList();
         operations = db.API_V_AUDIT_F_COMPTET.Where(a => a.CT_Type == CT_Type).Select(a => a.Operation).Distinct().ToList();

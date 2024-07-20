@@ -218,7 +218,8 @@
     protected override async Task OnInitializedAsync()
     {
 
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         types = db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161"))).OrderBy(a => a.R_Intitule).Select(a => a.R_Intitule).Distinct().ToList();
         statut = db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161"))).OrderBy(a => a.Echeance).Select(a => a.Echeance).Distinct().ToList();
         journaux = db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161"))).OrderBy(a => a.JO_Intitule).Select(a => a.JO_Intitule).Distinct().ToList();

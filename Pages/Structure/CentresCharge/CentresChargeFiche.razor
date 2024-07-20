@@ -37,7 +37,8 @@ else
 
     protected override void OnInitialized()
     {
-        db = session.db;
+                db = session.db;
+        GC.Collect();
         if (id != 0)
         {
             row = db.API_T_CentreCharge.Where(a => a.id == id).SingleOrDefault();
