@@ -24,7 +24,7 @@
                         <Template>
                             <RadzenLabel Text="Type" Component="type" />
                             <div style="padding-left: 10px; margin-right: 10px;" id="type">
-                                <SfMultiSelect Width="200px" @bind-Value=@types ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_RELEVE.Where(a => a.Groupe == "Document" && a.CT_Num == CT_Num).OrderBy(a => a.TypeIntitule).Select(a => a.TypeIntitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                                <SfMultiSelect Width="200px" @bind-Value=@selected_types ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(types)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
                                      <MultiSelectFieldSettings Text="TypeIntitule" Value="TypeIntitule"></MultiSelectFieldSettings>
                                      <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
                                  </SfMultiSelect>
@@ -232,8 +232,8 @@ else
         await Task.Delay(100);
                 db = session.db;
         GC.Collect();
-        types = db.API_V_RELEVE.OrderBy(a => a.TypeIntitule).Select(a => a.TypeIntitule).Distinct().ToList();
-        statuts = db.API_V_RELEVE.Where(a => a.DO_Domaine == domaine).Select(a => a.EtatReglement).Distinct().ToList();
+        types = db.API_V_RELEVE.Where(a => a.Groupe == "Document" && a.CT_Num == CT_Num).OrderBy(a => a.TypeIntitule).Select(a => a.TypeIntitule).Distinct().ToList();
+        statuts = db.API_V_RELEVE.Where(a => a.DO_Domaine == domaine && a.CT_Num == CT_Num).Select(a => a.EtatReglement).Distinct().ToList();
         selected_statuts = statuts;
         selected_types = types;
         await UpdateGrid();
@@ -256,7 +256,7 @@ else
             && a.Groupe == "Document"
             && ((date1 != null && a.DO_Date >= date1) || date1 == null)
                         && ((selected_statuts != null && selected_statuts.Contains(a.EtatReglement)))
-                        && ((types != null && types.Contains(a.TypeIntitule)))
+                        && ((selected_types != null && selected_types.Contains(a.TypeIntitule)))
             && ((date2 != null && a.DO_Date <= date2) || date2 == null)                               
         ).Where(a => (a.CO_No2 == CO_No && CO_No != 0) || (CO_No == 0))
             .OrderBy(a => a.DO_Date).ToList();

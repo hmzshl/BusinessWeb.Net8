@@ -774,7 +774,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Debit.Value)</Value>
+                                  <Value>=Sum(Fields!MontantTTC.Value)</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -819,7 +819,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Credit.Value)</Value>
+                                  <Value>=Sum(Fields!MontantRegle.Value)</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -863,7 +863,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Sum(Fields!Debit.Value)-Sum(Fields!Credit.Value)</Value>
+                                  <Value>=Sum(Fields!Reste.Value)</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>

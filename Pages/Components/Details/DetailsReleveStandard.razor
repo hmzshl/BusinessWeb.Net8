@@ -24,7 +24,7 @@
                         <Template>
                             <RadzenLabel Text="Type" Component="type" />
                             <div style="padding-left: 10px; margin-right: 10px;" id="type">
-                                <SfMultiSelect Width="230px" @bind-Value=@types ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_RELEVE.OrderBy(a => a.TypeIntitule).Select(a => a.TypeIntitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                                <SfMultiSelect Width="230px" @bind-Value=@selected_types ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(types)" ShowSelectAll ShowDropDownIcon>
                                      <MultiSelectFieldSettings Text="TypeIntitule" Value="TypeIntitule"></MultiSelectFieldSettings>
                                      <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
                                  </SfMultiSelect>
@@ -166,6 +166,7 @@ else
     int type = 0;
     SfGrid<V_ReleveStandard> DefaultGrid;
     List<string> types = new List<string>();
+    List<string> selected_types = new List<string>();
     private List<API_V_RELEVE> data = new List<API_V_RELEVE>();
     private List<V_ReleveStandard> items = new List<V_ReleveStandard>();
 
@@ -173,9 +174,10 @@ else
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(100);
-                db = session.db;
+        db = session.db;
         GC.Collect();
-        types = db.API_V_RELEVE.OrderBy(a => a.TypeIntitule).Select(a => a.TypeIntitule).Distinct().ToList();
+        types = db.API_V_RELEVE.Where(a => a.CT_Num == CT_Num).OrderBy(a => a.TypeIntitule).Select(a => a.TypeIntitule).Distinct().ToList();
+        selected_types = types;
         await UpdateGrid();
         IsLoaded = true;
     }
@@ -197,14 +199,14 @@ else
             )
             && ((date1 != null && a.DO_Date >= date1) || date1 == null)
             && ((date2 != null && a.DO_Date <= date2) || date2 == null)
-            && ((types != null) || (types.Contains(a.TypeIntitule)))
+            && ((selected_types != null) || (selected_types.Contains(a.TypeIntitule)))
         )
             .OrderBy(a => a.DO_Date).ToList();
 
         var reports = db.API_V_RELEVE.Where(a =>
             ((a.CT_Num == CT_Num && CT_Num != null) || (CT_Num == null))
             && a.DO_Date < date1
-            && ((types != null) || (types.Contains(a.TypeIntitule)))
+            && ((selected_types != null) || (selected_types.Contains(a.TypeIntitule)))
         )
             .OrderBy(a => a.DO_Date).ToList();
         solde = (reports?.Sum(a => a.Debit)??0) - (reports?.Sum(a => a.Credit)??0);
