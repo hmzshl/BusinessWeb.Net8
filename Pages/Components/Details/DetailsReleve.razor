@@ -233,7 +233,7 @@ else
                 db = session.db;
         GC.Collect();
         types = db.API_V_RELEVE.Where(a => a.Groupe == "Document" && a.CT_Num == CT_Num).OrderBy(a => a.TypeIntitule).Select(a => a.TypeIntitule).Distinct().ToList();
-        statuts = db.API_V_RELEVE.Where(a => a.DO_Domaine == domaine && a.CT_Num == CT_Num).Select(a => a.EtatReglement).Distinct().ToList();
+        statuts = db.API_V_RELEVE.Where(a => a.CT_Num == CT_Num).Select(a => a.EtatReglement).Distinct().ToList();
         selected_statuts = statuts;
         selected_types = types;
         await UpdateGrid();

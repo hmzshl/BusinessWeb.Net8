@@ -61,7 +61,7 @@
                                         }
                                     </FooterTemplate>
                                 </GridAggregateColumn>
-                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.DL_MontantHT)" Type="AggregateType.Sum" Format="N2">
+                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.DL_MontantHT)" Type="AggregateType.Sum" Format="N0">
                                     <FooterTemplate>
                                         @{
                                             var Value = (context as AggregateTemplateContext);
@@ -71,7 +71,7 @@
                                         }
                                     </FooterTemplate>
                                 </GridAggregateColumn>
-                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.DL_MontantTTC)" Type="AggregateType.Sum" Format="N2">
+                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.DL_MontantTTC)" Type="AggregateType.Sum" Format="N0">
                                     <FooterTemplate>
                                         @{
                                             var Value = (context as AggregateTemplateContext);
@@ -81,7 +81,7 @@
                                         }
                                     </FooterTemplate>
                                 </GridAggregateColumn>
-                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.SoldeCommercial)" Type="AggregateType.Sum" Format="N2">
+                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.SoldeCommercial)" Type="AggregateType.Sum" Format="N0">
                                     <FooterTemplate>
                                         @{
                                             var Value = (context as AggregateTemplateContext);
@@ -91,7 +91,7 @@
                                         }
                                     </FooterTemplate>
                                 </GridAggregateColumn>
-                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.SoldeComptable)" Type="AggregateType.Sum" Format="N2">
+                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.SoldeComptable)" Type="AggregateType.Sum" Format="N0">
                                     <FooterTemplate>
                                         @{
                                             var Value = (context as AggregateTemplateContext);
@@ -101,7 +101,7 @@
                                         }
                                     </FooterTemplate>
                                 </GridAggregateColumn>
-                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.RG_Montant)" Type="AggregateType.Sum" Format="N2">
+                                <GridAggregateColumn Field="@nameof(API_V_COMPTET.RG_Montant)" Type="AggregateType.Sum" Format="N0">
                                     <FooterTemplate>
                                         @{
                                             var Value = (context as AggregateTemplateContext);
@@ -125,9 +125,9 @@
                         <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Adresse" HeaderText="Adresse" Width="250"></GridColumn>
                         <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_Telephone" HeaderText="Téléphone"></GridColumn>
                         <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CT_EMail" HeaderText="Email"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT" HeaderText="CA HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC" HeaderText="CA TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="RG_Montant" HeaderText="Régl." Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                        <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT" HeaderText="CA HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC" HeaderText="CA TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="RG_Montant" HeaderText="Régl." Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                             <Template>
                                 @{
                                     var dt = (context as API_V_COMPTET);
@@ -140,7 +140,7 @@
                                 }
                             </Template>
                         </GridColumn>
-                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="SoldeCommercial" HeaderText="Solde" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                        <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="SoldeCommercial" HeaderText="Solde" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                             <Template>
                                 @{
                                     var dt = (context as API_V_COMPTET);
