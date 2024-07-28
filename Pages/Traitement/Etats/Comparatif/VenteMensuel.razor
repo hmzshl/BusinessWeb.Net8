@@ -34,7 +34,7 @@
                                 <SfToolbar CssClass="btns">
                                     <ToolbarItems>
                                         <ToolbarItem OnClick=@(args => (FRsfPivot.ExportToPdfAsync())) TooltipText="Export PDF" Text="Export PDF" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-pdf"></ToolbarItem>
-                                        <ToolbarItem OnClick=@(args => (FRsfPivot.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+                                        <ToolbarItem OnClick=@(args => (FRsfPivot.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
                                     </ToolbarItems>
                                 </SfToolbar>
                              <SfPivotView @ref=@FRsfPivot TValue="API_V_MARGE" Height="100%" ShowFieldList=false Target="document" AllowDeferLayoutUpdate="true" ExportAllPages=false
@@ -73,7 +73,7 @@
                                 <SfToolbar CssClass="btns">
                                     <ToolbarItems>
                                         <ToolbarItem OnClick=@(args => (ARsfPivot.ExportToPdfAsync())) TooltipText="Export PDF" Text="Export PDF" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-pdf"></ToolbarItem>
-                                        <ToolbarItem OnClick=@(args => (ARsfPivot.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+                                        <ToolbarItem OnClick=@(args => (ARsfPivot.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
                                     </ToolbarItems>
                                 </SfToolbar>
                              <SfPivotView @ref=@ARsfPivot TValue="API_V_MARGE" Height="100%" ShowFieldList=false Target="document" AllowDeferLayoutUpdate="true" ExportAllPages=false

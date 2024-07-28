@@ -10,18 +10,18 @@
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
 							<Template>
 								<div style="margin-left: 5px; margin-right: 10px;" id="debut">
-									<SfDatePicker ShowClearButton Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1"  ShowTodayButton>
+									<SfDatePicker ShowClearButton Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1" ShowTodayButton>
 										<DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
 									</SfDatePicker>
 								</div>
 
 							</Template>
 						</ToolbarItem>
-						
+
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
 							<Template>
 								<div style="margin-left: 5px; margin-right: 10px;" id="fin">
-									<SfDatePicker ShowClearButton Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2"  ShowTodayButton>
+									<SfDatePicker ShowClearButton Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2" ShowTodayButton>
 										<DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
 									</SfDatePicker>
 								</div>
@@ -32,7 +32,7 @@
 							<Template>
 								<RadzenLabel Text="Type" Component="type" />
 								<div style="padding-left: 10px; margin-right: 10px;" id="type">
-									<SfMultiSelect Width="200px" @bind-Value=@selected_types  TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(types)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+									<SfMultiSelect Width="200px" @bind-Value=@selected_types TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(types)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
 										<MultiSelectFieldSettings Text="TypeIntitule" Value="TypeIntitule"></MultiSelectFieldSettings>
 										<MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
 									</SfMultiSelect>
@@ -43,7 +43,7 @@
 							<Template>
 								<RadzenLabel Text="Etat" Component="etat" />
 								<div style="padding-left: 10px; margin-right: 10px;" id="etat">
-									<SfMultiSelect Width="140px" @bind-Value=@selected_statuts  TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(statuts)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+									<SfMultiSelect Width="140px" @bind-Value=@selected_statuts TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(statuts)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
 										<MultiSelectFieldSettings Text="EtatReglement" Value="EtatReglement"></MultiSelectFieldSettings>
 										<MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
 									</SfMultiSelect>
@@ -57,7 +57,7 @@
 						</ToolbarItem>
 
 						<ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
-						<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
 						<ToolbarItem OnClick=@(args => (UpdateGrid())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
 					</ToolbarItems>
 				</SfToolbar>
@@ -70,12 +70,12 @@
 					}
 					else
 					{
-						<SfGrid AllowFiltering AllowReordering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="DocumentGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging ContextMenuItems="@(contextMenu())">
+						<SfGrid EnablePersistence AllowFiltering AllowReordering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="DocumentGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging ContextMenuItems="@(contextMenu())">
 							<GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
 							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 							<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
 							<GridPageSettings PageSize="100"></GridPageSettings>
-							<GridEvents OnRecordDoubleClick="@(args => ShowPiece(args.RowData.DO_Piece,args.RowData.DO_Type))" ContextMenuItemClicked="OnContextMenuClick" TValue="API_V_DOCENTETE"></GridEvents>
+							<GridEvents Created="CreatedHandler" OnRecordDoubleClick="@(args => ShowPiece(args.RowData.DO_Piece,args.RowData.DO_Type))" ContextMenuItemClicked="OnContextMenuClick" TValue="API_V_DOCENTETE"></GridEvents>
 							<GridTemplates>
 								<EmptyRecordTemplate>
 									<Empty></Empty>
@@ -137,7 +137,7 @@
 
 						</SfGrid>
 					}
-					
+
 				</div>
 
 			</div>
@@ -167,7 +167,7 @@
 				Souche
 			</Header>
 			<Content>
-				<SfDropDownList Query="@fn.LocalDataQuery"  Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(list_souches)" TValue="short?" TItem="P_SOUCHEVENTE" @bind-Value="@souche">
+				<SfDropDownList Query="@fn.LocalDataQuery" Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(list_souches)" TValue="short?" TItem="P_SOUCHEVENTE" @bind-Value="@souche">
 					<DropDownListEvents TValue="short?" TItem="P_SOUCHEVENTE" />
 					<DropDownListFieldSettings Text="S_Intitule" Value="cbIndice" />
 				</SfDropDownList>
@@ -205,7 +205,7 @@
 				@(fn.getTiers(domaine))
 			</Header>
 			<Content>
-				<SfDropDownList Query="@fn.LocalDataQuery"  Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(list_tiers)" TValue="string" TItem="F_COMPTET" @bind-Value="@tiers">
+				<SfDropDownList Query="@fn.LocalDataQuery" Width="100%" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@(list_tiers)" TValue="string" TItem="F_COMPTET" @bind-Value="@tiers">
 					<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 					<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
 				</SfDropDownList>
@@ -240,7 +240,7 @@ else
 	private SfGrid<API_V_DOCENTETE> DefaultGrid;
 	bool IsLoaded = false;
 	bool loading = false;
-	DateTime? date1 = new DateTime(DateTime.Today.Year,1,1);
+	DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
 	DateTime? date2;
 	private List<API_V_DOCENTETE> items = new List<API_V_DOCENTETE>();
 
@@ -269,8 +269,8 @@ else
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(1);
-		        db = session.db;
-        GC.Collect();
+		db = session.db;
+		GC.Collect();
 
 		types = db.API_V_DOCENTETE.Where(a => a.DO_Domaine == domaine).Select(a => a.TypeIntitule).Distinct().ToList();
 		statuts = db.API_V_DOCENTETE.Where(a => a.DO_Domaine == domaine).Select(a => a.EtatReglement).Distinct().ToList();
@@ -283,6 +283,11 @@ else
 		await UpdateGrid();
 		IsLoaded = true;
 
+	}
+	public void CreatedHandler(object args)
+	{
+			DefaultGrid.ClearFilteringAsync();
+			DefaultGrid.ClearSortingAsync();		
 	}
 	private async Task UpdateTypes()
 	{
@@ -458,12 +463,12 @@ else
 		{
 
 
-			db.Database.ExecuteSqlRaw("UPDATE F_DOCENTETE SET DO_Souche = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", souche, item.DO_Piece, item.DO_Type);
+			db.Database.ExecuteSqlRaw("UPDATE F_DOCENTETE SET DO_Souche = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", souche - 1, item.DO_Piece, item.DO_Type);
 
 
 		}
 		fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
-		
+
 		await UpdateGrid();
 		await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
 	}

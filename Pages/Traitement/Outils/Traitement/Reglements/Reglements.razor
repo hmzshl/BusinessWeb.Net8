@@ -44,7 +44,7 @@
 							</Template>
 						</ToolbarItem>
 						<ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
-						<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
 						<ToolbarItem OnClick=@(args => (UpdateGrid())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
 					</ToolbarItems>
 				</SfToolbar>
@@ -57,12 +57,12 @@
 					}
 					else
 					{
-						<SfGrid AllowReordering Height="100%" AllowFiltering AllowSorting AllowResizing AllowSelection ShowColumnChooser="true" ID="ReglementGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging ContextMenuItems="@(contextMenu())">
+						<SfGrid EnablePersistence AllowReordering Height="100%" AllowFiltering AllowSorting AllowResizing AllowSelection ShowColumnChooser="true" ID="ReglementGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging ContextMenuItems="@(contextMenu())">
 							<GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
 							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 							<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
 							<GridPageSettings PageSize="100"></GridPageSettings>
-							<GridEvents ContextMenuItemClicked="OnContextMenuClick" TValue="API_V_CREGLEMENT"></GridEvents>
+							<GridEvents ContextMenuItemClicked="OnContextMenuClick" TValue="API_V_CREGLEMENT" Created="CreatedHandler"></GridEvents>
 							<GridTemplates>
 								<EmptyRecordTemplate>
 									<Empty></Empty>
@@ -235,6 +235,11 @@ else
 		await UpdateGrid();
 		IsLoaded = true;
 
+	}
+	public void CreatedHandler(object args)
+	{
+		DefaultGrid.ClearFilteringAsync();
+		DefaultGrid.ClearSortingAsync();
 	}
 	private async Task UpdateTypes()
 	{

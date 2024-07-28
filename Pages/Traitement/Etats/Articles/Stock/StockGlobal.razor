@@ -9,7 +9,8 @@
 			<div class="grid-90">
 				<SfToolbar CssClass="btns">
 					<ToolbarItems>
-						<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
 						<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
 							<Template>
@@ -38,7 +39,7 @@
 								</SfDatePicker>
 							</Template>
 						</ToolbarItem>
-						
+
 					</ToolbarItems>
 				</SfToolbar>
 				<div class="grid-84" style="zoom: @session.zoomLevel;">
@@ -50,9 +51,10 @@
 					}
 					else
 					{
-						<SfGrid Height="100%" DataSource="@(items)" AllowTextWrap EnableHover="false" AllowPaging AllowGrouping AllowExcelExport @ref=@DefaultGrid>
+						<SfGrid ShowColumnChooser EnablePersistence ID="StockGrid" Height="100%" DataSource="@(items)" EnableHover="false" AllowPaging AllowExcelExport @ref=@DefaultGrid AllowFiltering>
 							<GridPageSettings PageSize="500" PageCount="10" />
-							<GridEvents TValue="V_StockGlobal"></GridEvents>
+							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+							<GridEvents Created="CreatedHandler" TValue="V_StockGlobal"></GridEvents>
 							<GridGroupSettings Columns="@(new string[] { "FA_Intitule" })" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates>
 								<CaptionTemplate>
 									@{
@@ -61,12 +63,39 @@
 									}
 								</CaptionTemplate>
 							</GridGroupSettings>
+							<GridAggregates>
+								<GridAggregate>
+									<GridAggregateColumns>
+										<GridAggregateColumn Field="@nameof(V_StockGlobal.AR_Design)" Type="AggregateType.Count" Format="N0">
+											<FooterTemplate>
+												@{
+													var Value = (context as AggregateTemplateContext);
+													<div style="text-align: left !important;">
+														@Value.Count
+													</div>
+												}
+											</FooterTemplate>
+										</GridAggregateColumn>
+										<GridAggregateColumn Field="@nameof(V_StockGlobal.Montant)" Type="AggregateType.Sum" Format="N2">
+											<FooterTemplate>
+												@{
+													var Value = (context as AggregateTemplateContext);
+													<div style="text-align: right !important;">
+														@Value.Sum
+													</div>
+												}
+											</FooterTemplate>
+										</GridAggregateColumn>
+									</GridAggregateColumns>
+								</GridAggregate>
+							</GridAggregates>
 							<GridColumns>
 								<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.FA_Intitule)" HeaderText="Famille" />
-								<GridColumn MinWidth="240" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.AR_Design)" HeaderText="Désignation" />
+								<GridColumn MinWidth="400" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.AR_Design)" HeaderText="Désignation" />
 								<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.AR_Ref)" HeaderText="Référence" />
 								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.U_Intitule)" HeaderText="Unité" />
-								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Initial)" HeaderText="Stock Initial" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Initial)" HeaderText="Initial" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
 									<Template>
 										@{
 											var dt = (context as V_StockGlobal);
@@ -106,7 +135,7 @@
 										}
 									</Template>
 								</GridColumn>
-								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Entree)" HeaderText="Mouvements Entrées" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Entree)" HeaderText="Entrées" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
 									<Template>
 										@{
 											var dt = (context as V_StockGlobal);
@@ -121,7 +150,7 @@
 										}
 									</Template>
 								</GridColumn>
-								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Sortie)" HeaderText="Mouvements Sorties" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Sortie)" HeaderText="Sorties" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
 									<Template>
 										@{
 											var dt = (context as V_StockGlobal);
@@ -136,7 +165,7 @@
 										}
 									</Template>
 								</GridColumn>
-								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Transfert)" HeaderText="Mouvements Transferts" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Transfert)" HeaderText="Transferts" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
 									<Template>
 										@{
 											var dt = (context as V_StockGlobal);
@@ -151,7 +180,7 @@
 										}
 									</Template>
 								</GridColumn>
-								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Interne)" HeaderText="Documents Internes" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Interne)" HeaderText="Internes" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
 									<Template>
 										@{
 											var dt = (context as V_StockGlobal);
@@ -166,12 +195,52 @@
 										}
 									</Template>
 								</GridColumn>
-								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Theorique)" HeaderText="Stock Final" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Pu)" HeaderText="CMUP" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+									<Template>
+										@{
+											var dt = (context as V_StockGlobal);
+											<div style="font-weight: 600 !important;">
+												@dt.Pu.ToString("### ### ##0.00;-### ### ##0.00;#")
+											</div>
+										}
+									</Template>
+								</GridColumn>
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.AR_PrixAch)" HeaderText="PA" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+									<Template>
+										@{
+											var dt = (context as V_StockGlobal);
+											<div style="font-weight: 600 !important;">
+												@dt.AR_PrixAch?.ToString("### ### ##0.00;-### ### ##0.00;#")
+											</div>
+										}
+									</Template>
+								</GridColumn>
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.AR_PUNet)" HeaderText="Der.PA" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+									<Template>
+										@{
+											var dt = (context as V_StockGlobal);
+											<div style="font-weight: 600 !important;">
+												@dt.AR_PUNet?.ToString("### ### ##0.00;-### ### ##0.00;#")
+											</div>
+										}
+									</Template>
+								</GridColumn>
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Theorique)" HeaderText="Stock" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
 									<Template>
 										@{
 											var dt = (context as V_StockGlobal);
 											<div style="font-weight: 700 !important;">
 												@dt.Theorique.ToString("### ### ##0.00;-### ### ##0.00;#")
+											</div>
+										}
+									</Template>
+								</GridColumn>
+								<GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_StockGlobal.Montant)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+									<Template>
+										@{
+											var dt = (context as V_StockGlobal);
+											<div style="font-weight: 700 !important;">
+												@dt.Montant.ToString("### ### ##0.00;-### ### ##0.00;#")
 											</div>
 										}
 									</Template>
@@ -242,17 +311,22 @@ else
 	private SfGrid<V_StockGlobal> DefaultGrid;
 	protected override async Task OnInitializedAsync()
 	{
-		        db = session.db;
-        GC.Collect();
+		db = session.db;
+		GC.Collect();
 		await Task.Delay(1);
 		depots = db.F_DEPOT.ToList();
 		if (depots.Where(a => a.DP_NoDefaut == 1).Any())
 		{
 			depot = depots.Where(a => a.DP_NoDefaut == 1).First().DE_No;
 		}
-		
+
 		await LoadData();
 		IsLoaded = true;
+	}
+	public void CreatedHandler(object args)
+	{
+		DefaultGrid.ClearFilteringAsync();
+		DefaultGrid.ClearSortingAsync();
 	}
 	private async Task LoadData()
 	{
@@ -263,32 +337,46 @@ else
 		.OrderBy(a => a.AR_Design)
 		.ToList();
 		data_2 = data.Where(a => (a.DL_DateBL >= date1 || date1 == null)).ToList();
-		items = data.
-		GroupBy(a => new { a.AR_Ref, a.AR_Design, a.FA_CodeFamille, a.FA_Intitule })
-					.Select(a => new V_StockGlobal
-						{
-							AR_Ref = a.Key.AR_Ref,
-							AR_Design = a.Key.AR_Design,
-							FA_CodeFamille = a.Key.FA_CodeFamille,
-							FA_Intitule = a.Key.FA_Intitule,
+		items = data
+			.GroupBy(a => new { a.AR_Ref, a.AR_Design, a.FA_CodeFamille, a.FA_Intitule, a.U_Intitule, a.AR_PrixAch, a.AR_PUNet })
+			.Select(a => new V_StockGlobal
+				{
+					AR_Ref = a.Key.AR_Ref,
+					AR_Design = a.Key.AR_Design,
+					AR_PrixAch = a.Key.AR_PrixAch,
+					AR_PUNet = a.Key.AR_PUNet,
+					FA_CodeFamille = a.Key.FA_CodeFamille,
+					FA_Intitule = a.Key.FA_Intitule,
+					U_Intitule = a.Key.U_Intitule,
+					Initial = a.Where(a => a.DL_DateBL < date1).Sum(a => a.Mvt) ?? 0,
+					Achat = a.Where(a => a.DO_Domaine == 1 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
+					Vente = a.Where(a => a.DO_Domaine == 0 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
+					Entree = a.Where(a => a.DO_Type == 20 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
+					Sortie = a.Where(a => a.DO_Type == 21 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
+					Transfert = a.Where(a => a.DO_Type == 23 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
+					Interne = a.Where(a => a.DO_Domaine == 4 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
+					Theorique = a.Sum(a => a.Mvt) ?? 0,
+					Pu = (a.Where(a => (a.DO_Domaine == 2 || a.DO_Domaine == 1) && a.DL_MontantHT > 0).Sum(a => a.DL_MontantHT) ?? 0) /
+						 (a.Where(a => (a.DO_Domaine == 2 || a.DO_Domaine == 1) && a.DL_MontantHT > 0).Sum(a => a.DL_Qte) == 0 ? 1 : a.Where(a => (a.DO_Domaine == 2 || a.DO_Domaine == 1) && a.DL_MontantHT > 0).Sum(a => a.DL_Qte)) == 0
+						 ? 0
+						 : (a.Where(a => (a.DO_Domaine == 2 || a.DO_Domaine == 1) && a.DL_MontantHT > 0).Sum(a => a.DL_MontantHT) ?? 0) / (a.Where(a => (a.DO_Domaine == 2 || a.DO_Domaine == 1) && a.DL_MontantHT > 0).Sum(a => a.DL_Qte) ?? 1),
+					Montant = (a.Sum(a => a.Mvt) ?? 0) * (
+						(a.Where(a => (a.DO_Domaine == 2 || a.DO_Domaine == 1) && a.DL_MontantHT > 0).Sum(a => a.DL_MontantHT) ?? 0) /
+						(a.Where(a => (a.DO_Domaine == 2 || a.DO_Domaine == 1) && a.DL_MontantHT > 0).Sum(a => a.DL_Qte) == 0 ? 1 : a.Where(a => (a.DO_Domaine == 2 || a.DO_Domaine == 1) && a.DL_MontantHT > 0).Sum(a => a.DL_Qte)) == 0
+						? 0
+						: (a.Where(a => (a.DO_Domaine == 2 || a.DO_Domaine == 1) && a.DL_MontantHT > 0).Sum(a => a.DL_MontantHT) ?? 0) / (a.Where(a => (a.DO_Domaine == 2 || a.DO_Domaine == 1) && a.DL_MontantHT > 0).Sum(a => a.DL_Qte) ?? 1)
+					)
+				})
+			.ToList();
 
-							Initial = a.Where(a => a.DL_DateBL < date1).Sum(a => a.Mvt) ?? 0,
-							Achat = a.Where(a => a.DO_Domaine == 1 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
-							Vente = a.Where(a => a.DO_Domaine == 0 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
-							Entree = a.Where(a => a.DO_Type == 20 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
-							Sortie = a.Where(a => a.DO_Type == 21 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
-							Transfert = a.Where(a => a.DO_Type == 23 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
-							Interne = a.Where(a => a.DO_Domaine == 4 && (a.DL_DateBL >= date1 || date1 == null)).Sum(a => a.Mvt) ?? 0,
 
-							Theorique = a.Sum(a => a.Mvt) ?? 0
-						}).ToList();
 		Loading = false;
 		await Task.Delay(100);
 
 	}
 	private async Task ShowDetail(string AR_Ref, short? DO_Domaine, short DO_Type)
 	{
-		if(DO_Domaine != 2)
+		if (DO_Domaine != 2)
 		{
 			details = data_2.Where(a => a.AR_Ref == AR_Ref && a.DO_Domaine == DO_Domaine).ToList();
 		}

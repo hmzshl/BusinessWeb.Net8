@@ -38,9 +38,9 @@
                 </ToolbarItems>
             </SfToolbar>
             <div class="grid-84" style="zoom: @session.zoomLevel;">
-                <SfGrid Height="100%" AllowResizing AllowSorting AllowFiltering AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items">
+                <SfGrid EnablePersistence ID="TiersGrid" Height="100%" AllowResizing AllowSorting AllowFiltering AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items">
                     <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="false" AllowDeleting="false" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-                    <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="RowDoubleClicked" TValue="API_V_COMPTET"></GridEvents>
+                    <GridEvents Created="CreatedHandler" OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="RowDoubleClicked" TValue="API_V_COMPTET"></GridEvents>
                     <GridPageSettings PageSize="100"></GridPageSettings>
                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                     <GridTemplates>
@@ -260,6 +260,11 @@ else
         selected_sommeils = db.API_V_COMPTET.Where(a => a.SommeilIntitule == "Actif").Select(a => a.SommeilIntitule).Distinct().ToList();
         await UpdateGrid();
         IsLoaded = true;
+    }
+    public void CreatedHandler(object args)
+    {
+        DefaultGrid.ClearFilteringAsync();
+        DefaultGrid.ClearSortingAsync();
     }
     public async void PDFReport()
     {

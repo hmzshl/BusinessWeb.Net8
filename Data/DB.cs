@@ -4256,6 +4256,8 @@ public partial class DB : DbContext
             entity.Property(e => e.AR_Design)
                 .HasMaxLength(69)
                 .IsUnicode(false);
+            entity.Property(e => e.AR_PUNet).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.AR_PrixAch).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.AR_Ref)
                 .HasMaxLength(19)
                 .IsUnicode(false);
@@ -4267,6 +4269,8 @@ public partial class DB : DbContext
                 .HasMaxLength(35)
                 .IsUnicode(false);
             entity.Property(e => e.DL_DateBL).HasColumnType("datetime");
+            entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_PieceBL)
                 .HasMaxLength(9)
                 .IsUnicode(false);

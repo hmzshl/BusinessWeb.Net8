@@ -52,9 +52,9 @@
                     </ToolbarItems>
                 </SfToolbar>
                 <div class="grid-84" style="zoom: @session.zoomLevel;">
-                     <SfGrid  @ref=@DefaultGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
+                     <SfGrid EnablePersistence ID="TransfertGrid" @ref=@DefaultGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
 
-                         <GridEvents TValue="RAPPRO_DOCENTETE"></GridEvents>
+                        <GridEvents TValue="RAPPRO_DOCENTETE" Created="CreatedHandler"></GridEvents>
                          <GridPageSettings PageSize="100"></GridPageSettings>
                          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                          <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"/>
@@ -257,6 +257,11 @@ else
 
         IsLoaded = true;
 
+    }
+    public void CreatedHandler(object args)
+    {
+        DefaultGrid.ClearFilteringAsync();
+        DefaultGrid.ClearSortingAsync();
     }
     private async Task Compare() 
     {

@@ -25,13 +25,13 @@
 						</ToolbarItem>
 						<ToolbarItem OnClick=@(()=>{ _visible = true; }) TooltipText="Filtrer" Text="Filtrer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-filter"></ToolbarItem>
 						<ToolbarItem Disabled=@(!sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
-						<ToolbarItem Disabled=@(!sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+						<ToolbarItem Disabled=@(!sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
 					</ToolbarItems>
 				</SfToolbar>
 				<div class="grid-84" style="zoom: @session.zoomLevel;">
-					<SfGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowResizing AllowFiltering AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="ArticleGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
+					<SfGrid EnablePersistence Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowResizing AllowFiltering AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="ArticleGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
 						<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="false" AllowDeleting="false" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-						<GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_V_ARTICLE"></GridEvents>
+						<GridEvents Created="CreatedHandler" OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_V_ARTICLE"></GridEvents>
 						<GridPageSettings PageSize="100"></GridPageSettings>
 						<GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
 						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
@@ -382,6 +382,11 @@ else
 		selected_sommeils = db.API_V_ARTICLE.Where(a => a.SommeilIntitule == "Actif").Select(a => a.SommeilIntitule).Distinct().ToList();
 		await UpdateGrid();
 		IsLoaded = true;
+	}
+	public void CreatedHandler(object args)
+	{
+		DefaultGrid.ClearFilteringAsync();
+		DefaultGrid.ClearSortingAsync();
 	}
 	private async Task UpdateGrid()
 	{

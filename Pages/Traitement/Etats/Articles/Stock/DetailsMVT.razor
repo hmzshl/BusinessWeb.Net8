@@ -2,7 +2,7 @@
 {
 	<SfToolbar CssClass="btns">
 		<ToolbarItems>
-			<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync())) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+			<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
 			<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
 			<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
 				<Template>
@@ -18,6 +18,7 @@
 		<SfGrid TValue="API_V_ARTICLEMVT" Height="100%" AllowSelection="true" EnableHover="true" DataSource="@details.OrderBy(a => a.DL_DateBL)" AllowTextWrap AllowExcelExport>
 			<GridEvents TValue="API_V_ARTICLEMVT"></GridEvents>
 			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox" />
+			<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
 			<GridAggregates>
 				<GridAggregate>
 					<GridAggregateColumns>

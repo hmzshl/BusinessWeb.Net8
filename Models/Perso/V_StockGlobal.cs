@@ -24,5 +24,7 @@ namespace BusinessWeb.Models.Perso
 					return "Stock epuisé";
 			}
 		}
+		public decimal Pu { get; set; }
+		public decimal Montant { get; set; }
 	}
 }

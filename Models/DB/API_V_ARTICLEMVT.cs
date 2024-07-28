@@ -46,4 +46,14 @@ public partial class API_V_ARTICLEMVT
     public short? DO_Domaine { get; set; }
 
     public string U_Intitule { get; set; }
+
+    public decimal? DL_MontantHT { get; set; }
+
+    public decimal? DL_MontantTTC { get; set; }
+
+    public short? DL_Valorise { get; set; }
+
+    public decimal? AR_PrixAch { get; set; }
+
+    public decimal? AR_PUNet { get; set; }
 }
