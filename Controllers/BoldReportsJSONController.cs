@@ -142,7 +142,13 @@ namespace BusinessWeb.Controllers
 					Subject = emailConfig.Objet
 				};
 				mail.To.Add(emailConfig.RecipientEmail);
-
+				mail.Body = @"<p>Madame, Monsieur,</p>
+              <p>La vérification de votre compte nous permet de vous présenter, sauf erreur ou omission de notre part, un relevé général des factures émises à ce jour et dont le règlement ne nous est toujours pas parvenu.</p>
+              <p>Nous vous serions reconnaissants de bien vouloir procéder à l'envoi de votre règlement dans les meilleurs délais.</p>
+              <p>Cordialement</p>
+              <p>SAS Global Emballages<br />
+              Service facturation<br />
+              Tel : 0134701025</p>";
 				stream.Position = 0;
 				if (stream != null)
 				{
