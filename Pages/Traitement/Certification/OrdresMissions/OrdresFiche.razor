@@ -132,7 +132,8 @@
 								}
 							</Template>
 							<EditTemplate>
-								<SfDropDownList AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="int" TItem="API_T_CertifInstrument" DataSource="@instruments.Where(a => (!((lignes.Select(b => b.Instrument)?.Contains(a.id))??false)))" @bind-Value="@((context as API_T_CertifOrdreMissionLigne).Instrument)">
+								<SfDropDownList AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" 
+								TValue="int" TItem="API_T_CertifInstrument" DataSource="@(db.API_T_CertifInstrument)" @bind-Value="@((context as API_T_CertifOrdreMissionLigne).Instrument)">
 									<DropDownListEvents TValue="int" TItem="API_T_CertifInstrument" />
 									<DropDownListFieldSettings Text="Intitule" Value="id" />
 								</SfDropDownList>
