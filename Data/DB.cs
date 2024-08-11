@@ -112,11 +112,21 @@ public partial class DB : DbContext
 
     public virtual DbSet<API_T_CertifGrilleDialogueModif> API_T_CertifGrilleDialogueModif { get; set; }
 
+    public virtual DbSet<API_T_CertifInstrument> API_T_CertifInstrument { get; set; }
+
     public virtual DbSet<API_T_CertifLigne> API_T_CertifLigne { get; set; }
 
     public virtual DbSet<API_T_CertifMission> API_T_CertifMission { get; set; }
 
+    public virtual DbSet<API_T_CertifOrdreMission> API_T_CertifOrdreMission { get; set; }
+
+    public virtual DbSet<API_T_CertifOrdreMissionLigne> API_T_CertifOrdreMissionLigne { get; set; }
+
     public virtual DbSet<API_T_CertifOuvertureDossier> API_T_CertifOuvertureDossier { get; set; }
+
+    public virtual DbSet<API_T_CertifRapportMission> API_T_CertifRapportMission { get; set; }
+
+    public virtual DbSet<API_T_CertifRapportMissionLigne> API_T_CertifRapportMissionLigne { get; set; }
 
     public virtual DbSet<API_T_Config> API_T_Config { get; set; }
 
@@ -2663,6 +2673,24 @@ public partial class DB : DbContext
                 .HasConstraintName("fk_api_t_certifgrilledialoguemodif");
         });
 
+        modelBuilder.Entity<API_T_CertifInstrument>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_CertifInstrument_id_0");
+
+            entity.Property(e => e.Etat)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.IdentificationInterne)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Intitule)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Remarque)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<API_T_CertifLigne>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CertifLigne_id");
@@ -2729,6 +2757,52 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
         });
 
+        modelBuilder.Entity<API_T_CertifOrdreMission>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_CertifOrdreMission_id");
+
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateDepart).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateRetour).HasColumnType("smalldatetime");
+            entity.Property(e => e.Lieu)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.MissionObjet)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.MoyenTransport)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.NumeroDossier)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Piece)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<API_T_CertifOrdreMissionLigne>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_CertifOrdreMissionLigne_id");
+
+            entity.Property(e => e.Libelle)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.InstrumentNavigation).WithMany(p => p.API_T_CertifOrdreMissionLigne)
+                .HasForeignKey(d => d.Instrument)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_api_t_certifordremissionligne_2");
+
+            entity.HasOne(d => d.OrdreNavigation).WithMany(p => p.API_T_CertifOrdreMissionLigne)
+                .HasForeignKey(d => d.Ordre)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_api_t_certifordremissionligne");
+        });
+
         modelBuilder.Entity<API_T_CertifOuvertureDossier>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CertifOuvertureDossier_id");
@@ -2772,6 +2846,58 @@ public partial class DB : DbContext
             entity.Property(e => e.Telephone)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<API_T_CertifRapportMission>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_CertifRapportMission_id");
+
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateDebutTravaux).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateFinTravaux).HasColumnType("smalldatetime");
+            entity.Property(e => e.Lieu)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.NumeroDossier)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Piece)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<API_T_CertifRapportMissionLigne>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_CertifRapportMissionLigne_id");
+
+            entity.Property(e => e.Constructeur)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Designation)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Emplacement)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Identifiant)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.NumeroCertificat)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.InstrumentNavigation).WithMany(p => p.API_T_CertifRapportMissionLigne)
+                .HasForeignKey(d => d.Instrument)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_api_t_certifrapportmissionligne_2");
+
+            entity.HasOne(d => d.RapportNavigation).WithMany(p => p.API_T_CertifRapportMissionLigne)
+                .HasForeignKey(d => d.Rapport)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_api_t_certifrapportmissionligne");
         });
 
         modelBuilder.Entity<API_T_Config>(entity =>

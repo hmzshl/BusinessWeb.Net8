@@ -1,0 +1,140 @@
+@page "/et-instruments"
+@attribute [Authorize]
+@if (IsLoaded)
+{
+	<Card_1 Title="LISTE DES INSTRUMENTS">
+		<RadzenContent Container="main">
+			<div class="grid-90">
+				<SfToolbar>
+					<ToolbarItems>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+
+						<ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-print"></ToolbarItem>
+						<ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+
+						<ToolbarItem TooltipText="Supprimer" Text="Supprimer" OnClick=@(args => (DefaultGrid.DeleteRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-trash"></ToolbarItem>
+						<ToolbarItem TooltipText="Ajouter" Text="Ajouter" OnClick=@(args => (DefaultGrid.AddRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-circle-add"></ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+
+
+						<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+							<Template>
+								<SfTextBox Width="180px" Placeholder="RECHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+							</Template>
+						</ToolbarItem>
+					</ToolbarItems>
+				</SfToolbar>
+				<div class="grid-84" style="zoom: @session.zoomLevel;">
+					<SfGrid Height="100%" DataSource="@(items)" AllowPaging @ref=DefaultGrid >
+						<GridPageSettings PageSize="100"></GridPageSettings>
+						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+						<GridEditSettings ShowDeleteConfirmDialog="true" 
+							AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+							<HeaderTemplate>
+								<span>@((context as API_T_CertifInstrument).Intitule)</span>
+							</HeaderTemplate>
+						</GridEditSettings>
+						<GridEvents OnActionBegin="UpdateListe" TValue="API_T_CertifInstrument"></GridEvents>
+						<GridTemplates>
+							<EmptyRecordTemplate>
+								<Empty></Empty>
+							</EmptyRecordTemplate>
+						</GridTemplates>
+						<GridColumns>
+							<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifInstrument.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+							<GridColumn MinWidth="260px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifInstrument.Intitule) HeaderText="Instrument"></GridColumn>
+							<GridColumn Width="160px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifInstrument.IdentificationInterne) HeaderText="Identification interne"></GridColumn>
+							<GridColumn MinWidth="260px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifInstrument.Remarque) HeaderText="Remarque"></GridColumn>
+						</GridColumns>
+					</SfGrid>
+				</div>
+
+			</div>
+		</RadzenContent>
+	</Card_1>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+
+
+
+@code
+{
+	[CascadingParameter]
+	public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	[Parameter] public int type { get; set; }
+	[Parameter] public bool IsList { get; set; } = true;
+	[Parameter] public string Title { get; set; } = "";
+	string grid_height = "80vh";
+	//Components
+	private SfGrid<API_T_CertifInstrument> DefaultGrid;
+
+	//End components
+
+	private IEnumerable<API_T_CertifInstrument> items;
+
+	bool loading = false;
+	bool IsLoaded = false;
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(1);
+		db = session.db;
+		GC.Collect();
+		items = db.API_T_CertifInstrument.ToList();
+		IsLoaded = true;
+	}
+	private async Task UpdateGrid()
+	{
+		loading = true;
+		await Task.Delay(1);
+		
+		loading = false;
+		await Task.Delay(1);
+	}
+
+	public async Task UpdateListe(ActionEventArgs<API_T_CertifInstrument> args)
+	{
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+
+			if (args.Action == "Add")
+			{
+				API_T_CertifInstrument item = args.Data;
+				db.API_T_CertifInstrument.Add(item);
+				db.SaveChanges();
+
+			}
+			if (args.Action != "Add")
+			{
+				var local = db.Set<API_T_CertifInstrument>().Local.FirstOrDefault(a => a.id == args.Data.id);
+				if (local != null)
+				{
+					db.Entry(local).State = EntityState.Detached;
+				}
+				db.Entry(args.Data).State = EntityState.Modified;
+				db.SaveChanges();
+			}
+
+		}
+
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			var local = db.Set<API_T_CertifInstrument>().Local.FirstOrDefault(a => a.id == args.Data.id);
+			if (local != null)
+			{
+				db.Entry(local).State = EntityState.Detached;
+			}
+			db.Entry(args.Data).State = EntityState.Deleted;
+			db.SaveChanges();
+		}
+	}
+
+}

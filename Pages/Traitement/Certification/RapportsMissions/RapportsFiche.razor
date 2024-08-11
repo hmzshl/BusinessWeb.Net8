@@ -1,0 +1,352 @@
+
+<SfToolbar CssClass="btns">
+	<ToolbarItems>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton Disabled IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
+			</Template>
+		</ToolbarItem>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton OnClick="@(args => Submit(true))" IconCss="e-icons e-save" IsPrimary="true">Enregistrer</SfButton>
+			</Template>
+		</ToolbarItem>
+	</ToolbarItems>
+</SfToolbar>
+<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="row">
+	<GridRow>
+		<GridCol Xs="24" Md="5">
+			<Card Style="height: 100px;">
+				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
+					<SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
+				</FormItem>
+				<FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Enreg." LabelColSpan="8">
+					<SfTextBox @bind-Value="@(row.Piece)" />
+				</FormItem>
+				<FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Dossier" LabelColSpan="8">
+					<SfTextBox @bind-Value="@(row.NumeroDossier)" />
+				</FormItem>
+
+			</Card>
+		</GridCol>
+		<GridCol Xs="24" Md="5">
+
+			<Card Style="height: 100px;">
+
+				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Début Travaux" LabelColSpan="8">
+					<SfDatePicker TValue="DateTime?" @bind-Value="@row.DateDebutTravaux" />
+				</FormItem>
+				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Fin Travaux" LabelColSpan="8">
+					<SfDatePicker TValue="DateTime?" @bind-Value="@row.DateFinTravaux" />
+				</FormItem>
+			</Card>
+
+		</GridCol>
+
+
+		<GridCol Xs="24" Md="14">
+			<Card Style="height: 100px;">
+				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Client">
+					<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" 
+					DataSource="@(clients.Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule}))" @bind-Value="@row.CT_Num">
+						<DropDownListEvents TValue="string" TItem="F_COMPTET" />
+						<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+					</SfDropDownList>
+				</FormItem>
+
+				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Lieu">
+					<SfTextBox @bind-Value="@(row.Lieu)" />
+				</FormItem>
+				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Responsable">
+					<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="int" TItem="F_COLLABORATEUR"
+									DataSource="@(collabs.Select(a => new F_COLLABORATEUR{CO_No = a.CO_No, CO_Nom = a.CO_Prenom + " " + a.CO_Nom}))" @bind-Value="@row.CO_No">
+						<DropDownListEvents TValue="int" TItem="F_COLLABORATEUR" />
+						<DropDownListFieldSettings Text="CO_Nom" Value="CO_No" />
+					</SfDropDownList>
+				</FormItem>
+			</Card>
+		</GridCol>
+
+		<GridCol Xs="24" Md="24">
+			<SfToolbar>
+				<ToolbarItems>
+					<ToolbarItem Align="ItemAlign.Left" Disabled="@(row.CT_Num == null)" OnClick=@(args => (DefaultGrid.AddRecordAsync())) TooltipText="Ajouter" Text="Ajouter" ShowTextOn="DisplayMode.Overflow" PrefixIcon="e-icons e-plus"></ToolbarItem>
+					<ToolbarItem Align="ItemAlign.Left" Disabled="@(row.CT_Num == null || id == 0)" OnClick="Delete" TooltipText="Supprimer" Text="Supprimer" ShowTextOn="DisplayMode.Overflow" PrefixIcon="e-icons e-trash"></ToolbarItem>
+				</ToolbarItems>
+			</SfToolbar>
+			<div style="height: 60vh;" class="no-border small-grid">
+				<SfGrid AllowRowDragAndDrop="true" Height="100%" DataSource="@(lignes)" AllowSelection @ref=@DefaultGrid AllowExcelExport>
+					<GridSelectionSettings PersistSelection Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
+					<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+					<GridEditSettings AllowDeleting ShowDeleteConfirmDialog AllowAdding AllowEditing Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+						<HeaderTemplate>
+							<span>@((context as API_T_CertifRapportMissionLigne).Designation)</span>
+						</HeaderTemplate>
+					</GridEditSettings>
+					<GridEvents RowDropped="RowDropHandler" OnActionBegin="EditGrid" TValue="API_T_CertifRapportMissionLigne"></GridEvents>
+					<GridTemplates>
+						<EmptyRecordTemplate>
+							<Empty></Empty>
+						</EmptyRecordTemplate>
+					</GridTemplates>
+					<GridColumns>
+						<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifRapportMissionLigne.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+						<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Désignation" MinWidth="250px">
+							<Template>
+								@{
+									var dt = instruments.Where(a => a.id == (context as API_T_CertifRapportMissionLigne).Instrument).SingleOrDefault();
+									<div>@dt?.Intitule</div>
+								}
+							</Template>
+							<EditTemplate>
+								<SfDropDownList AllowFiltering TValue="int" TItem="API_T_CertifInstrument" DataSource="@instruments.Where(a => (!((lignes.Select(b => b.Instrument)?.Contains(a.id))??false)))" @bind-Value="@((context as API_T_CertifRapportMissionLigne).Instrument)">
+									<DropDownListEvents TValue="int" TItem="API_T_CertifInstrument" />
+									<DropDownListFieldSettings Text="Intitule" Value="id" />
+								</SfDropDownList>
+							</EditTemplate>
+						</GridColumn>
+						<GridColumn Width="160px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifRapportMissionLigne.Constructeur) HeaderText="Constructeur" />
+						<GridColumn Width="160px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Identification interne">
+							<Template>
+								@{
+									var dt = instruments.Where(a => a.id == (context as API_T_CertifRapportMissionLigne).Instrument).SingleOrDefault();
+									<div>@dt?.IdentificationInterne</div>
+								}
+							</Template>
+							<EditTemplate>
+							</EditTemplate>
+						</GridColumn>
+						<GridColumn Width="160px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifRapportMissionLigne.NumeroCertificat) HeaderText="N° Certificat" />
+						<GridColumn Width="160px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifRapportMissionLigne.Emplacement) HeaderText="Emplacement" />
+					</GridColumns>
+				</SfGrid>
+			</div>
+
+		</GridCol>
+	</GridRow>
+</Form>
+
+
+
+
+
+@code {
+	[CascadingParameter]
+	public SessionDT session { get; set; }
+	DB db = new DB();
+	EditForm form = new EditForm();
+	[Parameter]
+	public int id { get; set; } = 0;
+	[Parameter]
+	public int caisse { get; set; } = 0;
+	[Parameter]
+	public int type { get; set; }
+	[Parameter]
+	public string operation { get; set; }
+
+	private API_T_CertifRapportMission row { get; set; }
+	List<API_T_CertifRapportMissionLigne> lignes = new List<API_T_CertifRapportMissionLigne>();
+	List<API_T_CertifInstrument> instruments = new List<API_T_CertifInstrument>();
+	List<F_COMPTET> clients = new List<F_COMPTET>();
+	List<F_COLLABORATEUR> collabs = new List<F_COLLABORATEUR>();
+
+	[Parameter] public bool detail { get; set; } = false;
+	NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2", ShowSpinButton = false } };
+	[Parameter] public bool IsList { get; set; } = true;
+	public Syncfusion.Blazor.Data.Query LocalDataQuery = new Syncfusion.Blazor.Data.Query().Take(10);
+	SfGrid<API_T_CertifRapportMissionLigne> DefaultGrid;
+	string piece;
+	DateTime date = DateTime.Today;
+	short? souche = 0;
+	bool FaDG = false;
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			db = session.db;
+			GC.Collect();
+			clients = db.F_COMPTET.Where(a => a.CT_Type == 0).OrderBy(a => a.CT_Intitule).ToList();
+			collabs = db.F_COLLABORATEUR.ToList();
+			instruments = db.API_T_CertifInstrument.ToList();
+			if (id == 0)
+			{
+				row = new API_T_CertifRapportMission();
+				row.Date = DateTime.Today;
+				await InitPiece();
+
+				row.Piece = piece;
+			}
+			else
+			{
+				row = db.API_T_CertifRapportMission.Where(a => a.id == id).SingleOrDefault();
+				await UpdateGrid();
+
+			}
+		}
+		catch(Exception ex)
+		{
+			await Message.Error(ex.ToString(), 20);
+		}
+
+
+
+	}
+	private async Task Submit(bool close)
+	{
+		if (id == 0)
+		{
+			db.API_T_CertifRapportMission.Add(row);
+		}
+		db.SaveChanges();
+		id = row.id;
+		if (close)
+		{
+			DialogService.Close();
+		}
+	}
+	private async Task UpdateGrid()
+	{
+		lignes = db.API_T_CertifRapportMissionLigne.Where(a => a.Rapport == id).OrderBy(a => a.Ligne).ToList();
+	}
+	public async Task EditGrid(ActionEventArgs<API_T_CertifRapportMissionLigne> args)
+	{
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+			var ar = db.API_T_CertifInstrument.Where(a => a.id == args.Data.id).SingleOrDefault();
+			args.Data.Designation = (args.Data.Designation) ?? (ar?.Intitule);
+
+			if (args.Action == "Add")
+			{
+				if (id == 0)
+				{
+					await Submit(false);
+				}
+				API_T_CertifRapportMissionLigne item = args.Data;
+
+				item.Rapport = this.id;
+				if(args.Data.Instrument > 0)
+				{
+					db.Add(item);
+					db.SaveChanges();
+					await UpdateGrid();
+				}
+
+
+			}
+			if (args.Action != "Add")
+			{
+				var local = db.Set<API_T_CertifRapportMissionLigne>().Local.FirstOrDefault(a => a.id == args.Data.id);
+				if (local != null)
+				{
+					db.Entry(local).State = EntityState.Detached;
+				}
+				db.Entry(args.Data).State = EntityState.Modified;
+				db.SaveChanges();
+				await UpdateGrid();
+
+
+			}
+
+		}
+
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+			foreach (API_T_CertifRapportMissionLigne item in dt)
+			{
+				db.Database.ExecuteSqlRaw("DELETE FROM API_T_CertifRapportMissionLigne WHERE id = {0}", item.id);
+			}
+			await UpdateGrid();
+
+		}
+	}
+
+	private async Task RowDropHandler(RowDroppedEventArgs<API_T_CertifRapportMissionLigne> args)
+	{
+		try
+		{
+
+			foreach (API_T_CertifRapportMissionLigne dt in DefaultGrid.GetCurrentViewRecordsAsync().Result)
+			{
+				double index = DefaultGrid.GetRowIndexByPrimaryKeyAsync(dt.id).Result;
+				string q1 = "UPDATE API_T_CertifRapportMissionLigne SET Ligne = {0} WHERE id = {1}";
+				db.Database.ExecuteSqlRaw(q1, (index + 1), dt.id);
+			}
+
+
+		}
+		catch (Exception ex)
+		{
+			await Message.Error(ex.Message);
+		}
+
+	}
+	private void OnFileOpen(FileOpenEventArgs<FileManagerDirectoryContent> args)
+	{
+		if (args.FileDetails.Name.ToUpper().EndsWith(".PDF"))
+		{
+			DialogService.OpenAsync<PdfViewer>(args.FileDetails.Name,
+				new Dictionary<string, object>() { { "DocumentPath", fn.getPath(session.Societe.id.ToString(), "Projet", this.id.ToString()) + "/" + args.FileDetails.Name } },
+				new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
+		}
+		if (args.FileDetails.Name.ToUpper().EndsWith(".DOC") || args.FileDetails.Name.ToUpper().EndsWith(".DOCX") || args.FileDetails.Name.ToUpper().EndsWith(".TXT"))
+		{
+			DialogService.OpenAsync<WordViewer>(args.FileDetails.Name,
+				new Dictionary<string, object>() { { "DocumentPath", fn.getPath(session.Societe.id.ToString(), "Projet", this.id.ToString()) + "/" + args.FileDetails.Name } },
+				new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
+		}
+
+	}
+	private async Task Print()
+	{
+		await Submit(false);
+		List<JSReportParameter> parameters = new List<JSReportParameter>();
+
+		/*parameters.Add(new JSReportParameter { Name = "id", Values = new List<string>() { this.id.ToString() } });
+		await DialogService.OpenAsync<ReportViewer>(row.Piece,
+		new Dictionary<string, object>() { { "ReportName", "reports\\certification\\BonLivraison" }, { "parameters", parameters } },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });*/
+	}
+	private async Task Delete()
+	{
+		bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment supprimer la selection?", "SUPPRESSION");
+		if (isConfirm)
+		{
+			var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+			foreach (API_T_CertifRapportMissionLigne item in dt)
+			{
+				db.Database.ExecuteSqlRaw("DELETE FROM API_T_CertifRapportMissionLigne WHERE id = {0}", item.id);
+			}
+			lignes = db.API_T_CertifRapportMissionLigne.Where(a => a.Rapport == id).OrderBy(a => a.id).ToList();
+		}
+
+	}
+	private async Task Copy()
+	{
+		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+		foreach (API_T_CertifRapportMissionLigne item in dt)
+		{
+			var ln = new API_T_CertifRapportMissionLigne();
+			fn.CopyData(item, ln);
+			db.Add(ln);
+		}
+		db.SaveChanges();
+		await UpdateGrid();
+	}
+	private async Task InitPiece()
+	{
+		var q1 = db.API_T_CertifRapportMission.Select(a => a.Piece).Distinct();
+		var max = q1.Max();
+		if (max != null)
+
+		{
+			piece = fn.getNextCode(max);
+		}
+		else
+
+		{
+			piece = "RM-0000001";
+		}
+	}
+}

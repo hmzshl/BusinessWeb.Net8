@@ -1,0 +1,196 @@
+@page "/cr-rapport-mission"
+@attribute [Authorize]
+@if (IsLoaded)
+{
+	<Card_1 Title="RAPPORTS DE MISSIONS">
+		<RadzenContent Container="main">
+			<div class="grid-90">
+				<SfToolbar>
+					<ToolbarItems>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+
+						<ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-print"></ToolbarItem>
+						<ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+
+						<ToolbarItem TooltipText="Supprimer" Text="Supprimer" OnClick=@(args => (DefaultGrid.DeleteRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-trash"></ToolbarItem>
+						<ToolbarItem TooltipText="Ajouter" Text="Ajouter" OnClick=@(args => (DefaultGrid.AddRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-circle-add"></ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+
+
+						<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+							<Template>
+								<SfTextBox Width="180px" Placeholder="RECHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+							<Template>
+								@Date1
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+							<Template>
+								@Date2
+							</Template>
+						</ToolbarItem>
+
+					</ToolbarItems>
+				</SfToolbar>
+				<div class="grid-84" style="zoom: @session.zoomLevel;">
+					<SfGrid Height="100%" AllowFiltering RowRenderingMode="RowDirection.Horizontal" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="@(sc.IsInRole("Admin"))" AllowExcelExport="@(sc.IsInRole("Admin"))" AllowPaging="true" DataSource="@items">
+						<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+
+						</GridEditSettings>
+						<GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_T_CertifRapportMission"></GridEvents>
+						<GridPageSettings PageSize="100"></GridPageSettings>
+						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+						<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+						<GridTemplates>
+							<EmptyRecordTemplate>
+								<Empty></Empty>
+							</EmptyRecordTemplate>
+						</GridTemplates>
+						<GridColumns>
+
+							<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifRapportMission.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
+							<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifRapportMission.Piece)" HeaderText="N° Enregis."></GridColumn>
+							<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifRapportMission.CT_Num)" HeaderText="N° Client"></GridColumn>
+							<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Client">
+								<Template>
+									@{
+										var dt = (context as API_T_CertifRapportMission);
+										<div>@clients.Where(a => a.CT_Num == dt.CT_Num).SingleOrDefault()?.CT_Intitule</div>
+									}
+								</Template>
+							</GridColumn>
+							<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifRapportMission.Lieu)" HeaderText="Lieu"></GridColumn>
+						</GridColumns>
+						<SfSpinner @bind-Visible="@loading">
+						</SfSpinner>
+					</SfGrid>
+				</div>
+
+			</div>
+		</RadzenContent>
+	</Card_1>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+
+
+
+@code
+{
+	[CascadingParameter]
+	public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	[Parameter] public int type { get; set; }
+	[Parameter] public bool IsList { get; set; } = true;
+	[Parameter] public string Title { get; set; } = "";
+	string grid_height = "80vh";
+	//Components
+	private SfGrid<API_T_CertifRapportMission> DefaultGrid;
+
+	//End components
+
+	private IEnumerable<API_T_CertifRapportMission> items;
+	List<API_T_CertifRapportMission> rows = new List<API_T_CertifRapportMission>();
+	string activekey = "0";
+	bool loading = false;
+	bool IsLoaded = false;
+	int caisse = 0;
+	DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
+	DateTime? date2 = new DateTime(DateTime.Today.Year, 12, 31);
+	IList<API_T_CertifRapportMission> selecteditems;
+
+	List<F_COMPTET> clients = new List<F_COMPTET>();
+	List<F_COLLABORATEUR> collabs = new List<F_COLLABORATEUR>();
+
+	private RenderFragment Date1 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date1" Width="130px" Placeholder="Date Début" TValue="DateTime?">
+		<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+	</SfDatePicker>;
+	private RenderFragment Date2 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date2" Width="130px" Placeholder="Date Fin" TValue="DateTime?">
+		<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+	</SfDatePicker>
+	;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(1);
+		db = session.db;
+		GC.Collect();
+		clients = db.F_COMPTET.Where(a => a.CT_Type == 0).ToList();
+		collabs = db.F_COLLABORATEUR.ToList();
+		await UpdateGrid();
+		IsLoaded = true;
+	}
+	private async Task UpdateGrid()
+	{
+		loading = true;
+		await Task.Delay(1);
+		items = session.db.API_T_CertifRapportMission.Where(a => a.Date >= (date1 ?? new DateTime(1900, 1, 1)) && a.Date <= (date2 ?? new DateTime(2070, 12, 31))).OrderBy(a => a.Date).ToList();
+		loading = false;
+		await Task.Delay(1);
+	}
+
+	public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+	{
+		if (args.Item.Id == "Grid_excelexport") //Id is combination of Grid's ID and itemname
+		{
+			await this.DefaultGrid.ExcelExport();
+		}
+		if (args.Item.Id == "Grid_pdfexport")  //Id is combination of Grid's ID and itemname
+		{
+			await this.DefaultGrid.PdfExport();
+		}
+
+	}
+	private async Task OnActionBegin(ActionEventArgs<API_T_CertifRapportMission> args)
+	{
+		if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+	|| args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+	|| args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+		{
+			args.Cancel = true;
+		}
+
+		if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+		{
+			await Add();
+		}
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			db.Database.ExecuteSqlRaw("DELETE FROM API_T_CertifRapportMissionLigne WHERE Rapport = {0}", args.Data.id);
+			db.Database.ExecuteSqlRaw("DELETE FROM API_T_CertifRapportMission WHERE id = {0}", args.Data.id);
+			db.SaveChanges();
+			await UpdateGrid();
+		}
+	}
+	private string getTiers()
+	{
+		string rs = "Client";
+		if (type != 0)
+		{
+			rs = "Fournisseur";
+		}
+		return rs;
+	}
+	protected async Task Edit(RecordDoubleClickEventArgs<API_T_CertifRapportMission> args)
+	{
+		await DialogService.OpenAsync<RapportsFiche>(args.RowData.Piece,
+		new Dictionary<string, object>() { { "id", args.RowData.id } },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = false, Width = "98%", Height = "98%" });
+		await UpdateGrid();
+	}
+	private async Task Add()
+	{
+		await DialogService.OpenAsync<RapportsFiche>("Ajouter un élément",
+	new Dictionary<string, object>() { { "id", 0 } },
+	new Radzen.DialogOptions() { CloseDialogOnEsc = false, Width = "98%", Height = "98%" });
+		await UpdateGrid();
+	}
+
+}

@@ -346,6 +346,7 @@
 											<RadzenMenuItem Text="Liste des clients" Path="/clients" Visible=@(IsVisible("clients"))></RadzenMenuItem>
 											<RadzenMenuItem Text="Liste des articles" Path="/et-articles" Visible=@(IsVisible("et-articles"))></RadzenMenuItem>
 											<RadzenMenuItem Text="Liste des collaborateurs" Path="/et-collaborateurs" Visible=@(IsVisible("et-collaborateurs"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Liste des instruments" Path="/et-instruments" Visible=@(IsVisible("et-instruments"))></RadzenMenuItem>
 										</RadzenMenuItem>
 										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
 											<RadzenMenuItem Text="Grille de dialogue" Path="/cr-grille-dialogue" Visible=@(IsVisible("cr-grille-dialogue"))></RadzenMenuItem>
@@ -843,6 +844,7 @@ else
 			if ((license.Status == LicenseStatus.Valid || license.MachineCodeAsString == macAddr))
 			{
 				await Init();
+				await InitAuth();
 			}
 			session.license = license;
 		}
@@ -854,7 +856,30 @@ else
 		IsLoaded = true;
 
 	}
+	private async Task InitAuth()
+	{
+		foreach (TSociete ste in societes)
+		{
+			var items = fn.AuthItems();
+			foreach (AuthItems item in items)
+			{
+				var auth = sdb.TAuthorizes.AsNoTracking().Where(a => a.Societe == ste.id && a.Url == item.Url && a.UserID == sc.User.Id).AsNoTracking().ToList();
+				if (auth.Count == 0)
+				{
+					var ln = new TAuthorize();
+					ln.UserID = sc.User.Id;
+					ln.Url = item.Url;
+					ln.Societe = ste.id;
+					ln.SelectedAPP = item.SelectedAPP ?? 0;
+					ln.Title = item.Title;
+					ln.Description = item.Description;
 
+					sdb.Add(ln);
+				}
+			}
+		}
+		sdb.SaveChanges();
+	}
 	private bool IsVisible(string url)
 	{
 		return (session?.Authorizes?.Where(a => a.Visible).Select(a => a.Url)?.Contains(url)) ?? false;
@@ -895,6 +920,12 @@ else
 		try
 		{
 			scaleLevel = (await JSRuntime.InvokeAsync<double>("getScaleLevel"));
+
+			if(scaleLevel < 0.8)
+			{
+				scaleLevel = 0.8;
+			}
+
 			session.scaleLevel = scaleLevel;
 
 			session.gridHeight = ((scaleLevel - 0.17) * 100).ToString(System.Globalization.CultureInfo.InvariantCulture) + "%";

@@ -272,8 +272,9 @@ namespace BusinessWeb
             list.Add(new AuthItems { SelectedAPP = 15, Title = "Structure", Description = "Liste des clients", Url = "clients" });
             list.Add(new AuthItems { SelectedAPP = 15, Title = "Structure", Description = "Liste des articles", Url = "et-articles" });
             list.Add(new AuthItems { SelectedAPP = 15, Title = "Structure", Description = "Liste des collaborateurs", Url = "et-collaborateurs" });
+			list.Add(new AuthItems { SelectedAPP = 15, Title = "Structure", Description = "Liste des instruments", Url = "et-instruments" });
 
-            list.Add(new AuthItems { SelectedAPP = 15, Title = "Traitement", Description = "Bons de livraisons", Url = "cr-bl" });
+			list.Add(new AuthItems { SelectedAPP = 15, Title = "Traitement", Description = "Bons de livraisons", Url = "cr-bl" });
             list.Add(new AuthItems { SelectedAPP = 15, Title = "Traitement", Description = "Factures", Url = "cr-fa" });
 
 			list.Add(new AuthItems { SelectedAPP = 15, Title = "Traitement", Description = "Grille de dialogue", Url = "cr-grille-dialogue" });
