@@ -47,8 +47,8 @@
 		<GridCol Xs="24" Md="14">
 			<Card Style="height: 100px;">
 				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Client">
-					<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" 
-					DataSource="@(clients.Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule}))" @bind-Value="@row.CT_Num">
+					<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET"
+									DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0).OrderBy(a => a.CT_Intitule).Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule}))" @bind-Value="@row.CT_Num">
 						<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 						<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
 					</SfDropDownList>
@@ -59,7 +59,7 @@
 				</FormItem>
 				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Responsable">
 					<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="int" TItem="F_COLLABORATEUR"
-									DataSource="@(collabs.Select(a => new F_COLLABORATEUR{CO_No = a.CO_No, CO_Nom = a.CO_Prenom + " " + a.CO_Nom}))" @bind-Value="@row.CO_No">
+									DataSource="@(db.F_COLLABORATEUR.Select(a => new F_COLLABORATEUR{CO_No = a.CO_No, CO_Nom = a.CO_Prenom + " " + a.CO_Nom}))" @bind-Value="@row.CO_No">
 						<DropDownListEvents TValue="int" TItem="F_COLLABORATEUR" />
 						<DropDownListFieldSettings Text="CO_Nom" Value="CO_No" />
 					</SfDropDownList>
@@ -99,7 +99,7 @@
 								}
 							</Template>
 							<EditTemplate>
-								<SfDropDownList AllowFiltering TValue="int" TItem="API_T_CertifInstrument" DataSource="@instruments.Where(a => (!((lignes.Select(b => b.Instrument)?.Contains(a.id))??false)))" @bind-Value="@((context as API_T_CertifRapportMissionLigne).Instrument)">
+								<SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="int" TItem="API_T_CertifInstrument" DataSource="@instruments.Where(a => (!((lignes.Select(b => b.Instrument)?.Contains(a.id))??false)))" @bind-Value="@((context as API_T_CertifRapportMissionLigne).Instrument)">
 									<DropDownListEvents TValue="int" TItem="API_T_CertifInstrument" />
 									<DropDownListFieldSettings Text="Intitule" Value="id" />
 								</SfDropDownList>
