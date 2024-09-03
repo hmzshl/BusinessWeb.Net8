@@ -25,5 +25,11 @@ public partial class API_T_CertifRapportMission
 
     public DateTime? DateFinTravaux { get; set; }
 
+    public string Type { get; set; }
+
+    public string NumeroSerie { get; set; }
+
+    public string EtendueResolution { get; set; }
+
     public virtual ICollection<API_T_CertifRapportMissionLigne> API_T_CertifRapportMissionLigne { get; set; } = new List<API_T_CertifRapportMissionLigne>();
 }

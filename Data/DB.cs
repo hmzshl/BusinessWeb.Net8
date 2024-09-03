@@ -2858,13 +2858,22 @@ public partial class DB : DbContext
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.DateDebutTravaux).HasColumnType("smalldatetime");
             entity.Property(e => e.DateFinTravaux).HasColumnType("smalldatetime");
+            entity.Property(e => e.EtendueResolution)
+                .HasMaxLength(100)
+                .IsUnicode(false);
             entity.Property(e => e.Lieu)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.NumeroDossier)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.NumeroSerie)
+                .HasMaxLength(100)
+                .IsUnicode(false);
             entity.Property(e => e.Piece)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Type)
                 .HasMaxLength(100)
                 .IsUnicode(false);
         });
@@ -2882,10 +2891,19 @@ public partial class DB : DbContext
             entity.Property(e => e.Emplacement)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.EtendueResolution)
+                .HasMaxLength(100)
+                .IsUnicode(false);
             entity.Property(e => e.Identifiant)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.NumeroCertificat)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.NumeroSerie)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Type)
                 .HasMaxLength(100)
                 .IsUnicode(false);
 

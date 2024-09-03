@@ -25,6 +25,12 @@ public partial class API_T_CertifRapportMissionLigne
 
     public int Ligne { get; set; }
 
+    public string Type { get; set; }
+
+    public string NumeroSerie { get; set; }
+
+    public string EtendueResolution { get; set; }
+
     public virtual API_T_CertifInstrument InstrumentNavigation { get; set; }
 
     public virtual API_T_CertifRapportMission RapportNavigation { get; set; }
