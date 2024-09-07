@@ -8163,9 +8163,7 @@ public partial class DB : DbContext
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),[FA_CodeFamille]))", false);
             entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbModification)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("smalldatetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
             entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
 
@@ -9475,9 +9473,7 @@ public partial class DB : DbContext
                 .HasDefaultValueSql("('CSQL')")
                 .IsFixedLength();
             entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbModification)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("smalldatetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
             entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
 
@@ -9806,10 +9802,10 @@ public partial class DB : DbContext
             entity.Property(e => e.CA_Classement)
                 .HasMaxLength(17)
                 .IsUnicode(false);
-            entity.Property(e => e.CA_DateAcceptAffaire).HasColumnType("smalldatetime");
-            entity.Property(e => e.CA_DateCreationAffaire).HasColumnType("smalldatetime");
-            entity.Property(e => e.CA_DateDebutAffaire).HasColumnType("smalldatetime");
-            entity.Property(e => e.CA_DateFinAffaire).HasColumnType("smalldatetime");
+            entity.Property(e => e.CA_DateAcceptAffaire).HasColumnType("datetime");
+            entity.Property(e => e.CA_DateCreationAffaire).HasColumnType("datetime");
+            entity.Property(e => e.CA_DateDebutAffaire).HasColumnType("datetime");
+            entity.Property(e => e.CA_DateFinAffaire).HasColumnType("datetime");
             entity.Property(e => e.CA_Intitule)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -9833,9 +9829,7 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreation)
                 .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
                 .HasColumnType("datetime");
-            entity.Property(e => e.cbModification)
-                .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
-                .HasColumnType("datetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
 
             entity.HasOne(d => d.cbCO_NoNavigation).WithMany(p => p.F_COMPTEA)
                 .HasPrincipalKey(p => p.CO_No)
@@ -10523,9 +10517,7 @@ public partial class DB : DbContext
                 .HasDefaultValueSql("('CSQL')")
                 .IsFixedLength();
             entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbModification)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("smalldatetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
             entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
             entity.Property(e => e.cbTA_Code)
@@ -12253,35 +12245,7 @@ public partial class DB : DbContext
                     tb.HasTrigger("TG_UPD_CPTAF_CREGLEMENT");
                 });
 
-            entity.HasIndex(e => e.cbCA_No, "FKIA_F_CREGLEMENT_CA_No");
-
-            entity.HasIndex(e => e.CA_No, "IRG_CAISSE");
-
-            entity.HasIndex(e => e.CO_NoCaissier, "IRG_CAISSIER");
-
-            entity.HasIndex(e => e.cbCG_Num, "IRG_CGNUM");
-
-            entity.HasIndex(e => new { e.RG_Cloture, e.CA_No }, "IRG_CLOTURE");
-
-            entity.HasIndex(e => new { e.RG_Type, e.cbCT_NumPayeur, e.RG_Date }, "IRG_DATE");
-
-            entity.HasIndex(e => e.EC_No, "IRG_ECNO");
-
             entity.HasIndex(e => e.RG_No, "IRG_NO").IsUnique();
-
-            entity.HasIndex(e => e.cbCG_NumCont, "IRG_NUMCONT");
-
-            entity.HasIndex(e => e.cbCG_NumEcart, "IRG_NUMECART");
-
-            entity.HasIndex(e => new { e.cbCT_NumPayeur, e.RG_Impute, e.RG_Date }, "IRG_PAYEUR");
-
-            entity.HasIndex(e => e.cbCT_NumPayeurOrig, "IRG_PAYEURORIG");
-
-            entity.HasIndex(e => new { e.RG_Type, e.cbRG_Piece }, "IRG_PIECE");
-
-            entity.HasIndex(e => new { e.RG_Type, e.cbCT_NumPayeur, e.RG_TypeReg, e.RG_Date }, "IRG_TYPEDATE");
-
-            entity.HasIndex(e => new { e.cbCT_NumPayeur, e.RG_TypeReg, e.RG_Impute, e.RG_Date }, "IRG_TYPEPAYEUR");
 
             entity.Property(e => e.CG_Num)
                 .HasMaxLength(13)
@@ -12312,13 +12276,13 @@ public partial class DB : DbContext
                 .HasMaxLength(7)
                 .IsUnicode(false);
             entity.Property(e => e.RG_Cours).HasColumnType("numeric(24, 6)");
-            entity.Property(e => e.RG_Date).HasColumnType("smalldatetime");
-            entity.Property(e => e.RG_DateEchCont).HasColumnType("smalldatetime");
+            entity.Property(e => e.RG_Date).HasColumnType("datetime");
+            entity.Property(e => e.RG_DateEchCont).HasColumnType("datetime");
             entity.Property(e => e.RG_Heure)
                 .HasMaxLength(9)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.RG_Impaye).HasColumnType("smalldatetime");
+            entity.Property(e => e.RG_Impaye).HasColumnType("datetime");
             entity.Property(e => e.RG_Libelle)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -12360,9 +12324,7 @@ public partial class DB : DbContext
                 .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
                 .HasColumnType("datetime");
             entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbModification)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("smalldatetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
             entity.Property(e => e.cbRG_Piece)
                 .HasMaxLength(14)
@@ -12565,9 +12527,7 @@ public partial class DB : DbContext
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),[DE_Intitule]))", false);
             entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbModification)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("smalldatetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
             entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
 
@@ -12865,9 +12825,7 @@ public partial class DB : DbContext
                 .HasMaxLength(18)
                 .HasComputedColumnSql("(CONVERT([varbinary](18),isnull([DO_Tiers],'')))", false);
             entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbModification)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("smalldatetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
             entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
 
@@ -13339,18 +13297,12 @@ public partial class DB : DbContext
                     tb.HasTrigger("TG_UPD_F_DOCREGL");
                 });
 
-            entity.HasIndex(e => e.EC_No, "IDR_ECNO");
-
-            entity.HasIndex(e => new { e.DO_Domaine, e.DO_Type, e.cbDO_Piece, e.DR_TypeRegl, e.DR_Date, e.N_Reglement }, "IDR_LIGNE");
-
             entity.HasIndex(e => e.DR_No, "IDR_NO").IsUnique();
-
-            entity.HasIndex(e => new { e.DO_Domaine, e.DO_Type, e.cbDO_Piece, e.DR_TypeRegl, e.DR_Regle, e.DR_Date, e.N_Reglement }, "IDR_REGLE");
 
             entity.Property(e => e.DO_Piece)
                 .HasMaxLength(9)
                 .IsUnicode(false);
-            entity.Property(e => e.DR_Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.DR_Date).HasColumnType("datetime");
             entity.Property(e => e.DR_Libelle)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -13367,9 +13319,7 @@ public partial class DB : DbContext
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len(isnull([DO_Piece],''))+(1)))+isnull([DO_Piece],'')))", false);
             entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbModification)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("smalldatetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
             entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
         });
@@ -15891,9 +15841,7 @@ public partial class DB : DbContext
             entity.Property(e => e.cbLI_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([LI_Intitule],'')))", false);
-            entity.Property(e => e.cbModification)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("smalldatetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
             entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
 
@@ -18687,9 +18635,7 @@ public partial class DB : DbContext
                 .HasDefaultValueSql("('CSQL')")
                 .IsFixedLength();
             entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbModification)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("smalldatetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
             entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
             entity.Property(e => e.cbTA_Code)
