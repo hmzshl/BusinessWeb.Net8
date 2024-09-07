@@ -91,30 +91,10 @@
 					</GridTemplates>
 					<GridColumns>
 						<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifRapportMissionLigne.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
-						<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Désignation" MinWidth="250px">
-							<Template>
-								@{
-									var dt = instruments.Where(a => a.id == (context as API_T_CertifRapportMissionLigne).Instrument).SingleOrDefault();
-									<div>@dt?.Intitule</div>
-								}
-							</Template>
-							<EditTemplate>
-								<SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="int" TItem="API_T_CertifInstrument" DataSource="@(db.API_T_CertifInstrument)" @bind-Value="@((context as API_T_CertifRapportMissionLigne).Instrument)">
-									<DropDownListEvents TValue="int" TItem="API_T_CertifInstrument" />
-									<DropDownListFieldSettings Text="Intitule" Value="id" />
-								</SfDropDownList>
-							</EditTemplate>
+						<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifRapportMissionLigne.Designation) HeaderText="Désignation" MinWidth="250px">
 						</GridColumn>
 						<GridColumn Width="160px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifRapportMissionLigne.Constructeur) HeaderText="Constructeur" />
-						<GridColumn Width="160px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Identification interne">
-							<Template>
-								@{
-									var dt = instruments.Where(a => a.id == (context as API_T_CertifRapportMissionLigne).Instrument).SingleOrDefault();
-									<div>@dt?.IdentificationInterne</div>
-								}
-							</Template>
-							<EditTemplate>
-							</EditTemplate>
+						<GridColumn Width="160px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifRapportMissionLigne.Identifiant) HeaderText="Identification interne">
 						</GridColumn>
 						<GridColumn Width="160px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifRapportMissionLigne.NumeroCertificat) HeaderText="N° Certificat" />
 						<GridColumn Width="160px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifRapportMissionLigne.Emplacement) HeaderText="Emplacement" />
