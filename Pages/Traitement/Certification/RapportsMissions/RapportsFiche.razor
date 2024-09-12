@@ -3,7 +3,7 @@
 	<ToolbarItems>
 		<ToolbarItem Align="ItemAlign.Right">
 			<Template>
-				<SfButton Disabled IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
+				<SfButton IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
 			</Template>
 		</ToolbarItem>
 		<ToolbarItem Align="ItemAlign.Right">
@@ -208,12 +208,10 @@
 				API_T_CertifRapportMissionLigne item = args.Data;
 
 				item.Rapport = this.id;
-				if(args.Data.Instrument > 0)
-				{
-					db.Add(item);
-					db.SaveChanges();
-					await UpdateGrid();
-				}
+				item.Instrument = (db.API_T_CertifInstrument.First()?.id)??0;
+				db.Add(item);
+				db.SaveChanges();
+				//await UpdateGrid();
 
 
 			}
@@ -283,13 +281,13 @@
 	}
 	private async Task Print()
 	{
-		await Submit(false);
+		Submit(false);
 		List<JSReportParameter> parameters = new List<JSReportParameter>();
 
-		/*parameters.Add(new JSReportParameter { Name = "id", Values = new List<string>() { this.id.ToString() } });
+		parameters.Add(new JSReportParameter { Name = "id", Values = new List<string>() { this.id.ToString() } });
 		await DialogService.OpenAsync<ReportViewer>(row.Piece,
-		new Dictionary<string, object>() { { "ReportName", "reports\\certification\\BonLivraison" }, { "parameters", parameters } },
-		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });*/
+		new Dictionary<string, object>() { { "ReportName", "reports\\certification\\RapportMission" }, { "parameters", parameters } },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });
 	}
 	private async Task Delete()
 	{
