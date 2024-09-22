@@ -2,7 +2,7 @@
 	<ToolbarItems>
 		<ToolbarItem Align="ItemAlign.Right">
 			<Template>
-				<SfButton Disabled IconCss="e-icons e-print">Imprimer</SfButton>
+				<SfButton OnClick=@Print IconCss="e-icons e-print">Imprimer</SfButton>
 			</Template>
 		</ToolbarItem>
 		<ToolbarItem Align="ItemAlign.Right">
@@ -142,6 +142,7 @@
 	List<API_T_CertifDocument> offres = new List<API_T_CertifDocument>();
 	List<API_T_CertifDocument> commandes = new List<API_T_CertifDocument>();
 	private DialogSettings DialogParams = new DialogSettings { Width = "550px" };
+	string piece;
 	private void LoadData()
 	{
 
@@ -155,6 +156,9 @@
 		{
 			row = new API_T_CertifOuvertureDossier();
 			row.Date = DateTime.Today;
+			await InitPiece();
+
+			row.Numero = piece;
 
 		}
 		else
@@ -165,6 +169,31 @@
 			await UpdateCommande();
 		}
 		LoadData();
+	}
+	private async Task Print()
+	{
+		Submit(false);
+		List<JSReportParameter> parameters = new List<JSReportParameter>();
+
+		parameters.Add(new JSReportParameter { Name = "id", Values = new List<string>() { this.id.ToString() } });
+		await DialogService.OpenAsync<ReportViewer>(row.Numero,
+		new Dictionary<string, object>() { { "ReportName", "reports\\certification\\OuvertureDossier" }, { "parameters", parameters } },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });
+	}
+	private async Task InitPiece()
+	{
+		var q1 = db.API_T_CertifOuvertureDossier.Select(a => a.Numero).Distinct();
+		var max = q1.Max();
+		if (max != null)
+
+		{
+			piece = fn.getNextCode(max);
+		}
+		else
+
+		{
+			piece = "OVD-0000001";
+		}
 	}
 	private async Task UpdateDemande()
 	{
