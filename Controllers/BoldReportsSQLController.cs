@@ -40,11 +40,27 @@ namespace BusinessWeb.Controllers
             reportOption.ReportModel.Stream = reportStream;
             Helpers fn = new Helpers();
 
-            DataSourceCredentials dataSourceCredentials = new DataSourceCredentials();         
-            //You have to provide the shared data source name used with the report or the data source name available with the report.
-            dataSourceCredentials.Name = "DataSource1";
-            dataSourceCredentials.ConnectionString = RouteData.Values["ConnectionString"].ToString().Replace("FFFFFFF", "\\");
-            reportOption.ReportModel.DataSourceCredentials = new List<DataSourceCredentials> { dataSourceCredentials };
+            DataSourceCredentials data1 = new DataSourceCredentials();
+			data1.Name = "DataSource1";
+			data1.ConnectionString = RouteData.Values["ConnectionString"].ToString().Replace("FFFFFFF", "\\");
+
+			DataSourceCredentials data2 = new DataSourceCredentials();
+			data1.Name = "DataSource2";
+			data1.ConnectionString = RouteData.Values["ConnectionString"].ToString().Replace("FFFFFFF", "\\");
+
+			DataSourceCredentials data3 = new DataSourceCredentials();
+			data1.Name = "DataSource3";
+			data1.ConnectionString = RouteData.Values["ConnectionString"].ToString().Replace("FFFFFFF", "\\");
+
+			DataSourceCredentials data4 = new DataSourceCredentials();
+			data1.Name = "DataSource4";
+			data1.ConnectionString = RouteData.Values["ConnectionString"].ToString().Replace("FFFFFFF", "\\");
+
+			DataSourceCredentials data5 = new DataSourceCredentials();
+			data1.Name = "DataSource5";
+			data1.ConnectionString = RouteData.Values["ConnectionString"].ToString().Replace("FFFFFFF", "\\");
+
+            reportOption.ReportModel.DataSourceCredentials = new List<DataSourceCredentials> { data1,data2,data3,data4,data5 };
         }
         // Method will be called when report is loaded internally to start the layout process with ReportHelper.
         public void OnReportLoaded(ReportViewerOptions reportOption)
