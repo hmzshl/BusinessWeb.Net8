@@ -3228,8 +3228,2887 @@
               </TablixMembers>
             </TablixRowHierarchy>
           </Tablix>
+          <Tablix Name="Tablix5">
+            <Left>11.25pt</Left>
+            <Top>604.5pt</Top>
+            <Height>36pt</Height>
+            <Width>574.5pt</Width>
+            <CustomProperties>
+              <CustomProperty>
+                <Name>MaxRowCount</Name>
+                <Value>100000</Value>
+              </CustomProperty>
+              <CustomProperty>
+                <Name>MaxColumnCount</Name>
+                <Value>20</Value>
+              </CustomProperty>
+            </CustomProperties>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <DataSetName>DataSet2</DataSetName>
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>50.25pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>90.75pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>102.75pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>330.75pt</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>18pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox1">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>50.25pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Date</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox39">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>90.75pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Nature</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox40">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>102.75pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Responsable</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox51">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>330.75pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Discussion avec le client</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>18pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox41">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>50.25pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Date.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Format>dd/MM/yy</Format>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox46">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>90.75pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Nature.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox48">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>102.75pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Responsable.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox53">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>330.75pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Libelle.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Details" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+          </Tablix>
+          <Textbox Name="TextBox54">
+            <Left>13.92188pt</Left>
+            <Top>580.95pt</Top>
+            <Height>20.25pt</Height>
+            <Width>149.9998pt</Width>
+            <Style>
+              <FontSize>10.00008pt</FontSize>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2.00016pt</PaddingLeft>
+              <PaddingRight>2.00016pt</PaddingRight>
+              <PaddingTop>2.00016pt</PaddingTop>
+              <PaddingBottom>2.00016pt</PaddingBottom>
+              <Border>
+                <Color>LightGrey</Color>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Modifications</Value>
+                    <Style>
+                      <FontFamily>Tw Cen MT</FontFamily>
+                      <FontSize>12.0002pt</FontSize>
+                      <FontWeight>SemiBold</FontWeight>
+                      <Color>#4d4d4d</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <FontSize>10.00008pt</FontSize>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+          </Textbox>
+          <Tablix Name="Tablix6">
+            <Left>8.67188pt</Left>
+            <Top>682.5pt</Top>
+            <Height>59.25pt</Height>
+            <Width>578.25pt</Width>
+            <CustomProperties>
+              <CustomProperty>
+                <Name>MaxRowCount</Name>
+                <Value>100000</Value>
+              </CustomProperty>
+              <CustomProperty>
+                <Name>MaxColumnCount</Name>
+                <Value>20</Value>
+              </CustomProperty>
+            </CustomProperties>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <DataSetName>DataSet3</DataSetName>
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>41.25pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>101.25pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>43.5pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>51pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>54.75pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>48.75pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>49.5pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>51pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>39pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>98.25pt</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>41.25pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox60">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>41.25pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Réf</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox73">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>101.25pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Désignation</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox85">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>43.5pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Code</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox88">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>51pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Points Etalonnage</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox91">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>54.75pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Jugement de confirmité</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox94">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>48.75pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Règle de décision</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox97">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>49.5pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Erreur maximal toleré</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox109">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>51pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Erreur toleré utlisateur</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox113">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>39pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Classe</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox115">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>98.25pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Autre spécification</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>18pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox69">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>41.25pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!AR_Ref.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox84">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>101.25pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!AR_Design.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox87">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>43.5pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Code.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox90">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>51pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!PointsEtalonnage.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox93">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>54.75pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!JugementConformiteIntitule.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox96">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>48.75pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!RegleDecisionIntitule.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox108">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>49.5pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!ErreurMaximalTolereIntitule.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox112">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>51pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!ErreurMaximalTolereUtilisateur.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox114">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>39pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Classe.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox116">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>98.25pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!AutreSpecification.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Details1" />
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+          </Tablix>
+          <Textbox Name="TextBox72">
+            <Left>11.39062pt</Left>
+            <Top>658.95pt</Top>
+            <Height>20.25pt</Height>
+            <Width>380.2406pt</Width>
+            <Style>
+              <FontSize>10.00008pt</FontSize>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2.00016pt</PaddingLeft>
+              <PaddingRight>2.00016pt</PaddingRight>
+              <PaddingTop>2.00016pt</PaddingTop>
+              <PaddingBottom>2.00016pt</PaddingBottom>
+              <Border>
+                <Color>LightGrey</Color>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Tableau spécifiques des exigences client</Value>
+                    <Style>
+                      <FontFamily>Tw Cen MT</FontFamily>
+                      <FontSize>12.0002pt</FontSize>
+                      <FontWeight>SemiBold</FontWeight>
+                      <Color>#4d4d4d</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <FontSize>10.00008pt</FontSize>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+          </Textbox>
+          <Tablix Name="Tablix8">
+            <Left>10.92188pt</Left>
+            <Top>783.75pt</Top>
+            <Height>77.25pt</Height>
+            <Width>576.75pt</Width>
+            <CustomProperties>
+              <CustomProperty>
+                <Name>MaxRowCount</Name>
+                <Value>100000</Value>
+              </CustomProperty>
+              <CustomProperty>
+                <Name>MaxColumnCount</Name>
+                <Value>20</Value>
+              </CustomProperty>
+            </CustomProperties>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <DataSetName>DataSet4</DataSetName>
+            <TablixBody>
+              <TablixColumns>
+                <TablixColumn>
+                  <Width>101.25pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>35.25pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>39.75pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>47.25pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>40.5pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>43.5pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>42pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>39pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>45.75pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>45.75pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>45pt</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>51.75pt</Width>
+                </TablixColumn>
+              </TablixColumns>
+              <TablixRows>
+                <TablixRow>
+                  <Height>41.25pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox141">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>101.25pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Désignation</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox142">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>35.25pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Code</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox143">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>39.75pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Essai</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox144">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>47.25pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Temperature Sterilisation</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox145">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>40.5pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Tolérance</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox146">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>43.5pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Temps Sterilisation</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox147">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>42pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Temps Equilibrage</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox148">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>39pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Stabilité</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox149">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>45.75pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Homogeneite</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox161">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>45.75pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Pression</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox163">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>45pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Valeur Sterilisatrice</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox167">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>41.25pt</Height>
+                          <Width>51.75pt</Width>
+                          <Style>
+                            <BackgroundColor>#205eee</BackgroundColor>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Entrée Sondes</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>7.5pt</FontSize>
+                                    <Color>#ffffff</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>18pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox151">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>101.25pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!AR_Design.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox152">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>35.25pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Code.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox153">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>39.75pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Essai.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox154">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>47.25pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!TempsSterilisation.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox155">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>40.5pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Tolerance.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox156">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>43.5pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!TempsSterilisation.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox157">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>42pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!TempsEquilibrage.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox158">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>39pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Stabilite.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox159">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>45.75pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Homogeneite.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox162">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>45.75pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!Pression.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox164">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>45pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!ValeurSterilisatrice.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox168">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>51.75pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!EntreeSondes.Value</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
+                  <Height>18pt</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox169">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>136.5pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Jugement</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <LineHeight>0.99750pt</LineHeight>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>2</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox171">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>39.75pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!EssaiJuge.Value,"Non","Oui")</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <LineHeight>0.99750pt</LineHeight>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox172">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>47.25pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!TemperatureSterilisationJuge.Value,"Non","Oui")</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <LineHeight>0.99750pt</LineHeight>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox173">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>40.5pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!ToleranceJuge.Value,"Non","Oui")</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <LineHeight>0.99750pt</LineHeight>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox174">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>43.5pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!TemperatureSterilisationJuge.Value,"Non","Oui")</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <LineHeight>0.99750pt</LineHeight>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox175">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>42pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!TempsEquilibrageJuge.Value,"Non","Oui")</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <LineHeight>0.99750pt</LineHeight>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox176">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>39pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!StabiliteJuge.Value,"Non","Oui")</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <LineHeight>0.99750pt</LineHeight>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox177">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>45.75pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!HomogeneiteJuge.Value,"Non","Oui")</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <LineHeight>0.99750pt</LineHeight>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox178">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>45.75pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!PressionJuge.Value,"Non","Oui")</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <LineHeight>0.99750pt</LineHeight>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox179">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>45pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!ValeurSterilisatriceJuge.Value,"Non","Oui")</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <LineHeight>0.99750pt</LineHeight>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TextBox180">
+                          <Left>0in</Left>
+                          <Top>0in</Top>
+                          <Height>18pt</Height>
+                          <Width>51.75pt</Width>
+                          <Style>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=IIF(Fields!EntreeSondesJuge.Value,"Non","Oui")</Value>
+                                  <Style>
+                                    <FontFamily>Tw Cen MT</FontFamily>
+                                    <FontSize>8.25pt</FontSize>
+                                    <Color>black</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <LineHeight>0.99750pt</LineHeight>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                        </Textbox>
+                        <ColSpan>1</ColSpan>
+                        <RowSpan>1</RowSpan>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+              </TablixRows>
+            </TablixBody>
+            <TablixColumnHierarchy>
+              <TablixMembers>
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+                <TablixMember />
+              </TablixMembers>
+            </TablixColumnHierarchy>
+            <TablixRowHierarchy>
+              <TablixMembers>
+                <TablixMember>
+                  <KeepWithGroup>After</KeepWithGroup>
+                </TablixMember>
+                <TablixMember>
+                  <Group Name="Details12" />
+                  <TablixMembers>
+                    <TablixMember />
+                    <TablixMember />
+                  </TablixMembers>
+                </TablixMember>
+              </TablixMembers>
+            </TablixRowHierarchy>
+          </Tablix>
+          <Textbox Name="TextBox160">
+            <Left>13.64062pt</Left>
+            <Top>760.2pt</Top>
+            <Height>20.25pt</Height>
+            <Width>380.2406pt</Width>
+            <Style>
+              <FontSize>10.00008pt</FontSize>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>2.00016pt</PaddingLeft>
+              <PaddingRight>2.00016pt</PaddingRight>
+              <PaddingTop>2.00016pt</PaddingTop>
+              <PaddingBottom>2.00016pt</PaddingBottom>
+              <Border>
+                <Color>LightGrey</Color>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Annexe des exigences clients (Autoclaves)</Value>
+                    <Style>
+                      <FontFamily>Tw Cen MT</FontFamily>
+                      <FontSize>12.0002pt</FontSize>
+                      <FontWeight>SemiBold</FontWeight>
+                      <Color>#4d4d4d</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <FontSize>10.00008pt</FontSize>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+          </Textbox>
         </ReportItems>
-        <Height>1173.75pt</Height>
+        <Height>873.75pt</Height>
       </Body>
       <Width>588.96pt</Width>
       <Page>
@@ -3277,7 +6156,7 @@
                 <PaddingBottom>2.00016pt</PaddingBottom>
                 <Border>
                   <Color>LightGrey</Color>
-                  <Style>None</Style>
+                  <Style>Solid</Style>
                 </Border>
               </Style>
               <KeepTogether>true</KeepTogether>
@@ -3316,7 +6195,7 @@
                 <PaddingBottom>2.00016pt</PaddingBottom>
                 <Border>
                   <Color>LightGrey</Color>
-                  <Style>None</Style>
+                  <Style>Solid</Style>
                 </Border>
               </Style>
               <KeepTogether>true</KeepTogether>
@@ -3355,7 +6234,7 @@
                 <PaddingBottom>2.00016pt</PaddingBottom>
                 <Border>
                   <Color>LightGrey</Color>
-                  <Style>None</Style>
+                  <Style>Solid</Style>
                 </Border>
               </Style>
               <KeepTogether>true</KeepTogether>
@@ -3394,7 +6273,7 @@
                 <PaddingBottom>2.00016pt</PaddingBottom>
                 <Border>
                   <Color>LightGrey</Color>
-                  <Style>None</Style>
+                  <Style>Solid</Style>
                 </Border>
               </Style>
               <KeepTogether>true</KeepTogether>
@@ -3433,7 +6312,7 @@
                 <PaddingBottom>2.00016pt</PaddingBottom>
                 <Border>
                   <Color>LightGrey</Color>
-                  <Style>None</Style>
+                  <Style>Solid</Style>
                 </Border>
               </Style>
               <KeepTogether>true</KeepTogether>
@@ -3472,7 +6351,7 @@
                 <PaddingBottom>2.00016pt</PaddingBottom>
                 <Border>
                   <Color>LightGrey</Color>
-                  <Style>None</Style>
+                  <Style>Solid</Style>
                 </Border>
               </Style>
               <KeepTogether>true</KeepTogether>
@@ -3511,7 +6390,7 @@
                 <PaddingBottom>2.00016pt</PaddingBottom>
                 <Border>
                   <Color>LightGrey</Color>
-                  <Style>None</Style>
+                  <Style>Solid</Style>
                 </Border>
               </Style>
               <KeepTogether>true</KeepTogether>
@@ -3550,7 +6429,7 @@
                 <PaddingBottom>2.00016pt</PaddingBottom>
                 <Border>
                   <Color>LightGrey</Color>
-                  <Style>None</Style>
+                  <Style>Solid</Style>
                 </Border>
               </Style>
               <KeepTogether>true</KeepTogether>
@@ -3560,7 +6439,203 @@
                     <TextRun>
                       <Value>=Globals!OverallPageNumber+"/"+Globals!TotalPages</Value>
                       <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontWeight>Medium</FontWeight>
+                        <Color>black</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <FontSize>10.00008pt</FontSize>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+            </Textbox>
+            <Textbox Name="TextBox188">
+              <Left>9.70312pt</Left>
+              <Top>117.45pt</Top>
+              <Height>15pt</Height>
+              <Width>91.5pt</Width>
+              <Style>
+                <BackgroundColor>#205eee</BackgroundColor>
+                <FontSize>10.00008pt</FontSize>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2.00016pt</PaddingLeft>
+                <PaddingRight>2.00016pt</PaddingRight>
+                <PaddingTop>2.00016pt</PaddingTop>
+                <PaddingBottom>2.00016pt</PaddingBottom>
+                <Border>
+                  <Color>LightGrey</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>N° Enregistrement</Value>
+                      <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <FontWeight>Medium</FontWeight>
+                        <Color>#ffffff</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <FontSize>10.00008pt</FontSize>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+            </Textbox>
+            <Textbox Name="TextBox189">
+              <Left>9.42188pt</Left>
+              <Top>131.925pt</Top>
+              <Height>15pt</Height>
+              <Width>91.5pt</Width>
+              <Style>
+                <BackgroundColor>#205eee</BackgroundColor>
+                <FontSize>10.00008pt</FontSize>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2.00016pt</PaddingLeft>
+                <PaddingRight>2.00016pt</PaddingRight>
+                <PaddingTop>2.00016pt</PaddingTop>
+                <PaddingBottom>2.00016pt</PaddingBottom>
+                <Border>
+                  <Color>LightGrey</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Date Enregistrement</Value>
+                      <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <FontWeight>Medium</FontWeight>
+                        <Color>#ffffff</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <FontSize>10.00008pt</FontSize>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+            </Textbox>
+            <Textbox Name="TextBox191">
+              <Left>100.4906pt</Left>
+              <Top>117.45pt</Top>
+              <Height>15pt</Height>
+              <Width>136.2525pt</Width>
+              <Style>
+                <BackgroundColor>#ffffff</BackgroundColor>
+                <FontSize>10.00008pt</FontSize>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2.00016pt</PaddingLeft>
+                <PaddingRight>2.00016pt</PaddingRight>
+                <PaddingTop>2.00016pt</PaddingTop>
+                <PaddingBottom>2.00016pt</PaddingBottom>
+                <Border>
+                  <Color>LightGrey</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!Numero.Value,"DataSet1")</Value>
+                      <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontWeight>Bold</FontWeight>
                         <Color>Black</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <FontSize>10.00008pt</FontSize>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+            </Textbox>
+            <Textbox Name="TextBox192">
+              <Left>100.1906pt</Left>
+              <Top>131.925pt</Top>
+              <Height>15pt</Height>
+              <Width>136.2525pt</Width>
+              <Style>
+                <BackgroundColor>#ffffff</BackgroundColor>
+                <FontSize>10.00008pt</FontSize>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2.00016pt</PaddingLeft>
+                <PaddingRight>2.00016pt</PaddingRight>
+                <PaddingTop>2.00016pt</PaddingTop>
+                <PaddingBottom>2.00016pt</PaddingBottom>
+                <Border>
+                  <Color>LightGrey</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!Date.Value,"DataSet1")</Value>
+                      <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontWeight>Bold</FontWeight>
+                        <Format>dd/MM/yy</Format>
+                        <Color>Black</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <FontSize>10.00008pt</FontSize>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+            </Textbox>
+            <Textbox Name="TextBox194">
+              <Left>13.19999pt</Left>
+              <Top>85.95pt</Top>
+              <Height>20.25pt</Height>
+              <Width>308.2406pt</Width>
+              <Style>
+                <FontSize>10.00008pt</FontSize>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2.00016pt</PaddingLeft>
+                <PaddingRight>2.00016pt</PaddingRight>
+                <PaddingTop>2.00016pt</PaddingTop>
+                <PaddingBottom>2.00016pt</PaddingBottom>
+                <Border>
+                  <Color>LightGrey</Color>
+                  <Style>None</Style>
+                </Border>
+              </Style>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Grille du dialogue avec les clients</Value>
+                      <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontSize>18pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <TextDecoration>Underline</TextDecoration>
+                        <Color>#000000</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -3581,9 +6656,157 @@
               <Style>None</Style>
             </Border>
           </Style>
-          <Height>386.25pt</Height>
+          <Height>154.5pt</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="TextBox183">
+              <Left>13.94999pt</Left>
+              <Top>24.44998pt</Top>
+              <Height>20.25pt</Height>
+              <Width>231.7406pt</Width>
+              <Style>
+                <FontSize>10.00008pt</FontSize>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2.00016pt</PaddingLeft>
+                <PaddingRight>2.00016pt</PaddingRight>
+                <PaddingTop>2.00016pt</PaddingTop>
+                <PaddingBottom>2.00016pt</PaddingBottom>
+                <Border>
+                  <Color>LightGrey</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Accord du client</Value>
+                      <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontSize>10.5pt</FontSize>
+                        <FontWeight>Medium</FontWeight>
+                        <Color>#4d4d4d</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <FontSize>10.00008pt</FontSize>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+            </Textbox>
+            <Textbox Name="TextBox184">
+              <Left>256.2pt</Left>
+              <Top>24.44998pt</Top>
+              <Height>20.25pt</Height>
+              <Width>231.7406pt</Width>
+              <Style>
+                <FontSize>10.00008pt</FontSize>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2.00016pt</PaddingLeft>
+                <PaddingRight>2.00016pt</PaddingRight>
+                <PaddingTop>2.00016pt</PaddingTop>
+                <PaddingBottom>2.00016pt</PaddingBottom>
+                <Border>
+                  <Color>LightGrey</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Visa responsable laboratoire</Value>
+                      <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontSize>10.5pt</FontSize>
+                        <FontWeight>Medium</FontWeight>
+                        <Color>#4d4d4d</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <FontSize>10.00008pt</FontSize>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+            </Textbox>
+            <Textbox Name="TextBox185">
+              <Left>14.25pt</Left>
+              <Top>44.25pt</Top>
+              <Height>103.5pt</Height>
+              <Width>231.7406pt</Width>
+              <Style>
+                <FontSize>10.00008pt</FontSize>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2.00016pt</PaddingLeft>
+                <PaddingRight>2.00016pt</PaddingRight>
+                <PaddingTop>2.00016pt</PaddingTop>
+                <PaddingBottom>2.00016pt</PaddingBottom>
+                <Border>
+                  <Color>LightGrey</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value />
+                      <Style>
+                        <Color>Black</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <FontSize>10.00008pt</FontSize>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+            </Textbox>
+            <Textbox Name="TextBox186">
+              <Left>256.2pt</Left>
+              <Top>44.68126pt</Top>
+              <Height>103.5pt</Height>
+              <Width>231.7406pt</Width>
+              <Style>
+                <FontSize>10.00008pt</FontSize>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2.00016pt</PaddingLeft>
+                <PaddingRight>2.00016pt</PaddingRight>
+                <PaddingTop>2.00016pt</PaddingTop>
+                <PaddingBottom>2.00016pt</PaddingBottom>
+                <Border>
+                  <Color>LightGrey</Color>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value />
+                      <Style>
+                        <Color>Black</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <FontSize>10.00008pt</FontSize>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+            </Textbox>
+          </ReportItems>
         </PageFooter>
         <LeftMargin>0pt</LeftMargin>
         <RightMargin>0pt</RightMargin>
@@ -3604,9 +6827,11 @@
   <DataSources>
     <DataSource Name="DataSource1">
       <ConnectionProperties>
-        <DataProvider>JSON</DataProvider>
-        <ConnectString>{"Data":"{\n    \"id\": 1,\n    \"Date\": \"2024-03-10T00:00:00\",\n    \"Numero\": \"GD-1581\\/2024\",\n    \"CT_Num\": null,\n    \"DemandePar\": 3,\n    \"RaisonSocial\": \"TRESCAL\",\n    \"Telephone\": \"05 22 74 09 01\",\n    \"Fax\": null,\n    \"Adresse\": \"CASABLANCA\",\n    \"Interlocuteur\": \"Mme NAOUAL ETTIR\",\n    \"FonctionInterlocuteur\": null,\n    \"PreuvesRaccord\": true,\n    \" ListePersonnelQualifie\": true,\n    \" AuditAuLaboratoire\": true,\n    \"PMQ\": true,\n    \"ProcedureTraitementReclamation\": true,\n    \"LieuPrestation\": null,\n    \"OperationsAttendues\": null,\n    \"PeriodiciteEtalonnageEtiquettes\": true,\n    \"PeriodiciteEtalonnageRapports\": true,\n    \"RelanceEtalonnageAnnuel\": true,\n    \"DateSouhaiteePrestation\": \"2024-03-12T00:00:00\",\n    \"DateTransmissionDocuments\": \"2024-03-12T00:00:00\",\n    \"AdresseLivraisonExpedition\": null,\n    \"ModeLivraisonExpedition\": null,\n    \"PriseChargeTransport\": false,\n    \"NaturePrestation\": 0,\n    \"PointsEtalonnage\": 3,\n    \"CapaciteDisponibiliteRessourcesNecessaires\": false,\n    \"LieuPrestationInt\": 2,\n    \"OperationsAttenduesInt\": 0,\n    \"PreuvesRaccordRes\": 0,\n    \"ListePersonnelQualifieRes\": 0,\n    \"AuditAuLaboratoireRes\": 3,\n    \"PMQRes\": 0,\n    \"ProcedureTraitementReclamationRes\": 0,\n    \"MethodeEtalonnange\": 3,\n    \"AvisPertinenceMethode\": 0,\n    \"Commentaire\": \"COM\",\n    \"MethodeEtalonnageAutre\": \"10\",\n    \"Statut\": 1,\n    \"PreuvesRaccordChar\": \"1\",\n    \"ListePersonnelQualifieChar\": \"2\",\n    \"AuditAuLaboratoireChar\": \"3\",\n    \"PMQChar\": \"4\",\n    \"ProcedureTraitementReclamationChar\": \"5\",\n    \"DemandeParAutre\": \"6\",\n    \"PeriodiciteEtalonnageEtiquettesPeriode\": \"1 ANS\",\n    \"PeriodiciteEtalonnageRapportsPeriode\": \"2 ANS\",\n    \"PointsEtalonnageAutre\": \"12\",\n    \"PriseChargeTransportInt\": 0\n}","DataMode":"inline","URL":""}</ConnectString>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString>Data Source=(local);Initial Catalog=ABD;Encrypt=false;TrustServerCertificate=false;</ConnectString>
+        <IntegratedSecurity>true</IntegratedSecurity>
       </ConnectionProperties>
+      <rd:SecurityType>Integrated</rd:SecurityType>
       <rd:ImpersonateUser>false</rd:ImpersonateUser>
     </DataSource>
   </DataSources>
@@ -3615,7 +6840,7 @@
       <Fields>
         <Field Name="id">
           <DataField>id</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Date">
           <DataField>Date</DataField>
@@ -3627,11 +6852,11 @@
         </Field>
         <Field Name="CT_Num">
           <DataField>CT_Num</DataField>
-          <rd:TypeName>System.Object</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="DemandePar">
           <DataField>DemandePar</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="RaisonSocial">
           <DataField>RaisonSocial</DataField>
@@ -3643,7 +6868,7 @@
         </Field>
         <Field Name="Fax">
           <DataField>Fax</DataField>
-          <rd:TypeName>System.Object</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Adresse">
           <DataField>Adresse</DataField>
@@ -3655,7 +6880,7 @@
         </Field>
         <Field Name="FonctionInterlocuteur">
           <DataField>FonctionInterlocuteur</DataField>
-          <rd:TypeName>System.Object</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="PreuvesRaccord">
           <DataField>PreuvesRaccord</DataField>
@@ -3679,11 +6904,11 @@
         </Field>
         <Field Name="LieuPrestation">
           <DataField>LieuPrestation</DataField>
-          <rd:TypeName>System.Object</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="OperationsAttendues">
           <DataField>OperationsAttendues</DataField>
-          <rd:TypeName>System.Object</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="PeriodiciteEtalonnageEtiquettes">
           <DataField>PeriodiciteEtalonnageEtiquettes</DataField>
@@ -3707,11 +6932,11 @@
         </Field>
         <Field Name="AdresseLivraisonExpedition">
           <DataField>AdresseLivraisonExpedition</DataField>
-          <rd:TypeName>System.Object</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="ModeLivraisonExpedition">
           <DataField>ModeLivraisonExpedition</DataField>
-          <rd:TypeName>System.Object</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="PriseChargeTransport">
           <DataField>PriseChargeTransport</DataField>
@@ -3719,11 +6944,11 @@
         </Field>
         <Field Name="NaturePrestation">
           <DataField>NaturePrestation</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="PointsEtalonnage">
           <DataField>PointsEtalonnage</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="CapaciteDisponibiliteRessourcesNecessaires">
           <DataField>CapaciteDisponibiliteRessourcesNecessaires</DataField>
@@ -3731,39 +6956,39 @@
         </Field>
         <Field Name="LieuPrestationInt">
           <DataField>LieuPrestationInt</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="OperationsAttenduesInt">
           <DataField>OperationsAttenduesInt</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="PreuvesRaccordRes">
           <DataField>PreuvesRaccordRes</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="ListePersonnelQualifieRes">
           <DataField>ListePersonnelQualifieRes</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="AuditAuLaboratoireRes">
           <DataField>AuditAuLaboratoireRes</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="PMQRes">
           <DataField>PMQRes</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="ProcedureTraitementReclamationRes">
           <DataField>ProcedureTraitementReclamationRes</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="MethodeEtalonnange">
           <DataField>MethodeEtalonnange</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="AvisPertinenceMethode">
           <DataField>AvisPertinenceMethode</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Commentaire">
           <DataField>Commentaire</DataField>
@@ -3775,7 +7000,7 @@
         </Field>
         <Field Name="Statut">
           <DataField>Statut</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="PreuvesRaccordChar">
           <DataField>PreuvesRaccordChar</DataField>
@@ -3815,78 +7040,423 @@
         </Field>
         <Field Name="PriseChargeTransportInt">
           <DataField>PriseChargeTransportInt</DataField>
-          <rd:TypeName>System.Double</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="NaturePrestationAutre">
+          <DataField>NaturePrestationAutre</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Creation">
+          <DataField>Creation</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Modification">
+          <DataField>Modification</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="CreationIP">
+          <DataField>CreationIP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationIP">
+          <DataField>ModificationIP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreationHost">
+          <DataField>CreationHost</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationHost">
+          <DataField>ModificationHost</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreationUser">
+          <DataField>CreationUser</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationUser">
+          <DataField>ModificationUser</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <Query>
         <DataSourceName>DataSource1</DataSourceName>
         <CommandType>Text</CommandType>
-        <CommandText>{"Name":"Result","Columns":[]}</CommandText>
-        <QueryDesignerState xmlns="http://schemas.microsoft.com/ReportingServices/QueryDefinition/Relational">
-          <Tables>
-            <Table Name="Result" Schema="">
-              <Columns>
-                <Column Name="id" IsDuplicate="False" IsSelected="True" />
-                <Column Name="Date" IsDuplicate="False" IsSelected="True" />
-                <Column Name="Numero" IsDuplicate="False" IsSelected="True" />
-                <Column Name="CT_Num" IsDuplicate="False" IsSelected="True" />
-                <Column Name="DemandePar" IsDuplicate="False" IsSelected="True" />
-                <Column Name="RaisonSocial" IsDuplicate="False" IsSelected="True" />
-                <Column Name="Telephone" IsDuplicate="False" IsSelected="True" />
-                <Column Name="Fax" IsDuplicate="False" IsSelected="True" />
-                <Column Name="Adresse" IsDuplicate="False" IsSelected="True" />
-                <Column Name="Interlocuteur" IsDuplicate="False" IsSelected="True" />
-                <Column Name="FonctionInterlocuteur" IsDuplicate="False" IsSelected="True" />
-                <Column Name="PreuvesRaccord" IsDuplicate="False" IsSelected="True" />
-                <Column Name=" ListePersonnelQualifie" IsDuplicate="False" IsSelected="True" />
-                <Column Name=" AuditAuLaboratoire" IsDuplicate="False" IsSelected="True" />
-                <Column Name="PMQ" IsDuplicate="False" IsSelected="True" />
-                <Column Name="ProcedureTraitementReclamation" IsDuplicate="False" IsSelected="True" />
-                <Column Name="LieuPrestation" IsDuplicate="False" IsSelected="True" />
-                <Column Name="OperationsAttendues" IsDuplicate="False" IsSelected="True" />
-                <Column Name="PeriodiciteEtalonnageEtiquettes" IsDuplicate="False" IsSelected="True" />
-                <Column Name="PeriodiciteEtalonnageRapports" IsDuplicate="False" IsSelected="True" />
-                <Column Name="RelanceEtalonnageAnnuel" IsDuplicate="False" IsSelected="True" />
-                <Column Name="DateSouhaiteePrestation" IsDuplicate="False" IsSelected="True" />
-                <Column Name="DateTransmissionDocuments" IsDuplicate="False" IsSelected="True" />
-                <Column Name="AdresseLivraisonExpedition" IsDuplicate="False" IsSelected="True" />
-                <Column Name="ModeLivraisonExpedition" IsDuplicate="False" IsSelected="True" />
-                <Column Name="PriseChargeTransport" IsDuplicate="False" IsSelected="True" />
-                <Column Name="NaturePrestation" IsDuplicate="False" IsSelected="True" />
-                <Column Name="PointsEtalonnage" IsDuplicate="False" IsSelected="True" />
-                <Column Name="CapaciteDisponibiliteRessourcesNecessaires" IsDuplicate="False" IsSelected="True" />
-                <Column Name="LieuPrestationInt" IsDuplicate="False" IsSelected="True" />
-                <Column Name="OperationsAttenduesInt" IsDuplicate="False" IsSelected="True" />
-                <Column Name="PreuvesRaccordRes" IsDuplicate="False" IsSelected="True" />
-                <Column Name="ListePersonnelQualifieRes" IsDuplicate="False" IsSelected="True" />
-                <Column Name="AuditAuLaboratoireRes" IsDuplicate="False" IsSelected="True" />
-                <Column Name="PMQRes" IsDuplicate="False" IsSelected="True" />
-                <Column Name="ProcedureTraitementReclamationRes" IsDuplicate="False" IsSelected="True" />
-                <Column Name="MethodeEtalonnange" IsDuplicate="False" IsSelected="True" />
-                <Column Name="AvisPertinenceMethode" IsDuplicate="False" IsSelected="True" />
-                <Column Name="Commentaire" IsDuplicate="False" IsSelected="True" />
-                <Column Name="MethodeEtalonnageAutre" IsDuplicate="False" IsSelected="True" />
-                <Column Name="Statut" IsDuplicate="False" IsSelected="True" />
-                <Column Name="PreuvesRaccordChar" IsDuplicate="False" IsSelected="True" />
-                <Column Name="ListePersonnelQualifieChar" IsDuplicate="False" IsSelected="True" />
-                <Column Name="AuditAuLaboratoireChar" IsDuplicate="False" IsSelected="True" />
-                <Column Name="PMQChar" IsDuplicate="False" IsSelected="True" />
-                <Column Name="ProcedureTraitementReclamationChar" IsDuplicate="False" IsSelected="True" />
-                <Column Name="DemandeParAutre" IsDuplicate="False" IsSelected="True" />
-                <Column Name="PeriodiciteEtalonnageEtiquettesPeriode" IsDuplicate="False" IsSelected="True" />
-                <Column Name="PeriodiciteEtalonnageRapportsPeriode" IsDuplicate="False" IsSelected="True" />
-                <Column Name="PointsEtalonnageAutre" IsDuplicate="False" IsSelected="True" />
-                <Column Name="PriseChargeTransportInt" IsDuplicate="False" IsSelected="True" />
-              </Columns>
-              <SchemaLevels>
-                <SchemaInfo Name="Result" SchemaType="Table" />
-              </SchemaLevels>
-            </Table>
-          </Tables>
-        </QueryDesignerState>
+        <CommandText>SELECT a.* FROM API_T_CertifGrilleDialogue a
+WHERE a.id = @id</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@id">
+            <Value>=Parameters!id.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="DataSet2">
+      <Fields>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Dialogue">
+          <DataField>Dialogue</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Date">
+          <DataField>Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Nature">
+          <DataField>Nature</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Responsable">
+          <DataField>Responsable</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Libelle">
+          <DataField>Libelle</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Creation">
+          <DataField>Creation</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Modification">
+          <DataField>Modification</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="CreationIP">
+          <DataField>CreationIP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationIP">
+          <DataField>ModificationIP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreationHost">
+          <DataField>CreationHost</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationHost">
+          <DataField>ModificationHost</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreationUser">
+          <DataField>CreationUser</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationUser">
+          <DataField>ModificationUser</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT a.* FROM API_T_CertifGrilleDialogueModif a
+WHERE a.Dialogue = @id</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@id">
+            <Value>=Parameters!id.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="DataSet3">
+      <Fields>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Dialogue">
+          <DataField>Dialogue</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="AR_Ref">
+          <DataField>AR_Ref</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="JugementConformite">
+          <DataField>JugementConformite</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="AutreSpecification">
+          <DataField>AutreSpecification</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Incertitude">
+          <DataField>Incertitude</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="Classe">
+          <DataField>Classe</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Normative">
+          <DataField>Normative</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="Utilisateur">
+          <DataField>Utilisateur</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Jugement">
+          <DataField>Jugement</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="RegleDecision">
+          <DataField>RegleDecision</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ErreurMaximalTolere">
+          <DataField>ErreurMaximalTolere</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Code">
+          <DataField>Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PointsEtalonnage">
+          <DataField>PointsEtalonnage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ErreurMaximalTolereUtilisateur">
+          <DataField>ErreurMaximalTolereUtilisateur</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Creation">
+          <DataField>Creation</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Modification">
+          <DataField>Modification</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="CreationIP">
+          <DataField>CreationIP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationIP">
+          <DataField>ModificationIP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreationHost">
+          <DataField>CreationHost</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationHost">
+          <DataField>ModificationHost</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreationUser">
+          <DataField>CreationUser</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationUser">
+          <DataField>ModificationUser</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AR_Design">
+          <DataField>AR_Design</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="JugementConformiteIntitule">
+          <DataField>JugementConformiteIntitule</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="RegleDecisionIntitule">
+          <DataField>RegleDecisionIntitule</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ErreurMaximalTolereIntitule">
+          <DataField>ErreurMaximalTolereIntitule</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT 
+a.*,
+ar.AR_Design,
+CASE a.JugementConformite WHEN 0 THEN 'Oui' WHEN 1 THEN 'Non' END JugementConformiteIntitule,
+CASE a.RegleDecision WHEN 0 THEN 'Avec incertitude' WHEN 1 THEN 'Sans incertitude' END RegleDecisionIntitule,
+CASE a.ErreurMaximalTolere WHEN 0 THEN 'Normative' WHEN 1 THEN 'Utilisateur' END ErreurMaximalTolereIntitule
+
+
+FROM API_T_CertifGrilleDialogueExigence a
+LEFT JOIN F_ARTICLE ar ON a.AR_Ref = ar.AR_Ref
+WHERE a.Dialogue = @id
+</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@id">
+            <Value>=Parameters!id.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="DataSet4">
+      <Fields>
+        <Field Name="id">
+          <DataField>id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Creation">
+          <DataField>Creation</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Modification">
+          <DataField>Modification</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="CreationIP">
+          <DataField>CreationIP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationIP">
+          <DataField>ModificationIP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreationHost">
+          <DataField>CreationHost</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationHost">
+          <DataField>ModificationHost</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreationUser">
+          <DataField>CreationUser</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationUser">
+          <DataField>ModificationUser</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AR_Ref">
+          <DataField>AR_Ref</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Code">
+          <DataField>Code</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Essai">
+          <DataField>Essai</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="EssaiJuge">
+          <DataField>EssaiJuge</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TemperatureSterilisation">
+          <DataField>TemperatureSterilisation</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TemperatureSterilisationJuge">
+          <DataField>TemperatureSterilisationJuge</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Tolerance">
+          <DataField>Tolerance</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ToleranceJuge">
+          <DataField>ToleranceJuge</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TempsSterilisation">
+          <DataField>TempsSterilisation</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TempsSterilisationJuge">
+          <DataField>TempsSterilisationJuge</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TempsEquilibrage">
+          <DataField>TempsEquilibrage</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TempsEquilibrageJuge">
+          <DataField>TempsEquilibrageJuge</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Stabilite">
+          <DataField>Stabilite</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="StabiliteJuge">
+          <DataField>StabiliteJuge</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Homogeneite">
+          <DataField>Homogeneite</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HomogeneiteJuge">
+          <DataField>HomogeneiteJuge</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Pression">
+          <DataField>Pression</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="PressionJuge">
+          <DataField>PressionJuge</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ValeurSterilisatrice">
+          <DataField>ValeurSterilisatrice</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ValeurSterilisatriceJuge">
+          <DataField>ValeurSterilisatriceJuge</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="EntreeSondes">
+          <DataField>EntreeSondes</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="EntreeSondesJuge">
+          <DataField>EntreeSondesJuge</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Dialogue">
+          <DataField>Dialogue</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="AR_Design">
+          <DataField>AR_Design</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandType>Text</CommandType>
+        <CommandText>SELECT 
+a.*,
+ar.AR_Design
+FROM API_T_CertifAutoclaves a
+LEFT JOIN F_ARTICLE ar ON a.AR_Ref = ar.AR_Ref
+WHERE a.Dialogue = @id
+</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@id">
+            <Value>=Parameters!id.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
       </Query>
     </DataSet>
   </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="id">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>id</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+  </ReportParameters>
   <EmbeddedImages>
     <EmbeddedImage Name="logo_afrolab">
       <MIMEType>image/jpeg</MIMEType>
