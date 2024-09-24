@@ -325,7 +325,7 @@
 											}
 										</Template>
 										<EditTemplate>
-											<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Designation" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(articles.OrderBy(a => a.AR_Design))" TValue="string" TItem="F_ARTICLE" @bind-Value="@((context as API_T_CertifGrilleDialogueExigence).AR_Ref)">
+											<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Designation" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(db.F_ARTICLE.OrderBy(a => a.AR_Design))" TValue="string" TItem="F_ARTICLE" @bind-Value="@((context as API_T_CertifGrilleDialogueExigence).AR_Ref)">
 												<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
 												<DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
 											</SfDropDownList>

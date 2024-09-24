@@ -31,39 +31,23 @@ namespace BusinessWeb.Controllers
             return ReportHelper.GetResource(resource, this, _cache);
         }
 
-        // Method will be called to initialize the report information to load the report with ReportHelper for processing.
-        public void OnInitReportOptions(ReportViewerOptions reportOption)
-        {
-            string basePath = _hostingEnvironment.WebRootPath;
-            // Here, we have loaded the sales-order-detail.rdl report from the application folder wwwroot\Resources. sales-order-detail.rdl should be in the wwwroot\Resources application folder.
-            System.IO.FileStream reportStream = new System.IO.FileStream(basePath + @"\resources\" + reportOption.ReportModel.ReportPath + ".rdl", System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            reportOption.ReportModel.Stream = reportStream;
-            Helpers fn = new Helpers();
+		// Method will be called to initialize the report information to load the report with ReportHelper for processing.
+		public void OnInitReportOptions(ReportViewerOptions reportOption)
+		{
+			string basePath = _hostingEnvironment.WebRootPath;
+			// Here, we have loaded the sales-order-detail.rdl report from the application folder wwwroot\Resources. sales-order-detail.rdl should be in the wwwroot\Resources application folder.
+			System.IO.FileStream reportStream = new System.IO.FileStream(basePath + @"\resources\" + reportOption.ReportModel.ReportPath + ".rdl", System.IO.FileMode.Open, System.IO.FileAccess.Read);
+			reportOption.ReportModel.Stream = reportStream;
+			Helpers fn = new Helpers();
 
-            DataSourceCredentials data1 = new DataSourceCredentials();
-			data1.Name = "DataSource1";
-			data1.ConnectionString = RouteData.Values["ConnectionString"].ToString().Replace("FFFFFFF", "\\");
-
-			DataSourceCredentials data2 = new DataSourceCredentials();
-			data1.Name = "DataSource2";
-			data1.ConnectionString = RouteData.Values["ConnectionString"].ToString().Replace("FFFFFFF", "\\");
-
-			DataSourceCredentials data3 = new DataSourceCredentials();
-			data1.Name = "DataSource3";
-			data1.ConnectionString = RouteData.Values["ConnectionString"].ToString().Replace("FFFFFFF", "\\");
-
-			DataSourceCredentials data4 = new DataSourceCredentials();
-			data1.Name = "DataSource4";
-			data1.ConnectionString = RouteData.Values["ConnectionString"].ToString().Replace("FFFFFFF", "\\");
-
-			DataSourceCredentials data5 = new DataSourceCredentials();
-			data1.Name = "DataSource5";
-			data1.ConnectionString = RouteData.Values["ConnectionString"].ToString().Replace("FFFFFFF", "\\");
-
-            reportOption.ReportModel.DataSourceCredentials = new List<DataSourceCredentials> { data1,data2,data3,data4,data5 };
-        }
-        // Method will be called when report is loaded internally to start the layout process with ReportHelper.
-        public void OnReportLoaded(ReportViewerOptions reportOption)
+			DataSourceCredentials dataSourceCredentials = new DataSourceCredentials();
+			//You have to provide the shared data source name used with the report or the data source name available with the report.
+			dataSourceCredentials.Name = "DataSource1";
+			dataSourceCredentials.ConnectionString = RouteData.Values["ConnectionString"].ToString().Replace("FFFFFFF", "\\");
+			reportOption.ReportModel.DataSourceCredentials = new List<DataSourceCredentials> { dataSourceCredentials };
+		}
+		// Method will be called when report is loaded internally to start the layout process with ReportHelper.
+		public void OnReportLoaded(ReportViewerOptions reportOption)
         {
             //    var reportParameters = ReportHelper.GetParameters(jsonResult, this, _cache);
             //    List<BoldReports.Web.ReportParameter> setParameters = new List<BoldReports.Web.ReportParameter>();
