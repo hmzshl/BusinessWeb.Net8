@@ -1125,7 +1125,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIF(Fields!PreuvesRaccord.Value,"Oui","Non")</Value>
+                                  <Value>=IIF(Fields!PeriodiciteEtalonnageEtiquettes.Value,"Oui","Non")</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -1206,7 +1206,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!PeriodiciteEtalonnageEtiquettesPeriode.Value</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -1286,7 +1286,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIF(Fields!PreuvesRaccord.Value,"Oui","Non")</Value>
+                                  <Value>=IIF(Fields!PeriodiciteEtalonnageRapports.Value,"Oui","Non")</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -1367,7 +1367,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value>=Fields!PeriodiciteEtalonnageRapportsPeriode.Value</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -1447,7 +1447,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIF(Fields!PreuvesRaccord.Value,"Oui","Non")</Value>
+                                  <Value>=IIF(Fields!RelanceEtalonnageAnnuel.Value,"Oui","Non")</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>

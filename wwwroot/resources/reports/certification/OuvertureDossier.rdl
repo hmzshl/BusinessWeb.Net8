@@ -105,7 +105,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!RaisonSocial.Value</Value>
+                                  <Value>=Fields!Intitule.Value</Value>
                                   <Style>
                                     <FontFamily>Segoe UI</FontFamily>
                                     <FontSize>8.25pt</FontSize>
@@ -653,7 +653,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Numero.Value</Value>
+                                  <Value>=Fields!Reference.Value</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>8.25pt</FontSize>
@@ -662,7 +662,9 @@
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                         </Textbox>
@@ -701,7 +703,9 @@
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                         </Textbox>
@@ -1524,7 +1528,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Numero.Value</Value>
+                                  <Value>=Fields!Reference.Value</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>8.25pt</FontSize>
@@ -1827,7 +1831,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Numero.Value</Value>
+                                  <Value>=Fields!Reference.Value</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>8.25pt</FontSize>
@@ -1836,7 +1840,9 @@
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                         </Textbox>
@@ -1875,7 +1881,9 @@
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                         </Textbox>
@@ -1963,15 +1971,16 @@
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
             <Image Name="Image1">
-              <Left>8.99062pt</Left>
-              <Top>11.25pt</Top>
+              <Left>11.23828pt</Left>
+              <Top>8.25pt</Top>
               <Value>logo_afrolab</Value>
-              <Height>58.5pt</Height>
-              <Width>153pt</Width>
+              <Height>59.25pt</Height>
+              <Width>150.75pt</Width>
               <Visibility />
               <Style>
                 <Border>
-                  <Style>None</Style>
+                  <Color>#cccccc</Color>
+                  <Style>Solid</Style>
                 </Border>
               </Style>
               <Source>Embedded</Source>
@@ -1983,13 +1992,10 @@
               <Height>15pt</Height>
               <Width>91.5pt</Width>
               <Style>
-                <BackgroundColor>#205eee</BackgroundColor>
+                <BackgroundColor>#ffffff</BackgroundColor>
                 <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>2.00016pt</PaddingLeft>
-                <PaddingRight>2.00016pt</PaddingRight>
-                <PaddingTop>2.00016pt</PaddingTop>
-                <PaddingBottom>2.00016pt</PaddingBottom>
+                <PaddingLeft>2.25pt</PaddingLeft>
                 <Border>
                   <Color>LightGrey</Color>
                   <Style>Solid</Style>
@@ -2004,14 +2010,15 @@
                       <Style>
                         <FontFamily>Tw Cen MT</FontFamily>
                         <FontSize>9pt</FontSize>
-                        <FontWeight>Medium</FontWeight>
-                        <Color>#ffffff</Color>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#000000</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
                     <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
+                    <LineHeight>0.99750pt</LineHeight>
                   </Style>
                 </Paragraph>
               </Paragraphs>
@@ -2022,13 +2029,10 @@
               <Height>15pt</Height>
               <Width>91.5pt</Width>
               <Style>
-                <BackgroundColor>#205eee</BackgroundColor>
+                <BackgroundColor>#ffffff</BackgroundColor>
                 <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>2.00016pt</PaddingLeft>
-                <PaddingRight>2.00016pt</PaddingRight>
-                <PaddingTop>2.00016pt</PaddingTop>
-                <PaddingBottom>2.00016pt</PaddingBottom>
+                <PaddingLeft>2.25pt</PaddingLeft>
                 <Border>
                   <Color>LightGrey</Color>
                   <Style>Solid</Style>
@@ -2043,31 +2047,29 @@
                       <Style>
                         <FontFamily>Tw Cen MT</FontFamily>
                         <FontSize>9pt</FontSize>
-                        <FontWeight>Medium</FontWeight>
-                        <Color>#ffffff</Color>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#000000</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
                     <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
+                    <LineHeight>0.99750pt</LineHeight>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
             <Textbox Name="TextBox11">
-              <Left>358.2pt</Left>
+              <Left>358.5pt</Left>
               <Top>36.2325pt</Top>
               <Height>15pt</Height>
               <Width>91.5pt</Width>
               <Style>
-                <BackgroundColor>#205eee</BackgroundColor>
+                <BackgroundColor>#ffffff</BackgroundColor>
                 <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>2.00016pt</PaddingLeft>
-                <PaddingRight>2.00016pt</PaddingRight>
-                <PaddingTop>2.00016pt</PaddingTop>
-                <PaddingBottom>2.00016pt</PaddingBottom>
+                <PaddingLeft>2.25pt</PaddingLeft>
                 <Border>
                   <Color>LightGrey</Color>
                   <Style>Solid</Style>
@@ -2082,31 +2084,29 @@
                       <Style>
                         <FontFamily>Tw Cen MT</FontFamily>
                         <FontSize>9pt</FontSize>
-                        <FontWeight>Medium</FontWeight>
-                        <Color>#ffffff</Color>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#000000</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
                     <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
+                    <LineHeight>0.99750pt</LineHeight>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
             <Textbox Name="TextBox13">
-              <Left>358.2pt</Left>
+              <Left>358.5pt</Left>
               <Top>50.4825pt</Top>
               <Height>15pt</Height>
               <Width>91.5pt</Width>
               <Style>
-                <BackgroundColor>#205eee</BackgroundColor>
+                <BackgroundColor>#ffffff</BackgroundColor>
                 <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>2.00016pt</PaddingLeft>
-                <PaddingRight>2.00016pt</PaddingRight>
-                <PaddingTop>2.00016pt</PaddingTop>
-                <PaddingBottom>2.00016pt</PaddingBottom>
+                <PaddingLeft>2.25pt</PaddingLeft>
                 <Border>
                   <Color>LightGrey</Color>
                   <Style>Solid</Style>
@@ -2121,14 +2121,15 @@
                       <Style>
                         <FontFamily>Tw Cen MT</FontFamily>
                         <FontSize>9pt</FontSize>
-                        <FontWeight>Medium</FontWeight>
-                        <Color>#ffffff</Color>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#000000</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
                     <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
+                    <LineHeight>0.99750pt</LineHeight>
                   </Style>
                 </Paragraph>
               </Paragraphs>
@@ -2443,12 +2444,13 @@
                 </Paragraph>
               </Paragraphs>
             </Textbox>
-            <Textbox Name="TextBox194">
-              <Left>13.19999pt</Left>
-              <Top>85.95pt</Top>
-              <Height>20.25pt</Height>
-              <Width>308.2406pt</Width>
+            <Textbox Name="TextBox2">
+              <Left>162pt</Left>
+              <Top>8.25pt</Top>
+              <Height>15pt</Height>
+              <Width>196.2422pt</Width>
               <Style>
+                <BackgroundColor>#ffffff</BackgroundColor>
                 <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>2.00016pt</PaddingLeft>
@@ -2457,7 +2459,46 @@
                 <PaddingBottom>2.00016pt</PaddingBottom>
                 <Border>
                   <Color>LightGrey</Color>
-                  <Style>None</Style>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>SUPPORT D'ENREGISTREMENT</Value>
+                      <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontSize>9.75pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#000000</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <FontSize>10.00008pt</FontSize>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+            </Textbox>
+            <Textbox Name="TextBox3">
+              <Left>162pt</Left>
+              <Top>22.5pt</Top>
+              <Height>45pt</Height>
+              <Width>196.2422pt</Width>
+              <Style>
+                <BackgroundColor>#ffffff</BackgroundColor>
+                <FontSize>10.00008pt</FontSize>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>2.00016pt</PaddingLeft>
+                <PaddingRight>2.00016pt</PaddingRight>
+                <PaddingTop>2.00016pt</PaddingTop>
+                <PaddingBottom>2.00016pt</PaddingBottom>
+                <Border>
+                  <Color>LightGrey</Color>
+                  <Style>Solid</Style>
                 </Border>
               </Style>
               <KeepTogether>true</KeepTogether>
@@ -2468,16 +2509,15 @@
                       <Value>Ouverture dossier client</Value>
                       <Style>
                         <FontFamily>Tw Cen MT</FontFamily>
-                        <FontSize>18pt</FontSize>
+                        <FontSize>15pt</FontSize>
                         <FontWeight>Bold</FontWeight>
-                        <TextDecoration>Underline</TextDecoration>
                         <Color>#000000</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
                     <FontSize>10.00008pt</FontSize>
-                    <TextAlign>Left</TextAlign>
+                    <TextAlign>Center</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>

@@ -53,5 +53,7 @@ public partial class API_T_CertifOuvertureDossier
 
     public string ModificationUser { get; set; }
 
+    public string CT_Num { get; set; }
+
     public virtual ICollection<API_T_CertifDocument> API_T_CertifDocument { get; set; } = new List<API_T_CertifDocument>();
 }

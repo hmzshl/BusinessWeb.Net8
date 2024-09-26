@@ -37,24 +37,49 @@
 								<Card Title="Identification">
 									<GridRow>
 										<GridCol Xs="24" Md="6">
-											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro d’enregistrement" LabelColSpan="14">
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Enregis" LabelColSpan="10">
 												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Numero" />
 											</FormItem>
 
-											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="14">
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="10">
 												<SfDatePicker Readonly="@(row.Statut != 0)" TValue="DateTime?" @bind-Value="@row.Date" />
 											</FormItem>
-											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Tél./ Fax" LabelColSpan="14">
-												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Telephone" />
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Tél./ Fax" LabelColSpan="10">
+												<SfTextBox Readonly="@(row.Statut != 0 || (row.OldCompte??false))" @bind-Value="@row.Telephone" />
 											</FormItem>
 
 										</GridCol>
+										<GridCol Xs="24" Md="6">
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Client Existant" LabelColSpan="10">
+												<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.OldCompte"></SfSwitch>
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Demande par" LabelColSpan="10">
+												<SfDropDownList Readonly="@(row.Statut != 0)" TValue="int" TItem="Items" DataSource="@fn.DemandePar()" @bind-Value="@row.DemandePar">
+													<DropDownListEvents TValue="int" TItem="Items" />
+													<DropDownListFieldSettings Text="Name" Value="Id" />
+												</SfDropDownList>
+											</FormItem>
+											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Fonction" LabelColSpan="10">
+												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.FonctionInterlocuteur" />
+											</FormItem>
+										</GridCol>
 										<GridCol Xs="24" Md="12">
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Raison sociale" LabelColSpan="5">
-												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.RaisonSocial" />
+												@if(row.OldCompte??false)
+												{
+													<SfDropDownList Query="@fn.LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0).Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Num+" - "+a.CT_Intitule}))" @bind-Value="@row.CT_Num">
+														<DropDownListEvents ValueChange=@(args => UpdateInfos()) TValue="string" TItem="F_COMPTET" />
+														<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+													</SfDropDownList>
+												}
+												else 
+												{
+													<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.RaisonSocial" />
+												}
+												
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse" LabelColSpan="5">
-												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Adresse" />
+												<SfTextBox Readonly="@(row.Statut != 0 || (row.OldCompte??false))" @bind-Value="@row.Adresse" />
 											</FormItem>
 
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Interlocuteur" LabelColSpan="5">
@@ -67,14 +92,7 @@
 												</FormItem>
 											}
 										</GridCol>
-										<GridCol Xs="24" Md="6">
-											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Demande réceptionnée par" LabelColSpan="14">
-												<SfDropDownList Readonly="@(row.Statut != 0)" TValue="int" TItem="Items" DataSource="@fn.DemandePar()" @bind-Value="@row.DemandePar">
-													<DropDownListEvents TValue="int" TItem="Items" />
-													<DropDownListFieldSettings Text="Name" Value="Id" />
-												</SfDropDownList>
-											</FormItem>
-										</GridCol>
+
 									</GridRow>
 
 								</Card>
@@ -407,7 +425,7 @@
 											}
 										</Template>
 										<EditTemplate>
-											<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Designation" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(articles.OrderBy(a => a.AR_Design))" TValue="string" TItem="F_ARTICLE" @bind-Value="@((context as API_T_CertifAutoclaves).AR_Ref)">
+											<SfDropDownList Query="fn.LocalDataQuery" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Placeholder="Designation" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(db.F_ARTICLE.OrderBy(a => a.AR_Design))" TValue="string" TItem="F_ARTICLE" @bind-Value="@((context as API_T_CertifAutoclaves).AR_Ref)">
 												<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
 												<DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
 											</SfDropDownList>
@@ -866,8 +884,8 @@
 	}
 	protected override async Task OnInitializedAsync()
 	{
-		        db = session.db;
-        GC.Collect();
+		db = session.db;
+		GC.Collect();
 		articles = db.F_ARTICLE.ToList();
 		if (id == 0)
 		{
@@ -901,6 +919,13 @@
 		{
 			piece = "GD-0000001";
 		}
+	}
+	private async Task UpdateInfos()
+	{
+		var cl = db.F_COMPTET.Where(a => a.CT_Num == row.CT_Num).SingleOrDefault();
+		row.RaisonSocial = cl?.CT_Intitule;
+		row.Telephone = cl?.CT_Telephone;
+		row.Adresse = cl?.CT_Adresse;
 	}
 	private async Task UpdateModif()
 	{

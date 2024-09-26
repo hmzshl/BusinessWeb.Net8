@@ -18,39 +18,52 @@
 			<GridCol Xs="24" Md="24">
 				<Card Title="Identification">
 					<GridRow>
-						<GridCol Xs="24" Md="9">
-							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro d’enregistrement" LabelColSpan="14">
+						<GridCol Xs="24" Md="7">
+							<FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Enregi." LabelColSpan="10">
 								<SfTextBox @bind-Value="@row.Numero" />
 							</FormItem>
 
-							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="14">
+							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="10">
 								<SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
 							</FormItem>
-                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro dossier" LabelColSpan="14">
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro dossier" LabelColSpan="10">
 								<SfTextBox @bind-Value="@row.NumeroDossier" />
 							</FormItem>
 
-							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Ouverture" LabelColSpan="14">
+							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Ouverture" LabelColSpan="10">
 								<SfDatePicker TValue="DateTime?" @bind-Value="@row.DateOuverture" />
 							</FormItem>
 
 						</GridCol>
-						<GridCol Xs="24" Md="15">
+						<GridCol Xs="24" Md="17">
 							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Raison sociale" LabelColSpan="4">
 								<SfTextBox @bind-Value="@row.Intitule" />
 							</FormItem>
 							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse" LabelColSpan="4">
 								<SfTextBox @bind-Value="@row.Adresse" />
 							</FormItem>
-							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Interlocuteur" LabelColSpan="4">
-								<SfTextBox @bind-Value="@row.Interlocuteur" />
-							</FormItem>
+							<RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
+								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Responsable" LabelColSpan="8">
+									<SfDropDownList Query="@fn.LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="int" TItem="F_COLLABORATEUR"
+													DataSource="@(db.F_COLLABORATEUR.Select(a => new F_COLLABORATEUR{CO_No = a.CO_No, CO_Nom = a.CO_Prenom + " " + a.CO_Nom}))" @bind-Value="@row.CO_No">
+										<DropDownListEvents TValue="int" TItem="F_COLLABORATEUR" />
+										<DropDownListFieldSettings Text="CO_Nom" Value="CO_No" />
+									</SfDropDownList>
+								</FormItem>
+								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Interlocuteur" LabelColSpan="8">
+									<SfTextBox @bind-Value="@row.Interlocuteur" />
+								</FormItem>
+
+							</RadzenStack>
 							<RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
 								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Service" LabelColSpan="8">
 									<SfTextBox @bind-Value="@row.Service" />
 								</FormItem>
 								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Tél./ Fax" LabelColSpan="8">
 									<SfTextBox @bind-Value="@row.Telephone" />
+								</FormItem>
+								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Email" LabelColSpan="8">
+									<SfTextBox @bind-Value="@row.Email" />
 								</FormItem>
 
 							</RadzenStack>

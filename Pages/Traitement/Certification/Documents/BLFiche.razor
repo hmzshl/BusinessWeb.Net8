@@ -54,7 +54,7 @@
 									<GridCol Xs="24" Md="14">
 										<Card>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Client">
-												<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0).Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Intitule + " ("+a.CT_Num+")"}))" @bind-Value="@row.CT_Num">
+												<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0).Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Num+" - "+a.CT_Intitule}))" @bind-Value="@row.CT_Num">
 													<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 													<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
 												</SfDropDownList>
@@ -223,8 +223,8 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		        db = session.db;
-        GC.Collect();
+		db = session.db;
+		GC.Collect();
 
 		if (id == 0)
 		{
@@ -253,6 +253,7 @@
 		}
 
 	}
+
 	private void Submit(bool close)
 	{
 		if (id == 0)

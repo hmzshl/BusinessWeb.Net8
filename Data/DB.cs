@@ -2581,6 +2581,7 @@ public partial class DB : DbContext
             entity.Property(e => e.Numero)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+            entity.Property(e => e.OldCompte).HasDefaultValueSql("((0))");
             entity.Property(e => e.OperationsAttendues).HasColumnType("text");
             entity.Property(e => e.PMQChar)
                 .HasMaxLength(100)
@@ -2809,6 +2810,9 @@ public partial class DB : DbContext
 
             entity.Property(e => e.Adresse)
                 .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(30)
                 .IsUnicode(false);
             entity.Property(e => e.Commentaire)
                 .HasMaxLength(255)
