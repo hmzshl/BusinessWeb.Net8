@@ -449,60 +449,6 @@
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Textbox Name="TextBox17">
-              <Left>8.625pt</Left>
-              <Top>112.5pt</Top>
-              <Height>33.75pt</Height>
-              <Width>223.7227pt</Width>
-              <ZIndex>2</ZIndex>
-              <Style>
-                <BackgroundColor>#ffffff</BackgroundColor>
-                <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
-                <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-                <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#b3b2b3</Color>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>="Ordre de mission"</Value>
-                      <Style>
-                        <FontFamily>Tw Cen MT</FontFamily>
-                        <FontSize>18pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                        <TextDecoration>Underline</TextDecoration>
-                        <Color>#000000</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value />
-                      <Style>
-                        <FontFamily>Tw Cen MT</FontFamily>
-                        <FontSize>18pt</FontSize>
-                        <TextDecoration>Underline</TextDecoration>
-                        <Color>#000000</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
-                    <TextAlign>Left</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-            </Textbox>
             <Textbox Name="TextBox58">
               <Left>0pt</Left>
               <Top>159pt</Top>
@@ -1005,15 +951,16 @@
             </Textbox>
             <Image Name="Image1">
               <Left>6.75pt</Left>
-              <Top>11.25pt</Top>
+              <Top>8.25pt</Top>
               <Value>logo_afrolab</Value>
-              <Height>60.75pt</Height>
+              <Height>57.75pt</Height>
               <Width>162.75pt</Width>
               <Visibility />
               <Style>
                 <FontFamily>Arial</FontFamily>
                 <Border>
-                  <Style>None</Style>
+                  <Color>#cccccc</Color>
+                  <Style>Solid</Style>
                 </Border>
               </Style>
               <Source>Embedded</Source>
@@ -1669,7 +1616,7 @@
               <Height>15pt</Height>
               <Width>91.5pt</Width>
               <Style>
-                <BackgroundColor>#205eee</BackgroundColor>
+                <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
                 <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>3.75pt</PaddingLeft>
@@ -1689,8 +1636,8 @@
                       <Style>
                         <FontFamily>Tw Cen MT</FontFamily>
                         <FontSize>9pt</FontSize>
-                        <FontWeight>Medium</FontWeight>
-                        <Color>#ffffff</Color>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#000000</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1707,7 +1654,7 @@
               <Height>15pt</Height>
               <Width>91.5pt</Width>
               <Style>
-                <BackgroundColor>#205eee</BackgroundColor>
+                <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
                 <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>3.75pt</PaddingLeft>
@@ -1730,8 +1677,8 @@
                       <Style>
                         <FontFamily>Tw Cen MT</FontFamily>
                         <FontSize>9pt</FontSize>
-                        <FontWeight>Medium</FontWeight>
-                        <Color>#ffffff</Color>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#000000</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1748,7 +1695,7 @@
               <Height>15pt</Height>
               <Width>91.5pt</Width>
               <Style>
-                <BackgroundColor>#205eee</BackgroundColor>
+                <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
                 <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>3.75pt</PaddingLeft>
@@ -1771,8 +1718,8 @@
                       <Style>
                         <FontFamily>Tw Cen MT</FontFamily>
                         <FontSize>9pt</FontSize>
-                        <FontWeight>Medium</FontWeight>
-                        <Color>#ffffff</Color>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#000000</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -1789,7 +1736,7 @@
               <Height>15pt</Height>
               <Width>91.5pt</Width>
               <Style>
-                <BackgroundColor>#205eee</BackgroundColor>
+                <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
                 <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>3.75pt</PaddingLeft>
@@ -1812,8 +1759,8 @@
                       <Style>
                         <FontFamily>Tw Cen MT</FontFamily>
                         <FontSize>9pt</FontSize>
-                        <FontWeight>Medium</FontWeight>
-                        <Color>#ffffff</Color>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#000000</Color>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -2143,6 +2090,100 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
+                    <LineHeight>0.99750pt</LineHeight>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+            </Textbox>
+            <Textbox Name="TextBox3">
+              <Left>170.25pt</Left>
+              <Top>8.25pt</Top>
+              <Height>15pt</Height>
+              <Width>187.9922pt</Width>
+              <Style>
+                <FontFamily>Arial</FontFamily>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>3.75pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <Border>
+                  <Color>#cccbcb</Color>
+                  <Style>Solid</Style>
+                </Border>
+                <LeftBorder>
+                  <Color>#cccccc</Color>
+                  <Style>Solid</Style>
+                </LeftBorder>
+              </Style>
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>SUPPORT D'ENREGISTREMENT</Value>
+                      <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontSize>9.75pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>Black</Color>
+                      </Style>
+                    </TextRun>
+                    <TextRun>
+                      <Value />
+                      <Style>
+                        <FontFamily>Arial</FontFamily>
+                        <Color>Black</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <FontFamily>Arial</FontFamily>
+                    <TextAlign>Center</TextAlign>
+                    <LineHeight>0.99750pt</LineHeight>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+            </Textbox>
+            <Textbox Name="TextBox6">
+              <Left>170.25pt</Left>
+              <Top>22.5pt</Top>
+              <Height>43.5pt</Height>
+              <Width>187.995pt</Width>
+              <Style>
+                <FontFamily>Arial</FontFamily>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>3.75pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <Border>
+                  <Color>#cccbcb</Color>
+                  <Style>Solid</Style>
+                </Border>
+                <TopBorder>
+                  <Style>None</Style>
+                </TopBorder>
+                <LeftBorder>
+                  <Color>#cccccc</Color>
+                  <Style>Solid</Style>
+                </LeftBorder>
+              </Style>
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>= "Ordre de mission"</Value>
+                      <Style>
+                        <FontFamily>Tw Cen MT</FontFamily>
+                        <FontSize>15pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <Color>#000000</Color>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <FontFamily>Arial</FontFamily>
+                    <TextAlign>Center</TextAlign>
                     <LineHeight>0.99750pt</LineHeight>
                   </Style>
                 </Paragraph>
