@@ -38,7 +38,7 @@
 											@if (IsMV && (id == 0))
 											{
 												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Sense">
-													<SfDropDownList Readonly="(row.Valide)" TValue="int" TItem="Items" DataSource="@(fn.CaisseMV())" @bind-Value="@row.Sense">
+													<SfDropDownList Readonly="(row.Valide)" TValue="int" TItem="Items" DataSource="@(fn.CaisseMV())" @bind-Value="@row.Type">
 														<DropDownListEvents TValue=" int" TItem="Items" ValueChange="@(AccordionClickArgs => SenseChanged())" />
 														<DropDownListFieldSettings Text="Name" Value="Id" />
 													</SfDropDownList>
@@ -235,8 +235,8 @@
 	private async Task GetPiece()
 	{
 		var cs = db.API_T_Caisse.Where(a => a.id == caisse).SingleOrDefault();
-		string piece = fn.PieceCaisse(row.Sense) + (cs?.C_Racine ?? "") + "00001";
-		var dt = db.API_T_CaisseEntete.Where(a => a.Numero.StartsWith(fn.PieceCaisse(row.Sense) + (cs.C_Racine ?? ""))).ToList();
+		string piece = fn.PieceCaisse(row.Type) + (cs?.C_Racine ?? "") + "00001";
+		var dt = db.API_T_CaisseEntete.Where(a => a.Numero.StartsWith(fn.PieceCaisse(row.Type) + (cs.C_Racine ?? ""))).ToList();
 		if (dt.Count != 0)
 		{
 			piece = fn.getNextCode(dt.Max(a => a.Numero));

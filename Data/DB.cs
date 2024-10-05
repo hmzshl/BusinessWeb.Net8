@@ -5587,6 +5587,9 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Ville)
                 .HasMaxLength(35)
                 .IsUnicode(false);
+            entity.Property(e => e.Collaborateur)
+                .HasMaxLength(71)
+                .IsUnicode(false);
             entity.Property(e => e.Controle)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -5599,9 +5602,6 @@ public partial class DB : DbContext
             entity.Property(e => e.EtatSolde)
                 .IsRequired()
                 .HasMaxLength(9)
-                .IsUnicode(false);
-            entity.Property(e => e.PROT_User)
-                .HasMaxLength(35)
                 .IsUnicode(false);
             entity.Property(e => e.RG_Montant).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.R_Intitule)
