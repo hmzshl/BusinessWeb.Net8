@@ -51,7 +51,8 @@
 					}
 					else
 					{
-						<SfGrid ShowColumnChooser EnablePersistence ID="StockGrid" Height="100%" DataSource="@(items)" EnableHover="false" AllowPaging AllowExcelExport @ref=@DefaultGrid AllowFiltering>
+						<SfGrid ShowColumnChooser EnablePersistence ID="StockGrid" Height="100%" DataSource="@(items)" EnableHover="false" AllowPaging 
+						AllowExcelExport @ref=@DefaultGrid AllowFiltering>
 							<GridPageSettings PageSize="500" PageCount="10" />
 							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 							<GridEvents Created="CreatedHandler" TValue="V_StockGlobal"></GridEvents>
@@ -99,7 +100,7 @@
 									<Template>
 										@{
 											var dt = (context as V_StockGlobal);
-											<div style="font-weight: 700 !important;">
+											<div>
 												@dt.Initial.ToString("### ### ##0.00;-### ### ##0.00;#")
 											</div>
 										}
@@ -239,7 +240,7 @@
 									<Template>
 										@{
 											var dt = (context as V_StockGlobal);
-											<div style="font-weight: 700 !important;">
+											<div>
 												@dt.Montant.ToString("### ### ##0.00;-### ### ##0.00;#")
 											</div>
 										}

@@ -871,7 +871,7 @@ body {
 }
 
 .e-grid .e-headercell, .e-grid .e-detailheadercell {
-    padding: 3px 3px 3px;
+    padding: 5px 3px 5px 3px;
 }
 
 .e-grid .e-gridheader .e-fltr-icon .e-sortfilterdiv {
@@ -2250,15 +2250,13 @@ td .rz-button {
 }
 
 .e-headercelldiv, .e-grid .e-gridheader tr:first-child th, .e-grid.e-default .e-gridheader th.e-firstcell, .e-grid.e-default .e-gridheader th.e-laststackcell {
-    background: rgb(217 227 236) !important;
-    background-color: rgb(217 227 236) !important;
-    color: #434445 !important;
+    color: #575c61 !important;
 }
 
 th {
-    border-right: solid !important;
+    /*border-right: solid !important;
     border-right-color: #c4c7c5d9 !important;
-    border-right-width: 1px !important;
+    border-right-width: 1px !important;*/
 }
 
 .e-chart text {
@@ -2390,7 +2388,7 @@ input {
     border-top: 1px solid rgb(240 245 242);
 }
 .e-grid {
-    border-color: rgb(240 245 242);
+    border-color: rgb(255 255 255);
 }
 .e-pager .e-currentitem.e-active {
     border-width: inherit;
@@ -2410,4 +2408,9 @@ input {
 }
  .e-grid.e-wrap .e-columnheader .e-headercelldiv {
     line-height: 12px;
+}
+
+
+html, body * {
+    scrollbar-color: #1890ff transparent;
 }
