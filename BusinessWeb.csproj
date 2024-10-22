@@ -33,80 +33,80 @@
     <None Include="efpt.config.json.user" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AntDesign" Version="0.19.4" />
-    <PackageReference Include="AntDesign.Charts" Version="0.5.5" />
+    <PackageReference Include="AntDesign" Version="0.20.4.2" />
+    <PackageReference Include="AntDesign.Charts" Version="0.5.6" />
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
-    <PackageReference Include="Bold.Licensing" Version="6.1.46" />
-    <PackageReference Include="BoldReports.AspNet.Core" Version="6.1.46" />
-    <PackageReference Include="BoldReports.Data.Csv" Version="6.1.46" />
-    <PackageReference Include="BoldReports.Data.WebData" Version="6.1.46" />
-    <PackageReference Include="BoldReports.Net.Core" Version="6.1.46" />
-    <PackageReference Include="FluentValidation" Version="11.9.2" />
+    <PackageReference Include="Bold.Licensing" Version="6.2.41" />
+    <PackageReference Include="BoldReports.AspNet.Core" Version="6.2.41" />
+    <PackageReference Include="BoldReports.Data.Csv" Version="6.2.41" />
+    <PackageReference Include="BoldReports.Data.WebData" Version="6.2.41" />
+    <PackageReference Include="BoldReports.Net.Core" Version="6.2.41" />
+    <PackageReference Include="FluentValidation" Version="11.10.0" />
     <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.8.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGenerators.Mvc" Version="8.0.2" />
-    <PackageReference Include="MudBlazor" Version="7.1.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.11.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="8.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGenerators.Mvc" Version="8.0.6" />
+    <PackageReference Include="MudBlazor" Version="7.13.0" />
     <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
-    <PackageReference Include="Radzen.Blazor" Version="4.34.0" />
-    <PackageReference Include="DocumentFormat.OpenXml" Version="3.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
+    <PackageReference Include="Radzen.Blazor" Version="5.3.5" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.6" />
-    <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="8.0.6" />
-    <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.2.5" />
-    <PackageReference Include="Syncfusion.Blazor.BarcodeGenerator" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.BulletChart" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Cards" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Charts" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.CircularGauge" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Core" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Data" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.FileManager" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Gantt" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Inputs" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Kanban" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Layouts" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Lists" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Notifications" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.PdfViewerServer.Windows" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.PivotTable" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Popups" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.ProgressBar" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.RichTextEditor" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.SplitButtons" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.StockChart" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.Themes" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Blazor.WordProcessor" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Compression.Net.Core" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.DocIO.Net.Core" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.DocIORenderer.Net.Core" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.ExcelExport.Net.Core" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Licensing" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.Pdf.Imaging.Net.Core" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.PdfExport.Net.Core" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.PresentationRenderer.Net.Core" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.SkiaSharpHelper.Net.Core" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.WordProcessor.AspNet.Core" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="26.1.41" />
-    <PackageReference Include="Syncfusion.XlsIORenderer.Net.Core" Version="26.1.41" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.HeaderPropagation" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.OData" Version="9.0.0" />
+    <PackageReference Include="Syncfusion.Blazor.BarcodeGenerator" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.BulletChart" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Cards" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Charts" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.CircularGauge" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Core" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Data" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.FileManager" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Gantt" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Inputs" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Kanban" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Layouts" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Lists" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Notifications" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.PivotTable" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Popups" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.ProgressBar" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.RichTextEditor" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.SfPdfViewer" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.SplitButtons" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.StockChart" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Blazor.WordProcessor" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Compression.Net.Core" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.DocIO.Net.Core" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.DocIORenderer.Net.Core" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.ExcelExport.Net.Core" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Licensing" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.Pdf.Imaging.Net.Core" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.PdfExport.Net.Core" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.PresentationRenderer.Net.Core" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.SkiaSharpHelper.Net.Core" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.WordProcessor.AspNet.Core" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="27.1.55" />
+    <PackageReference Include="Syncfusion.XlsIORenderer.Net.Core" Version="27.1.55" />
     <PackageReference Include="System.Management" Version="8.0.0" />
 
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
     
   </ItemGroup>
   <ItemGroup>

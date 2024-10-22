@@ -1384,7 +1384,7 @@ div#main-text {
 }
 
 .ant-form-item {
-    height: 25px;
+    height: 32px !important;
 }
 .multiline .ant-form-item {
     height: 60px;
@@ -1679,14 +1679,12 @@ td .e-numerictextbox {
     font-size: 11px !important;
     padding: 4px 8px !important;
     width: 100% !important;
-    color: rgba(0, 0, 0, 0.87) !important;
     border-bottom-left-radius: 20px !important;
     border-top-left-radius: 20px !important;
     font-family: "Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
-    font-weight: 600 !important;
     letter-spacing: 0.01rem !important;
     font-style: normal !important;
-    color: #203154 !important;
+    color: #778aaf !important;
     background-color: #FFFFFF !important;
     -webkit-border-radius: 1.25rem !important;
     -moz-border-radius: 1.25rem !important;
@@ -2061,7 +2059,7 @@ td.e-rowcell .statustxt.e-infocolor {
 
 .e-toolbar .e-toolbar-item:not(.e-separator) {
     min-width: 28px;
-    padding: 4px 2px 4px 2px;
+    padding: 4px 2px 4px 2px !important;
 }
 
 .e-btn, .e-css.e-btn {
@@ -2380,7 +2378,7 @@ input {
     margin: -10px -2px -12px 8px !important;
 }
 .rz-label {
-    margin-top: 5px !important;
+    margin: 10px !important;
     font-weight: 700 !important;
     font-family: 'Ubuntu' !important;
 }
@@ -2413,4 +2411,10 @@ input {
 
 html, body * {
     scrollbar-color: #1890ff transparent;
+}
+.e-toolbar .e-toolbar-item .e-tbar-btn {
+    background: inherit !important;
+}
+.e-tab.e-fill .e-tab-header .e-toolbar-item.e-active .e-tab-wrap {
+    border-radius: 0px !important;
 }
