@@ -38,8 +38,8 @@
                 </ToolbarItems>
             </SfToolbar>
             <div class="grid-84" style="zoom: @session.zoomLevel;">
-                <SfGrid EnableVirtualization EnablePersistence ID="TiersGrid" Height="100%" AllowResizing AllowSorting 
-                AllowFiltering AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" @ref="DefaultGrid" 
+                <SfGrid EnableVirtualization EnablePersistence ID="@GridID" Height="100%" AllowResizing AllowSorting
+                        AllowFiltering AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" @ref="DefaultGrid" 
                 AllowPdfExport="true" AllowExcelExport="true" DataSource="@items">
                     <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="false" AllowDeleting="false" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
                     <GridEvents Created="CreatedHandler" OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="RowDoubleClicked" TValue="API_V_COMPTET"></GridEvents>
@@ -221,6 +221,7 @@ else
     [Parameter] public bool DelaiSommeil { get; set; } = false;
     [Parameter] public int CT_Type { get; set; } = 0;
     [Parameter] public string Title { get; set; } = "";
+    [Parameter] public string GridID { get; set; } = "";
     //End Parameters
 
     //Components
