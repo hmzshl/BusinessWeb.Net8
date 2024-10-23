@@ -16,7 +16,7 @@
 <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="row">
 	<GridRow>
 		<GridCol Xs="24" Md="4">
-			<Card Style="height: 120px;">
+			<Card Style="height: 135px;">
 				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
 					<SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
 				</FormItem>
@@ -31,7 +31,7 @@
 		</GridCol>
 		<GridCol Xs="24" Md="4">
 
-			<Card Style="height: 120px;">
+			<Card Style="height: 135px;">
 
 				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Départ" LabelColSpan="8">
 					<SfDatePicker TValue="DateTime?" @bind-Value="@row.DateDepart" />
@@ -48,7 +48,7 @@
 
 
 		<GridCol Xs="24" Md="9">
-			<Card Style="height: 120px;">
+			<Card Style="height: 135px;">
 				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Client">
 					<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET"
 									DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0).OrderBy(a => a.CT_Intitule).Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule}))" @bind-Value="@row.CT_Num">
@@ -68,7 +68,7 @@
 			</Card>
 		</GridCol>
 		<GridCol Xs="24" Md="7">
-			<Card Style="height: 120px;">
+			<Card Style="height: 135px;">
 				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Responsable">
 					<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="int" TItem="F_COLLABORATEUR"
 									DataSource="@(db.F_COLLABORATEUR.Select(a => new F_COLLABORATEUR{CO_No = a.CO_No, CO_Nom = a.CO_Prenom + " " + a.CO_Nom}))" @bind-Value="@row.CO_No">

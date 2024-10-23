@@ -29,9 +29,11 @@
 					</ToolbarItems>
 				</SfToolbar>
 				<div class="grid-84" style="zoom: @session.zoomLevel;">
-					<SfGrid EnablePersistence Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowResizing AllowFiltering AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="ArticleGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
+					<SfGrid EnableVirtualization Height="100%" AllowResizing AllowFiltering AllowSorting AllowReordering AllowSelection 
+					AllowMultiSorting ShowColumnChooser="true" ID="ArticleGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" 
+					AllowPaging="false" DataSource="@items">
 						<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="false" AllowDeleting="false" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-						<GridEvents Created="CreatedHandler" OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_V_ARTICLE"></GridEvents>
+						<GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_V_ARTICLE"></GridEvents>
 						<GridPageSettings PageSize="100"></GridPageSettings>
 						<GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
 						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
@@ -81,7 +83,7 @@
 							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="SommeilIntitule" HeaderText="Sommeil"></GridColumn>
 
 							<!--Stock-->
-							<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Stock"))" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="STOCK">
+							<GridColumn  HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="STOCK">
 								<GridColumns>
 									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Stock"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="EtatStock" HeaderText="Etat">
 										<Template>
@@ -143,7 +145,7 @@
 								</GridColumns>
 							</GridColumn>
 
-							<GridColumn Visible="@(!(selected_affichages != null && selected_affichages.Contains("Stock")))" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="STOCK">
+							<GridColumn  HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="STOCK">
 								<GridColumns>
 									<GridColumn Visible="@(!(selected_affichages != null && selected_affichages.Contains("Stock")))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="EtatStock" HeaderText="Etat">
 										<Template>
@@ -174,7 +176,7 @@
 							</GridColumn>
 
 							<!--Achats-->
-							<GridColumn Visible="@((selected_affichages != null && selected_affichages.Contains("Achats")))" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="ACHATS">
+							<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="ACHATS">
 								<GridColumns>
 									<GridColumn Visible="@((selected_affichages != null && selected_affichages.Contains("Achats")))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Qte_Achat" HeaderText="Qte.Ach" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
 									<GridColumn Visible="@((selected_affichages != null && selected_affichages.Contains("Achats")))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT_Achat" HeaderText="Ach.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
@@ -193,7 +195,7 @@
 
 
 							<!--Ventes-->
-							<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Ventes"))" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="VENTES">
+							<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="VENTES">
 								<GridColumns>
 									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Ventes"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Qte_Vente" HeaderText="Qte.Ven" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
 									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Ventes"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT_Vente" HeaderText="CA.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
@@ -213,7 +215,7 @@
 								<Template>
 									@{
 										var row = (context as API_V_ARTICLE);
-										var dt = db.F_LOTSERIE.Where(a => a.AR_Ref == row.AR_Ref && a.LS_QteRestant != 0);
+										var dt = lots.Where(a => a.AR_Ref == row.AR_Ref);
 										foreach (F_LOTSERIE itm in dt)
 										{
 											<div>
@@ -227,8 +229,6 @@
 								</Template>
 							</GridColumn>
 						</GridColumns>
-						<SfSpinner @bind-Visible="@loading">
-						</SfSpinner>
 					</SfGrid>
 				</div>
 
@@ -295,7 +295,7 @@ else
 	List<string> sommeils = new List<string>();
 	List<string> familles = new List<string>();
 	List<string> affichages = new List<string>();
-
+	List<F_LOTSERIE> lots = new List<F_LOTSERIE>();
 	List<string> selected_etats = new List<string>();
 	List<string> selected_stockmin = new List<string>();
 	List<string> selected_sommeils = new List<string>();
@@ -312,13 +312,14 @@ else
 
 	protected override async Task OnInitializedAsync()
 	{
-		await Task.Delay(1);
-		        db = session.db;
-        GC.Collect();
+		await Task.Delay(100);
+		db = session.db;
+		GC.Collect();
 		etats = db.API_V_ARTICLE.Select(a => a.EtatStock).Distinct().ToList();
 		stockmin = db.API_V_ARTICLE.Select(a => a.EtatStockMin).Distinct().ToList();
 		sommeils = db.API_V_ARTICLE.Select(a => a.SommeilIntitule).Distinct().ToList();
 		familles = db.API_V_ARTICLE.Select(a => a.FA_Intitule).Distinct().ToList();
+		lots = db.F_LOTSERIE.Where(a => a.LS_QteRestant != 0).ToList();
 		affichages.Add("Stock");
 		affichages.Add("Achats");
 		affichages.Add("Ventes");
@@ -330,23 +331,15 @@ else
 		await UpdateGrid();
 		IsLoaded = true;
 	}
-	public void CreatedHandler(object args)
-	{
-		DefaultGrid.ClearFilteringAsync();
-		DefaultGrid.ClearSortingAsync();
-	}
+
 	private async Task UpdateGrid()
 	{
-		loading = true;
-		await Task.Delay(1);
 		items = db.API_V_ARTICLE
 	.Where(a => (selected_sommeils != null && selected_sommeils.Contains(a.SommeilIntitule))
 	&& (selected_etats != null && selected_etats.Contains(a.EtatStock))
 		&& (selected_stockmin != null && selected_stockmin.Contains(a.EtatStockMin))
 	&& (selected_familles != null && selected_familles.Contains(a.FA_Intitule))
 	).ToList();
-		loading = false;
-		await Task.Delay(1);
 	}
 	private async Task OnActionBegin(ActionEventArgs<API_V_ARTICLE> args)
 	{

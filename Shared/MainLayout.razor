@@ -826,7 +826,7 @@ else
 				).FirstOrDefault();
 	protected override async Task OnInitializedAsync()
 	{
-		await Task.Delay(1);
+		await Task.Delay(100);
 		TLicense row = new TLicense();
 		var dt = sdb.TLicenses.AsNoTracking().OrderBy(a => a.id).ToList();
 		if (dt.Count() != 0)
@@ -858,6 +858,7 @@ else
 	}
 	private async Task InitAuth()
 	{
+		/*
 		foreach (TSociete ste in societes)
 		{
 			var items = fn.AuthItems();
@@ -879,7 +880,7 @@ else
 				}
 			}
 		}
-		sdb.SaveChanges();
+		sdb.SaveChanges();*/
 	}
 	private bool IsVisible(string url)
 	{

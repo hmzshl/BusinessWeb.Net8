@@ -26,7 +26,7 @@
                             <ContentTemplate>
                                 <GridRow>
                                     <GridCol Xs="24" Md="12">
-                                        <Card Style="height: 67px;">
+                                        <Card Style="height: 82px;">
                                             <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro">
                                                 <SfTextBox @bind-Value="@(row.Piece)" Readonly />
                                             </FormItem>
@@ -36,7 +36,7 @@
                                         </Card>
                                     </GridCol>
                                     <GridCol Xs="24" Md="12">
-                                        <Card Style="height: 67px;">
+                                        <Card Style="height: 82px;">
                                             <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Title="Montant" Value="@((row.Montant).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600 ;" Suffix="@fn.getDevise(db)" />
                                         </Card>
                                         
@@ -138,7 +138,7 @@
                             </ChildContent>
                             <ContentTemplate>
                                 <Card Style="height: 100%;">
-                                    <FilesManager table="Caisse" id="@id" societe="@session.Societe.id.ToString()"></FilesManager>
+                                    <FilesManager height="60vh" table="Caisse" id="@id" societe="@session.Societe.id.ToString()"></FilesManager>
                                 </Card>
                             </ContentTemplate>
                         </TabItem>
