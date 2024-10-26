@@ -1,0 +1,307 @@
+@page "/cr-suivi-dossier"
+@attribute [Authorize]
+@if (IsLoaded)
+{
+	<Card_1 Title="SUIVI DOSSIERS CLIENTS">
+		<RadzenContent Container="main">
+			<div class="grid-90">
+				<SfToolbar>
+					<ToolbarItems>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+
+						<ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-print"></ToolbarItem>
+						<ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+
+						<ToolbarItem TooltipText="Supprimer" Text="Supprimer" OnClick=@(args => (DefaultGrid.DeleteRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-trash"></ToolbarItem>
+						<ToolbarItem TooltipText="Ajouter" Text="Ajouter" OnClick=@(args => (DefaultGrid.AddRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-circle-add"></ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+
+
+						<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+							<Template>
+								<SfTextBox Width="180px" Placeholder="RECHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+							<Template>
+								@Date1
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+							<Template>
+								@Date2
+							</Template>
+						</ToolbarItem>
+
+					</ToolbarItems>
+				</SfToolbar>
+				<div class="grid-84" style="zoom: @session.zoomLevel;">
+					<SfGrid Height="100%" AllowFiltering RowRenderingMode="RowDirection.Horizontal" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="@(sc.IsInRole("Admin"))" AllowExcelExport="@(sc.IsInRole("Admin"))" AllowPaging="true" DataSource="@items">
+						<GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_T_CertifSuiviDossier"></GridEvents>
+						<GridPageSettings PageSize="100"></GridPageSettings>
+						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+						<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+						<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+
+						</GridEditSettings>
+						<GridTemplates>
+							<EmptyRecordTemplate>
+								<Empty></Empty>
+							</EmptyRecordTemplate>
+						</GridTemplates>
+						<GridColumns>
+							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifSuiviDossier.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
+							<GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifSuiviDossier.Piece)" HeaderText="N° Enregis."></GridColumn>
+							<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifSuiviDossier.CT_Num)" HeaderText="N° Client"></GridColumn>
+							<GridColumn MinWidth="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Client">
+								<Template>
+									@{
+										var dt = (context as API_T_CertifSuiviDossier);
+										<div>@clients.Where(a => a.CT_Num == dt.CT_Num).SingleOrDefault()?.CT_Intitule</div>
+									}
+								</Template>
+							</GridColumn>
+							<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Documents Administratifs">
+								<GridColumns>
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Ordre.M" AllowFiltering="false">
+										<Template>
+											@{
+												var row = (context as API_T_CertifSuiviDossier);
+												<div style="text-align: center;">
+													<RadzenCheckBox ReadOnly Value="@(row.OrdreMissionDateExist??false)" />
+												</div>
+
+											}
+										</Template>
+									</GridColumn>
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Rapp.M" AllowFiltering="false">
+										<Template>
+											@{
+												var row = (context as API_T_CertifSuiviDossier);
+												<div style="text-align: center;">
+													<RadzenCheckBox ReadOnly Value="@(row.RapportMissionDateExist??false)" />
+												</div>
+
+											}
+										</Template>
+									</GridColumn>
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="B.Envoi" AllowFiltering="false">
+										<Template>
+											@{
+												var row = (context as API_T_CertifSuiviDossier);
+												<div style="text-align: center;">
+													<RadzenCheckBox ReadOnly Value="@(row.BordereauEnvoiDateExist??false)" />
+												</div>
+
+											}
+										</Template>
+									</GridColumn>
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="F.Rec" AllowFiltering="false">
+										<Template>
+											@{
+												var row = (context as API_T_CertifSuiviDossier);
+												<div style="text-align: center;">
+													<RadzenCheckBox ReadOnly Value="@(row.FicheReceptionDateExist??false)" />
+												</div>
+
+											}
+										</Template>
+									</GridColumn>
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="D.Mat" AllowFiltering="false">
+										<Template>
+											@{
+												var row = (context as API_T_CertifSuiviDossier);
+												<div style="text-align: center;">
+													<RadzenCheckBox ReadOnly Value="@(row.DechargeMaterielDateExist??false)" />
+												</div>
+
+											}
+										</Template>
+									</GridColumn>
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Sat.Client" AllowFiltering="false">
+										<Template>
+											@{
+												var row = (context as API_T_CertifSuiviDossier);
+												<div style="text-align: center;">
+													<RadzenCheckBox ReadOnly Value="@(row.EnqueteSatisfactionDateExist??false)" />
+												</div>
+
+											}
+										</Template>
+									</GridColumn>
+								</GridColumns>
+							</GridColumn>
+							<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Documents Techniques">
+								<GridColumns>
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="F.Mesure" AllowFiltering="false">
+										<Template>
+											@{
+												var row = (context as API_T_CertifSuiviDossier);
+												<div style="text-align: center;">
+													<RadzenCheckBox ReadOnly Value="@(row.FeuilleMesureDateExist??false)" />
+												</div>
+
+											}
+										</Template>
+									</GridColumn>
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Cer.Etal" AllowFiltering="false">
+										<Template>
+											@{
+												var row = (context as API_T_CertifSuiviDossier);
+												<div style="text-align: center;">
+													<RadzenCheckBox ReadOnly Value="@(row.CertificatEtalonnageDateExist??false)" />
+												</div>
+
+											}
+										</Template>
+									</GridColumn>
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="F.Incerti" AllowFiltering="false">
+										<Template>
+											@{
+												var row = (context as API_T_CertifSuiviDossier);
+												<div style="text-align: center;">
+													<RadzenCheckBox ReadOnly Value="@(row.FeuilleCalculIncertitudeDateExist??false)" />
+												</div>
+
+											}
+										</Template>
+									</GridColumn>
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Constat" AllowFiltering="false">
+										<Template>
+											@{
+												var row = (context as API_T_CertifSuiviDossier);
+												<div style="text-align: center;">
+													<RadzenCheckBox ReadOnly Value="@(row.ConstatsVerificationDateExist??false)" />
+												</div>
+
+											}
+										</Template>
+									</GridColumn>
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="F.Anom" AllowFiltering="false">
+										<Template>
+											@{
+												var row = (context as API_T_CertifSuiviDossier);
+												<div style="text-align: center;">
+													<RadzenCheckBox ReadOnly Value="@(row.FicheAnomalieTechniqueDateExist??false)" />
+												</div>
+
+											}
+										</Template>
+									</GridColumn>
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Autres" AllowFiltering="false">
+										<Template>
+											@{
+												var row = (context as API_T_CertifSuiviDossier);
+												<div style="text-align: center;">
+													<RadzenCheckBox ReadOnly Value="@(row.AutresDateExist??false)" />
+												</div>
+
+											}
+										</Template>
+									</GridColumn>
+								</GridColumns>
+							</GridColumn>
+						</GridColumns>
+					</SfGrid>
+				</div>
+
+			</div>
+		</RadzenContent>
+	</Card_1>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+
+
+
+@code
+{
+	[CascadingParameter]
+	public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	[Parameter] public int type { get; set; }
+	[Parameter] public bool IsList { get; set; } = true;
+	[Parameter] public string Title { get; set; } = "";
+	string grid_height = "80vh";
+	List<F_COMPTET> clients = new List<F_COMPTET>();
+	//Components
+	private SfGrid<API_T_CertifSuiviDossier> DefaultGrid;
+
+	//End components
+
+	private IEnumerable<API_T_CertifSuiviDossier> items;
+	List<API_T_CertifSuiviDossier> rows = new List<API_T_CertifSuiviDossier>();
+	string activekey = "0";
+	bool loading = false;
+	bool IsLoaded = false;
+	int caisse = 0;
+	DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
+	DateTime? date2 = new DateTime(DateTime.Today.Year, 12, 31);
+	IList<API_T_CertifSuiviDossier> selecteditems;
+
+	private RenderFragment Date1 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" Value="@date1" Width="130px" Placeholder="Date Début" TValue="DateTime?">
+		<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+	</SfDatePicker>;
+	private RenderFragment Date2 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" Value="@date2" Width="130px" Placeholder="Date Fin" TValue="DateTime?">
+		<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+	</SfDatePicker>
+	;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(1);
+		db = session.db;
+		GC.Collect();
+		clients = db.F_COMPTET.Where(a => a.CT_Type == 0).ToList();
+		await UpdateGrid();
+		IsLoaded = true;
+	}
+	private async Task UpdateGrid()
+	{
+		loading = true;
+		await Task.Delay(1);
+		items = session.db.API_T_CertifSuiviDossier.Where(a => a.Date >= (date1 ?? new DateTime(1900, 1, 1)) && a.Date <= (date2 ?? new DateTime(2070, 12, 31))).OrderBy(a => a.Date).ToList();
+		loading = false;
+		await Task.Delay(1);
+	}
+
+	private async Task OnActionBegin(ActionEventArgs<API_T_CertifSuiviDossier> args)
+	{
+		if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+	|| args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+	|| args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+		{
+			args.Cancel = true;
+		}
+
+		if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+		{
+			await Add();
+		}
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			db.Database.ExecuteSqlRaw("DELETE FROM API_T_CertifSuiviDossier WHERE id = {0}", args.Data.id);
+			db.SaveChanges();
+			await UpdateGrid();
+		}
+	}
+	protected async Task Edit(RecordDoubleClickEventArgs<API_T_CertifSuiviDossier> args)
+	{
+		await DialogService.OpenAsync<SuiviFiche>(args.RowData.Piece,
+		new Dictionary<string, object>() { { "id", args.RowData.id } },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = false, Width = "1024px", Height = "98%" });
+		await UpdateGrid();
+	}
+	private async Task Add()
+	{
+		await DialogService.OpenAsync<SuiviFiche>("Ajouter un élément",
+		new Dictionary<string, object>() { { "id", 0 } },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = false, Width = "1024px", Height = "98%" });
+		await UpdateGrid();
+	}
+
+}

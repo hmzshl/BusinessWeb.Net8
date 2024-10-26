@@ -1,0 +1,386 @@
+<SfToolbar CssClass="btns">
+	<ToolbarItems>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton OnClick=@Print IconCss="e-icons e-print">Imprimer</SfButton>
+			</Template>
+		</ToolbarItem>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args =>Submit(true))">Enregistrer</SfButton>
+			</Template>
+		</ToolbarItem>
+	</ToolbarItems>
+</SfToolbar>
+<div>
+	<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="FormContext">
+		<GridRow>
+			<GridCol Xs="24" Md="24">
+				<Card>
+					<GridRow>
+						<GridCol Xs="24" Md="7">
+							<FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Enregi." LabelColSpan="10">
+								<SfTextBox @bind-Value="@row.Piece" />
+							</FormItem>
+
+							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="10">
+								<SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
+							</FormItem>
+						</GridCol>
+						<GridCol Xs="24" Md="17">
+							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Client" LabelColSpan="4">
+								<SfDropDownList Query="@fn.LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0).Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Num+" - "+a.CT_Intitule}))" @bind-Value="@row.CT_Num">
+									<DropDownListEvents TValue="string" TItem="F_COMPTET" />
+									<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+								</SfDropDownList>
+							</FormItem>
+
+							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse" LabelColSpan="4">
+								<SfDropDownList Readonly Query="@fn.LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0))" @bind-Value="@row.CT_Num">
+									<DropDownListEvents TValue="string" TItem="F_COMPTET" />
+									<DropDownListFieldSettings Text="CT_Adresse" Value="CT_Num" />
+								</SfDropDownList>
+							</FormItem>
+						</GridCol>
+					</GridRow>
+
+				</Card>
+			</GridCol>
+			<GridCol Xs="24" Md="7">
+
+			</GridCol>
+			<GridCol Xs="24" Md="3">
+				<label style="font-size: 13px;" class="ant-form-item-label">Date</label>
+			</GridCol>
+			<GridCol Xs="24" Md="5">
+				<label style="font-size: 13px;" class="ant-form-item-label">Référence</label>
+			</GridCol>
+			<GridCol Xs="24" Md="9">
+				<label style="font-size: 13px;" class="ant-form-item-label">Observations</label>
+			</GridCol>
+			<GridCol Xs="24" Md="24">
+				<Card Title=" Documents Administratifs">
+					<GridRow>
+						<GridCol Xs="24" Md="7">
+							<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Left">
+								<SfCheckBox @bind-Checked="@row.OrdreMissionDateExist"></SfCheckBox>
+								<div style="font-style: italic;">
+									<label style="text-align: left; text-wrap: auto;" class="ant-form-item-label">Ordre de mission</label>
+								</div>
+								
+							</RadzenStack>
+						</GridCol>
+						<GridCol Xs="24" Md="3">
+							<SfDatePicker TValue="DateTime?" @bind-Value="@row.OrdreMissionDate" />
+						</GridCol>
+						<GridCol Xs="24" Md="5">
+							<SfTextBox @bind-Value="@row.OrdreMissionRef" />
+						</GridCol>
+						<GridCol Xs="24" Md="9">
+							<SfTextBox @bind-Value="@row.OrdreMissionRemarque" />
+						</GridCol>
+
+
+						<GridCol Xs="24" Md="7">
+							<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Left">
+								<SfCheckBox @bind-Checked="@row.RapportMissionDateExist"></SfCheckBox>
+								<div style="font-style: italic;">
+									<label style="text-align: left; text-wrap: auto;" class="ant-form-item-label">Rapport de mission</label>
+								</div>
+
+							</RadzenStack>
+						</GridCol>
+						<GridCol Xs="24" Md="3">
+							<SfDatePicker TValue="DateTime?" @bind-Value="@row.RapportMissionDate" />
+						</GridCol>
+						<GridCol Xs="24" Md="5">
+							<SfTextBox @bind-Value="@row.RapportMissionRef" />
+						</GridCol>
+						<GridCol Xs="24" Md="9">
+							<SfTextBox @bind-Value="@row.RapportMissionRemarque" />
+						</GridCol>
+
+						<GridCol Xs="24" Md="7">
+							<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Left">
+								<SfCheckBox @bind-Checked="@row.BordereauEnvoiDateExist"></SfCheckBox>
+								<div style="font-style: italic;">
+									<label style="text-align: left; text-wrap: auto;" class="ant-form-item-label">Bordereau d’envoi</label>
+								</div>
+
+							</RadzenStack>
+						</GridCol>
+						<GridCol Xs="24" Md="3">
+							<SfDatePicker TValue="DateTime?" @bind-Value="@row.BordereauEnvoiDate" />
+						</GridCol>
+						<GridCol Xs="24" Md="5">
+							<SfTextBox @bind-Value="@row.BordereauEnvoiRef" />
+						</GridCol>
+						<GridCol Xs="24" Md="9">
+							<SfTextBox @bind-Value="@row.BordereauEnvoiRemarque" />
+						</GridCol>
+
+						<GridCol Xs="24" Md="7">
+							<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Left">
+								<SfCheckBox @bind-Checked="@row.FicheReceptionDateExist"></SfCheckBox>
+								<div style="font-style: italic;">
+									<label style="text-align: left; text-wrap: auto;" class="ant-form-item-label">Fiche de réception du matériel au laboratoire</label>
+								</div>
+
+							</RadzenStack>
+						</GridCol>
+						<GridCol Xs="24" Md="3">
+							<SfDatePicker TValue="DateTime?" @bind-Value="@row.FicheReceptionDate" />
+						</GridCol>
+						<GridCol Xs="24" Md="5">
+							<SfTextBox @bind-Value="@row.FicheReceptionRef" />
+						</GridCol>
+						<GridCol Xs="24" Md="9">
+							<SfTextBox @bind-Value="@row.FicheReceptionRemarque" />
+						</GridCol>
+
+						<GridCol Xs="24" Md="7">
+							<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Left">
+								<SfCheckBox @bind-Checked="@row.DechargeMaterielDateExist"></SfCheckBox>
+								<div style="font-style: italic;">
+									<label style="text-align: left; text-wrap: auto;" class="ant-form-item-label">Décharge du matériel</label>
+								</div>
+
+							</RadzenStack>
+						</GridCol>
+						<GridCol Xs="24" Md="3">
+							<SfDatePicker TValue="DateTime?" @bind-Value="@row.DechargeMaterielDate" />
+						</GridCol>
+						<GridCol Xs="24" Md="5">
+							<SfTextBox @bind-Value="@row.DechargeMaterielRef" />
+						</GridCol>
+						<GridCol Xs="24" Md="9">
+							<SfTextBox @bind-Value="@row.DechargeMaterielRemarque" />
+						</GridCol>
+
+						<GridCol Xs="24" Md="7">
+							<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Left">
+								<SfCheckBox @bind-Checked="@row.EnqueteSatisfactionDateExist"></SfCheckBox>
+								<div style="font-style: italic;">
+									<label style="text-align: left; text-wrap: auto;" class="ant-form-item-label">Enquête de satisfaction client</label>
+								</div>
+
+							</RadzenStack>
+						</GridCol>
+						<GridCol Xs="24" Md="3">
+							<SfDatePicker TValue="DateTime?" @bind-Value="@row.EnqueteSatisfactionDate" />
+						</GridCol>
+						<GridCol Xs="24" Md="5">
+							<SfTextBox @bind-Value="@row.EnqueteSatisfactionRef" />
+						</GridCol>
+						<GridCol Xs="24" Md="9">
+							<SfTextBox @bind-Value="@row.EnqueteSatisfactionRemarque" />
+						</GridCol>
+
+					</GridRow>
+
+				</Card>
+			</GridCol>
+			<GridCol Xs="24" Md="24">
+				<Card Title=" Documents Techniques">
+					<GridRow>
+						<GridCol Xs="24" Md="7">
+							<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Left">
+								<SfCheckBox @bind-Checked="@row.FeuilleMesureDateExist"></SfCheckBox>
+								<div style="font-style: italic;">
+									<label style="text-align: left; text-wrap: auto;" class="ant-form-item-label">Feuille de mesure</label>
+								</div>
+
+							</RadzenStack>
+						</GridCol>
+						<GridCol Xs="24" Md="3">
+							<SfDatePicker TValue="DateTime?" @bind-Value="@row.FeuilleMesureDate" />
+						</GridCol>
+						<GridCol Xs="24" Md="5">
+							<SfTextBox @bind-Value="@row.FeuilleMesureRef" />
+						</GridCol>
+						<GridCol Xs="24" Md="9">
+							<SfTextBox @bind-Value="@row.FeuilleMesureRemarque" />
+						</GridCol>
+
+
+						<GridCol Xs="24" Md="7">
+							<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Left">
+								<SfCheckBox @bind-Checked="@row.CertificatEtalonnageDateExist"></SfCheckBox>
+								<div style="font-style: italic;">
+									<label style="text-align: left; text-wrap: auto;" class="ant-form-item-label">Certificat d’étalonnage</label>
+								</div>
+
+							</RadzenStack>
+						</GridCol>
+						<GridCol Xs="24" Md="3">
+							<SfDatePicker TValue="DateTime?" @bind-Value="@row.CertificatEtalonnageDate" />
+						</GridCol>
+						<GridCol Xs="24" Md="5">
+							<SfTextBox @bind-Value="@row.CertificatEtalonnageRef" />
+						</GridCol>
+						<GridCol Xs="24" Md="9">
+							<SfTextBox @bind-Value="@row.CertificatEtalonnageRemarque" />
+						</GridCol>
+
+						<GridCol Xs="24" Md="7">
+							<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Left">
+								<SfCheckBox @bind-Checked="@row.FeuilleCalculIncertitudeDateExist"></SfCheckBox>
+								<div style="font-style: italic;">
+									<label style="text-align: left; text-wrap: auto;" class="ant-form-item-label">Feuille de calcul d’incertitude</label>
+								</div>
+
+							</RadzenStack>
+						</GridCol>
+						<GridCol Xs="24" Md="3">
+							<SfDatePicker TValue="DateTime?" @bind-Value="@row.FeuilleCalculIncertitudeDate" />
+						</GridCol>
+						<GridCol Xs="24" Md="5">
+							<SfTextBox @bind-Value="@row.FeuilleCalculIncertitudeRef" />
+						</GridCol>
+						<GridCol Xs="24" Md="9">
+							<SfTextBox @bind-Value="@row.FeuilleCalculIncertitudeRemarque" />
+						</GridCol>
+
+						<GridCol Xs="24" Md="7">
+							<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Left">
+								<SfCheckBox @bind-Checked="@row.ConstatsVerificationDateExist"></SfCheckBox>
+								<div style="font-style: italic;">
+									<label style="text-align: left; text-wrap: auto;" class="ant-form-item-label">Constats de vérification</label>
+								</div>
+
+							</RadzenStack>
+						</GridCol>
+						<GridCol Xs="24" Md="3">
+							<SfDatePicker TValue="DateTime?" @bind-Value="@row.ConstatsVerificationDate" />
+						</GridCol>
+						<GridCol Xs="24" Md="5">
+							<SfTextBox @bind-Value="@row.ConstatsVerificationRef" />
+						</GridCol>
+						<GridCol Xs="24" Md="9">
+							<SfTextBox @bind-Value="@row.ConstatsVerificationRemarque" />
+						</GridCol>
+
+						<GridCol Xs="24" Md="7">
+							<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Left">
+								<SfCheckBox @bind-Checked="@row.FicheAnomalieTechniqueDateExist"></SfCheckBox>
+								<div style="font-style: italic;">
+									<label style="text-align: left; text-wrap: auto;" class="ant-form-item-label">Fiche anomalie technique</label>
+								</div>
+
+							</RadzenStack>
+						</GridCol>
+						<GridCol Xs="24" Md="3">
+							<SfDatePicker TValue="DateTime?" @bind-Value="@row.FicheAnomalieTechniqueDate" />
+						</GridCol>
+						<GridCol Xs="24" Md="5">
+							<SfTextBox @bind-Value="@row.FicheAnomalieTechniqueRef" />
+						</GridCol>
+						<GridCol Xs="24" Md="9">
+							<SfTextBox @bind-Value="@row.FicheAnomalieTechniqueRemarque" />
+						</GridCol>
+
+						<GridCol Xs="24" Md="7">
+							<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Left">
+								<SfCheckBox @bind-Checked="@row.AutresDateExist"></SfCheckBox>
+								<div style="font-style: italic;">
+									<label style="text-align: left; text-wrap: auto;" class="ant-form-item-label">Autres</label>
+								</div>
+
+							</RadzenStack>
+						</GridCol>
+						<GridCol Xs="24" Md="3">
+							<SfDatePicker TValue="DateTime?" @bind-Value="@row.AutresDate" />
+						</GridCol>
+						<GridCol Xs="24" Md="5">
+							<SfTextBox @bind-Value="@row.AutresRef" />
+						</GridCol>
+						<GridCol Xs="24" Md="9">
+							<SfTextBox @bind-Value="@row.AutresRemarque" />
+						</GridCol>
+
+					</GridRow>
+
+				</Card>
+			</GridCol>
+		</GridRow>
+	</Form>
+</div>
+
+
+
+
+@code {
+	[CascadingParameter]
+	public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	[Parameter] public int id { get; set; } = 0;
+	public API_T_CertifSuiviDossier row { get; set; }
+	private DialogSettings DialogParams = new DialogSettings { Width = "550px" };
+	string piece;
+	private void LoadData()
+	{
+
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		        db = session.db;
+        GC.Collect();
+		if (id == 0)
+		{
+			row = new API_T_CertifSuiviDossier();
+			row.Date = DateTime.Today;
+			await InitPiece();
+
+			row.Piece = piece;
+
+		}
+		else
+		{
+			row = db.API_T_CertifSuiviDossier.Where(a => a.id == id).SingleOrDefault();
+		}
+		LoadData();
+	}
+	private async Task Print()
+	{
+		await Submit(false);
+		List<JSReportParameter> parameters = new List<JSReportParameter>();
+
+		parameters.Add(new JSReportParameter { Name = "id", Values = new List<string>() { this.id.ToString() } });
+		await DialogService.OpenAsync<ReportViewer>(row.Piece,
+		new Dictionary<string, object>() { { "ReportName", "reports\\certification\\OuvertureDossier" }, { "parameters", parameters } },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });
+	}
+	private async Task InitPiece()
+	{
+		var q1 = db.API_T_CertifSuiviDossier.Select(a => a.Piece).Distinct();
+		var max = q1.Max();
+		if (max != null)
+
+		{
+			piece = fn.getNextCode(max);
+		}
+		else
+
+		{
+			piece = "SVD-0000001";
+		}
+	}
+	private async Task Submit(bool close)
+	{
+		if (id == 0)
+		{
+			db.API_T_CertifSuiviDossier.Add(row);
+			db.SaveChanges();
+			id = row.id;
+		}
+		else
+		{
+			db.SaveChanges();
+		}
+		if (close)
+		{
+			DialogService.Close();
+		}		
+	}
+}

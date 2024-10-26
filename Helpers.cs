@@ -283,6 +283,7 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 15, Title = "Traitement", Description = "Décharges instruments", Url = "cr-decharge" });
 			list.Add(new AuthItems { SelectedAPP = 15, Title = "Traitement", Description = "Ordres de mission", Url = "cr-ordre-mission" });
 			list.Add(new AuthItems { SelectedAPP = 15, Title = "Traitement", Description = "Rapports de mission", Url = "cr-rapport-mission" });
+			list.Add(new AuthItems { SelectedAPP = 15, Title = "Traitement", Description = "Suivi dossiers clients", Url = "cr-suivi-dossier" });
 
 
 			//SYNCHRONISATION

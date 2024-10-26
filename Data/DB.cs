@@ -128,6 +128,8 @@ public partial class DB : DbContext
 
     public virtual DbSet<API_T_CertifRapportMissionLigne> API_T_CertifRapportMissionLigne { get; set; }
 
+    public virtual DbSet<API_T_CertifSuiviDossier> API_T_CertifSuiviDossier { get; set; }
+
     public virtual DbSet<API_T_Config> API_T_Config { get; set; }
 
     public virtual DbSet<API_T_Depot_User> API_T_Depot_User { get; set; }
@@ -2920,6 +2922,79 @@ public partial class DB : DbContext
                 .HasForeignKey(d => d.Rapport)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_api_t_certifrapportmissionligne");
+        });
+
+        modelBuilder.Entity<API_T_CertifSuiviDossier>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_CertifSuiviDossier_id");
+
+            entity.Property(e => e.AutresDate).HasColumnType("smalldatetime");
+            entity.Property(e => e.AutresRef)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.AutresRemarque).HasColumnType("text");
+            entity.Property(e => e.BordereauEnvoiDate).HasColumnType("smalldatetime");
+            entity.Property(e => e.BordereauEnvoiRef)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.BordereauEnvoiRemarque).HasColumnType("text");
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.CertificatEtalonnageDate).HasColumnType("smalldatetime");
+            entity.Property(e => e.CertificatEtalonnageRef)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.CertificatEtalonnageRemarque).HasColumnType("text");
+            entity.Property(e => e.ConstatsVerificationDate).HasColumnType("smalldatetime");
+            entity.Property(e => e.ConstatsVerificationRef)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.ConstatsVerificationRemarque).HasColumnType("text");
+            entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.DechargeMaterielDate).HasColumnType("smalldatetime");
+            entity.Property(e => e.DechargeMaterielRef)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.DechargeMaterielRemarque).HasColumnType("text");
+            entity.Property(e => e.EnqueteSatisfactionDate).HasColumnType("smalldatetime");
+            entity.Property(e => e.EnqueteSatisfactionRef)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.EnqueteSatisfactionRemarque).HasColumnType("text");
+            entity.Property(e => e.FeuilleCalculIncertitudeDate).HasColumnType("smalldatetime");
+            entity.Property(e => e.FeuilleCalculIncertitudeRef)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.FeuilleCalculIncertitudeRemarque).HasColumnType("text");
+            entity.Property(e => e.FeuilleMesureDate).HasColumnType("smalldatetime");
+            entity.Property(e => e.FeuilleMesureRef)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.FeuilleMesureRemarque).HasColumnType("text");
+            entity.Property(e => e.FicheAnomalieTechniqueDate).HasColumnType("smalldatetime");
+            entity.Property(e => e.FicheAnomalieTechniqueRef)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.FicheAnomalieTechniqueRemarque).HasColumnType("text");
+            entity.Property(e => e.FicheReceptionDate).HasColumnType("smalldatetime");
+            entity.Property(e => e.FicheReceptionRef)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.FicheReceptionRemarque).HasColumnType("text");
+            entity.Property(e => e.OrdreMissionDate).HasColumnType("smalldatetime");
+            entity.Property(e => e.OrdreMissionRef)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.OrdreMissionRemarque).HasColumnType("text");
+            entity.Property(e => e.Piece)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.RapportMissionDate).HasColumnType("smalldatetime");
+            entity.Property(e => e.RapportMissionRef)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.RapportMissionRemarque).HasColumnType("text");
         });
 
         modelBuilder.Entity<API_T_Config>(entity =>
