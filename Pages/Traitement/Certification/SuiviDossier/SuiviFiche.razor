@@ -348,7 +348,7 @@
 
 		parameters.Add(new JSReportParameter { Name = "id", Values = new List<string>() { this.id.ToString() } });
 		await DialogService.OpenAsync<ReportViewer>(row.Piece,
-		new Dictionary<string, object>() { { "ReportName", "reports\\certification\\OuvertureDossier" }, { "parameters", parameters } },
+		new Dictionary<string, object>() { { "ReportName", "reports\\certification\\SuiviDossier" }, { "parameters", parameters } },
 		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });
 	}
 	private async Task InitPiece()
