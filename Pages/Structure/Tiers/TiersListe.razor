@@ -253,8 +253,8 @@ else
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(1);
-        
-                db = session.db;
+
+        db = session.db;
         GC.Collect();
         etats = db.API_V_COMPTET.Select(a => a.EtatSolde).Distinct().ToList();
         sommeils = db.API_V_COMPTET.Select(a => a.SommeilIntitule).Distinct().ToList();
@@ -267,6 +267,7 @@ else
     {
         DefaultGrid.ClearFilteringAsync();
         DefaultGrid.ClearSortingAsync();
+        DefaultGrid.SearchAsync("");
     }
     public async void PDFReport()
     {
