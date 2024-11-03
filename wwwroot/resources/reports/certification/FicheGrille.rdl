@@ -2047,7 +2047,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIF(Fields!NaturePrestation.Value = 1,"Verification",IIF(Fields!NaturePrestation.Value = 2,"",IIF(Fields!NaturePrestation.Value = 3,"Autre","Etalonnage")))</Value>
+                                  <Value>=IIF(Fields!NaturePrestation.Value = 1,"Verification",IIF(Fields!NaturePrestation.Value = 2,"Etalonnage &amp; Verification",IIF(Fields!NaturePrestation.Value = 3,"Autre","Etalonnage")))</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -2247,7 +2247,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=IIF(Fields!AvisPertinenceMethode.Value = 1,"Inappropriee",IIF(Fields!AvisPertinenceMethode.Value = 2,"Perimée",IIF(Fields!AvisPertinenceMethode.Value = 3,"Autre","Pertinente")))</Value>
+                                  <Value>=IIF(Fields!AvisPertinenceMethode.Value = 4,"/",IIF(Fields!AvisPertinenceMethode.Value = 1,"Inappropriee",IIF(Fields!AvisPertinenceMethode.Value = 2,"Perimée",IIF(Fields!AvisPertinenceMethode.Value = 3,"Autre","Pertinente"))))</Value>
                                   <Style>
                                     <FontFamily>Tw Cen MT</FontFamily>
                                     <FontSize>9pt</FontSize>
@@ -6130,7 +6130,7 @@
               <Left>8.98828pt</Left>
               <Top>7.5pt</Top>
               <Value>logo_afrolab</Value>
-              <Height>59.49609pt</Height>
+              <Height>59.49375pt</Height>
               <Width>152.25pt</Width>
               <Visibility />
               <Style>

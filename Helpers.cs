@@ -1856,8 +1856,9 @@ namespace BusinessWeb
             list.Add(new Items { Id = 1, Name = "Inappropriee" });
             list.Add(new Items { Id = 2, Name = "Perimee" });
             list.Add(new Items { Id = 3, Name = "Autre" });
+			list.Add(new Items { Id = 4, Name = "/" });
 
-            return list;
+			return list;
         }
         public List<Items> OperationAttendues()
         {
