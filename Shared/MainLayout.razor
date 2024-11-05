@@ -611,12 +611,19 @@
 
 															@if (getURL() == "")
 															{
+																<Collapse Style="margin: 15px;    margin: 15px;
+																		margin-left: 200px;
+																		margin-right: 200px;
+																		min-height: 80vh;
+																		padding: 50px;" DefaultActiveKey="@(new[]{key})">
 
-																<Card Style="margin: 15px;">
 																	@foreach (string title in session?.Authorizes?.Where(a => a.Url != null && a.Url != "null").Select(a => a.Title).Distinct())
 																	{
-																		<div>
-																			<Card_2 Title="@title">
+																		<Panel Key="@title" Active="@(title == key)">
+																			<HeaderTemplate>
+																				@title
+																			</HeaderTemplate>
+																			<ChildContent>
 																				<RadzenStack Style="padding: 15px;" class="main-btns" JustifyContent="JustifyContent.Start" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Gap="10px" Wrap="FlexWrap.Wrap">
 																					@foreach (TAuthorize item in session?.Authorizes?.Where(a => a.Title == title).Select(a => new TAuthorize { Url = a.Url, Title = a.Title, Description = a.Description }).Distinct())
 																					{
@@ -634,10 +641,10 @@
 																						</Button>
 																					}
 																				</RadzenStack>
-																			</Card_2>
-																		</div>
+																			</ChildContent>
+																		</Panel>
 																	}
-																</Card>
+																</Collapse>
 
 															}
 															else
@@ -677,11 +684,19 @@
 												{
 													@if (getURL() == "")
 													{
-														<Card Style="margin: 15px;">
-															@foreach (string title in session?.Authorizes?.Select(a => a.Title).Distinct())
+														<Collapse Style="margin: 15px;    margin: 15px;
+																		margin-left: 200px;
+																		margin-right: 200px;
+																		min-height: 80vh;
+																		padding: 50px;" DefaultActiveKey="@(new[]{key})">
+
+															@foreach (string title in session?.Authorizes?.Where(a => a.Url != null && a.Url != "null").Select(a => a.Title).Distinct())
 															{
-																<div>
-																	<Card_2 Title="@title">
+																<Panel Key="@title" Active="@(title == key)" >
+																	<HeaderTemplate>
+																		@title
+																	</HeaderTemplate>
+																	<ChildContent>
 																		<RadzenStack Style="padding: 15px;" class="main-btns" JustifyContent="JustifyContent.Start" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Gap="10px" Wrap="FlexWrap.Wrap">
 																			@foreach (TAuthorize item in session?.Authorizes?.Where(a => a.Title == title).Select(a => new TAuthorize { Url = a.Url, Title = a.Title, Description = a.Description }).Distinct())
 																			{
@@ -699,10 +714,10 @@
 																				</Button>
 																			}
 																		</RadzenStack>
-																	</Card_2>
-																</div>
+																	</ChildContent>
+																</Panel>
 															}
-														</Card>
+														</Collapse>
 													}
 													else
 													{
@@ -819,6 +834,7 @@ else
 	double scaleLevel = 1;
 	string gridHeight = "80vh";
 	int screenHeight;
+	string key = "";
 	private CryptoLicense license = new CryptoLicense();
 	string macAddr = (
 				from nic in NetworkInterface.GetAllNetworkInterfaces()
@@ -853,7 +869,6 @@ else
 		{
 
 		}
-
 		IsLoaded = true;
 
 	}
@@ -924,7 +939,7 @@ else
 		{
 			scaleLevel = (await JSRuntime.InvokeAsync<double>("getScaleLevel"));
 
-			if(scaleLevel < 0.8)
+			if (scaleLevel < 0.8)
 			{
 				scaleLevel = 0.8;
 			}
@@ -961,14 +976,14 @@ else
 			}
 			else
 			{
-				rs = ((((scaleLevel - 0.04) ) * height * 0.95)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh";
+				rs = ((((scaleLevel - 0.04)) * height * 0.95)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh";
 			}
 		}
 		else if (screenHeight < 1080)
 		{
 			if (scaleLevel <= 1)
 			{
-				rs = ((height*1.1)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh"; ;
+				rs = ((height * 1.1)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh"; ;
 			}
 			else
 			{
