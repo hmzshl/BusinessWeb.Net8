@@ -25,7 +25,7 @@
 					</ToolbarItems>
 				</SfToolbar>
 				<div class="grid-84" style="zoom: @session.zoomLevel;">
-					<SfGrid Height="100%" DataSource="@(items)" AllowPaging @ref=DefaultGrid >
+					<SfGrid Height="100%" DataSource="@(items)" EnableVirtualization @ref=DefaultGrid >
 						<GridPageSettings PageSize="100"></GridPageSettings>
 						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 						<GridEditSettings ShowDeleteConfirmDialog="true" 

@@ -70,7 +70,9 @@
 					}
 					else
 					{
-						<SfGrid EnablePersistence AllowFiltering AllowReordering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="DocumentGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging ContextMenuItems="@(contextMenu())">
+						<SfGrid EnablePersistence AllowFiltering AllowReordering AllowSorting Height="100%" AllowResizing AllowSelection 
+						ShowColumnChooser="true" ID="DocumentGrid" @ref="DefaultGrid" 
+						AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" EnableVirtualization ContextMenuItems="@(contextMenu())">
 							<GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
 							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 							<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />

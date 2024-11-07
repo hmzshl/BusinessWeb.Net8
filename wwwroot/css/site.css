@@ -576,10 +576,6 @@ td {
     cursor: default;
 }
 
-.rz-button {
-    border-radius: 15px !important;
-}
-
 .rz-button-sm {
     min-height: 0px;
     min-width: 0px;
@@ -908,11 +904,6 @@ td {
 .e-grid.sf-grid .e-gridcontent .e-content, .e-grid.sf-grid .e-gridcontent .e-content .e-movablecontent {
     min-height: 70px;
 }
-
-.rz-menu {
-    height: 30px;
-}
-
 .e-grid .e-gridheader .e-sortfilter .e-headercelldiv, .e-grid .e-gridheader .e-stackedheadercelldiv {
     padding: 0 12px 0 0;
 }
@@ -1557,11 +1548,11 @@ div#main-text {
 h1, .e-gird, th, td, ul, li, label, input, button, .e-toolbar-item, .rz-navigation-item-text, .e-dlg-header, .rz-dialog-title,
 .ant-card-head-title, .e-tab-text, .e-tbar-btn-text, .ant-statistic-title, .ant-statistic-content-value-int, .e-label, .ant-steps-item-title,
 .rz-button-text, .rz-text-body1, h2, .rz-text-caption, .e-summarycell {
-    font-family: "Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
+    font-family: Ubuntu,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
 }
 
     input::placeholder, th, label, input, .e-tab-text, .ant-statistic-title, .ant-statistic-content-value-int, .e-label, .content-1 .title {
-        font-family: "Segoe UI",'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+        font-family: Ubuntu,"Segoe UI",'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
     }
 
 .rz-navigation-item-text, h1, .e-dlg-header, .rz-dialog-title, .e-headertext, .ant-tabs-tab-btn, .ant-steps-item-title, .rz-navigation-item-link {
@@ -2262,7 +2253,7 @@ th {
 }
 
 .sh-card {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset !important;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px !important;
 }
 
     .sh-card:hover {
@@ -2400,4 +2391,21 @@ html, body * {
 }
 .e-pager.sf-pager .e-numericcontainer a {
     padding: 6px 11px !important;
+}
+.rz-paginator-element:not(.rz-state-disabled):hover:not(:active), .rz-button:not(.rz-state-disabled):hover:not(:active) {
+    box-shadow: unset;
+    background: rgb(19 93 201);
+}
+
+div::first-letter {
+    text-transform: uppercase; /* Capitalizes only the first letter */
+}
+.rz-label, .card-title {
+    text-transform: lowercase;
+}
+.rz-label::first-letter, .card-title::first-letter {
+  text-transform: uppercase;
+}
+.e-ddl.e-popup .e-list-item {
+    font-size: 13px !important
 }

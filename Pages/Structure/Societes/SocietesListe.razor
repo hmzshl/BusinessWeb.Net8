@@ -3,7 +3,8 @@
 
 <RadzenContent Container="main">
     <div class="grid-67">
-        <SfGrid  Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPaging="true" DataSource="@items"
+        <SfGrid  Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting 
+        ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" EnableVirtualization DataSource="@items"
                 Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete"})">
             <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
             <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="RowDoubleClick" TValue="TSociete"></GridEvents>

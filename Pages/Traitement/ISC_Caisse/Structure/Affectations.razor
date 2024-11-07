@@ -1,7 +1,7 @@
 ﻿@attribute [Authorize]
 <RadzenContent Container="main">
     <div style="height: 70vh" class="no-border">
-        <SfGrid  Height="100%" AllowPaging Toolbar="@(new List<string>() { "Add", "Delete"})" DataSource="@(items)">
+        <SfGrid  Height="100%" EnableVirtualization Toolbar="@(new List<string>() { "Add", "Delete"})" DataSource="@(items)">
              <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
              <GridPageSettings PageSize="40"></GridPageSettings>
              <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting AllowEditing Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">

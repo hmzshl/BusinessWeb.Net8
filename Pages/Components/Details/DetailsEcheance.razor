@@ -42,7 +42,8 @@
     </SfToolbar>
     <div class="@ClassHeight" style=" zoom: @session.zoomLevel;">
 
-        <SfGrid  AllowTextWrap ID="EcheanceGRID" Height="100%" AllowGrouping AllowSelection EnableHover DataSource="@(items)" @ref=DefaultGrid AllowSorting AllowFiltering="false" AllowExcelExport>
+        <SfGrid  AllowTextWrap ID="EcheanceGRID" Height="100%" AllowGrouping AllowSelection EnableHover DataSource="@(items)" @ref=DefaultGrid 
+        AllowSorting AllowFiltering="false" AllowExcelExport>
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
             <GridGroupSettings Columns="@(new string[] { "CT_Intitule" })" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates EnableLazyLoading>
                 <CaptionTemplate>

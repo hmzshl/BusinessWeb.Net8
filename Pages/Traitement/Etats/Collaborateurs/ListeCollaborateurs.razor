@@ -19,7 +19,8 @@
 					</ToolbarItems>
 				</SfToolbar>
 				<div class="grid-84" style="zoom: @session.zoomLevel;">
-					<SfGrid Height="100%" AllowResizing AllowFiltering AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
+					<SfGrid Height="100%" AllowResizing AllowFiltering AllowSorting AllowReordering AllowSelection AllowMultiSorting 
+					ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" EnableVirtualization DataSource="@items">
 						<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
 
 						</GridEditSettings>

@@ -57,10 +57,11 @@
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date">
 												<SfDatePicker Readonly="(row.Valide)" TValue="DateTime?" @bind-Value="@row.Date" />
 											</FormItem>
-											@if (row.Sense == 0)
+											@if (row.Type == 0)
 											{
 												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Client">
-													<SfDropDownList Readonly="(row.Valide)" Query="@fn.LocalDataQuery" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="string" TItem="F_COMPTET" DataSource="@(tiers)" @bind-Value="@row.CT_Num">
+													<SfDropDownList Readonly="(row.Valide)" Query="@fn.LocalDataQuery" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="string" TItem="F_COMPTET" 
+													DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0 && a.CT_Sommeil == 0))" @bind-Value="@row.CT_Num">
 														<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 														<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
 													</SfDropDownList>
@@ -69,7 +70,8 @@
 											else
 											{
 												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Fournisseur">
-													<SfDropDownList Readonly="(row.Valide)" Query="@fn.LocalDataQuery" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="string" TItem="F_COMPTET" DataSource="@(tiers)" @bind-Value="@row.CT_Num">
+													<SfDropDownList Readonly="(row.Valide)" Query="@fn.LocalDataQuery" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="string" TItem="F_COMPTET"
+																	DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 1 && a.CT_Sommeil == 0))" @bind-Value="@row.CT_Num">
 														<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 														<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
 													</SfDropDownList>
