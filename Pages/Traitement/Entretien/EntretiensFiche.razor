@@ -1,432 +1,400 @@
 ﻿<SfToolbar CssClass="btns">
-    <ToolbarItems>
-        <ToolbarItem Align="ItemAlign.Right">
-            <Template>
-                <SfButton IconCss="e-icons e-print">Imprimer</SfButton>
-            </Template>
-        </ToolbarItem>
-        <ToolbarItem Align="ItemAlign.Right">
-            <Template>
-                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit(true))">Enregistrer</SfButton>
-            </Template>
-        </ToolbarItem>
-    </ToolbarItems>
+	<ToolbarItems>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton IconCss="e-icons e-print">Imprimer</SfButton>
+			</Template>
+		</ToolbarItem>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit(true))">Enregistrer</SfButton>
+			</Template>
+		</ToolbarItem>
+	</ToolbarItems>
 </SfToolbar>
 @if (@row == null)
 {
-        <div class="spin-center">
-            <Spin size="large" />
-        </div>
+	<div class="spin-center">
+		<Spin size="large" />
+	</div>
 }
 else
 {
-        <div>
-            <GridRow>
-                <GridCol Xs="24" Md="24">
-                    <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="8" Context="FormContext">
-                        <GridRow>
-                            <GridCol Xs="24" Md="12">
-                                <Card Style="height: 170px;">
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Type" LabelColSpan="8">
-                                        <SfDropDownList Readonly TValue="int" TItem="Items" DataSource="@fn.TypeEntretien()" @bind-Value="@row.Type">
-                                        <DropDownListEvents TValue="int" TItem="Items" />
-                                        <DropDownListFieldSettings Text="Name" Value="Id" />
-                                        </SfDropDownList>
-                                        </FormItem>
-                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Pièce" LabelColSpan="8">
-                                        <SfTextBox Readonly @bind-Value="@row.Piece" />
-                                    </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
-                                        <SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
-                                    </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Matériel" LabelColSpan="8">
-                                        <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Materiel" DataSource="@db.API_T_Materiel" @bind-Value="@row.Materiel" Readonly=@(Materiel != 0)>
-                                        <DropDownListEvents TValue="int" TItem="API_T_Materiel" />
-                                        <DropDownListFieldSettings Text="Intitule" Value="id" />
-                                        </SfDropDownList>
-                                        </FormItem>
-                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Matricule" LabelColSpan="8">
-                                        <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Materiel" DataSource="@db.API_T_Materiel" @bind-Value="@row.Materiel" Readonly=@(Materiel != 0)>
-                                        <DropDownListEvents TValue="int" TItem="API_T_Materiel" />
-                                        <DropDownListFieldSettings Text="Immatricule" Value="id" />
-                                        </SfDropDownList>
-                                        </FormItem>
-                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Conducteur" LabelColSpan="8">
-                                        <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Personnel" DataSource="@db.API_T_Personnel" @bind-Value="@row.Conducteur">
-                                        <DropDownListEvents TValue="int" TItem="API_T_Personnel" />
-                                        <DropDownListFieldSettings Text="Nom" Value="id" />
-                                        </SfDropDownList>
-                                        </FormItem>
-                                        
-                                    
-                                    
-                                        </Card>
-                                        </GridCol> 
-                                        <GridCol Xs="24" Md="12">
-                            <Card Style="height: 170px;">
-                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Fournisseur" LabelColSpan="8">
-                                    <SfTextBox @bind-Value="@row.Fournisseur" />
-                                </FormItem>
-                                @if (type == 0 || type == 7)
-                                {
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Kilométrage" LabelColSpan="8">
-                                                <SfNumericTextBox @bind-Value="@(row.Kilometrage)" ShowSpinButton="false" Decimals="0" Format="N2"/>
-                                        </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
-                                                <SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" Readonly/>
-                                            </FormItem>
-
-                                }
-                                @if (type == 1)
-                                {
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Année" LabelColSpan="8">
-                                                <SfNumericTextBox @bind-Value="@(row.Annee)" ShowSpinButton="false" Decimals="0" Format="0" />
-                                        </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
-                                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Validité" LabelColSpan="8">
-                                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateValidite" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
-                                                <SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" />
-                                            </FormItem>
-
-                                }
-                                @if (type == 2)
-                                {
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Année" LabelColSpan="8">
-                                        <SfNumericTextBox @bind-Value="@(row.Annee)" ShowSpinButton="false" Decimals="0" Format="0" />
-                                    </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
-                                        <SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
-                                    </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Validité" LabelColSpan="8">
-                                        <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateValidite" />
-                                    </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
-                                        <SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" />
-                                    </FormItem>
-
-                                }
-                                @if (type == 3)
-                                {
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Année" LabelColSpan="8">
-                                                <SfNumericTextBox @bind-Value="@(row.Annee)" ShowSpinButton="false" Decimals="0" Format="0" />
-                                        </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
-                                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Validité" LabelColSpan="8">
-                                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateValidite" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
-                                                <SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" />
-                                            </FormItem>
-
-                                }
-                                @if (type == 10)
-                                {
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Année" LabelColSpan="8">
-                                                <SfNumericTextBox @bind-Value="@(row.Annee)" ShowSpinButton="false" Decimals="0" Format="0" />
-                                        </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Début" LabelColSpan="8">
-                                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateDebut" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Fin" LabelColSpan="8">
-                                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateFin" />
-                                            </FormItem>
-                                }
-                                @if (type == 11)
-                                {
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Année" LabelColSpan="8">
-                                                <SfNumericTextBox @bind-Value="@(row.Annee)" ShowSpinButton="false" Decimals="0" Format="0" />
-                                        </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
-                                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Validité" LabelColSpan="8">
-                                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateValidite" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
-                                                <SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" />
-                                            </FormItem>
-                                }
-                                @if (type == 12)
-                                {
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
-                                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Paiement" LabelColSpan="8">
-                                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.DatePaiement" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Validité" LabelColSpan="8">
-                                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateValidite" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Quittance" LabelColSpan="8">
-                                                <SfTextBox Readonly @bind-Value="@row.NumeroQuittance" />
-                                        </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
-                                                <SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" />
-                                            </FormItem>
-                                }
-                                @if (type == 13)
-                                {
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Début" LabelColSpan="8">
-                                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateDebut" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Validité" LabelColSpan="8">
-                                                <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateValidite" />
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
-                                                <SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" />
-                                            </FormItem>
-                                }
-                                @if (type == 6)
-                                {
-
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Kilométrage" LabelColSpan="8">
-                                        <SfNumericTextBox @bind-Value="@(row.Kilometrage)" ShowSpinButton="false" Decimals="0" Format="N2" />
-                                    </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Kilo. Suivant" LabelColSpan="8">
-                                        <SfNumericTextBox @bind-Value="@(row.KilometrageSuivant)" ShowSpinButton="false" Decimals="0" Format="N2" />
-                                    </FormItem>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
-                                        <SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" />
-                                </FormItem>
-
-                                }
-                                </Card>
-                            </GridCol>
-                            <Divider/>
-                                                               <GridCol Xs="24" Md="24">
-                                  <Card>
-                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Objet" LabelColSpan="4">
-                                    <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Projet" DataSource="@db.API_T_Projet.Where(a => !(a.IsAppelOffre??false))" @bind-Value="@row.Projet" Readonly=@(Projet != 0)>
-                                    <DropDownListEvents TValue="int" TItem="API_T_Projet" />
-                                    <DropDownListFieldSettings Text="Objet" Value="id" />
-                                    </SfDropDownList>
-                                    </FormItem>
-                                  </Card>
-                                </GridCol>
-                                                                <GridCol Xs="24" Md="12">
-                                                                   <Card>
-                                                                       <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Marché" LabelColSpan="8">
-                                        <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Projet" DataSource="@db.API_T_Projet.Where(a => !(a.IsAppelOffre??false))" @bind-Value="@row.Projet" Readonly=@(Projet != 0)>
-                                        <DropDownListEvents TValue="int" TItem="API_T_Projet" />
-                                        <DropDownListFieldSettings Text="NumeroMarche" Value="id" />
-                                        </SfDropDownList>
-                                        </FormItem>
-                                                                   </Card>
-                                </GridCol>
-                                                                <GridCol Xs="24" Md="12">
-                                   <Card>
-                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Affaire" LabelColSpan="8">
-                                        <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Projet" DataSource="@db.API_T_Projet.Where(a => !(a.IsAppelOffre??false))" @bind-Value="@row.Projet" Readonly=@(Projet != 0)>
-                                            <DropDownListEvents TValue="int" TItem="API_T_Projet" />
-                                            <DropDownListFieldSettings Text="CA_Num" Value="id" />
-                                        </SfDropDownList>
-                                    </FormItem>
-                                   </Card>
-                                </GridCol>
-                            
-                        @if (type == 0 || type == 4 || type == 7 || type == 8)
-                        {
-                                    <Divider></Divider>
-                                    <GridCol Xs="24" Md="24">
-                                        <div style="height: 27vh;">
-                                            <SfGrid  Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(lignes)">
-                                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                                                <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
-                                                </GridEditSettings>
-                                                <GridEvents OnActionBegin="UpdateListe" TValue="API_T_MaterielEntretienDetail"></GridEvents>
-                                                <GridTemplates>
-                                                    <EmptyRecordTemplate>
-                                                        <Empty></Empty>
-                                                    </EmptyRecordTemplate>
-                                                </GridTemplates>
-                                                <GridAggregates>
-                                                    <GridAggregate>
-                                                        <GridAggregateColumns>
-                                                            <GridAggregateColumn Field="Montant" Type="AggregateType.Sum" Format="N2">
-                                                                <FooterTemplate>
-                                                            @{
-                                                            var SumValue = (context as AggregateTemplateContext);
-                                                                    <div>
-                                                                @SumValue.Sum
-                                                                    </div>
-                                                        }
-                                                        </FooterTemplate>
-
-                                                    </GridAggregateColumn>
-                                                </GridAggregateColumns>
-                                            </GridAggregate>
-                                        </GridAggregates>
-                                        <GridColumns>
-                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_MaterielEntretienDetail.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+	<div>
+		<GridRow>
+			<GridCol Xs="24" Md="24">
+				<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="8" Context="FormContext">
+					<GridRow>
+						<GridCol Xs="24" Md="12">
+							<Card Style="height: 220px;">
+								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Type" LabelColSpan="8">
+									<SfDropDownList Readonly TValue="int" TItem="Items" DataSource="@fn.TypeEntretien()" @bind-Value="@row.Type">
+										<DropDownListEvents TValue="int" TItem="Items" />
+										<DropDownListFieldSettings Text="Name" Value="Id" />
+									</SfDropDownList>
+								</FormItem>
+								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Pièce" LabelColSpan="8">
+									<SfTextBox Readonly @bind-Value="@row.Piece" />
+								</FormItem>
+								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
+									<SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
+								</FormItem>
+								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Matériel" LabelColSpan="8">
+									<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Materiel" DataSource="@db.API_T_Materiel" @bind-Value="@row.Materiel" Readonly=@(Materiel != 0)>
+										<DropDownListEvents TValue="int" TItem="API_T_Materiel" />
+										<DropDownListFieldSettings Text="Intitule" Value="id" />
+									</SfDropDownList>
+								</FormItem>
+								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Matricule" LabelColSpan="8">
+									<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Materiel" DataSource="@db.API_T_Materiel" @bind-Value="@row.Materiel" Readonly=@(Materiel != 0)>
+										<DropDownListEvents TValue="int" TItem="API_T_Materiel" />
+										<DropDownListFieldSettings Text="Immatricule" Value="id" />
+									</SfDropDownList>
+								</FormItem>
+								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Conducteur" LabelColSpan="8">
+									<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Personnel" DataSource="@db.API_T_Personnel" @bind-Value="@row.Conducteur">
+										<DropDownListEvents TValue="int" TItem="API_T_Personnel" />
+										<DropDownListFieldSettings Text="Nom" Value="id" />
+									</SfDropDownList>
+								</FormItem>
 
 
-                                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_MaterielEntretienDetail.Qte) HeaderText="Qté" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-                                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_MaterielEntretienDetail.PU) HeaderText="PU" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-                                            <GridColumn Width="80" AllowAdding=@(type == 7 || type == 8 || type == 4) AllowEditing=@(type == 7 || type == 8 || type == 4) HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_MaterielEntretienDetail.Unite) HeaderText="Unité">
-                                            </GridColumn>
+
+							</Card>
+						</GridCol>
+						<GridCol Xs="24" Md="12">
+							<Card Style="height: 220px;">
+								<FormItem LabelAlign="AntLabelAlignType.Left" Label="Fournisseur" LabelColSpan="8">
+									<SfTextBox @bind-Value="@row.Fournisseur" />
+								</FormItem>
+								@if (type == 0 || type == 7)
+								{
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Kilométrage" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Kilometrage)" ShowSpinButton="false" Decimals="0" Format="N2" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" Readonly />
+									</FormItem>
+
+								}
+								@if (type == 1)
+								{
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Année" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Annee)" ShowSpinButton="false" Decimals="0" Format="0" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Validité" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.DateValidite" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" />
+									</FormItem>
+
+								}
+								@if (type == 2)
+								{
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Année" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Annee)" ShowSpinButton="false" Decimals="0" Format="0" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Validité" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.DateValidite" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" />
+									</FormItem>
+
+								}
+								@if (type == 3)
+								{
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Année" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Annee)" ShowSpinButton="false" Decimals="0" Format="0" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Validité" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.DateValidite" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" />
+									</FormItem>
+
+								}
+								@if (type == 10)
+								{
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Année" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Annee)" ShowSpinButton="false" Decimals="0" Format="0" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Début" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.DateDebut" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Fin" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.DateFin" />
+									</FormItem>
+								}
+								@if (type == 11)
+								{
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Année" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Annee)" ShowSpinButton="false" Decimals="0" Format="0" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Validité" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.DateValidite" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" />
+									</FormItem>
+								}
+								@if (type == 12)
+								{
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.Date" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Paiement" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.DatePaiement" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Validité" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.DateValidite" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Quittance" LabelColSpan="8">
+										<SfTextBox Readonly @bind-Value="@row.NumeroQuittance" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" />
+									</FormItem>
+								}
+								@if (type == 13)
+								{
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Début" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.DateDebut" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Validité" LabelColSpan="8">
+										<SfDatePicker TValue="DateTime?" @bind-Value="@row.DateValidite" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" />
+									</FormItem>
+								}
+								@if (type == 6)
+								{
+
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Kilométrage" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Kilometrage)" ShowSpinButton="false" Decimals="0" Format="N2" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Kilo. Suivant" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.KilometrageSuivant)" ShowSpinButton="false" Decimals="0" Format="N2" />
+									</FormItem>
+									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="8">
+										<SfNumericTextBox @bind-Value="@(row.Montant)" ShowSpinButton="false" Decimals="2" Format="N2" />
+									</FormItem>
+
+								}
+							</Card>
+						</GridCol>
+						@if (type == 0 || type == 4 || type == 7 || type == 8)
+						{
+							<Divider></Divider>
+							<GridCol Xs="24" Md="24">
+								<div style="height: 27vh;">
+									<SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(lignes)">
+										<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+										<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+										</GridEditSettings>
+										<GridEvents OnActionBegin="UpdateListe" TValue="API_T_MaterielEntretienDetail"></GridEvents>
+										<GridTemplates>
+											<EmptyRecordTemplate>
+												<Empty></Empty>
+											</EmptyRecordTemplate>
+										</GridTemplates>
+										<GridAggregates>
+											<GridAggregate>
+												<GridAggregateColumns>
+													<GridAggregateColumn Field="Montant" Type="AggregateType.Sum" Format="N2">
+														<FooterTemplate>
+															@{
+																var SumValue = (context as AggregateTemplateContext);
+																<div>
+																	@SumValue.Sum
+																</div>
+															}
+														</FooterTemplate>
+
+													</GridAggregateColumn>
+												</GridAggregateColumns>
+											</GridAggregate>
+										</GridAggregates>
+										<GridColumns>
+											<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_MaterielEntretienDetail.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
 
 
-                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_MaterielEntretienDetail.Libelle) HeaderText="Description"></GridColumn>
-                                            <GridColumn Width="100" AllowAdding="false" AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_MaterielEntretienDetail.Montant) HeaderText="Montant" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+											<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_MaterielEntretienDetail.Qte) HeaderText="Qté" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+											<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_MaterielEntretienDetail.PU) HeaderText="PU" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+											<GridColumn Width="80" AllowAdding=@(type == 7 || type == 8 || type == 4) AllowEditing=@(type == 7 || type == 8 || type == 4) HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_MaterielEntretienDetail.Unite) HeaderText="Unité">
+											</GridColumn>
 
-                                        </GridColumns>
-                                    </SfGrid>
-                                </div>
 
-                            </GridCol>
-                        }
+											<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_MaterielEntretienDetail.Libelle) HeaderText="Description"></GridColumn>
+											<GridColumn Width="100" AllowAdding="false" AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_MaterielEntretienDetail.Montant) HeaderText="Montant" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+
+										</GridColumns>
+									</SfGrid>
+								</div>
+
+							</GridCol>
+						}
 
 
 
 
-                        </GridRow>
-                    </Form>
+					</GridRow>
+				</Form>
 
-                </GridCol>
+			</GridCol>
 
-            </GridRow>
-        </div>
+		</GridRow>
+	</div>
 }
 
 
 
 
 @code {
-    [Parameter] public int Materiel { get; set; } = 0;
-    [Parameter] public int Projet { get; set; } = 0;
-    [Parameter] public bool IsList { get; set; } = true;
-    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
-    [Parameter] public int id { get; set; } = 0;
-    [Parameter] public int type { get; set; } = 0;
-    int col = 24;
-    DB db = new DB();
-    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
-    private API_T_MaterielEntretien row { get; set; }
-    private List<API_T_MaterielEntretienDetail> lignes = new List<API_T_MaterielEntretienDetail>();
-    protected override void OnInitialized()
-    {
-                db = session.db;
-        GC.Collect();
-        if (type == 0 || type == 4 || type == 7 || type == 8)
-        {
-            col = 24;
-        }
-        if (id != 0)
-        {
-            row = db.API_T_MaterielEntretien.Where(a => a.id == id).SingleOrDefault();
-            lignes = db.API_T_MaterielEntretienDetail.Where(a => a.Entretien == this.id).ToList();
-        }
-        else
-        {
-            row = new API_T_MaterielEntretien();
-            row.Type = type;
-            row.Date = DateTime.Today;
-            row.Annee = DateTime.Today.Year;
-            string piece = "ENT0000001";
+	[Parameter] public int Materiel { get; set; } = 0;
+	[Parameter] public int Projet { get; set; } = 0;
+	[Parameter] public bool IsList { get; set; } = true;
+	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+	[Parameter] public int id { get; set; } = 0;
+	[Parameter] public int type { get; set; } = 0;
+	int col = 24;
+	DB db = new DB();
+	NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
+	private API_T_MaterielEntretien row { get; set; }
+	private List<API_T_MaterielEntretienDetail> lignes = new List<API_T_MaterielEntretienDetail>();
+	protected override void OnInitialized()
+	{
+		db = session.db;
+		GC.Collect();
+		if (type == 0 || type == 4 || type == 7 || type == 8)
+		{
+			col = 24;
+		}
+		if (id != 0)
+		{
+			row = db.API_T_MaterielEntretien.Where(a => a.id == id).SingleOrDefault();
+			lignes = db.API_T_MaterielEntretienDetail.Where(a => a.Entretien == this.id).ToList();
+		}
+		else
+		{
+			row = new API_T_MaterielEntretien();
+			row.Type = type;
+			row.Date = DateTime.Today;
+			row.Annee = DateTime.Today.Year;
+			string piece = "ENT0000001";
 
-            var dt = db.API_T_MaterielEntretien.Where(a => a.Piece.StartsWith("ENT")).ToList();
-            if (dt.Count != 0)
-            {
-                piece = fn.getNextCode(dt.Max(a => a.Piece));
-            }
-            row.Piece = piece;
-            if (Materiel != 0)
-            {
-                row.Materiel = Materiel;
-            }
-            if (Projet != 0)
-            {
-                row.Projet = Projet;
-            }
-        }
+			var dt = db.API_T_MaterielEntretien.Where(a => a.Piece.StartsWith("ENT")).ToList();
+			if (dt.Count != 0)
+			{
+				piece = fn.getNextCode(dt.Max(a => a.Piece));
+			}
+			row.Piece = piece;
+			if (Materiel != 0)
+			{
+				row.Materiel = Materiel;
+			}
+			if (Projet != 0)
+			{
+				row.Projet = Projet;
+			}
+		}
 
-    }
-    private void Submit(bool close)
-    {
-        try
-        {
-            if (id == 0)
-            {
-                db.API_T_MaterielEntretien.Add(row);
-            }
-            db.SaveChanges();
-            id = row.id;
-            if (close)
-            {
-                DialogService.Close();
-            }
+	}
+	private void Submit(bool close)
+	{
+		try
+		{
+			if (id == 0)
+			{
+				db.API_T_MaterielEntretien.Add(row);
+			}
+			db.SaveChanges();
+			id = row.id;
+			if (close)
+			{
+				DialogService.Close();
+			}
 
-        }
-        catch (Exception ex)
-        {
-            Message.Error(ex.Message);
-        }
-    }
-    private void UpdateTotal()
-    {
-        if (id != 0)
-        {
-            row.Montant = db.API_T_MaterielEntretienDetail.Where(a => a.Entretien == row.id).ToList().Sum(a => a.Montant);
-            db.API_T_MaterielEntretien.Update(row);
-            db.SaveChanges();
-        }
+		}
+		catch (Exception ex)
+		{
+			Message.Error(ex.Message);
+		}
+	}
+	private void UpdateTotal()
+	{
+		if (id != 0)
+		{
+			row.Montant = db.API_T_MaterielEntretienDetail.Where(a => a.Entretien == row.id).ToList().Sum(a => a.Montant);
+			db.API_T_MaterielEntretien.Update(row);
+			db.SaveChanges();
+		}
 
-    }
-    public void UpdateListe(ActionEventArgs<API_T_MaterielEntretienDetail> args)
-    {
-        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
-        {
-            args.Data.Montant = args.Data.Qte * args.Data.PU;
-            args.Data.Libelle = args.Data.Libelle ?? fn.TypeEntretien().Where(a => a.Id == type).SingleOrDefault().Name;
-            if (args.Action == "Add")
-            {
-                if (id == 0)
-                {
-                    Submit(false);
-                }
-                API_T_MaterielEntretienDetail item = args.Data;
-                item.Entretien = this.id;
-                if (type == 0)
-                {
-                    item.Unite = "Litre";
-                }
-                if (type == 4)
-                {
-                    item.Unite = "Unité";
-                }
-                db.API_T_MaterielEntretienDetail.Add(item);
-                db.SaveChanges();
+	}
+	public void UpdateListe(ActionEventArgs<API_T_MaterielEntretienDetail> args)
+	{
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+			args.Data.Montant = args.Data.Qte * args.Data.PU;
+			args.Data.Libelle = args.Data.Libelle ?? fn.TypeEntretien().Where(a => a.Id == type).SingleOrDefault().Name;
+			if (args.Action == "Add")
+			{
+				if (id == 0)
+				{
+					Submit(false);
+				}
+				API_T_MaterielEntretienDetail item = args.Data;
+				item.Entretien = this.id;
+				if (type == 0)
+				{
+					item.Unite = "Litre";
+				}
+				if (type == 4)
+				{
+					item.Unite = "Unité";
+				}
+				db.API_T_MaterielEntretienDetail.Add(item);
+				db.SaveChanges();
 
-            }
-            if (args.Action != "Add")
-            {
-                var local = db.Set<API_T_MaterielEntretienDetail>().Local.FirstOrDefault(a => a.id == args.Data.id);
-                if (local != null)
-                {
-                    db.Entry(local).State = EntityState.Detached;
-                }
-                db.Entry(args.Data).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+			}
+			if (args.Action != "Add")
+			{
+				var local = db.Set<API_T_MaterielEntretienDetail>().Local.FirstOrDefault(a => a.id == args.Data.id);
+				if (local != null)
+				{
+					db.Entry(local).State = EntityState.Detached;
+				}
+				db.Entry(args.Data).State = EntityState.Modified;
+				db.SaveChanges();
+			}
 
-        }
+		}
 
-        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
-        {
-            var local = db.Set<API_T_MaterielEntretienDetail>().Local.FirstOrDefault(a => a.id == args.Data.id);
-            if (local != null)
-            {
-                db.Entry(local).State = EntityState.Detached;
-            }
-            db.Entry(args.Data).State = EntityState.Deleted;
-            db.SaveChanges();
-        }
-        UpdateTotal();
-    }
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			var local = db.Set<API_T_MaterielEntretienDetail>().Local.FirstOrDefault(a => a.id == args.Data.id);
+			if (local != null)
+			{
+				db.Entry(local).State = EntityState.Detached;
+			}
+			db.Entry(args.Data).State = EntityState.Deleted;
+			db.SaveChanges();
+		}
+		UpdateTotal();
+	}
 }

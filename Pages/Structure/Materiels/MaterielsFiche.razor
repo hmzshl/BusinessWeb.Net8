@@ -48,7 +48,7 @@ else
                                     <ContentTemplate>
                                         <GridRow>
                                         <GridCol Xs="24" Md="12">
-                                            <Card Title="Identification" Style="height: 180px">
+                                            <Card Title="Identification" Style="height: 220px">
                                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Intitulé" LabelColSpan="8">
                                                     <SfTextBox @bind-Value="@row.Intitule"/>
                                                 </FormItem>
@@ -106,7 +106,7 @@ else
                                                     
                                         </GridCol>
                                         <GridCol Xs="24" Md="12">
-                                                    <Card Title="Conducteur" Style="height: 180px">
+                                                    <Card Title="Conducteur" Style="height: 220px">
                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Nom" LabelColSpan="8">
                                                     <SfDropDownList TValue="int" TItem="API_T_Personnel" DataSource="@db.API_T_Personnel" @bind-Value="@row.Conducteur">
                                                     <DropDownListEvents TValue="int" TItem="API_T_Personnel" ValueChange="@(args => GetCond(args.Value))"/>
