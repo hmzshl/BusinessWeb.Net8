@@ -127,7 +127,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 
             try
             {
-                setDB(); await _db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -149,7 +149,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
         public async Task<ActionResult<F_DOCENTETE>> PostF_DOCENTETE(F_DOCENTETE item)
         {
             setDB(); _db.F_DOCENTETE.Add(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return CreatedAtAction("GetF_DOCENTETE", new { id = item.cbMarq }, item);
         }
@@ -165,7 +165,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
             }
 
             _db.F_DOCENTETE.Remove(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return NoContent();
         }

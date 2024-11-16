@@ -82,11 +82,19 @@ namespace BusinessWeb.Controllers.SAGE_Tables
                 return BadRequest();
             }
 
-            setDB(); _db.Entry(item).State = EntityState.Modified;
+            setDB(); 
+            /*
+            var ln = _db.F_ARTICLE.Where(a => a.cbMarq == id).SingleOrDefault(); 
+            if(ln == null)
+            {
+                ln = item;
+                _db.SaveChanges();
+            }*/
+            _db.Entry(item).State = EntityState.Modified;
 
             try
             {
-                setDB(); await _db.SaveChangesAsync();
+                 await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -108,7 +116,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
         public async Task<ActionResult<F_ARTICLE>> PostF_ARTICLE(F_ARTICLE item)
         {
             setDB(); _db.F_ARTICLE.Add(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return CreatedAtAction("GetF_ARTICLE", new { id = item.cbMarq }, item);
         }
@@ -124,7 +132,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
             }
 
             _db.F_ARTICLE.Remove(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return NoContent();
         }

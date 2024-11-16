@@ -74,7 +74,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 
             try
             {
-                setDB(); await _db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -96,7 +96,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
         public async Task<ActionResult<P_DOSSIERCIAL>> PostP_DOSSIERCIAL(P_DOSSIERCIAL item)
         {
             setDB(); _db.P_DOSSIERCIAL.Add(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return CreatedAtAction("GetP_DOSSIERCIAL", new { id = item.cbMarq }, item);
         }
@@ -112,7 +112,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
             }
 
             _db.P_DOSSIERCIAL.Remove(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return NoContent();
         }

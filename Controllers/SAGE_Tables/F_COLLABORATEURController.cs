@@ -73,7 +73,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 
             try
             {
-                setDB(); await _db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -95,7 +95,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
         public async Task<ActionResult<F_COLLABORATEUR>> PostF_COLLABORATEUR(F_COLLABORATEUR item)
         {
             setDB(); _db.F_COLLABORATEUR.Add(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return CreatedAtAction("GetF_COLLABORATEUR", new { id = item.cbMarq }, item);
         }
@@ -111,7 +111,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
             }
 
             _db.F_COLLABORATEUR.Remove(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return NoContent();
         }

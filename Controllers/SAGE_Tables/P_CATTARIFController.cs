@@ -74,7 +74,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 
             try
             {
-                setDB(); await _db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -96,7 +96,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
         public async Task<ActionResult<P_CATTARIF>> PostP_CATTARIF(P_CATTARIF item)
         {
             setDB(); _db.P_CATTARIF.Add(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return CreatedAtAction("GetP_CATTARIF", new { id = item.cbMarq }, item);
         }
@@ -112,7 +112,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
             }
 
             _db.P_CATTARIF.Remove(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return NoContent();
         }

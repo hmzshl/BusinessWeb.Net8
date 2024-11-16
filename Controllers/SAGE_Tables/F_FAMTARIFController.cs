@@ -78,7 +78,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 
             try
             {
-                setDB(); await _db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -100,7 +100,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
         public async Task<ActionResult<F_FAMTARIF>> PostF_FAMTARIF(F_FAMTARIF item)
         {
             setDB(); _db.F_FAMTARIF.Add(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return CreatedAtAction("GetF_FAMTARIF", new { id = item.cbMarq }, item);
         }
@@ -116,7 +116,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
             }
 
             _db.F_FAMTARIF.Remove(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return NoContent();
         }

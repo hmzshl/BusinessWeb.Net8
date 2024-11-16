@@ -86,7 +86,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 
             try
             {
-                setDB(); await _db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -108,7 +108,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
         public async Task<ActionResult<F_COMPTEA>> PostF_COMPTEA(F_COMPTEA item)
         {
             setDB(); _db.F_COMPTEA.Add(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return CreatedAtAction("GetF_COMPTEA", new { id = item.cbMarq }, item);
         }
@@ -124,7 +124,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
             }
 
             _db.F_COMPTEA.Remove(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return NoContent();
         }

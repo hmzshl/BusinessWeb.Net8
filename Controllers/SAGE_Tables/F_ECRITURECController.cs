@@ -113,7 +113,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 
             try
             {
-                setDB(); await _db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -135,7 +135,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
         public async Task<ActionResult<F_ECRITUREC>> PostF_ECRITUREC(F_ECRITUREC item)
         {
             setDB(); _db.F_ECRITUREC.Add(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return CreatedAtAction("GetF_ECRITUREC", new { id = item.cbMarq }, item);
         }
@@ -151,7 +151,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
             }
 
             _db.F_ECRITUREC.Remove(item);
-            setDB(); await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return NoContent();
         }

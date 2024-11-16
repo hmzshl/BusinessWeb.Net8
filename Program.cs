@@ -138,6 +138,7 @@ app.UseRouting();
 app.UseCors("NewPolicy");
 app.UseAuthorization();
 app.UseAntiforgery();
+app.UseMiddleware<ApiKeyMiddleware>();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
@@ -145,7 +146,6 @@ app.UseEndpoints(endpoints =>
 app.UseCors();
 
 app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>().Database.Migrate();
-app.UseMiddleware<ApiKeyMiddleware>();
 app.MapControllers();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
