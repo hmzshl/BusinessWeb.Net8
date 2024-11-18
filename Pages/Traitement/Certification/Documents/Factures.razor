@@ -231,7 +231,7 @@ else
 	protected async Task Edit(RecordDoubleClickEventArgs<API_V_DOCENTETE> args)
 	{
 		await DialogService.OpenAsync<DetailsPiece>(args.RowData.DO_Piece,
-				new Dictionary<string, object>() { { "DO_Piece", args.RowData.DO_Piece }, { "DO_Type", args.RowData.DO_Type } },
+				new Dictionary<string, object>() { { "DO_Piece", args.RowData.DO_Piece }, { "DO_Type", args.RowData.DO_Type }, { "Src", "Certif" } },
 			new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
 	}
 

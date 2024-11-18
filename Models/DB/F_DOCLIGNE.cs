@@ -201,6 +201,12 @@ public partial class F_DOCLIGNE
 
     public DateTime? cbModification { get; set; }
 
+    public string DL_PieceDE { get; set; }
+
+    public DateTime? DL_DateDE { get; set; }
+
+    public decimal? DL_QteDE { get; set; }
+
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 
     public virtual F_TAXE DL_CodeTaxe1Navigation { get; set; }

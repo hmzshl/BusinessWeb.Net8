@@ -13096,6 +13096,7 @@ public partial class DB : DbContext
             entity.Property(e => e.DL_DateAvancement).HasColumnType("datetime");
             entity.Property(e => e.DL_DateBC).HasColumnType("datetime");
             entity.Property(e => e.DL_DateBL).HasColumnType("datetime");
+            entity.Property(e => e.DL_DateDE).HasColumnType("datetime");
             entity.Property(e => e.DL_DatePL).HasColumnType("datetime");
             entity.Property(e => e.DL_Design)
                 .HasMaxLength(69)
@@ -13116,6 +13117,9 @@ public partial class DB : DbContext
             entity.Property(e => e.DL_PieceBL)
                 .HasMaxLength(9)
                 .IsUnicode(false);
+            entity.Property(e => e.DL_PieceDE)
+                .HasMaxLength(13)
+                .IsUnicode(false);
             entity.Property(e => e.DL_PiecePL)
                 .HasMaxLength(9)
                 .IsUnicode(false);
@@ -13126,6 +13130,7 @@ public partial class DB : DbContext
             entity.Property(e => e.DL_Qte).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_QteBC).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_QteBL).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.DL_QteDE).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.DL_QtePL).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_Remise01REM_Valeur).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_Remise02REM_Valeur).HasColumnType("numeric(24, 6)");
