@@ -329,6 +329,13 @@ else
 				ln.DO_Date = doc.DO_Date;
 				ln.DO_Piece = doc.DO_Piece;
 				ln.DL_No = dl_no;
+				ln.DL_PrixUnitaire = item.DL_PrixUnitaire;
+				ln.DL_MontantHT = item.DL_MontantHT;
+				ln.DL_PUTTC = item.PUTTC;
+				ln.DL_MontantTTC = item.DL_MontantTTC;
+				ln.DL_Remise01REM_Valeur = item.DL_Remise01REM_Valeur;
+				ln.DL_Taxe1 = item.DL_Taxe1;
+				ln.DL_CodeTaxe1 = item.DL_CodeTaxe1;
 				db.Add(ln);
 				dl_no = dl_no + 1;
 			}
