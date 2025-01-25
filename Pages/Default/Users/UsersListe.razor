@@ -1,55 +1,66 @@
-﻿<RadzenContent Container="main">
-    <div class="grid-67">
-        <SfGrid  Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)" EnableVirtualization >
-            <GridPageSettings PageSize="100"></GridPageSettings>
-            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
-                <HeaderTemplate>
-                    <span>@((context as ApplicationUser).Name)</span>
-                </HeaderTemplate>
-                <Template>
-                    @{
-                        var row = (context as ApplicationUser);
-                    }
-                    <RadzenTemplateForm TItem="ApplicationUser" Data="@row" Context="FormContext">
-                        <GridRow>
-                            <GridCol Xs="24" Md="24">
-                                <SfTextBox ID="Email" @bind-Value="@row.Email" Placeholder="Email" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" />
-                                <RadzenRequiredValidator Component="Email" Text="Email is required" />
-                            </GridCol>
-                            <GridCol Xs="24" Md="24">
-                                <SfMultiSelect @bind-Value="@(userRoles)" Placeholder="Roles" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" TValue="IEnumerable<string>" TItem="ApplicationRole" DataSource="@roles">
-                                    <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
-                                </SfMultiSelect>
-                            </GridCol>
-                            <GridCol Xs="24" Md="24">
-                                <SfTextBox ID="Password" @bind-Value="@row.Password" Placeholder="Mot de passe" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" />
-                                <RadzenRequiredValidator Component="Password" Text="Password is required" />
-                            </GridCol>
-                            <GridCol Xs="24" Md="24">
-                                <SfTextBox ID="ConfirmPassword" @bind-Value="@row.ConfirmPassword" Placeholder="Confirmer le mot de passe" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" />
-                                <RadzenRequiredValidator Component="ConfirmPassword" Text="ConfirmPassword is required" />
-                                <RadzenCompareValidator Text="Passwords must match" Component="ConfirmPassword" Value="@row.Password" />
-                            </GridCol>
-                        </GridRow>
-                    </RadzenTemplateForm>
+﻿@if (IsLoaded)
+{
+    <RadzenContent Container="main">
+        <div class="grid-67">
+            <SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)" EnableVirtualization>
+                <GridPageSettings PageSize="100"></GridPageSettings>
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                    <HeaderTemplate>
+                        <span>@((context as ApplicationUser).Name)</span>
+                    </HeaderTemplate>
+                    <Template>
+                        @{
+                            var row = (context as ApplicationUser);
+                        }
+                        <RadzenTemplateForm TItem="ApplicationUser" Data="@row" Context="FormContext">
+                            <GridRow>
+                                <GridCol Xs="24" Md="24">
+                                    <SfTextBox ID="Email" @bind-Value="@row.Email" Placeholder="Email" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" />
+                                    <RadzenRequiredValidator Component="Email" Text="Email is required" />
+                                </GridCol>
+                                <GridCol Xs="24" Md="24">
+                                    <SfMultiSelect @bind-Value="@(userRoles)" Placeholder="Roles" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" TValue="IEnumerable<string>" TItem="ApplicationRole" DataSource="@roles">
+                                        <MultiSelectFieldSettings Text="Name" Value="Id"></MultiSelectFieldSettings>
+                                    </SfMultiSelect>
+                                </GridCol>
+                                <GridCol Xs="24" Md="24">
+                                    <SfTextBox ID="Password" @bind-Value="@row.Password" Placeholder="Mot de passe" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" />
+                                    <RadzenRequiredValidator Component="Password" Text="Password is required" />
+                                </GridCol>
+                                <GridCol Xs="24" Md="24">
+                                    <SfTextBox ID="ConfirmPassword" @bind-Value="@row.ConfirmPassword" Placeholder="Confirmer le mot de passe" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" />
+                                    <RadzenRequiredValidator Component="ConfirmPassword" Text="ConfirmPassword is required" />
+                                    <RadzenCompareValidator Text="Passwords must match" Component="ConfirmPassword" Value="@row.Password" />
+                                </GridCol>
+                            </GridRow>
+                        </RadzenTemplateForm>
 
-                </Template>
-            </GridEditSettings>
-            <GridEvents OnActionBegin="UpdateListe" TValue="AspNetUser" OnRecordDoubleClick="RowSelected"></GridEvents>
-            <GridTemplates Context="GridContext">
-                <EmptyRecordTemplate>
-                    <Empty></Empty>
-                </EmptyRecordTemplate>
-            </GridTemplates>
-            <GridColumns>
-                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(AspNetUser.Id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
-                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(AspNetUser.UserName) HeaderText="Nom"></GridColumn>
-            </GridColumns>
-        </SfGrid>
+                    </Template>
+                </GridEditSettings>
+                <GridEvents OnActionBegin="UpdateListe" TValue="AspNetUser" OnRecordDoubleClick="RowSelected"></GridEvents>
+                <GridTemplates Context="GridContext">
+                    <EmptyRecordTemplate>
+                        <Empty></Empty>
+                    </EmptyRecordTemplate>
+                </GridTemplates>
+                <GridColumns>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(AspNetUser.Id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(AspNetUser.UserName) HeaderText="Nom"></GridColumn>
+                </GridColumns>
+            </SfGrid>
+        </div>
+
+    </RadzenContent>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
     </div>
+}
 
-</RadzenContent>
+
 
 
 
@@ -58,11 +69,14 @@
     private IEnumerable<AspNetUser> items;
     protected IEnumerable<string> userRoles;
     protected IEnumerable<ApplicationRole> roles;
+    bool IsLoaded = false;
     protected override async Task OnInitializedAsync()
     {
+        await Task.Delay(100);
         roles = await sc.GetRoles();
         await Task.Run(LoadData);
         await InitAuth();
+        IsLoaded = true;
     }
     private async Task LoadData()
     {

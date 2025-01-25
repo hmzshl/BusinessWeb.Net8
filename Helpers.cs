@@ -535,7 +535,7 @@ namespace BusinessWeb
 				optionBuilder.UseSqlServer(getConnectionString(ste), o => o.UseCompatibilityLevel(100));
 				DB db = new DB(optionBuilder.Options);
 				db.Database.Migrate();
-				if (db.F_DOCLIGNE.Where(a => a.DO_Type == 40).Count() == 0)
+				/*if (db.F_DOCLIGNE.Where(a => a.DO_Type == 40).Count() == 0)
 				{
 					var ln = db.P_INTERNE.Where(a => a.cbMarq == 1).SingleOrDefault();
 					if (ln != null)
@@ -618,7 +618,7 @@ namespace BusinessWeb
 						ln.D_Coche01 = 3;
 						db.SaveChanges();
 					}
-				}
+				}*/
 				db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "ChefChantier", "VARCHAR(100)"));
 				db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "Demandeur", "VARCHAR(100)"));
 				return db;
