@@ -9,6 +9,10 @@
 @using System.Net.NetworkInformation;
 @attribute [Authorize]
 
+<div>
+
+</div>
+
 @if (IsLoaded)
 {
 	<ErrorBoundary @ref="errorBoundary">
@@ -408,7 +412,7 @@
 													@if (session.SelectedAPP == 0)
 													{
 														<div style="padding-top: 60px;">
-															<RadzenStack class="main-btns" JustifyContent="JustifyContent.Center" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="5px" Wrap="FlexWrap.Wrap">
+															<RadzenStack class="main-btns" JustifyContent="JustifyContent.Center" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="5px" Wrap="Radzen.FlexWrap.Wrap">
 																@if (license.IsFeaturePresentEx(7))
 																{
 																	<div>
@@ -624,7 +628,7 @@
 																				@title
 																			</HeaderTemplate>
 																			<ChildContent>
-																				<RadzenStack Style="padding: 15px;" class="main-btns" JustifyContent="JustifyContent.Start" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Gap="10px" Wrap="FlexWrap.Wrap">
+																				<RadzenStack Style="padding: 15px;" class="main-btns" JustifyContent="JustifyContent.Start" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Gap="10px" Wrap="Radzen.FlexWrap.Wrap">
 																					@foreach (TAuthorize item in session?.Authorizes?.Where(a => a.Title == title).Select(a => new TAuthorize { Url = a.Url, Title = a.Title, Description = a.Description }).Distinct())
 																					{
 																						string inputString = @item.Description ?? "";
@@ -697,7 +701,7 @@
 																		@title
 																	</HeaderTemplate>
 																	<ChildContent>
-																		<RadzenStack Style="padding: 15px;" class="main-btns" JustifyContent="JustifyContent.Start" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Gap="10px" Wrap="FlexWrap.Wrap">
+																		<RadzenStack Style="padding: 15px;" class="main-btns" JustifyContent="JustifyContent.Start" Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Start" Gap="10px" Wrap="Radzen.FlexWrap.Wrap">
 																			@foreach (TAuthorize item in session?.Authorizes?.Where(a => a.Title == title).Select(a => new TAuthorize { Url = a.Url, Title = a.Title, Description = a.Description }).Distinct())
 																			{
 																				string inputString = @item.Description ?? "";
@@ -870,7 +874,7 @@ else
 
 		}
 		IsLoaded = true;
-
+		
 	}
 	private async Task InitAuth()
 	{

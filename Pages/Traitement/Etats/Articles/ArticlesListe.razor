@@ -10,7 +10,7 @@
 						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
 
 							<Template>
-								<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap">
+								<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="Radzen.FlexWrap.Wrap">
 									<RadzenLabel Text="AFFICHAGE" />
 									<SfMultiSelect Width="150px" @bind-Value=@selected_affichages ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(affichages)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
 									</SfMultiSelect>

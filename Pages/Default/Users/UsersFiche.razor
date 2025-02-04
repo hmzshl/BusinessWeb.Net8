@@ -29,14 +29,14 @@
 					<FormItem LabelAlign="AntLabelAlignType.Left" Label="Importer les autorisations" LabelColSpan="8">
 						<div class="ls-parent">
 							<div class="ls-child-left">
-								<SfDropDownList @bind-Value="@imported_user" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering
+								<SfDropDownList Enabled="false" @bind-Value="@imported_user" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering
 												TValue="string" TItem="AspNetUser" DataSource="@(sdb.AspNetUsers.Where(a => a.Id != this.Id).ToList())">
 									<DropDownListEvents TValue="string" TItem="AspNetUser" />
 									<DropDownListFieldSettings Text="UserName" Value="Id" />
 								</SfDropDownList>
 							</div>
 							<div class="ls-child-right">
-								<RadzenButton Disabled="@(!(imported_user != null))" Click="ImportAuthorize" Icon="refresh" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+								<RadzenButton Disabled Click="ImportAuthorize" Icon="refresh" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
 							</div>
 						</div>
 					</FormItem>

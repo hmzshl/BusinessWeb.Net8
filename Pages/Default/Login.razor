@@ -20,9 +20,9 @@
                                         <RadzenColumn SizeMD="12">
                                             <RadzenTemplateForm Action="@($" account/login?redirectUrl={redirectUrl}")" Data="@("login")"
                                                                 Method="post">
-                                                <RadzenAlert Shade="Radzen.Shade.Lighter" Variant="Radzen.Variant.Text" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Danger" Visible="@errorVisible">@error</RadzenAlert>
-                                                <RadzenAlert Shade="Radzen.Shade.Lighter" Variant="Radzen.Variant.Text" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Info" Visible="@infoVisible">@info</RadzenAlert>
-                                                <RadzenLogin LoginText="SE CONNECTER" PasswordText="Mot de passe" UserText="Nom d'utilisateur" AllowResetPassword="false" AllowRegister="false" FormFieldVariant="Variant.Text" />
+                                                <RadzenAlert Shade="Radzen.Shade.Lighter" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Danger" Visible="@errorVisible">@error</RadzenAlert>
+                                                <RadzenAlert Shade="Radzen.Shade.Lighter" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Info" Visible="@infoVisible">@info</RadzenAlert>
+                                                <RadzenLogin LoginText="SE CONNECTER" PasswordText="Mot de passe" UserText="Nom d'utilisateur" AllowResetPassword="false" AllowRegister="false" />
                                             </RadzenTemplateForm>
                                         </RadzenColumn>
                                     </RadzenRow>

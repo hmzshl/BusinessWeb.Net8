@@ -10,7 +10,7 @@
                     <ToolbarItems>
                         <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
                             <Template>
-                                <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap">
+                                <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="Radzen.FlexWrap.Wrap">
                                     <RadzenLabel Text="VILLES" />
                                     <SfMultiSelect Width="230px" @bind-Value=@selected_villes ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(villes)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
                                          <MultiSelectFieldSettings Text="CT_Ville" Value="CT_Ville"></MultiSelectFieldSettings>
@@ -23,7 +23,7 @@
                          
                          <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
                              <Template>
-                                 <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="FlexWrap.Wrap">
+                                 <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="Radzen.FlexWrap.Wrap">
                                      <RadzenLabel Text="COLLABORATEURS" />
                                      <SfMultiSelect Width="230px" @bind-Value=@selected_collaborateurs ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(collaborateurs)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
                                          <MultiSelectFieldSettings Text="CO_Nom" Value="CO_Nom"></MultiSelectFieldSettings>

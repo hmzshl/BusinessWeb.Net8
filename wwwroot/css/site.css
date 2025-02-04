@@ -2409,3 +2409,7 @@ div::first-letter {
 .e-ddl.e-popup .e-list-item {
     font-size: 13px !important
 }
+.e-input:focus:not(.e-success):not(.e-warning):not(.e-error), .e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) input:focus, .e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) textarea:focus, .e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) input:focus, .e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) textarea:focus, .e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group).e-input-focus input, .e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group).e-input-focus input {
+    padding-bottom: 0px;
+    border-bottom-width: 0px;
+}
