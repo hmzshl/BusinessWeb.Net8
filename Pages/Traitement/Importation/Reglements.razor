@@ -1,0 +1,27 @@
+﻿@page "/imp-regl"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction")]
+
+@if (IsLoaded)
+{
+    <Card_1 Title="LISTE DES REGLEMENTS CLIENTS">
+        <div class="grid-container no-border">
+            <DetailsReglement IsClients="true" ClassHeight="grid-84" DO_Domaine="0" IsImport="true" ></DetailsReglement>
+        </div>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+@code {
+    bool IsLoaded = false;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        IsLoaded = true;
+    }
+}

@@ -27,14 +27,24 @@
 				</ToolbarItem>
 				<ToolbarItem OnClick=@(()=>{ _visible = true; }) TooltipText="Filtrer" Text="Filtrer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-filter"></ToolbarItem>
 				<ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+
 				<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+				<ToolbarItem OnClick="ShowLog" TooltipText="Importation log" Text="Importation log" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-circle-info"></ToolbarItem>
+				@if (IsImport)
+				{
+					<ToolbarItem Align="ItemAlign.Right">
+						<Template>
+							<SfButton OnClick="Import" IconCss="e-icons e-arrow-down" IsPrimary>Importer depuis excel</SfButton>
+						</Template>
+					</ToolbarItem>
+				}
 			</ToolbarItems>
 		</SfToolbar>
 	</div>
 	<div class="@ClassHeight" style=" zoom: @session.zoomLevel;">
 
 		<SfGrid  AllowReordering ID="DetailreglGRID" ShowColumnChooser Height="100%" AllowSelection EnableHover DataSource="@(items)" 
- @ref=DefaultGrid AllowSorting AllowFiltering AllowExcelExport EnableVirtualization >
+		@ref=DefaultGrid AllowSorting AllowFiltering AllowExcelExport EnableVirtualization >
 			<GridPageSettings PageSize="100" />
 			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 			<GridAggregates>
@@ -178,6 +188,7 @@ else
 	[Parameter] public string Statut { get; set; }
 	[Parameter] public int CO_No { get; set; }
 	[Parameter] public int DE_No { get; set; }
+	[Parameter] public bool IsImport { get; set; }
 	[Parameter] public string ClassHeight { get; set; }
 	bool _visible = false;
 	SfGrid<API_V_CREGLEMENT> DefaultGrid;
@@ -195,14 +206,28 @@ else
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(100);
-		        db = session.db;
-        GC.Collect();
+		db = session.db;
+		GC.Collect();
 		types = db.API_V_CREGLEMENT.OrderBy(a => a.R_Intitule).Select(a => a.R_Intitule).Distinct().ToList();
 		statut = db.API_V_CREGLEMENT.OrderBy(a => a.Echeance).Select(a => a.Echeance).Distinct().ToList();
 		affectation = db.API_V_CREGLEMENT.OrderBy(a => a.EtatReglement).Select(a => a.EtatReglement).Distinct().ToList();
 		journaux = db.API_V_CREGLEMENT.OrderBy(a => a.JO_Intitule).Select(a => a.JO_Intitule).Distinct().ToList();
 		await UpdateGrid();
 		IsLoaded = true;
+	}
+	private async Task Import()
+	{
+		await DialogService.OpenAsync<ReglImport>("",
+		new Dictionary<string, object>() { },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "600px", Height = "300px" });
+		await UpdateGrid();
+	}
+	private async Task ShowLog()
+	{
+		await DialogService.OpenAsync<ImportLog>("",
+		new Dictionary<string, object>() { { "TableName", "F_CREGLEMENT" } },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "800px", Height = "90%" });
+		await UpdateGrid();
 	}
 	private async Task UpdateGrid()
 	{

@@ -1,0 +1,49 @@
+﻿@if (IsLoaded)
+{
+	<div style="height: 80vh;">
+		<SfGrid Height="100%" DataSource="@(items)" AllowFiltering>
+			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+			<GridEvents TValue="API_T_ImportLog"></GridEvents>
+			<GridTemplates>
+				<EmptyRecordTemplate>
+					<Empty></Empty>
+				</EmptyRecordTemplate>
+			</GridTemplates>
+			<GridColumns>
+				<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ImportLog.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+				<GridColumn Width="130px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ImportLog.Date) HeaderText="Date"></GridColumn>
+				<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ImportLog.Libelle) HeaderText="Libellé"></GridColumn>
+			</GridColumns>
+		</SfGrid>
+	</div>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+
+
+
+
+@code
+{
+	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+	[Parameter] public string TableName { get; set; }
+	DB db = new DB();
+	bool IsLoaded = false;
+	private List<API_T_ImportLog> items = new List<API_T_ImportLog>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(100);
+		db = session.db;
+		GC.Collect();
+		items = session.db.API_T_ImportLog.Where(a => a.TableName == TableName).OrderBy(a => a.id).ToList();
+		IsLoaded = true;
+	}
+
+
+}
