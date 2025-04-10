@@ -145,7 +145,7 @@ app.UseEndpoints(endpoints =>
 });
 app.UseCors();
 
-app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>().Database.Migrate();
+await app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>().Database.MigrateAsync();
 app.MapControllers();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
