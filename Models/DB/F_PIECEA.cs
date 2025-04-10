@@ -37,5 +37,5 @@ public partial class F_PIECEA
 
     public short? cbFlag { get; set; }
 
-    public virtual F_PIECEG P { get; set; }
+    public virtual F_PIECEG F_PIECEG { get; set; }
 }

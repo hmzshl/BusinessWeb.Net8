@@ -264,7 +264,7 @@
                             <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AgenceOffre.Cumulative)" HeaderText="Cumulable" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
                                 <Template>
                                     @{
-                                        <SfCheckBox Checked="@((context as API_T_AgenceOffre).Cumulative??false)"></SfCheckBox>
+                                        <SfCheckBox Checked="@((context as API_T_AgenceOffre).Cumulative)"></SfCheckBox>
                                     }
                                 </Template>
                             </GridColumn>

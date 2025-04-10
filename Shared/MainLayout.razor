@@ -927,7 +927,7 @@ else
 			if (user.Count() != 0)
 			{
 				session.Societe = societes.Where(a => a.id == user.First().SelectedSociete).SingleOrDefault() ?? societes?.First();
-				session.SelectedAPP = user.First().SelectedAPP ?? 0;
+				//session.SelectedAPP = user.First().SelectedAPP ?? 0;
 			}
 			else
 			{

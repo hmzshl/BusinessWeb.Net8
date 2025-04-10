@@ -1,17 +1,19 @@
 ﻿using AntDesign;
-using Microsoft.EntityFrameworkCore;
 using BusinessWeb.Data;
 using BusinessWeb.Models;
-using BusinessWeb.Models.DB;
 using BusinessWeb.Models.BusinessWebDB;
+using BusinessWeb.Models.DB;
+using BusinessWeb.Models.Perso;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Options;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Navigations;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using BusinessWeb.Models.Perso;
-using System.Linq;
 
 namespace BusinessWeb
 {
@@ -181,7 +183,12 @@ namespace BusinessWeb
 
 			//PERSONNELS
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Liste des personnels", Url = "personnels" });
+			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Liste des nomenclatures", Url = "nomenclatures" });
+			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Ordres de fabrications", Url = "ordres-fabrication" });
+			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Documents d'achats", Url = "fabrication-achats" });
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Pointage Personnels", Url = "pointage-personnel" });
+			
+			
 
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Pointage par personnel", Url = "depots" });
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Pointage par projet", Url = "" });
@@ -533,7 +540,12 @@ namespace BusinessWeb
 		public DB getDb(TSociete ste)
 		{
 			var optionBuilder = new DbContextOptionsBuilder<DB>();
-			optionBuilder.UseSqlServer(getConnectionString(ste), o => o.UseCompatibilityLevel(100));
+			optionBuilder.UseSqlServer(getConnectionString(ste), o =>
+			{
+				o.UseCompatibilityLevel(100);
+				o.CommandTimeout(3600); // Timeout in seconds (default is 30)
+			});
+			optionBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
 			DB db = new DB(optionBuilder.Options);
 			db.Database.Migrate();
 			/*if (db.F_DOCLIGNE.Where(a => a.DO_Type == 40).Count() == 0)

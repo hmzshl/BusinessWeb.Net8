@@ -35,5 +35,5 @@ public partial class F_ARTSTOCKEMPL
 
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 
-    public virtual F_DEPOTEMPL D { get; set; }
+    public virtual F_DEPOTEMPL F_DEPOTEMPL { get; set; }
 }

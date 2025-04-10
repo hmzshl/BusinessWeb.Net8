@@ -1,448 +1,449 @@
 ﻿<SfToolbar CssClass="btns">
-    <ToolbarItems>
-        <ToolbarItem Align="ItemAlign.Right">
-                <Template>
-                    <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="Submit">Enregistrer</SfButton>
-                </Template>
-            </ToolbarItem>
-    </ToolbarItems>
+	<ToolbarItems>
+		<ToolbarItem Align="ItemAlign.Right">
+			<Template>
+				<SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="Submit">Enregistrer</SfButton>
+			</Template>
+		</ToolbarItem>
+	</ToolbarItems>
 </SfToolbar>
 @if (@row == null)
 {
-     <div class="spin-center">
-        <Spin size="large" />
-    </div>
+	<div class="spin-center">
+		<Spin size="large" />
+	</div>
 }
-else 
+else
 {
-    <div>
-        <GridRow>
-            <GridCol Xs="24" Md="24">
-                <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="8" Context="FormContext">
-                    <SfTab CssClass="e-fill">
-                        <TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/><TabItems>
-                            <TabItem>
-                                <ChildContent>
-                                    <TabHeader Text="Infos"></TabHeader>
-                                </ChildContent>
-                                <ContentTemplate>
-                                    <GridRow>
-                                    <GridCol Xs="24" Md="12">
-                                            <Card Title="Etat civil" Style="height: 375px">
-                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Nom" LabelColSpan="8">
-                                                    <SfTextBox @bind-Value="@row.Nom" />
-                                                </FormItem>                                                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Matricule" LabelColSpan="8">
-                                                    <SfTextBox @bind-Value="@row.Matricule" />
-                                                </FormItem>
-                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Naissance" LabelColSpan="8">
-                                                    <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateNaissance" />
-                                                </FormItem>
-                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Lieu Naissance" LabelColSpan="8">
-                                                    <SfTextBox @bind-Value="@row.LieuNaissance" />
-                                                </FormItem>
-                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="CIN" LabelColSpan="8">
-                                                    <SfTextBox @bind-Value="@row.CIN" />
-                                                </FormItem>
-                                                <Divider></Divider>
-                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Tél Perso" LabelColSpan="8">
-                                                    <SfTextBox @bind-Value="@row.TelephonePerso" />
-                                                </FormItem>
-                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Tél Pro" LabelColSpan="8">
-                                                    <SfTextBox @bind-Value="@row.TelephonePro" />
-                                                </FormItem>
-                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Autre Tél" LabelColSpan="8">
-                                                    <SfTextBox @bind-Value="@row.TelephoneAutre" />
-                                                </FormItem>
-                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Email" LabelColSpan="8">
-                                                    <SfTextBox @bind-Value="@row.Email" />
-                                                </FormItem>
-                                                <Divider></Divider>
-                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse" LabelColSpan="8">
-                                                    <SfTextBox @bind-Value="@row.Adresse" />
-                                                </FormItem>
-                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Nationalité" LabelColSpan="8">
-                                                    <div class="ls-parent">
-                                                        <div class="ls-child-left">
-                                                            <SfDropDownList AllowFiltering TValue="int?" TItem="API_T_Information" DataSource="@nationalites" @bind-Value="@row.Nationalite">
-                                                            <DropDownListEvents TValue="int?" TItem="API_T_Information" />
-                                                            <DropDownListFieldSettings Text="Valeur" Value="id" />
-                                                            </SfDropDownList>
-                                                        </div>
-                                                        <div class="ls-child-right">
-                                                            <RadzenButton Icon="reorder" Click="@(args => Informations(8))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                        </div>
-                                                    </div>
+	<div>
+		<GridRow>
+			<GridCol Xs="24" Md="24">
+				<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="8" Context="FormContext">
+					<SfTab CssClass="e-fill">
+						<TabEvents Selecting="@(args => fn.DisableTabSelect(args))" /><TabItems>
+							<TabItem>
+								<ChildContent>
+									<TabHeader Text="Infos"></TabHeader>
+								</ChildContent>
+								<ContentTemplate>
+									<GridRow>
+										<GridCol Xs="24" Md="12">
+											<Card Title="Etat civil">
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Nom" LabelColSpan="8">
+													<SfTextBox @bind-Value="@row.Nom" />
+												</FormItem>                                                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Matricule" LabelColSpan="8">
+													<SfTextBox @bind-Value="@row.Matricule" />
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Naissance" LabelColSpan="8">
+													<SfDatePicker TValue="DateTime ?" @bind-Value="@row.DateNaissance" />
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Lieu Naissance" LabelColSpan="8">
+													<SfTextBox @bind-Value="@row.LieuNaissance" />
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="CIN" LabelColSpan="8">
+													<SfTextBox @bind-Value="@row.CIN" />
+												</FormItem>
+												<Divider></Divider>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Tél Perso" LabelColSpan="8">
+													<SfTextBox @bind-Value="@row.TelephonePerso" />
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Tél Pro" LabelColSpan="8">
+													<SfTextBox @bind-Value="@row.TelephonePro" />
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Autre Tél" LabelColSpan="8">
+													<SfTextBox @bind-Value="@row.TelephoneAutre" />
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Email" LabelColSpan="8">
+													<SfTextBox @bind-Value="@row.Email" />
+												</FormItem>
+												<Divider></Divider>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse" LabelColSpan="8">
+													<SfTextBox @bind-Value="@row.Adresse" />
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Nationalité" LabelColSpan="8">
+													<div class="ls-parent">
+														<div class="ls-child-left">
+															<SfDropDownList AllowFiltering TValue="int?" TItem="API_T_Information" DataSource="@nationalites" @bind-Value="@row.Nationalite">
+																<DropDownListEvents TValue="int?" TItem="API_T_Information" />
+																<DropDownListFieldSettings Text="Valeur" Value="id" />
+															</SfDropDownList>
+														</div>
+														<div class="ls-child-right">
+															<RadzenButton Icon="reorder" Click="@(args => Informations(8))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+														</div>
+													</div>
 
 
 
-                                                    </FormItem>
-                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Zone" LabelColSpan="8">
-                                                    <div class="ls-parent">
-                                                        <div class="ls-child-left">
-                                                            <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Site" DataSource="@db.API_T_Site" @bind-Value="@row.Site">
-                                                            <DropDownListEvents TValue="int" TItem="API_T_Site" />
-                                                            <DropDownListFieldSettings Text="Intitule" Value="id" />
-                                                            </SfDropDownList>
-                                                        </div>
-                                                        <div class="ls-child-right">
-                                                            <RadzenButton Disabled Icon="reorder" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                        </div>
-                                                    </div>
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Zone" LabelColSpan="8">
+													<div class="ls-parent">
+														<div class="ls-child-left">
+															<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Site" DataSource="@db.API_T_Site" @bind-Value="@row.Site">
+																<DropDownListEvents TValue="int" TItem="API_T_Site" />
+																<DropDownListFieldSettings Text="Intitule" Value="id" />
+															</SfDropDownList>
+														</div>
+														<div class="ls-child-right">
+															<RadzenButton Disabled Icon="reorder" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+														</div>
+													</div>
 
 
 
-                                                    </FormItem>
+												</FormItem>
 
 
-                                        </Card>
-                                                    <Card Title="Fonction" Style="height: 155px;">
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Département" LabelColSpan="8">
-                                                    <div class="ls-parent">
-                                                        <div class="ls-child-left">
-                                                            <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Information" DataSource="@departements" @bind-Value="@row.Departement">
-                                                            <DropDownListEvents TValue="int" TItem="API_T_Information" />
-                                                            <DropDownListFieldSettings Text="Valeur" Value="id" />
-                                                            </SfDropDownList>
-                                                        </div>
-                                                        <div class="ls-child-right">
-                                                            <RadzenButton Icon="reorder" Click="@(args => Informations(3))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    </FormItem>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Fonction" LabelColSpan="8">
-                                                    <div class="ls-parent">
-                                                        <div class="ls-child-left">
-                                                            <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Information" DataSource="@fonctions" @bind-Value="@row.Fonction">
-                                                            <DropDownListEvents TValue="int" TItem="API_T_Information" />
-                                                            <DropDownListFieldSettings Text="Valeur" Value="id" />
-                                                            </SfDropDownList>
-                                                        </div>
-                                                        <div class="ls-child-right">
-                                                            <RadzenButton Icon="reorder" Click="@(args => Informations(4))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                        </div>
-                                                    </div>
+											</Card>
+											<Card Title="Fonction">
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Département" LabelColSpan="8">
+													<div class="ls-parent">
+														<div class="ls-child-left">
+															<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Information" DataSource="@departements" @bind-Value="@row.Departement">
+																<DropDownListEvents TValue="int" TItem="API_T_Information" />
+																<DropDownListFieldSettings Text="Valeur" Value="id" />
+															</SfDropDownList>
+														</div>
+														<div class="ls-child-right">
+															<RadzenButton Icon="reorder" Click="@(args => Informations(3))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+														</div>
+													</div>
 
 
 
-                                                    </FormItem>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Agence" LabelColSpan="8">
-                                                    <div class="ls-parent">
-                                                        <div class="ls-child-left">
-                                                            <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Information" DataSource="@agence" @bind-Value="@row.Agence">
-                                                            <DropDownListEvents TValue="int" TItem="API_T_Information" />
-                                                            <DropDownListFieldSettings Text="Valeur" Value="id" />
-                                                            </SfDropDownList>
-                                                        </div>
-                                                        <div class="ls-child-right">
-                                                            <RadzenButton Icon="reorder" Click="@(args => Informations(5))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                        </div>
-                                                    </div>
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Fonction" LabelColSpan="8">
+													<div class="ls-parent">
+														<div class="ls-child-left">
+															<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Information" DataSource="@fonctions" @bind-Value="@row.Fonction">
+																<DropDownListEvents TValue="int" TItem="API_T_Information" />
+																<DropDownListFieldSettings Text="Valeur" Value="id" />
+															</SfDropDownList>
+														</div>
+														<div class="ls-child-right">
+															<RadzenButton Icon="reorder" Click="@(args => Informations(4))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+														</div>
+													</div>
 
 
 
-                                                    </FormItem>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Marché" LabelColSpan="8">
-                                                    <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Projet" DataSource="@db.API_T_Projet.Where(a => !(a.IsAppelOffre??false))" @bind-Value="@row.Projet">
-                                                        <DropDownListEvents TValue="int" TItem="API_T_Projet" />
-                                                        <DropDownListFieldSettings Text="NumeroMarche" Value="id" />
-                                                    </SfDropDownList>
-                                                    </FormItem>
-                                                    </Card>
-                                    </GridCol>
-                                        <GridCol Xs="24" Md="12">
-
-                                                    <Card Title="Paie" Style="height: 375px">
-                                                    <Divider></Divider>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Contrat" LabelColSpan="8">
-                                                    <div class="ls-parent">
-                                                        <div class="ls-child-left">
-                                                            <SfDropDownList AllowFiltering TValue="int?" TItem="API_T_Information" DataSource="@contrats" @bind-Value="@row.Contrat">
-                                                            <DropDownListEvents TValue="int?" TItem="API_T_Information" />
-                                                            <DropDownListFieldSettings Text="Valeur" Value="id" />
-                                                            </SfDropDownList>
-                                                        </div>
-                                                        <div class="ls-child-right">
-                                                            <RadzenButton Icon="reorder" Click="@(args => Informations(1))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                        </div>
-                                                    </div>
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Agence" LabelColSpan="8">
+													<div class="ls-parent">
+														<div class="ls-child-left">
+															<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Information" DataSource="@agence" @bind-Value="@row.Agence">
+																<DropDownListEvents TValue="int" TItem="API_T_Information" />
+																<DropDownListFieldSettings Text="Valeur" Value="id" />
+															</SfDropDownList>
+														</div>
+														<div class="ls-child-right">
+															<RadzenButton Icon="reorder" Click="@(args => Informations(5))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+														</div>
+													</div>
 
 
 
-                                                    </FormItem>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Embauche" LabelColSpan="8">
-                                                    <SfDatePicker TValue="DateTime?" @bind-Value="@row.DateEmbouche" />
-                                                    </FormItem>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Num CNSS" LabelColSpan="8">
-                                                    <SfTextBox @bind-Value="@row.NumCNSS" />
-                                                    </FormItem>
-                                                    <Divider></Divider>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Salaire" LabelColSpan="8">
-                                                    <SfDropDownList TValue="int" TItem="Items" DataSource="@fn.SalaireType()" @bind-Value="@row.SalaireType">
-                                                    <DropDownListEvents TValue="int" TItem="Items" />
-                                                    <DropDownListFieldSettings Text="Name" Value="Id" />
-                                                    </SfDropDownList>
-                                                    </FormItem>
-                                                    @if(row.SalaireType == 0) 
-                                                    {
-                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Sal Mensuel" LabelColSpan="8">
-                                                    <SfNumericTextBox @bind-Value="@(row.SalaireBaseMensuel)" ShowSpinButton="false" Decimals="2" Format="N2" />
-                                                    </FormItem>
-                                                    }
-                                                    @if(row.SalaireType == 1) 
-                                                    {
-                                                     <FormItem LabelAlign="AntLabelAlignType.Left" Label="Sal Journalier" LabelColSpan="8">
-                                                    <SfNumericTextBox @bind-Value="@(row.SalaireBaseJournalier)" ShowSpinButton="false" Decimals="2" Format="N2" />
-                                                    </FormItem>
-                                                    }
-                                                    @if(row.SalaireType == 2) 
-                                                    {
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Sal Horaire" LabelColSpan="8">
-                                                        <SfNumericTextBox @bind-Value="@(row.SalaireBaseHoraire)" ShowSpinButton="false" Decimals="2" Format="N2" />
-                                                    </FormItem>
-                                                    }
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Responsable" LabelColSpan="8">
+													<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Personnel" DataSource="@db.API_T_Personnel.Where(a => a.id != this.id)" @bind-Value="@row.Projet">
+														<DropDownListEvents TValue="int" TItem="API_T_Personnel" />
+														<DropDownListFieldSettings Text="Nom" Value="id" />
+													</SfDropDownList>
+												</FormItem>
+											</Card>
+										</GridCol>
+										<GridCol Xs="24" Md="12">
 
-
-                                                    <Divider></Divider>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Sit Familial" LabelColSpan="8">
-                                                    <div class="ls-parent">
-                                                        <div class="ls-child-left">
-                                                            <SfDropDownList AllowFiltering TValue="int?" TItem="API_T_Information" DataSource="@situations" @bind-Value="@row.SituationFamiliale">
-                                                            <DropDownListEvents TValue="int?" TItem="API_T_Information" />
-                                                            <DropDownListFieldSettings Text="Valeur" Value="id" />
-                                                            </SfDropDownList>
-                                                        </div>
-                                                        <div class="ls-child-right">
-                                                            <RadzenButton Icon="reorder" Click="@(args => Informations(9))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                        </div>
-                                                    </div>
+											<Card Title="Paie">
+												<Divider></Divider>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Contrat" LabelColSpan="8">
+													<div class="ls-parent">
+														<div class="ls-child-left">
+															<SfDropDownList AllowFiltering TValue="int?" TItem="API_T_Information" DataSource="@contrats" @bind-Value="@row.Contrat">
+																<DropDownListEvents TValue="int?" TItem="API_T_Information" />
+																<DropDownListFieldSettings Text="Valeur" Value="id" />
+															</SfDropDownList>
+														</div>
+														<div class="ls-child-right">
+															<RadzenButton Icon="reorder" Click="@(args => Informations(1))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+														</div>
+													</div>
 
 
 
-                                                    </FormItem>
-                                                      <FormItem LabelAlign="AntLabelAlignType.Left" Label="Nbr enfants" LabelColSpan="8">
-                                                    <SfNumericTextBox @bind-Value="@(row.NombreEnfant)" ShowSpinButton="false" Decimals="0" Format="N0" />
-                                                    </FormItem>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Pers à charge" LabelColSpan="8">
-                                                    <SfNumericTextBox @bind-Value="@(row.PersonneCharge)" ShowSpinButton="false" Decimals="0" Format="N0" />
-                                                    </FormItem>
-                                                    <Divider></Divider>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Mode Paiement" LabelColSpan="8">
-                                                    <div class="ls-parent">
-                                                        <div class="ls-child-left">
-                                                            <SfDropDownList AllowFiltering TValue="int?" TItem="API_T_Information" DataSource="@modes" @bind-Value="@row.ModePaiement">
-                                                            <DropDownListEvents TValue="int?" TItem="API_T_Information" />
-                                                            <DropDownListFieldSettings Text="Valeur" Value="id" />
-                                                            </SfDropDownList>
-                                                        </div>
-                                                        <div class="ls-child-right">
-                                                            <RadzenButton Icon="reorder" Click="@(args => Informations(6))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                        </div>
-                                                    </div>
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Embauche" LabelColSpan="8">
+													<SfDatePicker TValue="DateTime ?" @bind-Value="@row.DateEmbouche" />
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Num CNSS" LabelColSpan="8">
+													<SfTextBox @bind-Value="@row.NumCNSS" />
+												</FormItem>
+												<Divider></Divider>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Salaire" LabelColSpan="8">
+													<SfDropDownList TValue="int" TItem="Items" DataSource="@fn.SalaireType()" @bind-Value="@row.SalaireType">
+														<DropDownListEvents TValue="int" TItem="Items" />
+														<DropDownListFieldSettings Text="Name" Value="Id" />
+													</SfDropDownList>
+												</FormItem>
+												@if (row.SalaireType == 0)
+												{
+													<FormItem LabelAlign="AntLabelAlignType.Left" Label="Sal Mensuel" LabelColSpan="8">
+														<SfNumericTextBox @bind-Value="@(row.SalaireBaseMensuel)" ShowSpinButton="false" Decimals="2" Format="N2" />
+													</FormItem>
+												}
+												@if (row.SalaireType == 1)
+												{
+													<FormItem LabelAlign="AntLabelAlignType.Left" Label="Sal Journalier" LabelColSpan="8">
+														<SfNumericTextBox @bind-Value="@(row.SalaireBaseJournalier)" ShowSpinButton="false" Decimals="2" Format="N2" />
+													</FormItem>
+												}
+												@if (row.SalaireType == 2)
+												{
+													<FormItem LabelAlign="AntLabelAlignType.Left" Label="Sal Horaire" LabelColSpan="8">
+														<SfNumericTextBox @bind-Value="@(row.SalaireBaseHoraire)" ShowSpinButton="false" Decimals="2" Format="N2" />
+													</FormItem>
+												}
+
+
+												<Divider></Divider>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Sit Familial" LabelColSpan="8">
+													<div class="ls-parent">
+														<div class="ls-child-left">
+															<SfDropDownList AllowFiltering TValue="int?" TItem="API_T_Information" DataSource="@situations" @bind-Value="@row.SituationFamiliale">
+																<DropDownListEvents TValue="int?" TItem="API_T_Information" />
+																<DropDownListFieldSettings Text="Valeur" Value="id" />
+															</SfDropDownList>
+														</div>
+														<div class="ls-child-right">
+															<RadzenButton Icon="reorder" Click="@(args => Informations(9))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+														</div>
+													</div>
 
 
 
-                                                    </FormItem>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Banque" LabelColSpan="8">
-                                                    <SfTextBox @bind-Value="@row.Banque" />
-                                                </FormItem>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="RIB" LabelColSpan="8">
-                                                    <SfTextBox @bind-Value="@row.RIB" />
-                                                    </FormItem>
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Nbr enfants" LabelColSpan="8">
+													<SfNumericTextBox @bind-Value="@(row.NombreEnfant)" ShowSpinButton="false" Decimals="0" Format="N0" />
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Pers à charge" LabelColSpan="8">
+													<SfNumericTextBox @bind-Value="@(row.PersonneCharge)" ShowSpinButton="false" Decimals="0" Format="N0" />
+												</FormItem>
+												<Divider></Divider>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Mode Paiement" LabelColSpan="8">
+													<div class="ls-parent">
+														<div class="ls-child-left">
+															<SfDropDownList AllowFiltering TValue="int?" TItem="API_T_Information" DataSource="@modes" @bind-Value="@row.ModePaiement">
+																<DropDownListEvents TValue="int?" TItem="API_T_Information" />
+																<DropDownListFieldSettings Text="Valeur" Value="id" />
+															</SfDropDownList>
+														</div>
+														<div class="ls-child-right">
+															<RadzenButton Icon="reorder" Click="@(args => Informations(6))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+														</div>
+													</div>
 
-                                            </Card>
-                                                    <Card Title="Permis de conduire" Style="height: 155px;">
-                                               <FormItem LabelAlign="AntLabelAlignType.Left" Label="Type" LabelColSpan="8">
-                                                    <SfTextBox @bind-Value="@row.PermisType" />
-                                                    </FormItem>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro" LabelColSpan="8">
-                                                    <SfTextBox @bind-Value="@row.PermisNum" />
-                                                    </FormItem>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Début" LabelColSpan="8">
-                                                    <SfDatePicker TValue="DateTime?" @bind-Value="@row.PermisDateDebut" />
-                                                    </FormItem>
-                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Fin" LabelColSpan="8">
-                                                    <SfDatePicker TValue="DateTime?" @bind-Value="@row.PermisDateFin" />
-                                                    </FormItem>
-                                            </Card>
-                                        </GridCol>
-                                </GridRow>
-                                </ContentTemplate>
-                            </TabItem>
-                            <TabItem>
-                                <ChildContent>
-                                    <TabHeader Text="Matrice de pointage"></TabHeader>
-                                </ChildContent>
-                                <ContentTemplate>
-                                    <Calendar Style="width: 100%" DateCellRender="DateCellRender" />
-                                </ContentTemplate>
-                            </TabItem>
-                            <TabItem>
-                                                <ChildContent>
-                                                    <TabHeader Text="Congé"></TabHeader>
-                                                </ChildContent>
-                                                <ContentTemplate>
 
-                                                </ContentTemplate>
-                            </TabItem>
-                            <TabItem>
-                                <ChildContent>
-                                    <TabHeader Text="Documents"></TabHeader>
-                                </ChildContent>
-                                <ContentTemplate>
-                                    <FilesManager table="Personnel" id="@id" societe="@session.Societe.id.ToString()"></FilesManager>
-                                </ContentTemplate>
-                            </TabItem>
-                        </TabItems>
-                    </SfTab>
-                </Form>
 
-            </GridCol>
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Banque" LabelColSpan="8">
+													<SfTextBox @bind-Value="@row.Banque" />
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="RIB" LabelColSpan="8">
+													<SfTextBox @bind-Value="@row.RIB" />
+												</FormItem>
 
-        </GridRow>
-    </div>
+											</Card>
+											<Card Title="Permis de conduire">
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Type" LabelColSpan="8">
+													<SfTextBox @bind-Value="@row.PermisType" />
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro" LabelColSpan="8">
+													<SfTextBox @bind-Value="@row.PermisNum" />
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Début" LabelColSpan="8">
+													<SfDatePicker TValue="DateTime ?" @bind-Value="@row.PermisDateDebut" />
+												</FormItem>
+												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Fin" LabelColSpan="8">
+													<SfDatePicker TValue="DateTime ?" @bind-Value="@row.PermisDateFin" />
+												</FormItem>
+											</Card>
+										</GridCol>
+									</GridRow>
+								</ContentTemplate>
+							</TabItem>
+							<TabItem>
+								<ChildContent>
+									<TabHeader Text="Matrice de pointage"></TabHeader>
+								</ChildContent>
+								<ContentTemplate>
+									<Calendar Style="width: 100%" DateCellRender="DateCellRender" />
+								</ContentTemplate>
+							</TabItem>
+							<TabItem>
+								<ChildContent>
+									<TabHeader Text="Congé"></TabHeader>
+								</ChildContent>
+								<ContentTemplate>
+
+								</ContentTemplate>
+							</TabItem>
+							<TabItem>
+								<ChildContent>
+									<TabHeader Text="Documents"></TabHeader>
+								</ChildContent>
+								<ContentTemplate>
+									<FilesManager table="Personnel" id="@id" societe="@session.Societe.id.ToString()"></FilesManager>
+								</ContentTemplate>
+							</TabItem>
+						</TabItems>
+					</SfTab>
+				</Form>
+
+			</GridCol>
+
+		</GridRow>
+	</div>
 }
 
 
 
 
 @code {
-    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
-    [Parameter] public int id { get; set; } = 0;
-    DB db = new DB();
-    private int journee = 0;
-    private int SelectedAnnee = DateTime.Today.Year;
-    private int SelectedMois = DateTime.Today.Month;
-    private DateTime SelectedDate = DateTime.Today;
-    private int SelectedProjet = 0;
-    private int SelectedResponsable = 0;
-    private int SelectedSite = 0;
-    private DateTime value = DateTime.Today;
-    private API_T_Personnel row { get; set; }
-    private List<API_T_CentreCharge> charges = new List<API_T_CentreCharge>();
-    private List<API_T_Attribute> attributes = new List<API_T_Attribute>();
-    private List<API_T_AttributeDetail> details = new List<API_T_AttributeDetail>();
+	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+	[Parameter] public int id { get; set; } = 0;
+	DB db = new DB();
+	private int journee = 0;
+	private int SelectedAnnee = DateTime.Today.Year;
+	private int SelectedMois = DateTime.Today.Month;
+	private DateTime SelectedDate = DateTime.Today;
+	private int SelectedProjet = 0;
+	private int SelectedResponsable = 0;
+	private int SelectedSite = 0;
+	private DateTime value = DateTime.Today;
+	private API_T_Personnel row { get; set; }
+	private List<API_T_CentreCharge> charges = new List<API_T_CentreCharge>();
+	private List<API_T_Attribute> attributes = new List<API_T_Attribute>();
+	private List<API_T_AttributeDetail> details = new List<API_T_AttributeDetail>();
 
 
-    private RenderFragment DateCellRender(DateTime value)
-    {
-        RenderFragment rs = @<Template>
-        <div />
-    </Template>;
-        var jr = db.API_T_PointageJournee.Where(a => a.Date == value);
-        if(jr.Count() != 0)
-        {
-            var ln = db.API_T_PointageDetail.Where(a => a.Journee == jr.First().id && a.Personnel == this.id && a.Type == 0);
-            if(ln.Count() != 0)
-            {
-                var pr = db.API_T_Projet.Where(a => a.id == ln.First().Projet);
-                if(pr.Count() != 0)
-                {
-                    rs = @<Template>
-        <div>@pr.First().NumeroMarche</div>
-        <div>@pr.First().CA_Num</div>
-        <div><span class="statustxt e-activecolor">@ln.First().NbrHeure.ToString("N0") H</span></div>
-    </Template>
-    ;
+	private RenderFragment DateCellRender(DateTime value)
+	{
+		RenderFragment rs = @<Template>
+			<div />
+		</Template>;
+		var jr = db.API_T_PointageJournee.Where(a => a.Date == value);
+		if (jr.Count() != 0)
+		{
+			var ln = db.API_T_PointageDetail.Where(a => a.Journee == jr.First().id && a.Personnel == this.id && a.Type == 0);
+			if (ln.Count() != 0)
+			{
+				var pr = db.API_T_Projet.Where(a => a.id == ln.First().Projet);
+				if (pr.Count() != 0)
+				{
+					rs = @<Template>
+						<div>@pr.First().NumeroMarche</div>
+						<div>@pr.First().CA_Num</div>
+						<div><span class="statustxt e-activecolor">@ln.First().NbrHeure.ToString("N0") H</span></div>
+					</Template>
+					;
 
-                }
+				}
 
-            }
-        }
-        return rs;        
-    }
-    private void LoadData()
-    {
+			}
+		}
+		return rs;
+	}
+	private void LoadData()
+	{
 
-    }
-    protected override async Task OnInitializedAsync()
-    {
-                db = session.db;
-        GC.Collect();
-        if(id != 0) 
-        {
-            await UpdateData();
-            row = db.API_T_Personnel.Where(a => a.id == id).SingleOrDefault();
-        }
-        else 
-        {
-            row = new API_T_Personnel();  
+	}
+	protected override async Task OnInitializedAsync()
+	{
+		db = session.db;
+		GC.Collect();
+		if (id != 0)
+		{
+			await UpdateData();
+			row = db.API_T_Personnel.Where(a => a.id == id).SingleOrDefault();
+		}
+		else
+		{
+			row = new API_T_Personnel();
 
-        }
-    }
-    private async Task OnPanelChange(DateTime value, string mode)
-    {
-        this.value = value;
-    }
-    private async Task Submit()
-    {
-        try {
-            if(row.SalaireType == 0)
-            {
-                row.SalaireBaseJournalier = row.SalaireBaseMensuel / 26;
-                row.SalaireBaseHoraire = row.SalaireBaseMensuel / 26 / 8;
-            }
-            if (row.SalaireType == 1)
-            {
-                row.SalaireBaseMensuel = row.SalaireBaseJournalier * 26;
-                row.SalaireBaseHoraire = row.SalaireBaseJournalier / 8;
-            }
-            if (row.SalaireType == 2)
-            {
-                row.SalaireBaseJournalier = row.SalaireBaseHoraire * 8;
-                row.SalaireBaseMensuel = row.SalaireBaseHoraire * 8 *26;
+		}
+	}
+	private async Task OnPanelChange(DateTime value, string mode)
+	{
+		this.value = value;
+	}
+	private async Task Submit()
+	{
+		try
+		{
+			if (row.SalaireType == 0)
+			{
+				row.SalaireBaseJournalier = row.SalaireBaseMensuel / 26;
+				row.SalaireBaseHoraire = row.SalaireBaseMensuel / 26 / 8;
+			}
+			if (row.SalaireType == 1)
+			{
+				row.SalaireBaseMensuel = row.SalaireBaseJournalier * 26;
+				row.SalaireBaseHoraire = row.SalaireBaseJournalier / 8;
+			}
+			if (row.SalaireType == 2)
+			{
+				row.SalaireBaseJournalier = row.SalaireBaseHoraire * 8;
+				row.SalaireBaseMensuel = row.SalaireBaseHoraire * 8 * 26;
 
-            }
-            if (id == 0)
-            {
-                db.API_T_Personnel.Add(row);
-            }
+			}
+			if (id == 0)
+			{
+				db.API_T_Personnel.Add(row);
+			}
 
-            foreach(API_T_AttributeDetail det in details) 
-            {
-                if(det.id == 0) 
-                {
-                    det.TableName = "API_T_CentreCharge";
-                    db.API_T_AttributeDetail.Add(det);
-                }
-            }
-            db.SaveChanges();
-            /*Message.Success("Les données sont enregistrées avec succès");
+			foreach (API_T_AttributeDetail det in details)
+			{
+				if (det.id == 0)
+				{
+					det.TableName = "API_T_CentreCharge";
+					db.API_T_AttributeDetail.Add(det);
+				}
+			}
+			db.SaveChanges();
+			/*Message.Success("Les données sont enregistrées avec succès");
             if (id == 0) { DialogService.Close(); }*/
-            DialogService.Close();
-        }
-        catch (Exception ex) 
-        {
-            Message.Error(ex.Message);
-        }
-    }
-    protected async Task Informations(int Tab)
-    {
-        await DialogService.OpenAsync<InformationsListe>(fn.GetInformation().Where(a => a.Id == Tab).SingleOrDefault().Name,
-      new Dictionary<string, object>() { { "Tab", Tab } },
-      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "80%" });
-        await UpdateData();
-    }
-    List<API_T_Information> contrats = new List<API_T_Information>();
-    List<API_T_Information> departements = new List<API_T_Information>();
-    List<API_T_Information> fonctions = new List<API_T_Information>();
-    List<API_T_Information> nationalites = new List<API_T_Information>();
-    List<API_T_Information> agence = new List<API_T_Information>();
-    List<API_T_Information> diplomes = new List<API_T_Information>();
-    List<API_T_Information> modes = new List<API_T_Information>();
-    List<API_T_Information> situations = new List<API_T_Information>();
-    protected async Task UpdateData()
-    {
-        fonctions = db.API_T_Information.Where(a => a.Tab == 4).OrderBy(a => a.Valeur).ToList();
-        nationalites = db.API_T_Information.Where(a => a.Tab == 8).OrderBy(a => a.Valeur).ToList();
-        contrats = db.API_T_Information.Where(a => a.Tab == 1).OrderBy(a => a.Valeur).ToList();
-        departements = db.API_T_Information.Where(a => a.Tab == 3).OrderBy(a => a.Valeur).ToList();
-        agence = db.API_T_Information.Where(a => a.Tab == 5).OrderBy(a => a.Valeur).ToList();
-        diplomes = db.API_T_Information.Where(a => a.Tab == 2).OrderBy(a => a.Valeur).ToList();
-        modes = db.API_T_Information.Where(a => a.Tab == 6).OrderBy(a => a.Valeur).ToList();
-        situations = db.API_T_Information.Where(a => a.Tab == 9).OrderBy(a => a.Valeur).ToList();
-    }
+			DialogService.Close();
+		}
+		catch (Exception ex)
+		{
+			Message.Error(ex.Message);
+		}
+	}
+	protected async Task Informations(int Tab)
+	{
+		await DialogService.OpenAsync<InformationsListe>(fn.GetInformation().Where(a => a.Id == Tab).SingleOrDefault().Name,
+	  new Dictionary<string, object>() { { "Tab", Tab } },
+	  new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "80%" });
+		await UpdateData();
+	}
+	List<API_T_Information> contrats = new List<API_T_Information>();
+	List<API_T_Information> departements = new List<API_T_Information>();
+	List<API_T_Information> fonctions = new List<API_T_Information>();
+	List<API_T_Information> nationalites = new List<API_T_Information>();
+	List<API_T_Information> agence = new List<API_T_Information>();
+	List<API_T_Information> diplomes = new List<API_T_Information>();
+	List<API_T_Information> modes = new List<API_T_Information>();
+	List<API_T_Information> situations = new List<API_T_Information>();
+	protected async Task UpdateData()
+	{
+		fonctions = db.API_T_Information.Where(a => a.Tab == 4).OrderBy(a => a.Valeur).ToList();
+		nationalites = db.API_T_Information.Where(a => a.Tab == 8).OrderBy(a => a.Valeur).ToList();
+		contrats = db.API_T_Information.Where(a => a.Tab == 1).OrderBy(a => a.Valeur).ToList();
+		departements = db.API_T_Information.Where(a => a.Tab == 3).OrderBy(a => a.Valeur).ToList();
+		agence = db.API_T_Information.Where(a => a.Tab == 5).OrderBy(a => a.Valeur).ToList();
+		diplomes = db.API_T_Information.Where(a => a.Tab == 2).OrderBy(a => a.Valeur).ToList();
+		modes = db.API_T_Information.Where(a => a.Tab == 6).OrderBy(a => a.Valeur).ToList();
+		situations = db.API_T_Information.Where(a => a.Tab == 9).OrderBy(a => a.Valeur).ToList();
+	}
 
 }

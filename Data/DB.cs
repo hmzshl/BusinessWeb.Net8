@@ -932,12 +932,12 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_AgenceContrat_id");
 
-            entity.Property(e => e.AdultStart).HasDefaultValueSql("((6))");
+            entity.Property(e => e.AdultStart).HasDefaultValue(6);
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.ChildEnd).HasDefaultValueSql("((5))");
-            entity.Property(e => e.ChildStart).HasDefaultValueSql("((2))");
+            entity.Property(e => e.ChildEnd).HasDefaultValue(5);
+            entity.Property(e => e.ChildStart).HasDefaultValue(2);
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -946,7 +946,7 @@ public partial class DB : DbContext
             entity.Property(e => e.DateDebut).HasColumnType("datetime");
             entity.Property(e => e.DateFin).HasColumnType("datetime");
             entity.Property(e => e.Fichier).HasColumnType("text");
-            entity.Property(e => e.InfantEnd).HasDefaultValueSql("((1))");
+            entity.Property(e => e.InfantEnd).HasDefaultValue(1);
             entity.Property(e => e.Libelle).HasColumnType("text");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
@@ -1061,9 +1061,7 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Cumulative)
-                .IsRequired()
-                .HasDefaultValueSql("((1))");
+            entity.Property(e => e.Cumulative).HasDefaultValue(true);
             entity.Property(e => e.Intitule)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -1132,7 +1130,7 @@ public partial class DB : DbContext
             entity.Property(e => e.MontantMarche).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantReste).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantTTC)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.NumeroDecompte)
                 .HasMaxLength(100)
@@ -1140,7 +1138,7 @@ public partial class DB : DbContext
             entity.Property(e => e.Piece)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Statut).HasDefaultValueSql("((0))");
+            entity.Property(e => e.Statut).HasDefaultValue(0);
             entity.Property(e => e.TauxRabais).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_Attachement)
@@ -1174,11 +1172,11 @@ public partial class DB : DbContext
             entity.Property(e => e.MontantMarche).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantReste).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantTTC)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PUTTC)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.QteCumul).HasColumnType("decimal(24, 6)");
@@ -1186,7 +1184,7 @@ public partial class DB : DbContext
             entity.Property(e => e.QtePrec).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.QteReste).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Taxe)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Unite)
                 .HasMaxLength(100)
@@ -2005,7 +2003,7 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.SelectedAPP).HasDefaultValueSql("((0))");
+            entity.Property(e => e.SelectedAPP).HasDefaultValue(0);
             entity.Property(e => e.Url).HasMaxLength(100);
             entity.Property(e => e.UserID).HasMaxLength(450);
         });
@@ -2120,7 +2118,7 @@ public partial class DB : DbContext
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantMarche).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantTTC)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Piece)
                 .HasMaxLength(100)
@@ -2160,7 +2158,7 @@ public partial class DB : DbContext
             entity.Property(e => e.MontantMarche).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantReste).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantTTC)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.NumeroPrix)
                 .HasMaxLength(100)
@@ -2168,13 +2166,13 @@ public partial class DB : DbContext
             entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PUMarche).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PUTTC)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.QteCumul).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.QteMarche).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.QteReste).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Taxe)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Unite)
                 .HasMaxLength(100)
@@ -2339,7 +2337,7 @@ public partial class DB : DbContext
             entity.Property(e => e.DateDepotClient).HasColumnType("smalldatetime");
             entity.Property(e => e.DateRetourBanque).HasColumnType("smalldatetime");
             entity.Property(e => e.DateRetraitBanque).HasColumnType("smalldatetime");
-            entity.Property(e => e.Etape).HasDefaultValueSql("((0))");
+            entity.Property(e => e.Etape).HasDefaultValue(0);
             entity.Property(e => e.Fichier).HasColumnType("text");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
@@ -2488,11 +2486,11 @@ public partial class DB : DbContext
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.DateLivraison).HasColumnType("smalldatetime");
             entity.Property(e => e.FactureDate).HasColumnType("smalldatetime");
-            entity.Property(e => e.FactureID).HasDefaultValueSql("((0))");
+            entity.Property(e => e.FactureID).HasDefaultValue(0);
             entity.Property(e => e.FactureNum)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.IsFacture).HasDefaultValueSql("((0))");
+            entity.Property(e => e.IsFacture).HasDefaultValue(false);
             entity.Property(e => e.Libelle).HasColumnType("text");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
@@ -2508,7 +2506,7 @@ public partial class DB : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Remarque).HasColumnType("text");
-            entity.Property(e => e.Souche).HasDefaultValueSql("((0))");
+            entity.Property(e => e.Souche).HasDefaultValue((short)0);
         });
 
         modelBuilder.Entity<API_T_CertifFiche>(entity =>
@@ -2583,7 +2581,7 @@ public partial class DB : DbContext
             entity.Property(e => e.Numero)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.OldCompte).HasDefaultValueSql("((0))");
+            entity.Property(e => e.OldCompte).HasDefaultValue(false);
             entity.Property(e => e.OperationsAttendues).HasColumnType("text");
             entity.Property(e => e.PMQChar)
                 .HasMaxLength(100)
@@ -2712,19 +2710,19 @@ public partial class DB : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.DL_MontantHT)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.DL_MontantTTC)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.DL_PU)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.DL_PUTTC)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.DL_Taxe)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Libelle).HasColumnType("text");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
@@ -2732,7 +2730,7 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.QL_Qte)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Reference)
                 .HasMaxLength(100)
@@ -3001,10 +2999,10 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Config_id");
 
-            entity.Property(e => e.BL_BalanceClient).HasDefaultValueSql("((1))");
-            entity.Property(e => e.BL_BalanceFournisseur).HasDefaultValueSql("((1))");
-            entity.Property(e => e.BL_Marge).HasDefaultValueSql("((1))");
-            entity.Property(e => e.BL_Releve).HasDefaultValueSql("((1))");
+            entity.Property(e => e.BL_BalanceClient).HasDefaultValue(true);
+            entity.Property(e => e.BL_BalanceFournisseur).HasDefaultValue(true);
+            entity.Property(e => e.BL_Marge).HasDefaultValue(true);
+            entity.Property(e => e.BL_Releve).HasDefaultValue(true);
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -3024,10 +3022,10 @@ public partial class DB : DbContext
             entity.Property(e => e.EmailSmtpServer)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.FA_BalanceClient).HasDefaultValueSql("((1))");
-            entity.Property(e => e.FA_BalanceFournisseur).HasDefaultValueSql("((1))");
-            entity.Property(e => e.FA_Marge).HasDefaultValueSql("((1))");
-            entity.Property(e => e.FA_Releve).HasDefaultValueSql("((1))");
+            entity.Property(e => e.FA_BalanceClient).HasDefaultValue(true);
+            entity.Property(e => e.FA_BalanceFournisseur).HasDefaultValue(true);
+            entity.Property(e => e.FA_Marge).HasDefaultValue(true);
+            entity.Property(e => e.FA_Releve).HasDefaultValue(true);
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
@@ -3300,7 +3298,7 @@ public partial class DB : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Consommation)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
@@ -3601,8 +3599,8 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Pointage_id");
 
-            entity.Property(e => e.Annee).HasDefaultValueSql("((0))");
-            entity.Property(e => e.Cloture).HasDefaultValueSql("((0))");
+            entity.Property(e => e.Annee).HasDefaultValue(0);
+            entity.Property(e => e.Cloture).HasDefaultValue(false);
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -3613,8 +3611,8 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Mois).HasDefaultValueSql("((0))");
-            entity.Property(e => e.Type).HasDefaultValueSql("((0))");
+            entity.Property(e => e.Mois).HasDefaultValue(0);
+            entity.Property(e => e.Type).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<API_T_PointageAnnee>(entity =>
@@ -3797,7 +3795,7 @@ public partial class DB : DbContext
             entity.Property(e => e.PeriodeExecutionResume)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Resultat).HasDefaultValueSql("((0))");
+            entity.Property(e => e.Resultat).HasDefaultValue(false);
             entity.Property(e => e.ResultatMarchePV).HasColumnType("text");
             entity.Property(e => e.TauxRetenueGarantie).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.TauxRetenueGarantieDecompte).HasColumnType("decimal(27, 6)");
@@ -4087,10 +4085,10 @@ public partial class DB : DbContext
             entity.Property(e => e.CA_Classement)
                 .HasMaxLength(17)
                 .IsUnicode(false);
-            entity.Property(e => e.CA_DateAcceptAffaire).HasColumnType("smalldatetime");
-            entity.Property(e => e.CA_DateCreationAffaire).HasColumnType("smalldatetime");
-            entity.Property(e => e.CA_DateDebutAffaire).HasColumnType("smalldatetime");
-            entity.Property(e => e.CA_DateFinAffaire).HasColumnType("smalldatetime");
+            entity.Property(e => e.CA_DateAcceptAffaire).HasColumnType("datetime");
+            entity.Property(e => e.CA_DateCreationAffaire).HasColumnType("datetime");
+            entity.Property(e => e.CA_DateDebutAffaire).HasColumnType("datetime");
+            entity.Property(e => e.CA_DateFinAffaire).HasColumnType("datetime");
             entity.Property(e => e.CA_Intitule)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -4467,7 +4465,7 @@ public partial class DB : DbContext
                 .HasMaxLength(21)
                 .IsUnicode(false);
             entity.Property(e => e.cbCreation).HasColumnType("datetime");
-            entity.Property(e => e.cbModification).HasColumnType("smalldatetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<API_V_ARTICLEMVT>(entity =>
@@ -5715,7 +5713,7 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Credit).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DateDepot).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateEcheance).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateEcheance).HasColumnType("datetime");
             entity.Property(e => e.DatePaie).HasColumnType("smalldatetime");
             entity.Property(e => e.Debit).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.Echeance)
@@ -5754,7 +5752,7 @@ public partial class DB : DbContext
             entity.Property(e => e.PROT_User)
                 .HasMaxLength(35)
                 .IsUnicode(false);
-            entity.Property(e => e.RG_Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.RG_Date).HasColumnType("datetime");
             entity.Property(e => e.RG_DateEcheance).HasMaxLength(4000);
             entity.Property(e => e.RG_Libelle)
                 .HasMaxLength(35)
@@ -5774,7 +5772,7 @@ public partial class DB : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.cbCreation).HasColumnType("datetime");
-            entity.Property(e => e.cbModification).HasColumnType("smalldatetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<API_V_DOCENTETE>(entity =>
@@ -5915,7 +5913,7 @@ public partial class DB : DbContext
                 .HasMaxLength(65)
                 .IsUnicode(false);
             entity.Property(e => e.cbCreation).HasColumnType("datetime");
-            entity.Property(e => e.cbModification).HasColumnType("smalldatetime");
+            entity.Property(e => e.cbModification).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<API_V_DOCLIGNE>(entity =>
@@ -6173,7 +6171,7 @@ public partial class DB : DbContext
             entity.Property(e => e.Computer)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.DateOP).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateOP).HasColumnType("datetime");
             entity.Property(e => e.SessionWindows)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -6274,8 +6272,8 @@ public partial class DB : DbContext
             entity.Property(e => e.CarburantIntitule)
                 .HasMaxLength(11)
                 .IsUnicode(false);
-            entity.Property(e => e.CarteGriseDebut).HasColumnType("smalldatetime");
-            entity.Property(e => e.CarteGriseFin).HasColumnType("smalldatetime");
+            entity.Property(e => e.CarteGriseDebut).HasColumnType("datetime");
+            entity.Property(e => e.CarteGriseFin).HasColumnType("datetime");
             entity.Property(e => e.Chassis)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -6286,8 +6284,8 @@ public partial class DB : DbContext
             entity.Property(e => e.DR)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.DateAchat).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateLocation).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateAchat).HasColumnType("datetime");
+            entity.Property(e => e.DateLocation).HasColumnType("datetime");
             entity.Property(e => e.Fournisseur)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -6609,16 +6607,16 @@ public partial class DB : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.CoutMarchePrevisionnel).HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DateEnregistrement).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateEnregistrementCPS).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateEnregistrementExemplaire).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateExemplaireUnique).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateOrdreNotification).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateOrdreService).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateOuverturePils).HasColumnType("smalldatetime");
-            entity.Property(e => e.DatePublication).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateReceptionDefinitiveEffective).HasColumnType("smalldatetime");
-            entity.Property(e => e.DateReceptionDefinitivePrevue).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateEnregistrement).HasColumnType("datetime");
+            entity.Property(e => e.DateEnregistrementCPS).HasColumnType("datetime");
+            entity.Property(e => e.DateEnregistrementExemplaire).HasColumnType("datetime");
+            entity.Property(e => e.DateExemplaireUnique).HasColumnType("datetime");
+            entity.Property(e => e.DateOrdreNotification).HasColumnType("datetime");
+            entity.Property(e => e.DateOrdreService).HasColumnType("datetime");
+            entity.Property(e => e.DateOuverturePils).HasColumnType("datetime");
+            entity.Property(e => e.DatePublication).HasColumnType("datetime");
+            entity.Property(e => e.DateReceptionDefinitiveEffective).HasColumnType("datetime");
+            entity.Property(e => e.DateReceptionDefinitivePrevue).HasColumnType("datetime");
             entity.Property(e => e.ModeSoumissionIntitule)
                 .HasMaxLength(12)
                 .IsUnicode(false);
@@ -6679,7 +6677,7 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(17)
                 .IsUnicode(false);
-            entity.Property(e => e.DO_Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.DO_Date).HasColumnType("datetime");
             entity.Property(e => e.DO_Piece)
                 .HasMaxLength(9)
                 .IsUnicode(false);
@@ -6747,8 +6745,8 @@ public partial class DB : DbContext
             entity.Property(e => e.DE_Intitule)
                 .HasMaxLength(35)
                 .IsUnicode(false);
-            entity.Property(e => e.DO_Date).HasColumnType("smalldatetime");
-            entity.Property(e => e.DO_Echeance).HasColumnType("smalldatetime");
+            entity.Property(e => e.DO_Date).HasColumnType("datetime");
+            entity.Property(e => e.DO_Echeance).HasColumnType("datetime");
             entity.Property(e => e.DO_Libelle)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -6758,7 +6756,7 @@ public partial class DB : DbContext
             entity.Property(e => e.DO_Ref)
                 .HasMaxLength(17)
                 .IsUnicode(false);
-            entity.Property(e => e.DateEcheance).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateEcheance).HasColumnType("datetime");
             entity.Property(e => e.Debit).HasColumnType("numeric(38, 6)");
             entity.Property(e => e.EtatLettrage)
                 .IsRequired()
@@ -6795,36 +6793,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_ABOENTETE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ABOENTETE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ABOENTETE");
-                    tb.HasTrigger("TG_CBINS_F_ABOENTETE");
-                    tb.HasTrigger("TG_CBUPD_F_ABOENTETE");
-                    tb.HasTrigger("TG_INS_CPTAF_ABOENTETE");
-                    tb.HasTrigger("TG_UPD_CPTAF_ABOENTETE");
-                    tb.HasTrigger("TG_UPD_F_ABOENTETE");
-                });
-
-            entity.HasIndex(e => e.AB_No, "FKIA_F_ABOENTETE_AB_No");
-
-            entity.HasIndex(e => e.DE_No, "FKIA_F_ABOENTETE_DE_No");
-
-            entity.HasIndex(e => e.cbCA_Num, "IAE_ANAL");
-
-            entity.HasIndex(e => e.cbCT_NumCentrale, "IAE_CENTRALE");
-
-            entity.HasIndex(e => e.cbCG_Num, "IAE_CGNUM");
-
-            entity.HasIndex(e => e.DE_No, "IAE_DEPOT");
-
-            entity.HasIndex(e => e.LI_No, "IAE_DEPOTCL");
-
-            entity.HasIndex(e => e.AB_No, "IAE_NO");
-
-            entity.HasIndex(e => e.cbCT_NumPayeur, "IAE_NUM");
-
-            entity.HasIndex(e => e.CO_No, "IAE_REPRESENT");
 
             entity.HasIndex(e => e.AB_No, "UKA_F_ABOENTETE_AB_No").IsUnique();
 
@@ -6878,14 +6846,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AB_NoNavigation).WithOne(p => p.F_ABOENTETE)
                 .HasPrincipalKey<F_ABONNEMENT>(p => p.AB_No)
@@ -6929,21 +6897,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ABOENTETEINFOS");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ABOENTETEINFOS");
-                    tb.HasTrigger("TG_CBINS_F_ABOENTETEINFOS");
-                    tb.HasTrigger("TG_CBUPD_F_ABOENTETEINFOS");
-                    tb.HasTrigger("TG_DEL_F_ABOENTETEINFOS");
-                    tb.HasTrigger("TG_INS_F_ABOENTETEINFOS");
-                    tb.HasTrigger("TG_UPD_F_ABOENTETEINFOS");
-                });
-
-            entity.HasIndex(e => e.AB_No, "FKIA_F_ABOENTETEINFOS_AB_No");
-
             entity.HasIndex(e => new { e.AB_No, e.cbAI_Code }, "IAI_CODE").IsUnique();
-
-            entity.HasIndex(e => new { e.AB_No, e.cbAI_Intitule }, "IAI_INTITULE");
 
             entity.Property(e => e.AI_Code)
                 .IsRequired()
@@ -6965,14 +6919,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AB_NoNavigation).WithMany(p => p.F_ABOENTETEINFOS)
                 .HasPrincipalKey(p => p.AB_No)
@@ -6985,45 +6939,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ABOLIGNE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ABOLIGNE");
-                    tb.HasTrigger("TG_CBINS_F_ABOLIGNE");
-                    tb.HasTrigger("TG_CBUPD_F_ABOLIGNE");
-                    tb.HasTrigger("TG_DEL_F_ABOLIGNE");
-                    tb.HasTrigger("TG_INS_CPTAF_ABOLIGNE");
-                    tb.HasTrigger("TG_INS_F_ABOLIGNE");
-                    tb.HasTrigger("TG_UPD_CPTAF_ABOLIGNE");
-                    tb.HasTrigger("TG_UPD_F_ABOLIGNE");
-                });
-
-            entity.HasIndex(e => e.AB_No, "FKIA_F_ABOLIGNE_AB_No");
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_ABOLIGNE_AR_Ref");
-
-            entity.HasIndex(e => e.cbDE_No, "FKIA_F_ABOLIGNE_DE_No");
-
-            entity.HasIndex(e => e.RP_Code, "FKIA_F_ABOLIGNE_RP_Code");
-
-            entity.HasIndex(e => e.cbCA_Num, "IAL_ANAL");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No1 }, "IAL_ARTGAM");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No2 }, "IAL_ARTGAM2");
-
-            entity.HasIndex(e => e.DE_No, "IAL_DEPOT");
-
-            entity.HasIndex(e => new { e.AB_No, e.AL_TRemPied, e.AL_Ligne }, "IAL_LIGNE");
-
             entity.HasIndex(e => e.AL_No, "IAL_NO").IsUnique();
-
-            entity.HasIndex(e => new { e.AB_No, e.cbAR_Ref, e.AG_No1, e.AG_No2 }, "IAL_REF");
-
-            entity.HasIndex(e => new { e.AB_No, e.cbAF_RefFourniss }, "IAL_REFFOUR");
-
-            entity.HasIndex(e => e.CO_No, "IAL_REPRESENT");
-
-            entity.HasIndex(e => e.cbRP_Code, "IAL_RESSOURCE");
 
             entity.Property(e => e.AC_RefClient)
                 .HasMaxLength(19)
@@ -7093,17 +7009,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbRP_Code)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),isnull([RP_Code],'')))", false);
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AB_NoNavigation).WithMany(p => p.F_ABOLIGNE)
                 .HasPrincipalKey(p => p.AB_No)
@@ -7151,18 +7067,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ABOLIGNEINFOS");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ABOLIGNEINFOS");
-                    tb.HasTrigger("TG_CBINS_F_ABOLIGNEINFOS");
-                    tb.HasTrigger("TG_CBUPD_F_ABOLIGNEINFOS");
-                });
-
-            entity.HasIndex(e => e.AL_No, "FKIA_F_ABOLIGNEINFOS_AL_No");
-
             entity.HasIndex(e => new { e.AL_No, e.cbAC_Code }, "IAC_CODE").IsUnique();
-
-            entity.HasIndex(e => new { e.AL_No, e.cbAC_Intitule }, "IAC_INTITULE");
 
             entity.Property(e => e.AC_Code)
                 .IsRequired()
@@ -7184,14 +7089,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AL_NoNavigation).WithMany(p => p.F_ABOLIGNEINFOS)
                 .HasPrincipalKey(p => p.AL_No)
@@ -7204,42 +7109,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ABONNEMENT");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ABONNEMENT");
-                    tb.HasTrigger("TG_CBINS_F_ABONNEMENT");
-                    tb.HasTrigger("TG_CBUPD_F_ABONNEMENT");
-                    tb.HasTrigger("TG_INS_CPTAF_ABONNEMENT");
-                    tb.HasTrigger("TG_INS_F_ABONNEMENT");
-                    tb.HasTrigger("TG_UPD_CPTAF_ABONNEMENT");
-                    tb.HasTrigger("TG_UPD_F_ABONNEMENT");
-                });
-
-            entity.HasIndex(e => new { e.AB_TypeTiers, e.AB_Debut, e.cbCT_Num, e.cbAB_Modele, e.AB_Type }, "IAB_DEBUT");
-
-            entity.HasIndex(e => new { e.AB_TypeTiers, e.AB_Fin, e.cbCT_Num, e.cbAB_Modele, e.AB_Type }, "IAB_FIN");
-
-            entity.HasIndex(e => new { e.AB_TypeTiers, e.cbAB_Intitule, e.cbCT_Num, e.AB_Type }, "IAB_INTITULE");
-
-            entity.HasIndex(e => new { e.AB_TypeTiers, e.cbAB_Modele, e.cbCT_Num, e.AB_Type }, "IAB_MODELE");
-
             entity.HasIndex(e => e.AB_No, "IAB_NO").IsUnique();
-
-            entity.HasIndex(e => new { e.AB_TypeTiers, e.cbCT_Num, e.cbAB_Modele, e.AB_Type }, "IAB_TIERS");
-
-            entity.HasIndex(e => new { e.AB_Type, e.cbAB_Intitule, e.cbCT_Num }, "IAB_TOUTTYPINTITULE");
-
-            entity.HasIndex(e => new { e.AB_Type, e.cbAB_Modele, e.cbCT_Num }, "IAB_TOUTTYPMODELE");
-
-            entity.HasIndex(e => new { e.AB_TypeTiers, e.AB_Type, e.AB_Debut, e.cbCT_Num, e.cbAB_Modele }, "IAB_TYPDEBUT");
-
-            entity.HasIndex(e => new { e.AB_TypeTiers, e.AB_Type, e.AB_Fin, e.cbCT_Num, e.cbAB_Modele }, "IAB_TYPFIN");
-
-            entity.HasIndex(e => new { e.AB_TypeTiers, e.AB_Type, e.cbAB_Intitule, e.cbCT_Num }, "IAB_TYPINTITULE");
-
-            entity.HasIndex(e => new { e.AB_TypeTiers, e.AB_Type, e.cbAB_Modele, e.cbCT_Num }, "IAB_TYPMODELE");
-
-            entity.HasIndex(e => new { e.AB_TypeTiers, e.AB_Type, e.cbCT_Num, e.cbAB_Modele }, "IAB_TYPTIERS");
 
             entity.Property(e => e.AB_Contrat)
                 .HasMaxLength(35)
@@ -7270,14 +7140,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_ABONNEMENT)
                 .HasPrincipalKey(p => p.CT_Num)
@@ -7289,22 +7159,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ABOPERIODE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ABOPERIODE");
-                    tb.HasTrigger("TG_CBINS_F_ABOPERIODE");
-                    tb.HasTrigger("TG_CBUPD_F_ABOPERIODE");
-                    tb.HasTrigger("TG_DEL_F_ABOPERIODE");
-                    tb.HasTrigger("TG_INS_F_ABOPERIODE");
-                    tb.HasTrigger("TG_UPD_F_ABOPERIODE");
-                });
-
-            entity.HasIndex(e => e.AB_No, "FKIA_F_ABOPERIODE_AB_No");
-
-            entity.HasIndex(e => new { e.AB_No, e.PE_Debut, e.PE_Generation }, "IAP_DEBUT");
-
-            entity.HasIndex(e => new { e.AB_No, e.PE_Etat, e.PE_Debut, e.PE_Generation }, "IAP_ETAT");
-
             entity.Property(e => e.PE_Debut).HasColumnType("smalldatetime");
             entity.Property(e => e.PE_Fin).HasColumnType("smalldatetime");
             entity.Property(e => e.PE_Generation).HasColumnType("smalldatetime");
@@ -7312,14 +7166,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AB_NoNavigation).WithMany(p => p.F_ABOPERIODE)
                 .HasPrincipalKey(p => p.AB_No)
@@ -7332,32 +7186,20 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ABOREGLEMENT");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ABOREGLEMENT");
-                    tb.HasTrigger("TG_CBINS_F_ABOREGLEMENT");
-                    tb.HasTrigger("TG_CBUPD_F_ABOREGLEMENT");
-                    tb.HasTrigger("TG_DEL_F_ABOREGLEMENT");
-                    tb.HasTrigger("TG_INS_F_ABOREGLEMENT");
-                    tb.HasTrigger("TG_UPD_F_ABOREGLEMENT");
-                });
-
-            entity.HasIndex(e => e.AB_No, "FKIA_F_ABOREGLEMENT_AB_No");
-
             entity.HasIndex(e => new { e.AB_No, e.RA_NbJour, e.N_Reglement }, "IRA_NBJOUR").IsUnique();
 
             entity.Property(e => e.RA_VRepart).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AB_NoNavigation).WithMany(p => p.F_ABOREGLEMENT)
                 .HasPrincipalKey(p => p.AB_No)
@@ -7370,52 +7212,25 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_AFFICHEUR");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_AFFICHEUR");
-                    tb.HasTrigger("TG_CBINS_F_AFFICHEUR");
-                    tb.HasTrigger("TG_CBUPD_F_AFFICHEUR");
-                });
-
-            entity.HasIndex(e => new { e.AF_Action, e.AF_NumOrdre }, "IAF_ACTION");
-
-            entity.HasIndex(e => e.AF_NumOrdre, "IAF_ORDRE");
-
             entity.Property(e => e.AF_Texte)
                 .HasMaxLength(69)
                 .IsUnicode(false);
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_AFFICHEURCAISSE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_AFFICHEURCAISSE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_AFFICHEURCAISSE");
-                    tb.HasTrigger("TG_CBINS_F_AFFICHEURCAISSE");
-                    tb.HasTrigger("TG_CBUPD_F_AFFICHEURCAISSE");
-                    tb.HasTrigger("TG_DEL_F_AFFICHEURCAISSE");
-                    tb.HasTrigger("TG_INS_F_AFFICHEURCAISSE");
-                    tb.HasTrigger("TG_UPD_F_AFFICHEURCAISSE");
-                });
-
-            entity.HasIndex(e => e.CA_No, "FKIA_F_AFFICHEURCAISSE_CA_No");
-
-            entity.HasIndex(e => new { e.CA_No, e.AC_Action, e.AC_NumOrdre }, "IAC_ACTION");
-
-            entity.HasIndex(e => new { e.CA_No, e.AC_NumOrdre }, "IAC_ORDRE");
 
             entity.Property(e => e.AC_Texte)
                 .HasMaxLength(69)
@@ -7423,14 +7238,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CA_NoNavigation).WithMany(p => p.F_AFFICHEURCAISSE)
                 .HasPrincipalKey(p => p.CA_No)
@@ -7443,43 +7258,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_AGENDA");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_AGENDA");
-                    tb.HasTrigger("TG_CBINS_F_AGENDA");
-                    tb.HasTrigger("TG_CBUPD_F_AGENDA");
-                    tb.HasTrigger("TG_INS_CPTAF_AGENDA");
-                    tb.HasTrigger("TG_INS_F_AGENDA");
-                    tb.HasTrigger("TG_UPD_F_AGENDA");
-                });
-
-            entity.HasIndex(e => e.cbDE_No, "FKIA_F_AGENDA_DE_No");
-
-            entity.HasIndex(e => e.cbDL_No, "FKIA_F_AGENDA_DL_No");
-
-            entity.HasIndex(e => e.cbPP_No, "FKIA_F_AGENDA_PP_No");
-
-            entity.HasIndex(e => new { e.AD_Champ, e.AG_Domaine, e.cbAG_Interes, e.AG_Debut }, "IAG_CHAMP");
-
-            entity.HasIndex(e => new { e.AG_Debut, e.AG_Domaine, e.cbAG_Interes, e.AD_Champ }, "IAG_DATE");
-
-            entity.HasIndex(e => new { e.DE_No, e.AG_Debut, e.cbAG_Interes }, "IAG_DEPOTDATE");
-
-            entity.HasIndex(e => new { e.AG_Domaine, e.AD_Champ, e.cbAG_Interes, e.AG_Debut }, "IAG_ICHAMP");
-
-            entity.HasIndex(e => new { e.AG_Domaine, e.AG_Debut, e.cbAG_Interes, e.AD_Champ }, "IAG_IDATE");
-
-            entity.HasIndex(e => new { e.AG_Domaine, e.cbAG_Interes, e.AG_Debut, e.AD_Champ }, "IAG_INTERES");
-
-            entity.HasIndex(e => new { e.AG_Domaine, e.cbAG_Interes, e.AG_Fin }, "IAG_INTERESFIN");
-
-            entity.HasIndex(e => e.DL_No, "IAG_LIGNE");
-
             entity.HasIndex(e => e.AD_No, "IAG_NOINT").IsUnique();
-
-            entity.HasIndex(e => e.PP_No, "IAG_PLANNING");
-
-            entity.HasIndex(e => new { e.AG_Veille, e.AG_Debut, e.AG_Domaine, e.cbAG_Interes }, "IAG_VEILLE");
 
             entity.Property(e => e.AD_Evenem)
                 .HasMaxLength(21)
@@ -7506,14 +7285,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.cbDE_NoNavigation).WithMany(p => p.F_AGENDA)
                 .HasPrincipalKey(p => p.DE_No)
@@ -7535,14 +7314,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_AGENDADET");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_AGENDADET");
-                    tb.HasTrigger("TG_CBINS_F_AGENDADET");
-                    tb.HasTrigger("TG_CBUPD_F_AGENDADET");
-                    tb.HasTrigger("TG_UPD_F_AGENDADET");
-                });
-
             entity.HasIndex(e => new { e.AD_Champ, e.cbAD_Evenem }, "IAD_EVENEM").IsUnique();
 
             entity.Property(e => e.AD_Evenem)
@@ -7555,42 +7326,19 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_ARTCLIENT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ARTCLIENT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ARTCLIENT");
-                    tb.HasTrigger("TG_CBINS_F_ARTCLIENT");
-                    tb.HasTrigger("TG_CBUPD_F_ARTCLIENT");
-                    tb.HasTrigger("TG_DEL_F_ARTCLIENT");
-                    tb.HasTrigger("TG_INS_CPTAF_ARTCLIENT");
-                    tb.HasTrigger("TG_INS_F_ARTCLIENT");
-                    tb.HasTrigger("TG_UPD_F_ARTCLIENT");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_ARTCLIENT_AR_Ref");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.cbCT_Num }, "IAC_CLI");
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.cbAR_Ref }, "IAC_CLIREF");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AC_Categorie }, "IAC_REF");
-
-            entity.HasIndex(e => new { e.cbAC_RefClient, e.cbAR_Ref }, "IAC_REFCL");
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.cbAC_RefClient }, "IAC_TIERSREF");
 
             entity.Property(e => e.AC_Coef).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.AC_CoefNouv).HasColumnType("numeric(24, 6)");
@@ -7623,14 +7371,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_ARTCLIENT)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -7647,32 +7395,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_ARTCOMPO>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ARTCOMPO");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ARTCOMPO");
-                    tb.HasTrigger("TG_CBINS_F_ARTCOMPO");
-                    tb.HasTrigger("TG_CBUPD_F_ARTCOMPO");
-                    tb.HasTrigger("TG_DEL_F_ARTCOMPO");
-                    tb.HasTrigger("TG_INS_F_ARTCOMPO");
-                    tb.HasTrigger("TG_UPD_F_ARTCOMPO");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_ARTCOMPO_AR_Ref");
-
-            entity.HasIndex(e => e.RP_Code, "FKIA_F_ARTCOMPO_RP_Code");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.cbAT_OperationChevauche }, "IAT_CHEVAUCHE");
-
-            entity.HasIndex(e => e.cbRP_Code, "IAT_CODE");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AT_TypeRessource, e.cbAT_Operation, e.AG_No1Comp, e.AG_No2Comp, e.AT_Ordre }, "IAT_OPERATION");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No1Comp, e.AG_No2Comp, e.cbAT_Operation, e.AT_TypeRessource, e.AT_Ordre }, "IAT_ORDRE");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No1Comp, e.AG_No2Comp, e.cbAT_Operation, e.cbRP_Code }, "IAT_REF");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No1Comp, e.AG_No2Comp, e.AT_TypeRessource, e.cbAT_Operation }, "IAT_TYPERESS");
 
             entity.Property(e => e.AR_Ref)
                 .IsRequired()
@@ -7707,17 +7429,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbRP_Code)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),isnull([RP_Code],'')))", false);
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_ARTCOMPO)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -7734,20 +7456,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_ARTCOMPTA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ARTCOMPTA");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ARTCOMPTA");
-                    tb.HasTrigger("TG_CBINS_F_ARTCOMPTA");
-                    tb.HasTrigger("TG_CBUPD_F_ARTCOMPTA");
-                    tb.HasTrigger("TG_DEL_F_ARTCOMPTA");
-                    tb.HasTrigger("TG_INS_CPTAF_ARTCOMPTA");
-                    tb.HasTrigger("TG_INS_F_ARTCOMPTA");
-                    tb.HasTrigger("TG_UPD_CPTAF_ARTCOMPTA");
-                    tb.HasTrigger("TG_UPD_F_ARTCOMPTA");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_ARTCOMPTA_AR_Ref");
 
             entity.HasIndex(e => new { e.cbAR_Ref, e.ACP_TypeFacture, e.ACP_Type, e.ACP_Champ }, "IACP_REF").IsUnique();
 
@@ -7788,14 +7496,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.ACP_ComptaCPT_CompteGNavigation).WithMany(p => p.F_ARTCOMPTA)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -7843,26 +7551,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ARTENUMREF");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ARTENUMREF");
-                    tb.HasTrigger("TG_CBINS_F_ARTENUMREF");
-                    tb.HasTrigger("TG_CBUPD_F_ARTENUMREF");
-                    tb.HasTrigger("TG_DEL_F_ARTENUMREF");
-                    tb.HasTrigger("TG_INS_F_ARTENUMREF");
-                    tb.HasTrigger("TG_UPD_F_ARTENUMREF");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_ARTENUMREF_AR_Ref");
-
-            entity.HasIndex(e => e.cbAE_CodeBarre, "IAE_CBARRE");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No1, e.AG_No2 }, "IAE_GAMME1");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No2, e.AG_No1 }, "IAE_GAMME2");
-
-            entity.HasIndex(e => e.cbAE_Ref, "IAE_REF");
-
             entity.HasIndex(e => new { e.AR_Ref, e.AG_No1, e.AG_No2 }, "UKA_F_ARTENUMREF_AE_REFGAM").IsUnique();
 
             entity.Property(e => e.AE_CodeBarre)
@@ -7892,14 +7580,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_ARTENUMREF)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -7912,30 +7600,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ARTFOURNISS");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ARTFOURNISS");
-                    tb.HasTrigger("TG_CBINS_F_ARTFOURNISS");
-                    tb.HasTrigger("TG_CBUPD_F_ARTFOURNISS");
-                    tb.HasTrigger("TG_DEL_F_ARTFOURNISS");
-                    tb.HasTrigger("TG_INS_CPTAF_ARTFOURNISS");
-                    tb.HasTrigger("TG_INS_F_ARTFOURNISS");
-                    tb.HasTrigger("TG_UPD_F_ARTFOURNISS");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_ARTFOURNISS_AR_Ref");
-
-            entity.HasIndex(e => new { e.cbAF_CodeBarre, e.cbAR_Ref }, "IAF_CBARRE");
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.cbAF_RefFourniss }, "IAF_FOURNISS");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AF_Principal }, "IAF_PRINCIPAL");
-
             entity.HasIndex(e => new { e.cbAR_Ref, e.cbCT_Num }, "IAF_REF").IsUnique();
-
-            entity.HasIndex(e => new { e.cbAF_RefFourniss, e.cbAR_Ref }, "IAF_REFFO");
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.cbAF_CodeBarre }, "IAF_TIERSBARRE");
 
             entity.Property(e => e.AF_CodeBarre)
                 .HasMaxLength(19)
@@ -7977,14 +7642,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_ARTFOURNISS)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -8003,23 +7668,9 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ARTGAMME");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ARTGAMME");
-                    tb.HasTrigger("TG_CBINS_F_ARTGAMME");
-                    tb.HasTrigger("TG_CBUPD_F_ARTGAMME");
-                    tb.HasTrigger("TG_DEL_F_ARTGAMME");
-                    tb.HasTrigger("TG_INS_F_ARTGAMME");
-                    tb.HasTrigger("TG_UPD_F_ARTGAMME");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_ARTGAMME_AR_Ref");
-
             entity.HasIndex(e => new { e.cbAR_Ref, e.AG_Type, e.cbEG_Enumere }, "IAG_ENUMERE").IsUnique();
 
             entity.HasIndex(e => e.AG_No, "IAG_NO").IsUnique();
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_Type, e.AG_No }, "IAG_REF");
 
             entity.Property(e => e.AR_Ref)
                 .IsRequired()
@@ -8034,17 +7685,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbEG_Enumere)
                 .HasMaxLength(22)
                 .HasComputedColumnSql("(CONVERT([varbinary](22),isnull([EG_Enumere],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_ARTGAMME)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -8056,24 +7707,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_ARTGLOSS>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ARTGLOSS");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ARTGLOSS");
-                    tb.HasTrigger("TG_CBINS_F_ARTGLOSS");
-                    tb.HasTrigger("TG_CBUPD_F_ARTGLOSS");
-                    tb.HasTrigger("TG_DEL_F_ARTGLOSS");
-                    tb.HasTrigger("TG_INS_F_ARTGLOSS");
-                    tb.HasTrigger("TG_UPD_F_ARTGLOSS");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_ARTGLOSS_AR_Ref");
-
-            entity.HasIndex(e => e.GL_No, "FKIA_F_ARTGLOSS_GL_No");
-
-            entity.HasIndex(e => new { e.GL_No, e.cbAR_Ref }, "IAGL_NO");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AGL_Num }, "IAGL_NUM");
 
             entity.HasIndex(e => new { e.cbAR_Ref, e.GL_No }, "IAGL_REF").IsUnique();
 
@@ -8087,14 +7720,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_ARTGLOSS)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -8112,16 +7745,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_ARTICLE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ARTICLE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ARTICLE");
-                    tb.HasTrigger("TG_CBINS_F_ARTICLE");
-                    tb.HasTrigger("TG_CBUPD_F_ARTICLE");
-                    tb.HasTrigger("TG_DEL_F_ARTICLE");
-                    tb.HasTrigger("TG_INS_F_ARTICLE");
-                    tb.HasTrigger("TG_UPD_F_ARTICLE");
-                });
 
             entity.HasIndex(e => e.cbAR_Ref, "IAR_REF").IsUnique();
 
@@ -8233,7 +7856,7 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbCreation)
                 .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
@@ -8241,10 +7864,10 @@ public partial class DB : DbContext
             entity.Property(e => e.cbFA_CodeFamille)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),[FA_CodeFamille]))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification).HasColumnType("datetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_SubstitutNavigation).WithMany(p => p.InverseAR_SubstitutNavigation)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -8281,20 +7904,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ARTICLEMEDIA");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ARTICLEMEDIA");
-                    tb.HasTrigger("TG_CBINS_F_ARTICLEMEDIA");
-                    tb.HasTrigger("TG_CBUPD_F_ARTICLEMEDIA");
-                    tb.HasTrigger("TG_DEL_F_ARTICLEMEDIA");
-                    tb.HasTrigger("TG_INS_F_ARTICLEMEDIA");
-                    tb.HasTrigger("TG_UPD_F_ARTICLEMEDIA");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_ARTICLEMEDIA_AR_Ref");
-
-            entity.HasIndex(e => e.cbAR_Ref, "IMEARTICLE_FICHIER");
-
             entity.Property(e => e.AR_Ref)
                 .IsRequired()
                 .HasMaxLength(19)
@@ -8311,14 +7920,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_ARTICLEMEDIA)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -8330,22 +7939,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_ARTICLERESSOURCE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ARTICLERESSOURCE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ARTICLERESSOURCE");
-                    tb.HasTrigger("TG_CBINS_F_ARTICLERESSOURCE");
-                    tb.HasTrigger("TG_CBUPD_F_ARTICLERESSOURCE");
-                    tb.HasTrigger("TG_DEL_F_ARTICLERESSOURCE");
-                    tb.HasTrigger("TG_INS_F_ARTICLERESSOURCE");
-                    tb.HasTrigger("TG_UPD_F_ARTICLERESSOURCE");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_ARTICLERESSOURCE_AR_Ref");
-
-            entity.HasIndex(e => e.RP_Code, "FKIA_F_ARTICLERESSOURCE_RP_Code");
-
-            entity.HasIndex(e => new { e.cbRP_Code, e.cbAR_Ref }, "IRA_CODE");
 
             entity.HasIndex(e => new { e.cbAR_Ref, e.cbRP_Code }, "IRA_REF").IsUnique();
 
@@ -8363,17 +7956,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbRP_Code)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),[RP_Code]))", false);
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_ARTICLERESSOURCE)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -8392,23 +7985,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ARTMODELE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ARTMODELE");
-                    tb.HasTrigger("TG_CBINS_F_ARTMODELE");
-                    tb.HasTrigger("TG_CBUPD_F_ARTMODELE");
-                    tb.HasTrigger("TG_DEL_F_ARTMODELE");
-                    tb.HasTrigger("TG_INS_F_ARTMODELE");
-                    tb.HasTrigger("TG_UPD_F_ARTMODELE");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_ARTMODELE_AR_Ref");
-
-            entity.HasIndex(e => e.MO_No, "FKIA_F_ARTMODELE_MO_No");
-
             entity.HasIndex(e => new { e.cbAR_Ref, e.AM_Domaine }, "IAM_CODE").IsUnique();
-
-            entity.HasIndex(e => new { e.MO_No, e.cbAR_Ref, e.AM_Domaine }, "IAM_MODELE");
 
             entity.Property(e => e.AR_Ref)
                 .IsRequired()
@@ -8420,14 +7997,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_ARTMODELE)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -8446,20 +8023,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ARTPRIX");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ARTPRIX");
-                    tb.HasTrigger("TG_CBINS_F_ARTPRIX");
-                    tb.HasTrigger("TG_CBUPD_F_ARTPRIX");
-                    tb.HasTrigger("TG_DEL_F_ARTPRIX");
-                    tb.HasTrigger("TG_INS_F_ARTPRIX");
-                    tb.HasTrigger("TG_UPD_F_ARTPRIX");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_ARTPRIX_AR_Ref");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No1, e.AG_No2 }, "IAP_PRIX");
-
             entity.HasIndex(e => new { e.AR_Ref, e.AG_No1, e.AG_No2 }, "UKA_F_ARTPRIX_AR_PRIX").IsUnique();
 
             entity.Property(e => e.AR_CoutStd).HasColumnType("numeric(24, 6)");
@@ -8474,14 +8037,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_ARTPRIX)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -8493,32 +8056,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_ARTSTOCK>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ARTSTOCK");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ARTSTOCK");
-                    tb.HasTrigger("TG_CBINS_F_ARTSTOCK");
-                    tb.HasTrigger("TG_CBUPD_F_ARTSTOCK");
-                    tb.HasTrigger("TG_DEL_F_ARTSTOCK");
-                    tb.HasTrigger("TG_INS_F_ARTSTOCK");
-                    tb.HasTrigger("TG_UPD_F_ARTSTOCK");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_ARTSTOCK_AR_Ref");
-
-            entity.HasIndex(e => e.DE_No, "FKIA_F_ARTSTOCK_DE_No");
-
-            entity.HasIndex(e => e.cbDP_NoControle, "FKIA_F_ARTSTOCK_DP_NoControle");
-
-            entity.HasIndex(e => e.cbDP_NoPrincipal, "FKIA_F_ARTSTOCK_DP_NoPrincipal");
-
-            entity.HasIndex(e => e.DP_NoControle, "IAS_EMPLACEMENTCONT");
-
-            entity.HasIndex(e => e.DP_NoPrincipal, "IAS_EMPLACEMENTPRINC");
-
-            entity.HasIndex(e => e.DE_No, "IAS_NO");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AS_Principal }, "IAS_PRINCIPAL");
 
             entity.HasIndex(e => new { e.cbAR_Ref, e.DE_No }, "IAS_REF").IsUnique();
 
@@ -8542,14 +8079,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_ARTSTOCK)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -8578,19 +8115,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ARTSTOCKEMPL");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ARTSTOCKEMPL");
-                    tb.HasTrigger("TG_CBINS_F_ARTSTOCKEMPL");
-                    tb.HasTrigger("TG_CBUPD_F_ARTSTOCKEMPL");
-                });
-
-            entity.HasIndex(e => new { e.DE_No, e.DP_No }, "FKIA_F_ARTSTOCKEMPL_ARTDENO_DPNO");
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_ARTSTOCKEMPL_AR_Ref");
-
-            entity.HasIndex(e => e.DP_No, "IAE_EMPLACEMENT");
-
             entity.HasIndex(e => new { e.cbAR_Ref, e.DE_No, e.DP_No }, "IAE_REFDEP").IsUnique();
 
             entity.Property(e => e.AE_QteAControler).HasColumnType("numeric(24, 6)");
@@ -8606,14 +8130,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_ARTSTOCKEMPL)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -8621,7 +8145,7 @@ public partial class DB : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKA_F_ARTSTOCKEMPL_AR_Ref");
 
-            entity.HasOne(d => d.D).WithMany(p => p.F_ARTSTOCKEMPL)
+            entity.HasOne(d => d.F_DEPOTEMPL).WithMany(p => p.F_ARTSTOCKEMPL)
                 .HasPrincipalKey(p => new { p.DE_No, p.DP_No })
                 .HasForeignKey(d => new { d.DE_No, d.DP_No })
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -8632,15 +8156,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_BILLETPIECE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_BILLETPIECE");
-                    tb.HasTrigger("TG_CBINS_F_BILLETPIECE");
-                    tb.HasTrigger("TG_CBUPD_F_BILLETPIECE");
-                });
-
-            entity.HasIndex(e => new { e.N_Devise, e.BI_Valeur }, "IBI_VALEUR");
-
             entity.Property(e => e.BI_Intitule)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -8648,37 +8163,19 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_BONAPAYERHISTO>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_BONAPAYERHISTO");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_BONAPAYERHISTO");
-                    tb.HasTrigger("TG_CBINS_F_BONAPAYERHISTO");
-                    tb.HasTrigger("TG_CBUPD_F_BONAPAYERHISTO");
-                    tb.HasTrigger("TG_DEL_F_BONAPAYERHISTO");
-                    tb.HasTrigger("TG_INS_F_BONAPAYERHISTO");
-                    tb.HasTrigger("TG_UPD_F_BONAPAYERHISTO");
-                });
-
-            entity.HasIndex(e => e.cbCO_No, "FKIA_F_BONAPAYERHISTO_CO_No");
-
-            entity.HasIndex(e => e.EC_No, "FKIA_F_BONAPAYERHISTO_EC_No");
-
-            entity.HasIndex(e => e.CO_No, "IBP_CONO");
-
-            entity.HasIndex(e => new { e.EC_No, e.BP_Date, e.BP_Type }, "IBP_ECNO");
 
             entity.Property(e => e.BP_Commentaire)
                 .HasMaxLength(255)
@@ -8687,14 +8184,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.EC_NoNavigation).WithMany(p => p.F_BONAPAYERHISTO)
                 .HasPrincipalKey(p => p.EC_No)
@@ -8712,17 +8209,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_BONAPAYERHISTOCIAL");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_BONAPAYERHISTOCIAL");
-                    tb.HasTrigger("TG_CBINS_F_BONAPAYERHISTOCIAL");
-                    tb.HasTrigger("TG_CBUPD_F_BONAPAYERHISTOCIAL");
-                });
-
-            entity.HasIndex(e => e.CO_No, "IBP_COLLAB");
-
-            entity.HasIndex(e => new { e.DO_Type, e.cbDO_Piece, e.BP_Date, e.BP_Type }, "IBP_ENTETE");
-
             entity.Property(e => e.BP_Commentaire)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -8733,44 +8219,26 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbDO_Piece)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len(isnull([DO_Piece],''))+(1)))+isnull([DO_Piece],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_BUDGET>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_BUDGET");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_BUDGET");
-                    tb.HasTrigger("TG_CBINS_F_BUDGET");
-                    tb.HasTrigger("TG_CBUPD_F_BUDGET");
-                    tb.HasTrigger("TG_DEL_F_BUDGET");
-                    tb.HasTrigger("TG_INS_F_BUDGET");
-                    tb.HasTrigger("TG_UPD_F_BUDGET");
-                });
-
-            entity.HasIndex(e => e.cbBD_Intitule, "IBD_INT");
-
             entity.HasIndex(e => e.BD_No, "IBD_NO").IsUnique();
 
             entity.HasIndex(e => e.cbBD_Num, "IBD_NUM").IsUnique();
-
-            entity.HasIndex(e => e.cbBD_NumCentr, "IBD_NUMCENTR");
-
-            entity.HasIndex(e => new { e.BD_Type, e.cbBD_Num }, "IBD_TYPE");
-
-            entity.HasIndex(e => new { e.BD_TRepart, e.cbBD_VRepart }, "IBD_VREPART");
 
             entity.Property(e => e.BD_Dotation0101).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.BD_Dotation0102).HasColumnType("numeric(24, 6)");
@@ -9232,42 +8700,23 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_CAISSE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CAISSE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CAISSE");
-                    tb.HasTrigger("TG_CBINS_F_CAISSE");
-                    tb.HasTrigger("TG_CBUPD_F_CAISSE");
-                    tb.HasTrigger("TG_INS_CPTAF_CAISSE");
-                    tb.HasTrigger("TG_UPD_CPTAF_CAISSE");
-                });
-
-            entity.HasIndex(e => e.DE_No, "FKIA_F_CAISSE_DE_No");
-
-            entity.HasIndex(e => e.CO_NoCaissier, "ICS_CAISSIER");
-
-            entity.HasIndex(e => e.DE_No, "ICS_DEPOT");
-
             entity.HasIndex(e => e.cbCA_Intitule, "ICS_INTITULE").IsUnique();
 
             entity.HasIndex(e => e.CA_No, "ICS_NO").IsUnique();
-
-            entity.HasIndex(e => e.cbCT_Num, "ICS_TIERS");
-
-            entity.HasIndex(e => e.CO_No, "ICS_VENDEUR");
 
             entity.Property(e => e.CA_DateCreation).HasColumnType("smalldatetime");
             entity.Property(e => e.CA_Intitule)
@@ -9291,14 +8740,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_CAISSE)
                 .HasPrincipalKey(p => p.CT_Num)
@@ -9327,30 +8776,19 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CAISSECAISSIER");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CAISSECAISSIER");
-                    tb.HasTrigger("TG_CBINS_F_CAISSECAISSIER");
-                    tb.HasTrigger("TG_CBUPD_F_CAISSECAISSIER");
-                });
-
-            entity.HasIndex(e => e.CA_No, "FKIA_F_CAISSECAISSIER_CA_No");
-
             entity.HasIndex(e => new { e.CA_No, e.CO_No }, "ICC_CAISSE").IsUnique();
-
-            entity.HasIndex(e => new { e.CO_No, e.CA_No }, "ICC_CAISSIER");
 
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CA_NoNavigation).WithMany(p => p.F_CAISSECAISSIER)
                 .HasPrincipalKey(p => p.CA_No)
@@ -9368,14 +8806,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_CALENDRIER>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CALENDRIER");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CALENDRIER");
-                    tb.HasTrigger("TG_CBINS_F_CALENDRIER");
-                    tb.HasTrigger("TG_CBUPD_F_CALENDRIER");
-                    tb.HasTrigger("TG_DEL_F_CALENDRIER");
-                });
 
             entity.HasIndex(e => e.cbCAL_Intitule, "ICAL_INTITULE").IsUnique();
 
@@ -9504,36 +8934,23 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_CATALOGUE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CATALOGUE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CATALOGUE");
-                    tb.HasTrigger("TG_CBINS_F_CATALOGUE");
-                    tb.HasTrigger("TG_CBUPD_F_CATALOGUE");
-                });
-
-            entity.HasIndex(e => e.cbCL_NoParent, "FKIA_F_CATALOGUE_CL_NoParent");
-
-            entity.HasIndex(e => new { e.CL_Niveau, e.cbCL_Intitule }, "ICL_NIVEAU");
-
             entity.HasIndex(e => e.CL_No, "ICL_NO").IsUnique();
 
             entity.HasIndex(e => new { e.CL_NoParent, e.cbCL_Intitule }, "ICL_PARENTINTIT").IsUnique();
-
-            entity.HasIndex(e => new { e.CL_NoParent, e.CL_No }, "ICL_PARENTNO");
 
             entity.Property(e => e.CL_Code)
                 .HasMaxLength(3)
@@ -9549,12 +8966,12 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification).HasColumnType("datetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.cbCL_NoParentNavigation).WithMany(p => p.InversecbCL_NoParentNavigation)
                 .HasPrincipalKey(p => p.CL_No)
@@ -9566,25 +8983,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CLAVIER");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CLAVIER");
-                    tb.HasTrigger("TG_CBINS_F_CLAVIER");
-                    tb.HasTrigger("TG_CBUPD_F_CLAVIER");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_CLAVIER_AR_Ref");
-
-            entity.HasIndex(e => e.cbAR_Ref, "ICL_ARTICLE");
-
-            entity.HasIndex(e => new { e.N_Clavier, e.CL_Affiche, e.CL_Fonction, e.CL_Interesse, e.cbAR_Ref, e.CO_No }, "ICL_FONCAFFIC");
-
-            entity.HasIndex(e => new { e.N_Clavier, e.CL_Fonction, e.CL_Interesse, e.cbAR_Ref, e.CO_No }, "ICL_FONCTION");
-
-            entity.HasIndex(e => new { e.N_Clavier, e.CL_Raccourci, e.CL_Flag }, "ICL_RACC");
-
-            entity.HasIndex(e => e.CO_No, "ICL_VENDEUR");
-
             entity.Property(e => e.AR_Ref)
                 .HasMaxLength(19)
                 .IsUnicode(false);
@@ -9594,14 +8992,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_CLAVIER)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -9618,69 +9016,27 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CMLIEN");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CMLIEN");
-                    tb.HasTrigger("TG_CBINS_F_CMLIEN");
-                    tb.HasTrigger("TG_CBUPD_F_CMLIEN");
-                    tb.HasTrigger("TG_INS_F_CMLIEN");
-                    tb.HasTrigger("TG_UPD_F_CMLIEN");
-                });
-
-            entity.HasIndex(e => new { e.DL_NoIn, e.DL_NoOut }, "ICM_NOIN");
-
-            entity.HasIndex(e => new { e.DL_NoOut, e.DL_NoIn }, "ICM_NOOUT");
-
             entity.Property(e => e.CM_Qte).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_COLLABORATEUR>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COLLABORATEUR");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COLLABORATEUR");
-                    tb.HasTrigger("TG_CBINS_F_COLLABORATEUR");
-                    tb.HasTrigger("TG_CBUPD_F_COLLABORATEUR");
-                    tb.HasTrigger("TG_DEL_F_COLLABORATEUR");
-                    tb.HasTrigger("TG_UPD_F_COLLABORATEUR");
-                });
-
-            entity.HasIndex(e => e.cbPROT_No, "FKIA_F_COLLABORATEUR_PROT_No");
-
-            entity.HasIndex(e => new { e.CO_Acheteur, e.cbCO_Nom, e.cbCO_Prenom }, "ICO_ACHETEUR");
-
-            entity.HasIndex(e => new { e.CO_Caissier, e.cbCO_Nom, e.cbCO_Prenom }, "ICO_CAISSIER");
-
-            entity.HasIndex(e => new { e.CO_ChargeRecouvr, e.cbCO_Nom, e.cbCO_Prenom }, "ICO_CHARGERECOUVR");
-
             entity.HasIndex(e => e.CO_No, "ICO_CONO").IsUnique();
 
-            entity.HasIndex(e => new { e.CO_Financier, e.cbCO_Nom, e.cbCO_Prenom }, "ICO_FINANCIER");
-
-            entity.HasIndex(e => new { e.cbCO_Fonction, e.cbCO_Nom, e.cbCO_Prenom }, "ICO_FONCTION");
-
-            entity.HasIndex(e => e.cbCO_Matricule, "ICO_MATRICULE");
-
             entity.HasIndex(e => new { e.cbCO_Nom, e.cbCO_Prenom }, "ICO_NOM").IsUnique();
-
-            entity.HasIndex(e => new { e.CO_Receptionnaire, e.cbCO_Nom, e.cbCO_Prenom }, "ICO_RECEPTIONNAIRE");
-
-            entity.HasIndex(e => e.PROT_No, "ICO_UTILISATEUR");
-
-            entity.HasIndex(e => new { e.CO_Vendeur, e.cbCO_Nom, e.cbCO_Prenom }, "ICO_VENDEUR");
 
             entity.Property(e => e.CO_Adresse)
                 .HasMaxLength(35)
@@ -9757,20 +9113,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMMPLANIFIE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMMPLANIFIE");
-                    tb.HasTrigger("TG_CBINS_F_COMMPLANIFIE");
-                    tb.HasTrigger("TG_CBUPD_F_COMMPLANIFIE");
-                });
-
-            entity.HasIndex(e => new { e.CP_Frequence, e.cbCP_Intitule }, "ICP_FREQUENCE");
-
-            entity.HasIndex(e => new { e.cbCP_Intitule, e.CP_Type }, "ICP_INTITULE");
-
             entity.HasIndex(e => e.CP_No, "ICP_NO").IsUnique();
-
-            entity.HasIndex(e => new { e.CP_Type, e.cbCP_Intitule }, "ICP_TYPE");
 
             entity.Property(e => e.AR_DateCreationA).HasColumnType("smalldatetime");
             entity.Property(e => e.AR_DateCreationDe).HasColumnType("smalldatetime");
@@ -9818,62 +9161,21 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_COMPTEA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTEA");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTEA");
-                    tb.HasTrigger("TG_CBINS_F_COMPTEA");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTEA");
-                    tb.HasTrigger("TG_DEL_CIALF_COMPTEA");
-                    tb.HasTrigger("TG_DEL_F_COMPTEA");
-                    tb.HasTrigger("TG_INS_F_COMPTEA");
-                    tb.HasTrigger("TG_UPD_F_COMPTEA");
-                });
-
-            entity.HasIndex(e => e.cbCO_No, "FKIA_F_COMPTEA_CO_No");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.cbCA_Classement, e.cbCA_Num }, "ICA_CLASS");
-
-            entity.HasIndex(e => e.CO_No, "ICA_CONO");
-
             entity.HasIndex(e => new { e.N_Analytique, e.cbCA_Num }, "ICA_NUM").IsUnique();
-
-            entity.HasIndex(e => e.cbCA_Raccourci, "ICA_RACC");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Sommeil, e.cbCA_Classement, e.cbCA_Num }, "ICA_SOMCLASS");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Sommeil, e.cbCA_Num, e.CA_Type }, "ICA_SOMNUM");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Sommeil, e.CA_Type, e.cbCA_Num }, "ICA_SOMTYPE");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Statut, e.cbCA_Classement, e.cbCA_Num }, "ICA_STATUTCLASS");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Statut, e.cbCA_Num }, "ICA_STATUTNUM");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Statut, e.CA_Sommeil, e.cbCA_Classement, e.cbCA_Num }, "ICA_STATUTSOMCLASS");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Statut, e.CA_Sommeil, e.cbCA_Num, e.CA_Type }, "ICA_STATUTSOMNUM");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Statut, e.CA_Sommeil, e.CA_Type, e.cbCA_Num }, "ICA_STATUTSOMTYPE");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Statut, e.CA_Type, e.cbCA_Num }, "ICA_STATUTTYPE");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Type, e.cbCA_Num }, "ICA_TYPE");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Type, e.cbCA_Classement }, "ICA_TYPECLASS");
 
             entity.HasIndex(e => new { e.N_Analytique, e.CA_Num }, "UKA_F_COMPTEA_CA_Num").IsUnique();
 
@@ -9919,18 +9221,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_COMPTEABUDGET>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTEABUDGET");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTEABUDGET");
-                    tb.HasTrigger("TG_CBINS_F_COMPTEABUDGET");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTEABUDGET");
-                    tb.HasTrigger("TG_DEL_F_COMPTEABUDGET");
-                    tb.HasTrigger("TG_INS_F_COMPTEABUDGET");
-                    tb.HasTrigger("TG_UPD_F_COMPTEABUDGET");
-                });
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Num }, "FKIA_F_COMPTEABUDGET_CA_Num");
 
             entity.HasIndex(e => new { e.N_Analytique, e.cbCA_Num }, "ICA_BUDGET").IsUnique();
 
@@ -10378,14 +9668,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.F_COMPTEA).WithOne(p => p.F_COMPTEABUDGET)
                 .HasPrincipalKey<F_COMPTEA>(p => new { p.N_Analytique, p.CA_Num })
@@ -10398,23 +9688,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTEABUDGETG");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTEABUDGETG");
-                    tb.HasTrigger("TG_CBINS_F_COMPTEABUDGETG");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTEABUDGETG");
-                    tb.HasTrigger("TG_DEL_F_COMPTEABUDGETG");
-                    tb.HasTrigger("TG_INS_F_COMPTEABUDGETG");
-                    tb.HasTrigger("TG_UPD_F_COMPTEABUDGETG");
-                });
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Num }, "FKIA_F_COMPTEABUDGETG_BUDGET");
-
-            entity.HasIndex(e => e.CG_Num, "FKIA_F_COMPTEABUDGETG_CG_Num");
-
             entity.HasIndex(e => new { e.N_Analytique, e.cbCA_Num, e.cbCG_Num }, "ICA_BUDGETGCANUM").IsUnique();
-
-            entity.HasIndex(e => new { e.cbCG_Num, e.N_Analytique, e.cbCA_Num }, "ICA_BUDGETGCGNUM");
 
             entity.Property(e => e.CA_BGVRepart01).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.CA_BGVRepart02).HasColumnType("numeric(24, 6)");
@@ -10445,14 +9719,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CG_NumNavigation).WithMany(p => p.F_COMPTEABUDGETG)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -10471,20 +9745,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTEAMEDIA");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTEAMEDIA");
-                    tb.HasTrigger("TG_CBINS_F_COMPTEAMEDIA");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTEAMEDIA");
-                    tb.HasTrigger("TG_DEL_F_COMPTEAMEDIA");
-                    tb.HasTrigger("TG_INS_F_COMPTEAMEDIA");
-                    tb.HasTrigger("TG_UPD_F_COMPTEAMEDIA");
-                });
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Num }, "FKIA_F_COMPTEAMEDIA_CA_Num");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.cbCA_Num }, "IMECOMPTEA_FICHIER");
-
             entity.Property(e => e.CA_Num)
                 .IsRequired()
                 .HasMaxLength(13)
@@ -10501,14 +9761,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.F_COMPTEA).WithMany(p => p.F_COMPTEAMEDIA)
                 .HasPrincipalKey(p => new { p.N_Analytique, p.CA_Num })
@@ -10521,41 +9781,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTEG");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTEG");
-                    tb.HasTrigger("TG_CBINS_F_COMPTEG");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTEG");
-                    tb.HasTrigger("TG_DEL_F_COMPTEG");
-                    tb.HasTrigger("TG_INS_F_COMPTEG");
-                    tb.HasTrigger("TG_UPD_F_COMPTEG");
-                });
-
-            entity.HasIndex(e => e.CR_Num, "FKIA_F_COMPTEG_CR_Num");
-
-            entity.HasIndex(e => e.TA_Code, "FKIA_F_COMPTEG_TA_Code");
-
-            entity.HasIndex(e => new { e.cbCG_Classement, e.cbCG_Num }, "ICG_CLASS");
-
-            entity.HasIndex(e => new { e.cbCR_Num, e.cbCG_Num }, "ICG_CRNUM");
-
             entity.HasIndex(e => e.cbCG_Num, "ICG_NUM").IsUnique();
-
-            entity.HasIndex(e => e.cbCG_Raccourci, "ICG_RACC");
-
-            entity.HasIndex(e => new { e.CG_Sommeil, e.cbCG_Classement, e.cbCG_Num }, "ICG_SOMCLASS");
-
-            entity.HasIndex(e => new { e.CG_Sommeil, e.cbCG_Num }, "ICG_SOMNUM");
-
-            entity.HasIndex(e => new { e.CG_Sommeil, e.CG_Type, e.cbCG_Num }, "ICG_SOMTYPE");
-
-            entity.HasIndex(e => new { e.CG_Sommeil, e.CG_Type, e.cbCG_Classement }, "ICG_SOMTYPECLASS");
-
-            entity.HasIndex(e => e.cbTA_Code, "ICG_TACODE");
-
-            entity.HasIndex(e => new { e.CG_Type, e.cbCG_Num }, "ICG_TYPE");
-
-            entity.HasIndex(e => new { e.CG_Type, e.cbCG_Classement }, "ICG_TYPECLASS");
 
             entity.HasIndex(e => e.CG_Num, "UKA_F_COMPTEG_CG_Num").IsUnique();
 
@@ -10593,12 +9819,12 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification).HasColumnType("datetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
             entity.Property(e => e.cbTA_Code)
                 .HasMaxLength(6)
                 .HasComputedColumnSql("(CONVERT([varbinary](6),isnull([TA_Code],'')))", false);
@@ -10617,22 +9843,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_COMPTEGA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTEGA");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTEGA");
-                    tb.HasTrigger("TG_CBINS_F_COMPTEGA");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTEGA");
-                    tb.HasTrigger("TG_DEL_F_COMPTEGA");
-                    tb.HasTrigger("TG_INS_F_COMPTEGA");
-                    tb.HasTrigger("TG_UPD_F_COMPTEGA");
-                });
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Num }, "FKIA_F_COMPTEGA_CA_Num");
-
-            entity.HasIndex(e => e.CG_Num, "FKIA_F_COMPTEGA_CG_Num");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.cbCA_Num, e.cbCG_Num }, "ICG_ACANUM");
 
             entity.HasIndex(e => new { e.cbCG_Num, e.N_Analytique, e.cbCA_Num }, "ICG_ACGNUM").IsUnique();
 
@@ -10654,14 +9864,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CG_NumNavigation).WithMany(p => p.F_COMPTEGA)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -10679,18 +9889,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_COMPTEGBUDGET>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTEGBUDGET");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTEGBUDGET");
-                    tb.HasTrigger("TG_CBINS_F_COMPTEGBUDGET");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTEGBUDGET");
-                    tb.HasTrigger("TG_DEL_F_COMPTEGBUDGET");
-                    tb.HasTrigger("TG_INS_F_COMPTEGBUDGET");
-                    tb.HasTrigger("TG_UPD_F_COMPTEGBUDGET");
-                });
-
-            entity.HasIndex(e => e.CG_Num, "FKIA_F_COMPTEGBUDGET_CG_Num");
 
             entity.HasIndex(e => e.cbCG_Num, "ICG_BUDGET").IsUnique();
 
@@ -11138,14 +10336,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CG_NumNavigation).WithOne(p => p.F_COMPTEGBUDGET)
                 .HasPrincipalKey<F_COMPTEG>(p => p.CG_Num)
@@ -11157,22 +10355,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_COMPTEGBUDGETA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTEGBUDGETA");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTEGBUDGETA");
-                    tb.HasTrigger("TG_CBINS_F_COMPTEGBUDGETA");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTEGBUDGETA");
-                    tb.HasTrigger("TG_DEL_F_COMPTEGBUDGETA");
-                    tb.HasTrigger("TG_INS_F_COMPTEGBUDGETA");
-                    tb.HasTrigger("TG_UPD_F_COMPTEGBUDGETA");
-                });
-
-            entity.HasIndex(e => e.CG_Num, "FKIA_F_COMPTEGBUDGETA_BUDGET");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Num }, "FKIA_F_COMPTEGBUDGETA_CA_Num");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.cbCA_Num, e.cbCG_Num }, "ICG_BUDGETACANUM");
 
             entity.HasIndex(e => new { e.cbCG_Num, e.N_Analytique, e.cbCA_Num }, "ICG_BUDGETACGNUM").IsUnique();
 
@@ -11205,14 +10387,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CG_NumNavigation).WithMany(p => p.F_COMPTEGBUDGETA)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -11231,18 +10413,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTEGNOTE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTEGNOTE");
-                    tb.HasTrigger("TG_CBINS_F_COMPTEGNOTE");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTEGNOTE");
-                    tb.HasTrigger("TG_DEL_F_COMPTEGNOTE");
-                    tb.HasTrigger("TG_INS_F_COMPTEGNOTE");
-                    tb.HasTrigger("TG_UPD_F_COMPTEGNOTE");
-                });
-
-            entity.HasIndex(e => e.CG_Num, "FKIA_F_COMPTEGNOTE_CG_Num");
-
             entity.HasIndex(e => e.cbCG_Num, "ICG_NOTE").IsUnique();
 
             entity.Property(e => e.CG_Note)
@@ -11258,14 +10428,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CG_NumNavigation).WithMany(p => p.F_COMPTEGNOTE)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -11278,18 +10448,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTER");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTER");
-                    tb.HasTrigger("TG_CBINS_F_COMPTER");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTER");
-                });
-
-            entity.HasIndex(e => new { e.cbCR_Classement, e.cbCR_Num, e.CR_Type }, "ICR_CLASS");
-
             entity.HasIndex(e => e.cbCR_Num, "ICR_NUM").IsUnique();
-
-            entity.HasIndex(e => new { e.CR_Type, e.cbCR_Num }, "ICR_TYPE");
 
             entity.HasIndex(e => e.CR_Num, "UKA_F_COMPTER_CR_Num").IsUnique();
 
@@ -11312,76 +10471,19 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_COMPTET>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTET");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTET");
-                    tb.HasTrigger("TG_CBINS_F_COMPTET");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTET");
-                    tb.HasTrigger("TG_DEL_CIALF_COMPTET");
-                    tb.HasTrigger("TG_DEL_F_COMPTET");
-                    tb.HasTrigger("TG_INS_F_COMPTET");
-                    tb.HasTrigger("TG_UPD_F_COMPTET");
-                });
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Num }, "FKIA_F_COMPTET_CA_Num");
-
-            entity.HasIndex(e => new { e.N_AnalytiqueIFRS, e.CA_NumIFRS }, "FKIA_F_COMPTET_CA_NumIFRS");
-
-            entity.HasIndex(e => e.cbCO_No, "FKIA_F_COMPTET_CO_No");
-
-            entity.HasIndex(e => e.cbEB_No, "FKIA_F_COMPTET_EB_No");
-
-            entity.HasIndex(e => e.cbMR_No, "FKIA_F_COMPTET_MR_No");
-
-            entity.HasIndex(e => e.cbPI_NoEchange, "FKIA_F_COMPTET_PI_NoEchange");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.cbCA_Num, e.cbCT_Num }, "ICT_CANUM");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.cbCA_Num, e.CT_Type, e.cbCT_Num }, "ICT_CANUMTYPE");
-
-            entity.HasIndex(e => new { e.cbCT_Classement, e.cbCT_Num }, "ICT_CLASS");
-
-            entity.HasIndex(e => new { e.cbCT_CodePostal, e.cbCT_Num }, "ICT_CODEPOSTAL");
-
-            entity.HasIndex(e => e.CO_No, "ICT_CONO");
-
-            entity.HasIndex(e => e.DE_No, "ICT_DENO");
-
-            entity.HasIndex(e => e.cbCT_NumCentrale, "ICT_NUMCENTRALE");
-
-            entity.HasIndex(e => e.cbCT_NumPayeur, "ICT_NUMPAYEUR");
-
-            entity.HasIndex(e => e.PI_NoEchange, "ICT_PINOECHANGE");
-
-            entity.HasIndex(e => e.cbCT_Raccourci, "ICT_RACC");
-
-            entity.HasIndex(e => new { e.CT_Sommeil, e.cbCT_Classement, e.cbCT_Num }, "ICT_SOMCLASS");
-
-            entity.HasIndex(e => new { e.CT_Sommeil, e.cbCT_Num }, "ICT_SOMNUM");
-
-            entity.HasIndex(e => new { e.CT_Sommeil, e.CT_Type, e.cbCT_Num }, "ICT_SOMTYPE");
-
-            entity.HasIndex(e => new { e.CT_Sommeil, e.CT_Type, e.cbCT_Classement, e.cbCT_Num }, "ICT_SOMTYPECLASS");
-
-            entity.HasIndex(e => new { e.CT_Type, e.cbCT_Num }, "ICT_TYPE");
-
-            entity.HasIndex(e => new { e.CT_Type, e.cbCT_Classement, e.cbCT_Num }, "ICT_TYPECLASS");
-
-            entity.HasIndex(e => new { e.CT_Type, e.cbCT_CodePostal, e.cbCT_Num }, "ICT_TYPECODEP");
 
             entity.HasIndex(e => e.CT_Num, "UKA_F_COMPTET_CT_Num").IsUnique();
 
@@ -11607,22 +10709,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTETG");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTETG");
-                    tb.HasTrigger("TG_CBINS_F_COMPTETG");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTETG");
-                    tb.HasTrigger("TG_DEL_F_COMPTETG");
-                    tb.HasTrigger("TG_INS_F_COMPTETG");
-                    tb.HasTrigger("TG_UPD_F_COMPTETG");
-                });
-
-            entity.HasIndex(e => e.CG_Num, "FKIA_F_COMPTETG_CG_Num");
-
-            entity.HasIndex(e => e.CT_Num, "FKIA_F_COMPTETG_CT_Num");
-
-            entity.HasIndex(e => new { e.cbCG_Num, e.cbCT_Num }, "ICT_CGNUM");
-
             entity.HasIndex(e => new { e.cbCT_Num, e.cbCG_Num }, "ICT_CTNUM").IsUnique();
 
             entity.Property(e => e.CG_Num)
@@ -11642,14 +10728,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CG_NumNavigation).WithMany(p => p.F_COMPTETG)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -11668,16 +10754,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTETINFOS");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTETINFOS");
-                    tb.HasTrigger("TG_CBINS_F_COMPTETINFOS");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTETINFOS");
-                });
-
             entity.HasIndex(e => new { e.cbCT_Num, e.cbCI_Code }, "ICI_CODE").IsUnique();
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.CI_Domaine, e.cbCI_Intitule }, "ICI_DOMAINE");
 
             entity.Property(e => e.CI_Code)
                 .IsRequired()
@@ -11706,14 +10783,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_COMPTETINFOS)
                 .HasPrincipalKey(p => p.CT_Num)
@@ -11725,20 +10802,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_COMPTETMEDIA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTETMEDIA");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTETMEDIA");
-                    tb.HasTrigger("TG_CBINS_F_COMPTETMEDIA");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTETMEDIA");
-                    tb.HasTrigger("TG_DEL_F_COMPTETMEDIA");
-                    tb.HasTrigger("TG_INS_F_COMPTETMEDIA");
-                    tb.HasTrigger("TG_UPD_F_COMPTETMEDIA");
-                });
-
-            entity.HasIndex(e => e.CT_Num, "FKIA_F_COMPTETMEDIA_CT_Num");
-
-            entity.HasIndex(e => e.cbCT_Num, "IMECOMPTET_FICHIER");
 
             entity.Property(e => e.CT_Num)
                 .IsRequired()
@@ -11756,14 +10819,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_COMPTETMEDIA)
                 .HasPrincipalKey(p => p.CT_Num)
@@ -11775,20 +10838,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_COMPTETMODELE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTETMODELE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTETMODELE");
-                    tb.HasTrigger("TG_CBINS_F_COMPTETMODELE");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTETMODELE");
-                    tb.HasTrigger("TG_DEL_F_COMPTETMODELE");
-                    tb.HasTrigger("TG_INS_F_COMPTETMODELE");
-                    tb.HasTrigger("TG_UPD_F_COMPTETMODELE");
-                });
-
-            entity.HasIndex(e => e.CT_Num, "FKIA_F_COMPTETMODELE_CT_Num");
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.CM_Creator, e.CM_Type }, "ICM_CREATOR");
 
             entity.Property(e => e.CM_Modele)
                 .HasMaxLength(259)
@@ -11803,14 +10852,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_COMPTETMODELE)
                 .HasPrincipalKey(p => p.CT_Num)
@@ -11822,20 +10871,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_COMPTETRAPPEL>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_COMPTETRAPPEL");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_COMPTETRAPPEL");
-                    tb.HasTrigger("TG_CBINS_F_COMPTETRAPPEL");
-                    tb.HasTrigger("TG_CBUPD_F_COMPTETRAPPEL");
-                    tb.HasTrigger("TG_DEL_F_COMPTETRAPPEL");
-                    tb.HasTrigger("TG_INS_F_COMPTETRAPPEL");
-                    tb.HasTrigger("TG_UPD_F_COMPTETRAPPEL");
-                });
-
-            entity.HasIndex(e => e.CT_Num, "FKIA_F_COMPTETRAPPEL_CT_Num");
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.CR_Date }, "ICR_DATE").IsDescending(false, true);
 
             entity.Property(e => e.CR_Date).HasColumnType("smalldatetime");
             entity.Property(e => e.CR_Echeance).HasColumnType("smalldatetime");
@@ -11852,14 +10887,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_COMPTETRAPPEL)
                 .HasPrincipalKey(p => p.CT_Num)
@@ -11872,29 +10907,9 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CONDITION");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CONDITION");
-                    tb.HasTrigger("TG_CBINS_F_CONDITION");
-                    tb.HasTrigger("TG_CBUPD_F_CONDITION");
-                    tb.HasTrigger("TG_DEL_F_CONDITION");
-                    tb.HasTrigger("TG_INS_F_CONDITION");
-                    tb.HasTrigger("TG_UPD_F_CONDITION");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_CONDITION_AR_Ref");
-
-            entity.HasIndex(e => e.cbCO_CodeBarre, "ICO_CBARRE");
-
             entity.HasIndex(e => new { e.cbAR_Ref, e.cbEC_Enumere, e.EC_Quantite }, "ICO_ENUMERE").IsUnique();
 
             entity.HasIndex(e => e.CO_No, "ICO_NO").IsUnique();
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.CO_Principal }, "ICO_PRINCIPAL");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.EC_Quantite }, "ICO_QUANTITE");
-
-            entity.HasIndex(e => e.cbCO_Ref, "ICO_REF");
 
             entity.Property(e => e.AR_Ref)
                 .IsRequired()
@@ -11922,17 +10937,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbEC_Enumere)
                 .HasMaxLength(22)
                 .HasComputedColumnSql("(CONVERT([varbinary](22),isnull([EC_Enumere],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_CONDITION)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -11944,18 +10959,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_CONTACTA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CONTACTA");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CONTACTA");
-                    tb.HasTrigger("TG_CBINS_F_CONTACTA");
-                    tb.HasTrigger("TG_CBUPD_F_CONTACTA");
-                    tb.HasTrigger("TG_DEL_F_CONTACTA");
-                    tb.HasTrigger("TG_INS_F_CONTACTA");
-                    tb.HasTrigger("TG_UPD_F_CONTACTA");
-                });
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Num }, "FKIA_F_CONTACTA_CA_Num");
 
             entity.HasIndex(e => e.CA_No, "ICA_NO").IsUnique();
 
@@ -11998,14 +11001,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.F_COMPTEA).WithMany(p => p.F_CONTACTA)
                 .HasPrincipalKey(p => new { p.N_Analytique, p.CA_Num })
@@ -12017,18 +11020,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_CONTACTB>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CONTACTB");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CONTACTB");
-                    tb.HasTrigger("TG_CBINS_F_CONTACTB");
-                    tb.HasTrigger("TG_CBUPD_F_CONTACTB");
-                    tb.HasTrigger("TG_DEL_F_CONTACTB");
-                    tb.HasTrigger("TG_INS_F_CONTACTB");
-                    tb.HasTrigger("TG_UPD_F_CONTACTB");
-                });
-
-            entity.HasIndex(e => e.BQ_No, "FKIA_F_CONTACTB_BQ_No");
 
             entity.HasIndex(e => e.CB_No, "ICB_NO").IsUnique();
 
@@ -12064,27 +11055,19 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_CONTACTD>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CONTACTD");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CONTACTD");
-                    tb.HasTrigger("TG_CBINS_F_CONTACTD");
-                    tb.HasTrigger("TG_CBUPD_F_CONTACTD");
-                    tb.HasTrigger("TG_DEL_F_CONTACTD");
-                });
 
             entity.HasIndex(e => e.CD_No, "ICD_NO").IsUnique();
 
@@ -12138,29 +11121,19 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_CONTACTR>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CONTACTR");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CONTACTR");
-                    tb.HasTrigger("TG_CBINS_F_CONTACTR");
-                    tb.HasTrigger("TG_CBUPD_F_CONTACTR");
-                    tb.HasTrigger("TG_DEL_F_CONTACTR");
-                });
-
-            entity.HasIndex(e => e.DR_Num, "FKIA_F_CONTACTR_DR_Num");
 
             entity.HasIndex(e => e.CR_No, "ICR_NO").IsUnique();
 
@@ -12218,17 +11191,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbDR_Num)
                 .HasMaxLength(14)
                 .HasComputedColumnSql("(CONVERT([varbinary](14),[DR_Num]))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.DR_NumNavigation).WithMany(p => p.F_CONTACTR)
                 .HasPrincipalKey(p => p.DR_Num)
@@ -12240,18 +11213,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_CONTACTT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CONTACTT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CONTACTT");
-                    tb.HasTrigger("TG_CBINS_F_CONTACTT");
-                    tb.HasTrigger("TG_CBUPD_F_CONTACTT");
-                    tb.HasTrigger("TG_DEL_F_CONTACTT");
-                    tb.HasTrigger("TG_INS_F_CONTACTT");
-                    tb.HasTrigger("TG_UPD_F_CONTACTT");
-                });
-
-            entity.HasIndex(e => e.CT_Num, "FKIA_F_CONTACTT_CT_Num");
 
             entity.HasIndex(e => e.CT_No, "ICT_NO").IsUnique();
 
@@ -12295,14 +11256,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_CONTACTT)
                 .HasPrincipalKey(p => p.CT_Num)
@@ -12314,15 +11275,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_CREGLEMENT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CREGLEMENT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CREGLEMENT");
-                    tb.HasTrigger("TG_CBINS_F_CREGLEMENT");
-                    tb.HasTrigger("TG_CBUPD_F_CREGLEMENT");
-                    tb.HasTrigger("TG_INS_CPTAF_CREGLEMENT");
-                    tb.HasTrigger("TG_UPD_CPTAF_CREGLEMENT");
-                });
 
             entity.HasIndex(e => e.RG_No, "IRG_NO").IsUnique();
 
@@ -12343,10 +11295,10 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.DateDepot).HasColumnType("smalldatetime");
             entity.Property(e => e.DatePaie).HasColumnType("smalldatetime");
-            entity.Property(e => e.Depose).HasDefaultValueSql("((0))");
-            entity.Property(e => e.Encaiss).HasDefaultValueSql("((0))");
-            entity.Property(e => e.Impaye).HasDefaultValueSql("((0))");
-            entity.Property(e => e.Incorpore).HasDefaultValueSql("((0))");
+            entity.Property(e => e.Depose).HasDefaultValue(false);
+            entity.Property(e => e.Encaiss).HasDefaultValue(false);
+            entity.Property(e => e.Impaye).HasDefaultValue(false);
+            entity.Property(e => e.Incorpore).HasDefaultValue(false);
             entity.Property(e => e.JO_Num)
                 .IsRequired()
                 .HasMaxLength(7)
@@ -12375,7 +11327,7 @@ public partial class DB : DbContext
             entity.Property(e => e.RG_Reference)
                 .HasMaxLength(17)
                 .IsUnicode(false);
-            entity.Property(e => e.Rappro).HasDefaultValueSql("((0))");
+            entity.Property(e => e.Rappro).HasDefaultValue(false);
             entity.Property(e => e.Remarque)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -12397,18 +11349,18 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbCreation)
                 .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
                 .HasColumnType("datetime");
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification).HasColumnType("datetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbRG_Piece)
                 .HasMaxLength(14)
                 .HasComputedColumnSql("(CONVERT([varbinary](14),space((14)-(len(isnull([RG_Piece],''))+(1)))+isnull([RG_Piece],'')))", false);
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CG_NumNavigation).WithMany(p => p.F_CREGLEMENTCG_NumNavigation)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -12450,16 +11402,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CYCLECONS");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CYCLECONS");
-                    tb.HasTrigger("TG_CBINS_F_CYCLECONS");
-                    tb.HasTrigger("TG_CBUPD_F_CYCLECONS");
-                    tb.HasTrigger("TG_UPD_F_CYCLECONS");
-                });
-
-            entity.HasIndex(e => new { e.cbCY_Num, e.CC_Exercice, e.cbCO_Num }, "ICC_CONUM");
-
             entity.Property(e => e.CC_Commentaire)
                 .HasMaxLength(69)
                 .IsUnicode(false);
@@ -12486,27 +11428,19 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_CYCLEOBS>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_CYCLEOBS");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_CYCLEOBS");
-                    tb.HasTrigger("TG_CBINS_F_CYCLEOBS");
-                    tb.HasTrigger("TG_CBUPD_F_CYCLEOBS");
-                    tb.HasTrigger("TG_UPD_F_CYCLEOBS");
-                });
 
             entity.HasIndex(e => new { e.cbCY_Num, e.CO_Exercice }, "ICO_CYNUM").IsUnique();
 
@@ -12520,41 +11454,23 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_DEPOT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DEPOT");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DEPOT");
-                    tb.HasTrigger("TG_CBINS_F_DEPOT");
-                    tb.HasTrigger("TG_CBUPD_F_DEPOT");
-                    tb.HasTrigger("TG_DEL_F_DEPOT");
-                    tb.HasTrigger("TG_INS_F_DEPOT");
-                    tb.HasTrigger("TG_UPD_F_DEPOT");
-                });
-
-            entity.HasIndex(e => e.cbDP_NoDefaut, "FKIA_F_DEPOT_DP_NoDefaut");
-
-            entity.HasIndex(e => e.cbDE_Code, "IDE_CODE");
-
-            entity.HasIndex(e => new { e.DE_Exclure, e.cbDE_Intitule }, "IDE_EXCLURE");
-
             entity.HasIndex(e => e.cbDE_Intitule, "IDE_INTITULE").IsUnique();
 
             entity.HasIndex(e => e.DE_No, "IDE_NO").IsUnique();
-
-            entity.HasIndex(e => e.DE_Principal, "IDE_PRINCIPAL");
 
             entity.Property(e => e.DE_Adresse)
                 .HasMaxLength(35)
@@ -12597,7 +11513,7 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbDE_Code)
                 .HasMaxLength(10)
@@ -12605,10 +11521,10 @@ public partial class DB : DbContext
             entity.Property(e => e.cbDE_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),[DE_Intitule]))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification).HasColumnType("datetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.cbDP_NoDefautNavigation).WithMany(p => p.F_DEPOT)
                 .HasPrincipalKey(p => p.DP_No)
@@ -12619,18 +11535,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_DEPOTCONTACT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DEPOTCONTACT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DEPOTCONTACT");
-                    tb.HasTrigger("TG_CBINS_F_DEPOTCONTACT");
-                    tb.HasTrigger("TG_CBUPD_F_DEPOTCONTACT");
-                    tb.HasTrigger("TG_DEL_F_DEPOTCONTACT");
-                    tb.HasTrigger("TG_INS_F_DEPOTCONTACT");
-                    tb.HasTrigger("TG_UPD_F_DEPOTCONTACT");
-                });
-
-            entity.HasIndex(e => e.DE_No, "FKIA_F_DEPOTCONTACT_DE_No");
 
             entity.HasIndex(e => e.DC_No, "IDC_NOCONT").IsUnique();
 
@@ -12660,7 +11564,7 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbDC_Nom)
                 .HasMaxLength(36)
@@ -12668,12 +11572,12 @@ public partial class DB : DbContext
             entity.Property(e => e.cbDC_Prenom)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([DC_Prenom],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.DE_NoNavigation).WithMany(p => p.F_DEPOTCONTACT)
                 .HasPrincipalKey(p => p.DE_No)
@@ -12686,22 +11590,9 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DEPOTEMPL");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DEPOTEMPL");
-                    tb.HasTrigger("TG_CBINS_F_DEPOTEMPL");
-                    tb.HasTrigger("TG_CBUPD_F_DEPOTEMPL");
-                });
-
-            entity.HasIndex(e => e.DE_No, "FKIA_F_DEPOTEMPL_DE_No");
-
             entity.HasIndex(e => new { e.DE_No, e.cbDP_Code }, "IDP_CODE").IsUnique();
 
-            entity.HasIndex(e => new { e.DE_No, e.DP_No }, "IDP_DEPOT");
-
             entity.HasIndex(e => e.DP_No, "IDP_NO").IsUnique();
-
-            entity.HasIndex(e => new { e.DE_No, e.DP_Type, e.cbDP_Code }, "IDP_TYPE");
 
             entity.HasIndex(e => new { e.DE_No, e.DP_No }, "UKA_F_DEPOTEMPL_DENO_DPNO").IsUnique();
 
@@ -12715,17 +11606,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbDP_Code)
                 .HasMaxLength(14)
                 .HasComputedColumnSql("(CONVERT([varbinary](14),isnull([DP_Code],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.DE_NoNavigation).WithMany(p => p.F_DEPOTEMPL)
                 .HasPrincipalKey(p => p.DE_No)
@@ -12738,13 +11629,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DOCCURRENTPIECE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DOCCURRENTPIECE");
-                    tb.HasTrigger("TG_CBINS_F_DOCCURRENTPIECE");
-                    tb.HasTrigger("TG_CBUPD_F_DOCCURRENTPIECE");
-                });
-
             entity.HasIndex(e => new { e.DC_Domaine, e.DC_IdCol, e.DC_Souche }, "IDC_DOCUMENT").IsUnique();
 
             entity.Property(e => e.DC_Piece)
@@ -12753,31 +11637,19 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_DOCENTETE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DOCENTETE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DOCENTETE");
-                    tb.HasTrigger("TG_CBINS_F_DOCENTETE");
-                    tb.HasTrigger("TG_CBUPD_F_DOCENTETE");
-                    tb.HasTrigger("TG_DEL_F_DOCENTETE");
-                    tb.HasTrigger("TG_INS_CPTAF_DOCENTETE");
-                    tb.HasTrigger("TG_INS_F_DOCENTETE");
-                    tb.HasTrigger("TG_UPD_CPTAF_DOCENTETE");
-                    tb.HasTrigger("TG_UPD_F_DOCENTETE");
-                });
 
             entity.HasIndex(e => new { e.DO_Type, e.cbDO_Piece }, "IDO_TPIECE").IsUnique();
 
@@ -12889,7 +11761,7 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbCreation)
                 .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
@@ -12903,10 +11775,10 @@ public partial class DB : DbContext
             entity.Property(e => e.cbDO_Tiers)
                 .HasMaxLength(18)
                 .HasComputedColumnSql("(CONVERT([varbinary](18),isnull([DO_Tiers],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification).HasColumnType("datetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CG_NumNavigation).WithMany(p => p.F_DOCENTETE)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -12968,19 +11840,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DOCENTETEINFOS");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DOCENTETEINFOS");
-                    tb.HasTrigger("TG_CBINS_F_DOCENTETEINFOS");
-                    tb.HasTrigger("TG_CBUPD_F_DOCENTETEINFOS");
-                    tb.HasTrigger("TG_DEL_F_DOCENTETEINFOS");
-                    tb.HasTrigger("TG_INS_F_DOCENTETEINFOS");
-                    tb.HasTrigger("TG_UPD_F_DOCENTETEINFOS");
-                });
-
             entity.HasIndex(e => new { e.DO_Type, e.cbDO_Piece, e.cbDI_Code }, "IDI_CODE").IsUnique();
-
-            entity.HasIndex(e => new { e.DO_Type, e.cbDO_Piece, e.cbDI_Intitule }, "IDI_INTITULE");
 
             entity.Property(e => e.DI_Code)
                 .IsRequired()
@@ -12999,7 +11859,7 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbDI_Code)
                 .HasMaxLength(14)
@@ -13010,24 +11870,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbDO_Piece)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len(isnull([DO_Piece],''))+(1)))+isnull([DO_Piece],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_DOCENTETETEXT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DOCENTETETEXT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DOCENTETETEXT");
-                    tb.HasTrigger("TG_CBINS_F_DOCENTETETEXT");
-                    tb.HasTrigger("TG_CBUPD_F_DOCENTETETEXT");
-                });
 
             entity.HasIndex(e => e.ET_No, "IET_NO").IsUnique();
 
@@ -13037,31 +11890,19 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_DOCLIGNE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DOCLIGNE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DOCLIGNE");
-                    tb.HasTrigger("TG_CBINS_F_DOCLIGNE");
-                    tb.HasTrigger("TG_CBUPD_F_DOCLIGNE");
-                    tb.HasTrigger("TG_DEL_F_DOCLIGNE");
-                    tb.HasTrigger("TG_INS_CPTAF_DOCLIGNE");
-                    tb.HasTrigger("TG_INS_F_DOCLIGNE");
-                    tb.HasTrigger("TG_UPD_CPTAF_DOCLIGNE");
-                    tb.HasTrigger("TG_UPD_F_DOCLIGNE");
-                });
 
             entity.HasIndex(e => e.DL_No, "IDL_NO").IsUnique();
 
@@ -13243,21 +12084,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DOCLIGNEEMPL");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DOCLIGNEEMPL");
-                    tb.HasTrigger("TG_CBINS_F_DOCLIGNEEMPL");
-                    tb.HasTrigger("TG_CBUPD_F_DOCLIGNEEMPL");
-                    tb.HasTrigger("TG_INS_F_DOCLIGNEEMPL");
-                    tb.HasTrigger("TG_UPD_F_DOCLIGNEEMPL");
-                });
-
-            entity.HasIndex(e => e.DL_No, "FKIA_F_DOCLIGNEEMPL_DL_No");
-
-            entity.HasIndex(e => e.DP_No, "FKIA_F_DOCLIGNEEMPL_DP_No");
-
-            entity.HasIndex(e => e.DP_No, "IDL_EMPL");
-
             entity.HasIndex(e => new { e.DL_No, e.DP_No }, "IDL_LIGNEEMPL").IsUnique();
 
             entity.Property(e => e.DL_Qte).HasColumnType("numeric(24, 6)");
@@ -13265,14 +12091,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.DL_NoNavigation).WithMany(p => p.F_DOCLIGNEEMPL)
                 .HasPrincipalKey(p => p.DL_No)
@@ -13291,18 +12117,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DOCLIGNEINFOS");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DOCLIGNEINFOS");
-                    tb.HasTrigger("TG_CBINS_F_DOCLIGNEINFOS");
-                    tb.HasTrigger("TG_CBUPD_F_DOCLIGNEINFOS");
-                });
-
-            entity.HasIndex(e => e.DL_No, "FKIA_F_DOCLIGNEINFOS_DL_No");
-
             entity.HasIndex(e => new { e.DL_No, e.cbDC_Code }, "IDC_CODE").IsUnique();
-
-            entity.HasIndex(e => new { e.DL_No, e.cbDC_Intitule }, "IDC_INTITULE");
 
             entity.Property(e => e.DC_Code)
                 .IsRequired()
@@ -13318,7 +12133,7 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbDC_Code)
                 .HasMaxLength(14)
@@ -13326,12 +12141,12 @@ public partial class DB : DbContext
             entity.Property(e => e.cbDC_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),[DC_Intitule]))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.DL_NoNavigation).WithMany(p => p.F_DOCLIGNEINFOS)
                 .HasPrincipalKey(p => p.DL_No)
@@ -13344,42 +12159,25 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DOCLIGNETEXT");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DOCLIGNETEXT");
-                    tb.HasTrigger("TG_CBINS_F_DOCLIGNETEXT");
-                    tb.HasTrigger("TG_CBUPD_F_DOCLIGNETEXT");
-                });
-
             entity.HasIndex(e => e.DT_No, "IDT_NO").IsUnique();
 
             entity.Property(e => e.DT_Text).IsUnicode(false);
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_DOCREGL>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DOCREGL");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DOCREGL");
-                    tb.HasTrigger("TG_CBINS_F_DOCREGL");
-                    tb.HasTrigger("TG_CBUPD_F_DOCREGL");
-                    tb.HasTrigger("TG_DEL_F_DOCREGL");
-                    tb.HasTrigger("TG_INS_F_DOCREGL");
-                    tb.HasTrigger("TG_UPD_F_DOCREGL");
-                });
 
             entity.HasIndex(e => e.DR_No, "IDR_NO").IsUnique();
 
@@ -13397,54 +12195,22 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbDO_Piece)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len(isnull([DO_Piece],''))+(1)))+isnull([DO_Piece],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification).HasColumnType("datetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_DRECOUVREMENT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DRECOUVREMENT");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DRECOUVREMENT");
-                    tb.HasTrigger("TG_CBINS_F_DRECOUVREMENT");
-                    tb.HasTrigger("TG_CBUPD_F_DRECOUVREMENT");
-                    tb.HasTrigger("TG_INS_F_DRECOUVREMENT");
-                });
-
-            entity.HasIndex(e => e.cbCO_No, "FKIA_F_DRECOUVREMENT_CO_No");
-
-            entity.HasIndex(e => e.cbCT_No, "FKIA_F_DRECOUVREMENT_CT_No");
-
-            entity.HasIndex(e => e.CT_Num, "FKIA_F_DRECOUVREMENT_CT_Num");
-
-            entity.HasIndex(e => e.CO_No, "IDR_CONO");
-
-            entity.HasIndex(e => e.CT_No, "IDR_CTNO");
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.cbDR_Num }, "IDR_CTNUM");
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.DR_DateDebut, e.cbDR_Num }, "IDR_CTNUMDATEDEBUT");
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.DR_Statut, e.cbDR_Num }, "IDR_CTNUMSTATUT");
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.DR_Statut, e.DR_DateDebut, e.cbDR_Num }, "IDR_CTNUMSTATUTDATEDEBUT");
-
-            entity.HasIndex(e => new { e.DR_DateDebut, e.cbDR_Num }, "IDR_DATEDEBUT");
-
             entity.HasIndex(e => e.cbDR_Num, "IDR_NUM").IsUnique();
-
-            entity.HasIndex(e => new { e.DR_Statut, e.DR_DateDebut, e.cbDR_Num }, "IDR_STATUTDATEDEBUT");
-
-            entity.HasIndex(e => new { e.DR_Statut, e.cbDR_Num }, "IDR_STATUTNUM");
 
             entity.HasIndex(e => e.DR_Num, "UKA_F_DRECOUVREMENT_DR_Num").IsUnique();
 
@@ -13472,17 +12238,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbDR_Num)
                 .HasMaxLength(14)
                 .HasComputedColumnSql("(CONVERT([varbinary](14),space((14)-(len([DR_Num])+(1)))+[DR_Num]))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_DRECOUVREMENT)
                 .HasPrincipalKey(p => p.CT_Num)
@@ -13505,22 +12271,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DRECOUVREMENTEC");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DRECOUVREMENTEC");
-                    tb.HasTrigger("TG_CBINS_F_DRECOUVREMENTEC");
-                    tb.HasTrigger("TG_CBUPD_F_DRECOUVREMENTEC");
-                    tb.HasTrigger("TG_DEL_F_DRECOUVREMENTEC");
-                    tb.HasTrigger("TG_INS_F_DRECOUVREMENTEC");
-                    tb.HasTrigger("TG_UPD_F_DRECOUVREMENTEC");
-                });
-
-            entity.HasIndex(e => e.DR_Num, "FKIA_F_DRECOUVREMENTEC_DR_Num");
-
-            entity.HasIndex(e => e.EC_No, "FKIA_F_DRECOUVREMENTEC_EC_No");
-
-            entity.HasIndex(e => new { e.cbDR_Num, e.EC_No }, "IDE_DRNUM");
-
             entity.HasIndex(e => e.EC_No, "IDE_ECNO").IsUnique();
 
             entity.Property(e => e.DR_Num)
@@ -13531,17 +12281,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbDR_Num)
                 .HasMaxLength(14)
                 .HasComputedColumnSql("(CONVERT([varbinary](14),[DR_Num]))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.DR_NumNavigation).WithMany(p => p.F_DRECOUVREMENTEC)
                 .HasPrincipalKey(p => p.DR_Num)
@@ -13559,28 +12309,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_DRECOUVREMENTIV>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_DRECOUVREMENTIV");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_DRECOUVREMENTIV");
-                    tb.HasTrigger("TG_CBINS_F_DRECOUVREMENTIV");
-                    tb.HasTrigger("TG_CBUPD_F_DRECOUVREMENTIV");
-                    tb.HasTrigger("TG_DEL_F_DRECOUVREMENTIV");
-                    tb.HasTrigger("TG_INS_F_DRECOUVREMENTIV");
-                    tb.HasTrigger("TG_UPD_F_DRECOUVREMENTIV");
-                });
-
-            entity.HasIndex(e => e.DR_Num, "FKIA_F_DRECOUVREMENTIV_DR_Num");
-
-            entity.HasIndex(e => e.cbES_No, "FKIA_F_DRECOUVREMENTIV_ES_No");
-
-            entity.HasIndex(e => new { e.IV_NoContactType, e.IV_NoContact }, "IIV_CONTACT");
-
-            entity.HasIndex(e => new { e.cbDR_Num, e.IV_Date, e.IV_Heure }, "IIV_DRNUMDATE");
-
-            entity.HasIndex(e => new { e.cbDR_Num, e.IV_Statut }, "IIV_DRNUMSTATUT");
-
-            entity.HasIndex(e => e.ES_No, "IIV_ESNO");
 
             entity.Property(e => e.DR_Num)
                 .IsRequired()
@@ -13611,17 +12339,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbDR_Num)
                 .HasMaxLength(14)
                 .HasComputedColumnSql("(CONVERT([varbinary](14),[DR_Num]))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.DR_NumNavigation).WithMany(p => p.F_DRECOUVREMENTIV)
                 .HasPrincipalKey(p => p.DR_Num)
@@ -13639,23 +12367,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_EBUDGET");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_EBUDGET");
-                    tb.HasTrigger("TG_CBINS_F_EBUDGET");
-                    tb.HasTrigger("TG_CBUPD_F_EBUDGET");
-                    tb.HasTrigger("TG_DEL_F_EBUDGET");
-                    tb.HasTrigger("TG_INS_F_EBUDGET");
-                    tb.HasTrigger("TG_UPD_F_EBUDGET");
-                });
-
-            entity.HasIndex(e => e.BD_No, "FKIA_F_EBUDGET_BD_No");
-
-            entity.HasIndex(e => e.CG_Num, "FKIA_F_EBUDGET_CG_Num");
-
             entity.HasIndex(e => new { e.BD_No, e.cbCG_Num }, "IEB_BDNO").IsUnique();
-
-            entity.HasIndex(e => e.cbCG_Num, "IEB_CGNUM");
 
             entity.Property(e => e.CG_Num)
                 .IsRequired()
@@ -13667,14 +12379,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.BD_NoNavigation).WithMany(p => p.F_EBUDGET)
                 .HasPrincipalKey(p => p.BD_No)
@@ -13693,15 +12405,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ECALENDRIER");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ECALENDRIER");
-                    tb.HasTrigger("TG_CBINS_F_ECALENDRIER");
-                    tb.HasTrigger("TG_CBUPD_F_ECALENDRIER");
-                });
-
-            entity.HasIndex(e => e.CAL_No, "FKIA_F_ECALENDRIER_CAL_No");
-
             entity.HasIndex(e => new { e.CAL_No, e.ECAL_Date }, "IECAL_DATE").IsUnique();
 
             entity.Property(e => e.ECAL_Date).HasColumnType("smalldatetime");
@@ -13711,14 +12414,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CAL_NoNavigation).WithMany(p => p.F_ECALENDRIER)
                 .HasPrincipalKey(p => p.CAL_No)
@@ -13729,22 +12432,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_ECRITUREA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ECRITUREA");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ECRITUREA");
-                    tb.HasTrigger("TG_CBINS_F_ECRITUREA");
-                    tb.HasTrigger("TG_CBUPD_F_ECRITUREA");
-                    tb.HasTrigger("TG_DEL_F_ECRITUREA");
-                    tb.HasTrigger("TG_INS_F_ECRITUREA");
-                    tb.HasTrigger("TG_UPD_F_ECRITUREA");
-                });
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Num }, "FKIA_F_ECRITUREA_CA_Num");
-
-            entity.HasIndex(e => e.EC_No, "FKIA_F_ECRITUREA_EC_No");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.cbCA_Num }, "IEA_CANUM");
 
             entity.HasIndex(e => new { e.EC_No, e.N_Analytique, e.EA_Ligne }, "IEA_LIGNE").IsUnique();
 
@@ -13760,14 +12447,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.EC_NoNavigation).WithMany(p => p.F_ECRITUREA)
                 .HasPrincipalKey(p => p.EC_No)
@@ -13786,49 +12473,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ECRITUREC");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ECRITUREC");
-                    tb.HasTrigger("TG_CBINS_F_ECRITUREC");
-                    tb.HasTrigger("TG_CBUPD_F_ECRITUREC");
-                    tb.HasTrigger("TG_DEL_F_ECRITUREC");
-                    tb.HasTrigger("TG_INS_CIALF_ECRITUREC");
-                    tb.HasTrigger("TG_INS_F_ECRITUREC");
-                    tb.HasTrigger("TG_UPD_CIALF_ECRITUREC");
-                    tb.HasTrigger("TG_UPD_F_ECRITUREC");
-                });
-
-            entity.HasIndex(e => e.CG_Num, "FKIA_F_ECRITUREC_EC_CG_NUM");
-
-            entity.HasIndex(e => e.CT_Num, "FKIA_F_ECRITUREC_EC_CT_NUM");
-
-            entity.HasIndex(e => e.TA_Code, "FKIA_F_ECRITUREC_EC_TA_CODE");
-
-            entity.HasIndex(e => new { e.cbCG_Num, e.JM_Date, e.EC_Jour, e.cbEC_Piece }, "IEC_CGNUM");
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.EC_Lettre, e.JM_Date, e.EC_Jour, e.cbEC_Piece }, "IEC_CTLETTRE");
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.JM_Date, e.EC_Jour, e.cbEC_Piece }, "IEC_CTNUM");
-
             entity.HasIndex(e => e.EC_No, "IEC_ECNO").IsUnique();
-
-            entity.HasIndex(e => new { e.cbJO_Num, e.JM_Date, e.EC_CType, e.EC_Jour, e.EC_No }, "IEC_JOUR");
-
-            entity.HasIndex(e => new { e.cbCG_Num, e.EC_Lettre, e.JM_Date, e.EC_Jour, e.cbEC_Piece }, "IEC_LETTRE");
-
-            entity.HasIndex(e => new { e.cbJO_Num, e.JM_Date, e.EC_CType, e.EC_No }, "IEC_NO");
-
-            entity.HasIndex(e => e.EC_NoLink, "IEC_NOLINK");
-
-            entity.HasIndex(e => new { e.cbJO_Num, e.JM_Date, e.EC_CType, e.cbEC_Piece, e.EC_No }, "IEC_PIECE");
-
-            entity.HasIndex(e => new { e.cbEC_Piece, e.cbJO_Num, e.JM_Date, e.EC_CType }, "IEC_PIECEJONUM");
-
-            entity.HasIndex(e => new { e.cbCG_Num, e.EC_Point, e.JM_Date, e.EC_Jour, e.cbEC_Piece }, "IEC_POINT");
-
-            entity.HasIndex(e => new { e.cbEC_RefPiece, e.JM_Date, e.EC_Jour }, "IEC_REFPIECE");
-
-            entity.HasIndex(e => e.cbTA_Code, "IEC_TACODE");
 
             entity.Property(e => e.CG_Num)
                 .IsRequired()
@@ -13896,7 +12541,7 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbCreation)
                 .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
@@ -13907,15 +12552,15 @@ public partial class DB : DbContext
             entity.Property(e => e.cbEC_RefPiece)
                 .HasMaxLength(18)
                 .HasComputedColumnSql("(CONVERT([varbinary](18),isnull([EC_RefPiece],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbJO_Num)
                 .HasMaxLength(8)
                 .HasComputedColumnSql("(CONVERT([varbinary](8),[JO_Num]))", false);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
             entity.Property(e => e.cbTA_Code)
                 .HasMaxLength(6)
                 .HasComputedColumnSql("(CONVERT([varbinary](6),isnull([TA_Code],'')))", false);
@@ -13941,20 +12586,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ECRITURECMEDIA");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ECRITURECMEDIA");
-                    tb.HasTrigger("TG_CBINS_F_ECRITURECMEDIA");
-                    tb.HasTrigger("TG_CBUPD_F_ECRITURECMEDIA");
-                    tb.HasTrigger("TG_DEL_F_ECRITURECMEDIA");
-                    tb.HasTrigger("TG_INS_F_ECRITURECMEDIA");
-                    tb.HasTrigger("TG_UPD_F_ECRITURECMEDIA");
-                });
-
-            entity.HasIndex(e => e.EC_No, "FKIA_F_ECRITURECMEDIA_EC_No");
-
-            entity.HasIndex(e => e.EC_No, "IEM_ECNO");
-
             entity.Property(e => e.EM_Commentaire)
                 .HasMaxLength(69)
                 .IsUnicode(false);
@@ -13964,14 +12595,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.EC_NoNavigation).WithMany(p => p.F_ECRITURECMEDIA)
                 .HasPrincipalKey(p => p.EC_No)
@@ -13983,19 +12614,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_ECRITUREF>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ECRITUREF");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ECRITUREF");
-                    tb.HasTrigger("TG_CBINS_F_ECRITUREF");
-                    tb.HasTrigger("TG_CBUPD_F_ECRITUREF");
-                    tb.HasTrigger("TG_INS_F_ECRITUREF");
-                    tb.HasTrigger("TG_UPD_F_ECRITUREF");
-                });
-
-            entity.HasIndex(e => e.CG_Num, "FKIA_F_ECRITUREF_CG_Num");
-
-            entity.HasIndex(e => new { e.cbCG_Num, e.EF_Date, e.cbEF_Piece }, "IEF_CGNUM");
 
             entity.HasIndex(e => e.EF_No, "IEF_EFNO").IsUnique();
 
@@ -14017,17 +12635,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbEF_Piece)
                 .HasMaxLength(14)
                 .HasComputedColumnSql("(CONVERT([varbinary](14),space((14)-(len(isnull([EF_Piece],''))+(1)))+isnull([EF_Piece],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CG_NumNavigation).WithMany(p => p.F_ECRITUREF)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -14040,28 +12658,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ECRITURER");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ECRITURER");
-                    tb.HasTrigger("TG_CBINS_F_ECRITURER");
-                    tb.HasTrigger("TG_CBUPD_F_ECRITURER");
-                    tb.HasTrigger("TG_INS_F_ECRITURER");
-                    tb.HasTrigger("TG_UPD_F_ECRITURER");
-                });
-
-            entity.HasIndex(e => new { e.N_Analytique, e.CA_Num }, "FKIA_F_ECRITURER_CA_Num");
-
-            entity.HasIndex(e => e.CG_Num, "FKIA_F_ECRITURER_CG_Num");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.cbCA_Num, e.cbCG_Num }, "IER_CANUM");
-
-            entity.HasIndex(e => new { e.cbCG_Num, e.N_Analytique, e.cbCA_Num }, "IER_CGNUM");
-
-            entity.HasIndex(e => new { e.ER_Date, e.N_Analytique, e.cbCG_Num, e.cbCA_Num }, "IER_DATE");
-
             entity.HasIndex(e => e.ER_No, "IER_ERNO").IsUnique();
-
-            entity.HasIndex(e => new { e.cbJA_Num, e.ER_Date, e.cbER_Piece }, "IER_JANUM");
 
             entity.Property(e => e.CA_Num)
                 .IsRequired()
@@ -14096,20 +12693,20 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbER_Piece)
                 .HasMaxLength(14)
                 .HasComputedColumnSql("(CONVERT([varbinary](14),isnull([ER_Piece],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbJA_Num)
                 .HasMaxLength(8)
                 .HasComputedColumnSql("(CONVERT([varbinary](8),[JA_Num]))", false);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CG_NumNavigation).WithMany(p => p.F_ECRITURER)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -14128,18 +12725,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_EMODELEA");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_EMODELEA");
-                    tb.HasTrigger("TG_CBINS_F_EMODELEA");
-                    tb.HasTrigger("TG_CBUPD_F_EMODELEA");
-                    tb.HasTrigger("TG_DEL_F_EMODELEA");
-                    tb.HasTrigger("TG_INS_F_EMODELEA");
-                    tb.HasTrigger("TG_UPD_F_EMODELEA");
-                });
-
-            entity.HasIndex(e => e.MA_No, "FKIA_F_EMODELEA_MA_No");
-
             entity.HasIndex(e => new { e.MA_No, e.EA_Date }, "IEA_DATE").IsUnique();
 
             entity.Property(e => e.EA_Date).HasColumnType("smalldatetime");
@@ -14147,14 +12732,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.MA_NoNavigation).WithMany(p => p.F_EMODELEA)
                 .HasPrincipalKey(p => p.MA_No)
@@ -14166,20 +12751,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_EMODELEG>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_EMODELEG");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_EMODELEG");
-                    tb.HasTrigger("TG_CBINS_F_EMODELEG");
-                    tb.HasTrigger("TG_CBUPD_F_EMODELEG");
-                    tb.HasTrigger("TG_DEL_F_EMODELEG");
-                    tb.HasTrigger("TG_INS_F_EMODELEG");
-                    tb.HasTrigger("TG_UPD_F_EMODELEG");
-                });
-
-            entity.HasIndex(e => e.MG_No, "FKIA_F_EMODELEG_MG_No");
-
-            entity.HasIndex(e => new { e.N_Analytique, e.cbCX_Num }, "IEG_CXNUM");
 
             entity.HasIndex(e => new { e.MG_No, e.N_Analytique, e.cbCX_Num }, "IEG_MGNO").IsUnique();
 
@@ -14193,14 +12764,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.MG_NoNavigation).WithMany(p => p.F_EMODELEG)
                 .HasPrincipalKey(p => p.MG_No)
@@ -14213,32 +12784,20 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_EMODELER");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_EMODELER");
-                    tb.HasTrigger("TG_CBINS_F_EMODELER");
-                    tb.HasTrigger("TG_CBUPD_F_EMODELER");
-                    tb.HasTrigger("TG_DEL_F_EMODELER");
-                    tb.HasTrigger("TG_INS_F_EMODELER");
-                    tb.HasTrigger("TG_UPD_F_EMODELER");
-                });
-
-            entity.HasIndex(e => e.MR_No, "FKIA_F_EMODELER_MR_No");
-
             entity.HasIndex(e => new { e.MR_No, e.ER_NbJour, e.N_Reglement }, "IER_NBJOUR").IsUnique();
 
             entity.Property(e => e.ER_VRepart).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.MR_NoNavigation).WithMany(p => p.F_EMODELER)
                 .HasPrincipalKey(p => p.MR_No)
@@ -14251,15 +12810,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ENUMCOND");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ENUMCOND");
-                    tb.HasTrigger("TG_CBINS_F_ENUMCOND");
-                    tb.HasTrigger("TG_CBUPD_F_ENUMCOND");
-                });
-
-            entity.HasIndex(e => new { e.EC_Champ, e.EC_Quantite }, "IEC_BORNE");
-
             entity.HasIndex(e => new { e.EC_Champ, e.cbEC_Enumere, e.EC_Quantite }, "IEC_ENUMERE").IsUnique();
 
             entity.Property(e => e.EC_Enumere)
@@ -14269,37 +12819,22 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbEC_Enumere)
                 .HasMaxLength(22)
                 .HasComputedColumnSql("(CONVERT([varbinary](22),isnull([EC_Enumere],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_ENUMGAMME>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ENUMGAMME");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ENUMGAMME");
-                    tb.HasTrigger("TG_CBINS_F_ENUMGAMME");
-                    tb.HasTrigger("TG_CBUPD_F_ENUMGAMME");
-                    tb.HasTrigger("TG_INS_F_ENUMGAMME");
-                    tb.HasTrigger("TG_UPD_F_ENUMGAMME");
-                });
-
-            entity.HasIndex(e => new { e.EG_Champ, e.EG_BorneSup }, "IEG_BORNE");
-
-            entity.HasIndex(e => new { e.EG_Champ, e.cbEG_Enumere }, "IEG_ENUMERE");
-
-            entity.HasIndex(e => new { e.EG_Champ, e.EG_Ligne }, "IEG_LIGNE");
 
             entity.Property(e => e.EG_BorneSup).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.EG_Enumere)
@@ -14308,29 +12843,22 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbEG_Enumere)
                 .HasMaxLength(22)
                 .HasComputedColumnSql("(CONVERT([varbinary](22),isnull([EG_Enumere],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_ENUMLIBRECIAL>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ENUMLIBRECIAL");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ENUMLIBRECIAL");
-                    tb.HasTrigger("TG_CBINS_F_ENUMLIBRECIAL");
-                    tb.HasTrigger("TG_CBUPD_F_ENUMLIBRECIAL");
-                });
 
             entity.HasIndex(e => new { e.N_File, e.N_Info, e.cbEL_Intitule }, "IELCIAL_INT").IsUnique();
 
@@ -14340,29 +12868,22 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbEL_Intitule)
                 .HasMaxLength(22)
                 .HasComputedColumnSql("(CONVERT([varbinary](22),isnull([EL_Intitule],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_ENUMLIBRECPTA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ENUMLIBRECPTA");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ENUMLIBRECPTA");
-                    tb.HasTrigger("TG_CBINS_F_ENUMLIBRECPTA");
-                    tb.HasTrigger("TG_CBUPD_F_ENUMLIBRECPTA");
-                });
 
             entity.HasIndex(e => new { e.N_File, e.N_Info, e.cbEL_Intitule }, "IELCPTA_INT").IsUnique();
 
@@ -14372,30 +12893,22 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbEL_Intitule)
                 .HasMaxLength(22)
                 .HasComputedColumnSql("(CONVERT([varbinary](22),isnull([EL_Intitule],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_ENUMSTAT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ENUMSTAT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ENUMSTAT");
-                    tb.HasTrigger("TG_CBINS_F_ENUMSTAT");
-                    tb.HasTrigger("TG_CBUPD_F_ENUMSTAT");
-                    tb.HasTrigger("TG_UPD_F_ENUMSTAT");
-                });
 
             entity.HasIndex(e => new { e.N_Statistique, e.cbES_Intitule }, "IES_INT").IsUnique();
 
@@ -14405,30 +12918,22 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbES_Intitule)
                 .HasMaxLength(22)
                 .HasComputedColumnSql("(CONVERT([varbinary](22),isnull([ES_Intitule],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_ENUMSTATART>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ENUMSTATART");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ENUMSTATART");
-                    tb.HasTrigger("TG_CBINS_F_ENUMSTATART");
-                    tb.HasTrigger("TG_CBUPD_F_ENUMSTATART");
-                    tb.HasTrigger("TG_UPD_F_ENUMSTATART");
-                });
 
             entity.HasIndex(e => new { e.SA_Champ, e.cbSA_Enumere }, "ISA_ENUMERE").IsUnique();
 
@@ -14439,14 +12944,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
             entity.Property(e => e.cbSA_Enumere)
                 .HasMaxLength(22)
                 .HasComputedColumnSql("(CONVERT([varbinary](22),[SA_Enumere]))", false);
@@ -14456,31 +12961,19 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_EPROTECTIONCIAL");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_EPROTECTIONCIAL");
-                    tb.HasTrigger("TG_CBINS_F_EPROTECTIONCIAL");
-                    tb.HasTrigger("TG_CBUPD_F_EPROTECTIONCIAL");
-                    tb.HasTrigger("TG_DEL_F_EPROTECTIONCIAL");
-                    tb.HasTrigger("TG_INS_F_EPROTECTIONCIAL");
-                    tb.HasTrigger("TG_UPD_F_EPROTECTIONCIAL");
-                });
-
-            entity.HasIndex(e => e.PROT_No, "FKIA_F_EPROTECTIONCIAL_PROT_No");
-
             entity.HasIndex(e => new { e.PROT_No, e.EPROT_Cmd }, "IEPROTCIAL_CMD").IsUnique();
 
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.PROT_NoNavigation).WithMany(p => p.F_EPROTECTIONCIAL)
                 .HasPrincipalKey(p => p.PROT_No)
@@ -14493,31 +12986,19 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_EPROTECTIONCPTA");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_EPROTECTIONCPTA");
-                    tb.HasTrigger("TG_CBINS_F_EPROTECTIONCPTA");
-                    tb.HasTrigger("TG_CBUPD_F_EPROTECTIONCPTA");
-                    tb.HasTrigger("TG_DEL_F_EPROTECTIONCPTA");
-                    tb.HasTrigger("TG_INS_F_EPROTECTIONCPTA");
-                    tb.HasTrigger("TG_UPD_F_EPROTECTIONCPTA");
-                });
-
-            entity.HasIndex(e => e.PROT_No, "FKIA_F_EPROTECTIONCPTA_PROT_No");
-
             entity.HasIndex(e => new { e.PROT_No, e.EPROT_Cmd }, "IEPROTCPTA_CMD").IsUnique();
 
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.PROT_NoNavigation).WithMany(p => p.F_EPROTECTIONCPTA)
                 .HasPrincipalKey(p => p.PROT_No)
@@ -14529,18 +13010,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_ESCENARIO>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ESCENARIO");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ESCENARIO");
-                    tb.HasTrigger("TG_CBINS_F_ESCENARIO");
-                    tb.HasTrigger("TG_CBUPD_F_ESCENARIO");
-                    tb.HasTrigger("TG_DEL_F_ESCENARIO");
-                    tb.HasTrigger("TG_INS_F_ESCENARIO");
-                    tb.HasTrigger("TG_UPD_F_ESCENARIO");
-                });
-
-            entity.HasIndex(e => e.SC_No, "FKIA_F_ESCENARIO_SC_No");
 
             entity.HasIndex(e => new { e.SC_No, e.ES_Ligne }, "IES_LIGNE").IsUnique();
 
@@ -14558,14 +13027,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.SC_NoNavigation).WithMany(p => p.F_ESCENARIO)
                 .HasPrincipalKey(p => p.SC_No)
@@ -14576,14 +13045,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_ETABLEAU>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ETABLEAU");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ETABLEAU");
-                    tb.HasTrigger("TG_CBINS_F_ETABLEAU");
-                    tb.HasTrigger("TG_CBUPD_F_ETABLEAU");
-                    tb.HasTrigger("TG_UPD_F_ETABLEAU");
-                });
 
             entity.HasIndex(e => new { e.cbCY_Num, e.cbTB_Num, e.ET_Exercice, e.ET_Ligne }, "IET_LIGNE").IsUnique();
 
@@ -14699,14 +13160,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
             entity.Property(e => e.cbTB_Num)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),isnull([TB_Num],'')))", false);
@@ -14715,22 +13176,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_ETAXE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_ETAXE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_ETAXE");
-                    tb.HasTrigger("TG_CBINS_F_ETAXE");
-                    tb.HasTrigger("TG_CBUPD_F_ETAXE");
-                    tb.HasTrigger("TG_DEL_F_ETAXE");
-                    tb.HasTrigger("TG_INS_F_ETAXE");
-                    tb.HasTrigger("TG_UPD_F_ETAXE");
-                });
-
-            entity.HasIndex(e => e.CG_Num, "FKIA_F_ETAXE_CG_Num");
-
-            entity.HasIndex(e => e.TA_No, "FKIA_F_ETAXE_TA_No");
-
-            entity.HasIndex(e => e.cbCG_Num, "IET_CGNUM");
 
             entity.HasIndex(e => new { e.TA_No, e.cbCG_Num }, "IET_TANO").IsUnique();
 
@@ -14744,14 +13189,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CG_NumNavigation).WithMany(p => p.F_ETAXE)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -14770,19 +13215,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_FAMCLIENT");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_FAMCLIENT");
-                    tb.HasTrigger("TG_CBINS_F_FAMCLIENT");
-                    tb.HasTrigger("TG_CBUPD_F_FAMCLIENT");
-                    tb.HasTrigger("TG_DEL_F_FAMCLIENT");
-                    tb.HasTrigger("TG_INS_CPTAF_FAMCLIENT");
-                    tb.HasTrigger("TG_INS_F_FAMCLIENT");
-                    tb.HasTrigger("TG_UPD_F_FAMCLIENT");
-                });
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.cbFA_CodeFamille }, "IFC_CLIFAM");
-
             entity.HasIndex(e => new { e.cbFA_CodeFamille, e.cbCT_Num }, "IFC_FAMCLI").IsUnique();
 
             entity.Property(e => e.CT_Num)
@@ -14800,17 +13232,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbFA_CodeFamille)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),[FA_CodeFamille]))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_FAMCLIENT)
                 .HasPrincipalKey(p => p.CT_Num)
@@ -14822,18 +13254,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_FAMCOMPTA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_FAMCOMPTA");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_FAMCOMPTA");
-                    tb.HasTrigger("TG_CBINS_F_FAMCOMPTA");
-                    tb.HasTrigger("TG_CBUPD_F_FAMCOMPTA");
-                    tb.HasTrigger("TG_DEL_F_FAMCOMPTA");
-                    tb.HasTrigger("TG_INS_CPTAF_FAMCOMPTA");
-                    tb.HasTrigger("TG_INS_F_FAMCOMPTA");
-                    tb.HasTrigger("TG_UPD_CPTAF_FAMCOMPTA");
-                    tb.HasTrigger("TG_UPD_F_FAMCOMPTA");
-                });
 
             entity.HasIndex(e => new { e.cbFA_CodeFamille, e.FCP_TypeFacture, e.FCP_Type, e.FCP_Champ }, "IFCP_CODE").IsUnique();
 
@@ -14871,17 +13291,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbFA_CodeFamille)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),[FA_CodeFamille]))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.FCP_ComptaCPT_CompteGNavigation).WithMany(p => p.F_FAMCOMPTA)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -14923,21 +13343,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_FAMFOURNISS");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_FAMFOURNISS");
-                    tb.HasTrigger("TG_CBINS_F_FAMFOURNISS");
-                    tb.HasTrigger("TG_CBUPD_F_FAMFOURNISS");
-                    tb.HasTrigger("TG_DEL_F_FAMFOURNISS");
-                    tb.HasTrigger("TG_INS_CPTAF_FAMFOURNISS");
-                    tb.HasTrigger("TG_INS_F_FAMFOURNISS");
-                    tb.HasTrigger("TG_UPD_F_FAMFOURNISS");
-                });
-
-            entity.HasIndex(e => e.cbCT_Num, "IFF_FOURNISS");
-
-            entity.HasIndex(e => new { e.cbFA_CodeFamille, e.FF_Principal }, "IFF_PRINCIPAL");
-
             entity.HasIndex(e => new { e.cbFA_CodeFamille, e.cbCT_Num }, "IFF_REF").IsUnique();
 
             entity.Property(e => e.CT_Num)
@@ -14959,17 +13364,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbFA_CodeFamille)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),[FA_CodeFamille]))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_FAMFOURNISS)
                 .HasPrincipalKey(p => p.CT_Num)
@@ -14982,39 +13387,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_FAMILLE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_FAMILLE");
-                    tb.HasTrigger("TG_CBINS_F_FAMILLE");
-                    tb.HasTrigger("TG_CBUPD_F_FAMILLE");
-                    tb.HasTrigger("TG_DEL_F_FAMILLE");
-                    tb.HasTrigger("TG_INS_F_FAMILLE");
-                    tb.HasTrigger("TG_UPD_F_FAMILLE");
-                });
-
-            entity.HasIndex(e => e.cbCL_No1, "FKIA_F_FAMILLE_CL_No1");
-
-            entity.HasIndex(e => e.cbCL_No2, "FKIA_F_FAMILLE_CL_No2");
-
-            entity.HasIndex(e => e.cbCL_No3, "FKIA_F_FAMILLE_CL_No3");
-
-            entity.HasIndex(e => e.cbCL_No4, "FKIA_F_FAMILLE_CL_No4");
-
-            entity.HasIndex(e => new { e.cbFA_Central, e.FA_Type, e.cbFA_CodeFamille }, "IFA_CENTRAL");
-
             entity.HasIndex(e => new { e.cbFA_CodeFamille, e.FA_Type }, "IFA_CODE").IsUnique();
-
-            entity.HasIndex(e => new { e.CL_No1, e.cbFA_CodeFamille }, "IFA_EMPL1");
-
-            entity.HasIndex(e => new { e.CL_No2, e.cbFA_CodeFamille }, "IFA_EMPL2");
-
-            entity.HasIndex(e => new { e.CL_No3, e.cbFA_CodeFamille }, "IFA_EMPL3");
-
-            entity.HasIndex(e => new { e.CL_No4, e.cbFA_CodeFamille }, "IFA_EMPL4");
-
-            entity.HasIndex(e => new { e.cbFA_Intitule, e.cbFA_CodeFamille, e.FA_Type }, "IFA_INTITULE");
-
-            entity.HasIndex(e => new { e.FA_Type, e.cbFA_CodeFamille }, "IFA_TYPE");
 
             entity.Property(e => e.FA_Central)
                 .HasMaxLength(11)
@@ -15075,7 +13448,7 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbFA_Central)
                 .HasMaxLength(12)
@@ -15086,12 +13459,12 @@ public partial class DB : DbContext
             entity.Property(e => e.cbFA_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([FA_Intitule],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.cbCL_No1Navigation).WithMany(p => p.F_FAMILLEcbCL_No1Navigation)
                 .HasPrincipalKey(p => p.CL_No)
@@ -15118,21 +13491,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_FAMMODELE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_FAMMODELE");
-                    tb.HasTrigger("TG_CBINS_F_FAMMODELE");
-                    tb.HasTrigger("TG_CBUPD_F_FAMMODELE");
-                    tb.HasTrigger("TG_DEL_F_FAMMODELE");
-                    tb.HasTrigger("TG_INS_F_FAMMODELE");
-                    tb.HasTrigger("TG_UPD_F_FAMMODELE");
-                });
-
-            entity.HasIndex(e => e.MO_No, "FKIA_F_FAMMODELE_MO_No");
-
             entity.HasIndex(e => new { e.cbFA_CodeFamille, e.FM_Domaine }, "IFM_CODE").IsUnique();
-
-            entity.HasIndex(e => new { e.MO_No, e.cbFA_CodeFamille, e.FM_Domaine }, "IFM_MODELE");
 
             entity.Property(e => e.FA_CodeFamille)
                 .IsRequired()
@@ -15141,17 +13500,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbFA_CodeFamille)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),[FA_CodeFamille]))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.MO_NoNavigation).WithMany(p => p.F_FAMMODELE)
                 .HasPrincipalKey(p => p.MO_No)
@@ -15164,16 +13523,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_FAMTARIF");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_FAMTARIF");
-                    tb.HasTrigger("TG_CBINS_F_FAMTARIF");
-                    tb.HasTrigger("TG_CBUPD_F_FAMTARIF");
-                    tb.HasTrigger("TG_DEL_F_FAMTARIF");
-                    tb.HasTrigger("TG_INS_F_FAMTARIF");
-                    tb.HasTrigger("TG_UPD_F_FAMTARIF");
-                });
-
             entity.HasIndex(e => new { e.cbFA_CodeFamille, e.FT_Categorie }, "IFT_REF").IsUnique();
 
             entity.Property(e => e.FA_CodeFamille)
@@ -15185,34 +13534,22 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbFA_CodeFamille)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),[FA_CodeFamille]))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_FAMTARIFQTE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_FAMTARIFQTE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_FAMTARIFQTE");
-                    tb.HasTrigger("TG_CBINS_F_FAMTARIFQTE");
-                    tb.HasTrigger("TG_CBUPD_F_FAMTARIFQTE");
-                    tb.HasTrigger("TG_DEL_F_FAMTARIFQTE");
-                    tb.HasTrigger("TG_INS_F_FAMTARIFQTE");
-                    tb.HasTrigger("TG_UPD_F_FAMTARIFQTE");
-                });
-
-            entity.HasIndex(e => new { e.cbFA_CodeFamille, e.cbFQ_RefCF, e.FQ_BorneSup }, "IFQ_CLFO");
 
             entity.Property(e => e.FA_CodeFamille)
                 .IsRequired()
@@ -15228,7 +13565,7 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbFA_CodeFamille)
                 .HasMaxLength(12)
@@ -15236,24 +13573,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbFQ_RefCF)
                 .HasMaxLength(18)
                 .HasComputedColumnSql("(CONVERT([varbinary](18),isnull([FQ_RefCF],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_FOURCHETTERESULTAT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_FOURCHETTERESULTAT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_FOURCHETTERESULTAT");
-                    tb.HasTrigger("TG_CBINS_F_FOURCHETTERESULTAT");
-                    tb.HasTrigger("TG_CBUPD_F_FOURCHETTERESULTAT");
-                });
 
             entity.HasIndex(e => new { e.N_Resultat, e.cbCG_NumDe }, "IFR_CGNUM").IsUnique();
 
@@ -15269,49 +13599,21 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_GAMSTOCK>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_GAMSTOCK");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_GAMSTOCK");
-                    tb.HasTrigger("TG_CBINS_F_GAMSTOCK");
-                    tb.HasTrigger("TG_CBUPD_F_GAMSTOCK");
-                    tb.HasTrigger("TG_DEL_F_GAMSTOCK");
-                    tb.HasTrigger("TG_INS_F_GAMSTOCK");
-                    tb.HasTrigger("TG_UPD_F_GAMSTOCK");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_GAMSTOCK_AR_Ref");
-
-            entity.HasIndex(e => e.DE_No, "FKIA_F_GAMSTOCK_DE_No");
-
-            entity.HasIndex(e => e.cbDP_NoControle, "FKIA_F_GAMSTOCK_DP_NoControle");
-
-            entity.HasIndex(e => e.cbDP_NoPrincipal, "FKIA_F_GAMSTOCK_DP_NoPrincipal");
-
-            entity.HasIndex(e => e.DP_NoControle, "IGS_EMPLACEMENTCONT");
-
-            entity.HasIndex(e => e.DP_NoPrincipal, "IGS_EMPLACEMENTPRINC");
-
             entity.HasIndex(e => new { e.cbAR_Ref, e.DE_No, e.AG_No1, e.AG_No2 }, "IGS_NODEP").IsUnique();
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.DE_No, e.AG_No2, e.AG_No1 }, "IGS_NODEP2");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No1, e.AG_No2, e.DE_No }, "IGS_NOGAM");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No2, e.DE_No, e.AG_No1 }, "IGS_NOGAM2");
 
             entity.Property(e => e.AR_Ref)
                 .IsRequired()
@@ -15333,14 +13635,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_GAMSTOCK)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -15369,23 +13671,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_GAMSTOCKEMPL");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_GAMSTOCKEMPL");
-                    tb.HasTrigger("TG_CBINS_F_GAMSTOCKEMPL");
-                    tb.HasTrigger("TG_CBUPD_F_GAMSTOCKEMPL");
-                    tb.HasTrigger("TG_INS_F_GAMSTOCKEMPL");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_GAMSTOCKEMPL_AR_Ref");
-
-            entity.HasIndex(e => new { e.DE_No, e.DP_No }, "FKIA_F_GAMSTOCKEMPL_GAMDENO_DPNO");
-
-            entity.HasIndex(e => e.DP_No, "IGE_EMPLACEMENT");
-
             entity.HasIndex(e => new { e.cbAR_Ref, e.DE_No, e.AG_No1, e.AG_No2, e.DP_No }, "IGE_NODEP").IsUnique();
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.DE_No, e.AG_No2 }, "IGE_NODEP2");
 
             entity.Property(e => e.AR_Ref)
                 .IsRequired()
@@ -15400,14 +13686,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_GAMSTOCKEMPL)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -15415,7 +13701,7 @@ public partial class DB : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKA_F_GAMSTOCKEMPL_AR_Ref");
 
-            entity.HasOne(d => d.D).WithMany(p => p.F_GAMSTOCKEMPL)
+            entity.HasOne(d => d.F_DEPOTEMPL).WithMany(p => p.F_GAMSTOCKEMPL)
                 .HasPrincipalKey(p => new { p.DE_No, p.DP_No })
                 .HasForeignKey(d => new { d.DE_No, d.DP_No })
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -15426,22 +13712,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_GLOSSAIRE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_GLOSSAIRE");
-                    tb.HasTrigger("TG_CBINS_F_GLOSSAIRE");
-                    tb.HasTrigger("TG_CBUPD_F_GLOSSAIRE");
-                    tb.HasTrigger("TG_INS_F_GLOSSAIRE");
-                    tb.HasTrigger("TG_UPD_F_GLOSSAIRE");
-                });
-
-            entity.HasIndex(e => new { e.GL_Domaine, e.cbGL_Intitule }, "IGL_DOMAINE");
-
-            entity.HasIndex(e => new { e.cbGL_Intitule, e.GL_Domaine }, "IGL_INTITULE");
-
             entity.HasIndex(e => e.GL_No, "IGL_NO").IsUnique();
-
-            entity.HasIndex(e => e.cbGL_Raccourci, "IGL_RACC");
 
             entity.Property(e => e.GL_Intitule)
                 .HasMaxLength(35)
@@ -15456,9 +13727,9 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbGL_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([GL_Intitule],'')))", false);
@@ -15468,27 +13739,15 @@ public partial class DB : DbContext
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_INTERBANCAIRE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_INTERBANCAIRE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_INTERBANCAIRE");
-                    tb.HasTrigger("TG_CBINS_F_INTERBANCAIRE");
-                    tb.HasTrigger("TG_CBUPD_F_INTERBANCAIRE");
-                    tb.HasTrigger("TG_DEL_F_INTERBANCAIRE");
-                });
-
             entity.HasIndex(e => new { e.cbIB_AFB, e.IB_Sens }, "IIB_AFB").IsUnique();
-
-            entity.HasIndex(e => e.cbIB_RapproAFB, "IIB_RAPPROAFB");
-
-            entity.HasIndex(e => new { e.IB_Sens, e.cbIB_AFB }, "IIB_SENS");
 
             entity.HasIndex(e => new { e.IB_AFB, e.IB_Sens }, "UKA_F_INTERBANCAIRE_IB_AFB").IsUnique();
 
@@ -15508,9 +13767,9 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbIB_AFB)
                 .HasMaxLength(4)
                 .HasComputedColumnSql("(CONVERT([varbinary](4),[IB_AFB]))", false);
@@ -15520,24 +13779,13 @@ public partial class DB : DbContext
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_JMOUV>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_JMOUV");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_JMOUV");
-                    tb.HasTrigger("TG_CBINS_F_JMOUV");
-                    tb.HasTrigger("TG_CBUPD_F_JMOUV");
-                    tb.HasTrigger("TG_DEL_F_JMOUV");
-                    tb.HasTrigger("TG_INS_F_JMOUV");
-                });
-
-            entity.HasIndex(e => new { e.JM_Date, e.cbJO_Num }, "IJM_DATE");
 
             entity.HasIndex(e => new { e.cbJO_Num, e.JM_Date }, "IJM_JONUM").IsUnique();
 
@@ -15550,49 +13798,24 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbJO_Num)
                 .HasMaxLength(8)
                 .HasComputedColumnSql("(CONVERT([varbinary](8),[JO_Num]))", false);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_JOURNAUX>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_JOURNAUX");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_JOURNAUX");
-                    tb.HasTrigger("TG_CBINS_F_JOURNAUX");
-                    tb.HasTrigger("TG_CBUPD_F_JOURNAUX");
-                    tb.HasTrigger("TG_DEL_CIALF_JOURNAUX");
-                    tb.HasTrigger("TG_DEL_F_JOURNAUX");
-                    tb.HasTrigger("TG_INS_F_JOURNAUX");
-                    tb.HasTrigger("TG_UPD_F_JOURNAUX");
-                });
-
-            entity.HasIndex(e => e.CG_Num, "FKIA_F_JOURNAUX_CG_Num");
-
-            entity.HasIndex(e => e.cbCG_Num, "IJO_CGNUM");
-
-            entity.HasIndex(e => e.cbJO_Intitule, "IJO_INT");
-
             entity.HasIndex(e => e.cbJO_Num, "IJO_NUM").IsUnique();
-
-            entity.HasIndex(e => new { e.JO_Sommeil, e.cbJO_Intitule }, "IJO_SOMINT");
-
-            entity.HasIndex(e => new { e.JO_Sommeil, e.cbJO_Num }, "IJO_SOMNUM");
-
-            entity.HasIndex(e => new { e.JO_Sommeil, e.JO_Type, e.cbJO_Num }, "IJO_SOMTYPE");
-
-            entity.HasIndex(e => new { e.JO_Type, e.cbJO_Num }, "IJO_TYPE");
 
             entity.Property(e => e.CG_Num)
                 .HasMaxLength(13)
@@ -15610,9 +13833,9 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbJO_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([JO_Intitule],'')))", false);
@@ -15622,8 +13845,8 @@ public partial class DB : DbContext
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CG_NumNavigation).WithMany(p => p.F_JOURNAUX)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -15635,23 +13858,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_JOURNAUXA");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_JOURNAUXA");
-                    tb.HasTrigger("TG_CBINS_F_JOURNAUXA");
-                    tb.HasTrigger("TG_CBUPD_F_JOURNAUXA");
-                    tb.HasTrigger("TG_DEL_F_JOURNAUXA");
-                    tb.HasTrigger("TG_INS_F_JOURNAUXA");
-                    tb.HasTrigger("TG_UPD_F_JOURNAUXA");
-                });
-
-            entity.HasIndex(e => e.cbJA_Intitule, "IJA_INT");
-
             entity.HasIndex(e => e.cbJA_Num, "IJA_NUM").IsUnique();
-
-            entity.HasIndex(e => new { e.JA_Sommeil, e.cbJA_Intitule }, "IJA_SOMINT");
-
-            entity.HasIndex(e => new { e.JA_Sommeil, e.cbJA_Num }, "IJA_SOMNUM");
 
             entity.Property(e => e.JA_Intitule)
                 .HasMaxLength(35)
@@ -15663,9 +13870,9 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbJA_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([JA_Intitule],'')))", false);
@@ -15675,24 +13882,13 @@ public partial class DB : DbContext
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_LIBELLE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_LIBELLE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_LIBELLE");
-                    tb.HasTrigger("TG_CBINS_F_LIBELLE");
-                    tb.HasTrigger("TG_CBUPD_F_LIBELLE");
-                    tb.HasTrigger("TG_INS_F_LIBELLE");
-                    tb.HasTrigger("TG_UPD_F_LIBELLE");
-                });
-
-            entity.HasIndex(e => e.cbLB_Intitule, "ILB_INT");
 
             entity.HasIndex(e => e.cbLB_Raccourci, "ILB_RACC").IsUnique();
 
@@ -15705,9 +13901,9 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbLB_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([LB_Intitule],'')))", false);
@@ -15717,24 +13913,13 @@ public partial class DB : DbContext
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_LIENRECTIF>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_LIENRECTIF");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_LIENRECTIF");
-                    tb.HasTrigger("TG_CBINS_F_LIENRECTIF");
-                    tb.HasTrigger("TG_CBUPD_F_LIENRECTIF");
-                });
-
-            entity.HasIndex(e => new { e.DO_Domaine, e.cbLR_Rectificative, e.cbLR_Rectifiee }, "ILR_RECTIFICATIVE");
-
-            entity.HasIndex(e => new { e.DO_Domaine, e.cbLR_Rectifiee, e.cbLR_Rectificative }, "ILR_RECTIFIEE");
 
             entity.Property(e => e.LR_Rectificative)
                 .HasMaxLength(9)
@@ -15745,9 +13930,9 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbLR_Rectificative)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len(isnull([LR_Rectificative],''))+(1)))+isnull([LR_Rectificative],'')))", false);
@@ -15757,35 +13942,13 @@ public partial class DB : DbContext
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_LIGNEARCHIVE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_LIGNEARCHIVE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_LIGNEARCHIVE");
-                    tb.HasTrigger("TG_CBINS_F_LIGNEARCHIVE");
-                    tb.HasTrigger("TG_CBUPD_F_LIGNEARCHIVE");
-                    tb.HasTrigger("TG_DEL_F_LIGNEARCHIVE");
-                    tb.HasTrigger("TG_INS_F_LIGNEARCHIVE");
-                    tb.HasTrigger("TG_UPD_F_LIGNEARCHIVE");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_LIGNEARCHIVE_AR_Ref");
-
-            entity.HasIndex(e => e.TA_Piece, "FKIA_F_LIGNEARCHIVE_TA_Piece");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No1 }, "ILA_ARTGAM");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No2 }, "ILA_ARTGAM2");
-
-            entity.HasIndex(e => new { e.cbTA_Piece, e.LA_Ligne }, "ILA_PIECE");
-
-            entity.HasIndex(e => e.CO_No, "ILA_VENDEUR");
 
             entity.Property(e => e.AR_Ref)
                 .HasMaxLength(19)
@@ -15825,14 +13988,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
             entity.Property(e => e.cbTA_Piece)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len([TA_Piece])+(1)))+[TA_Piece]))", false);
@@ -15858,23 +14021,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_LIVRAISON");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_LIVRAISON");
-                    tb.HasTrigger("TG_CBINS_F_LIVRAISON");
-                    tb.HasTrigger("TG_CBUPD_F_LIVRAISON");
-                    tb.HasTrigger("TG_DEL_F_LIVRAISON");
-                    tb.HasTrigger("TG_INS_F_LIVRAISON");
-                    tb.HasTrigger("TG_UPD_F_LIVRAISON");
-                });
-
-            entity.HasIndex(e => e.CT_Num, "FKIA_F_LIVRAISON_CT_Num");
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.cbLI_Intitule }, "ILI_INT");
-
             entity.HasIndex(e => e.LI_No, "ILI_NO").IsUnique();
-
-            entity.HasIndex(e => new { e.LI_Principal, e.cbCT_Num }, "ILI_PRINCIPAL");
 
             entity.Property(e => e.CT_Num)
                 .IsRequired()
@@ -15919,15 +14066,15 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbLI_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([LI_Intitule],'')))", false);
             entity.Property(e => e.cbModification).HasColumnType("datetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_LIVRAISON)
                 .HasPrincipalKey(p => p.CT_Num)
@@ -15939,25 +14086,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_LOTFIFO>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_LOTFIFO");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_LOTFIFO");
-                    tb.HasTrigger("TG_CBINS_F_LOTFIFO");
-                    tb.HasTrigger("TG_CBUPD_F_LOTFIFO");
-                    tb.HasTrigger("TG_INS_F_LOTFIFO");
-                    tb.HasTrigger("TG_UPD_F_LOTFIFO");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_LOTFIFO_AR_Ref");
-
-            entity.HasIndex(e => e.DE_No, "FKIA_F_LOTFIFO_DE_No");
-
-            entity.HasIndex(e => new { e.DL_NoIn, e.DL_NoOut }, "ILF_NOIN");
-
-            entity.HasIndex(e => e.DL_NoOut, "ILF_NOOUT");
-
-            entity.HasIndex(e => new { e.DE_No, e.cbAR_Ref, e.AG_No1, e.AG_No2, e.LF_MvtStock, e.LF_LotEpuise, e.LF_DateBL, e.DL_NoIn }, "ILF_STOCK");
 
             entity.Property(e => e.AR_Ref)
                 .IsRequired()
@@ -15972,14 +14100,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_LOTFIFO)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -15997,33 +14125,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_LOTSERIE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_LOTSERIE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_LOTSERIE");
-                    tb.HasTrigger("TG_CBINS_F_LOTSERIE");
-                    tb.HasTrigger("TG_CBUPD_F_LOTSERIE");
-                    tb.HasTrigger("TG_INS_F_LOTSERIE");
-                    tb.HasTrigger("TG_UPD_F_LOTSERIE");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_LOTSERIE_AR_Ref");
-
-            entity.HasIndex(e => e.DE_No, "FKIA_F_LOTSERIE_DE_No");
-
-            entity.HasIndex(e => new { e.DE_No, e.cbAR_Ref, e.LS_MvtStock, e.LS_LotEpuise, e.LS_Peremption, e.cbLS_NoSerie }, "ILS_DATE");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.LS_MvtStock, e.cbLS_NoSerie }, "ILS_MVTSTOCK");
-
-            entity.HasIndex(e => new { e.DL_NoIn, e.DL_NoOut }, "ILS_NOIN");
-
-            entity.HasIndex(e => e.DL_NoOut, "ILS_NOOUT");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.cbLS_NoSerie, e.LS_LotEpuise }, "ILS_SERIE");
-
-            entity.HasIndex(e => new { e.DE_No, e.cbAR_Ref, e.LS_MvtStock, e.LS_LotEpuise, e.cbLS_NoSerie }, "ILS_STOCK");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.LS_MvtStock, e.LS_LotEpuise, e.cbLS_NoSerie }, "ILS_STOCK2");
 
             entity.Property(e => e.AR_Ref)
                 .IsRequired()
@@ -16046,17 +14147,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbLS_NoSerie)
                 .HasMaxLength(32)
                 .HasComputedColumnSql("(CONVERT([varbinary](32),isnull([LS_NoSerie],'')))", false);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_LOTSERIE)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -16075,21 +14176,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_MANDAT");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_MANDAT");
-                    tb.HasTrigger("TG_CBINS_F_MANDAT");
-                    tb.HasTrigger("TG_CBUPD_F_MANDAT");
-                    tb.HasTrigger("TG_DEL_F_MANDAT");
-                    tb.HasTrigger("TG_INS_F_MANDAT");
-                    tb.HasTrigger("TG_UPD_F_MANDAT");
-                });
-
-            entity.HasIndex(e => new { e.CT_Num, e.BT_Num }, "FKIA_F_MANDAT_BT_Num");
-
             entity.HasIndex(e => e.MD_No, "IMD_NO").IsUnique();
-
-            entity.HasIndex(e => new { e.cbCT_Num, e.BT_Num, e.MD_No }, "IMD_NUM");
 
             entity.HasIndex(e => e.cbMD_Reference, "IMD_REFERENCE").IsUnique();
 
@@ -16110,29 +14197,22 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbMD_Reference)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([MD_Reference],'')))", false);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_MODELE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_MODELE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_MODELE");
-                    tb.HasTrigger("TG_CBINS_F_MODELE");
-                    tb.HasTrigger("TG_CBUPD_F_MODELE");
-                });
 
             entity.HasIndex(e => e.cbMO_Intitule, "IMO_INTITULE").IsUnique();
 
@@ -16146,41 +14226,26 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbMO_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([MO_Intitule],'')))", false);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_MODELEA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_MODELEA");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_MODELEA");
-                    tb.HasTrigger("TG_CBINS_F_MODELEA");
-                    tb.HasTrigger("TG_CBUPD_F_MODELEA");
-                    tb.HasTrigger("TG_INS_F_MODELEA");
-                    tb.HasTrigger("TG_UPD_F_MODELEA");
-                });
-
-            entity.HasIndex(e => e.PI_No, "FKIA_F_MODELEA_PI_No");
-
             entity.HasIndex(e => e.cbMA_Intitule, "IMA_INT").IsUnique();
 
-            entity.HasIndex(e => new { e.cbJO_Num, e.cbMA_Intitule }, "IMA_JONUM");
-
             entity.HasIndex(e => e.MA_No, "IMA_NO").IsUnique();
-
-            entity.HasIndex(e => e.PI_No, "IMA_PINO");
 
             entity.Property(e => e.JO_Num)
                 .IsRequired()
@@ -16197,9 +14262,9 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbJO_Num)
                 .HasMaxLength(8)
                 .HasComputedColumnSql("(CONVERT([varbinary](8),[JO_Num]))", false);
@@ -16209,8 +14274,8 @@ public partial class DB : DbContext
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.PI_NoNavigation).WithMany(p => p.F_MODELEA)
                 .HasPrincipalKey(p => p.PI_No)
@@ -16223,22 +14288,9 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_MODELEG");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_MODELEG");
-                    tb.HasTrigger("TG_CBINS_F_MODELEG");
-                    tb.HasTrigger("TG_CBUPD_F_MODELEG");
-                    tb.HasTrigger("TG_INS_F_MODELEG");
-                    tb.HasTrigger("TG_UPD_F_MODELEG");
-                });
-
             entity.HasIndex(e => e.cbMG_Intitule, "IMG_INT").IsUnique();
 
             entity.HasIndex(e => e.MG_No, "IMG_NO").IsUnique();
-
-            entity.HasIndex(e => e.cbMG_Raccourci, "IMG_RACC");
-
-            entity.HasIndex(e => new { e.MG_Type, e.cbMG_Intitule }, "IMG_TYPE");
 
             entity.Property(e => e.MG_Intitule)
                 .HasMaxLength(35)
@@ -16249,9 +14301,9 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbMG_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([MG_Intitule],'')))", false);
@@ -16261,21 +14313,13 @@ public partial class DB : DbContext
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_MODELER>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_MODELER");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_MODELER");
-                    tb.HasTrigger("TG_CBINS_F_MODELER");
-                    tb.HasTrigger("TG_CBUPD_F_MODELER");
-                    tb.HasTrigger("TG_DEL_F_MODELER");
-                });
 
             entity.HasIndex(e => e.cbMR_Intitule, "IMR_INT").IsUnique();
 
@@ -16287,50 +14331,24 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbMR_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([MR_Intitule],'')))", false);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_NOMENCLAT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_NOMENCLAT");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_NOMENCLAT");
-                    tb.HasTrigger("TG_CBINS_F_NOMENCLAT");
-                    tb.HasTrigger("TG_CBUPD_F_NOMENCLAT");
-                    tb.HasTrigger("TG_DEL_F_NOMENCLAT");
-                    tb.HasTrigger("TG_INS_F_NOMENCLAT");
-                    tb.HasTrigger("TG_UPD_F_NOMENCLAT");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_NOMENCLAT_AR_Ref");
-
-            entity.HasIndex(e => e.cbDE_No, "FKIA_F_NOMENCLAT_DE_No");
-
-            entity.HasIndex(e => e.NO_RefDet, "FKIA_F_NOMENCLAT_NO_RefDet");
-
-            entity.HasIndex(e => e.DE_No, "INO_DEPOT");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.cbNO_Operation, e.AG_No1Comp, e.AG_No2Comp, e.NO_Ordre }, "INO_OPERATION");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No1Comp, e.AG_No2Comp, e.cbNO_Operation, e.NO_Ordre }, "INO_ORDRE");
-
             entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No1Comp, e.AG_No2Comp, e.cbNO_RefDet, e.AG_No1, e.AG_No2, e.cbNO_Operation }, "INO_REF").IsUnique();
-
-            entity.HasIndex(e => new { e.cbNO_RefDet, e.AG_No1, e.AG_No2 }, "INO_REFDET");
-
-            entity.HasIndex(e => new { e.cbNO_RefDet, e.AG_No2 }, "INO_REFDET2");
 
             entity.Property(e => e.AR_Ref)
                 .IsRequired()
@@ -16354,9 +14372,9 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
@@ -16366,8 +14384,8 @@ public partial class DB : DbContext
             entity.Property(e => e.cbNO_RefDet)
                 .HasMaxLength(20)
                 .HasComputedColumnSql("(CONVERT([varbinary](20),[NO_RefDet]))", false);
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_NOMENCLATAR_RefNavigation)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -16391,13 +14409,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_PAYS");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_PAYS");
-                    tb.HasTrigger("TG_CBINS_F_PAYS");
-                    tb.HasTrigger("TG_CBUPD_F_PAYS");
-                });
-
             entity.HasIndex(e => e.cbPA_Intitule, "IPA_INTITULE").IsUnique();
 
             entity.Property(e => e.PA_Assurance).HasColumnType("numeric(24, 6)");
@@ -16417,41 +14428,26 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
             entity.Property(e => e.cbPA_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([PA_Intitule],'')))", false);
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_PIECE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_PIECE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_PIECE");
-                    tb.HasTrigger("TG_CBINS_F_PIECE");
-                    tb.HasTrigger("TG_CBUPD_F_PIECE");
-                    tb.HasTrigger("TG_INS_F_PIECE");
-                    tb.HasTrigger("TG_UPD_F_PIECE");
-                });
-
             entity.HasIndex(e => e.cbPI_Intitule, "IPI_INT").IsUnique();
 
-            entity.HasIndex(e => e.cbJO_Num, "IPI_JONUM");
-
-            entity.HasIndex(e => new { e.JO_Type, e.cbPI_Intitule }, "IPI_JOTYPE");
-
             entity.HasIndex(e => e.PI_No, "IPI_NO").IsUnique();
-
-            entity.HasIndex(e => e.cbPI_Raccourci, "IPI_RACC");
 
             entity.Property(e => e.JO_Num)
                 .HasMaxLength(7)
@@ -16465,9 +14461,9 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbJO_Num)
                 .HasMaxLength(8)
                 .HasComputedColumnSql("(CONVERT([varbinary](8),isnull([JO_Num],'')))", false);
@@ -16480,25 +14476,13 @@ public partial class DB : DbContext
             entity.Property(e => e.cbPI_Raccourci)
                 .HasMaxLength(8)
                 .HasComputedColumnSql("(CONVERT([varbinary](8),isnull([PI_Raccourci],'')))", false);
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_PIECEA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_PIECEA");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_PIECEA");
-                    tb.HasTrigger("TG_CBINS_F_PIECEA");
-                    tb.HasTrigger("TG_CBUPD_F_PIECEA");
-                    tb.HasTrigger("TG_DEL_F_PIECEA");
-                    tb.HasTrigger("TG_INS_F_PIECEA");
-                    tb.HasTrigger("TG_UPD_F_PIECEA");
-                });
-
-            entity.HasIndex(e => new { e.PI_No, e.PG_Ligne }, "FKIA_F_PIECEA_PI_LIGNE");
 
             entity.HasIndex(e => new { e.PI_No, e.PG_Ligne, e.N_Analytique, e.PA_Ligne }, "IPA_LIGNE").IsUnique();
 
@@ -16510,16 +14494,16 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
-            entity.HasOne(d => d.P).WithMany(p => p.F_PIECEA)
+            entity.HasOne(d => d.F_PIECEG).WithMany(p => p.F_PIECEA)
                 .HasPrincipalKey(p => new { p.PI_No, p.PG_Ligne })
                 .HasForeignKey(d => new { d.PI_No, d.PG_Ligne })
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -16529,18 +14513,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_PIECEG>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_PIECEG");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_PIECEG");
-                    tb.HasTrigger("TG_CBINS_F_PIECEG");
-                    tb.HasTrigger("TG_CBUPD_F_PIECEG");
-                    tb.HasTrigger("TG_DEL_F_PIECEG");
-                    tb.HasTrigger("TG_INS_F_PIECEG");
-                    tb.HasTrigger("TG_UPD_F_PIECEG");
-                });
-
-            entity.HasIndex(e => e.PI_No, "FKIA_F_PIECEG_PI_No");
 
             entity.HasIndex(e => new { e.PI_No, e.PG_Ligne }, "IPG_LIGNE").IsUnique();
 
@@ -16784,14 +14756,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.PI_NoNavigation).WithMany(p => p.F_PIECEG)
                 .HasPrincipalKey(p => p.PI_No)
@@ -16803,26 +14775,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_PREVISION>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_PREVISION");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_PREVISION");
-                    tb.HasTrigger("TG_CBINS_F_PREVISION");
-                    tb.HasTrigger("TG_CBUPD_F_PREVISION");
-                    tb.HasTrigger("TG_DEL_F_PREVISION");
-                    tb.HasTrigger("TG_INS_F_PREVISION");
-                    tb.HasTrigger("TG_UPD_F_PREVISION");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_PREVISION_AR_Ref");
-
-            entity.HasIndex(e => e.DE_No, "FKIA_F_PREVISION_DE_No");
-
-            entity.HasIndex(e => e.PV_Date, "IPV_DATE");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No1Comp, e.AG_No2Comp, e.PV_Date }, "IPV_DATEART");
-
-            entity.HasIndex(e => e.DE_No, "IPV_DEPOT");
 
             entity.HasIndex(e => new { e.cbAR_Ref, e.AG_No1Comp, e.AG_No2Comp, e.DE_No, e.PV_Date }, "IPV_DEPOTDATE").IsUnique();
 
@@ -16838,14 +14790,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_PREVISION)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -16864,37 +14816,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_PROJETFABRICATION");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_PROJETFABRICATION");
-                    tb.HasTrigger("TG_CBINS_F_PROJETFABRICATION");
-                    tb.HasTrigger("TG_CBUPD_F_PROJETFABRICATION");
-                    tb.HasTrigger("TG_INS_CPTAF_PROJETFABRICATION");
-                    tb.HasTrigger("TG_UPD_CPTAF_PROJETFABRICATION");
-                    tb.HasTrigger("TG_UPD_F_PROJETFABRICATION");
-                });
-
-            entity.HasIndex(e => e.cbDE_No, "FKIA_F_PROJETFABRICATION_DE_No");
-
-            entity.HasIndex(e => e.cbCA_Num, "IPF_AFFAIRE");
-
-            entity.HasIndex(e => new { e.PF_Type, e.PF_DateDebut, e.cbPF_Num }, "IPF_DATEDEBUT");
-
-            entity.HasIndex(e => e.DE_No, "IPF_DEPOT");
-
-            entity.HasIndex(e => e.cbDO_Piece, "IPF_DOCUMENT");
-
-            entity.HasIndex(e => new { e.PF_Type, e.cbPF_Intitule, e.cbPF_Num }, "IPF_INTITULE");
-
             entity.HasIndex(e => new { e.PF_Type, e.cbPF_Num }, "IPF_NUM").IsUnique();
-
-            entity.HasIndex(e => new { e.PF_Type, e.PF_Statut, e.PF_DateDebut, e.cbPF_Num }, "IPF_STATUTDATEDEBUT");
-
-            entity.HasIndex(e => new { e.PF_Type, e.PF_Statut, e.cbPF_Intitule, e.cbPF_Num }, "IPF_STATUTINTITULE");
-
-            entity.HasIndex(e => new { e.PF_Type, e.PF_Statut, e.cbPF_Num }, "IPF_STATUTNUM");
-
-            entity.HasIndex(e => e.cbCT_Num, "IPF_TIERS");
 
             entity.HasIndex(e => e.PF_Num, "UKA_F_PROJETFABRICATION_PF_Num").IsUnique();
 
@@ -16925,12 +14847,12 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbDO_Piece)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len(isnull([DO_Piece],''))+(1)))+isnull([DO_Piece],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
@@ -16940,8 +14862,8 @@ public partial class DB : DbContext
             entity.Property(e => e.cbPF_Num)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len([PF_Num])+(1)))+[PF_Num]))", false);
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.cbDE_NoNavigation).WithMany(p => p.F_PROJETFABRICATION)
                 .HasPrincipalKey(p => p.DE_No)
@@ -16952,36 +14874,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_PROJETHISTO>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_PROJETHISTO");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_PROJETHISTO");
-                    tb.HasTrigger("TG_CBINS_F_PROJETHISTO");
-                    tb.HasTrigger("TG_CBUPD_F_PROJETHISTO");
-                    tb.HasTrigger("TG_DEL_F_PROJETHISTO");
-                    tb.HasTrigger("TG_INS_F_PROJETHISTO");
-                    tb.HasTrigger("TG_UPD_F_PROJETHISTO");
-                });
-
-            entity.HasIndex(e => e.AR_RefComposant, "FKIA_F_PROJETHISTO_AR_RefComposant");
-
-            entity.HasIndex(e => e.AR_RefCompose, "FKIA_F_PROJETHISTO_AR_RefCompose");
-
-            entity.HasIndex(e => e.PF_Num, "FKIA_F_PROJETHISTO_PF_Num");
-
-            entity.HasIndex(e => e.PP_No, "FKIA_F_PROJETHISTO_PP_No");
-
-            entity.HasIndex(e => new { e.PF_Type, e.cbPF_Num, e.cbAR_RefCompose, e.AG_No1Compose, e.AG_No2Compose, e.PH_Date, e.PH_Type }, "IPH_COMPOSE");
-
-            entity.HasIndex(e => new { e.PF_Type, e.cbPF_Num, e.PH_Date, e.PH_Type }, "IPH_DATE");
-
-            entity.HasIndex(e => new { e.DE_No, e.cbAR_RefComposant, e.AG_No1Composant, e.AG_No2Composant }, "IPH_DEPOT");
-
-            entity.HasIndex(e => e.PP_No, "IPH_LIGNE");
-
-            entity.HasIndex(e => new { e.PF_Type, e.cbPF_Num, e.cbAR_RefCompose, e.AG_No1Compose, e.AG_No2Compose, e.cbPP_Operation, e.PH_Date, e.PH_Type }, "IPH_OPERATION");
-
-            entity.HasIndex(e => new { e.PF_Type, e.cbPF_Num, e.PP_No, e.PH_Type }, "IPH_TYPE");
 
             entity.Property(e => e.AR_RefComposant)
                 .HasMaxLength(19)
@@ -17020,9 +14912,9 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
@@ -17032,8 +14924,8 @@ public partial class DB : DbContext
             entity.Property(e => e.cbPP_Operation)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),isnull([PP_Operation],'')))", false);
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefComposantNavigation).WithMany(p => p.F_PROJETHISTOAR_RefComposantNavigation)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -17063,21 +14955,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_PROJETLIGNE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_PROJETLIGNE");
-                    tb.HasTrigger("TG_CBINS_F_PROJETLIGNE");
-                    tb.HasTrigger("TG_CBUPD_F_PROJETLIGNE");
-                });
-
-            entity.HasIndex(e => e.DL_No, "FKIA_F_PROJETLIGNE_DL_No");
-
-            entity.HasIndex(e => e.PF_Num, "FKIA_F_PROJETLIGNE_PF_Num");
-
-            entity.HasIndex(e => e.DL_No, "IPL_LIGNE");
-
-            entity.HasIndex(e => new { e.PF_Type, e.cbPF_Num, e.PL_Ordre }, "IPL_NUM");
-
             entity.Property(e => e.PF_Num)
                 .IsRequired()
                 .HasMaxLength(9)
@@ -17085,17 +14962,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
             entity.Property(e => e.cbPF_Num)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len([PF_Num])+(1)))+[PF_Num]))", false);
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.DL_NoNavigation).WithMany(p => p.F_PROJETLIGNE)
                 .HasPrincipalKey(p => p.DL_No)
@@ -17113,45 +14990,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_PROJETPLANNING");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_PROJETPLANNING");
-                    tb.HasTrigger("TG_CBINS_F_PROJETPLANNING");
-                    tb.HasTrigger("TG_CBUPD_F_PROJETPLANNING");
-                    tb.HasTrigger("TG_DEL_F_PROJETPLANNING");
-                    tb.HasTrigger("TG_INS_F_PROJETPLANNING");
-                    tb.HasTrigger("TG_UPD_F_PROJETPLANNING");
-                });
-
-            entity.HasIndex(e => e.AR_RefComposant, "FKIA_F_PROJETPLANNING_AR_RefComposant");
-
-            entity.HasIndex(e => e.AR_RefCompose, "FKIA_F_PROJETPLANNING_AR_RefCompose");
-
-            entity.HasIndex(e => e.cbDE_No, "FKIA_F_PROJETPLANNING_DE_No");
-
-            entity.HasIndex(e => e.PF_Num, "FKIA_F_PROJETPLANNING_PF_Num");
-
-            entity.HasIndex(e => e.RP_Code, "FKIA_F_PROJETPLANNING_RP_Code");
-
-            entity.HasIndex(e => new { e.cbAR_RefComposant, e.PF_Type, e.cbPF_Num }, "IPP_COMPOSANT");
-
-            entity.HasIndex(e => e.cbAR_RefCompose, "IPP_COMPOSE");
-
-            entity.HasIndex(e => e.DE_No, "IPP_DEPOT");
-
             entity.HasIndex(e => e.PP_No, "IPP_LIGNE").IsUnique();
-
-            entity.HasIndex(e => new { e.PF_Type, e.cbPF_Num, e.PP_Type, e.cbAR_RefCompose, e.AG_No1Compose, e.AG_No2Compose, e.cbPP_Operation, e.cbAR_RefComposant, e.AG_No1Composant, e.AG_No2Composant }, "IPP_PROJCOMPOSANT");
-
-            entity.HasIndex(e => new { e.PF_Type, e.cbPF_Num, e.PP_Type, e.cbAR_RefCompose, e.AG_No1Compose, e.AG_No2Compose }, "IPP_PROJCOMPOSE");
-
-            entity.HasIndex(e => new { e.PF_Type, e.cbPF_Num, e.PP_Ajout, e.PP_Ordre, e.cbPP_Operation, e.PP_Type }, "IPP_PROJET");
-
-            entity.HasIndex(e => new { e.PF_Type, e.cbPF_Num, e.PP_Ordre, e.cbPP_Operation, e.PP_Type }, "IPP_PROJETTOUT");
-
-            entity.HasIndex(e => new { e.PF_Type, e.cbPF_Num, e.PP_Type, e.cbAR_RefCompose, e.AG_No1Compose, e.AG_No2Compose, e.cbPP_Operation, e.cbRP_Code }, "IPP_PROJRESSOURCE");
-
-            entity.HasIndex(e => e.cbRP_Code, "IPP_RESSOURCE");
 
             entity.Property(e => e.AR_RefComposant)
                 .HasMaxLength(19)
@@ -17215,9 +15054,9 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
@@ -17227,11 +15066,11 @@ public partial class DB : DbContext
             entity.Property(e => e.cbPP_Operation)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),isnull([PP_Operation],'')))", false);
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbRP_Code)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),isnull([RP_Code],'')))", false);
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefComposantNavigation).WithMany(p => p.F_PROJETPLANNINGAR_RefComposantNavigation)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -17265,21 +15104,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_PROTECTIONCIAL");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_PROTECTIONCIAL");
-                    tb.HasTrigger("TG_CBINS_F_PROTECTIONCIAL");
-                    tb.HasTrigger("TG_CBUPD_F_PROTECTIONCIAL");
-                    tb.HasTrigger("TG_DEL_F_PROTECTIONCIAL");
-                    tb.HasTrigger("TG_INS_F_PROTECTIONCIAL");
-                    tb.HasTrigger("TG_UPD_F_PROTECTIONCIAL");
-                });
-
-            entity.HasIndex(e => e.cbPROT_UserProfil, "FKIA_F_PROTECTIONCIAL_PROT_UserProfil");
-
             entity.HasIndex(e => e.PROT_No, "IPROTCIAL_NO").IsUnique();
-
-            entity.HasIndex(e => e.PROT_UserProfil, "IPROTCIAL_PROFIL");
 
             entity.HasIndex(e => e.cbCIPROT_User, "IPROTCIAL_USER").IsUnique();
 
@@ -17314,21 +15139,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_PROTECTIONCPTA");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_PROTECTIONCPTA");
-                    tb.HasTrigger("TG_CBINS_F_PROTECTIONCPTA");
-                    tb.HasTrigger("TG_CBUPD_F_PROTECTIONCPTA");
-                    tb.HasTrigger("TG_DEL_F_PROTECTIONCPTA");
-                    tb.HasTrigger("TG_INS_F_PROTECTIONCPTA");
-                    tb.HasTrigger("TG_UPD_F_PROTECTIONCPTA");
-                });
-
-            entity.HasIndex(e => e.cbPROT_UserProfil, "FKIA_F_PROTECTIONCPTA_PROT_UserProfil");
-
             entity.HasIndex(e => e.PROT_No, "IPROTCPTA_NO").IsUnique();
-
-            entity.HasIndex(e => e.PROT_UserProfil, "IPROTCPTA_PROFIL");
 
             entity.HasIndex(e => e.cbCIPROT_User, "IPROTCPTA_USER").IsUnique();
 
@@ -17363,13 +15174,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_RECTIFICATIONMOTIF");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_RECTIFICATIONMOTIF");
-                    tb.HasTrigger("TG_CBINS_F_RECTIFICATIONMOTIF");
-                    tb.HasTrigger("TG_CBUPD_F_RECTIFICATIONMOTIF");
-                });
-
             entity.HasIndex(e => e.cbRM_Intitule, "IRM_INTITULE").IsUnique();
 
             entity.Property(e => e.RM_Code)
@@ -17382,40 +15186,22 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbRM_Intitule)
                 .HasMaxLength(70)
                 .HasComputedColumnSql("(CONVERT([varbinary](70),[RM_Intitule]))", false);
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
         });
 
         modelBuilder.Entity<F_REGLEARCHIVE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_REGLEARCHIVE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_REGLEARCHIVE");
-                    tb.HasTrigger("TG_CBINS_F_REGLEARCHIVE");
-                    tb.HasTrigger("TG_CBUPD_F_REGLEARCHIVE");
-                    tb.HasTrigger("TG_DEL_F_REGLEARCHIVE");
-                    tb.HasTrigger("TG_INS_F_REGLEARCHIVE");
-                    tb.HasTrigger("TG_UPD_F_REGLEARCHIVE");
-                });
-
-            entity.HasIndex(e => e.cbCA_No, "FKIA_F_REGLEARCHIVE_CA_No");
-
-            entity.HasIndex(e => e.TA_Piece, "FKIA_F_REGLEARCHIVE_TA_Piece");
-
-            entity.HasIndex(e => e.CA_No, "IRA_CAISSE");
-
-            entity.HasIndex(e => new { e.cbTA_Piece, e.RA_Date, e.N_Reglement }, "IRA_PIECE");
 
             entity.Property(e => e.RA_Date).HasColumnType("smalldatetime");
             entity.Property(e => e.RA_Montant).HasColumnType("numeric(24, 6)");
@@ -17427,14 +15213,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
             entity.Property(e => e.cbTA_Piece)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len([TA_Piece])+(1)))+[TA_Piece]))", false);
@@ -17455,28 +15241,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_REGLECH");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_REGLECH");
-                    tb.HasTrigger("TG_CBINS_F_REGLECH");
-                    tb.HasTrigger("TG_CBUPD_F_REGLECH");
-                    tb.HasTrigger("TG_DEL_F_REGLECH");
-                    tb.HasTrigger("TG_INS_F_REGLECH");
-                    tb.HasTrigger("TG_UPD_F_REGLECH");
-                });
-
-            entity.HasIndex(e => e.DR_No, "FKIA_F_REGLECH_DR_No");
-
-            entity.HasIndex(e => e.RG_No, "FKIA_F_REGLECH_RG_No");
-
-            entity.HasIndex(e => new { e.DR_No, e.RG_No }, "IRC_DRNO");
-
-            entity.HasIndex(e => new { e.DO_Domaine, e.DO_Type, e.cbDO_Piece }, "IRC_ENTETE");
-
-            entity.HasIndex(e => new { e.RG_TypeReg, e.DO_Domaine, e.DO_Type, e.cbDO_Piece }, "IRC_ENTETETYPE");
-
-            entity.HasIndex(e => new { e.RG_No, e.DR_No }, "IRC_RGNO");
-
             entity.Property(e => e.DO_Piece)
                 .HasMaxLength(9)
                 .IsUnicode(false);
@@ -17484,17 +15248,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbDO_Piece)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len(isnull([DO_Piece],''))+(1)))+isnull([DO_Piece],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.DR_NoNavigation).WithMany(p => p.F_REGLECH)
                 .HasPrincipalKey(p => p.DR_No)
@@ -17513,18 +15277,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_REGLEMENTT");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_REGLEMENTT");
-                    tb.HasTrigger("TG_CBINS_F_REGLEMENTT");
-                    tb.HasTrigger("TG_CBUPD_F_REGLEMENTT");
-                    tb.HasTrigger("TG_DEL_F_REGLEMENTT");
-                    tb.HasTrigger("TG_INS_F_REGLEMENTT");
-                    tb.HasTrigger("TG_UPD_F_REGLEMENTT");
-                });
-
-            entity.HasIndex(e => e.CT_Num, "FKIA_F_REGLEMENTT_CT_Num");
-
             entity.HasIndex(e => new { e.cbCT_Num, e.RT_NbJour, e.N_Reglement }, "IRT_NBJOUR").IsUnique();
 
             entity.Property(e => e.CT_Num)
@@ -17538,14 +15290,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_REGLEMENTT)
                 .HasPrincipalKey(p => p.CT_Num)
@@ -17557,18 +15309,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_REGREVISION>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_REGREVISION");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_REGREVISION");
-                    tb.HasTrigger("TG_CBINS_F_REGREVISION");
-                    tb.HasTrigger("TG_CBUPD_F_REGREVISION");
-                    tb.HasTrigger("TG_DEL_F_REGREVISION");
-                    tb.HasTrigger("TG_INS_F_REGREVISION");
-                    tb.HasTrigger("TG_UPD_F_REGREVISION");
-                });
-
-            entity.HasIndex(e => e.EC_No, "FKIA_F_REGREVISION_EC_No");
 
             entity.HasIndex(e => e.EC_No, "IRR_ECNO").IsUnique();
 
@@ -17588,14 +15328,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.EC_NoNavigation).WithOne(p => p.F_REGREVISION)
                 .HasPrincipalKey<F_ECRITUREC>(p => p.EC_No)
@@ -17608,65 +15348,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_REGTAXE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_REGTAXE");
-                    tb.HasTrigger("TG_CBINS_F_REGTAXE");
-                    tb.HasTrigger("TG_CBUPD_F_REGTAXE");
-                    tb.HasTrigger("TG_DEL_F_REGTAXE");
-                    tb.HasTrigger("TG_INS_F_REGTAXE");
-                    tb.HasTrigger("TG_UPD_F_REGTAXE");
-                });
-
-            entity.HasIndex(e => e.CG_Num01, "FKIA_F_REGTAXE_CG_NUM01");
-
-            entity.HasIndex(e => e.CG_Num02, "FKIA_F_REGTAXE_CG_NUM02");
-
-            entity.HasIndex(e => e.CG_Num03, "FKIA_F_REGTAXE_CG_NUM03");
-
-            entity.HasIndex(e => e.CG_Num04, "FKIA_F_REGTAXE_CG_NUM04");
-
-            entity.HasIndex(e => e.CG_Num05, "FKIA_F_REGTAXE_CG_NUM05");
-
-            entity.HasIndex(e => e.CG_Num06, "FKIA_F_REGTAXE_CG_NUM06");
-
-            entity.HasIndex(e => e.CG_Num07, "FKIA_F_REGTAXE_CG_NUM07");
-
-            entity.HasIndex(e => e.CG_Num08, "FKIA_F_REGTAXE_CG_NUM08");
-
-            entity.HasIndex(e => e.CG_Num09, "FKIA_F_REGTAXE_CG_NUM09");
-
-            entity.HasIndex(e => e.CG_Num10, "FKIA_F_REGTAXE_CG_NUM10");
-
-            entity.HasIndex(e => e.CT_Num, "FKIA_F_REGTAXE_CT_Num");
-
-            entity.HasIndex(e => e.EC_No, "FKIA_F_REGTAXE_EC_No");
-
-            entity.HasIndex(e => e.TA_Code01, "FKIA_F_REGTAXE_TA_CODE01");
-
-            entity.HasIndex(e => e.TA_Code02, "FKIA_F_REGTAXE_TA_CODE02");
-
-            entity.HasIndex(e => e.TA_Code03, "FKIA_F_REGTAXE_TA_CODE03");
-
-            entity.HasIndex(e => e.TA_Code04, "FKIA_F_REGTAXE_TA_CODE04");
-
-            entity.HasIndex(e => e.TA_Code05, "FKIA_F_REGTAXE_TA_CODE05");
-
-            entity.HasIndex(e => e.TA_Code06, "FKIA_F_REGTAXE_TA_CODE06");
-
-            entity.HasIndex(e => e.TA_Code07, "FKIA_F_REGTAXE_TA_CODE07");
-
-            entity.HasIndex(e => e.TA_Code08, "FKIA_F_REGTAXE_TA_CODE08");
-
-            entity.HasIndex(e => e.TA_Code09, "FKIA_F_REGTAXE_TA_CODE09");
-
-            entity.HasIndex(e => e.TA_Code10, "FKIA_F_REGTAXE_TA_CODE10");
-
-            entity.HasIndex(e => e.cbCT_Num, "IRT_CTNUM");
-
             entity.HasIndex(e => e.EC_No, "IRT_ECNO").IsUnique();
-
-            entity.HasIndex(e => new { e.RT_Type, e.JM_Date, e.RT_No }, "IRT_NO");
 
             entity.Property(e => e.CG_Num01)
                 .HasMaxLength(13)
@@ -17785,14 +15467,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CG_Num01Navigation).WithMany(p => p.F_REGTAXECG_Num01Navigation)
                 .HasPrincipalKey(p => p.CG_Num)
@@ -17910,32 +15592,19 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_REPCOM");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_REPCOM");
-                    tb.HasTrigger("TG_CBINS_F_REPCOM");
-                    tb.HasTrigger("TG_CBUPD_F_REPCOM");
-                    tb.HasTrigger("TG_INS_F_REPCOM");
-                    tb.HasTrigger("TG_UPD_F_REPCOM");
-                });
-
-            entity.HasIndex(e => e.TF_No, "FKIA_F_REPCOM_TF_No");
-
             entity.HasIndex(e => new { e.CO_No, e.TF_No }, "IRC_REP").IsUnique();
-
-            entity.HasIndex(e => new { e.TF_Interes, e.TF_No, e.CO_No }, "IRC_TARIF");
 
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.CO_NoNavigation).WithMany(p => p.F_REPCOM)
                 .HasPrincipalKey(p => p.CO_No)
@@ -17954,22 +15623,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_RESSCENTRE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_RESSCENTRE");
-                    tb.HasTrigger("TG_CBINS_F_RESSCENTRE");
-                    tb.HasTrigger("TG_CBUPD_F_RESSCENTRE");
-                    tb.HasTrigger("TG_DEL_F_RESSCENTRE");
-                    tb.HasTrigger("TG_INS_F_RESSCENTRE");
-                    tb.HasTrigger("TG_UPD_F_RESSCENTRE");
-                });
-
-            entity.HasIndex(e => e.RP_CodeCentre, "FKIA_F_RESSCENTRE_RP_CodeCentre");
-
-            entity.HasIndex(e => e.RP_CodeRessource, "FKIA_F_RESSCENTRE_RP_CodeRessource");
-
-            entity.HasIndex(e => new { e.cbRP_CodeCentre, e.cbRP_CodeRessource }, "IRC_CENTRE");
-
             entity.HasIndex(e => new { e.cbRP_CodeRessource, e.cbRP_CodeCentre }, "IRC_RESSOURCE").IsUnique();
 
             entity.Property(e => e.RP_CodeCentre)
@@ -17983,20 +15636,20 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbRP_CodeCentre)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),[RP_CodeCentre]))", false);
             entity.Property(e => e.cbRP_CodeRessource)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),[RP_CodeRessource]))", false);
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.RP_CodeCentreNavigation).WithMany(p => p.F_RESSCENTRERP_CodeCentreNavigation)
                 .HasPrincipalKey(p => p.RP_Code)
@@ -18015,58 +15668,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_RESSOURCEPROD");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_RESSOURCEPROD");
-                    tb.HasTrigger("TG_CBINS_F_RESSOURCEPROD");
-                    tb.HasTrigger("TG_CBUPD_F_RESSOURCEPROD");
-                    tb.HasTrigger("TG_INS_F_RESSOURCEPROD");
-                    tb.HasTrigger("TG_UPD_F_RESSOURCEPROD");
-                });
-
-            entity.HasIndex(e => e.AR_RefDefaut, "FKIA_F_RESSOURCEPROD_AR_Ref");
-
-            entity.HasIndex(e => e.DE_No, "FKIA_F_RESSOURCEPROD_DE_No");
-
-            entity.HasIndex(e => e.CAL_No, "IRP_CALENDRIER");
-
-            entity.HasIndex(e => new { e.RP_TypeRess, e.cbRP_Central }, "IRP_CENTRAL");
-
             entity.HasIndex(e => e.cbRP_Code, "IRP_CODE").IsUnique();
-
-            entity.HasIndex(e => new { e.DE_No, e.cbRP_Code }, "IRP_DEPOTCODE");
-
-            entity.HasIndex(e => new { e.cbRP_Intitule, e.cbRP_Code }, "IRP_INTITULE");
-
-            entity.HasIndex(e => new { e.RP_Sommeil, e.cbRP_Code }, "IRP_SOMCODE");
-
-            entity.HasIndex(e => new { e.RP_Sommeil, e.DE_No, e.cbRP_Code }, "IRP_SOMDEPOTCODE");
-
-            entity.HasIndex(e => new { e.RP_Sommeil, e.DE_No, e.cbRP_Intitule, e.cbRP_Code }, "IRP_SOMDEPOTINTITULE");
-
-            entity.HasIndex(e => new { e.RP_Sommeil, e.DE_No, e.RP_Type, e.cbRP_Code }, "IRP_SOMDEPOTTYPE");
-
-            entity.HasIndex(e => new { e.RP_Sommeil, e.cbRP_Intitule, e.cbRP_Code }, "IRP_SOMINTITULE");
-
-            entity.HasIndex(e => new { e.RP_Sommeil, e.RP_Type, e.cbRP_Code }, "IRP_SOMTYPE");
-
-            entity.HasIndex(e => new { e.RP_Type, e.cbRP_Code }, "IRP_TYPE");
-
-            entity.HasIndex(e => new { e.RP_TypeRess, e.cbRP_Code }, "IRP_TYPECODE");
-
-            entity.HasIndex(e => new { e.RP_TypeRess, e.DE_No, e.cbRP_Code }, "IRP_TYPEDEPOT");
-
-            entity.HasIndex(e => new { e.RP_TypeRess, e.cbRP_Intitule, e.cbRP_Code }, "IRP_TYPEINTITULE");
-
-            entity.HasIndex(e => new { e.RP_TypeRess, e.RP_Sommeil, e.cbRP_Code }, "IRP_TYPESOMCODE");
-
-            entity.HasIndex(e => new { e.RP_TypeRess, e.RP_Sommeil, e.DE_No, e.cbRP_Code }, "IRP_TYPESOMDEPOT");
-
-            entity.HasIndex(e => new { e.RP_TypeRess, e.RP_Sommeil, e.cbRP_Intitule, e.cbRP_Code }, "IRP_TYPESOMINTITULE");
-
-            entity.HasIndex(e => new { e.RP_TypeRess, e.RP_Sommeil, e.RP_Type, e.cbRP_Code }, "IRP_TYPESOMTYPE");
-
-            entity.HasIndex(e => new { e.RP_TypeRess, e.RP_Type, e.cbRP_Code }, "IRP_TYPETYPE");
 
             entity.HasIndex(e => e.RP_Code, "UKA_F_RESSOURCEPROD_RP_Code").IsUnique();
 
@@ -18241,13 +15843,13 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbRP_Central)
                 .HasMaxLength(12)
                 .HasComputedColumnSql("(CONVERT([varbinary](12),isnull([RP_Central],'')))", false);
@@ -18257,7 +15859,7 @@ public partial class DB : DbContext
             entity.Property(e => e.cbRP_Intitule)
                 .HasMaxLength(70)
                 .HasComputedColumnSql("(CONVERT([varbinary](70),isnull([RP_Intitule],'')))", false);
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.AR_RefDefautNavigation).WithMany(p => p.F_RESSOURCEPROD)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -18280,13 +15882,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_SCENARIO");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_SCENARIO");
-                    tb.HasTrigger("TG_CBINS_F_SCENARIO");
-                    tb.HasTrigger("TG_CBUPD_F_SCENARIO");
-                });
-
             entity.HasIndex(e => e.cbSC_Intitule, "ISC_INTITULE").IsUnique();
 
             entity.HasIndex(e => e.SC_No, "ISC_NO").IsUnique();
@@ -18298,14 +15893,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
             entity.Property(e => e.cbSC_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([SC_Intitule],'')))", false);
@@ -18315,26 +15910,9 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_TARIF");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_TARIF");
-                    tb.HasTrigger("TG_CBINS_F_TARIF");
-                    tb.HasTrigger("TG_CBUPD_F_TARIF");
-                    tb.HasTrigger("TG_INS_F_TARIF");
-                    tb.HasTrigger("TG_UPD_F_TARIF");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_TARIF_AR_Ref");
-
-            entity.HasIndex(e => e.cbCT_Num, "ITF_FOURN");
-
-            entity.HasIndex(e => new { e.TF_Type, e.TF_Interes, e.cbTF_Intitule }, "ITF_INTERES");
-
             entity.HasIndex(e => new { e.TF_Type, e.cbTF_Intitule, e.TF_Interes }, "ITF_INTITULE").IsUnique();
 
             entity.HasIndex(e => e.TF_No, "ITF_NO").IsUnique();
-
-            entity.HasIndex(e => e.cbAR_Ref, "ITF_REF");
 
             entity.Property(e => e.AR_Ref)
                 .HasMaxLength(19)
@@ -18360,14 +15938,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
             entity.Property(e => e.cbTF_Intitule)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([TF_Intitule],'')))", false);
@@ -18387,20 +15965,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_TARIFCOND");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_TARIFCOND");
-                    tb.HasTrigger("TG_CBINS_F_TARIFCOND");
-                    tb.HasTrigger("TG_CBUPD_F_TARIFCOND");
-                    tb.HasTrigger("TG_DEL_F_TARIFCOND");
-                    tb.HasTrigger("TG_INS_F_TARIFCOND");
-                    tb.HasTrigger("TG_UPD_F_TARIFCOND");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_TARIFCOND_AR_Ref");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.cbTC_RefCF, e.CO_No }, "ITC_CLFO");
-
             entity.HasIndex(e => new { e.AR_Ref, e.TC_RefCF, e.CO_No }, "UKA_F_TARIFCOND_TC_RefCF").IsUnique();
 
             entity.Property(e => e.AR_Ref)
@@ -18418,14 +15982,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
             entity.Property(e => e.cbTC_RefCF)
                 .HasMaxLength(18)
                 .HasComputedColumnSql("(CONVERT([varbinary](18),isnull([TC_RefCF],'')))", false);
@@ -18440,28 +16004,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_TARIFGAM>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_TARIFGAM");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_TARIFGAM");
-                    tb.HasTrigger("TG_CBINS_F_TARIFGAM");
-                    tb.HasTrigger("TG_CBUPD_F_TARIFGAM");
-                    tb.HasTrigger("TG_DEL_F_TARIFGAM");
-                    tb.HasTrigger("TG_INS_F_TARIFGAM");
-                    tb.HasTrigger("TG_UPD_F_TARIFGAM");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_TARIFGAM_AR_Ref");
-
-            entity.HasIndex(e => new { e.cbTG_CodeBarre, e.cbAR_Ref }, "ITG_CBARRE");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.cbTG_RefCF, e.AG_No1, e.AG_No2 }, "ITG_CLFO");
-
-            entity.HasIndex(e => new { e.cbTG_Ref, e.cbAR_Ref }, "ITG_REF");
-
-            entity.HasIndex(e => new { e.cbTG_RefCF, e.cbTG_CodeBarre }, "ITG_TIERSBARRE");
-
-            entity.HasIndex(e => new { e.cbTG_RefCF, e.cbTG_Ref }, "ITG_TIERSREF");
 
             entity.HasIndex(e => new { e.AR_Ref, e.TG_RefCF, e.AG_No1, e.AG_No2 }, "UKA_F_TARIFGAM_TG_REFGAM").IsUnique();
 
@@ -18486,14 +16028,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
             entity.Property(e => e.cbTG_CodeBarre)
                 .HasMaxLength(20)
                 .HasComputedColumnSql("(CONVERT([varbinary](20),isnull([TG_CodeBarre],'')))", false);
@@ -18515,20 +16057,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_TARIFQTE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_TARIFQTE");
-                    tb.HasTrigger("TG_CBINS_F_TARIFQTE");
-                    tb.HasTrigger("TG_CBUPD_F_TARIFQTE");
-                    tb.HasTrigger("TG_DEL_F_TARIFQTE");
-                    tb.HasTrigger("TG_INS_F_TARIFQTE");
-                    tb.HasTrigger("TG_UPD_F_TARIFQTE");
-                });
-
-            entity.HasIndex(e => e.AR_Ref, "FKIA_F_TARIFQTE_AR_Ref");
-
-            entity.HasIndex(e => new { e.cbAR_Ref, e.cbTQ_RefCF, e.TQ_BorneSup }, "ITQ_CLFO");
-
             entity.Property(e => e.AR_Ref)
                 .IsRequired()
                 .HasMaxLength(19)
@@ -18547,14 +16075,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
             entity.Property(e => e.cbTQ_RefCF)
                 .HasMaxLength(18)
                 .HasComputedColumnSql("(CONVERT([varbinary](18),isnull([TQ_RefCF],'')))", false);
@@ -18570,18 +16098,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_TARIFREMISE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_TARIFREMISE");
-                    tb.HasTrigger("TG_CBINS_F_TARIFREMISE");
-                    tb.HasTrigger("TG_CBUPD_F_TARIFREMISE");
-                    tb.HasTrigger("TG_DEL_F_TARIFREMISE");
-                    tb.HasTrigger("TG_INS_F_TARIFREMISE");
-                    tb.HasTrigger("TG_UPD_F_TARIFREMISE");
-                });
-
-            entity.HasIndex(e => e.TF_No, "FKIA_F_TARIFREMISE_TF_No");
-
             entity.HasIndex(e => new { e.TF_No, e.TR_BorneSup }, "ITR_BORNE").IsUnique();
 
             entity.Property(e => e.TR_BorneSup).HasColumnType("numeric(24, 6)");
@@ -18591,14 +16107,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
             entity.HasOne(d => d.TF_NoNavigation).WithMany(p => p.F_TARIFREMISE)
                 .HasPrincipalKey(p => p.TF_No)
@@ -18611,24 +16127,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_TARIFSELECT");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_TARIFSELECT");
-                    tb.HasTrigger("TG_CBINS_F_TARIFSELECT");
-                    tb.HasTrigger("TG_CBUPD_F_TARIFSELECT");
-                    tb.HasTrigger("TG_DEL_F_TARIFSELECT");
-                    tb.HasTrigger("TG_INS_CPTAF_TARIFSELECT");
-                    tb.HasTrigger("TG_INS_F_TARIFSELECT");
-                    tb.HasTrigger("TG_UPD_CPTAF_TARIFSELECT");
-                    tb.HasTrigger("TG_UPD_F_TARIFSELECT");
-                });
-
-            entity.HasIndex(e => e.TF_No, "FKIA_F_TARIFSELECT_TF_No");
-
-            entity.HasIndex(e => new { e.TS_Interes, e.cbTS_Ref, e.TF_No }, "ITS_INTERES");
-
-            entity.HasIndex(e => new { e.TF_No, e.TS_Interes, e.cbTS_Ref }, "ITS_TARIF");
-
             entity.HasIndex(e => new { e.TF_No, e.TS_Interes, e.TS_Ref }, "UKA_F_TARIFSELECT_TS_Ref").IsUnique();
 
             entity.Property(e => e.TS_Ref)
@@ -18637,14 +16135,14 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
             entity.Property(e => e.cbTS_Ref)
                 .HasMaxLength(20)
                 .HasComputedColumnSql("(CONVERT([varbinary](20),isnull([TS_Ref],'')))", false);
@@ -18660,28 +16158,9 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_TAXE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_TAXE");
-                    tb.HasTrigger("TG_CBINS_F_TAXE");
-                    tb.HasTrigger("TG_CBUPD_F_TAXE");
-                    tb.HasTrigger("TG_INS_F_TAXE");
-                    tb.HasTrigger("TG_UPD_F_TAXE");
-                });
-
-            entity.HasIndex(e => e.CG_Num, "FKIA_F_TAXE_CG_Num");
-
-            entity.HasIndex(e => e.cbCG_Num, "ITA_CGNUM");
-
             entity.HasIndex(e => e.cbTA_Code, "ITA_CODE").IsUnique();
 
-            entity.HasIndex(e => e.cbTA_Intitule, "ITA_INT");
-
             entity.HasIndex(e => e.TA_No, "ITA_NO").IsUnique();
-
-            entity.HasIndex(e => new { e.cbTA_Regroup, e.cbTA_Code }, "ITA_REGROUP");
-
-            entity.HasIndex(e => new { e.TA_Sens, e.cbTA_Code }, "ITA_SENS");
 
             entity.HasIndex(e => e.TA_Code, "UKA_F_TAXE_TA_Code").IsUnique();
 
@@ -18716,12 +16195,12 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification).HasColumnType("datetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
             entity.Property(e => e.cbTA_Code)
                 .HasMaxLength(6)
                 .HasComputedColumnSql("(CONVERT([varbinary](6),[TA_Code]))", false);
@@ -18742,29 +16221,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<F_TICKETARCHIVE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_F_TICKETARCHIVE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_F_TICKETARCHIVE");
-                    tb.HasTrigger("TG_CBINS_F_TICKETARCHIVE");
-                    tb.HasTrigger("TG_CBUPD_F_TICKETARCHIVE");
-                    tb.HasTrigger("TG_INS_CPTAF_TICKETARCHIVE");
-                    tb.HasTrigger("TG_UPD_CPTAF_TICKETARCHIVE");
-                });
-
-            entity.HasIndex(e => e.CA_No, "FKIA_F_TICKETARCHIVE_CA_No");
-
-            entity.HasIndex(e => e.CA_No, "ITA_CAISSE");
-
-            entity.HasIndex(e => e.CO_NoCaissier, "ITA_CAISSIER");
-
-            entity.HasIndex(e => e.cbCT_Num, "ITA_CLIENT");
-
-            entity.HasIndex(e => e.TA_Date, "ITA_DATE");
-
-            entity.HasIndex(e => e.cbDO_Piece, "ITA_DOC");
-
-            entity.HasIndex(e => e.cbTA_Piece, "ITA_PIECE");
 
             entity.HasIndex(e => e.TA_Piece, "UKA_F_TICKETARCHIVE_TA_Piece").IsUnique();
 
@@ -18790,17 +16246,17 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreateur)
                 .HasMaxLength(4)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('CSQL')")
+                .HasDefaultValue("CSQL")
                 .IsFixedLength();
             entity.Property(e => e.cbDO_Piece)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len(isnull([DO_Piece],''))+(1)))+isnull([DO_Piece],'')))", false);
-            entity.Property(e => e.cbFlag).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
-            entity.Property(e => e.cbProt).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbReplication).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbProt).HasDefaultValue((short)0);
+            entity.Property(e => e.cbReplication).HasDefaultValue(0);
             entity.Property(e => e.cbTA_Piece)
                 .HasMaxLength(10)
                 .HasComputedColumnSql("(CONVERT([varbinary](10),space((10)-(len([TA_Piece])+(1)))+[TA_Piece]))", false);
@@ -18826,56 +16282,26 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_ABOCLI>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_ABOCLI");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_ABOCLI");
-                    tb.HasTrigger("TG_CBUPD_P_ABOCLI");
-                });
         });
 
         modelBuilder.Entity<P_ABOFOUR>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_ABOFOUR");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_ABOFOUR");
-                    tb.HasTrigger("TG_CBUPD_P_ABOFOUR");
-                });
         });
 
         modelBuilder.Entity<P_ABOINT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_ABOINT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_ABOINT");
-                    tb.HasTrigger("TG_CBUPD_P_ABOINT");
-                });
         });
 
         modelBuilder.Entity<P_AFFAIRE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_AFFAIRE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_AFFAIRE");
-                    tb.HasTrigger("TG_CBUPD_P_AFFAIRE");
-                });
         });
 
         modelBuilder.Entity<P_AGENDAS>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_AGENDAS");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_AGENDAS");
-                    tb.HasTrigger("TG_CBUPD_P_AGENDAS");
-                });
 
             entity.Property(e => e.A_Intitule)
                 .HasMaxLength(35)
@@ -18886,35 +16312,17 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_ARRONDI");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_ARRONDI");
-                    tb.HasTrigger("TG_CBUPD_P_ARRONDI");
-                });
-
             entity.Property(e => e.AR_Valeur).HasColumnType("numeric(24, 6)");
         });
 
         modelBuilder.Entity<P_AVANCEMENT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_AVANCEMENT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_AVANCEMENT");
-                    tb.HasTrigger("TG_CBUPD_P_AVANCEMENT");
-                });
         });
 
         modelBuilder.Entity<P_BONAPAYER>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_BONAPAYER");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_BONAPAYER");
-                    tb.HasTrigger("TG_CBUPD_P_BONAPAYER");
-                });
 
             entity.Property(e => e.B_Seuil).HasColumnType("numeric(24, 6)");
         });
@@ -18922,12 +16330,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_CATCOMPTA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_CATCOMPTA");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_CATCOMPTA");
-                    tb.HasTrigger("TG_CBUPD_P_CATCOMPTA");
-                });
 
             entity.Property(e => e.CA_ComptaAch01)
                 .HasMaxLength(35)
@@ -19385,12 +16787,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_CATTARIF");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_CATTARIF");
-                    tb.HasTrigger("TG_CBUPD_P_CATTARIF");
-                });
-
             entity.Property(e => e.CT_Intitule)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -19399,56 +16795,26 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_CMDALIVRER>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_CMDALIVRER");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_CMDALIVRER");
-                    tb.HasTrigger("TG_CBUPD_P_CMDALIVRER");
-                });
         });
 
         modelBuilder.Entity<P_CMDARTICLES>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_CMDARTICLES");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_CMDARTICLES");
-                    tb.HasTrigger("TG_CBUPD_P_CMDARTICLES");
-                });
         });
 
         modelBuilder.Entity<P_CMDDETAIL>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_CMDDETAIL");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_CMDDETAIL");
-                    tb.HasTrigger("TG_CBUPD_P_CMDDETAIL");
-                });
         });
 
         modelBuilder.Entity<P_COLONNCPTA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_COLONNCPTA");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_COLONNCPTA");
-                    tb.HasTrigger("TG_CBUPD_P_COLONNCPTA");
-                });
         });
 
         modelBuilder.Entity<P_COLREGLEMENT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_COLREGLEMENT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_COLREGLEMENT");
-                    tb.HasTrigger("TG_CBUPD_P_COLREGLEMENT");
-                });
 
             entity.Property(e => e.CR_Numero01)
                 .HasMaxLength(13)
@@ -19461,12 +16827,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_COMMUNICATION>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_COMMUNICATION");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_COMMUNICATION");
-                    tb.HasTrigger("TG_CBUPD_P_COMMUNICATION");
-                });
 
             entity.Property(e => e.AR_RefAttente)
                 .HasMaxLength(19)
@@ -19488,12 +16848,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_COMPTOIR>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_COMPTOIR");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_COMPTOIR");
-                    tb.HasTrigger("TG_CBUPD_P_COMPTOIR");
-                });
 
             entity.Property(e => e.C_BtnTexte01)
                 .HasMaxLength(15)
@@ -19615,27 +16969,14 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_CONDITIONNEMENT");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_CONDITIONNEMENT");
-                    tb.HasTrigger("TG_CBUPD_P_CONDITIONNEMENT");
-                });
-
-            entity.Property(e => e.P_Conditionnement1)
+            entity.Property(e => e.P_Conditionnement)
                 .HasMaxLength(35)
-                .IsUnicode(false)
-                .HasColumnName("P_Conditionnement");
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<P_CONDLIVR>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_CONDLIVR");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_CONDLIVR");
-                    tb.HasTrigger("TG_CBUPD_P_CONDLIVR");
-                });
 
             entity.Property(e => e.C_Intitule)
                 .HasMaxLength(35)
@@ -19649,12 +16990,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_CONTACT");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_CONTACT");
-                    tb.HasTrigger("TG_CBUPD_P_CONTACT");
-                });
-
             entity.Property(e => e.C_Intitule)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -19663,56 +16998,26 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_CONTREMARQUECOM>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_CONTREMARQUECOM");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_CONTREMARQUECOM");
-                    tb.HasTrigger("TG_CBUPD_P_CONTREMARQUECOM");
-                });
         });
 
         modelBuilder.Entity<P_CONTREMARQUELIV>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_CONTREMARQUELIV");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_CONTREMARQUELIV");
-                    tb.HasTrigger("TG_CBUPD_P_CONTREMARQUELIV");
-                });
         });
 
         modelBuilder.Entity<P_CONVEUROCIAL>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_CONVEUROCIAL");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_CONVEUROCIAL");
-                    tb.HasTrigger("TG_CBUPD_P_CONVEUROCIAL");
-                });
         });
 
         modelBuilder.Entity<P_CONVEUROCPTA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_CONVEUROCPTA");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_CONVEUROCPTA");
-                    tb.HasTrigger("TG_CBUPD_P_CONVEUROCPTA");
-                });
         });
 
         modelBuilder.Entity<P_CRISQUE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_CRISQUE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_CRISQUE");
-                    tb.HasTrigger("TG_CBUPD_P_CRISQUE");
-                });
 
             entity.Property(e => e.R_Intitule)
                 .HasMaxLength(35)
@@ -19724,12 +17029,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_DEVISE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_DEVISE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_DEVISE");
-                    tb.HasTrigger("TG_CBUPD_P_DEVISE");
-                });
 
             entity.Property(e => e.D_AncCours).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.D_AncDate).HasColumnType("smalldatetime");
@@ -19762,23 +17061,11 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_DOCAFFAIRE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_DOCAFFAIRE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_DOCAFFAIRE");
-                    tb.HasTrigger("TG_CBUPD_P_DOCAFFAIRE");
-                });
         });
 
         modelBuilder.Entity<P_DOSSIER>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_DOSSIER");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_DOSSIER");
-                    tb.HasTrigger("TG_CBUPD_P_DOSSIER");
-                });
 
             entity.Property(e => e.CG_NumANBenef)
                 .HasMaxLength(13)
@@ -19917,12 +17204,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_DOSSIERCIAL");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_DOSSIERCIAL");
-                    tb.HasTrigger("TG_CBUPD_P_DOSSIERCIAL");
-                });
-
             entity.Property(e => e.D_ArchivePeriod).HasColumnType("smalldatetime");
             entity.Property(e => e.D_FormatPrix)
                 .HasMaxLength(31)
@@ -19938,12 +17219,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_ECHANGECIAL>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_ECHANGECIAL");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_ECHANGECIAL");
-                    tb.HasTrigger("TG_CBUPD_P_ECHANGECIAL");
-                });
 
             entity.Property(e => e.AR_Ref01)
                 .HasMaxLength(19)
@@ -19971,12 +17246,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_EXPEDITION");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_EXPEDITION");
-                    tb.HasTrigger("TG_CBUPD_P_EXPEDITION");
-                });
-
             entity.Property(e => e.AR_Ref)
                 .HasMaxLength(19)
                 .IsUnicode(false);
@@ -19993,34 +17262,16 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_FACTUREAFF>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_FACTUREAFF");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_FACTUREAFF");
-                    tb.HasTrigger("TG_CBUPD_P_FACTUREAFF");
-                });
         });
 
         modelBuilder.Entity<P_FILTREREV>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_FILTREREV");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_FILTREREV");
-                    tb.HasTrigger("TG_CBUPD_P_FILTREREV");
-                });
         });
 
         modelBuilder.Entity<P_FISCAL>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_FISCAL");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_FISCAL");
-                    tb.HasTrigger("TG_CBUPD_P_FISCAL");
-                });
 
             entity.Property(e => e.BP_CodeMAJRembours)
                 .HasMaxLength(9)
@@ -20193,12 +17444,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_GAMME");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_GAMME");
-                    tb.HasTrigger("TG_CBUPD_P_GAMME");
-                });
-
             entity.Property(e => e.G_Intitule)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -20207,12 +17452,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_GENAUTO>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_GENAUTO");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_GENAUTO");
-                    tb.HasTrigger("TG_CBUPD_P_GENAUTO");
-                });
 
             entity.Property(e => e.GE_ArtRacine)
                 .HasMaxLength(19)
@@ -20238,12 +17477,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_INTERNE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_INTERNE");
-                    tb.HasTrigger("TG_CBUPD_P_INTERNE");
-                });
-
             entity.Property(e => e.D_Intitule)
                 .HasMaxLength(65)
                 .IsUnicode(false);
@@ -20261,138 +17494,65 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_INTERROCAISSE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_INTERROCAISSE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_INTERROCAISSE");
-                    tb.HasTrigger("TG_CBUPD_P_INTERROCAISSE");
-                });
         });
 
         modelBuilder.Entity<P_INTERROCOMPTERESS>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_INTERROCOMPTERESS");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_INTERROCOMPTERESS");
-                    tb.HasTrigger("TG_CBUPD_P_INTERROCOMPTERESS");
-                });
         });
 
         modelBuilder.Entity<P_INTERRODOCREPRES>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_INTERRODOCREPRES");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_INTERRODOCREPRES");
-                    tb.HasTrigger("TG_CBUPD_P_INTERRODOCREPRES");
-                });
         });
 
         modelBuilder.Entity<P_INTERRONOMENCL>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_INTERRONOMENCL");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_INTERRONOMENCL");
-                    tb.HasTrigger("TG_CBUPD_P_INTERRONOMENCL");
-                });
         });
 
         modelBuilder.Entity<P_INTERROREPRES>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_INTERROREPRES");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_INTERROREPRES");
-                    tb.HasTrigger("TG_CBUPD_P_INTERROREPRES");
-                });
         });
 
         modelBuilder.Entity<P_INTERRORESS>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_INTERRORESS");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_INTERRORESS");
-                    tb.HasTrigger("TG_CBUPD_P_INTERRORESS");
-                });
         });
 
         modelBuilder.Entity<P_INTERROSTO>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_INTERROSTO");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_INTERROSTO");
-                    tb.HasTrigger("TG_CBUPD_P_INTERROSTO");
-                });
         });
 
         modelBuilder.Entity<P_INTERROSTONOMENCL>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_INTERROSTONOMENCL");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_INTERROSTONOMENCL");
-                    tb.HasTrigger("TG_CBUPD_P_INTERROSTONOMENCL");
-                });
         });
 
         modelBuilder.Entity<P_INTERROTAR>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_INTERROTAR");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_INTERROTAR");
-                    tb.HasTrigger("TG_CBUPD_P_INTERROTAR");
-                });
         });
 
         modelBuilder.Entity<P_INTERROTARNOMENCL>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_INTERROTARNOMENCL");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_INTERROTARNOMENCL");
-                    tb.HasTrigger("TG_CBUPD_P_INTERROTARNOMENCL");
-                });
         });
 
         modelBuilder.Entity<P_INTSTATART>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_INTSTATART");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_INTSTATART");
-                    tb.HasTrigger("TG_CBUPD_P_INTSTATART");
-                });
-
-            entity.Property(e => e.P_IntStatArt1)
+            entity.Property(e => e.P_IntStatArt)
                 .HasMaxLength(35)
-                .IsUnicode(false)
-                .HasColumnName("P_IntStatArt");
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<P_LETTRAGE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_LETTRAGE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_LETTRAGE");
-                    tb.HasTrigger("TG_CBUPD_P_LETTRAGE");
-                });
 
             entity.Property(e => e.JO_Num)
                 .HasMaxLength(7)
@@ -20412,12 +17572,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_LITIGE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_LITIGE");
-                    tb.HasTrigger("TG_CBUPD_P_LITIGE");
-                });
-
             entity.Property(e => e.L_Intitule)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -20426,12 +17580,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_NATURE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_NATURE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_NATURE");
-                    tb.HasTrigger("TG_CBUPD_P_NATURE");
-                });
 
             entity.Property(e => e.N_Nature01N_Debut)
                 .HasMaxLength(13)
@@ -20499,12 +17647,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_ORGAACH");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_ORGAACH");
-                    tb.HasTrigger("TG_CBUPD_P_ORGAACH");
-                });
-
             entity.Property(e => e.D_LibelleConfirme)
                 .HasMaxLength(21)
                 .IsUnicode(false);
@@ -20519,45 +17661,21 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_ORGAART>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_ORGAART");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_ORGAART");
-                    tb.HasTrigger("TG_CBUPD_P_ORGAART");
-                });
         });
 
         modelBuilder.Entity<P_ORGASTO>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_ORGASTO");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_ORGASTO");
-                    tb.HasTrigger("TG_CBUPD_P_ORGASTO");
-                });
         });
 
         modelBuilder.Entity<P_ORGATIERS>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_ORGATIERS");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_ORGATIERS");
-                    tb.HasTrigger("TG_CBUPD_P_ORGATIERS");
-                });
         });
 
         modelBuilder.Entity<P_ORGAVEN>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_ORGAVEN");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_ORGAVEN");
-                    tb.HasTrigger("TG_CBUPD_P_ORGAVEN");
-                });
 
             entity.Property(e => e.D_LibelleConfirme)
                 .HasMaxLength(21)
@@ -20573,12 +17691,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_PARAMETRECIAL>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_PARAMETRECIAL");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_PARAMETRECIAL");
-                    tb.HasTrigger("TG_CBUPD_P_PARAMETRECIAL");
-                });
 
             entity.Property(e => e.P_CreditCaisse)
                 .HasMaxLength(13)
@@ -20667,39 +17779,20 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_PARAMETRELIVR>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_PARAMETRELIVR");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_PARAMETRELIVR");
-                    tb.HasTrigger("TG_CBUPD_P_PARAMETRELIVR");
-                });
         });
 
         modelBuilder.Entity<P_PERIOD>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_PERIOD");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_PERIOD");
-                    tb.HasTrigger("TG_CBUPD_P_PERIOD");
-                });
-
-            entity.Property(e => e.P_Period1)
+            entity.Property(e => e.P_Period)
                 .HasMaxLength(35)
-                .IsUnicode(false)
-                .HasColumnName("P_Period");
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<P_PREFERENCES>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_PREFERENCES");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_PREFERENCES");
-                    tb.HasTrigger("TG_CBUPD_P_PREFERENCES");
-                });
 
             entity.Property(e => e.CG_NumCli)
                 .HasMaxLength(13)
@@ -20738,12 +17831,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_PROJETAFF");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_PROJETAFF");
-                    tb.HasTrigger("TG_CBUPD_P_PROJETAFF");
-                });
-
             entity.Property(e => e.PA_Numero)
                 .HasMaxLength(9)
                 .IsUnicode(false);
@@ -20752,12 +17839,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_PROJETFAB>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_PROJETFAB");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_PROJETFAB");
-                    tb.HasTrigger("TG_CBUPD_P_PROJETFAB");
-                });
 
             entity.Property(e => e.PF_Numero)
                 .HasMaxLength(9)
@@ -20768,12 +17849,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_RAPPEL");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_RAPPEL");
-                    tb.HasTrigger("TG_CBUPD_P_RAPPEL");
-                });
-
             entity.Property(e => e.R_Intitule)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -20782,45 +17857,21 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_REAPPRO>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_REAPPRO");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_REAPPRO");
-                    tb.HasTrigger("TG_CBUPD_P_REAPPRO");
-                });
         });
 
         modelBuilder.Entity<P_RECHDOC>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_RECHDOC");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_RECHDOC");
-                    tb.HasTrigger("TG_CBUPD_P_RECHDOC");
-                });
         });
 
         modelBuilder.Entity<P_RECHLIG>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_RECHLIG");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_RECHLIG");
-                    tb.HasTrigger("TG_CBUPD_P_RECHLIG");
-                });
         });
 
         modelBuilder.Entity<P_RECOUVREMENT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_RECOUVREMENT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_RECOUVREMENT");
-                    tb.HasTrigger("TG_CBUPD_P_RECOUVREMENT");
-                });
 
             entity.Property(e => e.CG_NumDouteux)
                 .HasMaxLength(13)
@@ -20839,23 +17890,11 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_REGISTRE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_REGISTRE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_REGISTRE");
-                    tb.HasTrigger("TG_CBUPD_P_REGISTRE");
-                });
         });
 
         modelBuilder.Entity<P_REGLEMENT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_REGLEMENT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_REGLEMENT");
-                    tb.HasTrigger("TG_CBUPD_P_REGLEMENT");
-                });
 
             entity.Property(e => e.IB_AFBDecaissPrinc)
                 .HasMaxLength(3)
@@ -20877,23 +17916,11 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_REGULINV>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_REGULINV");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_REGULINV");
-                    tb.HasTrigger("TG_CBUPD_P_REGULINV");
-                });
         });
 
         modelBuilder.Entity<P_REGULR>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_REGULR");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_REGULR");
-                    tb.HasTrigger("TG_CBUPD_P_REGULR");
-                });
 
             entity.Property(e => e.JO_NumExercice)
                 .HasMaxLength(7)
@@ -20907,12 +17934,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_REJET");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_REJET");
-                    tb.HasTrigger("TG_CBUPD_P_REJET");
-                });
-
             entity.Property(e => e.R_Code)
                 .HasMaxLength(3)
                 .IsUnicode(false);
@@ -20925,12 +17946,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_RESILIATION");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_RESILIATION");
-                    tb.HasTrigger("TG_CBUPD_P_RESILIATION");
-                });
-
             entity.Property(e => e.R_Resiliation)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -20940,12 +17955,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_RESOLUTION");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_RESOLUTION");
-                    tb.HasTrigger("TG_CBUPD_P_RESOLUTION");
-                });
-
             entity.Property(e => e.R_Intitule)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -20954,12 +17963,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_RESULTAT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_RESULTAT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_RESULTAT");
-                    tb.HasTrigger("TG_CBUPD_P_RESULTAT");
-                });
 
             entity.Property(e => e.CG_NumContrepartie)
                 .HasMaxLength(13)
@@ -20976,12 +17979,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_SCDCLAVIER");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_SCDCLAVIER");
-                    tb.HasTrigger("TG_CBUPD_P_SCDCLAVIER");
-                });
-
             entity.Property(e => e.C_Clavier)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -20990,12 +17987,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_SCDREGLEMENT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_SCDREGLEMENT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_SCDREGLEMENT");
-                    tb.HasTrigger("TG_CBUPD_P_SCDREGLEMENT");
-                });
 
             entity.Property(e => e.JO_NumCli)
                 .HasMaxLength(7)
@@ -21008,34 +17999,16 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_SECURITYSTRATEGYCIAL>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_SECURITYSTRATEGYCIAL");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_SECURITYSTRATEGYCIAL");
-                    tb.HasTrigger("TG_CBUPD_P_SECURITYSTRATEGYCIAL");
-                });
         });
 
         modelBuilder.Entity<P_SECURITYSTRATEGYCPTA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_SECURITYSTRATEGYCPTA");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_SECURITYSTRATEGYCPTA");
-                    tb.HasTrigger("TG_CBUPD_P_SECURITYSTRATEGYCPTA");
-                });
         });
 
         modelBuilder.Entity<P_SERVICECPTA>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_SERVICECPTA");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_SERVICECPTA");
-                    tb.HasTrigger("TG_CBUPD_P_SERVICECPTA");
-                });
 
             entity.Property(e => e.S_Abrege)
                 .HasMaxLength(3)
@@ -21048,12 +18021,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_SOUCHEACHAT>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_SOUCHEACHAT");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_SOUCHEACHAT");
-                    tb.HasTrigger("TG_CBUPD_P_SOUCHEACHAT");
-                });
 
             entity.Property(e => e.JO_Num)
                 .HasMaxLength(7)
@@ -21070,12 +18037,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_SOUCHEINTERNE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_SOUCHEINTERNE");
-                    tb.HasTrigger("TG_CBUPD_P_SOUCHEINTERNE");
-                });
-
             entity.Property(e => e.S_Intitule)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -21084,12 +18045,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_SOUCHEVENTE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_SOUCHEVENTE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_SOUCHEVENTE");
-                    tb.HasTrigger("TG_CBUPD_P_SOUCHEVENTE");
-                });
 
             entity.Property(e => e.JO_Num)
                 .HasMaxLength(7)
@@ -21106,12 +18061,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_STATISTIQUE");
 
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_STATISTIQUE");
-                    tb.HasTrigger("TG_CBUPD_P_STATISTIQUE");
-                });
-
             entity.Property(e => e.S_Intitule)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -21120,12 +18069,6 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_TIERS>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_TIERS");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_TIERS");
-                    tb.HasTrigger("TG_CBUPD_P_TIERS");
-                });
 
             entity.Property(e => e.T_Racine)
                 .HasMaxLength(17)
@@ -21195,23 +18138,11 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_TRACABILITE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_TRACABILITE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_TRACABILITE");
-                    tb.HasTrigger("TG_CBUPD_P_TRACABILITE");
-                });
         });
 
         modelBuilder.Entity<P_UNITE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_UNITE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_UNITE");
-                    tb.HasTrigger("TG_CBUPD_P_UNITE");
-                });
 
             entity.Property(e => e.U_EdiCode)
                 .HasMaxLength(3)
@@ -21224,23 +18155,11 @@ public partial class DB : DbContext
         modelBuilder.Entity<P_VALIDPLGLOBALE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_VALIDPLGLOBALE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_VALIDPLGLOBALE");
-                    tb.HasTrigger("TG_CBUPD_P_VALIDPLGLOBALE");
-                });
         });
 
         modelBuilder.Entity<P_VALIDPLUNITAIRE>(entity =>
         {
             entity.HasKey(e => e.cbMarq).HasName("PK_CBMARQ_P_VALIDPLUNITAIRE");
-
-            entity.ToTable(tb =>
-                {
-                    tb.HasTrigger("TG_CBDEL_P_VALIDPLUNITAIRE");
-                    tb.HasTrigger("TG_CBUPD_P_VALIDPLUNITAIRE");
-                });
         });
 
         modelBuilder.Entity<cbUserSession>(entity =>
@@ -21256,13 +18175,13 @@ public partial class DB : DbContext
                 .HasMaxLength(4)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.cbCurrentSynchroType).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbCurrentSynchroType).HasDefaultValue((short)0);
             entity.Property(e => e.cbExtCreator)
                 .HasMaxLength(4)
                 .IsUnicode(false)
                 .IsFixedLength();
-            entity.Property(e => e.cbLicence).HasDefaultValueSql("((0))");
-            entity.Property(e => e.cbLockBase).HasDefaultValueSql("((0))");
+            entity.Property(e => e.cbLicence).HasDefaultValue((short)0);
+            entity.Property(e => e.cbLockBase).HasDefaultValue((short)0);
             entity.Property(e => e.cbUserName).HasMaxLength(128);
         });
 

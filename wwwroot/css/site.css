@@ -856,22 +856,18 @@ body {
     padding: 5px 3px 5px 3px;
 }
 
-.e-grid .e-gridheader .e-fltr-icon .e-sortfilterdiv {
-    margin: -9px 11px -12px 8px;
-}
-
 .e-grid .e-gridheader .e-sortfilter .e-fltr-icon .e-headercelldiv {
     margin: -5px 10px -5px -5px;
     font-size: 11px !important;
 }
 
 td {
-    padding: 0px 5px !important;
+    padding: 0px 2px !important;
     cursor: default;
 }
 
 .e-grid .e-rowcell {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 18px;
 }
 
@@ -1278,10 +1274,6 @@ input.e-input, .e-input-group input.e-input, .e-input-group.e-control-wrapper in
     width: 150px !important;
 }
 
-.e-btn-icon {
-    font-size: 20px !important;
-}
-
 .e-icon-filter {
     /*font-size: 10px !important;
     padding: 0px !important;*/
@@ -1328,7 +1320,6 @@ div#main-text {
 
 .e-grid {
     font-family: "Ubuntu","Roboto", "Segoe UI", "GeezaPro", "DejaVu Serif", "sans-serif", "-apple-system", "BlinkMacSystemFont" !important;
-    font-weight: 500 !important;
 }
 
     .e-grid .e-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn {
@@ -2265,10 +2256,6 @@ th {
     font-size: 13px;
 }
 
-.e-pager .e-currentitem.e-active {
-    background: rgb(19 111 254);
-}
-
 .e-grid .e-summaryrow .e-summarycell, .e-grid .e-summaryrow .e-templatecell, .e-grid .e-summarycontent .e-indentcell, .e-grid .e-indentcell.e-detailindentcelltop, .e-grid .e-groupfooterrow.e-summaryrow .e-indentcell.e-indentcelltop {
     background: rgb(252 252 252) !important;
 }
@@ -2412,4 +2399,15 @@ div::first-letter {
 .e-input:focus:not(.e-success):not(.e-warning):not(.e-error), .e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) input:focus, .e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) textarea:focus, .e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) input:focus, .e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group) textarea:focus, .e-float-input:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group).e-input-focus input, .e-float-input.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error):not(.e-input-group).e-input-focus input {
     padding-bottom: 0px;
     border-bottom-width: 0px;
+}
+.e-grid tr, tr.e-row, tr.e-alt_row {
+    height: unset;
+}
+input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-input-group input.e-input, .e-input-group.e-control-wrapper input.e-input {
+    box-sizing: border-box;
+    height: unset;
+}
+.e-toolbar .e-toolbar-item .e-tbar-btn {
+    min-height: 30px;
+    min-width: 30px;
 }

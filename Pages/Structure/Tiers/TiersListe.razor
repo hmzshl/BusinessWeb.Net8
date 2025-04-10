@@ -266,8 +266,7 @@ else
     public void CreatedHandler(object args)
     {
         DefaultGrid.ClearFilteringAsync();
-        DefaultGrid.ClearSortingAsync();
-        DefaultGrid.SearchAsync("");
+        DefaultGrid.ClearSortingAsync(); DefaultGrid.SearchAsync("");
     }
     public async void PDFReport()
     {
@@ -294,7 +293,7 @@ else
     }
     protected async Task AddClick()
     {
-        await DialogService.OpenAsync<TiersFiche>($"Ajouter une société",
+        await DialogService.OpenAsync<TiersFiche>($"Ajouter une élément",
         new Dictionary<string, object>() { { "cbMarq", 0 } },
         new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
         await UpdateGrid();

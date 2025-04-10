@@ -11,7 +11,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Hosting.WindowsServices;
+using Microsoft.Extensions.Options;
 using Microsoft.OData.ModelBuilder;
 using MudBlazor.Services;
 using Radzen;
@@ -42,6 +44,7 @@ builder.Services.AddScoped<BusinessWeb.Helpers>();
 builder.Services.AddDbContext<BusinessWeb.Data.BusinessWebDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"), o => o.UseCompatibilityLevel(100));
+	options.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
 }, ServiceLifetime.Transient);
 builder.Services.AddDbContext<BusinessWeb.Data.DB>(options =>
 {
@@ -58,6 +61,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<ApplicationIdentityDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"), o => o.UseCompatibilityLevel(100));
+    options.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
 }, ServiceLifetime.Transient);
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationIdentityDbContext>().AddDefaultTokenProviders();
 builder.Services.AddControllers().AddOData(o =>
@@ -116,7 +120,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 var app = builder.Build();
 app.UseResponseCompression();
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NMaF5cXmBCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWX1edHVQQmheVE1xX0E=");
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzgwOTQzMEAzMjM5MmUzMDJlMzAzYjMyMzkzYk43bzloSDI4dENmcEJKdDc5YS9rZ3pSeU1EYTNQVlF6NzB6dDNuOHlyN0k9");
 Bold.Licensing.BoldLicenseProvider.RegisterLicense("zidV+mAe83DkDarVg0J39aLvzg6umhkhjiPNndeU1j4=");
 app.UseRequestLocalization("fr");
 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("fr");
@@ -144,8 +148,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 app.UseCors();
-
-await app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>().Database.MigrateAsync();
+app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>().Database.Migrate();
 app.MapControllers();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

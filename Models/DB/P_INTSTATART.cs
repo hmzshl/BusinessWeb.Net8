@@ -7,7 +7,7 @@ namespace BusinessWeb.Models.DB;
 
 public partial class P_INTSTATART
 {
-    public string P_IntStatArt1 { get; set; }
+    public string P_IntStatArt { get; set; }
 
     public short? cbIndice { get; set; }
 

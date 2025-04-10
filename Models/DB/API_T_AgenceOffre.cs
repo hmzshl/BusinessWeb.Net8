@@ -29,7 +29,7 @@ public partial class API_T_AgenceOffre
 
     public int Offre { get; set; }
 
-    public bool? Cumulative { get; set; }
+    public bool Cumulative { get; set; }
 
     public DateTime? Creation { get; set; }
 

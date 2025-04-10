@@ -327,7 +327,7 @@ else
 	public void CreatedHandler(object args)
 	{
 		DefaultGrid.ClearFilteringAsync();
-		DefaultGrid.ClearSortingAsync();
+		DefaultGrid.ClearSortingAsync(); DefaultGrid.SearchAsync("");
 	}
 	private async Task LoadData()
 	{

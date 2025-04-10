@@ -1,42 +1,52 @@
 ﻿@page "/materiels"
 @attribute [Authorize(Roles = "Super Admin,Admin,Direction, Responsable Materiel")]
 
-<Card_1 Title="LISTE DES MATERIELS">
-    <RadzenContent Container="main">
-        <div class="grid-90">
-            <SfGrid  Height="100%" AllowResizing AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items"
-                    Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport","Add", "Delete"})">
-                <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-                <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_MATERIEL"></GridEvents>
-                <GridPageSettings PageSize="100"></GridPageSettings>
-                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                <GridTemplates>
-                    <EmptyRecordTemplate>
-                        <Empty></Empty>
-                    </EmptyRecordTemplate>
-                </GridTemplates>
-                <GridColumns>
-                    <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Intitule)" HeaderText="Intitule"></GridColumn>
-                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.TypeIntitule)" HeaderText="Type" />
-                    <GridColumn AllowSorting="false" AllowFiltering="false" Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.CarburantIntitule)" HeaderText="Carburant" />
-                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Immatricule)" HeaderText="Immatricule"></GridColumn>
-                    <GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Chassis)" HeaderText="N° Chassis"></GridColumn>
-                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Modele)" HeaderText="Modéle"></GridColumn>
-                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Puissance)" HeaderText="Puis Fisc."></GridColumn>
-                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.DateAchat)" HeaderText="Date Achat" Format="dd/MM/yy"></GridColumn>
-                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Fournisseur)" HeaderText="Fournisseur"></GridColumn>
-                    <GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Nom)" HeaderText="Conducteur"></GridColumn>
-                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.PermisType)" HeaderText="Type Permis"></GridColumn>
-                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.PermisNum)" HeaderText="N° Permis"></GridColumn>
-                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.PermisDateDebut)" HeaderText="Date Début" Format="dd/MM/yy"></GridColumn>
-                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.PermisDateFin)" HeaderText="Date Fin" Format="dd/MM/yy"></GridColumn>
-                </GridColumns>
-                <SfSpinner @bind-Visible="@loading">
-                </SfSpinner>
-            </SfGrid>
-        </div>
-    </RadzenContent>
-</Card_1>
+@if (IsLoaded)
+{
+    <Card_1 Title="LISTE DES MATERIELS">
+        <RadzenContent Container="main">
+            <div class="grid-90">
+                <SfGrid Height="100%" AllowResizing AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items"
+                        Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport", "Add", "Delete" })">
+                    <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                    <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_MATERIEL"></GridEvents>
+                    <GridPageSettings PageSize="100"></GridPageSettings>
+                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                    <GridTemplates>
+                        <EmptyRecordTemplate>
+                            <Empty></Empty>
+                        </EmptyRecordTemplate>
+                    </GridTemplates>
+                    <GridColumns>
+                        <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Intitule)" HeaderText="Intitule"></GridColumn>
+                        <GridColumn AllowSorting="false" AllowFiltering="false" Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.TypeIntitule)" HeaderText="Type" />
+                        <GridColumn AllowSorting="false" AllowFiltering="false" Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.CarburantIntitule)" HeaderText="Carburant" />
+                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Immatricule)" HeaderText="Immatricule"></GridColumn>
+                        <GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Chassis)" HeaderText="N° Chassis"></GridColumn>
+                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Modele)" HeaderText="Modéle"></GridColumn>
+                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Puissance)" HeaderText="Puis Fisc."></GridColumn>
+                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.DateAchat)" HeaderText="Date Achat" Format="dd/MM/yy"></GridColumn>
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Fournisseur)" HeaderText="Fournisseur"></GridColumn>
+                        <GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.Nom)" HeaderText="Conducteur"></GridColumn>
+                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.PermisType)" HeaderText="Type Permis"></GridColumn>
+                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.PermisNum)" HeaderText="N° Permis"></GridColumn>
+                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.PermisDateDebut)" HeaderText="Date Début" Format="dd/MM/yy"></GridColumn>
+                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIEL.PermisDateFin)" HeaderText="Date Fin" Format="dd/MM/yy"></GridColumn>
+                    </GridColumns>
+                    <SfSpinner @bind-Visible="@loading">
+                    </SfSpinner>
+                </SfGrid>
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
 
 
 
@@ -47,7 +57,7 @@
     DB db = new DB();
     //Components
     private SfGrid<API_V_MATERIEL> DefaultGrid;
-
+    bool IsLoaded = false;
     //End components
 
     private ICollection<API_V_MATERIEL> items;
@@ -56,10 +66,11 @@
 
     protected override async Task OnInitializedAsync()
     {
+        await Task.Delay(1);
                 db = session.db;
         GC.Collect();
         await LoadData();
-        
+        IsLoaded = true;
     }
     private async Task LoadData()
     {

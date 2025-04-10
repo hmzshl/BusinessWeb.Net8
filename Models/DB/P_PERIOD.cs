@@ -7,7 +7,7 @@ namespace BusinessWeb.Models.DB;
 
 public partial class P_PERIOD
 {
-    public string P_Period1 { get; set; }
+    public string P_Period { get; set; }
 
     public short? cbIndice { get; set; }
 

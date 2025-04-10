@@ -7,7 +7,7 @@ namespace BusinessWeb.Models.DB;
 
 public partial class P_CONDITIONNEMENT
 {
-    public string P_Conditionnement1 { get; set; }
+    public string P_Conditionnement { get; set; }
 
     public short? cbIndice { get; set; }
 

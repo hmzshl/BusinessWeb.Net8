@@ -22,11 +22,11 @@
         </SfToolbar>
         <GridRow>
             <GridCol Xs="24" Md="5">
-                <Card Title="Zone" Style="padding: 5px;">
+                <Card Title="Responsable" Style="padding: 5px;">
 
-                    <SfDropDownList @bind-Value=@SelectedSite Width="100%" ShowClearButton AllowFiltering TValue="int" TItem="API_T_Site" DataSource="@sites">
-                        <DropDownListEvents TValue="int" TItem="API_T_Site" ValueChange="@(args => LoadData())" />
-                        <DropDownListFieldSettings Text="Intitule" Value="id" />
+                    <SfDropDownList @bind-Value=@SelectedResponsable Width="100%" ShowClearButton AllowFiltering TValue="int" TItem="API_T_Personnel" DataSource="@db.API_T_Personnel">
+                        <DropDownListEvents TValue="int" TItem="API_T_Personnel" ValueChange="@(args => LoadData())" />
+                        <DropDownListFieldSettings Text="Nom" Value="id" />
                     </SfDropDownList>
                 </Card>
                 <Card Title="Journée" Style="padding: 5px;">
@@ -39,7 +39,8 @@
                 <div class="grid-80" style="zoom: @session.zoomLevel;">
 
 
-                    <SfGrid  Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                    <SfGrid  Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting 
+                    AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
                             Toolbar="@(new List<object>() { "ColumnChooser", "Search"})">
 
                         <GridEvents TValue="API_V_PROJET" OnRecordDoubleClick="Edit"></GridEvents>
