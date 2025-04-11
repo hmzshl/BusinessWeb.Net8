@@ -2411,3 +2411,12 @@ input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-
     min-height: 30px;
     min-width: 30px;
 }
+.e-headercelldiv, .e-grid .e-gridheader tr:first-child th, .e-grid.e-default .e-gridheader th.e-firstcell, .e-grid.e-default .e-gridheader th.e-laststackcell {
+    background: #dee0e3 !important;
+    background-color: rgb(220 225 235) !important;
+    color: #434445 !important;
+}
+input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-input-group input.e-input, .e-input-group.e-control-wrapper input.e-input {
+    box-sizing: border-box;
+    height: inherit !important;
+}
