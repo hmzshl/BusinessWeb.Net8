@@ -13,6 +13,7 @@ public partial class DB : DbContext
     {
 
     }
+
     public DB(DbContextOptions<DB> options)
         : base(options)
     {
@@ -159,6 +160,14 @@ public partial class DB : DbContext
     public virtual DbSet<API_T_MaterielEntretienDetail> API_T_MaterielEntretienDetail { get; set; }
 
     public virtual DbSet<API_T_Nantissement> API_T_Nantissement { get; set; }
+
+    public virtual DbSet<API_T_OrderFabricationLigne> API_T_OrderFabricationLigne { get; set; }
+
+    public virtual DbSet<API_T_OrdreFabrication> API_T_OrdreFabrication { get; set; }
+
+    public virtual DbSet<API_T_OrdreFabricationDetail> API_T_OrdreFabricationDetail { get; set; }
+
+    public virtual DbSet<API_T_OrdreFabricationOperation> API_T_OrdreFabricationOperation { get; set; }
 
     public virtual DbSet<API_T_Personnel> API_T_Personnel { get; set; }
 
@@ -3454,6 +3463,64 @@ public partial class DB : DbContext
                 .HasForeignKey(d => d.Projet)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_api_t_nantissement");
+        });
+
+        modelBuilder.Entity<API_T_OrderFabricationLigne>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_OrderFabricationLigne_id");
+
+            entity.Property(e => e.AR_Ref)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
+
+            entity.HasOne(d => d.OrdreNavigation).WithMany(p => p.API_T_OrderFabricationLigne)
+                .HasForeignKey(d => d.Ordre)
+                .HasConstraintName("fk_api_t_orderfabricationligne");
+        });
+
+        modelBuilder.Entity<API_T_OrdreFabrication>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_OrdreFabrication_id");
+
+            entity.Property(e => e.CA_Num)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.Numero)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Reference)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<API_T_OrdreFabricationDetail>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_OrdreFabricationDetail_id");
+
+            entity.Property(e => e.AR_Ref)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
+
+            entity.HasOne(d => d.LigneNavigation).WithMany(p => p.API_T_OrdreFabricationDetail)
+                .HasForeignKey(d => d.Ligne)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_api_t_ordrefabricationdetail");
+        });
+
+        modelBuilder.Entity<API_T_OrdreFabricationOperation>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_OrdreFabricationOperation_id");
+
+            entity.HasOne(d => d.LigneNavigation).WithMany(p => p.API_T_OrdreFabricationOperation)
+                .HasForeignKey(d => d.Ligne)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_api_t_ordrefabricationoperation");
         });
 
         modelBuilder.Entity<API_T_Personnel>(entity =>
