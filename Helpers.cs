@@ -2112,6 +2112,56 @@ namespace BusinessWeb
 				return input;
 			}
 		}
+		private const string Base36Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		private const int FixedLength = 12;
+
+		// Shuffled characters for better mixing (customize this to your preference)
+		private static readonly char[] ShuffledChars = "H7XK2P9WQ5R4J6Y3L8Z1M0GUVTSNODAEFBCI".ToCharArray();
+
+		public string Encode(int id)
+		{
+			if (id < 0) throw new ArgumentOutOfRangeException(nameof(id), "ID must be non-negative");
+
+			// Step 1: Convert to base36
+			var base36 = new StringBuilder();
+			int value = id;
+
+			do
+			{
+				base36.Insert(0, Base36Chars[value % 36]);
+				value /= 36;
+			} while (value > 0);
+
+			string base36String = base36.ToString();
+
+			// Step 2: Pad to at least 8 characters (for better mixing)
+			if (base36String.Length < 8)
+			{
+				base36String = base36String.PadLeft(8, '0');
+			}
+
+			// Step 3: Hash to get more randomness (optional)
+			using var sha256 = SHA256.Create();
+			byte[] hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(base36String));
+			string hashedString = BitConverter.ToString(hash).Replace("-", "");
+
+			// Step 4: Convert to our mixed character set
+			var mixed = new StringBuilder();
+			foreach (char c in hashedString)
+			{
+				if (mixed.Length >= FixedLength) break;
+				int index = c % ShuffledChars.Length;
+				mixed.Append(ShuffledChars[index]);
+			}
+
+			// Ensure exactly 12 characters
+			if (mixed.Length < FixedLength)
+			{
+				mixed.Append(ShuffledChars[0], FixedLength - mixed.Length);
+			}
+
+			return mixed.ToString().Substring(0, FixedLength);
+		}
 
 	}
 

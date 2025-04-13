@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace BusinessWeb.Models.DB;
 
-public partial class API_T_OrderFabricationLigne
+public partial class API_T_OrdreFabricationLigne
 {
     public int id { get; set; }
 
@@ -18,6 +18,8 @@ public partial class API_T_OrderFabricationLigne
     public virtual ICollection<API_T_OrdreFabricationDetail> API_T_OrdreFabricationDetail { get; set; } = new List<API_T_OrdreFabricationDetail>();
 
     public virtual ICollection<API_T_OrdreFabricationOperation> API_T_OrdreFabricationOperation { get; set; } = new List<API_T_OrdreFabricationOperation>();
+
+    public virtual F_ARTICLE AR_RefNavigation { get; set; }
 
     public virtual API_T_OrdreFabrication OrdreNavigation { get; set; }
 }

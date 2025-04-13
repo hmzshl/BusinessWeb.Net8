@@ -23,5 +23,13 @@ public partial class API_T_OrdreFabrication
 
     public int Statut { get; set; }
 
-    public virtual ICollection<API_T_OrderFabricationLigne> API_T_OrderFabricationLigne { get; set; } = new List<API_T_OrderFabricationLigne>();
+    public virtual ICollection<API_T_OrdreFabricationLigne> API_T_OrdreFabricationLigne { get; set; } = new List<API_T_OrdreFabricationLigne>();
+
+    public virtual ICollection<API_T_OrdreFabricationPointage> API_T_OrdreFabricationPointage { get; set; } = new List<API_T_OrdreFabricationPointage>();
+
+    public virtual F_COMPTEA CA_NumNavigation { get; set; }
+
+    public virtual F_COMPTET CT_NumNavigation { get; set; }
+
+    public virtual API_T_Personnel ResponsableNavigation { get; set; }
 }

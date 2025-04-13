@@ -13,7 +13,6 @@ public partial class DB : DbContext
     {
 
     }
-
     public DB(DbContextOptions<DB> options)
         : base(options)
     {
@@ -161,13 +160,15 @@ public partial class DB : DbContext
 
     public virtual DbSet<API_T_Nantissement> API_T_Nantissement { get; set; }
 
-    public virtual DbSet<API_T_OrderFabricationLigne> API_T_OrderFabricationLigne { get; set; }
-
     public virtual DbSet<API_T_OrdreFabrication> API_T_OrdreFabrication { get; set; }
 
     public virtual DbSet<API_T_OrdreFabricationDetail> API_T_OrdreFabricationDetail { get; set; }
 
+    public virtual DbSet<API_T_OrdreFabricationLigne> API_T_OrdreFabricationLigne { get; set; }
+
     public virtual DbSet<API_T_OrdreFabricationOperation> API_T_OrdreFabricationOperation { get; set; }
+
+    public virtual DbSet<API_T_OrdreFabricationPointage> API_T_OrdreFabricationPointage { get; set; }
 
     public virtual DbSet<API_T_Personnel> API_T_Personnel { get; set; }
 
@@ -3465,29 +3466,15 @@ public partial class DB : DbContext
                 .HasConstraintName("fk_api_t_nantissement");
         });
 
-        modelBuilder.Entity<API_T_OrderFabricationLigne>(entity =>
-        {
-            entity.HasKey(e => e.id).HasName("Pk_API_T_OrderFabricationLigne_id");
-
-            entity.Property(e => e.AR_Ref)
-                .HasMaxLength(40)
-                .IsUnicode(false);
-            entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
-
-            entity.HasOne(d => d.OrdreNavigation).WithMany(p => p.API_T_OrderFabricationLigne)
-                .HasForeignKey(d => d.Ordre)
-                .HasConstraintName("fk_api_t_orderfabricationligne");
-        });
-
         modelBuilder.Entity<API_T_OrdreFabrication>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_OrdreFabrication_id");
 
             entity.Property(e => e.CA_Num)
-                .HasMaxLength(40)
+                .HasMaxLength(13)
                 .IsUnicode(false);
             entity.Property(e => e.CT_Num)
-                .HasMaxLength(40)
+                .HasMaxLength(17)
                 .IsUnicode(false);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.Numero)
@@ -3496,6 +3483,21 @@ public partial class DB : DbContext
             entity.Property(e => e.Reference)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.CA_NumNavigation).WithMany(p => p.API_T_OrdreFabrication)
+                .HasPrincipalKey(p => p.CA_Num)
+                .HasForeignKey(d => d.CA_Num)
+                .HasConstraintName("fk_api_t_ordrefabrication");
+
+            entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.API_T_OrdreFabrication)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_Num)
+                .HasConstraintName("fk_api_t_ordrefabrication_2");
+
+            entity.HasOne(d => d.ResponsableNavigation).WithMany(p => p.API_T_OrdreFabrication)
+                .HasForeignKey(d => d.Responsable)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_api_t_ordrefabrication_3");
         });
 
         modelBuilder.Entity<API_T_OrdreFabricationDetail>(entity =>
@@ -3503,14 +3505,38 @@ public partial class DB : DbContext
             entity.HasKey(e => e.id).HasName("Pk_API_T_OrdreFabricationDetail_id");
 
             entity.Property(e => e.AR_Ref)
-                .HasMaxLength(40)
+                .HasMaxLength(19)
                 .IsUnicode(false);
             entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
+
+            entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.API_T_OrdreFabricationDetail)
+                .HasPrincipalKey(p => p.AR_Ref)
+                .HasForeignKey(d => d.AR_Ref)
+                .HasConstraintName("fk_api_t_ordrefabricationdetail_2");
 
             entity.HasOne(d => d.LigneNavigation).WithMany(p => p.API_T_OrdreFabricationDetail)
                 .HasForeignKey(d => d.Ligne)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_api_t_ordrefabricationdetail");
+        });
+
+        modelBuilder.Entity<API_T_OrdreFabricationLigne>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_OrderFabricationLigne_id");
+
+            entity.Property(e => e.AR_Ref)
+                .HasMaxLength(19)
+                .IsUnicode(false);
+            entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
+
+            entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.API_T_OrdreFabricationLigne)
+                .HasPrincipalKey(p => p.AR_Ref)
+                .HasForeignKey(d => d.AR_Ref)
+                .HasConstraintName("fk_api_t_ordrefabricationligne");
+
+            entity.HasOne(d => d.OrdreNavigation).WithMany(p => p.API_T_OrdreFabricationLigne)
+                .HasForeignKey(d => d.Ordre)
+                .HasConstraintName("fk_api_t_orderfabricationligne");
         });
 
         modelBuilder.Entity<API_T_OrdreFabricationOperation>(entity =>
@@ -3519,8 +3545,25 @@ public partial class DB : DbContext
 
             entity.HasOne(d => d.LigneNavigation).WithMany(p => p.API_T_OrdreFabricationOperation)
                 .HasForeignKey(d => d.Ligne)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_api_t_ordrefabricationoperation");
+        });
+
+        modelBuilder.Entity<API_T_OrdreFabricationPointage>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_OrdreFabricationPointage_id");
+
+            entity.Property(e => e.AutresFrais).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.FraisJournalier).HasColumnType("decimal(24, 6)");
+
+            entity.HasOne(d => d.OrdreNavigation).WithMany(p => p.API_T_OrdreFabricationPointage)
+                .HasForeignKey(d => d.Ordre)
+                .HasConstraintName("fk_api_t_ordrefabricationpointage");
+
+            entity.HasOne(d => d.PresonnelNavigation).WithMany(p => p.API_T_OrdreFabricationPointage)
+                .HasForeignKey(d => d.Presonnel)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_api_t_ordrefabricationpointage_3");
         });
 
         modelBuilder.Entity<API_T_Personnel>(entity =>
@@ -9245,6 +9288,8 @@ public partial class DB : DbContext
             entity.HasIndex(e => new { e.N_Analytique, e.cbCA_Num }, "ICA_NUM").IsUnique();
 
             entity.HasIndex(e => new { e.N_Analytique, e.CA_Num }, "UKA_F_COMPTEA_CA_Num").IsUnique();
+
+            entity.HasIndex(e => e.CA_Num, "Unq_F_COMPTEA_CA_Num").IsUnique();
 
             entity.Property(e => e.CA_Achat).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.CA_Classement)

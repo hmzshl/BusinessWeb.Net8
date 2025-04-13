@@ -63,6 +63,8 @@ public partial class F_COMPTEA
 
     public DateTime? cbModification { get; set; }
 
+    public virtual ICollection<API_T_OrdreFabrication> API_T_OrdreFabrication { get; set; } = new List<API_T_OrdreFabrication>();
+
     public virtual F_COMPTEABUDGET F_COMPTEABUDGET { get; set; }
 
     public virtual ICollection<F_COMPTEAMEDIA> F_COMPTEAMEDIA { get; set; } = new List<F_COMPTEAMEDIA>();

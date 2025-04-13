@@ -299,10 +299,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[API_T_OrderFabricationLigne]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[API_T_OrdreFabrication]",
          "ObjectType": 0
       },
@@ -311,7 +307,15 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[API_T_OrdreFabricationLigne]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[API_T_OrdreFabricationOperation]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[API_T_OrdreFabricationPointage]",
          "ObjectType": 0
       },
       {
@@ -1550,7 +1554,7 @@
    "UseInflector": false,
    "UseInternalAccessModifiersForSprocsAndFunctions": false,
    "UseLegacyPluralizer": false,
-   "UseManyToManyEntity": false,
+   "UseManyToManyEntity": true,
    "UseNoDefaultConstructor": false,
    "UseNoNavigations": false,
    "UseNoObjectFilter": false,

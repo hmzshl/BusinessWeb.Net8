@@ -164,4 +164,8 @@ public partial class API_T_Personnel
     public string CreationUser { get; set; }
 
     public string ModificationUser { get; set; }
+
+    public virtual ICollection<API_T_OrdreFabrication> API_T_OrdreFabrication { get; set; } = new List<API_T_OrdreFabrication>();
+
+    public virtual ICollection<API_T_OrdreFabricationPointage> API_T_OrdreFabricationPointage { get; set; } = new List<API_T_OrdreFabricationPointage>();
 }

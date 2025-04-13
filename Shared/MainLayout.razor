@@ -9,9 +9,9 @@
 @using System.Net.NetworkInformation;
 @attribute [Authorize]
 
-<div>
+<Syncfusion.Blazor.Popups.SfDialogProvider />
 
-</div>
+
 
 @if (IsLoaded)
 {
@@ -22,8 +22,6 @@
 				<RadzenNotification />
 				<RadzenTooltip />
 				<RadzenContextMenu />
-
-				<Syncfusion.Blazor.Popups.SfDialogProvider />
 				<AntContainer />
 				<MudBlazor.MudThemeProvider />
 				<MudBlazor.MudDialogProvider />
@@ -121,6 +119,9 @@
 
 										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
 											<RadzenMenuItem Text="Liste des personnels" Path="/personnels" Visible=@(IsVisible("personnels"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Liste des nomenclatures" Path="/nomenclatures" Visible=@(IsVisible("nomenclatures"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Ordres de fabrications" Path="/ordres-fabrication" Visible=@(IsVisible("ordres-fabrication"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Documents d'achats" Path="/fabrication-achats" Visible=@(IsVisible("fabrication-achats"))></RadzenMenuItem>
 											<RadzenMenuItem Text="Pointage Personnels" Path="/pointage-personnel" Visible=@(IsVisible("pointage-personnel"))></RadzenMenuItem>
 										</RadzenMenuItem>
 										<RadzenMenuItem Text="Etats" Icon="pie_chart" Visible=@(TitleIsVisible("Etats"))>
@@ -777,12 +778,6 @@
 		</ErrorContent>
 	</ErrorBoundary>
 }
-else
-{
-	<div class="center-screen">
-		<Loading_1 />
-	</div>
-}
 
 <style>
 	.grid-80 {
@@ -846,11 +841,16 @@ else
 				where nic.OperationalStatus == OperationalStatus.Up
 				select nic.GetPhysicalAddress().ToString()
 				).FirstOrDefault();
+	ErrorBoundary errorBoundary;
+	void ShowNotification(Exception ex)
+	{
+		SyncDialog.AlertAsync(ex.ToString());
+	}
 	protected override async Task OnInitializedAsync()
 	{
-		await Task.Delay(100);
+		await Task.Delay(1);
 		TLicense row = new TLicense();
-		var dt = sdb.TLicenses.AsNoTracking().OrderBy(a => a.id).ToList();
+		var dt = sdb.TLicenses.OrderBy(a => a.id).ToList();
 		if (dt.Count() != 0)
 		{
 			row = dt.First();
@@ -875,7 +875,7 @@ else
 
 		}
 		IsLoaded = true;
-		
+
 	}
 	private async Task InitAuth()
 	{
@@ -898,9 +898,9 @@ else
 					ln.Description = item.Description;
 
 					sdb.Add(ln);
+					}
 				}
 			}
-		}
 		sdb.SaveChanges();*/
 	}
 	private bool IsVisible(string url)
@@ -1155,11 +1155,7 @@ else
 		new Dictionary<string, object>() { { "ReportName", "reports\\personnels\\PointagePersonnel" } },
 		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
 	}
-	ErrorBoundary errorBoundary;
-	void ShowNotification(Exception ex)
-	{
-		SyncDialog.AlertAsync(ex.ToString());
-	}
+
 }
 <style>
 	.main-btns .ant-btn {

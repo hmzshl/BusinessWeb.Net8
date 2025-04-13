@@ -1,0 +1,143 @@
+﻿<div style="height: @Height;">
+	<SfGrid Height="100%" Width="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)">
+		<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+		<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(AllowEditing)" AllowDeleting="@(AllowEditing)" AllowEditing="@(AllowEditing)" 
+			Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+		</GridEditSettings>
+		<GridEvents OnActionBegin="EditGrid" TValue="API_T_OrdreFabricationDetail"></GridEvents>
+		<GridTemplates>
+			<EmptyRecordTemplate>
+				<Empty></Empty>
+			</EmptyRecordTemplate>
+		</GridTemplates>
+		<GridColumns>
+			<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationDetail.id) HeaderText="#" IsPrimaryKey="true"
+						Visible="false" IsIdentity="true"></GridColumn>
+			<GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationLigne.AR_Ref) HeaderText="Réference">
+				<EditTemplate>
+					<SfDropDownList FloatLabelType="FloatLabelType.Never"
+									AllowFiltering TValue="string" TItem="F_ARTICLE"
+									FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+									Query="@fn.LocalDataQuery"
+									DataSource="@(db.F_ARTICLE.OrderBy(a => a.AR_Ref))" @bind-Value="@((context as API_T_OrdreFabricationDetail).AR_Ref)">
+						<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
+						<DropDownListFieldSettings Text="AR_Ref" Value="AR_Ref" />
+					</SfDropDownList>
+				</EditTemplate>
+			</GridColumn>
+			<GridColumn MinWidth="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationDetail.AR_Ref) HeaderText="Article">
+				<EditTemplate>
+					<SfDropDownList FloatLabelType="FloatLabelType.Never"
+									AllowFiltering TValue="string" TItem="F_ARTICLE"
+									FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+									Query="@fn.LocalDataQuery"
+									DataSource="@(db.F_ARTICLE.OrderBy(a => a.AR_Design))" @bind-Value="@((context as API_T_OrdreFabricationDetail).AR_Ref)">
+						<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
+						<DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
+					</SfDropDownList>
+				</EditTemplate>
+				<Template>
+					<div>
+						@((context as API_T_OrdreFabricationDetail)?.AR_RefNavigation?.AR_Design)
+					</div>
+				</Template>
+			</GridColumn>
+			<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.Qte) HeaderText="Qté.Unité"
+						Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+			<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.Qte) HeaderText="Qté.Totale"
+						Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+				<Template>
+					<div style="text-align: right;">
+						@((qte * (context as API_T_OrdreFabricationDetail).Qte).ToString("N2"))
+					</div>
+				</Template>
+				<EditTemplate>
+					<div style="text-align: right;">
+						@((qte * (context as API_T_OrdreFabricationDetail).Qte).ToString("N2"))
+					</div>
+				</EditTemplate>
+			</GridColumn>
+			<GridColumn Width="20"></GridColumn>
+		</GridColumns>
+	</SfGrid>
+</div>
+
+
+
+@code {
+	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	private SfGrid<API_T_OrdreFabricationDetail> DefaultGrid;
+	[Parameter]
+	public int ligne { get; set; } = 0;
+	[Parameter]
+	public decimal qte { get; set; } = 0;
+	[Parameter]
+	public string Height { get; set; } = "70vh";
+	[Parameter]
+	public bool AllowEditing { get; set; } = true;
+	private List<API_T_OrdreFabricationDetail> items = new List<API_T_OrdreFabricationDetail>();
+	bool loading = false;
+	bool IsLoaded = false;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(1);
+		db = session.db;
+		GC.Collect();
+		await UpdateGrid();
+		IsLoaded = true;
+
+	}
+	private async Task UpdateGrid()
+	{
+		items = db.API_T_OrdreFabricationDetail
+		.Include(a => a.AR_RefNavigation)
+		.Where(a => a.Ligne == this.ligne).ToList();
+	}
+	public async Task EditGrid(ActionEventArgs<API_T_OrdreFabricationDetail> args)
+	{
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+			if (args.Data.AR_Ref != null)
+			{
+				if (args.Data.Qte <= 0)
+				{
+					args.Data.Qte = 1;
+				}
+				if (args.Action == "Add")
+				{
+					API_T_OrdreFabricationDetail item = args.Data;
+					item.Ligne = this.ligne;
+					db.Add(item);
+					db.SaveChanges();
+				}
+				if (args.Action != "Add")
+				{
+					var local = db.Set<API_T_OrdreFabricationDetail>().Local.FirstOrDefault(a => a.id == args.Data.id);
+					if (local != null)
+					{
+						db.Entry(local).State = EntityState.Detached;
+					}
+					db.Entry(args.Data).State = EntityState.Modified;
+					db.SaveChanges();
+					await UpdateGrid();
+
+
+				}
+			}
+			else
+			{
+				args.Cancel = true;
+			}
+
+
+		}
+
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			db.Database.ExecuteSqlRaw("DELETE FROM API_T_OrdreFabricationDetail WHERE id = {0}", args.Data.id);
+			await UpdateGrid();
+		}
+
+	}
+}

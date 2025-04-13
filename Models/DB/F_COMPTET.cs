@@ -251,6 +251,8 @@ public partial class F_COMPTET
 
     public virtual ICollection<API_T_AgenceContrat> API_T_AgenceContrat { get; set; } = new List<API_T_AgenceContrat>();
 
+    public virtual ICollection<API_T_OrdreFabrication> API_T_OrdreFabrication { get; set; } = new List<API_T_OrdreFabrication>();
+
     public virtual F_COMPTEG CG_NumPrincNavigation { get; set; }
 
     public virtual ICollection<F_ABOENTETE> F_ABOENTETECT_NumCentraleNavigation { get; set; } = new List<F_ABOENTETE>();

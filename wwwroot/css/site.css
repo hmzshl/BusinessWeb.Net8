@@ -2418,5 +2418,12 @@ input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-
 }
 input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-input-group input.e-input, .e-input-group.e-control-wrapper input.e-input {
     box-sizing: border-box;
-    height: inherit !important;
+    height: 100% !important;
+}
+.e-float-input input:focus ~ label.e-float-text, .e-float-input input:valid ~ label.e-float-text, .e-float-input input ~ label.e-label-top.e-float-text, .e-float-input input[readonly] ~ label.e-label-top.e-float-text, .e-float-input input[disabled] ~ label.e-label-top.e-float-text, .e-float-input input label.e-float-text.e-label-top, .e-float-input.e-control-wrapper input:focus ~ label.e-float-text, .e-float-input.e-control-wrapper input:valid ~ label.e-float-text, .e-float-input.e-control-wrapper input ~ label.e-label-top.e-float-text, .e-float-input.e-control-wrapper input[readonly] ~ label.e-label-top.e-float-text, .e-float-input.e-control-wrapper input[disabled] ~ label.e-label-top.e-float-text, .e-float-input.e-control-wrapper input label.e-float-text.e-label-top, .e-float-input.e-control-wrapper.e-input-focus input ~ label.e-float-text, .e-float-input.e-input-focus input ~ label.e-float-text {
+    font-size: 13px;
+}
+.e-rightalign
+{
+    text-align: right !important;
 }
