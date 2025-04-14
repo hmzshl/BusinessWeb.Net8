@@ -482,6 +482,18 @@ else
 
         fn.DisableTriggers(db2, "F_DOCENTETE", "UPD");
         fn.DisableTriggers(db2, "F_ARTSTOCK", "UPD");
+        db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_DOCENTETE");
+        db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_DOCENTETE");
+        db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_COMPTEG");
+        db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_COMPTEA");
+        db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_COMPTET");
+        db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_TAXE");
+        db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_DEPOT");
+        db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_FAMILLE");
+        db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_ARTICLE");
+        db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_DOCLIGNE");
+        db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_DOCREGL");
+        db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_ARTSTOCK");
 
 
         foreach (F_COMPTEG ln in comptes)
@@ -739,6 +751,17 @@ else
         fn.EnableTriggers(db2, "F_DOCENTETE", "UPD");
         fn.EnableTriggers(db2, "F_ARTSTOCK", "UPD");
 
+        db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_DOCENTETE");
+        db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_COMPTEG");
+        db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_COMPTEA");
+        db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_COMPTET");
+        db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_TAXE");
+        db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_DEPOT");
+        db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_FAMILLE");
+        db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_ARTICLE");
+        db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_DOCLIGNE");
+        db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_DOCREGL");
+        db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_ARTSTOCK");
 
 
         

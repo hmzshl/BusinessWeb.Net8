@@ -71,7 +71,7 @@ else
 	}
 	private async Task LoadData()
 	{
-		items = session.db.API_V_PERSONNEL.OrderBy(a => a.Nom).ToList();
+		items = session.db.API_V_PERSONNEL.Where(a => a.Agence != 0).OrderBy(a => a.Nom).ToList();
 	}
 
 	protected async Task Edit(RecordDoubleClickEventArgs<API_V_PERSONNEL> args)

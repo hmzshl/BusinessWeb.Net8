@@ -9,7 +9,7 @@ namespace BusinessWeb.Data;
 
 public partial class DB : DbContext
 {
-    public DB()
+	public DB()
     {
 
     }
@@ -3507,6 +3507,7 @@ public partial class DB : DbContext
             entity.Property(e => e.AR_Ref)
                 .HasMaxLength(19)
                 .IsUnicode(false);
+            entity.Property(e => e.FraisU).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.API_T_OrdreFabricationDetail)
@@ -3527,6 +3528,7 @@ public partial class DB : DbContext
             entity.Property(e => e.AR_Ref)
                 .HasMaxLength(19)
                 .IsUnicode(false);
+            entity.Property(e => e.FraisU).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.API_T_OrdreFabricationLigne)

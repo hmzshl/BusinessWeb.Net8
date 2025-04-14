@@ -537,106 +537,27 @@ namespace BusinessWeb
 
 			return rs;
 		}
-		public DB getDb(TSociete ste)
-		{
-			var optionBuilder = new DbContextOptionsBuilder<DB>();
-			optionBuilder.UseSqlServer(getConnectionString(ste), o =>
-			{
-				o.UseCompatibilityLevel(100);
-				o.CommandTimeout(3600); // Timeout in seconds (default is 30)
-			});
-			optionBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
-			DB db = new DB(optionBuilder.Options);
-			db.Database.Migrate();
-			/*if (db.F_DOCLIGNE.Where(a => a.DO_Type == 40).Count() == 0)
-			{
-				var ln = db.P_INTERNE.Where(a => a.cbMarq == 1).SingleOrDefault();
-				if (ln != null)
-				{
-					ln.D_Intitule = "Consommation chantiers";
-					ln.D_MvtStock = 2;
-					ln.D_Valide = 1;
-					ln.D_Coche01 = 3;
-					db.SaveChanges();
-				}
-			}
-			else if (db.F_DOCLIGNE.Where(a => a.DO_Type == 41).Count() == 0)
-			{
-				var ln = db.P_INTERNE.Where(a => a.cbMarq == 2).SingleOrDefault();
-				if (ln != null)
-				{
-					ln.D_Intitule = "Consommation chantiers";
-					ln.D_MvtStock = 2;
-					ln.D_Valide = 1;
-					ln.D_Coche01 = 3;
-					db.SaveChanges();
-				}
-			}
-			else if (db.F_DOCLIGNE.Where(a => a.DO_Type == 42).Count() == 0)
-			{
-				var ln = db.P_INTERNE.Where(a => a.cbMarq == 3).SingleOrDefault();
-				if (ln != null)
-				{
-					ln.D_Intitule = "Consommation chantiers";
-					ln.D_MvtStock = 2;
-					ln.D_Valide = 1;
-					ln.D_Coche01 = 3;
-					db.SaveChanges();
-				}
-			}
-			else if (db.F_DOCLIGNE.Where(a => a.DO_Type == 43).Count() == 0)
-			{
-				var ln = db.P_INTERNE.Where(a => a.cbMarq == 4).SingleOrDefault();
-				if (ln != null)
-				{
-					ln.D_Intitule = "Consommation chantiers";
-					ln.D_MvtStock = 2;
-					ln.D_Valide = 1;
-					ln.D_Coche01 = 3;
-					db.SaveChanges();
-				}
-			}
-			else if (db.F_DOCLIGNE.Where(a => a.DO_Type == 44).Count() == 0)
-			{
-				var ln = db.P_INTERNE.Where(a => a.cbMarq == 5).SingleOrDefault();
-				if (ln != null)
-				{
-					ln.D_Intitule = "Consommation chantiers";
-					ln.D_MvtStock = 2;
-					ln.D_Valide = 1;
-					ln.D_Coche01 = 3;
-					db.SaveChanges();
-				}
-			}
-			else if (db.F_DOCLIGNE.Where(a => a.DO_Type == 45).Count() == 0)
-			{
-				var ln = db.P_INTERNE.Where(a => a.cbMarq == 6).SingleOrDefault();
-				if (ln != null)
-				{
-					ln.D_Intitule = "Consommation chantiers";
-					ln.D_MvtStock = 2;
-					ln.D_Valide = 1;
-					ln.D_Coche01 = 3;
-					db.SaveChanges();
-				}
-			}
-			else if (db.F_DOCLIGNE.Where(a => a.DO_Type == 46).Count() == 0)
-			{
-				var ln = db.P_INTERNE.Where(a => a.cbMarq == 7).SingleOrDefault();
-				if (ln != null)
-				{
-					ln.D_Intitule = "Consommation chantiers";
-					ln.D_MvtStock = 2;
-					ln.D_Valide = 1;
-					ln.D_Coche01 = 3;
-					db.SaveChanges();
-				}
-			}*/
-			db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "ChefChantier", "VARCHAR(100)"));
-			db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "Demandeur", "VARCHAR(100)"));
-			return db;
-
-		}
+public DB getDb(TSociete ste)
+{
+    var optionBuilder = new DbContextOptionsBuilder<DB>();
+    optionBuilder.UseSqlServer(getConnectionString(ste), o =>
+    {
+        o.UseCompatibilityLevel(100);
+        o.CommandTimeout(3600); // Timeout in seconds (default is 30)
+								// Add this line to handle triggers with OUTPUT clause:
+		o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
+		 .UseRelationalNulls();
+    });
+    
+    optionBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+    
+    DB db = new DB(optionBuilder.Options);
+    db.Database.Migrate();
+    db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "ChefChantier", "VARCHAR(100)"));
+    db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "Demandeur", "VARCHAR(100)"));
+    
+    return db;
+}
 		public string AddCol(string table, string col, string type)
 		{
 			if (type.ToUpper().Contains("INT") || type.ToUpper().Contains("DECIMAL") || type.ToUpper().Contains("BOOL"))

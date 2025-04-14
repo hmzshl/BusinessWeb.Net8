@@ -24,25 +24,29 @@
 	<GridCol Xs="24" Md="16">
 		<Card>
 			<SfDropDownList FloatLabelType="FloatLabelType.Always" Placeholder="Client"
-							AllowFiltering TValue="string" TItem="F_COMPTET" DataSource="@(db.F_COMPTET)" @bind-Value="@row.CT_Num">
+							AllowFiltering TValue="string" TItem="F_COMPTET" 
+							DataSource="@(db.F_COMPTET.Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule}))" 
+							@bind-Value="@row.CT_Num">
 				<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 				<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
 			</SfDropDownList>
 			<SfDropDownList FloatLabelType="FloatLabelType.Always" Placeholder="Affaire"
-							AllowFiltering TValue="string" TItem="F_COMPTEA" DataSource="@(db.F_COMPTEA)" @bind-Value="@row.CA_Num">
+							AllowFiltering TValue="string" TItem="F_COMPTEA" 
+							DataSource="@(db.F_COMPTEA.Select(a => new F_COMPTEA { CA_Num = a.CA_Num, CA_Intitule = a.CA_Num + " - " + a.CA_Intitule }))"
+							@bind-Value="@row.CA_Num">
 				<DropDownListEvents TValue="string" TItem="F_COMPTEA" />
 				<DropDownListFieldSettings Text="CA_Intitule" Value="CA_Num" />
 			</SfDropDownList>
 			<SfDropDownList FloatLabelType="FloatLabelType.Always" Placeholder="Responsable"
-							AllowFiltering TValue="int?" TItem="API_T_Personnel" DataSource="@(db.API_T_Personnel)" @bind-Value="@row.Responsable">
+							AllowFiltering TValue="int?" TItem="API_T_Personnel" DataSource="@(db.API_T_Personnel.Where(a => a.Agence != 0))" @bind-Value="@row.Responsable">
 				<DropDownListEvents TValue="int?" TItem="API_T_Personnel" />
 				<DropDownListFieldSettings Text="Nom" Value="id" />
 			</SfDropDownList>
 		</Card>
 	</GridCol>
 	<GridCol Xs="24" Md="24">
-		<div style="height: 59vh;">
-			<SfGrid @ref=Grid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(lignes)">
+		<div style="height: 62vh;">
+			<SfGrid @ref=Grid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(lignes)" AllowFiltering AllowSorting>
 				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 				<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
 				</GridEditSettings>
@@ -52,7 +56,12 @@
 						<Empty></Empty>
 					</EmptyRecordTemplate>
 					<DetailTemplate>
-						<OrdreFabricationDetail AllowEditing=@(!(Grid?.IsEdit ?? false)) qte="@((context as API_T_OrdreFabricationLigne).Qte)" Height="40vh" ligne="@((context as API_T_OrdreFabricationLigne).id)" />
+						<div style="padding:10px;">
+							<OrdreFabricationDetail AllowEditing=@(!(Grid?.IsEdit ?? false))
+													qte="@((context as API_T_OrdreFabricationLigne).Qte)"
+													Height="40vh" ligne="@((context as API_T_OrdreFabricationLigne).id)" />
+						</div>
+
 					</DetailTemplate>
 				</GridTemplates>
 				<GridColumns>
@@ -63,7 +72,7 @@
 											AllowFiltering TValue="string" TItem="F_ARTICLE"
 											FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
 											Query="@fn.LocalDataQuery"
-											DataSource="@(db.F_ARTICLE.OrderBy(a => a.AR_Ref))" @bind-Value="@((context as API_T_OrdreFabricationLigne).AR_Ref)">
+											DataSource="@(db.F_ARTICLE.FromSqlRaw("SELECT a.* FROM dbo.F_ARTICLE a WHERE a.AR_Ref IN (SELECT a.AR_Ref FROM dbo.F_NOMENCLAT a)").OrderBy(a => a.AR_Ref))" @bind-Value="@((context as API_T_OrdreFabricationLigne).AR_Ref)">
 								<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
 								<DropDownListFieldSettings Text="AR_Ref" Value="AR_Ref" />
 							</SfDropDownList>
@@ -75,7 +84,7 @@
 											AllowFiltering TValue="string" TItem="F_ARTICLE"
 											FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
 											Query="@fn.LocalDataQuery"
-											DataSource="@(db.F_ARTICLE.OrderBy(a => a.AR_Design))" @bind-Value="@((context as API_T_OrdreFabricationLigne).AR_Ref)">
+											DataSource="@(db.F_ARTICLE.FromSqlRaw("SELECT a.* FROM dbo.F_ARTICLE a WHERE a.AR_Ref IN (SELECT a.AR_Ref FROM dbo.F_NOMENCLAT a)").OrderBy(a => a.AR_Design))" @bind-Value="@((context as API_T_OrdreFabricationLigne).AR_Ref)">
 								<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
 								<DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
 							</SfDropDownList>
@@ -87,6 +96,21 @@
 						</Template>
 					</GridColumn>
 					<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationLigne.Qte) HeaderText="Qté" Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+					<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationLigne.FraisU) HeaderText="Frais.Unité"
+								Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+					<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationLigne.FraisU) HeaderText="Frais.Total"
+								Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+						<Template>
+							<div style="text-align: right;">
+								@(((context as API_T_OrdreFabricationLigne).FraisU * (context as API_T_OrdreFabricationLigne).Qte).ToString("N2"))
+							</div>
+						</Template>
+						<EditTemplate>
+							<div style="text-align: right;">
+								@(((context as API_T_OrdreFabricationLigne).FraisU * (context as API_T_OrdreFabricationLigne).Qte).ToString("N2"))
+							</div>
+						</EditTemplate>
+					</GridColumn>
 					<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
 						<Template>
 							<RadzenButton Click=@(args => EditDetail((context as API_T_OrdreFabricationLigne).id, (context as API_T_OrdreFabricationLigne).Qte)) ButtonStyle="ButtonStyle.Info" Icon="info" Size="Radzen.ButtonSize.Small"
@@ -110,7 +134,7 @@
 	List<API_T_OrdreFabricationLigne> lignes = new List<API_T_OrdreFabricationLigne>();
 	NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2", ShowSpinButton = false } };
 	SfGrid<API_T_OrdreFabricationLigne> Grid;
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
 		try
 		{
@@ -128,21 +152,17 @@
 				.SingleOrDefault();
 
 
-				lignes = db.API_T_OrdreFabricationLigne
-				.Where(a => a.Ordre == id).OrderBy(a => a.id)
-				.Include(b => b.API_T_OrdreFabricationDetail)
-				.Include(a => a.AR_RefNavigation)
-				.ToList();
+				await UpdateGrid();
 			}
 		}
 		catch (Exception ex)
 		{
-			DialogService.Alert(ex.ToString());
+			await DialogService.Alert(ex.ToString());
 		}
 
 
 	}
-	private void Submit(bool close)
+	private async Task Submit(bool close)
 	{
 		try
 		{
@@ -160,19 +180,17 @@
 				DialogService.Close();
 			}
 
-
-
 		}
 		catch (Exception ex)
 		{
-			Message.Error(ex.ToString());
+			await DialogService.Alert(ex.ToString());
 		}
 	}
 	public async Task EditDetail(int ligne, decimal qte)
 	{
 		await DialogService.OpenAsync<OrdreFabricationDetail>($"",
 		new Dictionary<string, object>() { { "ligne", ligne }, { "qte", qte } },
-		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "90%" });
 	}
 	public async Task EditGrid(ActionEventArgs<API_T_OrdreFabricationLigne> args)
 	{
@@ -180,17 +198,34 @@
 		{
 			if (args.Data.AR_Ref != null)
 			{
+				if (args.Data.Qte <= 0)
+				{
+					args.Data.Qte = 1;
+				}
 				if (args.Action == "Add")
 				{
 					if (id == 0)
 					{
-						Submit(false);
-
+						await Submit(false);
 					}
+
 					API_T_OrdreFabricationLigne item = args.Data;
 					item.Ordre = row.id;
 					db.Add(item);
 					db.SaveChanges();
+
+					foreach (F_NOMENCLAT ar in db.F_NOMENCLAT.Where(a => a.AR_Ref == args.Data.AR_Ref).Include(a => a.NO_RefDetNavigation))
+					{
+						var ln = new API_T_OrdreFabricationDetail();
+						ln.AR_Ref = ar.NO_RefDet;
+						ln.Qte = ar.NO_Qte ?? 1;
+						ln.FraisU = ar.NO_RefDetNavigation?.AR_PrixAch ?? 0;
+						ln.Ligne = item.id;
+						db.Add(ln);
+					}
+					db.SaveChanges();
+
+					//await UpdateGrid();
 				}
 				if (args.Action != "Add")
 				{
@@ -201,13 +236,10 @@
 					}
 					db.Entry(args.Data).State = EntityState.Modified;
 					db.SaveChanges();
+					//await UpdateGrid();
 
 
 				}
-			}
-			if (args.Data.Qte <= 0)
-			{
-				args.Data.Qte = 1;
 			}
 			else
 			{
@@ -222,14 +254,18 @@
 			db.Database.ExecuteSqlRaw("DELETE FROM API_T_OrdreFabricationDetail WHERE Ligne = {0}", args.Data.id);
 			db.Database.ExecuteSqlRaw("DELETE FROM API_T_OrdreFabricationLigne WHERE id = {0}", args.Data.id);
 
-			lignes = db.API_T_OrdreFabricationLigne
-			.Where(a => a.Ordre == id).OrderBy(a => a.id)
-			.Include(b => b.API_T_OrdreFabricationDetail)
-			.Include(a => a.AR_RefNavigation)
-			.ToList();
-			
+			await UpdateGrid();
+
 		}
 
+	}
+	private async Task UpdateGrid()
+	{
+		lignes = db.API_T_OrdreFabricationLigne
+		.Where(a => a.Ordre == id).OrderBy(a => a.id)
+		.Include(b => b.API_T_OrdreFabricationDetail)
+		.Include(a => a.AR_RefNavigation)
+		.ToList();
 	}
 	private async Task Print()
 	{

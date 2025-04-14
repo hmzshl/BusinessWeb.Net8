@@ -15,6 +15,8 @@ public partial class API_T_OrdreFabricationLigne
 
     public decimal Qte { get; set; }
 
+    public decimal FraisU { get; set; }
+
     public virtual ICollection<API_T_OrdreFabricationDetail> API_T_OrdreFabricationDetail { get; set; } = new List<API_T_OrdreFabricationDetail>();
 
     public virtual ICollection<API_T_OrdreFabricationOperation> API_T_OrdreFabricationOperation { get; set; } = new List<API_T_OrdreFabricationOperation>();

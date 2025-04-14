@@ -5,7 +5,8 @@
 	<Card_1 Title="LISTE DES ORDRES DE FABRICATION">
 		<RadzenContent Container="main">
 			<div class="grid-90">
-				<SfGrid Height="100%" AllowResizing AllowSorting AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items"
+				<SfGrid Height="100%" AllowResizing AllowSorting AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" 
+				AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items"
 						Toolbar="@(new List<object>() { "ColumnChooser", "Search", "Add", "Delete" })">
 					<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
 					<GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_T_OrdreFabrication"></GridEvents>
@@ -50,12 +51,12 @@
 							<Template>
 								@{
 									var dt = (context as API_T_OrdreFabrication);
-										foreach (API_T_OrdreFabricationLigne item in dt?.API_T_OrdreFabricationLigne)
-										{
-											<div>
-											 @item?.Qte.ToString("0") @item.AR_RefNavigation?.AR_Design
-											</div>
-										}
+									foreach (API_T_OrdreFabricationLigne item in dt?.API_T_OrdreFabricationLigne)
+									{
+										<div>
+											<b>@item?.Qte.ToString("0")</b> @item.AR_RefNavigation?.AR_Design
+										</div>
+									}
 
 								}
 							</Template>
@@ -120,14 +121,14 @@ else
 
 		await DialogService.OpenAsync<OrdreFabricationFiche>(args.RowData.Numero,
 	new Dictionary<string, object>() { { "id", args.RowData.id } },
-	new Radzen.DialogOptions() { Width = "800px", Height = "95%", CloseDialogOnEsc = false });
+	new Radzen.DialogOptions() { Width = "1000px", Height = "95%", CloseDialogOnEsc = false });
 		await LoadData();
 	}
 	private async Task Add()
 	{
 		await DialogService.OpenAsync<OrdreFabricationFiche>($"Ajouter un élément",
 		new Dictionary<string, object>() { { "id", 0 } },
-		new Radzen.DialogOptions() { Width = "800px", Height = "95%", CloseDialogOnEsc = false });
+		new Radzen.DialogOptions() { Width = "1000px", Height = "95%", CloseDialogOnEsc = false });
 		await LoadData();
 	}
 	private async Task OnActionBegin(ActionEventArgs<API_T_OrdreFabrication> args)

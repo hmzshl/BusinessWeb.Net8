@@ -1,0 +1,344 @@
+﻿@page "/pointage-personnel"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction, Responsable RH")]
+
+@if (IsLoaded)
+{
+	<Card_1 Title="POINTAGE DES PERSONNELS">
+		<RadzenContent Container="main">
+			<div class="grid-90">
+				<SfToolbar CssClass="btns">
+					<ToolbarItems>
+						<ToolbarItem Align="ItemAlign.Left">
+							<Template>
+								<SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined"><div style="text-transform: uppercase;">Date: @SelectedDate.ToShortDateString()</div></SfMessage>
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Right">
+							<Template>
+								<SfButton IconCss="e-icons e-save" IsPrimary="false" Disabled>Valider la journée</SfButton>
+							</Template>
+						</ToolbarItem>
+					</ToolbarItems>
+				</SfToolbar>
+				<GridRow>
+					<GridCol Xs="24" Md="5">
+						<Card Title="Journée" Style="padding: 5px;">
+							<Calendar Style="width: 100%" Value="@SelectedDate" OnChange="OnSelect" OnPanelChange="OnPanelChange" DateCellRender="DateCellRender" />
+						</Card>
+					</GridCol>
+					<GridCol Xs="24" Md="19">
+						<div class="grid-80" style="zoom: @session.zoomLevel;">
+
+
+							<SfGrid Height="100%" RowRenderingMode="RowDirection.Horizontal"
+									AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" AllowPdfExport="true"
+									AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+									Toolbar="@(new List<object>() { "Search", "Add", "Delete" })">
+								<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false"
+												  Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+									<HeaderTemplate></HeaderTemplate>
+								</GridEditSettings>
+								<GridEvents TValue="API_T_OrdreFabricationPointage" OnActionBegin="EditGrid"></GridEvents>
+								<GridPageSettings PageSize="100"></GridPageSettings>
+								<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+								<GridTemplates>
+									<EmptyRecordTemplate>
+										<Empty></Empty>
+									</EmptyRecordTemplate>
+
+								</GridTemplates>
+								<GridColumns>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationPointage.id) HeaderText="#" IsPrimaryKey="true"
+												Visible="false" IsIdentity="true"></GridColumn>
+									<GridColumn MinWidth="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Nom">
+										<Template>
+											@{
+												var dt = (context as API_T_OrdreFabricationPointage);
+												<div>
+													@dt.PresonnelNavigation?.Nom
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var dt = (context as API_T_OrdreFabricationPointage);
+												<RadzenFormField AllowFloatingLabel="false" Text="Nom" Style="width: 100%;">
+													<RadzenDropDownDataGrid Density="Density.Compact" PageSize="500" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+																			PopupStyle="min-width: 450px;"
+																			PagerHorizontalAlign="Radzen.HorizontalAlign.Left"
+																			@bind-Value=@dt.Presonnel Data=@(db.API_T_Personnel.Where(a => a.Agence != 0 && (!items.Select(a=> a.Presonnel).Contains(a.id))))
+																			TextProperty="@nameof(API_T_Personnel.Nom)" ValueProperty="@nameof(API_T_Personnel.id)" TValue="int"
+																			AllowColumnResize="true" AllowFilteringByAllStringColumns="true">
+														<Columns>
+															<RadzenDropDownDataGridColumn Property="@nameof(API_T_Personnel.Nom)" Title="Nom" Width="250px" />
+															<RadzenDropDownDataGridColumn Property="@nameof(API_T_Personnel.CIN)" Title="CIN" Width="100px" />
+														</Columns>
+													</RadzenDropDownDataGrid>
+												</RadzenFormField>
+
+											}
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="O.F">
+										<Template>
+											@{
+												var dt = (context as API_T_OrdreFabricationPointage);
+												<div>
+													@dt.OrdreNavigation?.Numero
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var dt = (context as API_T_OrdreFabricationPointage);
+												<RadzenFormField AllowFloatingLabel="false" Text="O.F" Style="width: 100%;">
+													<RadzenDropDownDataGrid Density="Density.Compact" PageSize="500" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" PopupStyle="min-width: 450px;"
+																			PagerHorizontalAlign="Radzen.HorizontalAlign.Left" @bind-Value=@dt.Ordre Data=@(db.API_T_OrdreFabrication)
+																			TextProperty="@nameof(API_T_OrdreFabrication.Numero)" ValueProperty="@nameof(API_T_OrdreFabrication.id)" TValue="int"
+																			AllowColumnResize="true" AllowFilteringByAllStringColumns="true">
+														<Columns>
+															<RadzenDropDownDataGridColumn Property="@nameof(API_T_OrdreFabrication.Date)" Title="Date" FormatString="{0:d}" Width="100px" />
+															<RadzenDropDownDataGridColumn Property="@nameof(API_T_OrdreFabrication.Numero)" Title="Numero" Width="150px" />
+															<RadzenDropDownDataGridColumn Property="@nameof(API_T_OrdreFabrication.Reference)" Title="Reference" Width="100px" />
+														</Columns>
+													</RadzenDropDownDataGrid>
+												</RadzenFormField>
+
+											}
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affaire">
+										<Template>
+											<div>
+												@((context as API_T_OrdreFabricationPointage).OrdreNavigation?.CA_Num)
+											</div>
+										</Template>
+										<EditTemplate>
+
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"
+												Field="@nameof(API_T_OrdreFabricationPointage.Debut)" HeaderText="Début">
+										<EditTemplate>
+											@{
+												var dt = (context as API_T_OrdreFabricationPointage);
+												<RadzenFormField AllowFloatingLabel="false" Text="Début" Style="width: 100%;">
+													<SfTimePicker @bind-Value=@dt.Debut TValue="TimeSpan" FullScreen="true" ShowClearButton="true"></SfTimePicker>
+												</RadzenFormField>
+											}
+
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"
+												Field="@nameof(API_T_OrdreFabricationPointage.Fin)" HeaderText="Fin">
+										<EditTemplate>
+											<RadzenFormField AllowFloatingLabel="false" Text="Fin" Style="width: 100%;">
+
+											</RadzenFormField>
+										</EditTemplate>
+									</GridColumn>
+
+								</GridColumns>
+							</SfGrid>
+
+
+
+							<!-- -->
+
+						</div>
+					</GridCol>
+				</GridRow>
+			</div>
+		</RadzenContent>
+	</Card_1>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+
+
+
+
+
+@code
+{
+
+	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	//Components
+	private SfGrid<API_T_PointageDetail> DefaultGrid;
+	private DateTime SelectedDate = DateTime.Today;
+	private int SelectedSite = 0;
+	string grid_height = "80vh";
+	NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
+	private List<API_T_OrdreFabricationPointage> items = new List<API_T_OrdreFabricationPointage>();
+	bool loading = false;
+	private DateTime value = DateTime.Today;
+	List<API_T_Site> sites = new List<API_T_Site>();
+	bool IsLoaded = false;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(1);
+		db = session.db;
+		GC.Collect();
+		await UpdateGrid();
+		IsLoaded = true;
+
+	}
+	private async Task UpdateGrid()
+	{
+		items = db.API_T_OrdreFabricationPointage
+		.Include(a => a.PresonnelNavigation)
+		.Include(a => a.OrdreNavigation)
+		.Where(a => a.Date == SelectedDate).ToList();
+	}
+	private async Task OnSelect(DateTime value)
+	{
+		this.value = value;
+		SelectedDate = value;
+		await UpdateGrid();
+	}
+	private async Task ValueChangeHandler(ChangeEventArgs<int, API_T_OrdreFabricationPointage> args)
+	{
+		await UpdateGrid();
+	}
+	private void OnPanelChange(DateTime value, string mode)
+	{
+		this.value = value;
+	}
+	public async Task EditGrid(ActionEventArgs<API_T_OrdreFabricationPointage> args)
+	{
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+			if (args.Data.Presonnel != 0 && args.Data.Ordre != 0)
+			{
+
+				if (args.Action == "Add")
+				{
+
+
+					API_T_OrdreFabricationPointage item = args.Data;
+					item.Date = SelectedDate;
+					db.Add(item);
+					db.SaveChanges();
+				}
+				if (args.Action != "Add")
+				{
+					var local = db.Set<API_T_OrdreFabricationPointage>().Local.FirstOrDefault(a => a.id == args.Data.id);
+					if (local != null)
+					{
+						db.Entry(local).State = EntityState.Detached;
+					}
+					db.Entry(args.Data).State = EntityState.Modified;
+					db.SaveChanges();
+
+				}
+			}
+			else
+			{
+				args.Cancel = true;
+			}
+
+
+		}
+
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			db.Database.ExecuteSqlRaw("DELETE FROM API_T_OrdreFabricationPointage WHERE id = {0}", args.Data.id);
+			await UpdateGrid();
+
+		}
+
+	}
+	private RenderFragment DateCellRender(DateTime value)
+	{
+		var dt = db.API_T_OrdreFabricationPointage.Where(a => a.Date == value);
+		if (dt.Count() != 0)
+		{
+			return
+			   @<Template>
+				<div>
+					<RadzenIcon Icon="check_circle_outline" IconStyle="@IconStyle.Success" />
+				</div>
+			</Template>
+			;
+		}
+		else
+		{
+			return
+				@<Template>
+				<div>
+				</div>
+			</Template>
+			;
+		}
+	}
+
+}
+
+<style>
+	.ant-picker-calendar-header .ant-picker-calendar-mode-switch {
+		display: none;
+	}
+
+	.ant-picker-calendar-header {
+		margin-right: 10px;
+	}
+
+	.events {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+		.events .ant-badge-status {
+			overflow: hidden;
+			white-space: nowrap;
+			width: 100%;
+			text-overflow: ellipsis;
+			font-size: 12px;
+		}
+
+	.notes-month {
+		text-align: center;
+		font-size: 28px;
+	}
+
+		.notes-month section {
+			font-size: 28px;
+		}
+
+	.ant-picker-calendar-full .ant-picker-panel .ant-picker-body th {
+		text-align: center;
+	}
+
+	.ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date {
+		height: 60px;
+	}
+
+	.item-label {
+		font-size: 11px !important;
+		padding: 4px 8px !important;
+		width: 110px !important;
+		color: rgba(0, 0, 0, 0.87) !important;
+		border-bottom-left-radius: 0px !important;
+		border-top-left-radius: 0px !important;
+		font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
+		font-weight: 500 !important;
+		letter-spacing: 0.025rem !important;
+		font-style: normal !important;
+		text-transform: uppercase !important;
+		color: #203154 !important;
+		background-color: #FFFFFF !important;
+		-webkit-border-radius: 0px !important;
+		-moz-border-radius: 0px !important;
+		border-style: solid !important;
+		border-width: 0.025rem !important;
+		border-color: #71639e !important;
+		-webkit-box-shadow: none !important;
+	}
+</style>

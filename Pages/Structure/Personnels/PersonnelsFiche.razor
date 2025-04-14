@@ -2,7 +2,7 @@
 	<ToolbarItems>
 		<ToolbarItem Align="ItemAlign.Right">
 			<Template>
-				<SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="Submit">Enregistrer</SfButton>
+				<SfButton Disabled=@(row.Agence <= 0) IconCss="e-icons e-save" IsPrimary="true" OnClick="Submit">Enregistrer</SfButton>
 			</Template>
 		</ToolbarItem>
 	</ToolbarItems>
@@ -131,7 +131,7 @@ else
 												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Agence" LabelColSpan="8">
 													<div class="ls-parent">
 														<div class="ls-child-left">
-															<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Information" DataSource="@agence" @bind-Value="@row.Agence">
+															<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Information" DataSource="@db.API_T_Information.Where(a => a.Tab == 5).OrderBy(a => a.Valeur).ToList()" @bind-Value="@row.Agence">
 																<DropDownListEvents TValue="int" TItem="API_T_Information" />
 																<DropDownListFieldSettings Text="Valeur" Value="id" />
 															</SfDropDownList>
@@ -145,7 +145,7 @@ else
 
 												</FormItem>
 												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Responsable" LabelColSpan="8">
-													<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Personnel" DataSource="@db.API_T_Personnel.Where(a => a.id != this.id)" @bind-Value="@row.Projet">
+													<SfDropDownList AllowFiltering TValue="int" TItem="API_T_Personnel" DataSource="@db.API_T_Personnel.Where(a => a.id != this.id && a.Agence != 0)" @bind-Value="@row.Projet">
 														<DropDownListEvents TValue="int" TItem="API_T_Personnel" />
 														<DropDownListFieldSettings Text="Nom" Value="id" />
 													</SfDropDownList>
