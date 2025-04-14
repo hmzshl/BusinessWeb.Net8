@@ -1,5 +1,5 @@
 ﻿@page "/pointage-personnel"
-@attribute [Authorize(Roles = "Super Admin,Admin,Direction, Responsable RH")]
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction, Responsable RH, Pointeur")]
 
 @if (IsLoaded)
 {
@@ -50,7 +50,7 @@
 								<GridColumns>
 									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationPointage.id) HeaderText="#" IsPrimaryKey="true"
 												Visible="false" IsIdentity="true"></GridColumn>
-									<GridColumn MinWidth="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Nom">
+									<GridColumn Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Nom">
 										<Template>
 											@{
 												var dt = (context as API_T_OrdreFabricationPointage);
@@ -107,10 +107,69 @@
 											}
 										</EditTemplate>
 									</GridColumn>
-									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affaire">
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Réference">
+										<Template>
+											@{
+												var dt = (context as API_T_OrdreFabricationPointage);
+												<div>
+													@dt.OrdreNavigation?.Reference
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn MinWidth="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Détails">
+										<Template>
+											@{
+												var dt = (context as API_T_OrdreFabricationPointage);
+												@foreach (API_T_OrdreFabricationLigne item in dt.OrdreNavigation?.API_T_OrdreFabricationLigne)
+												{
+													<div>
+														<b>@item?.Qte.ToString("0")</b> @item.AR_RefNavigation?.AR_Design
+													</div>
+												}
+											}
+										</Template>
+										<EditTemplate>
+
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° Client">
+										<Template>
+											<div>
+												@((context as API_T_OrdreFabricationPointage).OrdreNavigation?.CT_Num)
+											</div>
+										</Template>
+										<EditTemplate>
+
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Client">
+										<Template>
+											<div>
+												@((context as API_T_OrdreFabricationPointage).OrdreNavigation?.CT_NumNavigation?.CT_Intitule)
+											</div>
+										</Template>
+										<EditTemplate>
+
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° Affaire">
 										<Template>
 											<div>
 												@((context as API_T_OrdreFabricationPointage).OrdreNavigation?.CA_Num)
+											</div>
+										</Template>
+										<EditTemplate>
+
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affaire">
+										<Template>
+											<div>
+												@((context as API_T_OrdreFabricationPointage).OrdreNavigation?.CA_NumNavigation?.CA_Intitule)
 											</div>
 										</Template>
 										<EditTemplate>
@@ -123,7 +182,7 @@
 											@{
 												var dt = (context as API_T_OrdreFabricationPointage);
 												<RadzenFormField AllowFloatingLabel="false" Text="Début" Style="width: 100%;">
-													<SfTimePicker @bind-Value=@dt.Debut TValue="TimeSpan" FullScreen="true" ShowClearButton="true"></SfTimePicker>
+													<SfTimePicker @bind-Value=@dt.Debut TValue="TimeSpan?" FullScreen="true" ShowClearButton="true"></SfTimePicker>
 												</RadzenFormField>
 											}
 
@@ -132,9 +191,13 @@
 									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"
 												Field="@nameof(API_T_OrdreFabricationPointage.Fin)" HeaderText="Fin">
 										<EditTemplate>
-											<RadzenFormField AllowFloatingLabel="false" Text="Fin" Style="width: 100%;">
+											@{
+												var dt = (context as API_T_OrdreFabricationPointage);
+												<RadzenFormField AllowFloatingLabel="false" Text="Fin" Style="width: 100%;">
+													<SfTimePicker @bind-Value=@dt.Fin TValue="TimeSpan ?" FullScreen="true" ShowClearButton="true"></SfTimePicker>
+												</RadzenFormField>
+											}
 
-											</RadzenFormField>
 										</EditTemplate>
 									</GridColumn>
 
@@ -194,6 +257,12 @@ else
 		items = db.API_T_OrdreFabricationPointage
 		.Include(a => a.PresonnelNavigation)
 		.Include(a => a.OrdreNavigation)
+		.ThenInclude(a => a.CA_NumNavigation)
+		.Include(a => a.OrdreNavigation)
+		.ThenInclude(a => a.CT_NumNavigation)
+		.Include(a => a.OrdreNavigation)
+		.ThenInclude(a => a.API_T_OrdreFabricationLigne)
+		.ThenInclude(a => a.AR_RefNavigation)
 		.Where(a => a.Date == SelectedDate).ToList();
 	}
 	private async Task OnSelect(DateTime value)
@@ -223,6 +292,8 @@ else
 
 					API_T_OrdreFabricationPointage item = args.Data;
 					item.Date = SelectedDate;
+					item.Debut = item.Debut ?? new TimeSpan(8, 30, 0);
+					item.Fin = item.Fin ?? new TimeSpan(18, 30, 0);
 					db.Add(item);
 					db.SaveChanges();
 				}
