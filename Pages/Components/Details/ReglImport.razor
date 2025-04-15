@@ -77,7 +77,7 @@
         Columns = input.Columns.Cast<DataColumn>()
                              .Select(x => x.ColumnName)
                              .ToArray();
-
+        db.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_CREGLEMENT");
         foreach (DataRow row in input.Rows)
         {
             line = line + 1;
@@ -141,6 +141,7 @@
         }
 
         db.SaveChanges();
+        db.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_CREGLEMENT");
     }
 
     void ShowNotification(Exception ex)
