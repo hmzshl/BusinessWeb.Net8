@@ -9,7 +9,7 @@ namespace BusinessWeb.Data;
 
 public partial class DB : DbContext
 {
-	public DB()
+    public DB()
     {
 
     }
@@ -3477,6 +3477,12 @@ public partial class DB : DbContext
                 .HasMaxLength(17)
                 .IsUnicode(false);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.NumCommande)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.NumPreparationCommande)
+                .HasMaxLength(40)
+                .IsUnicode(false);
             entity.Property(e => e.Numero)
                 .HasMaxLength(50)
                 .IsUnicode(false);

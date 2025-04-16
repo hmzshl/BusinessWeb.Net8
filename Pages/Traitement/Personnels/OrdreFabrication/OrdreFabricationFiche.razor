@@ -24,24 +24,30 @@
 	<GridCol Xs="24" Md="16">
 		<Card>
 			<SfDropDownList FloatLabelType="FloatLabelType.Always" Placeholder="Client"
-							AllowFiltering TValue="string" TItem="F_COMPTET" 
-							DataSource="@(db.F_COMPTET.Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule}))" 
+							AllowFiltering TValue="string" TItem="F_COMPTET"
+							DataSource="@(db.F_COMPTET.Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule }))"
 							@bind-Value="@row.CT_Num">
 				<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 				<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
 			</SfDropDownList>
 			<SfDropDownList FloatLabelType="FloatLabelType.Always" Placeholder="Affaire"
-							AllowFiltering TValue="string" TItem="F_COMPTEA" 
+							AllowFiltering TValue="string" TItem="F_COMPTEA"
 							DataSource="@(db.F_COMPTEA.Select(a => new F_COMPTEA { CA_Num = a.CA_Num, CA_Intitule = a.CA_Num + " - " + a.CA_Intitule }))"
 							@bind-Value="@row.CA_Num">
 				<DropDownListEvents TValue="string" TItem="F_COMPTEA" />
 				<DropDownListFieldSettings Text="CA_Intitule" Value="CA_Num" />
 			</SfDropDownList>
-			<SfDropDownList FloatLabelType="FloatLabelType.Always" Placeholder="Responsable"
-							AllowFiltering TValue="int?" TItem="API_T_Personnel" DataSource="@(db.API_T_Personnel.Where(a => a.Agence != 0))" @bind-Value="@row.Responsable">
-				<DropDownListEvents TValue="int?" TItem="API_T_Personnel" />
-				<DropDownListFieldSettings Text="Nom" Value="id" />
-			</SfDropDownList>
+			<Syncfusion.Blazor.MultiColumnComboBox.SfMultiColumnComboBox FloatLabelType="FloatLabelType.Always"
+				@bind-Value="@row.NumCommande"
+																		 DataSource="@(db.F_DOCENTETE.Include(a => a.CT_NumPayeurNavigation).Where(a => a.DO_Type == 1))"
+																		 PopupWidth="600px" ValueField="DO_Piece" TextField="DO_Piece" Placeholder="Bon de commande">
+				<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumns>
+					<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(F_DOCENTETE.DO_Piece)" Header="Pièce" Width="80px" />
+					<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(F_DOCENTETE.DO_Date)" Header="Date" Width="80px" Format="dd/MM/yy" />
+					<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(F_DOCENTETE.CA_Num)" Header="Affaire" Width="80px" />
+					<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(F_DOCENTETE.DO_Tiers)" Header="Tiers" Width="200px" />
+				</Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumns>
+			</Syncfusion.Blazor.MultiColumnComboBox.SfMultiColumnComboBox>
 		</Card>
 	</GridCol>
 	<GridCol Xs="24" Md="24">
@@ -122,6 +128,35 @@
 		</div>
 	</GridCol>
 </GridRow>
+<style>
+	.control-section {
+		min-height: 370px;
+	}
+
+	.control-wrapper {
+		max-width: 250px;
+		margin: 0 auto;
+		padding: 50px 0px 0px;
+	}
+
+	.example-label {
+		font-size: 14px;
+		margin-bottom: 6px;
+	}
+
+	.property-panel-section .property-value {
+		padding: 5px 0px 10px;
+		font-size: 14px;
+	}
+
+	.property-panel-content {
+		padding: 0px 0px 15px 0px;
+	}
+
+		.property-panel-content:last-child {
+			padding: 0px 0px 40px 0px;
+		}
+</style>
 
 @code {
 	[CascadingParameter]
@@ -134,12 +169,17 @@
 	List<API_T_OrdreFabricationLigne> lignes = new List<API_T_OrdreFabricationLigne>();
 	NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2", ShowSpinButton = false } };
 	SfGrid<API_T_OrdreFabricationLigne> Grid;
+	List<Commandes> commandes = new List<Commandes>();
 	protected override async Task OnInitializedAsync()
 	{
 		try
 		{
 			db = session.db;
 			GC.Collect();
+			foreach (F_DOCENTETE item in db.F_DOCENTETE.Include(a => a.CT_NumPayeurNavigation).Where(a => a.DO_Type == 1))
+			{
+				commandes.Add(new Commandes { Numero = item.DO_Piece, Client = item.CT_NumPayeurNavigation?.CT_Intitule, Affaire = item.CA_Num });
+			}
 			if (id == 0)
 			{
 				row = new API_T_OrdreFabrication();
@@ -161,6 +201,12 @@
 		}
 
 
+	}
+	private class Commandes
+	{
+		public string Numero { get; set; }
+		public string Client { get; set; }
+		public string Affaire { get; set; }
 	}
 	private async Task Submit(bool close)
 	{

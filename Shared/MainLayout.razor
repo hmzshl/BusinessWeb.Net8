@@ -119,10 +119,12 @@
 
 										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
 											<RadzenMenuItem Text="Liste des personnels" Path="/personnels" Visible=@(IsVisible("personnels"))></RadzenMenuItem>
-											<RadzenMenuItem Text="Liste des nomenclatures" Path="/nomenclatures" Visible=@(IsVisible("nomenclatures"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Pointage Personnels" Path="/pointage-personnel" Visible=@(IsVisible("pointage-personnel"))></RadzenMenuItem>
+											@*<RadzenMenuItem Text="Liste des nomenclatures" Path="/nomenclatures" Visible=@(IsVisible("nomenclatures"))></RadzenMenuItem>*@
+											
 											<RadzenMenuItem Text="Ordres de fabrications" Path="/ordres-fabrication" Visible=@(IsVisible("ordres-fabrication"))></RadzenMenuItem>
 											<RadzenMenuItem Text="Documents d'achats" Path="/fabrication-achats" Visible=@(IsVisible("fabrication-achats"))></RadzenMenuItem>
-											<RadzenMenuItem Text="Pointage Personnels" Path="/pointage-personnel" Visible=@(IsVisible("pointage-personnel"))></RadzenMenuItem>
+											
 										</RadzenMenuItem>
 										<RadzenMenuItem Text="Etats" Icon="pie_chart" Visible=@(TitleIsVisible("Etats"))>
 											<RadzenMenuItem Text="Pointage par personnel"></RadzenMenuItem>
@@ -1068,7 +1070,7 @@
 		//await InitAuth();
 		if (session?.Societe != null && sc.User != null)
 		{
-			session.Authorizes = sdb.TAuthorizes.Where(a => a.Societe == session.Societe.id && a.UserID == sc.User.Id && a.SelectedAPP == session.SelectedAPP && a.Visible).ToList();
+			session.Authorizes = sdb.TAuthorizes.Where(a => a.Societe == session.Societe.id && a.UserID == sc.User.Id && a.SelectedAPP == session.SelectedAPP && a.Visible && fn.AuthItems().Select(b => b.Url).Contains(a.Url)).ToList();
 		}
 		else
 		{
