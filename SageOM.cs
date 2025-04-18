@@ -26,6 +26,7 @@ namespace BusinessWeb
 			CompanyDatabaseName = configuration["SageDB:CompanyDatabaseName"];
 			UserName = configuration["SageDB:UserName"];
 			Password = configuration["SageDB:Password"];
+
 		}
 
 		public bool OuvreBaseCpta(ref BSCPTAApplication100c BaseCpta)
@@ -94,7 +95,7 @@ namespace BusinessWeb
 		public string NextClient()
 		{
 			string rs = "CLT00001";
-			if(this.CPTA().FactoryClient.List.Count > 0)
+			if (this.CPTA().FactoryClient.List.Count > 0)
 			{
 				rs = this.NextString(this.CPTA().FactoryClient.List.Cast<IBOClient3>().OrderByDescending(a => a.CT_Num).First().CT_Num);
 			}

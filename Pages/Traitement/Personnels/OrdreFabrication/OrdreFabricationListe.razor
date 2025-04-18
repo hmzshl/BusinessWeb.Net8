@@ -21,6 +21,7 @@
 						<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
 						<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.Numero)" HeaderText="Numéro"></GridColumn>
 						<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.Reference)" HeaderText="Référence"></GridColumn>
+						<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.NumCommande)" HeaderText="Numéro B.C"></GridColumn>
 						<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.CT_Num)" HeaderText="N° Client"></GridColumn>
 						<GridColumn MinWidth="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.CT_Num)" HeaderText="Client">
 							<Template>
@@ -61,9 +62,19 @@
 								}
 							</Template>
 						</GridColumn>
-						<GridColumn Width="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.CA_Num)" HeaderText="Statut">
+						<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.PreparationCreated)" HeaderText="Transferé">
 							<Template>
-
+								@{
+									var dt = (context as API_T_OrdreFabrication);
+									if(dt.PreparationCreated)
+									{
+										<RadzenIcon IconStyle="IconStyle.Success" Icon="check_circle" style="font-weight: 600;" />
+									}
+									else
+									{
+										<RadzenIcon IconStyle="IconStyle.Warning" Icon="schedule" style="font-weight: 600;" />
+									}
+								}
 							</Template>
 						</GridColumn>
 					</GridColumns>

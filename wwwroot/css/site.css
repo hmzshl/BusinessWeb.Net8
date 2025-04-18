@@ -2430,3 +2430,16 @@ input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-
 .e-dialog .e-dlg-header-content .e-btn.e-dlg-closeicon-btn {
     position: unset;
 }
+.rz-dialog-confirm, .rz-dialog-alert {
+    max-width: fit-content;
+    width: fit-content !important;
+}
+.ant-spin-nested-loading > div > .ant-spin {
+    max-height: unset !important;
+}
+
+.ant-spin {
+    color: black;
+    font-size: 18px;
+    font-weight: 700;
+}

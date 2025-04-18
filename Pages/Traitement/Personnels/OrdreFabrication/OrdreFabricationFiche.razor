@@ -1,133 +1,134 @@
 ﻿
-<SfToolbar CssClass="btns">
-	<ToolbarItems>
-		<ToolbarItem Align="ItemAlign.Right">
-			<Template>
-				<SfButton Disabled IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
-			</Template>
-		</ToolbarItem>
-		<ToolbarItem Align="ItemAlign.Right">
-			<Template>
-				<SfButton OnClick="@(args => Submit(true))" IconCss="e-icons e-save" IsPrimary="true">Enregistrer</SfButton>
-			</Template>
-		</ToolbarItem>
-	</ToolbarItems>
-</SfToolbar>
-<GridRow>
-	<GridCol Xs="24" Md="8">
-		<Card>
-			<SfTextBox FloatLabelType="FloatLabelType.Always" Placeholder="Référence" @bind-Value="@(row.Reference)" Readonly />
-			<SfTextBox FloatLabelType="FloatLabelType.Always" Placeholder="Numéro" @bind-Value="@(row.Numero)" Readonly />
-			<SfDatePicker Readonly FloatLabelType="FloatLabelType.Always" Placeholder="Date" TValue="DateTime ?" @bind-Value="@row.Date" />
-		</Card>
-	</GridCol>
-	<GridCol Xs="24" Md="16">
-		<Card>
-			<SfDropDownList FloatLabelType="FloatLabelType.Always" Placeholder="Client"
-							AllowFiltering TValue="string" TItem="F_COMPTET"
-							DataSource="@(db.F_COMPTET.Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule }))"
-							@bind-Value="@row.CT_Num">
-				<DropDownListEvents TValue="string" TItem="F_COMPTET" />
-				<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
-			</SfDropDownList>
-			<SfDropDownList FloatLabelType="FloatLabelType.Always" Placeholder="Affaire"
-							AllowFiltering TValue="string" TItem="F_COMPTEA"
-							DataSource="@(db.F_COMPTEA.Select(a => new F_COMPTEA { CA_Num = a.CA_Num, CA_Intitule = a.CA_Num + " - " + a.CA_Intitule }))"
-							@bind-Value="@row.CA_Num">
-				<DropDownListEvents TValue="string" TItem="F_COMPTEA" />
-				<DropDownListFieldSettings Text="CA_Intitule" Value="CA_Num" />
-			</SfDropDownList>
-			<Syncfusion.Blazor.MultiColumnComboBox.SfMultiColumnComboBox FloatLabelType="FloatLabelType.Always"
-				@bind-Value="@row.NumCommande"
-																		 DataSource="@(db.F_DOCENTETE.Include(a => a.CT_NumPayeurNavigation).Where(a => a.DO_Type == 1))"
-																		 PopupWidth="600px" ValueField="DO_Piece" TextField="DO_Piece" Placeholder="Bon de commande">
-				<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumns>
-					<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(F_DOCENTETE.DO_Piece)" Header="Pièce" Width="80px" />
-					<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(F_DOCENTETE.DO_Date)" Header="Date" Width="80px" Format="dd/MM/yy" />
-					<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(F_DOCENTETE.CA_Num)" Header="Affaire" Width="80px" />
-					<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(F_DOCENTETE.DO_Tiers)" Header="Tiers" Width="200px" />
-				</Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumns>
-			</Syncfusion.Blazor.MultiColumnComboBox.SfMultiColumnComboBox>
-		</Card>
-	</GridCol>
-	<GridCol Xs="24" Md="24">
-		<div style="height: 62vh;">
-			<SfGrid @ref=Grid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(lignes)" AllowFiltering AllowSorting>
-				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-				<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
-				</GridEditSettings>
-				<GridEvents OnActionBegin="EditGrid" TValue="API_T_OrdreFabricationLigne"></GridEvents>
-				<GridTemplates>
-					<EmptyRecordTemplate>
-						<Empty></Empty>
-					</EmptyRecordTemplate>
-					<DetailTemplate>
-						<div style="padding:10px;">
-							<OrdreFabricationDetail AllowEditing=@(!(Grid?.IsEdit ?? false))
-													qte="@((context as API_T_OrdreFabricationLigne).Qte)"
-													Height="40vh" ligne="@((context as API_T_OrdreFabricationLigne).id)" />
-						</div>
+<AntDesign.Spin Spinning=Refreshing Size="large" Tip="Création de la préparation de commande en cours...">
+	<SfToolbar CssClass="btns">
+		<ToolbarItems>
+			<ToolbarItem Disabled=@(row.PreparationCreated) Align="ItemAlign.Right">
+				<Template>
+					<SfButton OnClick=@CreateCommande IconCss="e-icons e-send">Créer une préparation de commande</SfButton>
+				</Template>
+			</ToolbarItem>
+			<ToolbarItem Disabled Align="ItemAlign.Right">
+				<Template>
+					<SfButton IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
+				</Template>
+			</ToolbarItem>
+			<ToolbarItem Disabled="@(row.NumCommande == null)" Align="ItemAlign.Right">
+				<Template>
+					<SfButton OnClick="@(args => Submit(true))" IconCss="e-icons e-save" IsPrimary="true">Enregistrer</SfButton>
+				</Template>
+			</ToolbarItem>
+		</ToolbarItems>
+	</SfToolbar>
+	<GridRow>
+		<GridCol Xs="24" Md="8">
+			<Card>
+				<SfTextBox FloatLabelType="FloatLabelType.Always" Placeholder="Référence" @bind-Value="@(row.Reference)" Readonly />
+				<SfTextBox FloatLabelType="FloatLabelType.Always" Placeholder="Numéro" @bind-Value="@(row.Numero)" Readonly />
+				<SfDatePicker Readonly FloatLabelType="FloatLabelType.Always" Placeholder="Date" TValue="DateTime ?" @bind-Value="@row.Date" />
+			</Card>
+		</GridCol>
+		<GridCol Xs="24" Md="16">
+			<Card>
+				<SfDropDownList FloatLabelType="FloatLabelType.Always" Placeholder="Client" Readonly=@(id != 0)
+								AllowFiltering TValue="string" TItem="F_COMPTET"
+								DataSource="@(db.F_COMPTET.Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule }))"
+								@bind-Value="@row.CT_Num">
+					<DropDownListEvents TValue="string" TItem="F_COMPTET" />
+					<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+				</SfDropDownList>
+				<SfDropDownList FloatLabelType="FloatLabelType.Always" Placeholder="Affaire"
+								AllowFiltering TValue="string" TItem="F_COMPTEA"
+								DataSource="@(db.F_COMPTEA.Select(a => new F_COMPTEA { CA_Num = a.CA_Num, CA_Intitule = a.CA_Num + " - " + a.CA_Intitule }))"
+								@bind-Value="@row.CA_Num">
+					<DropDownListEvents TValue="string" TItem="F_COMPTEA" />
+					<DropDownListFieldSettings Text="CA_Intitule" Value="CA_Num" />
+				</SfDropDownList>
+				@if (this.id == 0)
+				{
+					<Syncfusion.Blazor.MultiColumnComboBox.SfMultiColumnComboBox FloatLabelType="FloatLabelType.Always"
+																				 @bind-Value="@row.NumCommande"
+																				 DataSource="@(db.F_DOCENTETE.Include(a => a.CT_NumPayeurNavigation).Where(a => a.DO_Type == 1 && a.DO_Tiers == row.CT_Num))"
+																				 PopupWidth="600px" ValueField="DO_Piece" TextField="DO_Piece" Placeholder="Bon de commande">
+						<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumns>
+							<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(F_DOCENTETE.DO_Piece)" Header="Pièce" Width="80px" />
+							<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(F_DOCENTETE.DO_Date)" Header="Date" Width="80px" Format="dd/MM/yy" />
+							<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(F_DOCENTETE.CA_Num)" Header="Affaire" Width="80px" />
+							<Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(F_DOCENTETE.DO_Tiers)" Header="Tiers" Width="200px" />
+						</Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumns>
+					</Syncfusion.Blazor.MultiColumnComboBox.SfMultiColumnComboBox>
+				}
+				else
+				{
+					<SfTextBox FloatLabelType="FloatLabelType.Always" Placeholder="Bon de commande" @bind-Value="@(row.NumCommande)" Readonly />
+				}
 
-					</DetailTemplate>
-				</GridTemplates>
-				<GridColumns>
-					<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationLigne.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
-					<GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationLigne.AR_Ref) HeaderText="Réference">
-						<EditTemplate>
-							<SfDropDownList FloatLabelType="FloatLabelType.Never"
-											AllowFiltering TValue="string" TItem="F_ARTICLE"
-											FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
-											Query="@fn.LocalDataQuery"
-											DataSource="@(db.F_ARTICLE.FromSqlRaw("SELECT a.* FROM dbo.F_ARTICLE a WHERE a.AR_Ref IN (SELECT a.AR_Ref FROM dbo.F_NOMENCLAT a)").OrderBy(a => a.AR_Ref))" @bind-Value="@((context as API_T_OrdreFabricationLigne).AR_Ref)">
-								<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
-								<DropDownListFieldSettings Text="AR_Ref" Value="AR_Ref" />
-							</SfDropDownList>
-						</EditTemplate>
-					</GridColumn>
-					<GridColumn MinWidth="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationLigne.AR_Ref) HeaderText="Article">
-						<EditTemplate>
-							<SfDropDownList FloatLabelType="FloatLabelType.Never"
-											AllowFiltering TValue="string" TItem="F_ARTICLE"
-											FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
-											Query="@fn.LocalDataQuery"
-											DataSource="@(db.F_ARTICLE.FromSqlRaw("SELECT a.* FROM dbo.F_ARTICLE a WHERE a.AR_Ref IN (SELECT a.AR_Ref FROM dbo.F_NOMENCLAT a)").OrderBy(a => a.AR_Design))" @bind-Value="@((context as API_T_OrdreFabricationLigne).AR_Ref)">
-								<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
-								<DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
-							</SfDropDownList>
-						</EditTemplate>
-						<Template>
-							<div>
-								@((context as API_T_OrdreFabricationLigne).AR_RefNavigation?.AR_Design)
+			</Card>
+		</GridCol>
+		<GridCol Xs="24" Md="24">
+			<div style="height: 62vh;">
+				<SfGrid @ref=Grid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(lignes)" AllowFiltering AllowSorting>
+					<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+					<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(row.NumCommande != null)" AllowDeleting="@(row.NumCommande != null)" AllowEditing="@(row.NumCommande != null)" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+					</GridEditSettings>
+					<GridEvents OnActionBegin="EditGrid" TValue="API_T_OrdreFabricationLigne"></GridEvents>
+					<GridTemplates>
+						<EmptyRecordTemplate>
+							<Empty></Empty>
+						</EmptyRecordTemplate>
+						<DetailTemplate>
+							<div style="padding:10px;">
+								<OrdreFabricationDetail AllowEditing=@(!(Grid?.IsEdit ?? false))
+														qte="@((context as API_T_OrdreFabricationLigne).Qte)"
+														Height="40vh" ligne="@((context as API_T_OrdreFabricationLigne).id)" />
 							</div>
-						</Template>
-					</GridColumn>
-					<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationLigne.Qte) HeaderText="Qté" Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-					<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationLigne.FraisU) HeaderText="Frais.Unité"
-								Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-					<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationLigne.FraisU) HeaderText="Frais.Total"
-								Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-						<Template>
-							<div style="text-align: right;">
-								@(((context as API_T_OrdreFabricationLigne).FraisU * (context as API_T_OrdreFabricationLigne).Qte).ToString("N2"))
-							</div>
-						</Template>
-						<EditTemplate>
-							<div style="text-align: right;">
-								@(((context as API_T_OrdreFabricationLigne).FraisU * (context as API_T_OrdreFabricationLigne).Qte).ToString("N2"))
-							</div>
-						</EditTemplate>
-					</GridColumn>
-					<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
-						<Template>
-							<RadzenButton Click=@(args => EditDetail((context as API_T_OrdreFabricationLigne).id, (context as API_T_OrdreFabricationLigne).Qte)) ButtonStyle="ButtonStyle.Info" Icon="info" Size="Radzen.ButtonSize.Small"
-										  Variant="Variant.Text" @onclick:stopPropagation="true" />
-						</Template>
-					</GridColumn>
-				</GridColumns>
-			</SfGrid>
-		</div>
-	</GridCol>
-</GridRow>
+
+						</DetailTemplate>
+					</GridTemplates>
+					<GridColumns>
+						<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationLigne.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+						<GridColumn Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationLigne.AR_Ref) HeaderText="Réference">
+							<EditTemplate>
+								<SfDropDownList FloatLabelType="FloatLabelType.Never"
+												AllowFiltering TValue="string" TItem="F_ARTICLE"
+												FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+												Query="@fn.LocalDataQuery"
+												DataSource="@(db.F_ARTICLE.FromSqlRaw("SELECT a.* FROM dbo.F_ARTICLE a WHERE a.AR_Ref IN (SELECT a.AR_Ref FROM dbo.F_NOMENCLAT a)").OrderBy(a => a.AR_Ref))" @bind-Value="@((context as API_T_OrdreFabricationLigne).AR_Ref)">
+									<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
+									<DropDownListFieldSettings Text="AR_Ref" Value="AR_Ref" />
+								</SfDropDownList>
+							</EditTemplate>
+						</GridColumn>
+						<GridColumn MinWidth="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationLigne.AR_Ref) HeaderText="Article">
+							<EditTemplate>
+								<SfDropDownList FloatLabelType="FloatLabelType.Never"
+												AllowFiltering TValue="string" TItem="F_ARTICLE"
+												FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+												Query="@fn.LocalDataQuery"
+												DataSource="@(db.F_ARTICLE.FromSqlRaw("SELECT a.* FROM dbo.F_ARTICLE a WHERE a.AR_Ref IN (SELECT a.AR_Ref FROM dbo.F_NOMENCLAT a)").OrderBy(a => a.AR_Design))" @bind-Value="@((context as API_T_OrdreFabricationLigne).AR_Ref)">
+									<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
+									<DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
+								</SfDropDownList>
+							</EditTemplate>
+							<Template>
+								<div>
+									@((context as API_T_OrdreFabricationLigne).AR_RefNavigation?.AR_Design)
+								</div>
+							</Template>
+						</GridColumn>
+						<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationLigne.Qte) HeaderText="Qté" Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+						<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+							<Template>
+								<RadzenButton Click=@(args => EditDetail((context as API_T_OrdreFabricationLigne).id, (context as API_T_OrdreFabricationLigne).Qte)) ButtonStyle="ButtonStyle.Info" Icon="info" Size="Radzen.ButtonSize.Small"
+											  Variant="Variant.Text" @onclick:stopPropagation="true" />
+							</Template>
+						</GridColumn>
+					</GridColumns>
+				</SfGrid>
+			</div>
+		</GridCol>
+	</GridRow>
+</AntDesign.Spin>
+
 <style>
 	.control-section {
 		min-height: 370px;
@@ -170,6 +171,7 @@
 	NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2", ShowSpinButton = false } };
 	SfGrid<API_T_OrdreFabricationLigne> Grid;
 	List<Commandes> commandes = new List<Commandes>();
+	bool Refreshing = false;
 	protected override async Task OnInitializedAsync()
 	{
 		try
@@ -310,6 +312,7 @@
 		lignes = db.API_T_OrdreFabricationLigne
 		.Where(a => a.Ordre == id).OrderBy(a => a.id)
 		.Include(b => b.API_T_OrdreFabricationDetail)
+		.ThenInclude(b => b.AR_RefNavigation)
 		.Include(a => a.AR_RefNavigation)
 		.ToList();
 	}
@@ -321,6 +324,61 @@
 		await DialogService.OpenAsync<ReportViewer>(row.Numero,
 		new Dictionary<string, object>() { { "ReportName", "reports\\caisses\\DepenseCaisse" }, { "parameters", parameters } },
 		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });
+	}
+	private async Task ShowNotification(NotificationMessage message)
+	{
+		NotificationService.Notify(message);
+	}
+	private async Task CreateCommande()
+	{
+
+		try
+		{
+			bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment créer une préparation de commande?");
+			{
+				Refreshing = true;
+				StateHasChanged();
+
+				await Task.Delay(100);
+				await Task.Run(() =>
+				{
+					var doc = om.CIAL().FactoryDocumentAchat.CreateType(DocumentType.DocumentTypeAchatCommande);
+					doc.SetDefault();
+					doc.SetDefaultFournisseur(om.CIAL().CptaApplication.FactoryFournisseur.ReadNumero("368"));
+					doc.DO_Ref = row.Numero;
+					doc.SetDefaultDO_Piece();
+					doc.Write();
+
+					foreach (API_T_OrdreFabricationLigne ln in lignes)
+					{
+						foreach (API_T_OrdreFabricationDetail ln2 in ln.API_T_OrdreFabricationDetail)
+						{
+							IBODocumentAchatLigne3 ligne2 = doc.FactoryDocumentLigne.Create() as IBODocumentAchatLigne3;
+							ligne2.SetDefaultArticleReference(ln2.AR_Ref, (double)(ln2.Qte * ln.Qte));
+							ligne2.DL_Design = ln2.AR_RefNavigation?.AR_Design;
+							ligne2.Write();
+						}
+						IBODocumentAchatLigne3 ligne3 = doc.FactoryDocumentLigne.Create() as IBODocumentAchatLigne3;
+						ligne3.DL_Design = "---------------------------------------------------------------------";
+						ligne3.Write();
+					}
+					row.PreparationCreated = true;
+					db.SaveChanges();
+				});
+
+				await UpdateGrid();
+			}
+		}
+		catch (Exception ex)
+		{
+			await DialogService.Alert(ex.ToString());
+		}
+		finally
+		{
+			Refreshing = false;
+			StateHasChanged();
+		}
+
 	}
 
 }
