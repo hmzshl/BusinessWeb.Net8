@@ -218,7 +218,7 @@ else
     {
         await Task.Delay(100);
 
-                db = session.db;
+        db = session.db;
         GC.Collect();
         ste1 = session.Societe;
         societes = sdb.TSocietes.Where(a => a.id != (ste1 ?? (new TSociete())).id).ToList();
@@ -605,7 +605,7 @@ else
         }
 
 
-        
+
         foreach (F_DOCENTETE ln in entetes)
         {
             if (!(db2.F_DOCENTETE.AsNoTracking().Where(a => a.DO_Piece == ln.DO_Piece && a.DO_Type == ln.DO_Type).Count() != 0))
@@ -615,6 +615,7 @@ else
                 item.DO_CodeTaxe1 = null;
                 item.DO_CodeTaxe2 = null;
                 item.DO_CodeTaxe3 = null;
+                item.DE_No = 1;
                 db2.F_DOCENTETE.Add(item);
 
                 db2.SaveChanges();
@@ -662,6 +663,7 @@ else
             var item = new F_DOCLIGNE();
             fn.CopyData(ln, item);
             item.DL_No = (db2.F_DOCLIGNE.Max(a => a.DL_No) + 1)??1;
+            item.DL_No = 1;
             db2.F_DOCLIGNE.Add(item);
             db2.SaveChanges();
 

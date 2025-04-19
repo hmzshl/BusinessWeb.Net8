@@ -105,31 +105,34 @@
 
                 string json = Newtonsoft.Json.JsonConvert.SerializeObject(e);
                 F_CREGLEMENT ln = Newtonsoft.Json.JsonConvert.DeserializeObject<F_CREGLEMENT>(json);
-                ln.RG_MontantEcart = 0;
-                ln.RG_MontantDev = 0;
-                ln.RG_Type = 0;
-                ln.RG_Souche = 0;
-                ln.RG_Ticket = 0;
-                ln.RG_Cloture = 0;
-                ln.RG_Transfere = 0;
-                ln.RG_Banque = 0;
-                ln.CA_No = 0;
-                ln.N_Devise = 0;
-                ln.RG_Cours = 0;
-                ln.EC_No = 0;
-                ln.RG_Impute = 0;
-                if (db.F_CREGLEMENT.Any())
                 {
-                    ln.RG_No = db.F_CREGLEMENT.Max(a => a.RG_No) + 1;
-                }
-                else
-                {
-                    ln.RG_No = 1;
-                }
-                
+                    ln.RG_MontantEcart = 0;
+                    ln.RG_MontantDev = 0;
+                    ln.RG_Type = 0;
+                    ln.RG_Souche = 0;
+                    ln.RG_Ticket = 0;
+                    ln.RG_Cloture = 0;
+                    ln.RG_Transfere = 0;
+                    ln.RG_Banque = 0;
+                    ln.CA_No = 0;
+                    ln.N_Devise = 0;
+                    ln.RG_Cours = 0;
+                    ln.EC_No = 0;
+                    ln.RG_Impute = 0;
+                    if (db.F_CREGLEMENT.Any())
+                    {
+                        ln.RG_No = db.F_CREGLEMENT.Max(a => a.RG_No) + 1;
+                    }
+                    else
+                    {
+                        ln.RG_No = 1;
+                    }
 
-                db.F_CREGLEMENT.Add(ln);
-                db.SaveChanges();
+
+                    db.F_CREGLEMENT.Add(ln);
+                    db.SaveChanges();
+                }
+
                 log.Libelle = "Ligne importée avec succès.";
             }
             catch (Exception ex)
