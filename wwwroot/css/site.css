@@ -2443,3 +2443,10 @@ input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-
     font-size: 18px;
     font-weight: 700;
 }
+.ant-spin-nested-loading > div > .ant-spin-lg .ant-spin-text {
+    padding-top: 30px !important;
+}
+/* Optional: Set font for specific Blazor components */
+body, h1, h2, h3, h4, h5, h6, p, button, input, textarea, select {
+    font-family: 'Ubuntu', sans-serif !important;
+}

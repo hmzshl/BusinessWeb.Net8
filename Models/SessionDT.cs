@@ -41,6 +41,7 @@ namespace BusinessWeb
 		public string zoomLevel { get; set; } = "1";
         public double scaleLevel { get; set; } = 1;
         public string gridHeight { get; set; } = "100%";
+		public int screenHeight { get; set; }
 
-    }
+	}
 }

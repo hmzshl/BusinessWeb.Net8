@@ -187,8 +187,8 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Ordres de fabrications", Url = "ordres-fabrication" });
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Documents d'achats", Url = "fabrication-achats" });
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Pointage Personnels", Url = "pointage-personnel" });
-			
-			
+
+
 
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Pointage par personnel", Url = "depots" });
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Pointage par projet", Url = "" });
@@ -537,27 +537,27 @@ namespace BusinessWeb
 
 			return rs;
 		}
-public DB getDb(TSociete ste)
-{
-    var optionBuilder = new DbContextOptionsBuilder<DB>();
-    optionBuilder.UseSqlServer(getConnectionString(ste), o =>
-    {
-        o.UseCompatibilityLevel(100);
-        o.CommandTimeout(3600); // Timeout in seconds (default is 30)
-								// Add this line to handle triggers with OUTPUT clause:
-		o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
-		 .UseRelationalNulls();
-    });
-    
-    optionBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
-    
-    DB db = new DB(optionBuilder.Options);
-    db.Database.Migrate();
-    db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "ChefChantier", "VARCHAR(100)"));
-    db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "Demandeur", "VARCHAR(100)"));
-    
-    return db;
-}
+		public DB getDb(TSociete ste)
+		{
+			var optionBuilder = new DbContextOptionsBuilder<DB>();
+			optionBuilder.UseSqlServer(getConnectionString(ste), o =>
+			{
+				o.UseCompatibilityLevel(100);
+				o.CommandTimeout(3600); // Timeout in seconds (default is 30)
+										// Add this line to handle triggers with OUTPUT clause:
+				o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
+				 .UseRelationalNulls();
+			});
+
+			optionBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+
+			DB db = new DB(optionBuilder.Options);
+			db.Database.Migrate();
+			db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "ChefChantier", "VARCHAR(100)"));
+			db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "Demandeur", "VARCHAR(100)"));
+
+			return db;
+		}
 		public string AddCol(string table, string col, string type)
 		{
 			if (type.ToUpper().Contains("INT") || type.ToUpper().Contains("DECIMAL") || type.ToUpper().Contains("BOOL"))

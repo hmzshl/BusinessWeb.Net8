@@ -12,6 +12,8 @@ namespace BusinessWeb.Models.Perso
         public Decimal? DO_TotalHT2 { get; set; }
 		public Decimal? DO_TotalTTC2 { get; set; }
 		public string Statut { get; set; }
-    }
+		public string Tiers { get; set; }
+		public string Tiers2 { get; set; }
+	}
 }
 
