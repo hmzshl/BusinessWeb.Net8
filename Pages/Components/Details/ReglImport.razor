@@ -1,11 +1,14 @@
 ﻿@using System.Globalization
-<GridRow>
-    <SfUploader @ref=sfUploader AutoUpload="false" AllowedExtensions=".xls, .xlsx">
-        <UploaderEvents ValueChange="Import"></UploaderEvents>
-    </SfUploader>
-    <div>Charger un fichier excel...</div>
+<AntDesign.Spin Spinning=loading Size="large" Tip="Veuillez patienter s'il vous plait...">
+    <GridRow>
+        <SfUploader @ref=sfUploader AutoUpload="false" AllowedExtensions=".xls, .xlsx">
+            <UploaderEvents ValueChange="Import"></UploaderEvents>
+        </SfUploader>
+        <div>Charger un fichier excel...</div>
 
-</GridRow>
+    </GridRow>
+</AntDesign.Spin>
+
 
 @code 
 {
@@ -13,7 +16,7 @@
     SfUploader sfUploader;
     DB db = new DB();
     [Parameter] public int id { get; set; } = 0;
-    bool loading = true;
+    bool loading = false;
     protected override void OnInitialized()
     {
         db = session.db;
@@ -25,46 +28,53 @@
     }
     private async Task Import(Syncfusion.Blazor.Inputs.UploadChangeEventArgs args)
     {
-
         try
         {
-            SfGrid<ExpandoObject> Grid2;
-
-            foreach (var file in args.Files)
+            loading = true;
+            StateHasChanged();
+            await Task.Delay(100);
+            await Task.Run(() =>
             {
-                DataTable table = new DataTable();
+                SfGrid<ExpandoObject> Grid2;
 
-                System.IO.Directory.CreateDirectory(Path.Combine(sg.GetRoot(), "data" + "\\" + "Reglements" + "\\" + "Import"));
-                var path = Path.Combine(sg.GetRoot(), "data" + "\\" + "Reglements" + "\\" + "Import" + "\\" + file.FileInfo.Name);
+                foreach (var file in args.Files)
+                {
+                    DataTable table = new DataTable();
 
-                //var path = file.FileInfo.Name;
-                ExcelEngine excelEngine = new ExcelEngine();
-                IApplication application = excelEngine.Excel;
+                    System.IO.Directory.CreateDirectory(Path.Combine(sg.GetRoot(), "data" + "\\" + "Reglements" + "\\" + "Import"));
+                    var path = Path.Combine(sg.GetRoot(), "data" + "\\" + "Reglements" + "\\" + "Import" + "\\" + file.FileInfo.Name);
 
-                application.DefaultVersion = ExcelVersion.Excel2016;
+                    //var path = file.FileInfo.Name;
+                    ExcelEngine excelEngine = new ExcelEngine();
+                    IApplication application = excelEngine.Excel;
 
-                FileStream openFileStream = new FileStream(path, FileMode.OpenOrCreate);
+                    application.DefaultVersion = ExcelVersion.Excel2016;
 
-                await file.File.OpenReadStream(long.MaxValue).CopyToAsync(openFileStream);
-                FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                //access the workbook from that filtestream
-                IWorkbook workbook = application.Workbooks.Open(fileStream);
-                IWorksheet worksheet = workbook.Worksheets[0];
-                //get datatable from workbook
-                table = worksheet.ExportDataTable(worksheet.UsedRange, ExcelExportDataTableOptions.ColumnNames);
-                //convert to dynamic list and append to Grid.
-                GenerateListFromTable(table);
-                openFileStream.Close();
+                    FileStream openFileStream = new FileStream(path, FileMode.OpenOrCreate);
 
-            }
+                    file.File.OpenReadStream(long.MaxValue).CopyToAsync(openFileStream);
+                    FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    //access the workbook from that filtestream
+                    IWorkbook workbook = application.Workbooks.Open(fileStream);
+                    IWorksheet worksheet = workbook.Worksheets[0];
+                    //get datatable from workbook
+                    table = worksheet.ExportDataTable(worksheet.UsedRange, ExcelExportDataTableOptions.ColumnNames);
+                    //convert to dynamic list and append to Grid.
+                    GenerateListFromTable(table);
+                    openFileStream.Close();
+
+                }
+            });
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            await Message.Error(ex.ToString(), 20);
+            await DialogService.Alert(ex.ToString());
         }
-
-
-
+        finally
+        {
+            loading = false;
+            StateHasChanged();
+        }
 
         DialogService.Close();
 
@@ -106,6 +116,7 @@
                 string json = Newtonsoft.Json.JsonConvert.SerializeObject(e);
                 F_CREGLEMENT ln = Newtonsoft.Json.JsonConvert.DeserializeObject<F_CREGLEMENT>(json);
                 {
+                    ln.N_Reglement = (db.P_REGLEMENT.Where(a => a.R_Intitule == ln.RG_Reference && a.R_Intitule != "").SingleOrDefault()?.cbIndice)??1;
                     ln.RG_MontantEcart = 0;
                     ln.RG_MontantDev = 0;
                     ln.RG_Type = 0;

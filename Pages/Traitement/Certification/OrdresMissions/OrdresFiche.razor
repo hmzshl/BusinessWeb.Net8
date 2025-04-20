@@ -219,7 +219,7 @@
 		}
 		catch(Exception ex)
 		{
-			await Message.Error(ex.ToString(), 20);
+			await DialogService.Alert(ex.ToString());
 		}
 
 

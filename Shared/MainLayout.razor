@@ -946,9 +946,9 @@
 		{
 			scaleLevel = (await JSRuntime.InvokeAsync<double>("getScaleLevel"));
 
-			if (scaleLevel < 0.8)
+			if (scaleLevel < 0.85)
 			{
-				scaleLevel = 0.8;
+				scaleLevel = 0.85;
 			}
 
 			session.scaleLevel = scaleLevel;
@@ -1008,7 +1008,6 @@
 				rs = (((scaleLevel - 0.04) * height)).ToString(System.Globalization.CultureInfo.InvariantCulture) + "vh";
 			}
 		}
-
 		return rs;
 	}
 	private string getURL()

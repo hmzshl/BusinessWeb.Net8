@@ -1,9 +1,10 @@
 ﻿@if (IsLoaded)
 {
 	<div style="height: 80vh;">
-		<SfGrid Height="100%" DataSource="@(items)" AllowFiltering>
+		<SfGrid Height="100%" DataSource="@(items)" AllowFiltering AllowPaging>
 			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 			<GridEvents TValue="API_T_ImportLog"></GridEvents>
+			<GridPageSettings PageSize="100" />
 			<GridTemplates>
 				<EmptyRecordTemplate>
 					<Empty></Empty>

@@ -43,8 +43,8 @@
 	</div>
 	<div class="@ClassHeight" style=" zoom: @session.zoomLevel;">
 
-		<SfGrid  AllowReordering ID="DetailreglGRID" ShowColumnChooser Height="100%" AllowSelection EnableHover DataSource="@(items)" 
-		@ref=DefaultGrid AllowSorting AllowFiltering AllowExcelExport EnableVirtualization >
+		<SfGrid AllowReordering ID="DetailreglGRID" ShowColumnChooser Height="100%" AllowSelection EnableHover AllowPaging="true" DataSource="@(items)"
+				@ref=DefaultGrid AllowSorting AllowFiltering AllowExcelExport EnableVirtualization >
 			<GridPageSettings PageSize="100" />
 			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 			<GridAggregates>
@@ -73,7 +73,7 @@
 				<GridColumn Width="260" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.JO_Intitule)" HeaderText="Journal" Visible="@(JO_Num == null)" />
 				<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Libelle)" HeaderText="Libellé" />
 				<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Montant)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-				<GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_DateEcheance)" HeaderText="Ech" />
+				<GridColumn Format="dd/MM/yy" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_DateEcheance)" HeaderText="Ech" />
 				<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.Echeance)" HeaderText="Sta.Ech">
 					<Template>
 						@{

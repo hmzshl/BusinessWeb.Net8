@@ -580,7 +580,7 @@ WHERE b.DO_Provenance = 0 AND a.DO_Type IN (6,7)").Select(a => a.DL_PieceBL).Dis
 		}
 		catch (Exception ex)
 		{
-			await Message.Error(ex.ToString(), 20);
+			await DialogService.Alert(ex.ToString());
 		}
 
 
