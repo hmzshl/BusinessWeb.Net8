@@ -17,14 +17,49 @@ using Microsoft.Extensions.Options;
 using Microsoft.OData.ModelBuilder;
 using MudBlazor.Services;
 using Radzen;
+using Serilog;
 using Syncfusion.Blazor;
 using Syncfusion.Blazor.Popups;
 using System.Globalization;
 using System.IO.Compression;
 using System.Reflection;
 
-var builder = WebApplication.CreateBuilder(new WebApplicationOptions() { ContentRootPath = WindowsServiceHelpers.IsWindowsService() ? AppContext.BaseDirectory : default, Args = args });
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions()
+{
+	ApplicationName = Assembly.GetExecutingAssembly().GetName().Name,
+	ContentRootPath = WindowsServiceHelpers.IsWindowsService() ? AppContext.BaseDirectory : default,
+	Args = args,
+	// Explicitly set ALL paths:
+	WebRootPath = WindowsServiceHelpers.IsWindowsService() ? Path.Combine(AppContext.BaseDirectory, "wwwroot") : default,
+	EnvironmentName = WindowsServiceHelpers.IsWindowsService() ? Environments.Production : Environments.Development
+});
+
+// Force the current directory to the app's installation path:
+if (WindowsServiceHelpers.IsWindowsService())
+{
+	Directory.SetCurrentDirectory(AppContext.BaseDirectory);
+}
+
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+	.MinimumLevel.Debug()
+	.WriteTo.File(
+		path: Path.Combine(AppContext.BaseDirectory, "logs", "service-log.txt"),
+		rollingInterval: RollingInterval.Day
+	)
+	.CreateLogger();
+
+builder.Host.UseSerilog(); // Integrate Serilog
+
+
+builder.Services.AddWindowsService(); // Add this
 builder.Host.UseWindowsService();
+builder.WebHost.UseUrls("http://*:5000");
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+	serverOptions.ListenAnyIP(5000); // Force listen on all interfaces
+});
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
@@ -33,7 +68,7 @@ builder.Services.AddMudServices();
 builder.Services.AddSyncfusionBlazor();
 builder.Services.AddScoped<SfDialogService>();
 builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
-builder.WebHost.UseUrls("http://*:5000");
+
 builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<TooltipService>();
@@ -44,12 +79,12 @@ builder.Services.AddScoped<BusinessWeb.Helpers>();
 builder.Services.AddScoped<SageOM>();
 builder.Services.AddDbContext<BusinessWeb.Data.BusinessWebDBContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"), o => o.UseCompatibilityLevel(100));
+	options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"), o => o.UseCompatibilityLevel(100));
 	options.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
 }, ServiceLifetime.Transient);
 builder.Services.AddDbContext<BusinessWeb.Data.DB>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("APIDB"), o => o.UseCompatibilityLevel(100));
+	options.UseSqlServer(builder.Configuration.GetConnectionString("APIDB"), o => o.UseCompatibilityLevel(100));
 }, ServiceLifetime.Transient);
 builder.Services.AddHttpClient("BusinessWeb").AddHeaderPropagation(o => o.Headers.Add("Cookie"));
 builder.Services.AddHeaderPropagation(o => o.Headers.Add("Cookie"));
@@ -61,41 +96,41 @@ builder.Services.AddScoped<BusinessWeb.SecurityService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<ApplicationIdentityDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"), o => o.UseCompatibilityLevel(100));
-    options.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+	options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"), o => o.UseCompatibilityLevel(100));
+	options.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
 }, ServiceLifetime.Transient);
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationIdentityDbContext>().AddDefaultTokenProviders();
 builder.Services.AddControllers().AddOData(o =>
 {
-    var oDataBuilder = new ODataConventionModelBuilder();
-    oDataBuilder.EntitySet<ApplicationUser>("ApplicationUsers");
-    var usersType = oDataBuilder.StructuralTypes.First(x => x.ClrType == typeof(ApplicationUser));
-    usersType.AddProperty(typeof(ApplicationUser).GetProperty(nameof(ApplicationUser.Password)));
-    usersType.AddProperty(typeof(ApplicationUser).GetProperty(nameof(ApplicationUser.ConfirmPassword)));
-    oDataBuilder.EntitySet<ApplicationRole>("ApplicationRoles");
-    o.AddRouteComponents("odata/Identity", oDataBuilder.GetEdmModel()).Count().Filter().OrderBy().Expand().Select().SetMaxTop(null).TimeZone = TimeZoneInfo.Utc;
+	var oDataBuilder = new ODataConventionModelBuilder();
+	oDataBuilder.EntitySet<ApplicationUser>("ApplicationUsers");
+	var usersType = oDataBuilder.StructuralTypes.First(x => x.ClrType == typeof(ApplicationUser));
+	usersType.AddProperty(typeof(ApplicationUser).GetProperty(nameof(ApplicationUser.Password)));
+	usersType.AddProperty(typeof(ApplicationUser).GetProperty(nameof(ApplicationUser.ConfirmPassword)));
+	oDataBuilder.EntitySet<ApplicationRole>("ApplicationRoles");
+	o.AddRouteComponents("odata/Identity", oDataBuilder.GetEdmModel()).Count().Filter().OrderBy().Expand().Select().SetMaxTop(null).TimeZone = TimeZoneInfo.Utc;
 });
 // Add data protection services
 builder.Services.AddDataProtection()
-    .PersistKeysToFileSystem(new DirectoryInfo(@"C:\keys"))
+	.PersistKeysToFileSystem(new DirectoryInfo(@"C:\keys"))
 		.SetApplicationName("BusinessWeb");
 
 
 builder.Services.AddCors(opts => opts.AddDefaultPolicy(bld =>
 {
-    bld
-        .AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-        .WithExposedHeaders("*")
-    ;
+	bld
+		.AllowAnyOrigin()
+		.AllowAnyMethod()
+		.AllowAnyHeader()
+		.WithExposedHeaders("*")
+	;
 }));
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("NewPolicy", builder =>
-    builder.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader());
+	options.AddPolicy("NewPolicy", builder =>
+	builder.AllowAnyOrigin()
+		.AllowAnyMethod()
+		.AllowAnyHeader());
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -103,22 +138,22 @@ builder.Services.AddMvc(e => e.EnableEndpointRouting = false);
 builder.Services.AddScoped<AuthenticationStateProvider, BusinessWeb.ApplicationAuthenticationStateProvider>();
 builder.Services.AddDbContext<BusinessWeb.Data.BusinessWebDBContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"));
+	options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"));
 });
 
 ReportConfig.DefaultSettings = new ReportSettings().RegisterExtensions(new List<string> { "BoldReports.Data.WebData", "BoldReports.Data.Csv" });
 builder.Services.Configure<GzipCompressionProviderOptions>(options =>
 {
-    options.Level = CompressionLevel.SmallestSize;
+	options.Level = CompressionLevel.SmallestSize;
 });
 builder.Services.AddResponseCompression(options =>
 {
-    options.Providers.Add<GzipCompressionProvider>();
-    options.EnableForHttps = true; // Optional: Enable compression for HTTPS
+	options.Providers.Add<GzipCompressionProvider>();
+	options.EnableForHttps = true; // Optional: Enable compression for HTTPS
 });
 builder.Services.AddMvc(e => e.EnableEndpointRouting = false);
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+	.AddInteractiveServerComponents();
 var app = builder.Build();
 app.UseResponseCompression();
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzgwOTQzMEAzMjM5MmUzMDJlMzAzYjMyMzkzYk43bzloSDI4dENmcEJKdDc5YS9rZ3pSeU1EYTNQVlF6NzB6dDNuOHlyN0k9");
@@ -129,9 +164,9 @@ CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("fr");
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+	app.UseExceptionHandler("/Error");
+	// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+	app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -146,11 +181,11 @@ app.UseAntiforgery();
 app.UseMiddleware<ApiKeyMiddleware>();
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllers();
+	endpoints.MapControllers();
 });
 app.UseCors();
 app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>().Database.Migrate();
 app.MapControllers();
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+	.AddInteractiveServerRenderMode();
 app.Run();
