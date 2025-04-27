@@ -463,7 +463,7 @@ else
 		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
 		foreach (RAPPRO_DOCENTETE itm in dt)
 		{
-			if (itm.DO_Piece != null && itm.Statut != "Facturé")
+			if (itm.DO_Piece != null)
 			{
 				entetes.Add(db1.F_DOCENTETE.AsNoTracking().Where(a => a.DO_Type == itm.DO_Type && a.DO_Piece == itm.DO_Piece).SingleOrDefault());
 				lignes.AddRange(db1.F_DOCLIGNE.AsNoTracking().Where(a => a.DO_Type == itm.DO_Type && a.DO_Piece == itm.DO_Piece));
