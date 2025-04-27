@@ -116,7 +116,7 @@
                 string json = Newtonsoft.Json.JsonConvert.SerializeObject(e);
                 F_CREGLEMENT ln = Newtonsoft.Json.JsonConvert.DeserializeObject<F_CREGLEMENT>(json);
                 {
-                    ln.N_Reglement = (db.P_REGLEMENT.Where(a => a.R_Intitule == ln.RG_Reference && a.R_Intitule != "").SingleOrDefault()?.cbIndice)??1;
+                    ln.N_Reglement = (db.P_REGLEMENT.Where(a => a.R_Intitule == ln.Remarque && a.R_Intitule != "").SingleOrDefault()?.cbIndice)??1;
                     ln.RG_MontantEcart = 0;
                     ln.RG_MontantDev = 0;
                     ln.RG_Type = 0;

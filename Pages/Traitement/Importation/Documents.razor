@@ -1,165 +1,158 @@
 ﻿@if (IsLoaded)
 {
 
-			<AntDesign.Spin Spinning=loading Size="large" Tip="Veuillez patienter s'il vous plait...">
-				<Card_1 Title="@title">
-					<RadzenContent Container="main">
-						<div class="grid-90">
-							<SfToolbar>
-								<ToolbarItems>
-									<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
-										<Template>
-											<SfDropDownList Width="200" TItem="TSociete" TValue="TSociete" Placeholder="Base de données" @bind-Value="@ste2" DataSource="@(societes)">
-												<DropDownListEvents TItem="TSociete" TValue="TSociete" />
-												<DropDownListFieldSettings Text="Intitule" Value="id" />
-											</SfDropDownList>
-										</Template>
+	<AntDesign.Spin Spinning=loading Size="large" Tip="Veuillez patienter s'il vous plait...">
+		<Card_1 Title="@title">
+			<RadzenContent Container="main">
+				<div class="grid-90">
+					<SfToolbar>
+						<ToolbarItems>
+							<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+								<Template>
+									<SfDropDownList Width="200" TItem="TSociete" TValue="TSociete" Placeholder="Base de données" @bind-Value="@ste2" DataSource="@(societes)">
+										<DropDownListEvents TItem="TSociete" TValue="TSociete" />
+										<DropDownListFieldSettings Text="Intitule" Value="id" />
+									</SfDropDownList>
+								</Template>
 
-									</ToolbarItem>
-									<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
-									<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-										<Template>
-											<SfDropDownList Width="260px" Placeholder="Type document" TValue="short?" TItem="TypeIntitule" DataSource="@types.Where(a => a.DO_Domaine == row.do_domaine)" @bind-Value="@row.do_type">
-												<DropDownListEvents TValue="short?" TItem="TypeIntitule" />
-												<DropDownListFieldSettings Text="Intitule" Value="DO_Type" />
-											</SfDropDownList>
-										</Template>
-									</ToolbarItem>
+							</ToolbarItem>
+							<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+							<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+								<Template>
+									<SfDropDownList Width="260px" Placeholder="Type document" TValue="short?" TItem="TypeIntitule" DataSource="@types.Where(a => a.DO_Domaine == row.do_domaine)" @bind-Value="@row.do_type">
+										<DropDownListEvents TValue="short?" TItem="TypeIntitule" />
+										<DropDownListFieldSettings Text="Intitule" Value="DO_Type" />
+									</SfDropDownList>
+								</Template>
+							</ToolbarItem>
 
-									<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-										<Template>
-											<SfDatePicker Width="140px" ShowClearButton ShowTodayButton Placeholder="Date Début" TValue="DateTime ?" @bind-Value="@row.do_date1" />
-										</Template>
+							<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+								<Template>
+									<SfDatePicker Width="140px" ShowClearButton ShowTodayButton Placeholder="Date Début" TValue="DateTime ?" @bind-Value="@row.do_date1" />
+								</Template>
 
-									</ToolbarItem>
-									<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-										<Template>
-											<SfDatePicker Width="140px" ShowClearButton ShowTodayButton Placeholder="Date Fin" TValue="DateTime ?" @bind-Value="@row.do_date2" />
-										</Template>
+							</ToolbarItem>
+							<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+								<Template>
+									<SfDatePicker Width="140px" ShowClearButton ShowTodayButton Placeholder="Date Fin" TValue="DateTime ?" @bind-Value="@row.do_date2" />
+								</Template>
 
-									</ToolbarItem>
+							</ToolbarItem>
 
-									<ToolbarItem Align="ItemAlign.Right">
-										<Template>
-											<SfButton IconCss="e-icons e-sorting-1" OnClick="Compare">Comparer</SfButton>
-										</Template>
-									</ToolbarItem>
-									<ToolbarItem Align="ItemAlign.Right">
-										<Template>
-											<SfButton IconCss="e-icons e-arrow-down" IsPrimary OnClick="Transferer">Transferer</SfButton>
-										</Template>
-									</ToolbarItem>
+							<ToolbarItem Align="ItemAlign.Right">
+								<Template>
+									<SfButton IconCss="e-icons e-sorting-1" OnClick="Compare">Comparer</SfButton>
+								</Template>
+							</ToolbarItem>
+							<ToolbarItem Align="ItemAlign.Right">
+								<Template>
+									<SfButton IconCss="e-icons e-arrow-down" IsPrimary OnClick="Transferer">Transferer</SfButton>
+								</Template>
+							</ToolbarItem>
 
-								</ToolbarItems>
-							</SfToolbar>
-							<div class="grid-84" style="zoom: @session.zoomLevel;">
-								<SfGrid EnablePersistence ID="TransfertGrid" @ref=@DefaultGrid Height="100%" RowRenderingMode="RowDirection.Horizontal"
-										AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
+						</ToolbarItems>
+					</SfToolbar>
+					<div class="grid-84" style="zoom: @session.zoomLevel;">
+						<SfGrid EnablePersistence ID="TransfertGrid" @ref=@DefaultGrid Height="100%" RowRenderingMode="RowDirection.Horizontal"
+						AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
 
-									<GridEvents TValue="RAPPRO_DOCENTETE" Created="CreatedHandler"></GridEvents>
-									<GridPageSettings PageSize="100"></GridPageSettings>
-									<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-									<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
-									<GridTemplates>
-										<EmptyRecordTemplate>
-											<Empty></Empty>
-										</EmptyRecordTemplate>
-									</GridTemplates>
+							<GridEvents TValue="RAPPRO_DOCENTETE" Created="CreatedHandler"></GridEvents>
+							<GridPageSettings PageSize="100"></GridPageSettings>
+							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+							<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
+							<GridTemplates>
+								<EmptyRecordTemplate>
+									<Empty></Empty>
+								</EmptyRecordTemplate>
+							</GridTemplates>
+							<GridColumns>
+								<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Type">
+									<Template>
+										<div>@(GetTypeIntitule(row.do_type))</div>
+									</Template>
+								</GridColumn>
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Piece" HeaderText="Pièce">
+									<Template>
+										@{
+											var item = (context as RAPPRO_DOCENTETE);
+											<RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowPiece(null, item.DO_Piece, item.DO_Type))" Shade="Shade.Darker" Variant="Variant.Text" Text="@(item.DO_Piece)" ButtonStyle="ButtonStyle.Info" />
+										}
+									</Template>
+								</GridColumn>
+
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="@((ste1 ?? new TSociete()).Intitule)">
 									<GridColumns>
-										<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Type">
-											<Template>
-												<div>@(GetTypeIntitule(row.do_type))</div>
-											</Template>
+
+
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Date" Format="dd/MM/yy" HeaderText="Date"></GridColumn>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Tiers" HeaderText="Numéro"></GridColumn>
+										<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Tiers" HeaderText="Tiers" Width="250">
 										</GridColumn>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalHT" Format="N2" HeaderText="HT" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalTTC" Format="N2" HeaderText="TTC" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									</GridColumns>
+								</GridColumn>
+
+								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="@((ste2 ?? new TSociete()).Intitule)">
+									<GridColumns>
 										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Piece" HeaderText="Pièce">
 											<Template>
 												@{
-															var item = (context as RAPPRO_DOCENTETE);
-															<RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowPiece(null, item.DO_Piece, item.DO_Type))" Shade="Shade.Darker" Variant="Variant.Text" Text="@(item.DO_Piece)" ButtonStyle="ButtonStyle.Info" />
+													var item = (context as RAPPRO_DOCENTETE);
+													<RadzenButton Disabled=@(item.Statut == "A Ajouter" || item.Statut == "Facturé") Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowPiece(db2, item.DO_Piece, item.DO_Type))" Shade="Shade.Darker" Variant="Variant.Text" Text="@(item.DO_Piece)" ButtonStyle="ButtonStyle.Info" />
 												}
 											</Template>
 										</GridColumn>
-
-										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="@((ste1 ?? new TSociete()).Intitule)">
-											<GridColumns>
-
-
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Date" Format="dd/MM/yy" HeaderText="Date"></GridColumn>
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Tiers" HeaderText="Numéro"></GridColumn>
-												<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Tiers" HeaderText="Tiers" Width="250">
-												</GridColumn>
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalHT" Format="N2" HeaderText="HT" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalTTC" Format="N2" HeaderText="TTC" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-											</GridColumns>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Date2" Format="dd/MM/yy" HeaderText="Date"></GridColumn>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Tiers2" HeaderText="Numéro"></GridColumn>
+										<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Tiers2" HeaderText="Tiers" Width="250">
 										</GridColumn>
 
-										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="@((ste2 ?? new TSociete()).Intitule)">
-											<GridColumns>
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Piece" HeaderText="Pièce">
-													<Template>
-														@{
-																	var item = (context as RAPPRO_DOCENTETE);
-																	<RadzenButton Disabled=@(item.Statut == "A Ajouter" || item.Statut == "Facturé") Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 8px !important; padding-right: 8px !important;" Click="@(args => ShowPiece(db2, item.DO_Piece, item.DO_Type))" Shade="Shade.Darker" Variant="Variant.Text" Text="@(item.DO_Piece)" ButtonStyle="ButtonStyle.Info" />
-														}
-													</Template>
-												</GridColumn>
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Date2" Format="dd/MM/yy" HeaderText="Date"></GridColumn>
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_Tiers2" HeaderText="Numéro"></GridColumn>
-												<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Tiers2" HeaderText="Tiers" Width="250">
-												</GridColumn>
-
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalHT2" Format="N2" HeaderText="HT" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalTTC2" Format="N2" HeaderText="TTC" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalHT2" Format="N2" HeaderText="HT" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DO_TotalTTC2" Format="N2" HeaderText="TTC" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
 
 
-											</GridColumns>
-										</GridColumn>
-										<GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Statut">
-											<Template>
-												@{
-															var dt = (context as RAPPRO_DOCENTETE);
-															if (dt.Statut == "A Ajouter")
-															{
-																		<div style="text-align: center;">
-																			<span class="statustxt e-inactivecolor">A Ajouter</span>
-																		</div>
-															}
-															else if (dt.Statut == "A Modifier")
-															{
-																		<div style="text-align: center;">
-																			<span class="statustxt e-infocolor">A Modifier</span>
-																		</div>
-															}
-															else if (dt.Statut == "Identique")
-															{
-																		<div style="text-align: center;">
-																			<span class="statustxt e-activecolor">Identique</span>
-																		</div>
-															}
-															else
-															{
-																		<div style="text-align: center;">
-																			<span>Facturé</span>
-																		</div>
-															}
-
-												}
-											</Template>
-										</GridColumn>
 									</GridColumns>
-								</SfGrid>
-							</div>
-						</div>
-					</RadzenContent>
-				</Card_1>
-			</AntDesign.Spin>
+								</GridColumn>
+								<GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="Statut">
+									<Template>
+										@{
+											var dt = (context as RAPPRO_DOCENTETE);
+											if (dt.Statut == "A Ajouter")
+											{
+												<div style="text-align: center;">
+													<span class="statustxt e-inactivecolor">A Ajouter</span>
+												</div>
+											}
+											else if (dt.Statut == "A Modifier")
+											{
+												<div style="text-align: center;">
+													<span class="statustxt e-infocolor">A Modifier</span>
+												</div>
+											}
+											else if (dt.Statut == "Identique")
+											{
+												<div style="text-align: center;">
+													<span class="statustxt e-activecolor">Identique</span>
+												</div>
+											}
+											else
+											{
+												<div style="text-align: center;">
+													<span>Facturé</span>
+												</div>
+											}
 
-	@foreach (RAPPRO_DOCENTETE itm in DefaultGrid?.GetSelectedRecords()?.Result)
-	{
-		<div>
-			@itm.DO_Piece
-		</div>
-	}
+										}
+									</Template>
+								</GridColumn>
+							</GridColumns>
+						</SfGrid>
+					</div>
+				</div>
+			</RadzenContent>
+		</Card_1>
+	</AntDesign.Spin>
 
 }
 else
