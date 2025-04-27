@@ -295,12 +295,12 @@ else
 	[CascadingParameter]
 	public SessionDT session { get; set; } = new SessionDT();
 	DB db = new DB();
-	private List<API_V_ARTICLEMVT> data = new List<API_V_ARTICLEMVT>();
-	private List<API_V_ARTICLEMVT> data_2 = new List<API_V_ARTICLEMVT>();
-	private List<API_V_ARTICLEMVT> details = new List<API_V_ARTICLEMVT>();
-	private List<API_V_ARTICLEMVT> initial = new List<API_V_ARTICLEMVT>();
+	private IEnumerable<API_V_ARTICLEMVT> data;
+	private IEnumerable<API_V_ARTICLEMVT> data_2;
+	private IEnumerable<API_V_ARTICLEMVT> details;
+	private IEnumerable<API_V_ARTICLEMVT> initial ;
 	private List<V_StockGlobal> items = new List<V_StockGlobal>();
-	private List<API_V_ARTICLEMVT> chart_items = new List<API_V_ARTICLEMVT>();
+	private IEnumerable<API_V_ARTICLEMVT> chart_items;
 	private List<F_DEPOT> depots = new List<F_DEPOT>();
 	DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
 	DateTime? date2 = new DateTime(DateTime.Today.Year, 12, 31);
@@ -335,9 +335,8 @@ else
 		await Task.Delay(100);
 		data = db.API_V_ARTICLEMVT
 		.Where(a => (((date2 != null && a.DO_Date <= date2) || date2 == null)) && (a.DE_No == depot || depot == null))
-		.OrderBy(a => a.AR_Design)
-		.ToList();
-		data_2 = data.Where(a => (a.DL_DateBL >= date1 || date1 == null)).ToList();
+		.OrderBy(a => a.AR_Design);
+		data_2 = data.Where(a => (a.DL_DateBL >= date1 || date1 == null));
 		items = data
 			.GroupBy(a => new { a.AR_Ref, a.AR_Design, a.FA_CodeFamille, a.FA_Intitule, a.U_Intitule, a.AR_PrixAch, a.AR_PUNet })
 			.Select(a => new V_StockGlobal
@@ -367,8 +366,7 @@ else
 						? 0
 						: (a.Where(a => (a.DO_Domaine == 2 || a.DO_Domaine == 1) && a.DL_MontantHT > 0).Sum(a => a.DL_MontantHT) ?? 0) / (a.Where(a => (a.DO_Domaine == 2 || a.DO_Domaine == 1) && a.DL_MontantHT > 0).Sum(a => a.DL_Qte) ?? 1)
 					)
-				})
-			.ToList();
+				}).ToList();
 
 
 		Loading = false;
@@ -379,11 +377,11 @@ else
 	{
 		if (DO_Domaine != 2)
 		{
-			details = data_2.Where(a => a.AR_Ref == AR_Ref && a.DO_Domaine == DO_Domaine).ToList();
+			details = data_2.Where(a => a.AR_Ref == AR_Ref && a.DO_Domaine == DO_Domaine);
 		}
 		else
 		{
-			details = data_2.Where(a => a.AR_Ref == AR_Ref && a.DO_Type == DO_Type).ToList();
+			details = data_2.Where(a => a.AR_Ref == AR_Ref && a.DO_Type == DO_Type);
 		}
 		await DialogService.OpenAsync<DetailsMVT>("",
 	new Dictionary<string, object>() { { "details", details }, { "ClassHeight", "grid-84" } },

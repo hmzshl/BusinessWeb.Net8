@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>BusinessMobile_128x128.ico</ApplicationIcon>
     <OutputType>Exe</OutputType>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Pages\Components\CA\**" />
@@ -28,8 +28,8 @@
   <ItemGroup>
     <COMReference Include="Objets100cLib">
       <WrapperTool>tlbimp</WrapperTool>
-      <VersionMinor>0</VersionMinor>
-      <VersionMajor>5</VersionMajor>
+      <VersionMinor>2</VersionMinor>
+      <VersionMajor>9</VersionMajor>
       <Guid>8b42efd1-11de-4af5-8f95-2901702d7a46</Guid>
       <Lcid>0</Lcid>
       <Isolated>false</Isolated>
@@ -123,11 +123,6 @@
     
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="LogicNP.CryptoLicensing">
-      <HintPath>..\..\..\..\Documents\LogicNP.CryptoLicensing.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Update="Resources\SfResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -147,5 +142,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\Traitement\Clients\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="LogicNP.CryptoLicensing">
+      <HintPath>..\..\..\..\Documents\LogicNP.CryptoLicensing.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
