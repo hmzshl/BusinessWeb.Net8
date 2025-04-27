@@ -3,7 +3,7 @@
     <NoWarn>CS0168,CS1998,BL9993,CS0649,CS0436,0436</NoWarn>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationIcon>BusinessMobile_128x128.ico</ApplicationIcon>
+    <ApplicationIcon>ND_128x128.ico</ApplicationIcon>
     <OutputType>Exe</OutputType>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
@@ -37,7 +37,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BusinessMobile_128x128.ico" />
+    <Content Include="ND_128x128.ico" />
     <Content Include="Models\PhysicalFileProvider.cs" />
   </ItemGroup>
   <ItemGroup>
