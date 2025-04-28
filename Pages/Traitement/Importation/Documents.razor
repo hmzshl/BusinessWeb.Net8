@@ -498,6 +498,7 @@ else
 		db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_DOCLIGNE");
 		db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_DOCREGL");
 		db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_ARTSTOCK");
+		db2.Database.ExecuteSqlRaw("DISABLE TRIGGER ALL ON F_LIVRAISON");
 
 
 		foreach (F_COMPTEG ln in comptes)
@@ -738,6 +739,7 @@ else
 		db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_DOCLIGNE");
 		db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_DOCREGL");
 		db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_ARTSTOCK");
+		db2.Database.ExecuteSqlRaw("ENABLE TRIGGER ALL ON F_LIVRAISON");
 
 
 

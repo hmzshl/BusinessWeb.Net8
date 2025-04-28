@@ -71,7 +71,7 @@ else
 	[CascadingParameter]
 	public SessionDT session { get; set; } = new SessionDT();
 	DB db = new DB();
-	[Parameter] public List<API_V_ARTICLEMVT> details { get; set; }
+	[Parameter] public IEnumerable<API_V_ARTICLEMVT> details { get; set; }
 	[Parameter] public string ClassHeight { get; set; }
 	bool IsLoaded = false;
 
