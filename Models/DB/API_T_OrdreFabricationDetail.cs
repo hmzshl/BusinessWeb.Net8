@@ -17,6 +17,10 @@ public partial class API_T_OrdreFabricationDetail
 
     public decimal FraisU { get; set; }
 
+    public bool PreparationCreated { get; set; }
+
+    public string NumDA { get; set; }
+
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 
     public virtual API_T_OrdreFabricationLigne LigneNavigation { get; set; }

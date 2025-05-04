@@ -3514,6 +3514,9 @@ public partial class DB : DbContext
                 .HasMaxLength(19)
                 .IsUnicode(false);
             entity.Property(e => e.FraisU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.NumDA)
+                .HasMaxLength(30)
+                .IsUnicode(false);
             entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.API_T_OrdreFabricationDetail)

@@ -57,9 +57,11 @@
 					</div>
 				</EditTemplate>
 			</GridColumn>
-			<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.FraisU) HeaderText="Frais.Unité"
+			<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationDetail.NumDA) HeaderText="NumDA"></GridColumn>
+
+			<GridColumn Visible="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.FraisU) HeaderText="Frais.Unité"
 						Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-			<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.FraisU) HeaderText="Frais.Total"
+			<GridColumn Visible="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.FraisU) HeaderText="Frais.Total"
 						Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
 				<Template>
 					<div style="text-align: right;">

@@ -2,7 +2,7 @@
 <AntDesign.Spin Spinning=Refreshing Size="large" Tip="Création de la préparation de commande en cours...">
 	<SfToolbar CssClass="btns">
 		<ToolbarItems>
-			<ToolbarItem Disabled=@(row.PreparationCreated) Align="ItemAlign.Right">
+			<ToolbarItem Visible=@(sc.IsInRole("Admin", "Chef Chantier")) Disabled=@(row.id == 0) Align="ItemAlign.Right">
 				<Template>
 					<SfButton OnClick=@CreateCommande IconCss="e-icons e-send">Créer une préparation de commande</SfButton>
 				</Template>
@@ -29,16 +29,20 @@
 		</GridCol>
 		<GridCol Xs="24" Md="16">
 			<Card>
-				<SfDropDownList FloatLabelType="FloatLabelType.Always" Placeholder="Client" Readonly=@(id != 0)
-								AllowFiltering TValue="string" TItem="F_COMPTET"
-								DataSource="@(db.F_COMPTET.Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule }))"
+				<SfDropDownList FloatLabelType="FloatLabelType.Always" Placeholder="Client"
+								AllowFiltering TValue="string" TItem="F_COMPTET" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Query=@fn.LocalDataQuery
+								DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0).Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule }))"
 								@bind-Value="@row.CT_Num">
 					<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 					<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
 				</SfDropDownList>
 				<SfDropDownList FloatLabelType="FloatLabelType.Always" Placeholder="Affaire"
-								AllowFiltering TValue="string" TItem="F_COMPTEA"
-								DataSource="@(db.F_COMPTEA.Select(a => new F_COMPTEA { CA_Num = a.CA_Num, CA_Intitule = a.CA_Num + " - " + a.CA_Intitule }))"
+								AllowFiltering TValue="string" TItem="F_COMPTEA" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Query=@fn.LocalDataQuery
+								DataSource="@(db.F_COMPTEA.FromSqlRaw(@"SELECT
+				a.*
+				FROM F_COMPTEA a
+				INNER JOIN P_ANALYTIQUE b ON a.N_Analytique = b.cbMarq
+				WHERE b.A_Intitule = 'Affaires'").Select(a => new F_COMPTEA { CA_Num = a.CA_Num, CA_Intitule = a.CA_Num + " - " + a.CA_Intitule }))"
 								@bind-Value="@row.CA_Num">
 					<DropDownListEvents TValue="string" TItem="F_COMPTEA" />
 					<DropDownListFieldSettings Text="CA_Intitule" Value="CA_Num" />
@@ -236,7 +240,8 @@
 	}
 	public async Task EditDetail(int ligne, decimal qte)
 	{
-		await DialogService.OpenAsync<OrdreFabricationDetail>($"",
+		var ln = db.API_T_OrdreFabricationLigne.Include(a => a.AR_RefNavigation).Where(a => a.id == ligne).SingleOrDefault();
+		await DialogService.OpenAsync<OrdreFabricationDetail>(ln.AR_RefNavigation?.AR_Design,
 		new Dictionary<string, object>() { { "ligne", ligne }, { "qte", qte } },
 		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "90%" });
 	}
@@ -342,28 +347,46 @@
 				await Task.Delay(100);
 				await Task.Run(() =>
 				{
-					var doc = om.CIAL().FactoryDocumentAchat.CreateType(DocumentType.DocumentTypeAchatCommande);
-					doc.SetDefault();
-					doc.SetDefaultFournisseur(om.CIAL().CptaApplication.FactoryFournisseur.ReadNumero("368"));
-					doc.DO_Ref = row.Numero;
-					doc.SetDefaultDO_Piece();
-					doc.Write();
-
-					foreach (API_T_OrdreFabricationLigne ln in lignes)
-					{
-						foreach (API_T_OrdreFabricationDetail ln2 in ln.API_T_OrdreFabricationDetail)
-						{
-							IBODocumentAchatLigne3 ligne2 = doc.FactoryDocumentLigne.Create() as IBODocumentAchatLigne3;
-							ligne2.SetDefaultArticleReference(ln2.AR_Ref, (double)(ln2.Qte * ln.Qte));
-							ligne2.DL_Design = ln2.AR_RefNavigation?.AR_Design;
-							ligne2.Write();
-						}
-						IBODocumentAchatLigne3 ligne3 = doc.FactoryDocumentLigne.Create() as IBODocumentAchatLigne3;
-						ligne3.DL_Design = "---------------------------------------------------------------------";
-						ligne3.Write();
-					}
-					row.PreparationCreated = true;
 					db.SaveChanges();
+
+
+					if (lignes.Where(a => a.API_T_OrdreFabricationDetail.Where(b => b.PreparationCreated == false).Any()).Any())
+					{
+						var doc = om.CIAL().FactoryDocumentAchat.CreateType(DocumentType.DocumentTypeAchatCommande);
+						doc.SetDefault();
+						doc.SetDefaultFournisseur(om.CIAL().CptaApplication.FactoryFournisseur.ReadNumero("368"));
+						doc.DO_Ref = row.Numero;
+						doc.SetDefaultDO_Piece();
+						if(row.CA_Num != null)
+						{
+							var bP = om.CPTA().FactoryAnalytique.ReadIntitule("Affaires");
+							doc.CompteA = om.CPTA().FactoryCompteA.ReadNumero(bP, row.CA_Num);
+							
+						}
+						doc.Write();
+
+						foreach (API_T_OrdreFabricationLigne ln in lignes.Where(a => a.API_T_OrdreFabricationDetail.Where(b => b.PreparationCreated == false).Any()))
+						{
+							IBODocumentAchatLigne3 ligne3 = doc.FactoryDocumentLigne.Create() as IBODocumentAchatLigne3;
+							ligne3.DL_Design = "---------------------------------------------------------------------";
+							ligne3.Write();
+
+							foreach (API_T_OrdreFabricationDetail ln2 in ln.API_T_OrdreFabricationDetail.Where(b => b.PreparationCreated == false))
+							{
+								IBODocumentAchatLigne3 ligne2 = doc.FactoryDocumentLigne.Create() as IBODocumentAchatLigne3;
+								ligne2.SetDefaultArticleReference(ln2.AR_Ref, (double)(ln2.Qte * ln.Qte));
+								ligne2.DL_Design = ln2.AR_RefNavigation?.AR_Design;
+								ligne2.Write();
+								ln2.PreparationCreated = true;
+								ln2.NumDA = doc.DO_Piece;
+							}
+
+						}
+						row.PreparationCreated = true;
+						db.SaveChanges();
+					}
+
+
 				});
 
 				await UpdateGrid();
