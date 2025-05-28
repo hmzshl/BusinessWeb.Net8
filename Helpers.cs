@@ -20,6 +20,7 @@ namespace BusinessWeb
 	public class Helpers
 	{
 		public Syncfusion.Blazor.Data.Query LocalDataQuery = new Syncfusion.Blazor.Data.Query().Take(10);
+		public NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "### ### ##0.00;-### ### ##0.00;#" } };
 		public ExcelExportProperties excelExport()
 		{
 			ExcelExportProperties rs = new ExcelExportProperties();
@@ -346,6 +347,8 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 15, Title = "Structure", Description = "Liste des articles", Url = "et-articles" });
 			list.Add(new AuthItems { SelectedAPP = 15, Title = "Structure", Description = "Liste des collaborateurs", Url = "et-collaborateurs" });
 			list.Add(new AuthItems { SelectedAPP = 15, Title = "Structure", Description = "Liste des instruments", Url = "et-instruments" });
+			list.Add(new AuthItems { SelectedAPP = 15, Title = "Structure", Description = "Responsables", Url = "cr-responsables" });
+
 
 			list.Add(new AuthItems { SelectedAPP = 15, Title = "Traitement", Description = "Bons de livraisons", Url = "cr-bl" });
 			list.Add(new AuthItems { SelectedAPP = 15, Title = "Traitement", Description = "Factures", Url = "cr-fa" });
@@ -357,6 +360,8 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 15, Title = "Traitement", Description = "Ordres de mission", Url = "cr-ordre-mission" });
 			list.Add(new AuthItems { SelectedAPP = 15, Title = "Traitement", Description = "Rapports de mission", Url = "cr-rapport-mission" });
 			list.Add(new AuthItems { SelectedAPP = 15, Title = "Traitement", Description = "Suivi dossiers clients", Url = "cr-suivi-dossier" });
+			
+			list.Add(new AuthItems { SelectedAPP = 15, Title = "Traitement", Description = "Tableau de bord etalonnage", Url = "cr-tb-etalonnage" });
 
 
 			//SYNCHRONISATION
@@ -1682,6 +1687,13 @@ namespace BusinessWeb
 			list.Add(new Items { Id = 3, Name = "Par Article" });
 			list.Add(new Items { Id = 4, Name = "Par Collaborateur" });
 			list.Add(new Items { Id = 5, Name = "Par Affaire" });
+			return list;
+		}
+		public List<Items> CertifStatut()
+		{
+			List<Items> list = new List<Items>();
+			list.Add(new Items { Id = 0, Name = "En cours" });
+			list.Add(new Items { Id = 1, Name = "Ok" });
 			return list;
 		}
 		public List<Items> TypeSociete()

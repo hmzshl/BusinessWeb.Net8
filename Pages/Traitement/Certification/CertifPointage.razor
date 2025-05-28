@@ -1,0 +1,525 @@
+﻿@page "/cr-tb-etalonnage"
+@attribute [Authorize]
+
+@if (IsLoaded)
+{
+	<Card_1 Title="TABLEAU DE BORD ETALONNAGE">
+		<RadzenContent Container="main">
+			<div class="grid-90">
+				<SfToolbar CssClass="btns">
+					<ToolbarItems>
+						<ToolbarItem Align="ItemAlign.Left">
+							<Template>
+								<SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined"><div style="text-transform: uppercase;">Date: @SelectedDate.ToShortDateString()</div></SfMessage>
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem Align="ItemAlign.Right">
+							<Template>
+								<SfButton IconCss="e-icons e-save" IsPrimary="false" Disabled>Valider la journée</SfButton>
+							</Template>
+						</ToolbarItem>
+					</ToolbarItems>
+				</SfToolbar>
+				<GridRow>
+					
+					<GridCol Xs="24" Md="21">
+						<div class="grid-80" style="zoom: @session.zoomLevel;">
+
+
+							<SfGrid Height="100%" RowRenderingMode="RowDirection.Horizontal"
+									AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" AllowPdfExport="true"
+									AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+									Toolbar="@(new List<object>() { "Search", "Add", "Delete" })">
+								<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true"
+												  Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+									<HeaderTemplate></HeaderTemplate>
+								</GridEditSettings>
+								<GridEvents TValue="API_T_CertifPointage" OnActionBegin="EditGrid"></GridEvents>
+								<GridPageSettings PageSize="100"></GridPageSettings>
+								<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+								<GridTemplates>
+									<EmptyRecordTemplate>
+										<Empty></Empty>
+									</EmptyRecordTemplate>
+
+								</GridTemplates>
+								<GridColumns>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifPointage.id) HeaderText="#" IsPrimaryKey="true"
+												Visible="false" IsIdentity="true"></GridColumn>
+									<GridColumn IsFrozen HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Bon de commande">
+										<GridColumns>
+											<GridColumn IsFrozen Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut">
+												<Template>
+													@{
+														var dt = (context as API_T_CertifPointage);
+														if (dt.Statut == 1)
+														{
+															<div style="text-align: center;">
+																<span class="statustxt e-activecolor">@fn.CertifStatut().Where(a => a.Id == dt.Statut).SingleOrDefault()?.Name</span>
+															</div>
+														}
+														else
+														{
+															<div style="text-align: center;">
+																<span class="statustxt e-inactivecolor">@fn.CertifStatut().Where(a => a.Id == dt.Statut).SingleOrDefault()?.Name</span>
+															</div>
+														}
+														<div>
+															
+														</div>
+													}
+												</Template>
+												<EditTemplate>
+													@{
+														var dt = (context as API_T_CertifPointage);
+														<SfDropDownList FloatLabelType="FloatLabelType.Never"
+																		AllowFiltering TValue="int?" TItem="Items" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+																		DataSource="@(fn.CertifStatut())"
+																		@bind-Value="@dt.Statut">
+															<DropDownListEvents TValue="int?" TItem="Items" />
+															<DropDownListFieldSettings Text="Name" Value="Id" />
+														</SfDropDownList>
+													}
+												</EditTemplate>
+											</GridColumn>
+											<GridColumn IsFrozen Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Client">
+												<Template>
+													@{
+														var dt = (context as API_T_CertifPointage);
+														<div>
+															@dt.CT_NumNavigation?.CT_Intitule
+														</div>
+													}
+												</Template>
+												<EditTemplate>
+													@{
+														var dt = (context as API_T_CertifPointage);
+														<SfDropDownList FloatLabelType="FloatLabelType.Never" Query="@fn.LocalDataQuery"
+																		AllowFiltering TValue="string" TItem="F_COMPTET" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+																		DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0 && a.CT_Sommeil == 0).OrderBy(a => a.CT_Intitule))"
+																		@bind-Value="@dt.CT_Num">
+															<DropDownListEvents TValue="string" TItem="F_COMPTET" />
+															<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+														</SfDropDownList>
+													}
+												</EditTemplate>
+											</GridColumn>
+
+											<GridColumn IsFrozen Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Ville">
+												<Template>
+													@{
+														var dt = (context as API_T_CertifPointage);
+														<div>
+															@dt.CT_NumNavigation?.CT_Ville
+														</div>
+													}
+												</Template>
+											</GridColumn>
+										</GridColumns>
+									</GridColumn>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Travaux d'étalonnage">
+										<GridColumns>
+											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" AllowEditing="false" HeaderText="Debut" Field=@nameof(API_T_CertifPointage.DateDebutEtalonnage) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
+
+											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Fin" Field=@nameof(API_T_CertifPointage.DateFinEtalonnage) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
+											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable 1">
+												<Template>
+													@{
+														var dt = (context as API_T_CertifPointage);
+														<div>
+															@dt.ResponsableEtalonnageNavigation?.Nom
+														</div>
+													}
+												</Template>
+												<EditTemplate>
+													@{
+														var dt = (context as API_T_CertifPointage);
+														<SfDropDownList FloatLabelType="FloatLabelType.Never"
+																		AllowFiltering TValue="int?" TItem="API_T_Personnel" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+																		DataSource="@(db.API_T_Personnel.Where(a => a.Agence != 0))"
+																		@bind-Value="@dt.ResponsableEtalonnage">
+															<DropDownListEvents TValue="int?" TItem="API_T_Personnel" />
+															<DropDownListFieldSettings Text="Nom" Value="id" />
+														</SfDropDownList>
+													}
+												</EditTemplate>
+											</GridColumn>
+
+											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable 2">
+												<Template>
+													@{
+														var dt = (context as API_T_CertifPointage);
+														<div>
+															@dt.ResponsableEtalonnage2Navigation?.Nom
+														</div>
+													}
+												</Template>
+												<EditTemplate>
+													@{
+														var dt = (context as API_T_CertifPointage);
+														<SfDropDownList FloatLabelType="FloatLabelType.Never"
+																		AllowFiltering TValue="int?" TItem="API_T_Personnel" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+																		DataSource="@(db.API_T_Personnel.Where(a => a.Agence != 0))"
+																		@bind-Value="@dt.ResponsableEtalonnage2">
+															<DropDownListEvents TValue="int?" TItem="API_T_Personnel" />
+															<DropDownListFieldSettings Text="Nom" Value="id" />
+														</SfDropDownList>
+													}
+												</EditTemplate>
+											</GridColumn>
+
+
+
+										</GridColumns>
+									</GridColumn>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Emission des certificats/rapports">
+										<GridColumns>
+											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="ReceptionDossier" Field=@nameof(API_T_CertifPointage.DateReceptionDossier) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
+
+											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="DebutSaisie" Field=@nameof(API_T_CertifPointage.DateDebutSaisie) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
+
+											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="FinSaisie" Field=@nameof(API_T_CertifPointage.DateFinSaisie) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
+
+											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="NbrCertificats" Field=@nameof(API_T_CertifPointage.NombreCertificats) EditType="EditType.NumericEdit" EditorSettings="@fn.parameters" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+
+											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable Saisie">
+												<Template>
+													@{
+														var dt = (context as API_T_CertifPointage);
+														<div>
+															@dt.ResponsableSaisieNavigation?.Nom
+														</div>
+													}
+												</Template>
+												<EditTemplate>
+													@{
+														var dt = (context as API_T_CertifPointage);
+														<SfDropDownList FloatLabelType="FloatLabelType.Never"
+																		AllowFiltering TValue="int?" TItem="API_T_Personnel" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+																		DataSource="@(db.API_T_Personnel.Where(a => a.Agence != 0))"
+																		@bind-Value="@dt.ResponsableSaisie">
+															<DropDownListEvents TValue="int?" TItem="API_T_Personnel" />
+															<DropDownListFieldSettings Text="Nom" Value="id" />
+														</SfDropDownList>
+													}
+												</EditTemplate>
+											</GridColumn>
+										</GridColumns>
+									</GridColumn>
+
+
+
+
+
+
+
+									<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable Impression">
+										<Template>
+											@{
+												var dt = (context as API_T_CertifPointage);
+												<div>
+													@dt.ResponsableImpressionNavigation?.Nom
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var dt = (context as API_T_CertifPointage);
+												<SfDropDownList FloatLabelType="FloatLabelType.Never"
+																AllowFiltering TValue="int?" TItem="API_T_Personnel" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+																DataSource="@(db.API_T_Personnel.Where(a => a.Agence != 0))"
+																@bind-Value="@dt.ResponsableImpression">
+													<DropDownListEvents TValue="int?" TItem="API_T_Personnel" />
+													<DropDownListFieldSettings Text="Nom" Value="id" />
+												</SfDropDownList>
+											}
+										</EditTemplate>
+									</GridColumn>
+
+									<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Verification Avant Impression">
+										<Template>
+											@{
+												var dt = (context as API_T_CertifPointage);
+												<div>
+													@dt.VerificationAvantImpressionNavigation?.Nom
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var dt = (context as API_T_CertifPointage);
+												<SfDropDownList FloatLabelType="FloatLabelType.Never"
+																AllowFiltering TValue="int?" TItem="API_T_Personnel" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+																DataSource="@(db.API_T_Personnel.Where(a => a.Agence != 0))"
+																@bind-Value="@dt.VerificationAvantImpression">
+													<DropDownListEvents TValue="int?" TItem="API_T_Personnel" />
+													<DropDownListFieldSettings Text="Nom" Value="id" />
+												</SfDropDownList>
+											}
+										</EditTemplate>
+									</GridColumn>
+
+									<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Verification Apres Impression">
+										<Template>
+											@{
+												var dt = (context as API_T_CertifPointage);
+												<div>
+													@dt.VerificationApresImpressionNavigation?.Nom
+												</div>
+											}
+										</Template>
+										<EditTemplate>
+											@{
+												var dt = (context as API_T_CertifPointage);
+												<SfDropDownList FloatLabelType="FloatLabelType.Never"
+																AllowFiltering TValue="int?" TItem="API_T_Personnel" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+																DataSource="@(db.API_T_Personnel.Where(a => a.Agence != 0))"
+																@bind-Value="@dt.VerificationApresImpression">
+													<DropDownListEvents TValue="int?" TItem="API_T_Personnel" />
+													<DropDownListFieldSettings Text="Nom" Value="id" />
+												</SfDropDownList>
+											}
+										</EditTemplate>
+									</GridColumn>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Suivi comptabilité">
+										<GridColumns>
+											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Certificats" Field=@nameof(API_T_CertifPointage.Certificats) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+
+											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Scan" Field=@nameof(API_T_CertifPointage.VerificationScan) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+
+											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="FA" Field=@nameof(API_T_CertifPointage.Facture) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+
+											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="BL" Field=@nameof(API_T_CertifPointage.BonDeLivraison) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+
+											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° FA/BL" Field=@nameof(API_T_CertifPointage.NumeroFACBL) />
+
+											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Date Livraison" Field=@nameof(API_T_CertifPointage.DateLivraison) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
+
+											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Livreur" Field=@nameof(API_T_CertifPointage.Livreur) />
+
+											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Accuse Reception" Field=@nameof(API_T_CertifPointage.AccuseReception) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+
+											<GridColumn Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Commentaire" Field=@nameof(API_T_CertifPointage.Commentaire) />
+										</GridColumns>
+									</GridColumn>
+
+
+
+								</GridColumns>
+							</SfGrid>
+
+
+
+							<!-- -->
+
+						</div>
+					</GridCol>
+					<GridCol Xs="24" Md="3">
+						<Card Title="Journée" Style="padding: 5px;">
+							<Calendar Style="width: 100%" Value="@SelectedDate" OnChange="OnSelect" OnPanelChange="OnPanelChange" DateCellRender="DateCellRender" />
+						</Card>
+					</GridCol>
+				</GridRow>
+			</div>
+		</RadzenContent>
+	</Card_1>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+
+
+
+
+
+@code
+{
+
+	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	//Components
+	private SfGrid<API_T_PointageDetail> DefaultGrid;
+	private DateTime SelectedDate = DateTime.Today;
+	private int SelectedSite = 0;
+	string grid_height = "80vh";
+	NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
+	private List<API_T_CertifPointage> items = new List<API_T_CertifPointage>();
+	bool loading = false;
+	private DateTime value = DateTime.Today;
+	List<API_T_Site> sites = new List<API_T_Site>();
+	bool IsLoaded = false;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(1);
+		db = session.db;
+		GC.Collect();
+		await UpdateGrid();
+		IsLoaded = true;
+
+	}
+	private async Task UpdateGrid()
+	{
+		items = db.API_T_CertifPointage
+		.Include(a => a.CT_NumNavigation)
+		.Include(a => a.ResponsableEtalonnage2Navigation)
+		.Include(a => a.ResponsableEtalonnage3Navigation)
+		.Include(a => a.ResponsableEtalonnageNavigation)
+		.Include(a => a.ResponsableImpressionNavigation)
+		.Include(a => a.ResponsableSaisieNavigation)
+		.Where(a => a.Date == SelectedDate)
+		.OrderByDescending(a => a.id)
+		.ToList();
+	}
+	private async Task OnSelect(DateTime value)
+	{
+		this.value = value;
+		SelectedDate = value;
+		await UpdateGrid();
+	}
+	private async Task ValueChangeHandler(ChangeEventArgs<int, API_T_CertifPointage> args)
+	{
+		await UpdateGrid();
+	}
+	private void OnPanelChange(DateTime value, string mode)
+	{
+		this.value = value;
+	}
+	public async Task EditGrid(ActionEventArgs<API_T_CertifPointage> args)
+	{
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+		{
+			if (1 == 1)
+			{
+
+				if (args.Action == "Add")
+				{
+
+
+					API_T_CertifPointage item = args.Data;
+					item.Date = SelectedDate;
+					item.DateDebutEtalonnage = SelectedDate;
+					item.Statut = 0;
+					db.Add(item);
+					db.SaveChanges();
+				}
+				if (args.Action != "Add")
+				{
+					var local = db.Set<API_T_CertifPointage>().Local.FirstOrDefault(a => a.id == args.Data.id);
+					if (local != null)
+					{
+						db.Entry(local).State = EntityState.Detached;
+					}
+					db.Entry(args.Data).State = EntityState.Modified;
+					db.SaveChanges();
+
+				}
+				await UpdateGrid();
+			}
+			else
+			{
+				args.Cancel = true;
+			}
+
+
+		}
+
+		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+		{
+			db.Database.ExecuteSqlRaw("DELETE FROM API_T_CertifPointage WHERE id = {0}", args.Data.id);
+			await UpdateGrid();
+
+		}
+
+	}
+	private RenderFragment DateCellRender(DateTime value)
+	{
+		var dt = db.API_T_CertifPointage.Where(a => a.Date == value);
+		if (dt.Count() != 0)
+		{
+			return
+			   @<Template>
+				<div>
+					<RadzenIcon Icon="check_circle_outline" IconStyle="@IconStyle.Success" />
+				</div>
+			</Template>
+			;
+		}
+		else
+		{
+			return
+				@<Template>
+				<div>
+				</div>
+			</Template>
+			;
+		}
+	}
+
+}
+
+<style>
+	.ant-picker-calendar-header .ant-picker-calendar-mode-switch {
+		display: none;
+	}
+
+	.ant-picker-calendar-header {
+		margin-right: 10px;
+	}
+
+	.events {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+		.events .ant-badge-status {
+			overflow: hidden;
+			white-space: nowrap;
+			width: 100%;
+			text-overflow: ellipsis;
+			font-size: 12px;
+		}
+
+	.notes-month {
+		text-align: center;
+		font-size: 28px;
+	}
+
+		.notes-month section {
+			font-size: 28px;
+		}
+
+	.ant-picker-calendar-full .ant-picker-panel .ant-picker-body th {
+		text-align: center;
+	}
+
+	.ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date {
+		height: 60px;
+	}
+
+	.item-label {
+		font-size: 11px !important;
+		padding: 4px 8px !important;
+		width: 110px !important;
+		color: rgba(0, 0, 0, 0.87) !important;
+		border-bottom-left-radius: 0px !important;
+		border-top-left-radius: 0px !important;
+		font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji" !important;
+		font-weight: 500 !important;
+		letter-spacing: 0.025rem !important;
+		font-style: normal !important;
+		text-transform: uppercase !important;
+		color: #203154 !important;
+		background-color: #FFFFFF !important;
+		-webkit-border-radius: 0px !important;
+		-moz-border-radius: 0px !important;
+		border-style: solid !important;
+		border-width: 0.025rem !important;
+		border-color: #71639e !important;
+		-webkit-box-shadow: none !important;
+	}
+</style>

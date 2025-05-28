@@ -165,6 +165,20 @@ public partial class API_T_Personnel
 
     public string ModificationUser { get; set; }
 
+    public virtual ICollection<API_T_CertifPointage> API_T_CertifPointageResponsableEtalonnage2Navigation { get; set; } = new List<API_T_CertifPointage>();
+
+    public virtual ICollection<API_T_CertifPointage> API_T_CertifPointageResponsableEtalonnage3Navigation { get; set; } = new List<API_T_CertifPointage>();
+
+    public virtual ICollection<API_T_CertifPointage> API_T_CertifPointageResponsableEtalonnageNavigation { get; set; } = new List<API_T_CertifPointage>();
+
+    public virtual ICollection<API_T_CertifPointage> API_T_CertifPointageResponsableImpressionNavigation { get; set; } = new List<API_T_CertifPointage>();
+
+    public virtual ICollection<API_T_CertifPointage> API_T_CertifPointageResponsableSaisieNavigation { get; set; } = new List<API_T_CertifPointage>();
+
+    public virtual ICollection<API_T_CertifPointage> API_T_CertifPointageVerificationApresImpressionNavigation { get; set; } = new List<API_T_CertifPointage>();
+
+    public virtual ICollection<API_T_CertifPointage> API_T_CertifPointageVerificationAvantImpressionNavigation { get; set; } = new List<API_T_CertifPointage>();
+
     public virtual ICollection<API_T_OrdreFabrication> API_T_OrdreFabrication { get; set; } = new List<API_T_OrdreFabrication>();
 
     public virtual ICollection<API_T_OrdreFabricationPointage> API_T_OrdreFabricationPointage { get; set; } = new List<API_T_OrdreFabricationPointage>();

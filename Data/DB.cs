@@ -124,6 +124,8 @@ public partial class DB : DbContext
 
     public virtual DbSet<API_T_CertifOuvertureDossier> API_T_CertifOuvertureDossier { get; set; }
 
+    public virtual DbSet<API_T_CertifPointage> API_T_CertifPointage { get; set; }
+
     public virtual DbSet<API_T_CertifRapportMission> API_T_CertifRapportMission { get; set; }
 
     public virtual DbSet<API_T_CertifRapportMissionLigne> API_T_CertifRapportMissionLigne { get; set; }
@@ -2860,6 +2862,64 @@ public partial class DB : DbContext
             entity.Property(e => e.Telephone)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<API_T_CertifPointage>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("PK__API_T_Ce__3213E83FA8292B7A");
+
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(17)
+                .IsUnicode(false);
+            entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateCreation)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("smalldatetime");
+            entity.Property(e => e.DateDebutEtalonnage).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateDebutSaisie).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateFinEtalonnage).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateFinSaisie).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateLivraison).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateModification)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("smalldatetime");
+            entity.Property(e => e.DateReceptionDossier).HasColumnType("smalldatetime");
+            entity.Property(e => e.Livreur).HasMaxLength(100);
+            entity.Property(e => e.NumeroFACBL).HasMaxLength(50);
+            entity.Property(e => e.Ville).HasMaxLength(100);
+
+            entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.API_T_CertifPointage)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_Num)
+                .HasConstraintName("fk_api_t_certifpointage");
+
+            entity.HasOne(d => d.ResponsableEtalonnageNavigation).WithMany(p => p.API_T_CertifPointageResponsableEtalonnageNavigation)
+                .HasForeignKey(d => d.ResponsableEtalonnage)
+                .HasConstraintName("fk_api_t_certifpointage2");
+
+            entity.HasOne(d => d.ResponsableEtalonnage2Navigation).WithMany(p => p.API_T_CertifPointageResponsableEtalonnage2Navigation)
+                .HasForeignKey(d => d.ResponsableEtalonnage2)
+                .HasConstraintName("fk_api_t_certifpointage5");
+
+            entity.HasOne(d => d.ResponsableEtalonnage3Navigation).WithMany(p => p.API_T_CertifPointageResponsableEtalonnage3Navigation)
+                .HasForeignKey(d => d.ResponsableEtalonnage3)
+                .HasConstraintName("fk_api_t_certifpointage6");
+
+            entity.HasOne(d => d.ResponsableImpressionNavigation).WithMany(p => p.API_T_CertifPointageResponsableImpressionNavigation)
+                .HasForeignKey(d => d.ResponsableImpression)
+                .HasConstraintName("fk_api_t_certifpointage4");
+
+            entity.HasOne(d => d.ResponsableSaisieNavigation).WithMany(p => p.API_T_CertifPointageResponsableSaisieNavigation)
+                .HasForeignKey(d => d.ResponsableSaisie)
+                .HasConstraintName("fk_api_t_certifpointage3");
+
+            entity.HasOne(d => d.VerificationApresImpressionNavigation).WithMany(p => p.API_T_CertifPointageVerificationApresImpressionNavigation)
+                .HasForeignKey(d => d.VerificationApresImpression)
+                .HasConstraintName("fk_api_t_certifpointage8");
+
+            entity.HasOne(d => d.VerificationAvantImpressionNavigation).WithMany(p => p.API_T_CertifPointageVerificationAvantImpressionNavigation)
+                .HasForeignKey(d => d.VerificationAvantImpression)
+                .HasConstraintName("fk_api_t_certifpointage7");
         });
 
         modelBuilder.Entity<API_T_CertifRapportMission>(entity =>

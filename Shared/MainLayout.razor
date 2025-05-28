@@ -354,6 +354,7 @@
 											<RadzenMenuItem Text="Liste des articles" Path="/et-articles" Visible=@(IsVisible("et-articles"))></RadzenMenuItem>
 											<RadzenMenuItem Text="Liste des collaborateurs" Path="/et-collaborateurs" Visible=@(IsVisible("et-collaborateurs"))></RadzenMenuItem>
 											<RadzenMenuItem Text="Liste des instruments" Path="/et-instruments" Visible=@(IsVisible("et-instruments"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Responsables" Path="/cr-responsables" Visible=@(IsVisible("cr-responsables"))></RadzenMenuItem>
 										</RadzenMenuItem>
 										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
 											<RadzenMenuItem Text="Grille de dialogue" Path="/cr-grille-dialogue" Visible=@(IsVisible("cr-grille-dialogue"))></RadzenMenuItem>
@@ -365,6 +366,8 @@
 											<RadzenMenuItem Text="Bons de livraisons" Path="/cr-bl" Visible=@(IsVisible("cr-bl"))></RadzenMenuItem>
 											<RadzenMenuItem Text="Factures" Path="/cr-fa" Visible=@(IsVisible("cr-fa"))></RadzenMenuItem>
 											<RadzenMenuItem Text="Suivi dossiers clients" Path="/cr-suivi-dossier" Visible=@(IsVisible("cr-suivi-dossier"))></RadzenMenuItem>
+											
+											<RadzenMenuItem Text="Tableau de bord etalonnage" Path="/cr-tb-etalonnage" Visible=@(IsVisible("cr-tb-etalonnage"))></RadzenMenuItem>
 										</RadzenMenuItem>
 									}
 									/*Synchronisation*/
