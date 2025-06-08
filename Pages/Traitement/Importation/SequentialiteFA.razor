@@ -1,0 +1,156 @@
+﻿@page "/seq-fa"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction")]
+@if (IsLoaded)
+{
+	<Card_1 Title="Séquentialité Factures">
+		<RadzenContent Container="main">
+			<div class="grid-90">
+				<SfToolbar>
+					<ToolbarItems>
+					
+						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+							<Template>
+								<div style="margin-left: 5px; margin-right: 10px;" id="debut">
+									<SfDatePicker ShowClearButton Placeholder="Date Début" Width="140px" TValue="DateTime ?" @bind-Value="date1" ShowTodayButton>
+										<DatePickerEvents TValue="DateTime ?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
+									</SfDatePicker>
+								</div>
+
+							</Template>
+						</ToolbarItem>
+
+						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+							<Template>
+								<div style="margin-left: 5px; margin-right: 10px;" id="fin">
+									<SfDatePicker ShowClearButton Placeholder="Date Fin" Width="140px" TValue="DateTime ?" @bind-Value="date2" ShowTodayButton>
+										<DatePickerEvents TValue="DateTime ?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
+									</SfDatePicker>
+								</div>
+
+							</Template>
+						</ToolbarItem>
+						<ToolbarItem OnClick=@(args => (UpdateGrid())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
+					</ToolbarItems>
+				</SfToolbar>
+				<div style="zoom: @session.zoomLevel; margin: 10px; margin-left: 50px; margin-right: 50px;" >
+					@if (loading)
+					{
+						<div class="center-screen">
+							<Loading_1 />
+						</div>
+					}
+					else
+					{
+						var results = validator.ValiderDocuments(items);
+						@if (results.ADesErreurs)
+						{
+							// Handle gaps
+							foreach (var gap in results.ErreursIntervalles)
+							{
+								<RadzenAlert AllowClose="false" AlertStyle="AlertStyle.Danger" ShowIcon="false" Variant="Variant.Text" Shade="Shade.Darker">
+									@gap.Message
+								</RadzenAlert>
+
+							}
+
+							// Handle date issues
+							foreach (var dateError in results.ErreursChronologiques)
+							{
+								<RadzenAlert AllowClose="false" AlertStyle="AlertStyle.Info" ShowIcon="false" Variant="Variant.Text" Shade="Shade.Darker">
+									@dateError.Message
+								</RadzenAlert>
+							}
+						}
+						else
+						{
+							<RadzenAlert AllowClose="false" AlertStyle="AlertStyle.Success" Variant="Variant.Flat" Shade="Shade.Dark">
+								All documents are properly sequenced!
+							</RadzenAlert>
+						}
+					}
+
+				</div>
+
+			</div>
+		</RadzenContent>
+	</Card_1>
+
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+
+
+
+@code
+{
+
+	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	//Components
+	[Parameter] public int domaine { get; set; } = 0;
+	[Parameter] public string title { get; set; } = "";
+	private SfGrid<API_V_DOCENTETE> DefaultGrid;
+	bool IsLoaded = false;
+	bool loading = false;
+	DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
+	DateTime? date2;
+	private List<API_V_DOCENTETE> items = new List<API_V_DOCENTETE>();
+	DocumentValidationService validator = new DocumentValidationService();
+
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(1);
+		db = session.db;
+		GC.Collect();
+
+		await UpdateGrid();
+		
+		
+		IsLoaded = true;
+
+	}
+	public void CreatedHandler(object args)
+	{
+		DefaultGrid.ClearFilteringAsync();
+		DefaultGrid.ClearSortingAsync(); DefaultGrid.SearchAsync("");
+	}
+	private async Task UpdateTypes()
+	{
+		await UpdateGrid();
+	}
+	private async Task UpdateGrid()
+	{
+		loading = true;
+		await Task.Delay(100);
+
+		items = db.API_V_DOCENTETE
+		.Where(a => (
+			(date1 != null && a.DO_Date >= date1) || date1 == null)
+			&& ((date2 != null && a.DO_Date <= date2) || date2 == null)
+			&& (a.DO_Type == 6 || a.DO_Type == 7)
+				)
+				.OrderByDescending(a => a.DO_Date)
+				.ToList();
+
+		loading = false;
+		await Task.Delay(100);
+
+	}
+	private async Task ShowNotification(NotificationMessage message)
+	{
+		NotificationService.Notify(message);
+	}
+	protected async Task ShowPiece(string DO_Piece, short? DO_Type)
+	{
+		await DialogService.OpenAsync<DetailsPiece>(DO_Piece,
+		new Dictionary<string, object>() { { "DO_Piece", DO_Piece }, { "DO_Type", DO_Type } },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "90%" });
+	}
+}
+

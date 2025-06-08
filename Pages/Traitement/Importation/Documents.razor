@@ -139,7 +139,7 @@
 											else
 											{
 												<div style="text-align: center;">
-													<span>Facturé</span>
+													<span>@dt.Statut</span>
 												</div>
 											}
 
@@ -182,7 +182,7 @@ else
 	List<DomaineIntitule> domaines = new List<DomaineIntitule>();
 	List<TypeIntitule> types = new List<TypeIntitule>();
 	data row = new data();
-	List<string> bls = new List<string>();
+	List<F_DOCLIGNE> bls = new List<F_DOCLIGNE>();
 	SfGrid<RAPPRO_DOCENTETE> DefaultGrid;
 
 	protected override async Task OnInitializedAsync()
@@ -274,7 +274,16 @@ else
 				db2 = fn.getDb(ste2 ?? new TSociete());
 
 
-				bls = db2.F_DOCLIGNE.Where(a => a.DL_PieceBL != "" && a.DL_PieceBL != null && a.DO_Domaine == 0 && (a.DO_Type == 6 || a.DO_Type == 7)).Select(a => a.DL_PieceBL).Distinct().ToList();
+				bls = db2.F_DOCLIGNE
+							.Where(a => a.DL_PieceBL != "" && a.DL_PieceBL != null && a.DO_Domaine == 0 && (a.DO_Type == 6 || a.DO_Type == 7))
+							.GroupBy(a => a.DL_PieceBL)
+							.Select(g => new F_DOCLIGNE
+					{
+						DL_PieceBL = g.Key,
+						DL_MontantHT = g.Sum(a => a.DL_MontantHT),
+						DL_MontantTTC = g.Sum(a => a.DL_MontantTTC)
+					})
+							.ToList();
 
 
 				List<F_DOCENTETE> ListA = db1.F_DOCENTETE.Include(a => a.CT_NumPayeurNavigation).Where(a => a.DO_Domaine == row.do_domaine && a.DO_Type == row.do_type && a.DO_Date >= row.do_date1 && a.DO_Date <= row.do_date2).ToList();
@@ -338,9 +347,16 @@ else
 				items = fullJoin.OrderBy(a => a.DO_Piece).ToList();
 				foreach (RAPPRO_DOCENTETE item in items)
 				{
-					if (bls.Contains(item.DO_Piece))
+					if (bls.Select(a => a.DL_PieceBL).Contains(item.DO_Piece))
 					{
 						item.Statut = "Facturé";
+						item.DO_TotalHT2 = bls.Where(a => a.DL_PieceBL == item.DO_Piece).Sum(a => a.DL_MontantHT);
+						item.DO_TotalTTC2 = bls.Where(a => a.DL_PieceBL == item.DO_Piece).Sum(a => a.DL_MontantTTC);
+						if(item.DO_TotalHT != item.DO_TotalHT2)
+						{
+							item.Statut = "FA.Erreurs";
+						}
+
 					}
 				}
 

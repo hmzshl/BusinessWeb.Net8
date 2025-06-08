@@ -368,6 +368,7 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Ventes", Url = "imp-ventes" });
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Achats", Url = "imp-achats" });
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Réglements", Url = "imp-regl" });
+			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Séquentialité Factures", Url = "seq-fa" });
 
 			return list;
 		}
@@ -2095,6 +2096,7 @@ namespace BusinessWeb
 
 			return mixed.ToString().Substring(0, FixedLength);
 		}
+
 
 	}
 
