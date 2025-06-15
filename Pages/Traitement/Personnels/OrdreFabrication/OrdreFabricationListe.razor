@@ -20,7 +20,7 @@
 					<GridColumns>
 						<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
 						<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.Numero)" HeaderText="Numéro"></GridColumn>
-						<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.Reference)" HeaderText="Référence"></GridColumn>
+						<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.DateLivraison)" HeaderText="Date Livraison" Format="dd/MM/yy"></GridColumn>
 						<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.NumCommande)" HeaderText="Numéro B.C"></GridColumn>
 						<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.CT_Num)" HeaderText="N° Client"></GridColumn>
 						<GridColumn MinWidth="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.CT_Num)" HeaderText="Client">
@@ -132,14 +132,14 @@ else
 
 		await DialogService.OpenAsync<OrdreFabricationFiche>(args.RowData.Numero,
 	new Dictionary<string, object>() { { "id", args.RowData.id } },
-	new Radzen.DialogOptions() { Width = "1000px", Height = "95%", CloseDialogOnEsc = false });
+	new Radzen.DialogOptions() { Width = "95%", Height = "95%", CloseDialogOnEsc = false, Style="max-width: 1500px;" });
 		await LoadData();
 	}
 	private async Task Add()
 	{
 		await DialogService.OpenAsync<OrdreFabricationFiche>($"Ajouter un élément",
 		new Dictionary<string, object>() { { "id", 0 } },
-		new Radzen.DialogOptions() { Width = "1000px", Height = "95%", CloseDialogOnEsc = false });
+		new Radzen.DialogOptions() { Width = "95%", Height = "95%", CloseDialogOnEsc = false, Style = "max-width: 1500px;" });
 		await LoadData();
 	}
 	private async Task OnActionBegin(ActionEventArgs<API_T_OrdreFabrication> args)

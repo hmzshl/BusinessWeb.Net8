@@ -22,9 +22,9 @@
 	<GridRow>
 		<GridCol Xs="24" Md="8">
 			<Card>
-				<SfTextBox FloatLabelType="FloatLabelType.Always" Placeholder="Référence" @bind-Value="@(row.Reference)" Readonly />
 				<SfTextBox FloatLabelType="FloatLabelType.Always" Placeholder="Numéro" @bind-Value="@(row.Numero)" Readonly />
-				<SfDatePicker Readonly FloatLabelType="FloatLabelType.Always" Placeholder="Date" TValue="DateTime ?" @bind-Value="@row.Date" />
+				<SfDatePicker Readonly FloatLabelType="FloatLabelType.Always" Placeholder="Date" TValue="DateTime ?" @bind-Value="@row.Date"/>
+				<SfDatePicker FloatLabelType="FloatLabelType.Always" Placeholder="Date Livraison" TValue="DateTime ?" @bind-Value="@row.DateLivraison" />
 			</Card>
 		</GridCol>
 		<GridCol Xs="24" Md="16">
@@ -238,7 +238,7 @@
 		var ln = db.API_T_OrdreFabricationLigne.Include(a => a.AR_RefNavigation).Where(a => a.id == ligne).SingleOrDefault();
 		await DialogService.OpenAsync<OrdreFabricationDetail>(ln.AR_RefNavigation?.AR_Design,
 		new Dictionary<string, object>() { { "ligne", ligne }, { "qte", qte } },
-		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "90%" });
+		new Radzen.DialogOptions() { Width = "95%", Height = "95%", CloseDialogOnEsc = false, Style = "max-width: 1500px;" });
 	}
 	public async Task EditGrid(ActionEventArgs<API_T_OrdreFabricationLigne> args)
 	{
@@ -351,13 +351,16 @@
 						doc.SetDefault();
 						doc.SetDefaultFournisseur(om.CIAL().CptaApplication.FactoryFournisseur.ReadNumero("368"));
 						doc.DO_Ref = row.Numero;
+						doc.DO_Coord[1] = sc.User.Name;
+						doc.DO_DateLivr = row.DateLivraison??(DateTime.Today);
 						doc.SetDefaultDO_Piece();
 						if(row.CA_Num != null)
 						{
 							var bP = om.CPTA().FactoryAnalytique.ReadIntitule("Affaires");
 							doc.CompteA = om.CPTA().FactoryCompteA.ReadNumero(bP, row.CA_Num);
-							
+
 						}
+						
 						doc.Write();
 
 						foreach (API_T_OrdreFabricationLigne ln in lignes.Where(a => a.API_T_OrdreFabricationDetail.Where(b => b.PreparationCreated == false).Any()))
@@ -372,6 +375,7 @@
 								ligne2.SetDefaultArticleReference(ln2.AR_Ref, (double)(ln2.Qte * ln.Qte));
 								ligne2.DL_Design = ln2.AR_RefNavigation?.AR_Design;
 								ligne2.Write();
+								
 								ln2.PreparationCreated = true;
 								ln2.NumDA = doc.DO_Piece;
 							}

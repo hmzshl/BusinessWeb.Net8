@@ -59,6 +59,79 @@
 			</GridColumn>
 			<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationDetail.NumDA) HeaderText="NumDA"></GridColumn>
 
+			<GridColumn AllowSorting="false" AllowFiltering="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="70" Field=@nameof(API_T_OrdreFabricationDetail.Qte) HeaderText="Total"
+						Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+				<Template>
+					@{
+						var dt = (context as API_T_OrdreFabricationDetail);
+					}
+					<div style="text-align: right;">
+						@((conso.Where(a => a.AR_Ref == dt.AR_Ref).Sum(a => a.Qte))?.ToString("### ### ##0.0;-### ### ##0.0;#"))
+					</div>
+				</Template>
+				<EditTemplate>
+
+				</EditTemplate>
+			</GridColumn>
+			<GridColumn AllowSorting="false" AllowFiltering="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="70" Field=@nameof(API_T_OrdreFabricationDetail.Qte) HeaderText="BC"
+						Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+				<Template>
+					@{
+						var dt = (context as API_T_OrdreFabricationDetail);
+					}
+					<div style="text-align: right;">
+						@((conso.Where(a => a.AR_Ref == dt.AR_Ref).Sum(a => a.BC))?.ToString("### ### ##0.0;-### ### ##0.0;#"))
+					</div>
+				</Template>
+				<EditTemplate>
+
+				</EditTemplate>
+			</GridColumn>
+			<GridColumn AllowSorting="false" AllowFiltering="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="70" Field=@nameof(API_T_OrdreFabricationDetail.Qte) HeaderText="BL"
+						Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+				<Template>
+					@{
+						var dt = (context as API_T_OrdreFabricationDetail);
+					}
+					<div style="text-align: right;">
+						@((conso.Where(a => a.AR_Ref == dt.AR_Ref).Sum(a => a.BL))?.ToString("### ### ##0.0;-### ### ##0.0;#"))
+					</div>
+				</Template>
+				<EditTemplate>
+
+				</EditTemplate>
+			</GridColumn>
+			<GridColumn AllowSorting="false" AllowFiltering="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="70" Field=@nameof(API_T_OrdreFabricationDetail.Qte) HeaderText="FA"
+						Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+				<Template>
+					@{
+						var dt = (context as API_T_OrdreFabricationDetail);
+					}
+					<div style="text-align: right;">
+						@((conso.Where(a => a.AR_Ref == dt.AR_Ref).Sum(a => a.FA))?.ToString("### ### ##0.0;-### ### ##0.0;#"))
+					</div>
+				</Template>
+				<EditTemplate>
+
+				</EditTemplate>
+			</GridColumn>
+			<GridColumn AllowSorting="false" AllowFiltering="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="70" Field=@nameof(API_T_OrdreFabricationDetail.Qte) HeaderText="Sorties"
+						Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+				<Template>
+					@{
+						var dt = (context as API_T_OrdreFabricationDetail);
+					}
+					<div style="text-align: right;">
+						@((conso.Where(a => a.AR_Ref == dt.AR_Ref).Sum(a => a.SO))?.ToString("### ### ##0.0;-### ### ##0.0;#"))
+					</div>
+				</Template>
+				<EditTemplate>
+
+				</EditTemplate>
+			</GridColumn>
+
+
+
 			<GridColumn Visible="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.FraisU) HeaderText="Frais.Unité"
 						Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
 			<GridColumn Visible="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.FraisU) HeaderText="Frais.Total"
@@ -80,7 +153,6 @@
 </div>
 
 
-
 @code {
 	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
 	DB db = new DB();
@@ -97,6 +169,7 @@
 	bool loading = false;
 	bool IsLoaded = false;
 	IEnumerable<F_ARTICLE> articles;
+	List<V_UEMA_Conso> conso = new List<V_UEMA_Conso>();
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(1);
@@ -104,6 +177,7 @@
 		GC.Collect();
 		articles = db.F_ARTICLE;
 		await UpdateGrid();
+		await UpdateConso();
 		IsLoaded = true;
 
 	}
@@ -112,6 +186,64 @@
 		items = db.API_T_OrdreFabricationDetail
 		.Include(a => a.AR_RefNavigation)
 		.Where(a => a.Ligne == this.ligne).ToList();
+	}
+	private async Task UpdateConso()
+	{
+		string q1 = @"
+SELECT
+a.*,
+b.PC,
+b.BC,
+b.BL,
+b.FA,
+b.SO
+FROM
+(SELECT
+c.Numero,
+b.AR_Ref Affectation,
+a.AR_Ref,
+SUM(a.Qte*b.Qte) Qte
+
+
+FROM API_T_OrdreFabricationDetail a
+INNER JOIN API_T_OrdreFabricationLigne b ON a.Ligne = b.id
+INNER JOIN API_T_OrdreFabrication c ON b.Ordre = c.id
+
+WHERE a.Ligne = {0}
+
+GROUP BY
+c.Numero,
+b.AR_Ref,
+a.AR_Ref) a
+
+LEFT JOIN
+
+(
+SELECT
+a.[P.Fabrication],
+a.Affectation,
+a.AR_Ref,
+SUM(CASE WHEN a.DO_Type = 11 THEN a.DL_Qte ELSE 0 END) PC,
+SUM(CASE WHEN a.DO_Type = 12 THEN a.DL_Qte ELSE 0 END) BC,
+SUM(CASE WHEN a.DO_Type IN (13,14,15) THEN a.DL_Qte ELSE 0 END) BL,
+SUM(CASE WHEN a.DO_Type IN (16,17) THEN a.DL_Qte ELSE 0 END) FA,
+SUM(CASE WHEN a.DO_Type = 21 THEN a.DL_Qte ELSE 0 END) SO
+FROM F_DOCLIGNE a
+
+
+WHERE ISNULL(a.[P.Fabrication],'') != ''
+AND (a.DO_Domaine = 1 OR a.DO_Type = 21)
+
+GROUP BY
+
+a.[P.Fabrication],
+a.Affectation,
+a.AR_Ref
+) b ON a.Affectation = b.Affectation AND a.AR_Ref = b.AR_Ref AND a.Numero = b.[P.Fabrication]
+
+
+";
+		conso = db.Database.SqlQueryRaw<V_UEMA_Conso>(q1,ligne).ToList() ;
 	}
 	public async Task EditGrid(ActionEventArgs<API_T_OrdreFabricationDetail> args)
 	{

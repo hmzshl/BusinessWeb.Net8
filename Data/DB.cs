@@ -3537,6 +3537,7 @@ public partial class DB : DbContext
                 .HasMaxLength(17)
                 .IsUnicode(false);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateLivraison).HasColumnType("smalldatetime");
             entity.Property(e => e.NumCommande)
                 .HasMaxLength(40)
                 .IsUnicode(false);
