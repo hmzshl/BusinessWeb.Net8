@@ -65,6 +65,8 @@ public partial class API_T_CertifPointage
 
     public int? Statut { get; set; }
 
+    public string NumeroDE { get; set; }
+
     public virtual F_COMPTET CT_NumNavigation { get; set; }
 
     public virtual API_T_Personnel ResponsableEtalonnage2Navigation { get; set; }

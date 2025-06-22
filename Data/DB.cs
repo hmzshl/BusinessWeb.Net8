@@ -2885,6 +2885,9 @@ public partial class DB : DbContext
                 .HasColumnType("smalldatetime");
             entity.Property(e => e.DateReceptionDossier).HasColumnType("smalldatetime");
             entity.Property(e => e.Livreur).HasMaxLength(100);
+            entity.Property(e => e.NumeroDE)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.NumeroFACBL).HasMaxLength(50);
             entity.Property(e => e.Ville).HasMaxLength(100);
 

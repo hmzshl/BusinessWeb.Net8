@@ -6,28 +6,14 @@
 	<Card_1 Title="TABLEAU DE BORD ETALONNAGE">
 		<RadzenContent Container="main">
 			<div class="grid-90">
-				<SfToolbar CssClass="btns">
-					<ToolbarItems>
-						<ToolbarItem Align="ItemAlign.Left">
-							<Template>
-								<SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined"><div style="text-transform: uppercase;">Date: @SelectedDate.ToShortDateString()</div></SfMessage>
-							</Template>
-						</ToolbarItem>
-						<ToolbarItem Align="ItemAlign.Right">
-							<Template>
-								<SfButton IconCss="e-icons e-save" IsPrimary="false" Disabled>Valider la journée</SfButton>
-							</Template>
-						</ToolbarItem>
-					</ToolbarItems>
-				</SfToolbar>
 				<GridRow>
-					
-					<GridCol Xs="24" Md="21">
-						<div class="grid-80" style="zoom: @session.zoomLevel;">
+
+					<GridCol Xs="24" Md="24">
+						<div class="grid-84" style="zoom: @session.zoomLevel;">
 
 
-							<SfGrid Height="100%" RowRenderingMode="RowDirection.Horizontal"
-									AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" AllowPdfExport="true"
+							<SfGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" @ref=DefaultGrid
+									AllowReordering AllowSelection AllowFiltering ShowColumnChooser="true" ID="Grid" AllowPdfExport="true"
 									AllowExcelExport="true" AllowPaging="true" DataSource="@items"
 									Toolbar="@(new List<object>() { "Search", "Add", "Delete" })">
 								<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true"
@@ -48,6 +34,8 @@
 												Visible="false" IsIdentity="true"></GridColumn>
 									<GridColumn IsFrozen HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Bon de commande">
 										<GridColumns>
+											<GridColumn IsFrozen Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Création" Field=@nameof(API_T_CertifPointage.DateCreation) AllowEditing="false"
+														EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
 											<GridColumn IsFrozen Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut">
 												<Template>
 													@{
@@ -65,7 +53,6 @@
 															</div>
 														}
 														<div>
-															
 														</div>
 													}
 												</Template>
@@ -119,7 +106,7 @@
 									</GridColumn>
 									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Travaux d'étalonnage">
 										<GridColumns>
-											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" AllowEditing="false" HeaderText="Debut" Field=@nameof(API_T_CertifPointage.DateDebutEtalonnage) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
+
 
 											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Fin" Field=@nameof(API_T_CertifPointage.DateFinEtalonnage) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
 											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable 1">
@@ -127,7 +114,7 @@
 													@{
 														var dt = (context as API_T_CertifPointage);
 														<div>
-															@dt.ResponsableEtalonnageNavigation?.Nom
+															@db.API_T_Personnel.Where(a => a.id == dt.ResponsableEtalonnage).SingleOrDefault()?.Nom
 														</div>
 													}
 												</Template>
@@ -150,7 +137,7 @@
 													@{
 														var dt = (context as API_T_CertifPointage);
 														<div>
-															@dt.ResponsableEtalonnage2Navigation?.Nom
+															@db.API_T_Personnel.Where(a => a.id == dt.ResponsableEtalonnage2).SingleOrDefault()?.Nom
 														</div>
 													}
 												</Template>
@@ -187,7 +174,7 @@
 													@{
 														var dt = (context as API_T_CertifPointage);
 														<div>
-															@dt.ResponsableSaisieNavigation?.Nom
+															@db.API_T_Personnel.Where(a => a.id == dt.ResponsableSaisie).SingleOrDefault()?.Nom
 														</div>
 													}
 												</Template>
@@ -218,7 +205,7 @@
 											@{
 												var dt = (context as API_T_CertifPointage);
 												<div>
-													@dt.ResponsableImpressionNavigation?.Nom
+													@db.API_T_Personnel.Where(a => a.id == dt.ResponsableImpression).SingleOrDefault()?.Nom
 												</div>
 											}
 										</Template>
@@ -241,7 +228,7 @@
 											@{
 												var dt = (context as API_T_CertifPointage);
 												<div>
-													@dt.VerificationAvantImpressionNavigation?.Nom
+													@db.API_T_Personnel.Where(a => a.id == dt.VerificationAvantImpression).SingleOrDefault()?.Nom
 												</div>
 											}
 										</Template>
@@ -264,7 +251,7 @@
 											@{
 												var dt = (context as API_T_CertifPointage);
 												<div>
-													@dt.VerificationApresImpressionNavigation?.Nom
+													@db.API_T_Personnel.Where(a => a.id == dt.VerificationApresImpression).SingleOrDefault()?.Nom
 												</div>
 											}
 										</Template>
@@ -290,7 +277,7 @@
 											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="FA" Field=@nameof(API_T_CertifPointage.Facture) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
 
 											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="BL" Field=@nameof(API_T_CertifPointage.BonDeLivraison) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
-
+											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° DE" Field=@nameof(API_T_CertifPointage.NumeroDE) />
 											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° FA/BL" Field=@nameof(API_T_CertifPointage.NumeroFACBL) />
 
 											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Date Livraison" Field=@nameof(API_T_CertifPointage.DateLivraison) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
@@ -313,11 +300,6 @@
 							<!-- -->
 
 						</div>
-					</GridCol>
-					<GridCol Xs="24" Md="3">
-						<Card Title="Journée" Style="padding: 5px;">
-							<Calendar Style="width: 100%" Value="@SelectedDate" OnChange="OnSelect" OnPanelChange="OnPanelChange" DateCellRender="DateCellRender" />
-						</Card>
 					</GridCol>
 				</GridRow>
 			</div>
@@ -342,7 +324,7 @@ else
 	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
 	DB db = new DB();
 	//Components
-	private SfGrid<API_T_PointageDetail> DefaultGrid;
+	private SfGrid<API_T_CertifPointage> DefaultGrid;
 	private DateTime SelectedDate = DateTime.Today;
 	private int SelectedSite = 0;
 	string grid_height = "80vh";
@@ -370,7 +352,6 @@ else
 		.Include(a => a.ResponsableEtalonnageNavigation)
 		.Include(a => a.ResponsableImpressionNavigation)
 		.Include(a => a.ResponsableSaisieNavigation)
-		.Where(a => a.Date == SelectedDate)
 		.OrderByDescending(a => a.id)
 		.ToList();
 	}
@@ -395,16 +376,18 @@ else
 			if (1 == 1)
 			{
 
+
 				if (args.Action == "Add")
 				{
 
 
 					API_T_CertifPointage item = args.Data;
 					item.Date = SelectedDate;
-					item.DateDebutEtalonnage = SelectedDate;
+					item.DateCreation = DateTime.Now;
 					item.Statut = 0;
 					db.Add(item);
 					db.SaveChanges();
+					await UpdateGrid();
 				}
 				if (args.Action != "Add")
 				{
@@ -416,8 +399,14 @@ else
 					db.Entry(args.Data).State = EntityState.Modified;
 					db.SaveChanges();
 
+
+					await UpdateGrid();
+					await DefaultGrid.Refresh();
+					//foreach()
+
 				}
-				await UpdateGrid();
+
+
 			}
 			else
 			{
