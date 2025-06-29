@@ -370,7 +370,11 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Réglements", Url = "imp-regl" });
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Séquentialité Factures", Url = "seq-fa" });
 
-			return list;
+            //FOOD COST
+            list.Add(new AuthItems { SelectedAPP = 20, Title = "Traitement", Description = "Affaires", Url = "fc-affaires" });
+            list.Add(new AuthItems { SelectedAPP = 20, Title = "Traitement", Description = "Charges", Url = "fc-charges" });
+
+            return list;
 		}
 		public string getTiers(int type)
 		{
@@ -1789,8 +1793,9 @@ namespace BusinessWeb
 			list.Add(new Items { Id = 16, Name = "Transfert Données", Icon = "sync_alt" });
 			list.Add(new Items { Id = 18, Name = "Utilisateurs", Icon = "people" });
 			list.Add(new Items { Id = 19, Name = "Traçabilité", Icon = "update" });
+            list.Add(new Items { Id = 20, Name = "Food Cost", Icon = "bakery_dining" });
 
-			return list;
+            return list;
 		}
 		public List<Items> ModeSoumission()
 		{

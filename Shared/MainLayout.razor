@@ -381,6 +381,15 @@
 
 										</RadzenMenuItem>
 									}
+									/*Food Cost*/
+									@if (session.SelectedAPP == 20)
+									{
+										<RadzenMenuItem Text="Traitement" Icon="assessment" Visible=@(TitleIsVisible("Traitement"))>
+											<RadzenMenuItem Text="Ventes" Path="fc-affaires" Visible=@(IsVisible("fc-affaires"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Achats" Path="fc-charges" Visible=@(IsVisible("fc-charges"))></RadzenMenuItem>
+
+										</RadzenMenuItem>
+									}
 								}
 
 								<RadzenMenuItem class="ls-child-right" Visible="@sc.IsAuthenticated()" Text="@(session?.Societe?.Intitule)" Icon="home_filled">
@@ -540,6 +549,19 @@
 																				</RadzenImage>
 
 																				<h3 style="text-align: center;">Traçabilité</h3>
+																			</RadzenCard>
+																		</Button>
+																	</div>
+																}
+															@if (license.IsFeaturePresentEx(20))
+																{
+																	<div>
+																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(20))">
+																			<RadzenCard class="ant-card-hoverable green-card sh-card">
+																				<RadzenImage Path="/images/chart-2.png" Style="width: 70px; height: 70px;">
+																				</RadzenImage>
+
+																				<h3 style="text-align: center;">Food Cost</h3>
 																			</RadzenCard>
 																		</Button>
 																	</div>

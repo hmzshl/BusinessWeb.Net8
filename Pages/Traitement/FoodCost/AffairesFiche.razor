@@ -1,0 +1,312 @@
+﻿<div>
+    <GridRow>
+        <GridCol Xs="24" Md="24">
+            <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="FormContext">
+                <SfTab CssClass="e-fill">
+                    <TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/><TabItems>
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Accueil"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <GridRow>
+                                    <GridCol Xs="24" Md="4">
+                                        <Card>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Affaire" LabelColSpan="8">
+                                                <SfTextBox @bind-Value="@row.CA_Num" Readonly />
+                                             </FormItem>
+                                        </Card>
+                                        
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="8">
+                                        <Card>
+                                           <FormItem LabelAlign="AntLabelAlignType.Left" Label="Affaire" LabelColSpan="4">
+                                            <SfTextBox @bind-Value="@row.CA_Intitule" Readonly/>
+                                        </FormItem>
+                                        </Card>
+                                        
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="4">
+                                        <Card>
+                                           <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Client" LabelColSpan="8">
+                                            <SfTextBox @bind-Value="@cl.CT_Num" Readonly/>
+                                        </FormItem>
+                                        </Card>
+                                        
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="8">
+                                        <Card>
+                                             <FormItem LabelAlign="AntLabelAlignType.Left" Label="Client" LabelColSpan="4">
+                                                 <SfTextBox @bind-Value="@cl.CT_Intitule" Readonly />
+                                             </FormItem>
+                                        </Card>
+                                        
+                                    </GridCol>
+
+                                    
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="CA Estimé" Value="@((row.CADE ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600 ;" Suffix="@fn.getDevise(db)" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="CA Réalisé" Value="@((row.CABL ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+                                    </GridCol>
+                                    <GridCol Xs="24" Md="3">
+                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Réalisation" Value="@((row.Avancement ?? 0).ToString("P2"))" ValueStyle="color: #3f8600;" />
+                                    </GridCol>
+                                    
+                                    <GridCol Xs="24" Md="24">
+                                        <Card title="Devis">
+                                            <div style="height: 60vh;" class="small-grid no-border">
+                                                <SfGrid  Height="100%" AllowSelection="false" EnableHover="false" DataSource="@(db.API_V_DOCLIGNE.Where(a => a.CA_Num == CA_Num && a.DO_Type == 0 && a.DL_Valorise == 1).OrderBy(a => a.DL_Ligne))">
+                                                     <GridAggregates>
+                                                        <GridAggregate>
+                                                            <GridAggregateColumns>
+                                                                <GridAggregateColumn Field="@nameof(API_V_DOCLIGNE.DL_MontantHT)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                                                    <FooterTemplate>
+                                                                        @{
+                                                                            var value = (context as AggregateTemplateContext);
+                                                                            <div>
+                                                                                @value.Sum
+                                                                            </div>
+                                                                        }
+                                                                    </FooterTemplate>
+                                                                </GridAggregateColumn>
+                                                                <GridAggregateColumn Field="@nameof(API_V_DOCLIGNE.DL_MontantTTC)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                                                    <FooterTemplate>
+                                                                        @{
+                                                                            var value = (context as AggregateTemplateContext);
+                                                                            <div>
+                                                                                @value.Sum
+                                                                            </div>
+                                                                        }
+                                                                    </FooterTemplate>
+                                                                </GridAggregateColumn>
+                                                            </GridAggregateColumns>
+                                                        </GridAggregate>
+                                                    </GridAggregates>
+                                                    <GridColumns>
+                                                        <GridColumn AllowEditing="false" Width="10" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.cbMarq)" HeaderText="#" Visible="false" IsPrimaryKey="true" />
+                                                        <GridColumn AllowEditing="false" Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.AR_Ref)" HeaderText="Référence" />
+                                                        <GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_Design)" HeaderText="Désignation" />
+                                                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.EU_Enumere)" HeaderText="Unité" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"/>
+                                                        <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_Qte)" HeaderText="Qté" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                        <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_PrixUnitaire)" HeaderText="PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                        <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_CodeTaxe1)" HeaderText="Taxe" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"/>
+                                                        <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_PUTTC)" HeaderText="PU TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                        <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_Remise01REM_Valeur)" HeaderText="Remise" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                        <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.PUNet)" HeaderText="PU Net" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                        <GridColumn AllowEditing="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_MontantHT)" HeaderText="MNT HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                        <GridColumn AllowEditing="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCLIGNE.DL_MontantTTC)" HeaderText="MNT TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                    </GridColumns>
+
+                                                </SfGrid>
+                                            </div>
+                            
+                                        </Card>
+
+                                    </GridCol>
+                                </GridRow>
+                            </ContentTemplate>
+                        </TabItem>
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Avancement"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <div style="height: 78vh; padding: 8px;" class="small-grid">
+                                    <SfGrid  Height="100%" AllowSelection="false" EnableHover="false" DataSource="@(db.API_V_AFFAIREAVANCEMENT.Where(a => a.CA_Num == CA_Num).OrderBy(a => a.AR_Design))">
+                                        <GridAggregates>
+                                            <GridAggregate>
+                                                <GridAggregateColumns>
+                                                    <GridAggregateColumn Field="@nameof(API_V_AFFAIREAVANCEMENT.CADE)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                                        <FooterTemplate>
+                                                            @{
+                                                                var value = (context as AggregateTemplateContext);
+                                                                <div>
+                                                                    @value.Sum
+                                                                </div>
+                                                            }
+                                                        </FooterTemplate>
+                                                    </GridAggregateColumn>
+                                                    <GridAggregateColumn Field="@nameof(API_V_AFFAIREAVANCEMENT.CABL)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                                        <FooterTemplate>
+                                                            @{
+                                                                var value = (context as AggregateTemplateContext);
+                                                                <div>
+                                                                    @value.Sum
+                                                                </div>
+                                                            }
+                                                        </FooterTemplate>
+                                                    </GridAggregateColumn>
+                                                    <GridAggregateColumn Field="@nameof(API_V_AFFAIREAVANCEMENT.ResteCA)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                                        <FooterTemplate>
+                                                            @{
+                                                                var value = (context as AggregateTemplateContext);
+                                                                <div>
+                                                                    @value.Sum
+                                                                </div>
+                                                            }
+                                                        </FooterTemplate>
+                                                    </GridAggregateColumn>
+                                                    <GridAggregateColumn Field="@nameof(API_V_AFFAIREAVANCEMENT.EcartCA)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                                        <FooterTemplate>
+                                                            @{
+                                                                var value = (context as AggregateTemplateContext);
+                                                                <div>
+                                                                    @value.Sum
+                                                                </div>
+                                                            }
+                                                        </FooterTemplate>
+                                                    </GridAggregateColumn>
+                                                </GridAggregateColumns>
+                                            </GridAggregate>
+                                        </GridAggregates>
+                                        <GridColumns>
+                                            <GridColumn AllowEditing="false" Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIREAVANCEMENT.AR_Ref)" HeaderText="Référence" />
+                                            <GridColumn Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIREAVANCEMENT.AR_Design)" HeaderText="Désignation" />
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIREAVANCEMENT.Unite)" HeaderText="Unité" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                             <GridColumn HeaderText="DEVIS" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                                 <GridColumns>
+                                                    <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIREAVANCEMENT.DE)" HeaderText="Qté" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                    <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIREAVANCEMENT.CADE)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                 </GridColumns>
+                                             </GridColumn>
+                                              <GridColumn HeaderText="REALISATION" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                                 <GridColumns>
+                                                    <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIREAVANCEMENT.BL)" HeaderText="Qté" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                                        <Template>
+                                                            @{
+                                                                var item = (context as API_V_AFFAIREAVANCEMENT);
+                                                                <RadzenButton Style="padding: 0px !important; font-size: 11px; font-weight: 700;" Click="@(args => ShowLivraison(item))" Shade="Shade.Darker" Variant="Variant.Text" Text="@((item.BL ?? 0).ToString("### ### ##0.00;-### ### ##0.00;#"))" ButtonStyle="ButtonStyle.Info" />
+                                                            }
+                                                        </Template>
+                                                    </GridColumn>
+                                                    <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIREAVANCEMENT.CABL)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                    <GridColumn Width="350" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Avancement">
+                                                        <Template>
+                                                            <Progress Percent=@((Convert.ToDouble(((context as API_V_AFFAIREAVANCEMENT).Avancement??0)) * 100)) Format="_fortmat1" />
+                                                        </Template>
+                                                    </GridColumn>
+                                                 </GridColumns>
+                                             </GridColumn>
+                                             <GridColumn HeaderText="RESTE" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                                 <GridColumns>
+                                                    <GridColumn Width="80" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIREAVANCEMENT.ResteQte)" HeaderText="Qté" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                    <GridColumn AllowEditing="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIREAVANCEMENT.ResteCA)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                 </GridColumns>
+                                             </GridColumn>
+                                            <GridColumn HeaderText="ECART" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                                <GridColumns>
+                                                    <GridColumn AllowEditing="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIREAVANCEMENT.EcartQte)" HeaderText="Qté" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                                        <Template>
+                                                            @{
+                                                                var dt = (context as API_V_AFFAIREAVANCEMENT);
+                                                                if (dt.EcartQte > 0)
+                                                                {
+                                                                    <div style="text-align: right;">
+                                                                        <span class="statustxt e-activecolor">@dt.EcartQte?.ToString("N2")</span>
+                                                                    </div>
+                                                                }
+                                                                if (dt.EcartQte < 0)
+                                                                {
+                                                                    <div style="text-align: right;">
+                                                                        <span class="statustxt e-inactivecolor">@dt.EcartQte?.ToString("N2")</span>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </Template>
+                                                    </GridColumn>
+                                                    <GridColumn AllowEditing="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIREAVANCEMENT.EcartCA)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                                        <Template>
+                                                            @{
+                                                                var dt = (context as API_V_AFFAIREAVANCEMENT);
+                                                                if (dt.EcartCA > 0)
+                                                                {
+                                                                    <div style="text-align: right;">
+                                                                        <span class="statustxt e-activecolor">@dt.EcartCA?.ToString("N2")</span>
+                                                                    </div>
+                                                                }
+                                                                if (dt.EcartCA < 0)
+                                                                {
+                                                                    <div style="text-align: right;">
+                                                                        <span class="statustxt e-inactivecolor">@dt.EcartCA?.ToString("N2")</span>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </Template>
+                                                    </GridColumn>
+                                                </GridColumns>
+                                            </GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Livraisons"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <div class="no-border">
+                                    <DetailsLigne IsLivraison="true" CA_Num="@row.CA_Num" DO_Domaine="0" ClassHeight="grid-78"></DetailsLigne>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Achats"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <div class="no-border">
+                                    <DetailsLigne IsLivraison="true" CA_Num="@row.CA_Num" DO_Domaine="1" ClassHeight="grid-78"></DetailsLigne>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Charges"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+
+                            </ContentTemplate>
+                        </TabItem>
+
+                    </TabItems>
+                </SfTab>
+            </Form>
+
+        </GridCol>
+
+    </GridRow>
+</div>
+
+@code 
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter] public string CA_Num { get; set; }
+    private API_V_AFFAIRE row = new API_V_AFFAIRE();
+    private F_COMPTET cl = new F_COMPTET();
+    private Func<double, string> _fortmat1 = (p) => $"{(p / 100).ToString("### ### ##0 %")}";
+    protected override async Task OnInitializedAsync()
+    {
+                db = session.db;
+        GC.Collect();
+        row = db.API_V_AFFAIRE.Where(a => a.CA_Num == CA_Num).SingleOrDefault();
+        var dt = db.F_DOCLIGNE.Where(a => a.DO_Domaine == 0 && a.CA_Num == CA_Num);
+        if(dt.Count() != 0)
+        {
+            cl = db.F_COMPTET.Where(a => a.CT_Num == dt.First().CT_Num).SingleOrDefault();
+        }
+
+    }
+    private async Task ShowLivraison(API_V_AFFAIREAVANCEMENT args)
+    {
+        await DialogService.OpenAsync<DetailsLigne>(args.AR_Design,
+     new Dictionary<string, object>() { { "CA_Num", args.CA_Num }, { "AR_Ref", args.AR_Ref }, { "IsLivraison", true }, { "Height", "65vh" } },
+     new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "80%", Height = "80%" });
+    }
+
+
+}
