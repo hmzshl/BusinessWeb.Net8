@@ -253,6 +253,12 @@ public partial class F_COMPTET
 
     public virtual ICollection<API_T_CertifPointage> API_T_CertifPointage { get; set; } = new List<API_T_CertifPointage>();
 
+    public virtual ICollection<API_T_FC_Charges> API_T_FC_Charges { get; set; } = new List<API_T_FC_Charges>();
+
+    public virtual ICollection<API_T_FC_MasseSalariale> API_T_FC_MasseSalariale { get; set; } = new List<API_T_FC_MasseSalariale>();
+
+    public virtual ICollection<API_T_FC_Repas> API_T_FC_Repas { get; set; } = new List<API_T_FC_Repas>();
+
     public virtual ICollection<API_T_OrdreFabrication> API_T_OrdreFabrication { get; set; } = new List<API_T_OrdreFabrication>();
 
     public virtual F_COMPTEG CG_NumPrincNavigation { get; set; }

@@ -109,7 +109,7 @@ input, .rz-dropdown {
 }
 
 .rz-dialog {
-    border-radius: 0px 0px 0px 0px;
+    border-radius: 15px !important;
 }
 
 .footer {
@@ -1742,7 +1742,6 @@ td .e-numerictextbox {
 .rz-dialog-titlebar {
     color: #000000 !important;
     padding: 10px !important;
-    padding-top: 5px !important;
     padding-bottom: 5px !important;
     background: #ffffff;
     font-size: 15px;
@@ -2238,10 +2237,6 @@ th {
 .e-switch-wrapper, .e-css.e-switch-wrapper {
     margin-top: 7px;
     min-width: 55px;
-}
-
-.ant-card {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
 }
 
 .sh-card {

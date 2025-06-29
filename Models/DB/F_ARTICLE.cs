@@ -223,6 +223,10 @@ public partial class F_ARTICLE
 
     public Guid? cbCreationUser { get; set; }
 
+    public virtual ICollection<API_T_FC_Repas> API_T_FC_Repas { get; set; } = new List<API_T_FC_Repas>();
+
+    public virtual ICollection<API_T_FC_RepasCompose> API_T_FC_RepasCompose { get; set; } = new List<API_T_FC_RepasCompose>();
+
     public virtual ICollection<API_T_OrdreFabricationDetail> API_T_OrdreFabricationDetail { get; set; } = new List<API_T_OrdreFabricationDetail>();
 
     public virtual ICollection<API_T_OrdreFabricationLigne> API_T_OrdreFabricationLigne { get; set; } = new List<API_T_OrdreFabricationLigne>();

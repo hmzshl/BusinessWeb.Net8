@@ -142,6 +142,16 @@ public partial class DB : DbContext
 
     public virtual DbSet<API_T_DroitConstate> API_T_DroitConstate { get; set; }
 
+    public virtual DbSet<API_T_FC_Charges> API_T_FC_Charges { get; set; }
+
+    public virtual DbSet<API_T_FC_MasseSalariale> API_T_FC_MasseSalariale { get; set; }
+
+    public virtual DbSet<API_T_FC_Repas> API_T_FC_Repas { get; set; }
+
+    public virtual DbSet<API_T_FC_RepasCompose> API_T_FC_RepasCompose { get; set; }
+
+    public virtual DbSet<API_T_FC_RepasComposeDetail> API_T_FC_RepasComposeDetail { get; set; }
+
     public virtual DbSet<API_T_FraisEntete> API_T_FraisEntete { get; set; }
 
     public virtual DbSet<API_T_FraisLigne> API_T_FraisLigne { get; set; }
@@ -3226,6 +3236,122 @@ public partial class DB : DbContext
                 .HasConstraintName("fk_api_t_droitconstate");
         });
 
+        modelBuilder.Entity<API_T_FC_Charges>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_FC_Charges_id");
+
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(17)
+                .IsUnicode(false);
+            entity.Property(e => e.MontantMensuel).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Qté).HasColumnType("decimal(24, 6)");
+
+            entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.API_T_FC_Charges)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_Num)
+                .HasConstraintName("fk_api_t_fc_charges_f_comptet");
+        });
+
+        modelBuilder.Entity<API_T_FC_MasseSalariale>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_FC_MasseSalariale_id");
+
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(17)
+                .IsUnicode(false);
+            entity.Property(e => e.Charges).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Effectif).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Libelle)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.SalaireNet).HasColumnType("decimal(24, 6)");
+
+            entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.API_T_FC_MasseSalariale)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_Num)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_api_t_fc_massesalariale");
+
+            entity.HasOne(d => d.FonctionNavigation).WithMany(p => p.API_T_FC_MasseSalariale)
+                .HasForeignKey(d => d.Fonction)
+                .HasConstraintName("fk_api_t_fc_massesalariale_2");
+        });
+
+        modelBuilder.Entity<API_T_FC_Repas>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_FC_Repas_id");
+
+            entity.Property(e => e.AR_Ref)
+                .HasMaxLength(19)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(17)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.API_T_FC_Repas)
+                .HasPrincipalKey(p => p.AR_Ref)
+                .HasForeignKey(d => d.AR_Ref)
+                .HasConstraintName("fk_api_t_fc_repas_f_article_3");
+
+            entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.API_T_FC_Repas)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_Num)
+                .HasConstraintName("fk_api_t_fc_repas_f_comptet_2");
+
+            entity.HasOne(d => d.LigneNavigation).WithMany(p => p.API_T_FC_Repas)
+                .HasForeignKey(d => d.Ligne)
+                .HasConstraintName("fk_api_t_fc_repas_f_artclient");
+        });
+
+        modelBuilder.Entity<API_T_FC_RepasCompose>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_FC_RepasCompose_id");
+
+            entity.Property(e => e.AR_Ref)
+                .HasMaxLength(19)
+                .IsUnicode(false);
+            entity.Property(e => e.Designation)
+                .HasMaxLength(69)
+                .IsUnicode(false);
+            entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
+
+            entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.API_T_FC_RepasCompose)
+                .HasPrincipalKey(p => p.AR_Ref)
+                .HasForeignKey(d => d.AR_Ref)
+                .HasConstraintName("fk_api_t_fc_repascompose_3");
+
+            entity.HasOne(d => d.RepasNavigation).WithMany(p => p.API_T_FC_RepasCompose)
+                .HasForeignKey(d => d.Repas)
+                .HasConstraintName("fk_api_t_fc_repascompose_2");
+
+            entity.HasOne(d => d.TypeNavigation).WithMany(p => p.API_T_FC_RepasCompose)
+                .HasForeignKey(d => d.Type)
+                .HasConstraintName("fk_api_t_fc_repascompose");
+        });
+
+        modelBuilder.Entity<API_T_FC_RepasComposeDetail>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_FC_RepasComposeDetail_id");
+
+            entity.Property(e => e.AR_Ref)
+                .HasMaxLength(19)
+                .IsUnicode(false);
+            entity.Property(e => e.Designation)
+                .HasMaxLength(69)
+                .IsUnicode(false);
+            entity.Property(e => e.Frequence).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Grammage).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Total).HasColumnType("decimal(24, 6)");
+
+            entity.HasOne(d => d.ComposeNavigation).WithMany(p => p.API_T_FC_RepasComposeDetail)
+                .HasForeignKey(d => d.Compose)
+                .HasConstraintName("fk_api_t_fc_repascomposedetail");
+        });
+
         modelBuilder.Entity<API_T_FraisEntete>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_FraisEntete_id");
@@ -5850,6 +5976,9 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Controle)
                 .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.DE_Intitule)
+                .HasMaxLength(35)
                 .IsUnicode(false);
             entity.Property(e => e.DL_DateBL).HasColumnType("datetime");
             entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(38, 6)");

@@ -10,7 +10,7 @@
                     <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
 
                     </GridEditSettings>
-                    <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_V_AFFAIRE"></GridEvents>
+                    <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_V_COMPTET"></GridEvents>
                     <GridPageSettings PageSize="100"></GridPageSettings>
                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                     <GridTemplates>
@@ -21,7 +21,7 @@
                     <GridAggregates>
                         <GridAggregate>
                             <GridAggregateColumns>
-                                <GridAggregateColumn Field="CA_Num" Type="AggregateType.Count" Format="N0">
+                                <GridAggregateColumn Field="CT_Num" Type="AggregateType.Count" Format="N0">
                                     <FooterTemplate>
                                         @{
                                             var SumValue = (context as AggregateTemplateContext);
@@ -32,18 +32,7 @@
                                     </FooterTemplate>
 
                                 </GridAggregateColumn>
-                                <GridAggregateColumn Field="CADE" Type="AggregateType.Sum" Format="N2">
-                                    <FooterTemplate>
-                                        @{
-                                            var SumValue = (context as AggregateTemplateContext);
-                                            <div>
-                                                @SumValue.Sum
-                                            </div>
-                                        }
-                                    </FooterTemplate>
-
-                                </GridAggregateColumn>
-                                <GridAggregateColumn Field="CABL" Type="AggregateType.Sum" Format="N2">
+                                <GridAggregateColumn Field="DL_MontantTTC" Type="AggregateType.Sum" Format="N2">
                                     <FooterTemplate>
                                         @{
                                             var SumValue = (context as AggregateTemplateContext);
@@ -58,10 +47,12 @@
                         </GridAggregate>
                     </GridAggregates>
                     <GridColumns>
-                        <GridColumn Width="120" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIRE.CA_Num)" HeaderText="N° Affaire"></GridColumn>
-                        <GridColumn AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIRE.CA_Intitule)" HeaderText="Affaire"></GridColumn>
-                        <GridColumn Width="120" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIRE.CADE)" HeaderText="CA Estimé" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-                        <GridColumn Width="120" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AFFAIRE.CABL)" HeaderText="CA Réalisé" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="120" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.CT_Num)" HeaderText="N° Client"></GridColumn>
+                        <GridColumn AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.CT_Intitule)" HeaderText="Affaire"></GridColumn>
+                        <GridColumn Width="120" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.DL_MontantTTC)" HeaderText="CA Réalisé" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="240" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.DE_Intitule)" HeaderText="Dépot"></GridColumn>
+                        <GridColumn Width="160" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.Collaborateur)" HeaderText="Collaborateur"></GridColumn>
+                        <GridColumn Width="130" AllowFiltering HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_COMPTET.SommeilIntitule)" HeaderText="Sommeil"></GridColumn>
                     </GridColumns>
                     <SfSpinner @bind-Visible="@loading">
                     </SfSpinner>
@@ -94,13 +85,13 @@ else
     [Parameter] public string Title { get; set; } = "";
     string grid_height = "80vh";
     //Components
-    private SfGrid<API_V_AFFAIRE> DefaultGrid;
+    private SfGrid<API_V_COMPTET> DefaultGrid;
     private Func<double, string> _fortmat1 = (p) => $"{(p / 100).ToString("### ### ##0 %")}";
 
     //End components
 
-    private IEnumerable<API_V_AFFAIRE> items;
-    List<API_V_AFFAIRE> rows = new List<API_V_AFFAIRE>();
+    private IEnumerable<API_V_COMPTET> items;
+    List<API_V_COMPTET> rows = new List<API_V_COMPTET>();
     string activekey = "0";
     bool loading = false;
     bool IsLoaded = false;
@@ -108,7 +99,7 @@ else
     int caisse = 0;
     DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
     DateTime? date2;
-    IList<API_V_AFFAIRE> selecteditems;
+    IList<API_V_COMPTET> selecteditems;
     private RenderFragment Date1 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date1" Width="130px" Placeholder="Date Début" TValue="DateTime?">
         <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
     </SfDatePicker>;
@@ -128,7 +119,7 @@ else
     {
         loading = true;
         await Task.Delay(1);
-        items = session.db.API_V_AFFAIRE.OrderBy(a => a.CA_Num).ToList();
+        items = session.db.API_V_COMPTET.Where(a => a.CT_Type == 0).OrderBy(a => a.CT_Intitule).ToList();
         loading = false;
         await Task.Delay(1);
     }
@@ -145,7 +136,7 @@ else
         }
 
     }
-    private async Task OnActionBegin(ActionEventArgs<API_V_AFFAIRE> args)
+    private async Task OnActionBegin(ActionEventArgs<API_V_COMPTET> args)
     {
         if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
     || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
@@ -175,11 +166,11 @@ else
         }
         return rs;
     }
-    protected async Task Edit(RecordDoubleClickEventArgs<API_V_AFFAIRE> args)
+    protected async Task Edit(RecordDoubleClickEventArgs<API_V_COMPTET> args)
     {
-        await DialogService.OpenAsync<AffairesFiche>(args.RowData.CA_Intitule,
-        new Dictionary<string, object>() { { "CA_Num", args.RowData.CA_Num } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
+        await DialogService.OpenAsync<AffairesFiche>(args.RowData.CT_Intitule,
+        new Dictionary<string, object>() { { "CT_Num", args.RowData.CT_Num } },
+        new Radzen.DialogOptions() { Width = "1000px", Height = "95%" });
         await UpdateGrid();
     }
     private async Task Add()

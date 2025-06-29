@@ -232,4 +232,6 @@ public partial class API_V_COMPTET
     public DateTime? cbModification { get; set; }
 
     public string Collaborateur { get; set; }
+
+    public string DE_Intitule { get; set; }
 }
