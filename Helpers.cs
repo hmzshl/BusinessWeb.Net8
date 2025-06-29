@@ -369,6 +369,7 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Achats", Url = "imp-achats" });
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Réglements", Url = "imp-regl" });
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Séquentialité Factures", Url = "seq-fa" });
+            list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Solde clients", Url = "solde-clients" });
 
             //FOOD COST
             list.Add(new AuthItems { SelectedAPP = 20, Title = "Traitement", Description = "Affaires", Url = "fc-affaires" });
