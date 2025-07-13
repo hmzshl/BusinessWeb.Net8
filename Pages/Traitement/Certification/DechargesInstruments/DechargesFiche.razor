@@ -1,0 +1,311 @@
+<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton  Disabled IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
+            </Template>
+        </ToolbarItem>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton OnClick="@(args => Submit(true))" IconCss="e-icons e-save" IsPrimary="true">Enregistrer</SfButton>
+            </Template>
+        </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+
+<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="row">
+    <GridRow>
+        <GridCol Xs="24" Md="6">
+            <Card Style="height: 200px;">
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Fiche" LabelColSpan="8">
+                    <SfDatePicker TValue="DateTime" @bind-Value="@row.DateFiche" />
+                </FormItem>
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Fiche" LabelColSpan="8">
+                    <SfTextBox @bind-Value="@row.NumeroFiche" Enabled="@(id == 0)" />
+                </FormItem>
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Dossier" LabelColSpan="8">
+                    <SfTextBox @bind-Value="@row.NumeroDossier" />
+                </FormItem>
+            </Card>
+        </GridCol>
+
+        <GridCol Xs="24" Md="18">
+            <Card Style="height: 200px;">
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Fiche Réception Correspondante">
+                    <SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+                                    TValue="string" TItem="API_T_CertifReception" DataSource="@receptions" @bind-Value="@row.NumeroFicheReceptionCorrespondante">
+                        <DropDownListEvents TValue="string" TItem="API_T_CertifReception" ValueChange="@OnReceptionChange" />
+                        <DropDownListFieldSettings Text="NumeroEnregistrement" Value="NumeroEnregistrement" />
+                    </SfDropDownList>
+                </FormItem>
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Soussigné">
+                    <SfTextBox @bind-Value="@row.SoussigneNom" />
+                </FormItem>
+                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Société">
+                    <SfTextBox @bind-Value="@row.SocieteNom" />
+                </FormItem>
+            </Card>
+        </GridCol>
+
+        <GridCol Xs="24" Md="24">
+            <SfToolbar>
+                <ToolbarItems>
+                    <ToolbarItem Align="ItemAlign.Left" Disabled="@(string.IsNullOrEmpty(row.NumeroFicheReceptionCorrespondante) || id == 0)"
+                                 OnClick="Delete" TooltipText="Supprimer" Text="Supprimer"
+                                 ShowTextOn="DisplayMode.Overflow" PrefixIcon="e-icons e-trash"></ToolbarItem>
+                </ToolbarItems>
+            </SfToolbar>
+
+            <div style="height: 60vh;" class="no-border small-grid">
+                <SfGrid AllowRowDragAndDrop="true" Height="100%" DataSource="@lignes" AllowSelection @ref="DefaultGrid" AllowExcelExport>
+                    <GridSelectionSettings PersistSelection Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
+                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                    <GridEditSettings AllowDeleting ShowDeleteConfirmDialog AllowEditing Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+                    </GridEditSettings>
+                    <GridEvents RowDropped="RowDropHandler" OnActionBegin="EditGrid" TValue="API_T_CertifDechargeLigne"></GridEvents>
+                    <GridTemplates>
+                        <EmptyRecordTemplate>
+                            <Empty></Empty>
+                        </EmptyRecordTemplate>
+                    </GridTemplates>
+                    <GridColumns>
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifDechargeLigne.id)" HeaderText="#" IsPrimaryKey="true" Visible="false"></GridColumn>
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Désignation" MinWidth="250px">
+                            <Template>
+                                @{
+                                    var dt = instruments.Where(a => a.id == (context as API_T_CertifDechargeLigne).Instrument).SingleOrDefault();
+                                    <div>@dt?.Intitule</div>
+                                }
+                            </Template>
+                            <EditTemplate>
+
+                            </EditTemplate>
+                        </GridColumn>
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifDechargeLigne.Identification)" HeaderText="Identification" Width="150px"></GridColumn>
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_CertifDechargeLigne.Accessoires)" HeaderText="Accessoires" Width="200px"></GridColumn>
+                    </GridColumns>
+                </SfGrid>
+            </div>
+        </GridCol>
+    </GridRow>
+</Form>
+
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    DB db = new DB();
+
+    [Parameter]
+    public int id { get; set; } = 0;
+
+    private API_T_CertifDecharge row { get; set; } = new API_T_CertifDecharge();
+    private List<API_T_CertifDechargeLigne> lignes = new List<API_T_CertifDechargeLigne>();
+    private List<API_T_CertifReception> receptions = new List<API_T_CertifReception>();
+    List<API_T_CertifInstrument> instruments = new List<API_T_CertifInstrument>();
+    private SfGrid<API_T_CertifDechargeLigne> DefaultGrid;
+    public Syncfusion.Blazor.Data.Query LocalDataQuery = new Syncfusion.Blazor.Data.Query().Take(10);
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        instruments = db.API_T_CertifInstrument.ToList();
+        receptions = await db.API_T_CertifReception
+                           .OrderByDescending(a => a.DateReception)
+                           .ToListAsync();
+
+        if (id == 0)
+        {
+            row = new API_T_CertifDecharge
+            {
+                DateFiche = DateTime.Today,
+                NumeroFiche = await GenerateNextNumber()
+            };
+        }
+        else
+        {
+            row = await db.API_T_CertifDecharge.FirstOrDefaultAsync(a => a.id == id);
+            await UpdateGrid();
+        }
+    }
+
+    private async Task<string> GenerateNextNumber()
+    {
+        var lastNumber = await db.API_T_CertifDecharge
+                                .OrderByDescending(a => a.id)
+                                .Select(a => a.NumeroFiche)
+                                .FirstOrDefaultAsync();
+
+        if (string.IsNullOrEmpty(lastNumber))
+        {
+            return "DCH-000001";
+        }
+
+        var numberPart = lastNumber.Split('-')[1];
+        if (int.TryParse(numberPart, out int num))
+        {
+            return $"DCH-{(num + 1).ToString("D6")}";
+        }
+
+        return "DCH-000001";
+    }
+
+    private async Task OnReceptionChange(ChangeEventArgs<string, API_T_CertifReception> args)
+    {
+        var reception = receptions.FirstOrDefault(r => r.NumeroEnregistrement == args.Value);
+        
+        if (reception != null)
+        {
+            row.NumeroDossier = reception.NumeroDossier;
+            row.ReceptionID = reception.id;
+            // Load corresponding items from reception
+            var receptionItems = await db.API_T_CertifReceptionLigne
+                                       .Where(a => a.EnregistrementID == reception.id)
+                                       .ToListAsync();
+
+            // Convert to discharge items
+            lignes = receptionItems.Select(i => new API_T_CertifDechargeLigne
+            {
+                FicheReceptionID = this.id,
+                Identification = i.Identification,
+                Accessoires = i.Accessoires,
+                Instrument = i.Instrument
+            }).ToList();
+        }
+    }
+
+    private async Task Submit(bool close)
+    {
+        if (id == 0)
+        {
+            row.CreatedDate = DateTime.Now;
+            db.API_T_CertifDecharge.Add(row);
+        }
+        else
+        {
+            row.ModifiedDate = DateTime.Now;
+            db.API_T_CertifDecharge.Update(row);
+        }
+
+        await db.SaveChangesAsync();
+        id = row.id;
+
+        // Save lines
+        foreach (var ligne in lignes)
+        {
+            ligne.FicheReceptionID = this.id;
+            if (ligne.id == 0)
+            {
+                db.API_T_CertifDechargeLigne.Add(ligne);
+            }
+            else
+            {
+                db.API_T_CertifDechargeLigne.Update(ligne);
+            }
+        }
+
+        await db.SaveChangesAsync();
+
+        if (close)
+        {
+            DialogService.Close();
+        }
+    }
+    private async Task UpdateGrid()
+    {
+        lignes = db.API_T_CertifDechargeLigne.Where(a => a.FicheReceptionID == id).ToList();
+    }
+    public async Task EditGrid(ActionEventArgs<API_T_CertifDechargeLigne> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+            var ar = db.API_T_CertifDechargeLigne.Where(a => a.id == args.Data.id).SingleOrDefault();
+            // Add any additional property assignments here if needed
+            // args.Data.SomeProperty = ar?.SomeProperty;
+
+            if (args.Action == "Add")
+            {
+                if (id == 0)
+                {
+                    await Submit(false);
+                }
+                API_T_CertifDechargeLigne item = args.Data;
+
+                item.FicheReceptionID = this.id;
+                db.Add(item);
+                db.SaveChanges();
+                await UpdateGrid();
+            }
+            if (args.Action != "Add")
+            {
+                var local = db.Set<API_T_CertifDechargeLigne>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                if (local != null)
+                {
+                    db.Entry(local).State = EntityState.Detached;
+                }
+                db.Entry(args.Data).State = EntityState.Modified;
+                db.SaveChanges();
+                await UpdateGrid();
+            }
+        }
+
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+            foreach (API_T_CertifDechargeLigne item in dt)
+            {
+                db.Database.ExecuteSqlRaw("DELETE FROM API_T_CertifDechargeLigne WHERE id = {0}", item.id);
+            }
+            await UpdateGrid();
+        }
+    }
+
+    private async Task RowDropHandler(RowDroppedEventArgs<API_T_CertifDechargeLigne> args)
+    {
+        try
+        {
+            var records = await DefaultGrid.GetCurrentViewRecordsAsync();
+            for (int i = 0; i < records.Count; i++)
+            {
+                records[i].id = i + 1;
+                db.API_T_CertifDechargeLigne.Update(records[i]);
+            }
+            await db.SaveChangesAsync();
+        }
+        catch (Exception ex)
+        {
+            await DialogService.Alert(ex.Message, "Erreur");
+        }
+    }
+
+    private async Task Print()
+    {
+        await Submit(false);
+
+        List<JSReportParameter> parameters = new List<JSReportParameter>
+        {
+            new JSReportParameter { Name = "id", Values = new List<string>() { id.ToString() } }
+        };
+
+        await DialogService.OpenAsync<ReportViewer>(row.NumeroFiche,
+            new Dictionary<string, object>() {
+                { "ReportName", "reports\\certification\\Decharge" },
+                { "parameters", parameters }
+            },
+            new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });
+    }
+
+    private async Task Delete()
+    {
+        bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment supprimer la selection?", "SUPPRESSION");
+        if (isConfirm)
+        {
+            var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+            foreach (API_T_CertifDechargeLigne item in dt)
+            {
+                db.Database.ExecuteSqlRaw("DELETE FROM API_T_CertifDechargeLigne WHERE id = {0}", item.id);
+            }
+            await UpdateGrid();
+        }
+    }
+}

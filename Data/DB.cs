@@ -100,6 +100,10 @@ public partial class DB : DbContext
 
     public virtual DbSet<API_T_CertifAutoclaves> API_T_CertifAutoclaves { get; set; }
 
+    public virtual DbSet<API_T_CertifDecharge> API_T_CertifDecharge { get; set; }
+
+    public virtual DbSet<API_T_CertifDechargeLigne> API_T_CertifDechargeLigne { get; set; }
+
     public virtual DbSet<API_T_CertifDocument> API_T_CertifDocument { get; set; }
 
     public virtual DbSet<API_T_CertifEntete> API_T_CertifEntete { get; set; }
@@ -129,6 +133,10 @@ public partial class DB : DbContext
     public virtual DbSet<API_T_CertifRapportMission> API_T_CertifRapportMission { get; set; }
 
     public virtual DbSet<API_T_CertifRapportMissionLigne> API_T_CertifRapportMissionLigne { get; set; }
+
+    public virtual DbSet<API_T_CertifReception> API_T_CertifReception { get; set; }
+
+    public virtual DbSet<API_T_CertifReceptionLigne> API_T_CertifReceptionLigne { get; set; }
 
     public virtual DbSet<API_T_CertifSuiviDossier> API_T_CertifSuiviDossier { get; set; }
 
@@ -2463,6 +2471,47 @@ public partial class DB : DbContext
                 .HasConstraintName("fk_api_t_certifautoclaves");
         });
 
+        modelBuilder.Entity<API_T_CertifDecharge>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("PK__API_T_Ce__3213E83FBBA965AD");
+
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("smalldatetime");
+            entity.Property(e => e.DateFiche).HasColumnType("smalldatetime");
+            entity.Property(e => e.ModifiedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("smalldatetime");
+            entity.Property(e => e.NumeroDossier)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.NumeroFiche)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.NumeroFicheReceptionCorrespondante)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.SocieteNom)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.SoussigneNom)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<API_T_CertifDechargeLigne>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("PK__API_T_Ce__3213E83F1A3EBABD");
+
+            entity.Property(e => e.Accessoires)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Identification)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<API_T_CertifDocument>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CertifDocument_id");
@@ -3003,6 +3052,64 @@ public partial class DB : DbContext
                 .HasForeignKey(d => d.Rapport)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_api_t_certifrapportmissionligne");
+        });
+
+        modelBuilder.Entity<API_T_CertifReception>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("PK__API_T_Ce__3213E83FA134D9B3");
+
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.ClientNom)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.CreatedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("smalldatetime");
+            entity.Property(e => e.DateEntreeLabo).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateReception).HasColumnType("date");
+            entity.Property(e => e.DateSortieLabo).HasColumnType("smalldatetime");
+            entity.Property(e => e.Livreur)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.ModifiedDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("smalldatetime");
+            entity.Property(e => e.NaturePrestation)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.NumeroDossier)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.NumeroEnregistrement)
+                .IsRequired()
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Planification)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Priorite)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Recepteur)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<API_T_CertifReceptionLigne>(entity =>
+        {
+            entity.HasKey(e => e.LigneID).HasName("PK__API_T_Ce__3B499C53DA61377D");
+
+            entity.Property(e => e.Accessoires)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Identification)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Observations)
+                .HasMaxLength(500)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<API_T_CertifSuiviDossier>(entity =>
