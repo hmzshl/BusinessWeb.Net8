@@ -4,6 +4,7 @@
    "ContextNamespace": null,
    "FilterSchemas": false,
    "IncludeConnectionString": false,
+   "MinimumProductVersion": "2.6.0",
    "ModelNamespace": null,
    "OutputContextPath": "Data",
    "OutputPath": "Models\/DB",
@@ -1508,6 +1509,10 @@
       },
       {
          "Name": "[dbo].[API_V_CERTIFENTETE]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[API_V_CERTIFPOINTAGE]",
          "ObjectType": 3
       },
       {

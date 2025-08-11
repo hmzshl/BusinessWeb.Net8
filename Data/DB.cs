@@ -278,6 +278,8 @@ public partial class DB : DbContext
 
     public virtual DbSet<API_V_CERTIFENTETE> API_V_CERTIFENTETE { get; set; }
 
+    public virtual DbSet<API_V_CERTIFPOINTAGE> API_V_CERTIFPOINTAGE { get; set; }
+
     public virtual DbSet<API_V_COLLABORATEUR> API_V_COLLABORATEUR { get; set; }
 
     public virtual DbSet<API_V_COMPTET> API_V_COMPTET { get; set; }
@@ -2943,6 +2945,9 @@ public partial class DB : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("smalldatetime");
             entity.Property(e => e.DateReceptionDossier).HasColumnType("smalldatetime");
+            entity.Property(e => e.Intermediaire)
+                .HasMaxLength(255)
+                .IsUnicode(false);
             entity.Property(e => e.Livreur).HasMaxLength(100);
             entity.Property(e => e.NumeroDE)
                 .HasMaxLength(50)
@@ -5856,6 +5861,85 @@ public partial class DB : DbContext
                 .IsRequired()
                 .HasMaxLength(11)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<API_V_CERTIFPOINTAGE>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("API_V_CERTIFPOINTAGE");
+
+            entity.Property(e => e.AccuseReceptionIntitule)
+                .IsRequired()
+                .HasMaxLength(3)
+                .IsUnicode(false);
+            entity.Property(e => e.BonDeLivraisonIntitule)
+                .IsRequired()
+                .HasMaxLength(3)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Adresse)
+                .HasMaxLength(35)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Intitule)
+                .HasMaxLength(35)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(17)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Ville)
+                .HasMaxLength(35)
+                .IsUnicode(false);
+            entity.Property(e => e.CertificatsIntitule)
+                .IsRequired()
+                .HasMaxLength(3)
+                .IsUnicode(false);
+            entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateCreation).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateDebutEtalonnage).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateDebutSaisie).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateFinEtalonnage).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateFinSaisie).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateLivraison).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateModification).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateReceptionDossier).HasColumnType("smalldatetime");
+            entity.Property(e => e.FactureIntitule)
+                .IsRequired()
+                .HasMaxLength(3)
+                .IsUnicode(false);
+            entity.Property(e => e.Intermediaire)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+            entity.Property(e => e.Livreur).HasMaxLength(100);
+            entity.Property(e => e.NumeroDE)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.NumeroFACBL).HasMaxLength(50);
+            entity.Property(e => e.ResponsableEtalonnage2Intitule)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.ResponsableEtalonnage3Intitule)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.ResponsableEtalonnageIntitule)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.ResponsableSaisieIntitule)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.StatutIntitule)
+                .HasMaxLength(8)
+                .IsUnicode(false);
+            entity.Property(e => e.VerificationApresImpressionIntitule)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.VerificationAvantImpressionIntitule)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.VerificationScanIntitule)
+                .IsRequired()
+                .HasMaxLength(3)
+                .IsUnicode(false);
+            entity.Property(e => e.Ville).HasMaxLength(100);
         });
 
         modelBuilder.Entity<API_V_COLLABORATEUR>(entity =>

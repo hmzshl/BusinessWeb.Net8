@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace BusinessWeb.Models.DB;
 
-public partial class API_T_CertifPointage
+public partial class API_V_CERTIFPOINTAGE
 {
     public int id { get; set; }
 
@@ -69,19 +69,33 @@ public partial class API_T_CertifPointage
 
     public string Intermediaire { get; set; }
 
-    public virtual F_COMPTET CT_NumNavigation { get; set; }
+    public string CT_Intitule { get; set; }
 
-    public virtual API_T_Personnel ResponsableEtalonnage2Navigation { get; set; }
+    public string CT_Adresse { get; set; }
 
-    public virtual API_T_Personnel ResponsableEtalonnage3Navigation { get; set; }
+    public string CT_Ville { get; set; }
 
-    public virtual API_T_Personnel ResponsableEtalonnageNavigation { get; set; }
+    public string StatutIntitule { get; set; }
 
-    public virtual API_T_Personnel ResponsableImpressionNavigation { get; set; }
+    public string ResponsableEtalonnageIntitule { get; set; }
 
-    public virtual API_T_Personnel ResponsableSaisieNavigation { get; set; }
+    public string ResponsableEtalonnage2Intitule { get; set; }
 
-    public virtual API_T_Personnel VerificationApresImpressionNavigation { get; set; }
+    public string ResponsableEtalonnage3Intitule { get; set; }
 
-    public virtual API_T_Personnel VerificationAvantImpressionNavigation { get; set; }
+    public string ResponsableSaisieIntitule { get; set; }
+
+    public string VerificationAvantImpressionIntitule { get; set; }
+
+    public string VerificationApresImpressionIntitule { get; set; }
+
+    public string CertificatsIntitule { get; set; }
+
+    public string VerificationScanIntitule { get; set; }
+
+    public string FactureIntitule { get; set; }
+
+    public string BonDeLivraisonIntitule { get; set; }
+
+    public string AccuseReceptionIntitule { get; set; }
 }
