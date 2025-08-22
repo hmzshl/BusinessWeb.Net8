@@ -70,6 +70,7 @@ namespace BusinessWeb.Controllers.SAGE_Save
                             mLig.SetDefaultArticle((IBOArticle3)oCial.FactoryArticle.ReadReference(art.AR_Ref), 1);
                             mLig.SetDefaultRemise();
                             mLig.DL_PrixRU = mLig.DL_CMUP;
+                            mLig.DL_Qte = (double)(art.DL_Qte??1);
                         }
                         mLig.WriteDefault();
                     }
@@ -77,7 +78,7 @@ namespace BusinessWeb.Controllers.SAGE_Save
                     mDoc.WriteDefault();
 
                 }
-                return "";
+                return "Ok";
             }
             catch (Exception ex)
             {
