@@ -21,5 +21,6 @@
 		public decimal? AS_QteSto { get; set; }
 		public decimal? AS_MontSto { get; set; }
 		public string EtatStock { get; set; }
-	}
+        public double? Qte { get; set; }
+    }
 }

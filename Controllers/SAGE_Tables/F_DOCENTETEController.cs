@@ -22,11 +22,11 @@ namespace BusinessWeb.Controllers.SAGE_Tables
     [ApiController]
 
 
-    public partial class F_DOCENTETEController : ControllerBase
+    public partial class Save_DOCENTETEController : ControllerBase
     {
         public DB _db = new DB(); BusinessWebDBContext _sdb = new BusinessWebDBContext();  Helpers fn = new Helpers();
 
-        public F_DOCENTETEController(BusinessWebDBContext sdb)
+        public Save_DOCENTETEController(BusinessWebDBContext sdb)
         {
             _sdb = sdb;
         }
