@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 
@@ -47,19 +48,42 @@ namespace BusinessWeb.Controllers.SAGE_Save
                 return Ok(new { result = StatusCode(500, ex.Message) });
             }
         }
-
+        private class AR_Result
+        {
+            public List<string> Oks { get; set; } = new List<string>();
+            public string Erreur { get; set; }
+            public string ActiveRef { get; set; }
+        }
+        private DocumentType GetDocumentType(short? type)
+        {
+            switch (type)
+            {
+                case 0:
+                    return DocumentType.DocumentTypeVenteDevis;
+                case 1:
+                    return DocumentType.DocumentTypeVenteCommande;
+                case 2:
+                    return DocumentType.DocumentTypeVentePrepaLivraison;
+                case 3:
+                    return DocumentType.DocumentTypeVenteLivraison;
+                default:
+                    throw new ArgumentException("Type de document inconnu");
+            }
+        }
         private string CreateDocumentVenteLigne(API_LT_DOCENTETE docEntete, List<API_LT_DOCLIGNE> lignes)
         {
             SageOM sageOM = new SageOM();
             var oCial = sageOM.CIAL();
             var oCpta = sageOM.CPTA();
+            var rs = new AR_Result();
             try
             {
-                if (oCial.FactoryDocumentVente.ExistPiece(DocumentType.DocumentTypeVenteDevis, docEntete.DO_Piece))
+                if (oCial.FactoryDocumentVente.ExistPiece(GetDocumentType(docEntete.DO_Type), docEntete.DO_Piece))
                 {
-                    IBODocumentVente3 mDoc = (IBODocumentVente3)oCial.FactoryDocumentVente.ReadPiece(DocumentType.DocumentTypeVenteDevis, docEntete.DO_Piece);
+                    IBODocumentVente3 mDoc = (IBODocumentVente3)oCial.FactoryDocumentVente.ReadPiece(GetDocumentType(docEntete.DO_Type), docEntete.DO_Piece);
                     foreach (API_LT_DOCLIGNE art in lignes)
                     {
+                        rs.ActiveRef = art.AR_Ref;
                         var mLig = (IBODocumentVenteLigne3)mDoc.FactoryDocumentLigne.Create();
                         if (String.IsNullOrEmpty(art.AR_Ref))
                         {
@@ -72,7 +96,9 @@ namespace BusinessWeb.Controllers.SAGE_Save
                             mLig.DL_PrixRU = mLig.DL_CMUP;
                             mLig.DL_Qte = (double)(art.DL_Qte??1);
                         }
+                        
                         mLig.WriteDefault();
+                        rs.Oks.Add(art.AR_Ref);
                     }
                     mDoc.RecalculTotaux(true);
                     mDoc.WriteDefault();
@@ -82,7 +108,9 @@ namespace BusinessWeb.Controllers.SAGE_Save
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                //return ex.Message;
+                rs.Erreur = (ex.Message.ToString());
+                return JsonSerializer.Serialize(rs);
             }
             finally
             {

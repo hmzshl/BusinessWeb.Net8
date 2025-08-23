@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.SignalR.Protocol;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Controller;
@@ -19,6 +20,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 
 namespace BusinessWeb.Controllers.SAGE_Save
@@ -47,6 +49,12 @@ namespace BusinessWeb.Controllers.SAGE_Save
                 return Ok(new { result = StatusCode(500, ex.Message) });
             }
         }
+        private class DO_Result
+        {
+            public string Erreur { get; set; }
+            public string DO_Piece { get; set; }
+            public string Statut { get; set; }
+        }
         private DocumentType GetDocumentType(short? type)
         {
                        switch (type)
@@ -68,6 +76,7 @@ namespace BusinessWeb.Controllers.SAGE_Save
              SageOM sageOM = new SageOM();
             var oCial = sageOM.CIAL();
             var oCpta = sageOM.CPTA();
+            var rs = new DO_Result();
             try
             {
                 IPMDocument mProcessDoc = oCial.CreateProcess_Document(GetDocumentType(docEntete.DO_Type));
@@ -92,11 +101,16 @@ namespace BusinessWeb.Controllers.SAGE_Save
 
                 mProcessDoc.Process();
                 //return "Document créé avec succès.";
-                return mDoc.DO_Piece;
+                rs.Statut = "Ok";
+                rs.DO_Piece = mDoc.DO_Piece;
+                return JsonSerializer.Serialize(rs);
             }
             catch (Exception ex)
             {
-                return "Erreur : " + ex.Message;
+                rs.Erreur = ex.Message.ToString();
+                rs.Statut = "Erreur";
+                return JsonSerializer.Serialize(rs);
+
             }
             finally
             {
