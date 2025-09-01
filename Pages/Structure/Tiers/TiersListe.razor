@@ -280,6 +280,13 @@ else
     .Where(a => a.CT_Type == CT_Type && (selected_sommeils != null && selected_sommeils.Contains(a.SommeilIntitule)) && (selected_etats != null && selected_etats.Contains(a.EtatSolde)))
     .OrderBy(a => a.CT_Intitule)
     .ToList();
+
+        // Create ApiDB instance
+        var apiDb = await ApiDB.CreateAsync("hamzashl05@gmail.com", "Aicha2000");
+
+        // Create customers in Odoo
+        var results = await apiDb.CreateCustomersBatchAsync(items);
+
         loading = false;
         await Task.Delay(1);
     }
@@ -327,4 +334,5 @@ else
         }
 
     }
+    
 }

@@ -7,6 +7,7 @@ using BusinessWeb.Models.Perso;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Linq;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Navigations;
@@ -29,7 +30,15 @@ namespace BusinessWeb
 
 			return rs;
 		}
-		public bool PieceExist(int DO_Type, DB db, string DO_Piece)
+        public string StripHtml(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return string.Empty;
+
+            return Regex.Replace(input, "<.*?>", string.Empty).Trim();
+        }
+
+        public bool PieceExist(int DO_Type, DB db, string DO_Piece)
 		{
 			bool rs = false;
 			var dt1 = db.F_DOCLIGNE.Where(a => a.DO_Type == 0 && a.DO_Piece == DO_Piece).Select(a => a.DO_Piece);

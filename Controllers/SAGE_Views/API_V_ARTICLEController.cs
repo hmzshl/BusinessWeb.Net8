@@ -14,6 +14,7 @@ using Newtonsoft.Json.Linq;
 using BusinessWeb.Data;
 using BusinessWeb.Models.DB;
 using BusinessWeb.Models.BusinessWebDB;
+using System.Text.Json;
 
 
 namespace BusinessWeb.Controllers.SAGE_Tables
@@ -70,7 +71,14 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 
 			return item;
 		}
+        [HttpGet("AR_Refs/{AR_Refs}")]
+        public async Task<ActionResult<List<API_V_ARTICLE>>> GetAPI_V_ARTICLEByAR_Refs(string AR_Refs)
+        {
+            var refs = JsonSerializer.Deserialize<List<string>>(AR_Refs);
+            setDB();  
+            return _db.API_V_ARTICLE.Where(a => (refs.Contains(a.AR_Ref))).ToList();
+        }
 
 
-	}
+    }
 }

@@ -46,7 +46,7 @@ namespace BusinessWeb.Controllers.SAGE_Save
             }
             catch (Exception ex)
             {
-                return Ok(new { result = StatusCode(500, ex.Message) });
+                return Ok(new { result = JsonSerializer.Serialize(new DO_Result() { Erreur = ex.Message, Statut = "Erreur" }) }); 
             }
         }
         private class DO_Result

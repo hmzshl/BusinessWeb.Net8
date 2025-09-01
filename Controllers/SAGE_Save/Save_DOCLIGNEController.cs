@@ -20,6 +20,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static BusinessWeb.Controllers.SAGE_Save.Save_DOCLIGNEController;
 
 
 namespace BusinessWeb.Controllers.SAGE_Save
@@ -45,14 +46,8 @@ namespace BusinessWeb.Controllers.SAGE_Save
             }
             catch (Exception ex)
             {
-                return Ok(new { result = StatusCode(500, ex.Message) });
+                return Ok(new { result = JsonSerializer.Serialize(new AR_Result() { Erreur = ex.Message }) });
             }
-        }
-        private class AR_Result
-        {
-            public List<string> Oks { get; set; } = new List<string>();
-            public string Erreur { get; set; }
-            public string ActiveRef { get; set; }
         }
         private DocumentType GetDocumentType(short? type)
         {
@@ -81,35 +76,60 @@ namespace BusinessWeb.Controllers.SAGE_Save
                 if (oCial.FactoryDocumentVente.ExistPiece(GetDocumentType(docEntete.DO_Type), docEntete.DO_Piece))
                 {
                     IBODocumentVente3 mDoc = (IBODocumentVente3)oCial.FactoryDocumentVente.ReadPiece(GetDocumentType(docEntete.DO_Type), docEntete.DO_Piece);
+
                     foreach (API_LT_DOCLIGNE art in lignes)
                     {
-                        rs.ActiveRef = art.AR_Ref;
-                        var mLig = (IBODocumentVenteLigne3)mDoc.FactoryDocumentLigne.Create();
-                        if (String.IsNullOrEmpty(art.AR_Ref))
+                        try
                         {
-                            mLig.DL_Design = art.DL_Design;
+                            rs.ActiveRef = art.AR_Ref;
+                            var mLig = (IBODocumentVenteLigne3)mDoc.FactoryDocumentLigne.Create();
+
+                            if (String.IsNullOrEmpty(art.AR_Ref))
+                            {
+                                mLig.DL_Design = art.DL_Design;
+                            }
+                            else
+                            {
+                                mLig.SetDefaultArticle((IBOArticle3)oCial.FactoryArticle.ReadReference(art.AR_Ref), 1);
+                                mLig.SetDefaultRemise();
+                                mLig.DL_PrixRU = mLig.DL_CMUP;
+                                mLig.DL_Qte = (double)(art.DL_Qte ?? 1);
+                            }
+
+                            mLig.WriteDefault();
+                            rs.Oks.Add(art.AR_Ref);
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            mLig.SetDefaultArticle((IBOArticle3)oCial.FactoryArticle.ReadReference(art.AR_Ref), 1);
-                            mLig.SetDefaultRemise();
-                            mLig.DL_PrixRU = mLig.DL_CMUP;
-                            mLig.DL_Qte = (double)(art.DL_Qte??1);
+                            // Log error for this specific article but continue processing others
+                            rs.Errors.Add(new ArtError
+                            {
+                                AR_Ref = art.AR_Ref,
+                                ErrorMessage = ex.Message
+                            });
+                            // Optionally log to a more detailed error collection if needed
                         }
-                        
-                        mLig.WriteDefault();
-                        rs.Oks.Add(art.AR_Ref);
                     }
+
                     mDoc.RecalculTotaux(true);
                     mDoc.WriteDefault();
-
                 }
-                return "Ok";
+
+                // Return success if all processed, or mixed results if some failed
+                if (rs.Errors.Count == 0)
+                {
+                    return "Ok";
+                }
+                else
+                {
+                    // Return serialized result that includes both successes and errors
+                    return JsonSerializer.Serialize(rs);
+                }
             }
             catch (Exception ex)
             {
-                //return ex.Message;
-                rs.Erreur = (ex.Message.ToString());
+                // Global exception that stops the entire process
+                rs.Erreur = ex.Message;
                 return JsonSerializer.Serialize(rs);
             }
             finally
@@ -117,6 +137,21 @@ namespace BusinessWeb.Controllers.SAGE_Save
                 if (oCial != null) CloseBase(oCial);
                 //if (oCpta != null) CloseBaseCpta(oCpta);
             }
+        }
+
+        // You'll need to define these classes if they don't exist:
+        public class AR_Result
+        {
+            public string ActiveRef { get; set; }
+            public List<string> Oks { get; set; } = new List<string>();
+            public List<ArtError> Errors { get; set; } = new List<ArtError>();
+            public string Erreur { get; set; }
+        }
+
+        public class ArtError
+        {
+            public string AR_Ref { get; set; }
+            public string ErrorMessage { get; set; }
         }
         private string GetErrors(IPMProcess proc)
         {

@@ -77,6 +77,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<BusinessWeb.BusinessWebDBService>();
 builder.Services.AddScoped<BusinessWeb.Helpers>();
 builder.Services.AddScoped<SageOM>();
+
 builder.Services.AddDbContext<BusinessWeb.Data.BusinessWebDBContext>(options =>
 {
 	options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"), o => o.UseCompatibilityLevel(100));
