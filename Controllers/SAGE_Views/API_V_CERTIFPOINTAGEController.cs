@@ -42,14 +42,14 @@ namespace BusinessWeb.Controllers.SAGE_Tables
         [HttpGet]
         public async Task<ActionResult<IEnumerable<API_V_CERTIFPOINTAGE>>> GetAPI_V_CERTIFPOINTAGE()
         {
-            setDB(); return await _db.API_V_CERTIFPOINTAGE.ToListAsync();
+            setDB(); return new List<API_V_CERTIFPOINTAGE>();//await _db.API_V_CERTIFPOINTAGE.ToListAsync();
         }
 
 		[HttpGet("Date/{DateDebut}/{DateFin}")]
 		public async Task<ActionResult<IEnumerable<API_V_CERTIFPOINTAGE>>> GetAPI_V_CERTIFPOINTAGEByDate(DateTime DateDebut, DateTime DateFin)
 		{
-			setDB(); return await _db.API_V_CERTIFPOINTAGE.Where(a => a.Date >= DateDebut && a.Date <= DateFin).ToListAsync();
-		}
+			setDB(); return new List<API_V_CERTIFPOINTAGE>();//await _db.API_V_CERTIFPOINTAGE.Where(a => a.Date >= DateDebut && a.Date <= DateFin).ToListAsync();
+        }
 
 
 

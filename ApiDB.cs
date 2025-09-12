@@ -519,7 +519,8 @@ public class ApiDB
             // Add more fields as needed
             is_company = customer.CT_Type == 1, // Adjust based on your CT_Type values
             customer_rank = 1, // Mark as customer
-            supplier_rank = 0
+            supplier_rank = 0,
+			@ref = customer.CT_Num // Reference field to store CT_Num
         };
 
         var body = new

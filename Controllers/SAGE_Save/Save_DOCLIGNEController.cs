@@ -118,11 +118,13 @@ namespace BusinessWeb.Controllers.SAGE_Save
                 // Return success if all processed, or mixed results if some failed
                 if (rs.Errors.Count == 0)
                 {
-                    return "Ok";
+                    rs.Statut = "Ok";
+                    return JsonSerializer.Serialize(rs);
                 }
                 else
                 {
                     // Return serialized result that includes both successes and errors
+                    rs.Statut = "Erreur";
                     return JsonSerializer.Serialize(rs);
                 }
             }
@@ -130,6 +132,7 @@ namespace BusinessWeb.Controllers.SAGE_Save
             {
                 // Global exception that stops the entire process
                 rs.Erreur = ex.Message;
+                rs.Statut = "Erreur";
                 return JsonSerializer.Serialize(rs);
             }
             finally
@@ -146,6 +149,7 @@ namespace BusinessWeb.Controllers.SAGE_Save
             public List<string> Oks { get; set; } = new List<string>();
             public List<ArtError> Errors { get; set; } = new List<ArtError>();
             public string Erreur { get; set; }
+            public string Statut { get; set; }
         }
 
         public class ArtError

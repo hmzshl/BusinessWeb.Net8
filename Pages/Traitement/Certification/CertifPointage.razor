@@ -20,7 +20,7 @@
 												  Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
 									<HeaderTemplate></HeaderTemplate>
 								</GridEditSettings>
-								<GridEvents TValue="API_T_CertifPointage" OnActionBegin="EditGrid"></GridEvents>
+								<GridEvents TValue="API_V_CERTIFPOINTAGE" OnActionBegin="EditGrid"></GridEvents>
 								<GridPageSettings PageSize="100"></GridPageSettings>
 								<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 								<GridTemplates>
@@ -30,26 +30,26 @@
 
 								</GridTemplates>
 								<GridColumns>
-									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_CertifPointage.id) HeaderText="#" IsPrimaryKey="true"
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_V_CERTIFPOINTAGE.id) HeaderText="#" IsPrimaryKey="true"
 												Visible="false" IsIdentity="true"></GridColumn>
 									<GridColumn IsFrozen HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Bon de commande">
 										<GridColumns>
-											<GridColumn IsFrozen Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Création" Field=@nameof(API_T_CertifPointage.DateCreation) AllowEditing="false"
+											<GridColumn IsFrozen Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Création" Field=@nameof(API_V_CERTIFPOINTAGE.DateCreation) AllowEditing="false"
 														EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
-											<GridColumn IsFrozen Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut">
+											<GridColumn IsFrozen Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut" Field=@nameof(API_V_CERTIFPOINTAGE.StatutIntitule)>
 												<Template>
 													@{
-														var dt = (context as API_T_CertifPointage);
+														var dt = (context as API_V_CERTIFPOINTAGE);
 														if (dt.Statut == 1)
 														{
 															<div style="text-align: center;">
-																<span class="statustxt e-activecolor">@fn.CertifStatut().Where(a => a.Id == dt.Statut).SingleOrDefault()?.Name</span>
+																<span class="statustxt e-activecolor">@dt.StatutIntitule</span>
 															</div>
 														}
 														else
 														{
 															<div style="text-align: center;">
-																<span class="statustxt e-inactivecolor">@fn.CertifStatut().Where(a => a.Id == dt.Statut).SingleOrDefault()?.Name</span>
+																<span class="statustxt e-inactivecolor">@dt.StatutIntitule</span>
 															</div>
 														}
 														<div>
@@ -58,7 +58,7 @@
 												</Template>
 												<EditTemplate>
 													@{
-														var dt = (context as API_T_CertifPointage);
+														var dt = (context as API_V_CERTIFPOINTAGE);
 														<SfDropDownList FloatLabelType="FloatLabelType.Never"
 																		AllowFiltering TValue="int?" TItem="Items" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
 																		DataSource="@(fn.CertifStatut())"
@@ -69,18 +69,10 @@
 													}
 												</EditTemplate>
 											</GridColumn>
-											<GridColumn IsFrozen Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Client">
-												<Template>
-													@{
-														var dt = (context as API_T_CertifPointage);
-														<div>
-															@dt.CT_NumNavigation?.CT_Intitule
-														</div>
-													}
-												</Template>
+											<GridColumn IsFrozen Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Client" Field=@nameof(API_V_CERTIFPOINTAGE.CT_Intitule)>
 												<EditTemplate>
 													@{
-														var dt = (context as API_T_CertifPointage);
+														var dt = (context as API_V_CERTIFPOINTAGE);
 														<SfDropDownList FloatLabelType="FloatLabelType.Never" Query="@fn.LocalDataQuery"
 																		AllowFiltering TValue="string" TItem="F_COMPTET" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
 																		DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0 && a.CT_Sommeil == 0).OrderBy(a => a.CT_Intitule))"
@@ -92,36 +84,20 @@
 												</EditTemplate>
 											</GridColumn>
 
-											<GridColumn IsFrozen Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Ville">
-												<Template>
-													@{
-														var dt = (context as API_T_CertifPointage);
-														<div>
-															@dt.CT_NumNavigation?.CT_Ville
-														</div>
-													}
-												</Template>
+											<GridColumn IsFrozen Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Ville" Field=@nameof(API_V_CERTIFPOINTAGE.CT_Ville)>
 											</GridColumn>
-											<GridColumn IsFrozen Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Intermediaire" Field=@nameof(API_T_CertifPointage.Intermediaire) />
+											<GridColumn IsFrozen Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Intermediaire" Field=@nameof(API_V_CERTIFPOINTAGE.Intermediaire) />
 										</GridColumns>
 									</GridColumn>
 									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Travaux d'étalonnage">
 										<GridColumns>
 
-											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Début" Field=@nameof(API_T_CertifPointage.DateDebutEtalonnage) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
-											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Fin" Field=@nameof(API_T_CertifPointage.DateFinEtalonnage) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
-											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable 1">
-												<Template>
-													@{
-														var dt = (context as API_T_CertifPointage);
-														<div>
-															@db.API_T_Personnel.Where(a => a.id == dt.ResponsableEtalonnage).SingleOrDefault()?.Nom
-														</div>
-													}
-												</Template>
+											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Début" Field=@nameof(API_V_CERTIFPOINTAGE.DateDebutEtalonnage) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
+											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Fin" Field=@nameof(API_V_CERTIFPOINTAGE.DateFinEtalonnage) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
+											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable 1" Field=@nameof(API_V_CERTIFPOINTAGE.ResponsableEtalonnageIntitule)>
 												<EditTemplate>
 													@{
-														var dt = (context as API_T_CertifPointage);
+														var dt = (context as API_V_CERTIFPOINTAGE);
 														<SfDropDownList FloatLabelType="FloatLabelType.Never"
 																		AllowFiltering TValue="int?" TItem="API_T_Personnel" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
 																		DataSource="@(db.API_T_Personnel.Where(a => a.Agence != 0))"
@@ -133,18 +109,10 @@
 												</EditTemplate>
 											</GridColumn>
 
-											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable 2">
-												<Template>
-													@{
-														var dt = (context as API_T_CertifPointage);
-														<div>
-															@db.API_T_Personnel.Where(a => a.id == dt.ResponsableEtalonnage2).SingleOrDefault()?.Nom
-														</div>
-													}
-												</Template>
+											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable 2" Field=@nameof(API_V_CERTIFPOINTAGE.ResponsableEtalonnage2Intitule)>
 												<EditTemplate>
 													@{
-														var dt = (context as API_T_CertifPointage);
+														var dt = (context as API_V_CERTIFPOINTAGE);
 														<SfDropDownList FloatLabelType="FloatLabelType.Never"
 																		AllowFiltering TValue="int?" TItem="API_T_Personnel" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
 																		DataSource="@(db.API_T_Personnel.Where(a => a.Agence != 0))"
@@ -162,26 +130,18 @@
 									</GridColumn>
 									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Emission des certificats/rapports">
 										<GridColumns>
-											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="ReceptionDossier" Field=@nameof(API_T_CertifPointage.DateReceptionDossier) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
+											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="ReceptionDossier" Field=@nameof(API_V_CERTIFPOINTAGE.DateReceptionDossier) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
 
-											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="DebutSaisie" Field=@nameof(API_T_CertifPointage.DateDebutSaisie) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
+											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Saisie" Field=@nameof(API_V_CERTIFPOINTAGE.DateDebutSaisie) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
 
-											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="FinSaisie" Field=@nameof(API_T_CertifPointage.DateFinSaisie) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
+											<GridColumn Visible="false" Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="FinSaisie" Field=@nameof(API_V_CERTIFPOINTAGE.DateFinSaisie) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
 
-											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="NbrCertificats" Field=@nameof(API_T_CertifPointage.NombreCertificats) EditType="EditType.NumericEdit" EditorSettings="@fn.parameters" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="NbrCertificats" Field=@nameof(API_V_CERTIFPOINTAGE.NombreCertificats) EditType="EditType.NumericEdit" EditorSettings="@fn.parameters" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
 
-											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable Saisie">
-												<Template>
-													@{
-														var dt = (context as API_T_CertifPointage);
-														<div>
-															@db.API_T_Personnel.Where(a => a.id == dt.ResponsableSaisie).SingleOrDefault()?.Nom
-														</div>
-													}
-												</Template>
+											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable Saisie" Field=@nameof(API_V_CERTIFPOINTAGE.ResponsableSaisieIntitule)>
 												<EditTemplate>
 													@{
-														var dt = (context as API_T_CertifPointage);
+														var dt = (context as API_V_CERTIFPOINTAGE);
 														<SfDropDownList FloatLabelType="FloatLabelType.Never"
 																		AllowFiltering TValue="int?" TItem="API_T_Personnel" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
 																		DataSource="@(db.API_T_Personnel.Where(a => a.Agence != 0))"
@@ -201,18 +161,10 @@
 
 
 
-									<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable Impression">
-										<Template>
-											@{
-												var dt = (context as API_T_CertifPointage);
-												<div>
-													@db.API_T_Personnel.Where(a => a.id == dt.ResponsableImpression).SingleOrDefault()?.Nom
-												</div>
-											}
-										</Template>
+									<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable Impression" Field=@nameof(API_V_CERTIFPOINTAGE.VerificationAvantImpressionIntitule)>
 										<EditTemplate>
 											@{
-												var dt = (context as API_T_CertifPointage);
+												var dt = (context as API_V_CERTIFPOINTAGE);
 												<SfDropDownList FloatLabelType="FloatLabelType.Never"
 																AllowFiltering TValue="int?" TItem="API_T_Personnel" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
 																DataSource="@(db.API_T_Personnel.Where(a => a.Agence != 0))"
@@ -224,18 +176,10 @@
 										</EditTemplate>
 									</GridColumn>
 
-									<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Verification Avant Impression">
-										<Template>
-											@{
-												var dt = (context as API_T_CertifPointage);
-												<div>
-													@db.API_T_Personnel.Where(a => a.id == dt.VerificationAvantImpression).SingleOrDefault()?.Nom
-												</div>
-											}
-										</Template>
+									<GridColumn Visible="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Verification Avant Impression" Field=@nameof(API_V_CERTIFPOINTAGE.VerificationApresImpressionIntitule)>
 										<EditTemplate>
 											@{
-												var dt = (context as API_T_CertifPointage);
+												var dt = (context as API_V_CERTIFPOINTAGE);
 												<SfDropDownList FloatLabelType="FloatLabelType.Never"
 																AllowFiltering TValue="int?" TItem="API_T_Personnel" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
 																DataSource="@(db.API_T_Personnel.Where(a => a.Agence != 0))"
@@ -247,18 +191,10 @@
 										</EditTemplate>
 									</GridColumn>
 
-									<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Verification Apres Impression">
-										<Template>
-											@{
-												var dt = (context as API_T_CertifPointage);
-												<div>
-													@db.API_T_Personnel.Where(a => a.id == dt.VerificationApresImpression).SingleOrDefault()?.Nom
-												</div>
-											}
-										</Template>
+									<GridColumn Visible="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Verification Apres Impression" Field=@nameof(API_V_CERTIFPOINTAGE.VerificationApresImpressionIntitule)>
 										<EditTemplate>
 											@{
-												var dt = (context as API_T_CertifPointage);
+												var dt = (context as API_V_CERTIFPOINTAGE);
 												<SfDropDownList FloatLabelType="FloatLabelType.Never"
 																AllowFiltering TValue="int?" TItem="API_T_Personnel" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
 																DataSource="@(db.API_T_Personnel.Where(a => a.Agence != 0))"
@@ -271,23 +207,23 @@
 									</GridColumn>
 									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Suivi comptabilité">
 										<GridColumns>
-											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Certificats" Field=@nameof(API_T_CertifPointage.Certificats) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Certificats" Field=@nameof(API_V_CERTIFPOINTAGE.Certificats) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
 
-											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Scan" Field=@nameof(API_T_CertifPointage.VerificationScan) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Scan" Field=@nameof(API_V_CERTIFPOINTAGE.VerificationScan) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
 
-											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="FA" Field=@nameof(API_T_CertifPointage.Facture) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="FA" Field=@nameof(API_V_CERTIFPOINTAGE.Facture) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
 
-											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="BL" Field=@nameof(API_T_CertifPointage.BonDeLivraison) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
-											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° DE" Field=@nameof(API_T_CertifPointage.NumeroDE) />
-											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° FA/BL" Field=@nameof(API_T_CertifPointage.NumeroFACBL) />
+											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="BL" Field=@nameof(API_V_CERTIFPOINTAGE.BonDeLivraison) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° DE" Field=@nameof(API_V_CERTIFPOINTAGE.NumeroDE) />
+											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° FA/BL" Field=@nameof(API_V_CERTIFPOINTAGE.NumeroFACBL) />
 
-											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Date Livraison" Field=@nameof(API_T_CertifPointage.DateLivraison) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
+											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Date Livraison" Field=@nameof(API_V_CERTIFPOINTAGE.DateLivraison) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
 
-											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Livreur" Field=@nameof(API_T_CertifPointage.Livreur) />
+											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Livreur" Field=@nameof(API_V_CERTIFPOINTAGE.Livreur) />
 
-											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Accuse Reception" Field=@nameof(API_T_CertifPointage.AccuseReception) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+											<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Accuse Reception" Field=@nameof(API_V_CERTIFPOINTAGE.AccuseReception) EditType="EditType.BooleanEdit" DisplayAsCheckBox TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
 
-											<GridColumn Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Commentaire" Field=@nameof(API_T_CertifPointage.Commentaire) />
+											<GridColumn Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Commentaire" Field=@nameof(API_V_CERTIFPOINTAGE.Commentaire) />
 										</GridColumns>
 									</GridColumn>
 
@@ -325,12 +261,12 @@ else
 	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
 	DB db = new DB();
 	//Components
-	private SfGrid<API_T_CertifPointage> DefaultGrid;
+	private SfGrid<API_V_CERTIFPOINTAGE> DefaultGrid;
 	private DateTime SelectedDate = DateTime.Today;
 	private int SelectedSite = 0;
 	string grid_height = "80vh";
 	NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
-	private List<API_T_CertifPointage> items = new List<API_T_CertifPointage>();
+	private List<API_V_CERTIFPOINTAGE> items = new List<API_V_CERTIFPOINTAGE>();
 	bool loading = false;
 	private DateTime value = DateTime.Today;
 	List<API_T_Site> sites = new List<API_T_Site>();
@@ -346,13 +282,7 @@ else
 	}
 	private async Task UpdateGrid()
 	{
-		items = db.API_T_CertifPointage
-		.Include(a => a.CT_NumNavigation)
-		.Include(a => a.ResponsableEtalonnage2Navigation)
-		.Include(a => a.ResponsableEtalonnage3Navigation)
-		.Include(a => a.ResponsableEtalonnageNavigation)
-		.Include(a => a.ResponsableImpressionNavigation)
-		.Include(a => a.ResponsableSaisieNavigation)
+		items = db.API_V_CERTIFPOINTAGE
 		.OrderByDescending(a => a.id)
 		.ToList();
 	}
@@ -362,7 +292,7 @@ else
 		SelectedDate = value;
 		await UpdateGrid();
 	}
-	private async Task ValueChangeHandler(ChangeEventArgs<int, API_T_CertifPointage> args)
+	private async Task ValueChangeHandler(ChangeEventArgs<int, API_V_CERTIFPOINTAGE> args)
 	{
 		await UpdateGrid();
 	}
@@ -370,7 +300,7 @@ else
 	{
 		this.value = value;
 	}
-	public async Task EditGrid(ActionEventArgs<API_T_CertifPointage> args)
+	public async Task EditGrid(ActionEventArgs<API_V_CERTIFPOINTAGE> args)
 	{
 		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
 		{
@@ -382,27 +312,29 @@ else
 				{
 
 
-					API_T_CertifPointage item = args.Data;
+					API_T_CertifPointage item = new API_T_CertifPointage();
+					fn.CopyData(args.Data, item);
 					item.Date = SelectedDate;
 					item.DateCreation = DateTime.Now;
-					item.Statut = 0;
 					db.Add(item);
 					db.SaveChanges();
 					await UpdateGrid();
 				}
 				if (args.Action != "Add")
 				{
-					var local = db.Set<API_T_CertifPointage>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                    var ln = db.API_T_CertifPointage.Where(a => a.id == args.Data.id).FirstOrDefault();
+                    fn.CopyData(args.Data, ln);
+					var local = db.Set<API_T_CertifPointage>().Local.FirstOrDefault(a => a.id == ln.id);
 					if (local != null)
 					{
 						db.Entry(local).State = EntityState.Detached;
 					}
-					db.Entry(args.Data).State = EntityState.Modified;
+					db.Entry(ln).State = EntityState.Modified;
 					db.SaveChanges();
 
 
 					await UpdateGrid();
-					await DefaultGrid.Refresh();
+					//await DefaultGrid.Refresh();
 					//foreach()
 
 				}
@@ -427,7 +359,7 @@ else
 	}
 	private RenderFragment DateCellRender(DateTime value)
 	{
-		var dt = db.API_T_CertifPointage.Where(a => a.Date == value);
+		var dt = db.API_V_CERTIFPOINTAGE.Where(a => a.Date == value);
 		if (dt.Count() != 0)
 		{
 			return
