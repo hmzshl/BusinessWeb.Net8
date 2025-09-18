@@ -9,108 +9,116 @@
 	</ToolbarItems>
 </SfToolbar>
 <Form Model="@user" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="8">
-	<RadzenAlert Title="Impossible de modifier l'utilisateur'" Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@error</RadzenAlert>
-	<GridRow>
-		<GridCol Xs="24" Md="24">
-			<Card Title="Informations">
-				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Nom" LabelColSpan="8">
-					<SfTextBox @bind-Value="@user.UserName" />
-				</FormItem>
-				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Roles" LabelColSpan="8">
-					<SfMultiSelect @bind-Value=@userRoles ShowClearButton="false" TValue="string[]" Mode="@VisualMode.CheckBox" TItem="ApplicationRole" AllowFiltering="true" DataSource="@(roles)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
-						<MultiSelectFieldSettings Text="@nameof(ApplicationRole.Name)" Value="@nameof(ApplicationRole.Id)"></MultiSelectFieldSettings>
-					</SfMultiSelect>
-				</FormItem>
-				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Mot de passe" LabelColSpan="8">
-					<SfTextBox Type="InputType.Password" @bind-Value="@user.Password" />
-				</FormItem>
-				@if (Id != null)
-				{
-					<FormItem LabelAlign="AntLabelAlignType.Left" Label="Importer les autorisations" LabelColSpan="8">
-						<div class="ls-parent">
-							<div class="ls-child-left">
-								<SfDropDownList Enabled="false" @bind-Value="@imported_user" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering
-												TValue="string" TItem="AspNetUser" DataSource="@(sdb.AspNetUsers.Where(a => a.Id != this.Id).ToList())">
-									<DropDownListEvents TValue="string" TItem="AspNetUser" />
-									<DropDownListFieldSettings Text="UserName" Value="Id" />
-								</SfDropDownList>
-							</div>
-							<div class="ls-child-right">
-								<RadzenButton Disabled Click="ImportAuthorize" Icon="refresh" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-							</div>
-						</div>
+	<div style="padding: 10px;">
+		<Tabs DefaultActiveKey="1" Size="@TabSize.Small">
+			<TabPane Key="1" Tab="Informations">
+				<div style="padding: 10px;">
+					<RadzenAlert Title="Impossible de modifier l'utilisateur'" Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@error</RadzenAlert>
+					<FormItem LabelAlign="AntLabelAlignType.Left" Label="Nom" LabelColSpan="8">
+						<SfTextBox @bind-Value="@user.UserName" />
 					</FormItem>
-				}
+					<FormItem LabelAlign="AntLabelAlignType.Left" Label="Roles" LabelColSpan="8">
+						<SfMultiSelect @bind-Value=@userRoles ShowClearButton="false" TValue="string[]" Mode="@VisualMode.CheckBox" TItem="ApplicationRole" AllowFiltering="true" DataSource="@(roles)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+							<MultiSelectFieldSettings Text="@nameof(ApplicationRole.Name)" Value="@nameof(ApplicationRole.Id)"></MultiSelectFieldSettings>
+						</SfMultiSelect>
+					</FormItem>
+					<FormItem LabelAlign="AntLabelAlignType.Left" Label="Mot de passe" LabelColSpan="8">
+						<SfTextBox Type="InputType.Password" @bind-Value="@user.Password" />
+					</FormItem>
+				</div>
 
-			</Card>
-			@if (Id != null)
-			{
-				<Card Title="Autorisations">
-					<Collapse DefaultActiveKey="@(new[]{"1"})">
-						@foreach (TSociete ste in stes)
-						{
-							<Panel Key="@ste.id.ToString()">
-								<HeaderTemplate>
-									@ste.Intitule
-								</HeaderTemplate>
-								<ChildContent>
+			</TabPane>
+			<TabPane Key="2" Tab="Autorisations">
+				<div style="padding: 10px;">
+					@if (Id != null)
+					{
+						<div style="margin: 10px;">
+							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Importer les autorisations" LabelColSpan="8">
+								<div class="ls-parent">
+									<div class="ls-child-left">
+										<SfDropDownList Enabled="false" @bind-Value="@imported_user" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering
+														TValue="string" TItem="AspNetUser" DataSource="@(sdb.AspNetUsers.Where(a => a.Id != this.Id).ToList())">
+											<DropDownListEvents TValue="string" TItem="AspNetUser" />
+											<DropDownListFieldSettings Text="UserName" Value="Id" />
+										</SfDropDownList>
+									</div>
+									<div class="ls-child-right">
+										<RadzenButton Disabled Click="ImportAuthorize" Icon="refresh" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+									</div>
+								</div>
+							</FormItem>
+						</div>
 
-									<RadzenAccordion Multiple="true">
-										<Items>
-											@foreach (Items item in apps)
-											{
-												<RadzenAccordionItem Text="@item.Name">
-													@{
-														var dt = sdb.TAuthorizes.Where(a => a.SelectedAPP == item.Id && a.Societe == ste.id && a.UserID == Id);
-													}
-													<div style="padding: 5px; height: 100%;">
+					}
+					@if (Id != null)
+					{
+						<Collapse DefaultActiveKey="@(new[] { "1" })">
+							@foreach (TSociete ste in stes)
+							{
+								<Panel Key="@ste.id.ToString()">
+									<HeaderTemplate>
+										@ste.Intitule
+									</HeaderTemplate>
+									<ChildContent>
 
-														<SfTab CssClass="e-fill" Height="100%">
-															<TabEvents Selecting="@(args => fn.DisableTabSelect(args))" />
-															<TabItems>
-																@foreach (string title in dt.Select(a => a.Title).Distinct())
-																{
-																	<TabItem>
-																		<ChildContent>
-																			<TabHeader Text="@title"></TabHeader>
-																		</ChildContent>
-																		<ContentTemplate>
-																			@{
-																				bool all = true;
-																			}
-																			<div style="padding: 5px;overflow-y: auto;">
-																				@foreach (TAuthorize authorize in dt.Where(a => a.Title == title))
-																				{
-																					<div style="padding-top: 0px; padding-bottom: 0px;overflow-y: auto;">
-																						<SfCheckBox @bind-Checked="@authorize.Visible">@authorize.Description</SfCheckBox>
-																					</div>
+										<RadzenAccordion Multiple="true">
+											<Items>
+												@foreach (Items item in apps)
+												{
+													<RadzenAccordionItem Text="@item.Name">
+														@{
+															var dt = sdb.TAuthorizes.Where(a => a.SelectedAPP == item.Id && a.Societe == ste.id && a.UserID == Id);
+														}
+														<div style="padding: 5px; height: 100%;">
+
+															<SfTab CssClass="e-fill" Height="100%">
+																<TabEvents Selecting="@(args => fn.DisableTabSelect(args))" />
+																<TabItems>
+																	@foreach (string title in dt.Select(a => a.Title).Distinct())
+																	{
+																		<TabItem>
+																			<ChildContent>
+																				<TabHeader Text="@title"></TabHeader>
+																			</ChildContent>
+																			<ContentTemplate>
+																				@{
+																					bool all = true;
 																				}
-																			</div>
+																				<div style="padding: 5px;overflow-y: auto;">
+																					@foreach (TAuthorize authorize in dt.Where(a => a.Title == title))
+																					{
+																						<div style="padding-top: 0px; padding-bottom: 0px;overflow-y: auto;">
+																							<SfCheckBox @bind-Checked="@authorize.Visible">@authorize.Description</SfCheckBox>
+																						</div>
+																					}
+																				</div>
 
-																		</ContentTemplate>
-																	</TabItem>
+																			</ContentTemplate>
+																		</TabItem>
 
-																}
-															</TabItems>
-														</SfTab>
-													</div>
-												</RadzenAccordionItem>
-											}
+																	}
+																</TabItems>
+															</SfTab>
+														</div>
+													</RadzenAccordionItem>
+												}
 
-										</Items>
-									</RadzenAccordion>
+											</Items>
+										</RadzenAccordion>
 
-								</ChildContent>
-							</Panel>
-						}
+									</ChildContent>
+								</Panel>
+							}
 
-					</Collapse>
+						</Collapse>
+					}
+				</div>
 
-				</Card>
-			}
-
-		</GridCol>
-	</GridRow>
+			</TabPane>
+		</Tabs>
+	</div>
+	
+	
 </Form>
 
 @code
