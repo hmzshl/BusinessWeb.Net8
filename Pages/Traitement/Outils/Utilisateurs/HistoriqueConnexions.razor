@@ -11,7 +11,7 @@
 						<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
 
 						<ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-print"></ToolbarItem>
-						<ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+						<ToolbarItem Visible=@(sc.IsInRole("Admin")) OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.ExportToExcelAsync()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
 						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
 
 

@@ -22,7 +22,7 @@ namespace BusinessWeb
 	{
 		public Syncfusion.Blazor.Data.Query LocalDataQuery = new Syncfusion.Blazor.Data.Query().Take(10);
 		public NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "### ### ##0.00;-### ### ##0.00;#" } };
-		public ExcelExportProperties excelExport()
+		public ExcelExportProperties ExportToExcelAsync()
 		{
 			ExcelExportProperties rs = new ExcelExportProperties();
 			rs.IncludeTemplateColumn = true;

@@ -19,7 +19,7 @@
                 </Template>
             </ToolbarItem>
             <ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
-            <ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.excelExport()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+            <ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.ExportToExcelAsync()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
 
         </ToolbarItems>
     </SfToolbar>
@@ -165,7 +165,7 @@ else
     {
         if (args.Item.Id == "DetailAchatGRID_excelexport") //Id is combination of Grid's ID and itemname
         {
-            await this.DefaultGrid.ExcelExport();
+            await this.DefaultGrid.ExportToExcelAsync();
         }
     }
     int[] liv = { 3, 4, 5, 6, 7, 13, 14, 15, 16, 17 };

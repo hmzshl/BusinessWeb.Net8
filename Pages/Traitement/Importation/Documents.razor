@@ -476,7 +476,7 @@ else
 		List<F_ARTICLE> articles = new List<F_ARTICLE>();
 		List<F_DOCLIGNE> lignes = new List<F_DOCLIGNE>();
 
-		var dt = DefaultGrid.GetSelectedRecords().Result;
+		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
 		foreach (RAPPRO_DOCENTETE itm in dt)
 		{
 			if (itm.DO_Piece != null)

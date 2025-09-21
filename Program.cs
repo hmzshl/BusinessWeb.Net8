@@ -157,7 +157,7 @@ builder.Services.AddRazorComponents()
 	.AddInteractiveServerComponents();
 var app = builder.Build();
 app.UseResponseCompression();
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzgwOTQzMEAzMjM5MmUzMDJlMzAzYjMyMzkzYk43bzloSDI4dENmcEJKdDc5YS9rZ3pSeU1EYTNQVlF6NzB6dDNuOHlyN0k9");
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JFaF5cXGRCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWXZccXRcRGFeWUV0WkJWYEg=");
 Bold.Licensing.BoldLicenseProvider.RegisterLicense("zidV+mAe83DkDarVg0J39aLvzg6umhkhjiPNndeU1j4=");
 app.UseRequestLocalization("fr");
 CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("fr");
