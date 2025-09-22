@@ -12,10 +12,8 @@ namespace BusinessWeb.Models.BusinessWebDB
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
-        [Required]
         public int Societe { get; set; }
 
-        [Required]
         public int SelectedAPP { get; set; }
 
         public string UserID { get; set; }
@@ -27,6 +25,5 @@ namespace BusinessWeb.Models.BusinessWebDB
         public string Description { get; set; }
 
         public bool Visible { get; set; }
-
     }
 }

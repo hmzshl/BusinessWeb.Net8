@@ -43,7 +43,7 @@ namespace BusinessWeb.Controllers.SDB
 					fn.CopyData(item, lt);
                     lt.Serveur = null;
                     lt.Passe = null;
-                    lt.Base = null;
+                    lt.Base1 = null;
                     lt.Web = null;
                     lt.id = item.id;
 					rs.Add(lt);
@@ -64,7 +64,7 @@ namespace BusinessWeb.Controllers.SDB
             var item = await _sdb.TSocietes.FindAsync(id);
 			item.Serveur = null;
 			item.Passe = null;
-			item.Base = null;
+			item.Base1 = null;
 			item.Web = null;
 
 			if (item == null)

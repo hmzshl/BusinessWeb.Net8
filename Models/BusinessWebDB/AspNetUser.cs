@@ -54,6 +54,5 @@ namespace BusinessWeb.Models.BusinessWebDB
         public ICollection<AspNetUserRole> AspNetUserRoles { get; set; }
 
         public ICollection<AspNetUserToken> AspNetUserTokens { get; set; }
-
     }
 }

@@ -77,7 +77,7 @@
                                     <SfTextBox @bind-Value="@row.Serveur" />
                                 </FormItem>
                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Base données" LabelColSpan="8">
-                                    <SfTextBox @bind-Value="@row.Base" />
+                                    <SfTextBox @bind-Value="@row.Base1" />
                                 </FormItem>
                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Utilisateur" LabelColSpan="8">
                                     <SfTextBox @bind-Value="@row.Web" />
@@ -127,8 +127,8 @@
                         <GridCol Xs="24" Md="24">
                             <Card>
                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Version Sage" LabelColSpan="16">
-                                    <SfDropDownList TValue="int?" TItem="Items" DataSource="@fn.VersionsSage()" @bind-Value="@row.VersionSage" Width="200px">
-                                        <DropDownListEvents TValue="int?" TItem="Items" />
+                                    <SfDropDownList TValue="int" TItem="Items" DataSource="@fn.VersionsSage()" @bind-Value="@row.VersionSage" Width="200px">
+                                        <DropDownListEvents TValue="int" TItem="Items" />
                                         <DropDownListFieldSettings Text="Name" Value="Id" />
                                     </SfDropDownList>
                                 </FormItem>
@@ -243,7 +243,7 @@
                     {
                         await DeleteTracabiliteTriggers();
                     }
-                    if ((row.HistoriqueConnexion) ?? false)
+                    if (row.HistoriqueConnexion)
                     {
                         await DeleteHistoriqueTriggers();
                         await CreateHistoriqueTriggers();
@@ -281,7 +281,7 @@
                 {
                     await DeleteTracabiliteTriggers();
                 }
-                if ((row.HistoriqueConnexion) ?? false)
+                if (row.HistoriqueConnexion)
                 {
                     await DeleteHistoriqueTriggers();
                     await CreateHistoriqueTriggers();

@@ -1,267 +1,344 @@
 ﻿
 <SfToolbar CssClass="btns">
-	<ToolbarItems>
-		<ToolbarItem Align="ItemAlign.Right">
-			<Template>
-				<SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit())">Enregistrer</SfButton>
-			</Template>
-		</ToolbarItem>
-	</ToolbarItems>
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit())">Enregistrer</SfButton>
+            </Template>
+        </ToolbarItem>
+    </ToolbarItems>
 </SfToolbar>
-<Form Model="@user" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="8">
-	<div style="padding: 10px;">
-		<Tabs DefaultActiveKey="1" Size="@TabSize.Small">
-			<TabPane Key="1" Tab="Informations">
-				<div style="padding: 10px;">
-					<RadzenAlert Title="Impossible de modifier l'utilisateur'" Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@error</RadzenAlert>
-					<FormItem LabelAlign="AntLabelAlignType.Left" Label="Nom" LabelColSpan="8">
-						<SfTextBox @bind-Value="@user.UserName" />
-					</FormItem>
-					<FormItem LabelAlign="AntLabelAlignType.Left" Label="Roles" LabelColSpan="8">
-						<SfMultiSelect @bind-Value=@userRoles ShowClearButton="false" TValue="string[]" Mode="@VisualMode.CheckBox" TItem="ApplicationRole" AllowFiltering="true" DataSource="@(roles)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
-							<MultiSelectFieldSettings Text="@nameof(ApplicationRole.Name)" Value="@nameof(ApplicationRole.Id)"></MultiSelectFieldSettings>
-						</SfMultiSelect>
-					</FormItem>
-					<FormItem LabelAlign="AntLabelAlignType.Left" Label="Mot de passe" LabelColSpan="8">
-						<SfTextBox Type="InputType.Password" @bind-Value="@user.Password" />
-					</FormItem>
-				</div>
+<Form Model="@user" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="8" Context="context2">
+    <div style="padding: 10px;">
+        <Tabs DefaultActiveKey="1" Size="@TabSize.Small">
+            <TabPane Key="1" Tab="Informations">
+                <div style="padding: 10px;">
+                    <RadzenAlert Title="Impossible de modifier l'utilisateur'" Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@error</RadzenAlert>
+                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Nom" LabelColSpan="8">
+                        <SfTextBox @bind-Value="@user.UserName" />
+                    </FormItem>
+                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Roles" LabelColSpan="8">
+                        <SfMultiSelect @bind-Value=@userRoles ShowClearButton="false" TValue="string[]" Mode="@VisualMode.CheckBox" TItem="ApplicationRole" AllowFiltering="true" DataSource="@(roles)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                            <MultiSelectFieldSettings Text="@nameof(ApplicationRole.Name)" Value="@nameof(ApplicationRole.Id)"></MultiSelectFieldSettings>
+                        </SfMultiSelect>
+                    </FormItem>
+                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Mot de passe" LabelColSpan="8">
+                        <SfTextBox Type="InputType.Password" @bind-Value="@user.Password" />
+                    </FormItem>
+                </div>
+            </TabPane>
+            <TabPane Key="2" Tab="Sociétés">
+                <div style="height: 50vh">
+                    <SfGrid AllowFiltering="false" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(societes)" Height="100%">
+                        <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog"></GridEditSettings>
+                        <GridEvents OnActionComplete="UpdateStes" TValue="TSocieteUser"></GridEvents>
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <Empty></Empty>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                        <GridColumns>
+                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(TSocieteUser.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                            <GridColumn AllowSorting="false" AllowFiltering="false" Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Société">
+                                <Template>
+                                    @{
+                                        var dt = (context as TSocieteUser);
+                                        <div>@sdb.TSocietes.Where(a => a.id == dt.Societe)?.SingleOrDefault()?.Intitule</div>
+                                    }
+                                </Template>
+                                <EditTemplate>
+                                    <SfDropDownList Placeholder="Société" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" 
+                                    DataSource="@(sdb.TSocietes.Where(a => !societes.Select(b => b.Societe).Contains(a.id)))" 
+                                    TValue="int" TItem="TSociete" @bind-Value="@((context as TSocieteUser).Societe)">
+                                        <DropDownListEvents TValue="int" TItem="TSociete" />
+                                        <DropDownListFieldSettings Text="Intitule" Value="id" />
+                                    </SfDropDownList>
+                                </EditTemplate>
+                            </GridColumn>
+                        </GridColumns>
+                    </SfGrid>
+                </div>
+            </TabPane>
+            <TabPane Disabled="@(!societes.Any())" Key="3" Tab="Collaborateurs">
 
-			</TabPane>
-			<TabPane Key="2" Tab="Autorisations">
-				<div style="padding: 10px;">
-					@if (Id != null)
-					{
-						<div style="margin: 10px;">
-							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Importer les autorisations" LabelColSpan="8">
-								<div class="ls-parent">
-									<div class="ls-child-left">
-										<SfDropDownList Enabled="false" @bind-Value="@imported_user" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering
-														TValue="string" TItem="AspNetUser" DataSource="@(sdb.AspNetUsers.Where(a => a.Id != this.Id).ToList())">
-											<DropDownListEvents TValue="string" TItem="AspNetUser" />
-											<DropDownListFieldSettings Text="UserName" Value="Id" />
-										</SfDropDownList>
-									</div>
-									<div class="ls-child-right">
-										<RadzenButton Disabled Click="ImportAuthorize" Icon="refresh" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-									</div>
-								</div>
-							</FormItem>
-						</div>
+            </TabPane>
+            <TabPane Disabled="@(!societes.Any())" Key="4" Tab="Autorisations">
+                <div style="padding: 10px;">
+                    @if (Id != null)
+                    {
+                        <div style="margin: 10px;">
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Importer les autorisations" LabelColSpan="8">
+                                <div class="ls-parent">
+                                    <div class="ls-child-left">
+                                        <SfDropDownList Enabled="false" @bind-Value="@imported_user" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering
+                                                        TValue="string" TItem="AspNetUser" DataSource="@(sdb.AspNetUsers.Where(a => a.Id != this.Id).ToList())">
+                                            <DropDownListEvents TValue="string" TItem="AspNetUser" />
+                                            <DropDownListFieldSettings Text="UserName" Value="Id" />
+                                        </SfDropDownList>
+                                    </div>
+                                    <div class="ls-child-right">
+                                        <RadzenButton Disabled Click="ImportAuthorize" Icon="refresh" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                    </div>
+                                </div>
+                            </FormItem>
+                        </div>
 
-					}
-					@if (Id != null)
-					{
-						<Collapse DefaultActiveKey="@(new[] { "1" })">
-							@foreach (TSociete ste in stes)
-							{
-								<Panel Key="@ste.id.ToString()">
-									<HeaderTemplate>
-										@ste.Intitule
-									</HeaderTemplate>
-									<ChildContent>
+                    }
+                    @if (Id != null)
+                    {
+                        <Collapse DefaultActiveKey="@(new[] { "1" })">
+                            @foreach (TSocieteUser ste in societes)
+                            {
+                                <Panel Key="@ste.id.ToString()">
+                                    <HeaderTemplate>
+                                        @sdb.TSocietes.Where(a => a.id == ste.Societe)?.SingleOrDefault()?.Intitule
+                                    </HeaderTemplate>
+                                    <ChildContent>
 
-										<RadzenAccordion Multiple="true">
-											<Items>
-												@foreach (Items item in apps)
-												{
-													<RadzenAccordionItem Text="@item.Name">
-														@{
-															var dt = sdb.TAuthorizes.Where(a => a.SelectedAPP == item.Id && a.Societe == ste.id && a.UserID == Id);
-														}
-														<div style="padding: 5px; height: 100%;">
+                                        <RadzenAccordion Multiple="true">
+                                            <Items>
+                                                @foreach (Items item in apps)
+                                                {
+                                                    <RadzenAccordionItem Text="@item.Name">
+                                                        @{
+                                                            var dt = sdb.TAuthorizes.Where(a => a.SelectedAPP == item.Id && a.Societe == ste.Societe && a.UserID == Id);
+                                                        }
+                                                        <div style="padding: 5px; height: 100%;">
 
-															<SfTab CssClass="e-fill" Height="100%">
-																<TabEvents Selecting="@(args => fn.DisableTabSelect(args))" />
-																<TabItems>
-																	@foreach (string title in dt.Select(a => a.Title).Distinct())
-																	{
-																		<TabItem>
-																			<ChildContent>
-																				<TabHeader Text="@title"></TabHeader>
-																			</ChildContent>
-																			<ContentTemplate>
-																				@{
-																					bool all = true;
-																				}
-																				<div style="padding: 5px;overflow-y: auto;">
-																					@foreach (TAuthorize authorize in dt.Where(a => a.Title == title))
-																					{
-																						<div style="padding-top: 0px; padding-bottom: 0px;overflow-y: auto;">
-																							<SfCheckBox @bind-Checked="@authorize.Visible">@authorize.Description</SfCheckBox>
-																						</div>
-																					}
-																				</div>
+                                                            <SfTab CssClass="e-fill" Height="100%">
+                                                                <TabEvents Selecting="@(args => fn.DisableTabSelect(args))" />
+                                                                <TabItems>
+                                                                    @foreach (string title in dt.Select(a => a.Title).Distinct())
+                                                                    {
+                                                                        <TabItem>
+                                                                            <ChildContent>
+                                                                                <TabHeader Text="@title"></TabHeader>
+                                                                            </ChildContent>
+                                                                            <ContentTemplate>
+                                                                                @{
+                                                                                    bool all = true;
+                                                                                }
+                                                                                <div style="padding: 5px;overflow-y: auto;">
+                                                                                    @foreach (TAuthorize authorize in dt.Where(a => a.Title == title))
+                                                                                    {
+                                                                                        <div style="padding-top: 0px; padding-bottom: 0px;overflow-y: auto;">
+                                                                                            <SfCheckBox @bind-Checked="@authorize.Visible">@authorize.Description</SfCheckBox>
+                                                                                        </div>
+                                                                                    }
+                                                                                </div>
 
-																			</ContentTemplate>
-																		</TabItem>
+                                                                            </ContentTemplate>
+                                                                        </TabItem>
 
-																	}
-																</TabItems>
-															</SfTab>
-														</div>
-													</RadzenAccordionItem>
-												}
+                                                                    }
+                                                                </TabItems>
+                                                            </SfTab>
+                                                        </div>
+                                                    </RadzenAccordionItem>
+                                                }
 
-											</Items>
-										</RadzenAccordion>
+                                            </Items>
+                                        </RadzenAccordion>
 
-									</ChildContent>
-								</Panel>
-							}
+                                    </ChildContent>
+                                </Panel>
+                            }
 
-						</Collapse>
-					}
-				</div>
+                        </Collapse>
+                    }
+                </div>
 
-			</TabPane>
-		</Tabs>
-	</div>
-	
-	
+            </TabPane>
+            <TabPane Disabled="@(!societes.Any())" Key="5" Tab="Mobile Autorisations">
+
+            </TabPane>
+        </Tabs>
+    </div>
+
+
 </Form>
 
 @code
 {
-	protected IEnumerable<BusinessWeb.Models.ApplicationRole> roles;
-	protected BusinessWeb.Models.ApplicationUser user = new ApplicationUser();
-	protected AspNetUser row = new AspNetUser();
-	protected string[] userRoles;
-	protected string error;
-	protected bool errorVisible;
-	private List<TSociete> stes = new List<TSociete>();
-	private List<TAuthorize> auths = new List<TAuthorize>();
-	private List<Items> apps = new List<Items>();
-	string imported_user;
-	[CascadingParameter]
-	public SessionDT session { get; set; } = new SessionDT();
+    protected IEnumerable<BusinessWeb.Models.ApplicationRole> roles;
+    protected BusinessWeb.Models.ApplicationUser user = new ApplicationUser();
+    protected AspNetUser row = new AspNetUser();
+    protected string[] userRoles;
+    protected string error;
+    protected bool errorVisible;
+    private List<TAuthorize> auths = new List<TAuthorize>();
+    private List<Items> apps = new List<Items>();
+    List<TSocieteUser> societes = new List<TSocieteUser>();
+    string imported_user;
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
 
 
-	[Parameter]
-	public string Id { get; set; }
+    [Parameter]
+    public string Id { get; set; }
 
-	protected override async Task OnInitializedAsync()
-	{
-		if (Id != null)
-		{
-			user = await sc.GetUserById($"{Id}");
-			row = await EtendueService.GetAspNetUserById($"{Id}");
-			userRoles = user.Roles.Select(a => a.Id).ToArray();
-			await InitAuth();
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != null)
+        {
+            user = await sc.GetUserById($"{Id}");
+            row = await EtendueService.GetAspNetUserById($"{Id}");
+            userRoles = user.Roles.Select(a => a.Id).ToArray();
+            societes = sdb.TSocieteUsers.Where(a => a.UserID == this.Id).ToList();
+            await UpdateAuthorize();
+            await InitAuth();
 
-		}
-		else
-		{
-			user = new BusinessWeb.Models.ApplicationUser();
-		}
+        }
+        else
+        {
+            user = new BusinessWeb.Models.ApplicationUser();
+        }
 
-		roles = await sc.GetRoles();
-	}
-	private async Task InitAuth()
-	{
-		var items = fn.AuthItems();
-		stes = sdb.TSocietes.AsNoTracking().ToList();
-		foreach (TSociete ste in stes)
-		{
-			foreach (AuthItems item in items)
-			{
-				var auth = sdb.TAuthorizes.AsNoTracking().Where(a => a.Societe == ste.id && a.Url == item.Url && a.UserID == this.Id).AsNoTracking().ToList();
-				if (auth.Count == 0)
-				{
-					var ln = new TAuthorize();
-					ln.UserID = this.Id;
-					ln.Url = item.Url;
-					ln.Societe = ste.id;
-					ln.SelectedAPP = item.SelectedAPP ?? 0;
-					ln.Title = item.Title;
-					ln.Description = item.Description;
-					ln.Visible = false;
+        roles = await sc.GetRoles();
+    }
+    private async Task UpdateStes(ActionEventArgs<TSocieteUser> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
 
-					sdb.Add(ln);
-				}
-			}
-		}
-		sdb.SaveChanges();
-		apps.Clear();
-		foreach (Items item in fn.getApps())
-		{
-			if ((session.license?.IsFeaturePresentEx(item.Id ?? 0)) ?? false)
-			{
-				apps.Add(item);
-			}
-		}
-		if (apps.Count() != 0)
-		{
-			auths = sdb.TAuthorizes.Where(a => apps.Select(a => a.Id).Contains(a.SelectedAPP)).ToList();
-		}
+            if (args.Action == "Add")
+            {
+                TSocieteUser item = args.Data;
+                item.UserID = this.Id;
+                sdb.Add(item);
+                sdb.SaveChanges();
+                societes = sdb.TSocieteUsers.Where(a => a.UserID == this.Id).ToList();
+                await UpdateAuthorize();
+                StateHasChanged();
+            }
+        }
 
-	}
-	private async Task SelectAll(IQueryable<TAuthorize> dt, bool all)
-	{
-		foreach (TAuthorize item in dt)
-		{
-			item.Visible = all;
-		}
-	}
-	private async Task ImportAuthorize()
-	{
-		foreach (TAuthorize item in sdb.TAuthorizes.AsNoTracking().Where(a => a.UserID == imported_user))
-		{
-			var dt = auths.Where(a => a.Societe == item.Societe && a.Url == item.Url && a.Title == item.Title && a.Description == item.Description && a.SelectedAPP == item.SelectedAPP && a.UserID != imported_user);
-			foreach (TAuthorize ln in dt)
-			{
-				ln.Visible = item.Visible;
-			}
-		}
-		sdb.SaveChanges();
-		await ShowNotification(
-			new NotificationMessage
-				{
-					Severity = NotificationSeverity.Success,
-					Summary = "Opération réussie",
-					Detail = "Autorisations importées avec succès.",
-					Duration = 2000
-				});
-	}
-	private async Task ShowNotification(NotificationMessage message)
-	{
-		NotificationService.Notify(message);
-	}
-	protected async Task Submit()
-	{
-		try
-		{
-			user.Roles = roles.Where(role => userRoles.Contains(role.Id)).ToList();
-			user.ConfirmPassword = user.Password;
-			user.Email = user.UserName;
-			user.EmailConfirmed = true;
-			user.PhoneNumberConfirmed = true;
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            sdb.Remove(args.Data);
+            sdb.SaveChanges();
+            await UpdateAuthorize();
+            societes = sdb.TSocieteUsers.Where(a => a.UserID == this.Id).ToList();
+            StateHasChanged();
+        }
+    }
+    private async Task InitAuth()
+    {
 
-			if (Id != null)
-			{
-				await sc.UpdateUser($"{Id}", user);
-				await EtendueService.UpdateAspNetUser($"{Id}", row);
-				sdb.SaveChanges();
-				DialogService.Close(null);
-			}
-			else
-			{
-				await sc.CreateUser(user);
-				this.Id = user.Id;
-				DialogService.Close(null);
-			}
-		}
-		catch (Exception ex)
-		{
-			errorVisible = true;
-			error = ex.Message;
-		}
+        apps.Clear();
+        foreach (Items item in fn.getApps())
+        {
+            if ((session.license?.IsFeaturePresentEx(item.Id ?? 0)) ?? false)
+            {
+                apps.Add(item);
+            }
+        }
+        if (apps.Count() != 0)
+        {
+            auths = sdb.TAuthorizes.Where(a => apps.Select(a => a.Id).Contains(a.SelectedAPP)).ToList();
+        }
 
-	}
+    }
+    private async Task SelectAll(IQueryable<TAuthorize> dt, bool all)
+    {
+        foreach (TAuthorize item in dt)
+        {
+            item.Visible = all;
+        }
+    }
+    private async Task ImportAuthorize()
+    {
+        foreach (TAuthorize item in sdb.TAuthorizes.AsNoTracking().Where(a => a.UserID == imported_user))
+        {
+            var dt = auths.Where(a => a.Societe == item.Societe && a.Url == item.Url && a.Title == item.Title && a.Description == item.Description && a.SelectedAPP == item.SelectedAPP && a.UserID != imported_user);
+            foreach (TAuthorize ln in dt)
+            {
+                ln.Visible = item.Visible;
+            }
+        }
+        sdb.SaveChanges();
+        await ShowNotification(
+            new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Opération réussie",
+                Detail = "Autorisations importées avec succès.",
+                Duration = 2000
+            });
+    }
+    private async Task ShowNotification(NotificationMessage message)
+    {
+        NotificationService.Notify(message);
+    }
+    protected async Task Submit()
+    {
+        try
+        {
+            user.Roles = roles.Where(role => userRoles.Contains(role.Id)).ToList();
+            user.ConfirmPassword = user.Password;
+            user.Email = user.UserName;
+            user.EmailConfirmed = true;
+            user.PhoneNumberConfirmed = true;
+
+            if (Id != null)
+            {
+                await sc.UpdateUser($"{Id}", user);
+                await EtendueService.UpdateAspNetUser($"{Id}", row);
+                sdb.SaveChanges();
+                DialogService.Close(null);
+            }
+            else
+            {
+                await sc.CreateUser(user);
+                this.Id = user.Id;
+                DialogService.Close(null);
+            }
+        }
+        catch (Exception ex)
+        {
+            errorVisible = true;
+            error = ex.Message;
+        }
+
+    }
+    private async Task UpdateAuthorize()
+    {
+        var items = fn.AuthItems();
+
+        foreach (TSocieteUser ste in societes)
+        {
+            foreach (AuthItems item in items)
+            {
+                var auth = sdb.TAuthorizes.AsNoTracking().Where(a => a.Societe == ste.Societe && a.Url == item.Url && a.UserID == this.Id).AsNoTracking().ToList();
+                if (auth.Count == 0)
+                {
+                    var ln = new TAuthorize();
+                    ln.UserID = this.Id;
+                    ln.Url = item.Url;
+                    ln.Societe = ste.Societe;
+                    ln.SelectedAPP = item.SelectedAPP ?? 0;
+                    ln.Title = item.Title;
+                    ln.Description = item.Description;
+                    ln.Visible = false;
+
+                    sdb.Add(ln);
+                }
+            }
+        }
+        foreach(TSociete item in sdb.TSocietes.Where(a => !societes.Select(b => b.Societe).Contains(a.id)))
+        {
+            var auth = sdb.TAuthorizes.Where(a => a.Societe == item.id && a.UserID == this.Id).ToList();
+            if (auth.Count > 0)
+            {
+                sdb.RemoveRange(auth);
+            }
+        }
+        sdb.SaveChanges();
+    }
 
 }
 <style>
-	.e-tab > .e-content {
-		overflow-y: auto;
-	}
+    .e-tab > .e-content {
+        overflow-y: auto;
+    }
 </style>

@@ -12,13 +12,12 @@ namespace BusinessWeb.Models.BusinessWebDB
         [Required]
         public string UserId { get; set; }
 
+        public AspNetUser AspNetUser { get; set; }
+
         [Key]
         [Required]
         public string RoleId { get; set; }
 
         public AspNetRole AspNetRole { get; set; }
-
-        public AspNetUser AspNetUser { get; set; }
-
     }
 }

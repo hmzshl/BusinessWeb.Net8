@@ -111,7 +111,7 @@ else
     public async Task RowSelected(RecordDoubleClickEventArgs<AspNetUser> args)
     {
         await DialogService.OpenAsync<UsersFiche>(args.RowData.Email.ToUpper(), new Dictionary<string, object> { { "Id", args.RowData.Id } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "600px", Height = "95%" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "95%" });
         await LoadData();
     }
     private async Task InitAuth()

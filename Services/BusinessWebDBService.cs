@@ -71,12 +71,12 @@ namespace BusinessWeb
 
         public async Task ExportAspNetRoleClaimsToExcel(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/aspnetroleclaims/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/aspnetroleclaims/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/aspnetroleclaims/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/aspnetroleclaims/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         public async Task ExportAspNetRoleClaimsToCSV(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/aspnetroleclaims/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/aspnetroleclaims/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/aspnetroleclaims/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/aspnetroleclaims/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         partial void OnAspNetRoleClaimsRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.AspNetRoleClaim> items);
@@ -234,12 +234,12 @@ namespace BusinessWeb
     
         public async Task ExportAspNetRolesToExcel(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/aspnetroles/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/aspnetroles/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/aspnetroles/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/aspnetroles/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         public async Task ExportAspNetRolesToCSV(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/aspnetroles/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/aspnetroles/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/aspnetroles/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/aspnetroles/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         partial void OnAspNetRolesRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.AspNetRole> items);
@@ -397,12 +397,12 @@ namespace BusinessWeb
     
         public async Task ExportAspNetUserClaimsToExcel(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/aspnetuserclaims/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/aspnetuserclaims/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/aspnetuserclaims/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/aspnetuserclaims/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         public async Task ExportAspNetUserClaimsToCSV(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/aspnetuserclaims/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/aspnetuserclaims/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/aspnetuserclaims/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/aspnetuserclaims/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         partial void OnAspNetUserClaimsRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.AspNetUserClaim> items);
@@ -560,12 +560,12 @@ namespace BusinessWeb
     
         public async Task ExportAspNetUserLoginsToExcel(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/aspnetuserlogins/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/aspnetuserlogins/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/aspnetuserlogins/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/aspnetuserlogins/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         public async Task ExportAspNetUserLoginsToCSV(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/aspnetuserlogins/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/aspnetuserlogins/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/aspnetuserlogins/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/aspnetuserlogins/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         partial void OnAspNetUserLoginsRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.AspNetUserLogin> items);
@@ -723,12 +723,12 @@ namespace BusinessWeb
     
         public async Task ExportAspNetUserRolesToExcel(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/aspnetuserroles/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/aspnetuserroles/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/aspnetuserroles/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/aspnetuserroles/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         public async Task ExportAspNetUserRolesToCSV(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/aspnetuserroles/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/aspnetuserroles/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/aspnetuserroles/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/aspnetuserroles/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         partial void OnAspNetUserRolesRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.AspNetUserRole> items);
@@ -888,12 +888,12 @@ namespace BusinessWeb
     
         public async Task ExportAspNetUsersToExcel(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/aspnetusers/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/aspnetusers/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/aspnetusers/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/aspnetusers/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         public async Task ExportAspNetUsersToCSV(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/aspnetusers/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/aspnetusers/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/aspnetusers/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/aspnetusers/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         partial void OnAspNetUsersRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.AspNetUser> items);
@@ -1053,12 +1053,12 @@ namespace BusinessWeb
     
         public async Task ExportAspNetUserTokensToExcel(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/aspnetusertokens/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/aspnetusertokens/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/aspnetusertokens/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/aspnetusertokens/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         public async Task ExportAspNetUserTokensToCSV(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/aspnetusertokens/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/aspnetusertokens/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/aspnetusertokens/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/aspnetusertokens/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         partial void OnAspNetUserTokensRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.AspNetUserToken> items);
@@ -1214,14 +1214,175 @@ namespace BusinessWeb
             return itemToDelete;
         }
     
+        public async Task ExportTAuthorizesToExcel(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tauthorizes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tauthorizes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        public async Task ExportTAuthorizesToCSV(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tauthorizes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tauthorizes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        partial void OnTAuthorizesRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TAuthorize> items);
+
+        public async Task<IQueryable<BusinessWeb.Models.BusinessWebDB.TAuthorize>> GetTAuthorizes(Query query = null)
+        {
+            var items = Context.TAuthorizes.AsQueryable();
+
+
+            if (query != null)
+            {
+                if (!string.IsNullOrEmpty(query.Expand))
+                {
+                    var propertiesToExpand = query.Expand.Split(',');
+                    foreach(var p in propertiesToExpand)
+                    {
+                        items = items.Include(p.Trim());
+                    }
+                }
+
+                ApplyQuery(ref items, query);
+            }
+
+            OnTAuthorizesRead(ref items);
+
+            return await Task.FromResult(items);
+        }
+
+        partial void OnTAuthorizeGet(BusinessWeb.Models.BusinessWebDB.TAuthorize item);
+        partial void OnGetTAuthorizeById(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TAuthorize> items);
+
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorize> GetTAuthorizeById(int id)
+        {
+            var items = Context.TAuthorizes
+                              .AsNoTracking()
+                              .Where(i => i.id == id);
+
+ 
+            OnGetTAuthorizeById(ref items);
+
+            var itemToReturn = items.FirstOrDefault();
+
+            OnTAuthorizeGet(itemToReturn);
+
+            return await Task.FromResult(itemToReturn);
+        }
+
+        partial void OnTAuthorizeCreated(BusinessWeb.Models.BusinessWebDB.TAuthorize item);
+        partial void OnAfterTAuthorizeCreated(BusinessWeb.Models.BusinessWebDB.TAuthorize item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorize> CreateTAuthorize(BusinessWeb.Models.BusinessWebDB.TAuthorize tauthorize)
+        {
+            OnTAuthorizeCreated(tauthorize);
+
+            var existingItem = Context.TAuthorizes
+                              .Where(i => i.id == tauthorize.id)
+                              .FirstOrDefault();
+
+            if (existingItem != null)
+            {
+               throw new Exception("Item already available");
+            }            
+
+            try
+            {
+                Context.TAuthorizes.Add(tauthorize);
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(tauthorize).State = EntityState.Detached;
+                throw;
+            }
+
+            OnAfterTAuthorizeCreated(tauthorize);
+
+            return tauthorize;
+        }
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorize> CancelTAuthorizeChanges(BusinessWeb.Models.BusinessWebDB.TAuthorize item)
+        {
+            var entityToCancel = Context.Entry(item);
+            if (entityToCancel.State == EntityState.Modified)
+            {
+              entityToCancel.CurrentValues.SetValues(entityToCancel.OriginalValues);
+              entityToCancel.State = EntityState.Unchanged;
+            }
+
+            return item;
+        }
+
+        partial void OnTAuthorizeUpdated(BusinessWeb.Models.BusinessWebDB.TAuthorize item);
+        partial void OnAfterTAuthorizeUpdated(BusinessWeb.Models.BusinessWebDB.TAuthorize item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorize> UpdateTAuthorize(int id, BusinessWeb.Models.BusinessWebDB.TAuthorize tauthorize)
+        {
+            OnTAuthorizeUpdated(tauthorize);
+
+            var itemToUpdate = Context.TAuthorizes
+                              .Where(i => i.id == tauthorize.id)
+                              .FirstOrDefault();
+
+            if (itemToUpdate == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+                
+            var entryToUpdate = Context.Entry(itemToUpdate);
+            entryToUpdate.CurrentValues.SetValues(tauthorize);
+            entryToUpdate.State = EntityState.Modified;
+
+            Context.SaveChanges();
+
+            OnAfterTAuthorizeUpdated(tauthorize);
+
+            return tauthorize;
+        }
+
+        partial void OnTAuthorizeDeleted(BusinessWeb.Models.BusinessWebDB.TAuthorize item);
+        partial void OnAfterTAuthorizeDeleted(BusinessWeb.Models.BusinessWebDB.TAuthorize item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorize> DeleteTAuthorize(int id)
+        {
+            var itemToDelete = Context.TAuthorizes
+                              .Where(i => i.id == id)
+                              .FirstOrDefault();
+
+            if (itemToDelete == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+
+            OnTAuthorizeDeleted(itemToDelete);
+
+
+            Context.TAuthorizes.Remove(itemToDelete);
+
+            try
+            {
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(itemToDelete).State = EntityState.Unchanged;
+                throw;
+            }
+
+            OnAfterTAuthorizeDeleted(itemToDelete);
+
+            return itemToDelete;
+        }
+    
         public async Task ExportTLicensesToExcel(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/tlicenses/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/tlicenses/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tlicenses/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tlicenses/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         public async Task ExportTLicensesToCSV(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/tlicenses/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/tlicenses/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tlicenses/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tlicenses/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         partial void OnTLicensesRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TLicense> items);
@@ -1377,12 +1538,12 @@ namespace BusinessWeb
     
         public async Task ExportTSocietesToExcel(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/tsocietes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/tsocietes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tsocietes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tsocietes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         public async Task ExportTSocietesToCSV(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/tsocietes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/tsocietes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tsocietes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tsocietes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
         partial void OnTSocietesRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TSociete> items);
@@ -1536,21 +1697,21 @@ namespace BusinessWeb
             return itemToDelete;
         }
     
-        public async Task ExportTAuthorizesToExcel(Query query = null, string fileName = null)
+        public async Task ExportTAuthorizeMobilesToExcel(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/tauthorizes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/tauthorizes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tauthorizemobiles/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tauthorizemobiles/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
-        public async Task ExportTAuthorizesToCSV(Query query = null, string fileName = null)
+        public async Task ExportTAuthorizeMobilesToCSV(Query query = null, string fileName = null)
         {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/BusinessWebdb/tauthorizes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/BusinessWebdb/tauthorizes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tauthorizemobiles/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tauthorizemobiles/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
         }
 
-        partial void OnTAuthorizesRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TAuthorize> items);
+        partial void OnTAuthorizeMobilesRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile> items);
 
-        public async Task<IQueryable<BusinessWeb.Models.BusinessWebDB.TAuthorize>> GetTAuthorizes(Query query = null)
+        public async Task<IQueryable<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile>> GetTAuthorizeMobiles(Query query = null)
         {
-            var items = Context.TAuthorizes.AsQueryable();
+            var items = Context.TAuthorizeMobiles.AsQueryable();
 
 
             if (query != null)
@@ -1567,40 +1728,40 @@ namespace BusinessWeb
                 ApplyQuery(ref items, query);
             }
 
-            OnTAuthorizesRead(ref items);
+            OnTAuthorizeMobilesRead(ref items);
 
             return await Task.FromResult(items);
         }
 
-        partial void OnTAuthorizeGet(BusinessWeb.Models.BusinessWebDB.TAuthorize item);
-        partial void OnGetTAuthorizeById(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TAuthorize> items);
+        partial void OnTAuthorizeMobileGet(BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile item);
+        partial void OnGetTAuthorizeMobileById(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile> items);
 
 
-        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorize> GetTAuthorizeById(int id)
+        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile> GetTAuthorizeMobileById(int id)
         {
-            var items = Context.TAuthorizes
+            var items = Context.TAuthorizeMobiles
                               .AsNoTracking()
                               .Where(i => i.id == id);
 
  
-            OnGetTAuthorizeById(ref items);
+            OnGetTAuthorizeMobileById(ref items);
 
             var itemToReturn = items.FirstOrDefault();
 
-            OnTAuthorizeGet(itemToReturn);
+            OnTAuthorizeMobileGet(itemToReturn);
 
             return await Task.FromResult(itemToReturn);
         }
 
-        partial void OnTAuthorizeCreated(BusinessWeb.Models.BusinessWebDB.TAuthorize item);
-        partial void OnAfterTAuthorizeCreated(BusinessWeb.Models.BusinessWebDB.TAuthorize item);
+        partial void OnTAuthorizeMobileCreated(BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile item);
+        partial void OnAfterTAuthorizeMobileCreated(BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile item);
 
-        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorize> CreateTAuthorize(BusinessWeb.Models.BusinessWebDB.TAuthorize tauthorize)
+        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile> CreateTAuthorizeMobile(BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile tauthorizemobile)
         {
-            OnTAuthorizeCreated(tauthorize);
+            OnTAuthorizeMobileCreated(tauthorizemobile);
 
-            var existingItem = Context.TAuthorizes
-                              .Where(i => i.id == tauthorize.id)
+            var existingItem = Context.TAuthorizeMobiles
+                              .Where(i => i.id == tauthorizemobile.id)
                               .FirstOrDefault();
 
             if (existingItem != null)
@@ -1610,21 +1771,21 @@ namespace BusinessWeb
 
             try
             {
-                Context.TAuthorizes.Add(tauthorize);
+                Context.TAuthorizeMobiles.Add(tauthorizemobile);
                 Context.SaveChanges();
             }
             catch
             {
-                Context.Entry(tauthorize).State = EntityState.Detached;
+                Context.Entry(tauthorizemobile).State = EntityState.Detached;
                 throw;
             }
 
-            OnAfterTAuthorizeCreated(tauthorize);
+            OnAfterTAuthorizeMobileCreated(tauthorizemobile);
 
-            return tauthorize;
+            return tauthorizemobile;
         }
 
-        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorize> CancelTAuthorizeChanges(BusinessWeb.Models.BusinessWebDB.TAuthorize item)
+        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile> CancelTAuthorizeMobileChanges(BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile item)
         {
             var entityToCancel = Context.Entry(item);
             if (entityToCancel.State == EntityState.Modified)
@@ -1636,15 +1797,15 @@ namespace BusinessWeb
             return item;
         }
 
-        partial void OnTAuthorizeUpdated(BusinessWeb.Models.BusinessWebDB.TAuthorize item);
-        partial void OnAfterTAuthorizeUpdated(BusinessWeb.Models.BusinessWebDB.TAuthorize item);
+        partial void OnTAuthorizeMobileUpdated(BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile item);
+        partial void OnAfterTAuthorizeMobileUpdated(BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile item);
 
-        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorize> UpdateTAuthorize(int id, BusinessWeb.Models.BusinessWebDB.TAuthorize tauthorize)
+        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile> UpdateTAuthorizeMobile(int id, BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile tauthorizemobile)
         {
-            OnTAuthorizeUpdated(tauthorize);
+            OnTAuthorizeMobileUpdated(tauthorizemobile);
 
-            var itemToUpdate = Context.TAuthorizes
-                              .Where(i => i.id == tauthorize.id)
+            var itemToUpdate = Context.TAuthorizeMobiles
+                              .Where(i => i.id == tauthorizemobile.id)
                               .FirstOrDefault();
 
             if (itemToUpdate == null)
@@ -1653,22 +1814,22 @@ namespace BusinessWeb
             }
                 
             var entryToUpdate = Context.Entry(itemToUpdate);
-            entryToUpdate.CurrentValues.SetValues(tauthorize);
+            entryToUpdate.CurrentValues.SetValues(tauthorizemobile);
             entryToUpdate.State = EntityState.Modified;
 
             Context.SaveChanges();
 
-            OnAfterTAuthorizeUpdated(tauthorize);
+            OnAfterTAuthorizeMobileUpdated(tauthorizemobile);
 
-            return tauthorize;
+            return tauthorizemobile;
         }
 
-        partial void OnTAuthorizeDeleted(BusinessWeb.Models.BusinessWebDB.TAuthorize item);
-        partial void OnAfterTAuthorizeDeleted(BusinessWeb.Models.BusinessWebDB.TAuthorize item);
+        partial void OnTAuthorizeMobileDeleted(BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile item);
+        partial void OnAfterTAuthorizeMobileDeleted(BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile item);
 
-        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorize> DeleteTAuthorize(int id)
+        public async Task<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile> DeleteTAuthorizeMobile(int id)
         {
-            var itemToDelete = Context.TAuthorizes
+            var itemToDelete = Context.TAuthorizeMobiles
                               .Where(i => i.id == id)
                               .FirstOrDefault();
 
@@ -1677,10 +1838,10 @@ namespace BusinessWeb
                throw new Exception("Item no longer available");
             }
 
-            OnTAuthorizeDeleted(itemToDelete);
+            OnTAuthorizeMobileDeleted(itemToDelete);
 
 
-            Context.TAuthorizes.Remove(itemToDelete);
+            Context.TAuthorizeMobiles.Remove(itemToDelete);
 
             try
             {
@@ -1692,7 +1853,329 @@ namespace BusinessWeb
                 throw;
             }
 
-            OnAfterTAuthorizeDeleted(itemToDelete);
+            OnAfterTAuthorizeMobileDeleted(itemToDelete);
+
+            return itemToDelete;
+        }
+    
+        public async Task ExportTCollaborateursToExcel(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tcollaborateurs/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tcollaborateurs/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        public async Task ExportTCollaborateursToCSV(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tcollaborateurs/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tcollaborateurs/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        partial void OnTCollaborateursRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TCollaborateur> items);
+
+        public async Task<IQueryable<BusinessWeb.Models.BusinessWebDB.TCollaborateur>> GetTCollaborateurs(Query query = null)
+        {
+            var items = Context.TCollaborateurs.AsQueryable();
+
+
+            if (query != null)
+            {
+                if (!string.IsNullOrEmpty(query.Expand))
+                {
+                    var propertiesToExpand = query.Expand.Split(',');
+                    foreach(var p in propertiesToExpand)
+                    {
+                        items = items.Include(p.Trim());
+                    }
+                }
+
+                ApplyQuery(ref items, query);
+            }
+
+            OnTCollaborateursRead(ref items);
+
+            return await Task.FromResult(items);
+        }
+
+        partial void OnTCollaborateurGet(BusinessWeb.Models.BusinessWebDB.TCollaborateur item);
+        partial void OnGetTCollaborateurById(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TCollaborateur> items);
+
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TCollaborateur> GetTCollaborateurById(int id)
+        {
+            var items = Context.TCollaborateurs
+                              .AsNoTracking()
+                              .Where(i => i.id == id);
+
+ 
+            OnGetTCollaborateurById(ref items);
+
+            var itemToReturn = items.FirstOrDefault();
+
+            OnTCollaborateurGet(itemToReturn);
+
+            return await Task.FromResult(itemToReturn);
+        }
+
+        partial void OnTCollaborateurCreated(BusinessWeb.Models.BusinessWebDB.TCollaborateur item);
+        partial void OnAfterTCollaborateurCreated(BusinessWeb.Models.BusinessWebDB.TCollaborateur item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TCollaborateur> CreateTCollaborateur(BusinessWeb.Models.BusinessWebDB.TCollaborateur tcollaborateur)
+        {
+            OnTCollaborateurCreated(tcollaborateur);
+
+            var existingItem = Context.TCollaborateurs
+                              .Where(i => i.id == tcollaborateur.id)
+                              .FirstOrDefault();
+
+            if (existingItem != null)
+            {
+               throw new Exception("Item already available");
+            }            
+
+            try
+            {
+                Context.TCollaborateurs.Add(tcollaborateur);
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(tcollaborateur).State = EntityState.Detached;
+                throw;
+            }
+
+            OnAfterTCollaborateurCreated(tcollaborateur);
+
+            return tcollaborateur;
+        }
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TCollaborateur> CancelTCollaborateurChanges(BusinessWeb.Models.BusinessWebDB.TCollaborateur item)
+        {
+            var entityToCancel = Context.Entry(item);
+            if (entityToCancel.State == EntityState.Modified)
+            {
+              entityToCancel.CurrentValues.SetValues(entityToCancel.OriginalValues);
+              entityToCancel.State = EntityState.Unchanged;
+            }
+
+            return item;
+        }
+
+        partial void OnTCollaborateurUpdated(BusinessWeb.Models.BusinessWebDB.TCollaborateur item);
+        partial void OnAfterTCollaborateurUpdated(BusinessWeb.Models.BusinessWebDB.TCollaborateur item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TCollaborateur> UpdateTCollaborateur(int id, BusinessWeb.Models.BusinessWebDB.TCollaborateur tcollaborateur)
+        {
+            OnTCollaborateurUpdated(tcollaborateur);
+
+            var itemToUpdate = Context.TCollaborateurs
+                              .Where(i => i.id == tcollaborateur.id)
+                              .FirstOrDefault();
+
+            if (itemToUpdate == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+                
+            var entryToUpdate = Context.Entry(itemToUpdate);
+            entryToUpdate.CurrentValues.SetValues(tcollaborateur);
+            entryToUpdate.State = EntityState.Modified;
+
+            Context.SaveChanges();
+
+            OnAfterTCollaborateurUpdated(tcollaborateur);
+
+            return tcollaborateur;
+        }
+
+        partial void OnTCollaborateurDeleted(BusinessWeb.Models.BusinessWebDB.TCollaborateur item);
+        partial void OnAfterTCollaborateurDeleted(BusinessWeb.Models.BusinessWebDB.TCollaborateur item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TCollaborateur> DeleteTCollaborateur(int id)
+        {
+            var itemToDelete = Context.TCollaborateurs
+                              .Where(i => i.id == id)
+                              .FirstOrDefault();
+
+            if (itemToDelete == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+
+            OnTCollaborateurDeleted(itemToDelete);
+
+
+            Context.TCollaborateurs.Remove(itemToDelete);
+
+            try
+            {
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(itemToDelete).State = EntityState.Unchanged;
+                throw;
+            }
+
+            OnAfterTCollaborateurDeleted(itemToDelete);
+
+            return itemToDelete;
+        }
+    
+        public async Task ExportTSocieteUsersToExcel(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tsocieteusers/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tsocieteusers/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        public async Task ExportTSocieteUsersToCSV(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tsocieteusers/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tsocieteusers/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        partial void OnTSocieteUsersRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TSocieteUser> items);
+
+        public async Task<IQueryable<BusinessWeb.Models.BusinessWebDB.TSocieteUser>> GetTSocieteUsers(Query query = null)
+        {
+            var items = Context.TSocieteUsers.AsQueryable();
+
+
+            if (query != null)
+            {
+                if (!string.IsNullOrEmpty(query.Expand))
+                {
+                    var propertiesToExpand = query.Expand.Split(',');
+                    foreach(var p in propertiesToExpand)
+                    {
+                        items = items.Include(p.Trim());
+                    }
+                }
+
+                ApplyQuery(ref items, query);
+            }
+
+            OnTSocieteUsersRead(ref items);
+
+            return await Task.FromResult(items);
+        }
+
+        partial void OnTSocieteUserGet(BusinessWeb.Models.BusinessWebDB.TSocieteUser item);
+        partial void OnGetTSocieteUserById(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TSocieteUser> items);
+
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TSocieteUser> GetTSocieteUserById(int id)
+        {
+            var items = Context.TSocieteUsers
+                              .AsNoTracking()
+                              .Where(i => i.id == id);
+
+ 
+            OnGetTSocieteUserById(ref items);
+
+            var itemToReturn = items.FirstOrDefault();
+
+            OnTSocieteUserGet(itemToReturn);
+
+            return await Task.FromResult(itemToReturn);
+        }
+
+        partial void OnTSocieteUserCreated(BusinessWeb.Models.BusinessWebDB.TSocieteUser item);
+        partial void OnAfterTSocieteUserCreated(BusinessWeb.Models.BusinessWebDB.TSocieteUser item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TSocieteUser> CreateTSocieteUser(BusinessWeb.Models.BusinessWebDB.TSocieteUser tsocieteuser)
+        {
+            OnTSocieteUserCreated(tsocieteuser);
+
+            var existingItem = Context.TSocieteUsers
+                              .Where(i => i.id == tsocieteuser.id)
+                              .FirstOrDefault();
+
+            if (existingItem != null)
+            {
+               throw new Exception("Item already available");
+            }            
+
+            try
+            {
+                Context.TSocieteUsers.Add(tsocieteuser);
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(tsocieteuser).State = EntityState.Detached;
+                throw;
+            }
+
+            OnAfterTSocieteUserCreated(tsocieteuser);
+
+            return tsocieteuser;
+        }
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TSocieteUser> CancelTSocieteUserChanges(BusinessWeb.Models.BusinessWebDB.TSocieteUser item)
+        {
+            var entityToCancel = Context.Entry(item);
+            if (entityToCancel.State == EntityState.Modified)
+            {
+              entityToCancel.CurrentValues.SetValues(entityToCancel.OriginalValues);
+              entityToCancel.State = EntityState.Unchanged;
+            }
+
+            return item;
+        }
+
+        partial void OnTSocieteUserUpdated(BusinessWeb.Models.BusinessWebDB.TSocieteUser item);
+        partial void OnAfterTSocieteUserUpdated(BusinessWeb.Models.BusinessWebDB.TSocieteUser item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TSocieteUser> UpdateTSocieteUser(int id, BusinessWeb.Models.BusinessWebDB.TSocieteUser tsocieteuser)
+        {
+            OnTSocieteUserUpdated(tsocieteuser);
+
+            var itemToUpdate = Context.TSocieteUsers
+                              .Where(i => i.id == tsocieteuser.id)
+                              .FirstOrDefault();
+
+            if (itemToUpdate == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+                
+            var entryToUpdate = Context.Entry(itemToUpdate);
+            entryToUpdate.CurrentValues.SetValues(tsocieteuser);
+            entryToUpdate.State = EntityState.Modified;
+
+            Context.SaveChanges();
+
+            OnAfterTSocieteUserUpdated(tsocieteuser);
+
+            return tsocieteuser;
+        }
+
+        partial void OnTSocieteUserDeleted(BusinessWeb.Models.BusinessWebDB.TSocieteUser item);
+        partial void OnAfterTSocieteUserDeleted(BusinessWeb.Models.BusinessWebDB.TSocieteUser item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TSocieteUser> DeleteTSocieteUser(int id)
+        {
+            var itemToDelete = Context.TSocieteUsers
+                              .Where(i => i.id == id)
+                              .FirstOrDefault();
+
+            if (itemToDelete == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+
+            OnTSocieteUserDeleted(itemToDelete);
+
+
+            Context.TSocieteUsers.Remove(itemToDelete);
+
+            try
+            {
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(itemToDelete).State = EntityState.Unchanged;
+                throw;
+            }
+
+            OnAfterTSocieteUserDeleted(itemToDelete);
 
             return itemToDelete;
         }

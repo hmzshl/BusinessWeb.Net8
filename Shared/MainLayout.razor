@@ -407,7 +407,6 @@
 										@if (sc.IsInRole("Admin"))
 										{
 											<RadzenMenuItem Click="UtilisateursListe" Icon="person" Text="Utilisateurs" />
-											<RadzenMenuItem Click="RolesListe" Icon="security" Text="Roles" />
 											<RadzenMenuItem Text="Sociétés" Icon="horizontal_split" Click="SocieteListe"></RadzenMenuItem>
 											<RadzenMenuItem Icon="info" Text="Activation" Click="CheckActivation" />
 										}
@@ -1139,7 +1138,7 @@
 	{
 		await DialogService.OpenAsync<BusinessWeb.Pages.Traitement.ISC_Caisse.Structure.Beneficiaires>($"Bénéficiaires",
 		new Dictionary<string, object>(),
-		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "800px", Height = "90%" });
 	}
 	private async Task CaissesListe()
 	{
@@ -1151,25 +1150,25 @@
 	{
 		await DialogService.OpenAsync<BusinessWeb.Pages.Traitement.ISC_Caisse.Structure.Affectations>($"Affectations",
 		new Dictionary<string, object>(),
-		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "800px", Height = "90%" });
 	}
 	private async Task UtilisateursListe()
 	{
 		await DialogService.OpenAsync<Pages.Default.Users.UsersListe>($"Utilisateurs",
 		new Dictionary<string, object>(),
-		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "800px", Height = "90%" });
 	}
 	private async Task Profile()
 	{
 		await DialogService.OpenAsync<Pages.Default.Users.Profile>(sc.User?.UserName,
 		new Dictionary<string, object>(),
-		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "95%" });
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "800px", Height = "95%" });
 	}
 	private async Task RolesListe()
 	{
 		await DialogService.OpenAsync<Pages.Default.Roles.RolesListe>($"Profiles",
 		new Dictionary<string, object>(),
-		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "800px", Height = "90%" });
 	}
 	private async Task SocieteListe()
 	{

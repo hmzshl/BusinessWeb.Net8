@@ -5,15 +5,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BusinessWeb.Models.BusinessWebDB
 {
-    [Table("T_SocieteUser", Schema = "dbo")]
-    public partial class TSocieteUser
+    [Table("T_Collaborateur", Schema = "dbo")]
+    public partial class TCollaborateur
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
-        public string UserID { get; set; }
+        public string UserName { get; set; }
 
         public int Societe { get; set; }
+
+        public int CO_No { get; set; }
     }
 }

@@ -20,6 +20,5 @@ namespace BusinessWeb.Models.BusinessWebDB
         public string UserId { get; set; }
 
         public AspNetUser AspNetUser { get; set; }
-
     }
 }

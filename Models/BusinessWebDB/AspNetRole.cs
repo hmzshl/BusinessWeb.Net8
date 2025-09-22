@@ -21,6 +21,5 @@ namespace BusinessWeb.Models.BusinessWebDB
         public ICollection<AspNetRoleClaim> AspNetRoleClaims { get; set; }
 
         public ICollection<AspNetUserRole> AspNetUserRoles { get; set; }
-
     }
 }

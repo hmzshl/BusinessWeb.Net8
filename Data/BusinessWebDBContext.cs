@@ -70,6 +70,66 @@ namespace BusinessWeb.Data
               .HasForeignKey(i => i.UserId)
               .HasPrincipalKey(i => i.Id);
 
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TAuthorize>()
+              .Property(p => p.Societe)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TAuthorize>()
+              .Property(p => p.SelectedAPP)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TAuthorize>()
+              .Property(p => p.Visible)
+              .HasDefaultValueSql(@"((1))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TSociete>()
+              .Property(p => p.Superficie)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TSociete>()
+              .Property(p => p.Capital)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TSociete>()
+              .Property(p => p.FormeJuridique)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TSociete>()
+              .Property(p => p.GestionCommercial)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TSociete>()
+              .Property(p => p.Rendement)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TSociete>()
+              .Property(p => p.RH)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TSociete>()
+              .Property(p => p.SousTraitance)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TSociete>()
+              .Property(p => p.Caisse)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TSociete>()
+              .Property(p => p.Banque)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TSociete>()
+              .Property(p => p.Recolte)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TSociete>()
+              .Property(p => p.RecolteSenegal)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TSociete>()
+              .Property(p => p.Region)
+              .HasDefaultValueSql(@"((0))");
+
             builder.Entity<BusinessWeb.Models.BusinessWebDB.TSociete>()
               .Property(p => p.Comptabilite)
               .HasDefaultValueSql(@"((1))");
@@ -86,9 +146,25 @@ namespace BusinessWeb.Data
               .Property(p => p.VersionSage)
               .HasDefaultValueSql(@"((0))");
 
-            builder.Entity<BusinessWeb.Models.BusinessWebDB.TAuthorize>()
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile>()
+              .Property(p => p.Societe)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile>()
               .Property(p => p.Visible)
-              .HasDefaultValueSql(@"((1))");
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TCollaborateur>()
+              .Property(p => p.Societe)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TCollaborateur>()
+              .Property(p => p.CO_No)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TSocieteUser>()
+              .Property(p => p.Societe)
+              .HasDefaultValueSql(@"((0))");
 
             builder.Entity<BusinessWeb.Models.BusinessWebDB.AspNetUser>()
               .Property(p => p.LockoutEnd)
@@ -122,11 +198,21 @@ namespace BusinessWeb.Data
 
         public DbSet<BusinessWeb.Models.BusinessWebDB.AspNetUserToken> AspNetUserTokens { get; set; }
 
+        public DbSet<BusinessWeb.Models.BusinessWebDB.TAuthorize> TAuthorizes { get; set; }
+
         public DbSet<BusinessWeb.Models.BusinessWebDB.TLicense> TLicenses { get; set; }
 
         public DbSet<BusinessWeb.Models.BusinessWebDB.TSociete> TSocietes { get; set; }
 
-        public DbSet<BusinessWeb.Models.BusinessWebDB.TAuthorize> TAuthorizes { get; set; }
+        public DbSet<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile> TAuthorizeMobiles { get; set; }
 
+        public DbSet<BusinessWeb.Models.BusinessWebDB.TCollaborateur> TCollaborateurs { get; set; }
+
+        public DbSet<BusinessWeb.Models.BusinessWebDB.TSocieteUser> TSocieteUsers { get; set; }
+
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            configurationBuilder.Conventions.Add(_ => new BlankTriggerAddingConvention());
+        }
     }
 }

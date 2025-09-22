@@ -12,6 +12,8 @@ namespace BusinessWeb.Models.BusinessWebDB
         [Required]
         public string UserId { get; set; }
 
+        public AspNetUser AspNetUser { get; set; }
+
         [Key]
         [Required]
         public string LoginProvider { get; set; }
@@ -21,8 +23,5 @@ namespace BusinessWeb.Models.BusinessWebDB
         public string Name { get; set; }
 
         public string Value { get; set; }
-
-        public AspNetUser AspNetUser { get; set; }
-
     }
 }

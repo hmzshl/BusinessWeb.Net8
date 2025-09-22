@@ -13,6 +13,5 @@ namespace BusinessWeb.Models.BusinessWebDB
         public int id { get; set; }
 
         public string Activation { get; set; }
-
     }
 }

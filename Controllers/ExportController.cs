@@ -18,7 +18,7 @@ namespace BusinessWeb.Controllers
 {
     public partial class ExportController : Controller
     {
-        public IQueryable ApplyQuery<T>(IQueryable<T> items, IQueryCollection query = null) where T : class
+        public IQueryable ApplyQuery<T>(IQueryable<T> items, IQueryCollection query = null, bool keyless = false) where T : class
         {
             if (query != null)
             {
@@ -34,6 +34,10 @@ namespace BusinessWeb.Controllers
                 var filter = query.ContainsKey("$filter") ? query["$filter"].ToString() : null;
                 if (!string.IsNullOrEmpty(filter))
                 {
+                    if(keyless)
+                    {
+                        items = items.ToList().AsQueryable();
+                    }
                     items = items.Where(filter);
                 }
 
@@ -73,7 +77,14 @@ namespace BusinessWeb.Controllers
 
                 foreach (var column in columns)
                 {
-                    row.Add($"{GetValue(item, column.Key)}".Trim());
+                    var rawValue = $"{GetValue(item, column.Key)}".Trim();
+
+                    if (rawValue.Contains(",") || rawValue.Contains("\"") || rawValue.Contains("\n"))
+                    {
+                        rawValue = $"\"{rawValue.Replace("\"", "\"\"")}\"";
+                    }
+
+                    row.Add(rawValue);
                 }
 
                 sb.AppendLine(string.Join(",", row.ToArray()));
@@ -158,7 +169,14 @@ namespace BusinessWeb.Controllers
                         {
                             if (value != null)
                             {
-                                stringValue = Convert.ToString(value, CultureInfo.InvariantCulture);
+                                if (value is Enum enumValue)
+                                {
+                                    stringValue = Radzen.Blazor.EnumExtensions.GetDisplayDescription(enumValue);
+                                }
+                                else 
+                                {
+                                    stringValue = Convert.ToString(value, CultureInfo.InvariantCulture);
+                                }
                             }
                             cell.CellValue = new CellValue(stringValue);
                             cell.DataType = new EnumValue<CellValues>(CellValues.Number);
@@ -211,6 +229,10 @@ namespace BusinessWeb.Controllers
             if(underlyingType == typeof(System.Guid) || underlyingType == typeof(System.DateTimeOffset))
                 return true;
 
+#if NET6_0_OR_GREATER
+            if(underlyingType == typeof(System.DateOnly) || underlyingType == typeof(System.TimeOnly))
+                return true;
+#endif
             var typeCode = Type.GetTypeCode(underlyingType);
 
             switch (typeCode)

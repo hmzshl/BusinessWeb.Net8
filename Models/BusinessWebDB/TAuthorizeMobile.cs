@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BusinessWeb.Models.BusinessWebDB
 {
-    [Table("T_SocieteUser", Schema = "dbo")]
-    public partial class TSocieteUser
+    [Table("T_AuthorizeMobile", Schema = "dbo")]
+    public partial class TAuthorizeMobile
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -15,5 +15,11 @@ namespace BusinessWeb.Models.BusinessWebDB
         public string UserID { get; set; }
 
         public int Societe { get; set; }
+
+        public string RoleID { get; set; }
+
+        public string Url { get; set; }
+
+        public bool Visible { get; set; }
     }
 }

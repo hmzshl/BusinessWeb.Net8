@@ -19,7 +19,6 @@ namespace BusinessWeb.Models.BusinessWebDB
 
         public string Adresse { get; set; }
 
-        [Required]
         public decimal Superficie { get; set; }
 
         public string IdF { get; set; }
@@ -34,10 +33,8 @@ namespace BusinessWeb.Models.BusinessWebDB
 
         public string Patente { get; set; }
 
-        [Required]
         public decimal Capital { get; set; }
 
-        [Required]
         public int FormeJuridique { get; set; }
 
         public string Telephone { get; set; }
@@ -72,7 +69,6 @@ namespace BusinessWeb.Models.BusinessWebDB
 
         public DateTime? DateCreation { get; set; }
 
-        [Required]
         public int Region { get; set; }
 
         public bool Comptabilite { get; set; }
@@ -81,13 +77,13 @@ namespace BusinessWeb.Models.BusinessWebDB
 
         public string Serveur { get; set; }
 
-        public string Base { get; set; }
+        [Column("Base")]
+        public string Base1 { get; set; }
 
         public string Passe { get; set; }
 
-        public bool? HistoriqueConnexion { get; set; }
+        public bool HistoriqueConnexion { get; set; }
 
-        public int? VersionSage { get; set; }
-
+        public int VersionSage { get; set; }
     }
 }

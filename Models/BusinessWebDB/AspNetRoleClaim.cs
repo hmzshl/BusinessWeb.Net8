@@ -20,6 +20,5 @@ namespace BusinessWeb.Models.BusinessWebDB
         public string RoleId { get; set; }
 
         public AspNetRole AspNetRole { get; set; }
-
     }
 }

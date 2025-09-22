@@ -547,7 +547,7 @@ namespace BusinessWeb
 			{
 				ste = new TSociete();
 			}
-			return "Server=" + (ste.Serveur ?? "") + ";Connection Timeout=360;Persist Security Info=False;TrustServerCertificate=True;User ID=" + (ste.Web ?? "sa") + ";Password=" + (ste.Passe ?? "") + ";Initial Catalog=" + (ste.Base ?? "") + ";MultipleActiveResultSets=False;";
+			return "Server=" + (ste.Serveur ?? "") + ";Connection Timeout=360;Persist Security Info=False;TrustServerCertificate=True;User ID=" + (ste.Web ?? "sa") + ";Password=" + (ste.Passe ?? "") + ";Initial Catalog=" + (ste.Base1 ?? "") + ";MultipleActiveResultSets=False;";
 		}
 		public string getDevise(DB db)
 		{
