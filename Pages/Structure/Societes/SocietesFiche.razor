@@ -85,7 +85,26 @@
                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Mot de passe" LabelColSpan="8">
                                     <SfTextBox Type="InputType.Password" @bind-Value="@row.Passe" />
                                 </FormItem>
+
                             </Card>
+                            <Divider></Divider>
+                            <RadzenStack Style="padding: 10px;" Gap="10px" Orientation="Radzen.Orientation.Vertical" AlignItems="AlignItems.End">
+                                @if (!connected)
+                                {
+                                    <div style="width: 100%;">
+                                        <SfMessage ShowCloseIcon="false" Severity="MessageSeverity.Error">Vérifier votre connexion</SfMessage>
+                                    </div>
+                                    
+                                }
+                                else
+                                {
+                                    <div style="width: 100%;">
+                                        <SfMessage ShowCloseIcon="false" Severity="MessageSeverity.Success">Connexion établie</SfMessage>
+                                    </div>
+                                    
+                                }
+                                <SfButton style="width: 180px;" IconCss="e-icons e-check" OnClick="@(args => { connected = fn.CheckSteDB(row); StateHasChanged(); })">Tester la connexion</SfButton>
+                            </RadzenStack>
 
                         </GridCol>
                     </GridRow>
@@ -177,6 +196,7 @@
     protected string error;
     protected bool errorVisible;
     private ICollection<TSocieteUser> items;
+    bool connected = false;
 
 
     protected override async Task OnInitializedAsync()
@@ -186,37 +206,9 @@
         if (id != 0)
         {
             row = sdb.TSocietes.Where(a => a.id == id).SingleOrDefault();
-            db = fn.getDb(row);
-            try
+            connected = fn.CheckSteDB(row);
+            if (fn.CheckSteDB(row))
             {
-                var dt = db.API_T_Config;
-                if (dt.Count() != 0)
-                {
-                    config = dt.First();
-                }
-                else
-                {
-                    var item = new API_T_Config();
-                    db.Add(item);
-                    db.SaveChanges();
-                    config = item;
-                }
-            }
-            catch(Exception ex)
-            {
-
-            }
-        }
-    }
-    protected async Task Submit()
-    {
-
-        if (id == 0)
-        {
-            try
-            {
-                sdb.Add(row);
-                sdb.SaveChanges();
                 db = fn.getDb(row);
                 try
                 {
@@ -232,13 +224,89 @@
                         db.SaveChanges();
                         config = item;
                     }
+                }
+                catch (Exception ex)
+                {
 
+                }
+            }
+
+        }
+    }
+    protected async Task Submit()
+    {
+
+        if (id == 0)
+        {
+            try
+            {
+                sdb.Add(row);
+                sdb.SaveChanges();
+                if (fn.CheckSteDB(row))
+                {
+                    db = fn.getDb(row);
+                    try
+                    {
+                        var dt = db.API_T_Config;
+                        if (dt.Count() != 0)
+                        {
+                            config = dt.First();
+                        }
+                        else
+                        {
+                            var item = new API_T_Config();
+                            db.Add(item);
+                            db.SaveChanges();
+                            config = item;
+                        }
+
+                        if (row.Tracabilite)
+                        {
+                            await DeleteTracabiliteTriggers();
+                            await CreateTracabiliteTriggers();
+                        }
+
+                        else
+                        {
+                            await DeleteTracabiliteTriggers();
+                        }
+                        if (row.HistoriqueConnexion)
+                        {
+                            await DeleteHistoriqueTriggers();
+                            await CreateHistoriqueTriggers();
+                        }
+                        else
+                        {
+                            await DeleteHistoriqueTriggers();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+        else
+        {
+            try 
+            {
+                sdb.SaveChanges();
+                @if (fn.CheckSteDB(row))
+                {
+                    db.SaveChanges();
                     if (row.Tracabilite)
                     {
                         await DeleteTracabiliteTriggers();
                         await CreateTracabiliteTriggers();
                     }
-
                     else
                     {
                         await DeleteTracabiliteTriggers();
@@ -253,43 +321,7 @@
                         await DeleteHistoriqueTriggers();
                     }
                 }
-                catch(Exception ex)
-                {
 
-                }
-
-            }
-            catch (Exception ex)
-            {
-
-            }
-
-        }
-        else
-        {
-            try 
-            {
-                sdb.SaveChanges();
-                db.SaveChanges();
-                if (row.Tracabilite)
-                {
-                    await DeleteTracabiliteTriggers();
-                    await CreateTracabiliteTriggers();
-                }
-
-                else
-                {
-                    await DeleteTracabiliteTriggers();
-                }
-                if (row.HistoriqueConnexion)
-                {
-                    await DeleteHistoriqueTriggers();
-                    await CreateHistoriqueTriggers();
-                }
-                else
-                {
-                    await DeleteHistoriqueTriggers();
-                }
             }
             catch(Exception ex)
             {
@@ -300,27 +332,32 @@
 
         try
         {
-           db.Database.ExecuteSqlRaw(getAddQuery("API_ICE"));
-            db.Database.ExecuteSqlRaw(getAddQuery("API_Patente"));
-            db.Database.ExecuteSqlRaw(getAddQuery("API_IdF"));
-            db.Database.ExecuteSqlRaw(getAddQuery("API_RC"));
+            if (fn.CheckSteDB(row))
+            {
+                db.Database.ExecuteSqlRaw(getAddQuery("API_ICE"));
+                db.Database.ExecuteSqlRaw(getAddQuery("API_Patente"));
+                db.Database.ExecuteSqlRaw(getAddQuery("API_IdF"));
+                db.Database.ExecuteSqlRaw(getAddQuery("API_RC"));
 
-            db.Database.ExecuteSqlRaw(getAddQuery("API_Telephone"));
-            db.Database.ExecuteSqlRaw(getAddQuery("API_Email"));
-            db.Database.ExecuteSqlRaw(getAddQuery("API_Web"));
-            db.Database.ExecuteSqlRaw(getAddQuery("API_Adresse"));
-            db.Database.ExecuteSqlRaw(getAddQuery("API_Ville"));
+                db.Database.ExecuteSqlRaw(getAddQuery("API_Telephone"));
+                db.Database.ExecuteSqlRaw(getAddQuery("API_Email"));
+                db.Database.ExecuteSqlRaw(getAddQuery("API_Web"));
+                db.Database.ExecuteSqlRaw(getAddQuery("API_Adresse"));
+                db.Database.ExecuteSqlRaw(getAddQuery("API_Ville"));
 
-            db.Database.ExecuteSqlRaw(getUpdateQuery("API_ICE", row.ICE ?? ""));
-            db.Database.ExecuteSqlRaw(getUpdateQuery("API_Patente", row.Patente??""));
-            db.Database.ExecuteSqlRaw(getUpdateQuery("API_IdF",row.IdF??""));
-            db.Database.ExecuteSqlRaw(getUpdateQuery("API_RC", row.RC ?? ""));
+                db.Database.ExecuteSqlRaw(getUpdateQuery("API_ICE", row.ICE ?? ""));
+                db.Database.ExecuteSqlRaw(getUpdateQuery("API_Patente", row.Patente ?? ""));
+                db.Database.ExecuteSqlRaw(getUpdateQuery("API_IdF", row.IdF ?? ""));
+                db.Database.ExecuteSqlRaw(getUpdateQuery("API_RC", row.RC ?? ""));
 
-            db.Database.ExecuteSqlRaw(getUpdateQuery("API_Telephone", row.Telephone ?? ""));
-            db.Database.ExecuteSqlRaw(getUpdateQuery("API_Email",row.Email ?? ""));
-            db.Database.ExecuteSqlRaw(getUpdateQuery("API_Web",""));
-            db.Database.ExecuteSqlRaw(getUpdateQuery("API_Adresse", row.Adresse ?? "")); 
-            db.Database.ExecuteSqlRaw(getUpdateQuery("API_Ville", row.Ville ?? ""));
+                db.Database.ExecuteSqlRaw(getUpdateQuery("API_Telephone", row.Telephone ?? ""));
+                db.Database.ExecuteSqlRaw(getUpdateQuery("API_Email", row.Email ?? ""));
+                db.Database.ExecuteSqlRaw(getUpdateQuery("API_Web", ""));
+                db.Database.ExecuteSqlRaw(getUpdateQuery("API_Adresse", row.Adresse ?? ""));
+                db.Database.ExecuteSqlRaw(getUpdateQuery("API_Ville", row.Ville ?? ""));
+            }
+
+
         }
         catch(Exception ex)
         {

@@ -103,7 +103,40 @@ namespace BusinessWeb
 
 			return rs;
 		}
-		public string GetFrenchMonth(string monthCode)
+		public bool CheckDB(DB dB)
+		{
+			if(dB.Database.CanConnect())
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+            }
+        }
+        public bool CheckSteDB(TSociete ste)
+        {
+			bool rs = false;
+            try
+            {
+                // Test the connection
+                using (var db = getDbCheck(ste))
+                {
+                    // Try to execute a simple query to test the connection
+                    var testQuery = db.P_DOSSIER.Take(1).Any();
+
+                    // If we reach here, connection is working
+                    rs = true;
+                }
+            }
+            catch (Exception)
+            {
+                // If any exception occurs, connection is not working
+                rs = false;
+            }
+			return rs;
+        }
+        public string GetFrenchMonth(string monthCode)
 		{
 			var monthMap = new Dictionary<string, string>
 		{
@@ -549,7 +582,31 @@ namespace BusinessWeb
 			}
 			return "Server=" + (ste.Serveur ?? "") + ";Connection Timeout=360;Persist Security Info=False;TrustServerCertificate=True;User ID=" + (ste.Web ?? "sa") + ";Password=" + (ste.Passe ?? "") + ";Initial Catalog=" + (ste.Base1 ?? "") + ";MultipleActiveResultSets=False;";
 		}
-		public string getDevise(DB db)
+        public string getConnectionStringCheck(TSociete ste)
+        {
+            if (ste == null)
+            {
+                ste = new TSociete();
+            }
+            return "Server=" + (ste.Serveur ?? "") + ";Connection Timeout=10;Persist Security Info=False;TrustServerCertificate=True;User ID=" + (ste.Web ?? "sa") + ";Password=" + (ste.Passe ?? "") + ";Initial Catalog=" + (ste.Base1 ?? "") + ";MultipleActiveResultSets=False;";
+        }
+        public DB getDbCheck(TSociete ste)
+        {
+            var optionBuilder = new DbContextOptionsBuilder<DB>();
+            optionBuilder.UseSqlServer(getConnectionString(ste), o =>
+            {
+                o.UseCompatibilityLevel(100);
+                o.CommandTimeout(10); // Timeout in seconds (default is 30)
+                                        // Add this line to handle triggers with OUTPUT clause:
+                o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
+                 .UseRelationalNulls();
+            });
+
+            optionBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+            DB db = new DB(optionBuilder.Options);
+            return db;
+        }
+        public string getDevise(DB db)
 		{
 			string rs = "MAD";
 			if (db.P_DEVISE.Count() != 0)
