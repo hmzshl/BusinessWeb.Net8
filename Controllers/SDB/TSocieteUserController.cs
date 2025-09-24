@@ -52,9 +52,36 @@ namespace BusinessWeb.Controllers.SDB
             return _sdb.TSocieteUsers.Any(e => e.id == id);
         }
 		[HttpGet("User/{Id}")]
-		public async Task<ActionResult<IEnumerable<TSocieteUser>>> GetTSocieteUserByUser(string Id)
+		public async Task<ActionResult<IEnumerable<TSociete>>> GetTSocieteUserByUser(string Id)
 		{
-			return await _sdb.TSocieteUsers.Where(a => a.UserID == Id).ToListAsync();
-		}
-	}
+            var allowed_stes = _sdb.TSocieteUsers.Where(a => a.UserID == Id).Select(a => a.Societe);
+            Helpers fn = new Helpers();
+            List<TSociete> dt = await _sdb.TSocietes.Where(a => allowed_stes.Contains(a.id)).ToListAsync();
+
+            try
+            {
+                var rs = new List<TSociete>();
+                foreach (var item in dt)
+                {
+                    var lt = new TSociete();
+                    fn.CopyData(item, lt);
+                    lt.Serveur = null;
+                    lt.Passe = null;
+                    lt.Base1 = null;
+                    lt.Web = null;
+                    lt.id = item.id;
+                    rs.Add(lt);
+
+                }
+                return Ok(rs);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+            //return await _sdb.TSocietes.ToListAsync();
+
+
+        }
+    }
 }

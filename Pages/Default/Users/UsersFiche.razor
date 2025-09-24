@@ -13,7 +13,7 @@
         <div style="padding: 10px;">
             <Tabs DefaultActiveKey="1" Size="@TabSize.Small">
                 <TabPane Key="1" Tab="Informations">
-                    <div style="padding: 30px;">
+                    <div style="padding: 10px;">
                         <RadzenAlert Title="Impossible de modifier l'utilisateur'" Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">@error</RadzenAlert>
                         <FormItem LabelAlign="AntLabelAlignType.Left" Label="Nom" LabelColSpan="8">
                             <SfTextBox @bind-Value="@user.UserName" />
@@ -29,7 +29,7 @@
                     </div>
                 </TabPane>
                 <TabPane Key="2" Tab="Sociétés">
-                    <div style="height: 50vh; padding: 30px;">
+                    <div style="height: 50vh; padding: 10px;">
                         <SfGrid AllowFiltering="false" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(societes)" Height="100%">
                             <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog"></GridEditSettings>
                             <GridEvents OnActionComplete="UpdateStes" TValue="TSocieteUser"></GridEvents>
@@ -62,7 +62,7 @@
                 </TabPane>
 
                 <TabPane Disabled="@(!societes.Any())" Key="4" Tab="Autorisations">
-                    <div style="padding: 30px;">
+                    <div style="padding: 10px;">
                         @if (Id != null)
                         {
                             <div style="margin: 10px;">
@@ -148,11 +148,8 @@
                     </div>
 
                 </TabPane>
-                <TabPane Disabled="@(!societes.Any())" Key="5" Tab="Mobile Autorisations">
-
-                </TabPane>
-                <TabPane Disabled="@(!societes.Any())" Key="3" Tab="Collaborateurs">
-                    <div style="height: 50vh; padding: 30px;">
+                <TabPane Disabled="@(!societes.Any())" Key="3" Tab="Collaborateur">
+                    <div style="height: 50vh; padding: 10px;">
                         <SfGrid AllowFiltering="false" DataSource="@(connected_societes)" Height="100%">
                             <GridEditSettings AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                             <GridEvents OnActionComplete="UpdateCollabs" TValue="TSociete"></GridEvents>
@@ -223,6 +220,64 @@
                         </SfGrid>
                     </div>
                 </TabPane>
+                <TabPane Disabled="@(!societes.Any())" Key="5" Tab="Dépots">
+                    <div style="height: 50vh; padding: 10px;">
+                        <SfGrid AllowFiltering="false" DataSource="@(connected_societes)" Height="100%">
+                            <GridEditSettings AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                            <GridEvents OnActionComplete="UpdateCollabs" TValue="TSociete"></GridEvents>
+                            <GridTemplates>
+                                <EmptyRecordTemplate>
+                                    <Empty></Empty>
+                                </EmptyRecordTemplate>
+                            </GridTemplates>
+                            <GridColumns>
+                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(TSociete.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                <GridColumn AllowEditing="false" AllowSorting="false" AllowFiltering="false" Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"
+                                            HeaderText="Société" Field=@nameof(TSociete.Intitule) />
+                                <GridColumn AllowSorting="false" AllowFiltering="false" Width="190" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Dépots">
+                                    <Template>
+                                        @{
+                                            var dt = (context as TSociete);
+                                            var dps = depots.Where(a => a.Societe == dt.id).ToList();
+                                            foreach (var item in dps)
+                                            {
+                                                if (dt.Rendement)
+                                                {
+                                                    <div style="padding: 5px;">
+                                                        <SfCheckBox @bind-Checked="@item.Visible">@fn.getDb(dt).F_DEPOT.Where(a => a.DE_No == item.DE_No)?.SingleOrDefault()?.DE_Intitule</SfCheckBox>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="color: red; padding: 5px;">@dt.Intitule (Hors ligne)</div>
+                                                }
+                                            }
+                                        }
+                                    </Template>
+                                    <EditTemplate>
+                                        @{
+                                            var dt = (context as TSociete);
+                                            var dps = depots.Where(a => a.Societe == dt.id).ToList();
+                                            foreach (var item in dps)
+                                            {
+                                                if (dt.Rendement)
+                                                {
+                                                    <div style="padding: 5px;">
+                                                        <SfCheckBox @bind-Checked="@item.Visible">@fn.getDb(dt).F_DEPOT.Where(a => a.DE_No == item.DE_No)?.SingleOrDefault()?.DE_Intitule</SfCheckBox>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div style="color: red; padding: 5px;">@dt.Intitule (Hors ligne)</div>
+                                                }
+                                            }
+                                        }
+                                    </EditTemplate>
+                                </GridColumn>
+                            </GridColumns>
+                        </SfGrid>
+                    </div>
+                </TabPane>
             </Tabs>
         </div>
     </Form>
@@ -246,6 +301,7 @@ else
     private List<TAuthorize> auths = new List<TAuthorize>();
     private List<Items> apps = new List<Items>();
     List<TSocieteUser> societes = new List<TSocieteUser>();
+    List<TDepot> depots = new List<TDepot>();
     List<TSociete> connected_societes = new List<TSociete>();
     string imported_user;
     [CascadingParameter]
@@ -268,6 +324,7 @@ else
             await InitAuth();
             connected_societes = GetWorkingSocietes();
             await InitCollas();
+            await InitDepots();
 
         }
         else
@@ -292,6 +349,27 @@ else
             }
         }
         sdb.SaveChanges();
+    }
+    private async Task InitDepots()
+    {
+        foreach(var item in connected_societes.Where(a => a.Rendement))
+        {
+            foreach(var dt in fn.getDb(item).F_DEPOT.ToList())
+            {
+                var dpt = sdb.TDepots.Where(a => a.Societe == item.id && a.DE_No == dt.DE_No && a.UserName == this.Id).ToList();
+                if(dpt.Count == 0)
+                {
+                    var depot = new TDepot();
+                    depot.Societe = item.id;
+                    depot.UserName = this.Id;
+                    depot.DE_No = dt.DE_No??0;
+                    sdb.Add(depot);
+                }
+            }
+
+        }
+        sdb.SaveChanges();
+        depots = sdb.TDepots.Where(a => a.UserName == this.Id).ToList();
     }
     private async Task UpdateCollabs(ActionEventArgs<TSociete> args)
     {

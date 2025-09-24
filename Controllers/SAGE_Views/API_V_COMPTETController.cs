@@ -74,7 +74,12 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 
 			return item;
 		}
+        [HttpGet("CO_No/{CO_No}")]
+        public async Task<ActionResult<IEnumerable<API_V_COMPTET>>> GetAPI_V_COMPTETByCO_No(int CO_No)
+        {
+            setDB(); return await _db.API_V_COMPTET.Where(a => a.CO_No == CO_No).ToListAsync();
+        }
 
 
-	}
+    }
 }

@@ -82,6 +82,22 @@ namespace BusinessWeb.Data
               .Property(p => p.Visible)
               .HasDefaultValueSql(@"((1))");
 
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile>()
+              .Property(p => p.Societe)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile>()
+              .Property(p => p.Visible)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TCollaborateur>()
+              .Property(p => p.Societe)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TCollaborateur>()
+              .Property(p => p.CO_No)
+              .HasDefaultValueSql(@"((0))");
+
             builder.Entity<BusinessWeb.Models.BusinessWebDB.TSociete>()
               .Property(p => p.Superficie)
               .HasDefaultValueSql(@"((0))");
@@ -146,25 +162,21 @@ namespace BusinessWeb.Data
               .Property(p => p.VersionSage)
               .HasDefaultValueSql(@"((0))");
 
-            builder.Entity<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile>()
-              .Property(p => p.Societe)
-              .HasDefaultValueSql(@"((0))");
-
-            builder.Entity<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile>()
-              .Property(p => p.Visible)
-              .HasDefaultValueSql(@"((0))");
-
-            builder.Entity<BusinessWeb.Models.BusinessWebDB.TCollaborateur>()
-              .Property(p => p.Societe)
-              .HasDefaultValueSql(@"((0))");
-
-            builder.Entity<BusinessWeb.Models.BusinessWebDB.TCollaborateur>()
-              .Property(p => p.CO_No)
-              .HasDefaultValueSql(@"((0))");
-
             builder.Entity<BusinessWeb.Models.BusinessWebDB.TSocieteUser>()
               .Property(p => p.Societe)
               .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TDepot>()
+              .Property(p => p.Societe)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TDepot>()
+              .Property(p => p.DE_No)
+              .HasDefaultValueSql(@"((0))");
+
+            builder.Entity<BusinessWeb.Models.BusinessWebDB.TDepot>()
+              .Property(p => p.Visible)
+              .HasDefaultValueSql(@"((1))");
 
             builder.Entity<BusinessWeb.Models.BusinessWebDB.AspNetUser>()
               .Property(p => p.LockoutEnd)
@@ -200,15 +212,17 @@ namespace BusinessWeb.Data
 
         public DbSet<BusinessWeb.Models.BusinessWebDB.TAuthorize> TAuthorizes { get; set; }
 
-        public DbSet<BusinessWeb.Models.BusinessWebDB.TLicense> TLicenses { get; set; }
-
-        public DbSet<BusinessWeb.Models.BusinessWebDB.TSociete> TSocietes { get; set; }
-
         public DbSet<BusinessWeb.Models.BusinessWebDB.TAuthorizeMobile> TAuthorizeMobiles { get; set; }
 
         public DbSet<BusinessWeb.Models.BusinessWebDB.TCollaborateur> TCollaborateurs { get; set; }
 
+        public DbSet<BusinessWeb.Models.BusinessWebDB.TLicense> TLicenses { get; set; }
+
+        public DbSet<BusinessWeb.Models.BusinessWebDB.TSociete> TSocietes { get; set; }
+
         public DbSet<BusinessWeb.Models.BusinessWebDB.TSocieteUser> TSocieteUsers { get; set; }
+
+        public DbSet<BusinessWeb.Models.BusinessWebDB.TDepot> TDepots { get; set; }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {

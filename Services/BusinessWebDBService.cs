@@ -1375,328 +1375,6 @@ namespace BusinessWeb
             return itemToDelete;
         }
     
-        public async Task ExportTLicensesToExcel(Query query = null, string fileName = null)
-        {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tlicenses/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tlicenses/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
-        }
-
-        public async Task ExportTLicensesToCSV(Query query = null, string fileName = null)
-        {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tlicenses/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tlicenses/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
-        }
-
-        partial void OnTLicensesRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TLicense> items);
-
-        public async Task<IQueryable<BusinessWeb.Models.BusinessWebDB.TLicense>> GetTLicenses(Query query = null)
-        {
-            var items = Context.TLicenses.AsQueryable();
-
-
-            if (query != null)
-            {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
-
-                ApplyQuery(ref items, query);
-            }
-
-            OnTLicensesRead(ref items);
-
-            return await Task.FromResult(items);
-        }
-
-        partial void OnTLicenseGet(BusinessWeb.Models.BusinessWebDB.TLicense item);
-        partial void OnGetTLicenseById(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TLicense> items);
-
-
-        public async Task<BusinessWeb.Models.BusinessWebDB.TLicense> GetTLicenseById(int id)
-        {
-            var items = Context.TLicenses
-                              .AsNoTracking()
-                              .Where(i => i.id == id);
-
- 
-            OnGetTLicenseById(ref items);
-
-            var itemToReturn = items.FirstOrDefault();
-
-            OnTLicenseGet(itemToReturn);
-
-            return await Task.FromResult(itemToReturn);
-        }
-
-        partial void OnTLicenseCreated(BusinessWeb.Models.BusinessWebDB.TLicense item);
-        partial void OnAfterTLicenseCreated(BusinessWeb.Models.BusinessWebDB.TLicense item);
-
-        public async Task<BusinessWeb.Models.BusinessWebDB.TLicense> CreateTLicense(BusinessWeb.Models.BusinessWebDB.TLicense tlicense)
-        {
-            OnTLicenseCreated(tlicense);
-
-            var existingItem = Context.TLicenses
-                              .Where(i => i.id == tlicense.id)
-                              .FirstOrDefault();
-
-            if (existingItem != null)
-            {
-               throw new Exception("Item already available");
-            }            
-
-            try
-            {
-                Context.TLicenses.Add(tlicense);
-                Context.SaveChanges();
-            }
-            catch
-            {
-                Context.Entry(tlicense).State = EntityState.Detached;
-                throw;
-            }
-
-            OnAfterTLicenseCreated(tlicense);
-
-            return tlicense;
-        }
-
-        public async Task<BusinessWeb.Models.BusinessWebDB.TLicense> CancelTLicenseChanges(BusinessWeb.Models.BusinessWebDB.TLicense item)
-        {
-            var entityToCancel = Context.Entry(item);
-            if (entityToCancel.State == EntityState.Modified)
-            {
-              entityToCancel.CurrentValues.SetValues(entityToCancel.OriginalValues);
-              entityToCancel.State = EntityState.Unchanged;
-            }
-
-            return item;
-        }
-
-        partial void OnTLicenseUpdated(BusinessWeb.Models.BusinessWebDB.TLicense item);
-        partial void OnAfterTLicenseUpdated(BusinessWeb.Models.BusinessWebDB.TLicense item);
-
-        public async Task<BusinessWeb.Models.BusinessWebDB.TLicense> UpdateTLicense(int id, BusinessWeb.Models.BusinessWebDB.TLicense tlicense)
-        {
-            OnTLicenseUpdated(tlicense);
-
-            var itemToUpdate = Context.TLicenses
-                              .Where(i => i.id == tlicense.id)
-                              .FirstOrDefault();
-
-            if (itemToUpdate == null)
-            {
-               throw new Exception("Item no longer available");
-            }
-                
-            var entryToUpdate = Context.Entry(itemToUpdate);
-            entryToUpdate.CurrentValues.SetValues(tlicense);
-            entryToUpdate.State = EntityState.Modified;
-
-            Context.SaveChanges();
-
-            OnAfterTLicenseUpdated(tlicense);
-
-            return tlicense;
-        }
-
-        partial void OnTLicenseDeleted(BusinessWeb.Models.BusinessWebDB.TLicense item);
-        partial void OnAfterTLicenseDeleted(BusinessWeb.Models.BusinessWebDB.TLicense item);
-
-        public async Task<BusinessWeb.Models.BusinessWebDB.TLicense> DeleteTLicense(int id)
-        {
-            var itemToDelete = Context.TLicenses
-                              .Where(i => i.id == id)
-                              .FirstOrDefault();
-
-            if (itemToDelete == null)
-            {
-               throw new Exception("Item no longer available");
-            }
-
-            OnTLicenseDeleted(itemToDelete);
-
-
-            Context.TLicenses.Remove(itemToDelete);
-
-            try
-            {
-                Context.SaveChanges();
-            }
-            catch
-            {
-                Context.Entry(itemToDelete).State = EntityState.Unchanged;
-                throw;
-            }
-
-            OnAfterTLicenseDeleted(itemToDelete);
-
-            return itemToDelete;
-        }
-    
-        public async Task ExportTSocietesToExcel(Query query = null, string fileName = null)
-        {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tsocietes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tsocietes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
-        }
-
-        public async Task ExportTSocietesToCSV(Query query = null, string fileName = null)
-        {
-            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tsocietes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tsocietes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
-        }
-
-        partial void OnTSocietesRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TSociete> items);
-
-        public async Task<IQueryable<BusinessWeb.Models.BusinessWebDB.TSociete>> GetTSocietes(Query query = null)
-        {
-            var items = Context.TSocietes.AsQueryable();
-
-
-            if (query != null)
-            {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
-
-                ApplyQuery(ref items, query);
-            }
-
-            OnTSocietesRead(ref items);
-
-            return await Task.FromResult(items);
-        }
-
-        partial void OnTSocieteGet(BusinessWeb.Models.BusinessWebDB.TSociete item);
-        partial void OnGetTSocieteById(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TSociete> items);
-
-
-        public async Task<BusinessWeb.Models.BusinessWebDB.TSociete> GetTSocieteById(int id)
-        {
-            var items = Context.TSocietes
-                              .AsNoTracking()
-                              .Where(i => i.id == id);
-
- 
-            OnGetTSocieteById(ref items);
-
-            var itemToReturn = items.FirstOrDefault();
-
-            OnTSocieteGet(itemToReturn);
-
-            return await Task.FromResult(itemToReturn);
-        }
-
-        partial void OnTSocieteCreated(BusinessWeb.Models.BusinessWebDB.TSociete item);
-        partial void OnAfterTSocieteCreated(BusinessWeb.Models.BusinessWebDB.TSociete item);
-
-        public async Task<BusinessWeb.Models.BusinessWebDB.TSociete> CreateTSociete(BusinessWeb.Models.BusinessWebDB.TSociete tsociete)
-        {
-            OnTSocieteCreated(tsociete);
-
-            var existingItem = Context.TSocietes
-                              .Where(i => i.id == tsociete.id)
-                              .FirstOrDefault();
-
-            if (existingItem != null)
-            {
-               throw new Exception("Item already available");
-            }            
-
-            try
-            {
-                Context.TSocietes.Add(tsociete);
-                Context.SaveChanges();
-            }
-            catch
-            {
-                Context.Entry(tsociete).State = EntityState.Detached;
-                throw;
-            }
-
-            OnAfterTSocieteCreated(tsociete);
-
-            return tsociete;
-        }
-
-        public async Task<BusinessWeb.Models.BusinessWebDB.TSociete> CancelTSocieteChanges(BusinessWeb.Models.BusinessWebDB.TSociete item)
-        {
-            var entityToCancel = Context.Entry(item);
-            if (entityToCancel.State == EntityState.Modified)
-            {
-              entityToCancel.CurrentValues.SetValues(entityToCancel.OriginalValues);
-              entityToCancel.State = EntityState.Unchanged;
-            }
-
-            return item;
-        }
-
-        partial void OnTSocieteUpdated(BusinessWeb.Models.BusinessWebDB.TSociete item);
-        partial void OnAfterTSocieteUpdated(BusinessWeb.Models.BusinessWebDB.TSociete item);
-
-        public async Task<BusinessWeb.Models.BusinessWebDB.TSociete> UpdateTSociete(int id, BusinessWeb.Models.BusinessWebDB.TSociete tsociete)
-        {
-            OnTSocieteUpdated(tsociete);
-
-            var itemToUpdate = Context.TSocietes
-                              .Where(i => i.id == tsociete.id)
-                              .FirstOrDefault();
-
-            if (itemToUpdate == null)
-            {
-               throw new Exception("Item no longer available");
-            }
-                
-            var entryToUpdate = Context.Entry(itemToUpdate);
-            entryToUpdate.CurrentValues.SetValues(tsociete);
-            entryToUpdate.State = EntityState.Modified;
-
-            Context.SaveChanges();
-
-            OnAfterTSocieteUpdated(tsociete);
-
-            return tsociete;
-        }
-
-        partial void OnTSocieteDeleted(BusinessWeb.Models.BusinessWebDB.TSociete item);
-        partial void OnAfterTSocieteDeleted(BusinessWeb.Models.BusinessWebDB.TSociete item);
-
-        public async Task<BusinessWeb.Models.BusinessWebDB.TSociete> DeleteTSociete(int id)
-        {
-            var itemToDelete = Context.TSocietes
-                              .Where(i => i.id == id)
-                              .FirstOrDefault();
-
-            if (itemToDelete == null)
-            {
-               throw new Exception("Item no longer available");
-            }
-
-            OnTSocieteDeleted(itemToDelete);
-
-
-            Context.TSocietes.Remove(itemToDelete);
-
-            try
-            {
-                Context.SaveChanges();
-            }
-            catch
-            {
-                Context.Entry(itemToDelete).State = EntityState.Unchanged;
-                throw;
-            }
-
-            OnAfterTSocieteDeleted(itemToDelete);
-
-            return itemToDelete;
-        }
-    
         public async Task ExportTAuthorizeMobilesToExcel(Query query = null, string fileName = null)
         {
             navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tauthorizemobiles/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tauthorizemobiles/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
@@ -2019,6 +1697,328 @@ namespace BusinessWeb
             return itemToDelete;
         }
     
+        public async Task ExportTLicensesToExcel(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tlicenses/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tlicenses/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        public async Task ExportTLicensesToCSV(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tlicenses/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tlicenses/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        partial void OnTLicensesRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TLicense> items);
+
+        public async Task<IQueryable<BusinessWeb.Models.BusinessWebDB.TLicense>> GetTLicenses(Query query = null)
+        {
+            var items = Context.TLicenses.AsQueryable();
+
+
+            if (query != null)
+            {
+                if (!string.IsNullOrEmpty(query.Expand))
+                {
+                    var propertiesToExpand = query.Expand.Split(',');
+                    foreach(var p in propertiesToExpand)
+                    {
+                        items = items.Include(p.Trim());
+                    }
+                }
+
+                ApplyQuery(ref items, query);
+            }
+
+            OnTLicensesRead(ref items);
+
+            return await Task.FromResult(items);
+        }
+
+        partial void OnTLicenseGet(BusinessWeb.Models.BusinessWebDB.TLicense item);
+        partial void OnGetTLicenseById(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TLicense> items);
+
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TLicense> GetTLicenseById(int id)
+        {
+            var items = Context.TLicenses
+                              .AsNoTracking()
+                              .Where(i => i.id == id);
+
+ 
+            OnGetTLicenseById(ref items);
+
+            var itemToReturn = items.FirstOrDefault();
+
+            OnTLicenseGet(itemToReturn);
+
+            return await Task.FromResult(itemToReturn);
+        }
+
+        partial void OnTLicenseCreated(BusinessWeb.Models.BusinessWebDB.TLicense item);
+        partial void OnAfterTLicenseCreated(BusinessWeb.Models.BusinessWebDB.TLicense item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TLicense> CreateTLicense(BusinessWeb.Models.BusinessWebDB.TLicense tlicense)
+        {
+            OnTLicenseCreated(tlicense);
+
+            var existingItem = Context.TLicenses
+                              .Where(i => i.id == tlicense.id)
+                              .FirstOrDefault();
+
+            if (existingItem != null)
+            {
+               throw new Exception("Item already available");
+            }            
+
+            try
+            {
+                Context.TLicenses.Add(tlicense);
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(tlicense).State = EntityState.Detached;
+                throw;
+            }
+
+            OnAfterTLicenseCreated(tlicense);
+
+            return tlicense;
+        }
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TLicense> CancelTLicenseChanges(BusinessWeb.Models.BusinessWebDB.TLicense item)
+        {
+            var entityToCancel = Context.Entry(item);
+            if (entityToCancel.State == EntityState.Modified)
+            {
+              entityToCancel.CurrentValues.SetValues(entityToCancel.OriginalValues);
+              entityToCancel.State = EntityState.Unchanged;
+            }
+
+            return item;
+        }
+
+        partial void OnTLicenseUpdated(BusinessWeb.Models.BusinessWebDB.TLicense item);
+        partial void OnAfterTLicenseUpdated(BusinessWeb.Models.BusinessWebDB.TLicense item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TLicense> UpdateTLicense(int id, BusinessWeb.Models.BusinessWebDB.TLicense tlicense)
+        {
+            OnTLicenseUpdated(tlicense);
+
+            var itemToUpdate = Context.TLicenses
+                              .Where(i => i.id == tlicense.id)
+                              .FirstOrDefault();
+
+            if (itemToUpdate == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+                
+            var entryToUpdate = Context.Entry(itemToUpdate);
+            entryToUpdate.CurrentValues.SetValues(tlicense);
+            entryToUpdate.State = EntityState.Modified;
+
+            Context.SaveChanges();
+
+            OnAfterTLicenseUpdated(tlicense);
+
+            return tlicense;
+        }
+
+        partial void OnTLicenseDeleted(BusinessWeb.Models.BusinessWebDB.TLicense item);
+        partial void OnAfterTLicenseDeleted(BusinessWeb.Models.BusinessWebDB.TLicense item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TLicense> DeleteTLicense(int id)
+        {
+            var itemToDelete = Context.TLicenses
+                              .Where(i => i.id == id)
+                              .FirstOrDefault();
+
+            if (itemToDelete == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+
+            OnTLicenseDeleted(itemToDelete);
+
+
+            Context.TLicenses.Remove(itemToDelete);
+
+            try
+            {
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(itemToDelete).State = EntityState.Unchanged;
+                throw;
+            }
+
+            OnAfterTLicenseDeleted(itemToDelete);
+
+            return itemToDelete;
+        }
+    
+        public async Task ExportTSocietesToExcel(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tsocietes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tsocietes/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        public async Task ExportTSocietesToCSV(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tsocietes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tsocietes/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        partial void OnTSocietesRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TSociete> items);
+
+        public async Task<IQueryable<BusinessWeb.Models.BusinessWebDB.TSociete>> GetTSocietes(Query query = null)
+        {
+            var items = Context.TSocietes.AsQueryable();
+
+
+            if (query != null)
+            {
+                if (!string.IsNullOrEmpty(query.Expand))
+                {
+                    var propertiesToExpand = query.Expand.Split(',');
+                    foreach(var p in propertiesToExpand)
+                    {
+                        items = items.Include(p.Trim());
+                    }
+                }
+
+                ApplyQuery(ref items, query);
+            }
+
+            OnTSocietesRead(ref items);
+
+            return await Task.FromResult(items);
+        }
+
+        partial void OnTSocieteGet(BusinessWeb.Models.BusinessWebDB.TSociete item);
+        partial void OnGetTSocieteById(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TSociete> items);
+
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TSociete> GetTSocieteById(int id)
+        {
+            var items = Context.TSocietes
+                              .AsNoTracking()
+                              .Where(i => i.id == id);
+
+ 
+            OnGetTSocieteById(ref items);
+
+            var itemToReturn = items.FirstOrDefault();
+
+            OnTSocieteGet(itemToReturn);
+
+            return await Task.FromResult(itemToReturn);
+        }
+
+        partial void OnTSocieteCreated(BusinessWeb.Models.BusinessWebDB.TSociete item);
+        partial void OnAfterTSocieteCreated(BusinessWeb.Models.BusinessWebDB.TSociete item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TSociete> CreateTSociete(BusinessWeb.Models.BusinessWebDB.TSociete tsociete)
+        {
+            OnTSocieteCreated(tsociete);
+
+            var existingItem = Context.TSocietes
+                              .Where(i => i.id == tsociete.id)
+                              .FirstOrDefault();
+
+            if (existingItem != null)
+            {
+               throw new Exception("Item already available");
+            }            
+
+            try
+            {
+                Context.TSocietes.Add(tsociete);
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(tsociete).State = EntityState.Detached;
+                throw;
+            }
+
+            OnAfterTSocieteCreated(tsociete);
+
+            return tsociete;
+        }
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TSociete> CancelTSocieteChanges(BusinessWeb.Models.BusinessWebDB.TSociete item)
+        {
+            var entityToCancel = Context.Entry(item);
+            if (entityToCancel.State == EntityState.Modified)
+            {
+              entityToCancel.CurrentValues.SetValues(entityToCancel.OriginalValues);
+              entityToCancel.State = EntityState.Unchanged;
+            }
+
+            return item;
+        }
+
+        partial void OnTSocieteUpdated(BusinessWeb.Models.BusinessWebDB.TSociete item);
+        partial void OnAfterTSocieteUpdated(BusinessWeb.Models.BusinessWebDB.TSociete item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TSociete> UpdateTSociete(int id, BusinessWeb.Models.BusinessWebDB.TSociete tsociete)
+        {
+            OnTSocieteUpdated(tsociete);
+
+            var itemToUpdate = Context.TSocietes
+                              .Where(i => i.id == tsociete.id)
+                              .FirstOrDefault();
+
+            if (itemToUpdate == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+                
+            var entryToUpdate = Context.Entry(itemToUpdate);
+            entryToUpdate.CurrentValues.SetValues(tsociete);
+            entryToUpdate.State = EntityState.Modified;
+
+            Context.SaveChanges();
+
+            OnAfterTSocieteUpdated(tsociete);
+
+            return tsociete;
+        }
+
+        partial void OnTSocieteDeleted(BusinessWeb.Models.BusinessWebDB.TSociete item);
+        partial void OnAfterTSocieteDeleted(BusinessWeb.Models.BusinessWebDB.TSociete item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TSociete> DeleteTSociete(int id)
+        {
+            var itemToDelete = Context.TSocietes
+                              .Where(i => i.id == id)
+                              .FirstOrDefault();
+
+            if (itemToDelete == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+
+            OnTSocieteDeleted(itemToDelete);
+
+
+            Context.TSocietes.Remove(itemToDelete);
+
+            try
+            {
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(itemToDelete).State = EntityState.Unchanged;
+                throw;
+            }
+
+            OnAfterTSocieteDeleted(itemToDelete);
+
+            return itemToDelete;
+        }
+    
         public async Task ExportTSocieteUsersToExcel(Query query = null, string fileName = null)
         {
             navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tsocieteusers/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tsocieteusers/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
@@ -2176,6 +2176,167 @@ namespace BusinessWeb
             }
 
             OnAfterTSocieteUserDeleted(itemToDelete);
+
+            return itemToDelete;
+        }
+    
+        public async Task ExportTDepotsToExcel(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tdepots/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tdepots/excel(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        public async Task ExportTDepotsToCSV(Query query = null, string fileName = null)
+        {
+            navigationManager.NavigateTo(query != null ? query.ToUrl($"export/businesswebdb/tdepots/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')") : $"export/businesswebdb/tdepots/csv(fileName='{(!string.IsNullOrEmpty(fileName) ? UrlEncoder.Default.Encode(fileName) : "Export")}')", true);
+        }
+
+        partial void OnTDepotsRead(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TDepot> items);
+
+        public async Task<IQueryable<BusinessWeb.Models.BusinessWebDB.TDepot>> GetTDepots(Query query = null)
+        {
+            var items = Context.TDepots.AsQueryable();
+
+
+            if (query != null)
+            {
+                if (!string.IsNullOrEmpty(query.Expand))
+                {
+                    var propertiesToExpand = query.Expand.Split(',');
+                    foreach(var p in propertiesToExpand)
+                    {
+                        items = items.Include(p.Trim());
+                    }
+                }
+
+                ApplyQuery(ref items, query);
+            }
+
+            OnTDepotsRead(ref items);
+
+            return await Task.FromResult(items);
+        }
+
+        partial void OnTDepotGet(BusinessWeb.Models.BusinessWebDB.TDepot item);
+        partial void OnGetTDepotById(ref IQueryable<BusinessWeb.Models.BusinessWebDB.TDepot> items);
+
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TDepot> GetTDepotById(int id)
+        {
+            var items = Context.TDepots
+                              .AsNoTracking()
+                              .Where(i => i.id == id);
+
+ 
+            OnGetTDepotById(ref items);
+
+            var itemToReturn = items.FirstOrDefault();
+
+            OnTDepotGet(itemToReturn);
+
+            return await Task.FromResult(itemToReturn);
+        }
+
+        partial void OnTDepotCreated(BusinessWeb.Models.BusinessWebDB.TDepot item);
+        partial void OnAfterTDepotCreated(BusinessWeb.Models.BusinessWebDB.TDepot item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TDepot> CreateTDepot(BusinessWeb.Models.BusinessWebDB.TDepot tdepot)
+        {
+            OnTDepotCreated(tdepot);
+
+            var existingItem = Context.TDepots
+                              .Where(i => i.id == tdepot.id)
+                              .FirstOrDefault();
+
+            if (existingItem != null)
+            {
+               throw new Exception("Item already available");
+            }            
+
+            try
+            {
+                Context.TDepots.Add(tdepot);
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(tdepot).State = EntityState.Detached;
+                throw;
+            }
+
+            OnAfterTDepotCreated(tdepot);
+
+            return tdepot;
+        }
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TDepot> CancelTDepotChanges(BusinessWeb.Models.BusinessWebDB.TDepot item)
+        {
+            var entityToCancel = Context.Entry(item);
+            if (entityToCancel.State == EntityState.Modified)
+            {
+              entityToCancel.CurrentValues.SetValues(entityToCancel.OriginalValues);
+              entityToCancel.State = EntityState.Unchanged;
+            }
+
+            return item;
+        }
+
+        partial void OnTDepotUpdated(BusinessWeb.Models.BusinessWebDB.TDepot item);
+        partial void OnAfterTDepotUpdated(BusinessWeb.Models.BusinessWebDB.TDepot item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TDepot> UpdateTDepot(int id, BusinessWeb.Models.BusinessWebDB.TDepot tdepot)
+        {
+            OnTDepotUpdated(tdepot);
+
+            var itemToUpdate = Context.TDepots
+                              .Where(i => i.id == tdepot.id)
+                              .FirstOrDefault();
+
+            if (itemToUpdate == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+                
+            var entryToUpdate = Context.Entry(itemToUpdate);
+            entryToUpdate.CurrentValues.SetValues(tdepot);
+            entryToUpdate.State = EntityState.Modified;
+
+            Context.SaveChanges();
+
+            OnAfterTDepotUpdated(tdepot);
+
+            return tdepot;
+        }
+
+        partial void OnTDepotDeleted(BusinessWeb.Models.BusinessWebDB.TDepot item);
+        partial void OnAfterTDepotDeleted(BusinessWeb.Models.BusinessWebDB.TDepot item);
+
+        public async Task<BusinessWeb.Models.BusinessWebDB.TDepot> DeleteTDepot(int id)
+        {
+            var itemToDelete = Context.TDepots
+                              .Where(i => i.id == id)
+                              .FirstOrDefault();
+
+            if (itemToDelete == null)
+            {
+               throw new Exception("Item no longer available");
+            }
+
+            OnTDepotDeleted(itemToDelete);
+
+
+            Context.TDepots.Remove(itemToDelete);
+
+            try
+            {
+                Context.SaveChanges();
+            }
+            catch
+            {
+                Context.Entry(itemToDelete).State = EntityState.Unchanged;
+                throw;
+            }
+
+            OnAfterTDepotDeleted(itemToDelete);
 
             return itemToDelete;
         }
