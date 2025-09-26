@@ -109,7 +109,7 @@
 												</EditTemplate>
 											</GridColumn>
 
-											<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable 2" Field=@nameof(API_V_CERTIFPOINTAGE.ResponsableEtalonnage2Intitule)>
+											<GridColumn Visible="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable 2" Field=@nameof(API_V_CERTIFPOINTAGE.ResponsableEtalonnage2Intitule)>
 												<EditTemplate>
 													@{
 														var dt = (context as API_V_CERTIFPOINTAGE);
@@ -130,7 +130,7 @@
 									</GridColumn>
 									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Emission des certificats/rapports">
 										<GridColumns>
-											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="ReceptionDossier" Field=@nameof(API_V_CERTIFPOINTAGE.DateReceptionDossier) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
+											<GridColumn Visible="false" Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="ReceptionDossier" Field=@nameof(API_V_CERTIFPOINTAGE.DateReceptionDossier) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
 
 											<GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Saisie" Field=@nameof(API_V_CERTIFPOINTAGE.DateDebutSaisie) EditType="EditType.DatePickerEdit" Format="dd/MM/yy" />
 
