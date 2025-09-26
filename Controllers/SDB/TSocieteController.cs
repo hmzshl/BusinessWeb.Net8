@@ -37,7 +37,7 @@ namespace BusinessWeb.Controllers.SDB
 			try
 			{
 				var rs = new List<TSociete>();
-                /*
+                
 				foreach (var item in dt)
 				{
 					var lt = new TSociete();
@@ -49,7 +49,7 @@ namespace BusinessWeb.Controllers.SDB
                     lt.id = item.id;
 					rs.Add(lt);
 
-				}*/
+				}
 				return Ok(rs);
 			}
 			catch (Exception ex)

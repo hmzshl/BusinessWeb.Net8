@@ -161,7 +161,7 @@
 
 
 
-									<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable Impression" Field=@nameof(API_V_CERTIFPOINTAGE.VerificationAvantImpressionIntitule)>
+									<GridColumn Visible="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Responsable Impression" Field=@nameof(API_V_CERTIFPOINTAGE.VerificationAvantImpressionIntitule)>
 										<EditTemplate>
 											@{
 												var dt = (context as API_V_CERTIFPOINTAGE);
@@ -191,7 +191,7 @@
 										</EditTemplate>
 									</GridColumn>
 
-									<GridColumn Visible="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Verification Apres Impression" Field=@nameof(API_V_CERTIFPOINTAGE.VerificationApresImpressionIntitule)>
+									<GridColumn Visible="true" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Verification Apres Impression" Field=@nameof(API_V_CERTIFPOINTAGE.VerificationApresImpressionIntitule)>
 										<EditTemplate>
 											@{
 												var dt = (context as API_V_CERTIFPOINTAGE);
