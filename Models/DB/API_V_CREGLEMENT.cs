@@ -104,4 +104,8 @@ public partial class API_V_CREGLEMENT
     public DateTime? cbCreation { get; set; }
 
     public DateTime? cbModification { get; set; }
+
+    public string CT_CodeRegion { get; set; }
+
+    public string CT_Ville { get; set; }
 }

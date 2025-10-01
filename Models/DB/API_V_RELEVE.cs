@@ -90,4 +90,6 @@ public partial class API_V_RELEVE
     public decimal? CT_Encours { get; set; }
 
     public DateTime? DateEcheance { get; set; }
+
+    public string CT_CodeRegion { get; set; }
 }

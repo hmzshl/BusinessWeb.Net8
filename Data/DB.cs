@@ -5642,6 +5642,9 @@ public partial class DB : DbContext
                 .HasMaxLength(35)
                 .IsUnicode(false);
             entity.Property(e => e.Encours).HasColumnType("numeric(38, 6)");
+            entity.Property(e => e.Region)
+                .HasMaxLength(25)
+                .IsUnicode(false);
             entity.Property(e => e._120J)
                 .HasColumnType("numeric(38, 6)")
                 .HasColumnName("120J");
@@ -6205,6 +6208,9 @@ public partial class DB : DbContext
             entity.Property(e => e.CG_Num)
                 .HasMaxLength(13)
                 .IsUnicode(false);
+            entity.Property(e => e.CT_CodeRegion)
+                .HasMaxLength(25)
+                .IsUnicode(false);
             entity.Property(e => e.CT_Intitule)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -6215,6 +6221,9 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Type)
                 .IsRequired()
                 .HasMaxLength(11)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Ville)
+                .HasMaxLength(35)
                 .IsUnicode(false);
             entity.Property(e => e.Credit).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DateDepot).HasColumnType("smalldatetime");
@@ -7226,6 +7235,9 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.CT_Adresse)
                 .HasMaxLength(35)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_CodeRegion)
+                .HasMaxLength(25)
                 .IsUnicode(false);
             entity.Property(e => e.CT_EMail)
                 .HasMaxLength(69)

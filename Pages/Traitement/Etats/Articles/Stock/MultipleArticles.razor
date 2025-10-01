@@ -1,0 +1,160 @@
+﻿<div class="dg-parent">
+    <div>
+        <GridRow>
+            <GridCol Xs="24" Md="24">
+                <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="FormContext">
+                    <GridRow>
+                        <GridCol Xs="24" Md="24">
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Référence" LabelColSpan="6">
+                                <SfTextBox @bind-Value="@row.AR_Ref" Readonly />
+                            </FormItem>
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Désignation" LabelColSpan="6">
+                                <SfTextBox @bind-Value="@row.AR_Design" Readonly />
+                            </FormItem>
+                            <Divider></Divider>
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Qté" LabelColSpan="6">
+                                <SfNumericTextBox @bind-Value="@qte" ShowSpinButton="false" Decimals="2" Format="N2" />
+                            </FormItem>
+                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="PU" LabelColSpan="6">
+                                <SfNumericTextBox @bind-Value="@pu" ShowSpinButton="false" Decimals="2" Format="N2" />
+                            </FormItem>
+                        </GridCol>
+                    </GridRow>
+                </Form>
+            </GridCol>
+        </GridRow>
+    </div>
+    <div class="btns-end">
+        <SfButton IsPrimary="true" OnClick="Submit">Affecter</SfButton>
+        <SfButton OnClick="Annuler">Annuler</SfButton>
+    </div>
+</div>
+
+@code 
+{
+
+    [Parameter]
+    public DB db { get; set; }
+    [Parameter]
+    public List<F_DOCLIGNE> dt { get; set; }
+    [Parameter]
+    public F_ARTICLE row { get; set; } = new F_ARTICLE();
+    Decimal qte = 0;
+    Decimal pu = 0;
+
+    private async Task Submit()
+    {
+        fn.DisableTriggers(db, "F_ARTSTOCK", "INS");
+        fn.DisableTriggers(db, "F_ARTSTOCK", "UPD");
+        fn.DisableTriggers(db, "F_DOCLIGNE", "INS");
+        fn.DisableTriggers(db, "F_DOCLIGNE", "DEL");
+        foreach(F_DOCLIGNE item in dt)
+        {
+            var ln = new F_DOCLIGNE();
+            fn.CopyData(item,ln);
+            ln.DL_Qte = qte;
+            ln.EU_Qte = qte;
+            ln.DL_PrixUnitaire = pu;
+            ln.DL_PUTTC = pu + (pu * item.DL_Taxe1 / 100);
+            ln.DL_CMUP = row.AR_PrixAch;
+            ln.DL_PrixRU = row.AR_PrixAch;
+            ln.DL_MontantHT = ((ln.DL_PrixUnitaire - (ln.DL_PrixUnitaire * ln.DL_Remise01REM_Valeur / 100)) 
+            - ((ln.DL_PrixUnitaire - (ln.DL_PrixUnitaire * ln.DL_Remise01REM_Valeur / 100)) * ln.DL_Remise02REM_Valeur / 100)
+            - ((ln.DL_MontantHT = (ln.DL_PrixUnitaire - (ln.DL_PrixUnitaire * ln.DL_Remise01REM_Valeur / 100))
+            - ((ln.DL_PrixUnitaire - (ln.DL_PrixUnitaire * ln.DL_Remise01REM_Valeur / 100)) * ln.DL_Remise02REM_Valeur / 100)) * ln.DL_Remise03REM_Valeur / 100)) * ln.DL_Qte;
+            ln.DL_MontantTTC = ln.DL_MontantHT + (ln.DL_MontantHT * ln.DL_Taxe1 / 100);
+            ln.AR_Ref = row.AR_Ref;
+            ln.DL_Design = row.AR_Design;
+            ln.DL_No = db.F_DOCLIGNE.Max(a => a.DL_No) + 1;
+            db.F_DOCLIGNE.Add(ln);
+            db.SaveChanges();
+
+            var aud = new API_T_Audit_F_DOCLIGNE();
+            aud.AR_Ref = item.AR_Ref;
+            aud.DO_Date = item.DO_Date;
+            aud.DO_Type = item.DO_Type;
+            aud.DO_Piece = item.DO_Piece;
+            aud.Operation = "Suppression";
+            aud.DL_Qte = item.DL_Qte ?? 0;
+            aud.DL_PrixUnitaire = item.DL_PrixUnitaire ?? 0;
+            aud.DL_Remise01REM_Valeur = item.DL_Remise01REM_Valeur ?? 0;
+            aud.DL_Remise02REM_Valeur = item.DL_Remise02REM_Valeur ?? 0;
+            aud.DL_Remise03REM_Valeur = item.DL_Remise03REM_Valeur ?? 0;
+            aud.cbMarq = item.cbMarq;
+            aud.cbMarq = item.cbMarq;
+            aud.CT_Num = item.CT_Num;
+            aud.Timestamp = DateTime.Now;
+            db.API_T_Audit_F_DOCLIGNE.Add(aud);
+            db.SaveChanges();
+
+            db.Database.ExecuteSqlRaw("DELETE FROM F_DOCLIGNEEMPL WHERE DL_No = {0}", item.DL_No);
+            db.Database.ExecuteSqlRaw("DELETE FROM F_DOCLIGNE WHERE cbMarq = {0}",item.cbMarq);
+
+            
+
+
+
+        }
+
+        UpdateStock(row.AR_Ref);
+
+        fn.EnableTriggers(db, "F_ARTSTOCK", "INS");
+        fn.EnableTriggers(db, "F_ARTSTOCK", "UPD");
+        fn.EnableTriggers(db, "F_DOCLIGNE", "INS");
+        fn.EnableTriggers(db, "F_DOCLIGNE", "DEL");
+
+        DialogService.Close();
+    }
+    private async Task Annuler()
+    {
+        DialogService.Close();
+    }
+
+    private void UpdateStock(string Ref)
+    {
+
+        string q00 = @"INSERT INTO F_ARTSTOCK ([AR_Ref],[DE_No],[AS_QteMini],[AS_QteMaxi],[AS_MontSto],[AS_QteSto],[AS_QteRes],[AS_QteCom],[AS_Principal],[AS_QteResCM],[AS_QteComCM]
+            ,[AS_QtePrepa],[DP_NoPrincipal],[DP_NoControle],[AS_QteAControler],[AS_Mouvemente],[cbProt])
+
+                SELECT
+                b.AR_Ref,a.DE_No,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,0.000000,
+                0.000000,0.000000,0,0,0,0,0
+
+
+                FROM F_DEPOT a
+                INNER JOIN F_ARTICLE b ON 1 = 1
+                LEFT JOIN F_ARTSTOCK de ON a.DE_No = de.DE_No AND b.AR_Ref = de.AR_Ref
+
+
+                WHERE b.AR_Ref = {0} AND de.AR_Ref IS NULL";    
+        string q1 = @"UPDATE a SET a.AS_QteSto = ISNULL(b.Qte,0), a.AS_MontSto = ISNULL(c.PU,0) * ISNULL(b.Qte,0)
+
+                        FROM F_ARTSTOCK a
+                        LEFT JOIN
+                        (SELECT
+                        a.DE_No,
+                        a.AR_Ref,
+                        SUM(CASE WHEN a.DL_MvtStock = 1 THEN a.DL_Qte ELSE -a.DL_Qte END) Qte
+                        FROM F_DOCLIGNE a
+                        WHERE a.DL_MvtStock IN (1,3)
+                        GROUP BY
+                        a.DE_No,
+                        a.AR_Ref) b ON a.DE_No = b.DE_No AND a.AR_Ref = b.AR_Ref
+
+                        LEFT JOIN
+                        (
+                        (SELECT
+                        a.DE_No,
+                        a.AR_Ref,
+                        CASE WHEN SUM(a.DL_Qte) != 0 THEN SUM(a.DL_MontantHT)/SUM(a.DL_Qte) ELSE 0 END PU
+                        FROM F_DOCLIGNE a
+                        WHERE a.DL_MvtStock = 1
+                        GROUP BY a.AR_Ref,
+                        a.DE_No)
+                        ) c ON a.DE_No = c.DE_No AND a.AR_Ref = c.AR_Ref WHERE a.AR_Ref = {0}";
+        db.Database.ExecuteSqlRaw(q00, Ref);
+        db.Database.ExecuteSqlRaw(q1, Ref);
+
+    }
+
+ }

@@ -1,0 +1,361 @@
+﻿<GridRow>
+    <GridCol Xs="24" Md="20">
+        <Card Title="Documents à réaffecter">
+            <div style="height: 65vh;">
+                <SfGrid Height="100%" AllowSelection @ref="LigneGrid" DataSource="@(lignes)" AllowPaging ContextMenuItems="@(new List<Object>() { "Reaffecter", new ContextMenuItemModel { Text = "Réaffecter cet article", Target = ".e-content", Id = "reaffacter" } })">
+                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                    <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
+                    <GridEvents TValue="F_DOCLIGNE" RowSelecting="DetailsSelect" ContextMenuItemClicked="OnContextMenuClick"></GridEvents>
+                    <GridAggregates>
+                        <GridAggregate>
+                            <GridAggregateColumns>
+                                <GridAggregateColumn Field="DL_Qte" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                    <FooterTemplate Context="SumContext">
+                                        @{
+                                            var SumValue = (SumContext as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="DL_MontantHT" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                    <FooterTemplate Context="SumContext">
+                                        @{
+                                            var SumValue = (SumContext as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+                                </GridAggregateColumn>
+                                <GridAggregateColumn Field="DL_MontantTTC" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                    <FooterTemplate Context="SumContext">
+                                        @{
+                                            var SumValue = (SumContext as AggregateTemplateContext);
+                                            <div>
+                                                @SumValue.Sum
+                                            </div>
+                                        }
+                                    </FooterTemplate>
+                                </GridAggregateColumn>
+                            </GridAggregateColumns>
+                        </GridAggregate>
+                    </GridAggregates>
+                    <GridColumns>
+                        <GridColumn Type="ColumnType.CheckBox" Width="50" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                        <GridColumn AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(F_DOCLIGNE.cbMarq) HeaderText="#" Visible="false" IsPrimaryKey="true" />
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(F_DOCLIGNE.AR_Ref) HeaderText="Référence"></GridColumn>
+                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(F_DOCLIGNE.DL_Design) HeaderText="Désignation"></GridColumn>
+                        <GridColumn AllowSorting="false" AllowFiltering="false" Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Type">
+                            <Template>
+                                <div>@GetTypeIntitule((context as F_DOCLIGNE).DO_Type)</div>
+                            </Template>
+                        </GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(F_DOCLIGNE.DO_Date) HeaderText="Date" Format="d" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(F_DOCLIGNE.DO_Piece) HeaderText="Pièce"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(F_DOCLIGNE.CT_Num) HeaderText="Numéro"></GridColumn>
+                        <GridColumn AllowSorting="false" AllowFiltering="false" Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Tiers">
+                            <Template>
+                                @{
+                                    var dt = (db.F_COMPTET.AsNoTracking().Where(a => a.CT_Num == (context as F_DOCLIGNE).CT_Num));
+                                }
+                                @if (dt.Count() != 0)
+                                {
+                                    <div>@dt.First().CT_Intitule</div>
+                                }
+                            </Template>
+                        </GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(F_DOCLIGNE.DL_Qte) HeaderText="Qté" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(F_DOCLIGNE.DL_PrixUnitaire) HeaderText="PU" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(F_DOCLIGNE.DL_MontantHT) HeaderText="Montant HT" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(F_DOCLIGNE.DL_MontantTTC) HeaderText="Montant TTC" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                    </GridColumns>
+                </SfGrid>
+            </div>
+
+        </Card>
+    </GridCol>
+    <GridCol Xs="24" Md="4">
+        <div class="dg-parent">
+            <div>
+                <SfMultiSelect FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Query=@LocalDataQuery Width="100%" PopupHeight="200px" AllowFiltering ShowClearButton EnableVirtualization="true" ItemsCount=10 FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" @bind-Value="@AR_Ref_New" Placeholder="Nouveau Référence" TValue="string[]" TItem="F_ARTICLE" DataSource="@(articles)">
+                    <MultiSelectFieldSettings Text="AR_Ref" Value="AR_Ref" />
+                </SfMultiSelect>
+                <SfMultiSelect FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Query=@LocalDataQuery Width="100%" PopupHeight="200px" AllowFiltering ShowClearButton EnableVirtualization="true" ItemsCount=10 FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" @bind-Value="@AR_Ref_New" Placeholder="Nouvelle Désignation" TValue="string[]" TItem="F_ARTICLE" DataSource="@(articles)">
+                    <MultiSelectFieldSettings Text="AR_Design" Value="AR_Ref" />
+                </SfMultiSelect>
+            </div>
+            <div class="btns-end">
+                <SfButton IconCss="e-icons e-sorting-1" OnClick="Reaffecter" Disabled=@(AR_Ref_New == null || (LigneGrid.GetSelectedRecordsAsync().Result.Count() == 0))>Réaffecter</SfButton>
+            </div>
+        </div>
+
+        
+    </GridCol>
+</GridRow>
+
+
+
+
+@code {
+
+    [Parameter]
+    public string AR_Ref { get; set; }
+    [Parameter]
+    public DB db { get; set; }
+    string[] AR_Ref_New;
+    F_ARTICLE row = new F_ARTICLE();
+    Helpers helpers = new Helpers();
+    IEnumerable<F_DOCLIGNE> lignes;
+    SfGrid<F_DOCLIGNE> LigneGrid;
+    private List<F_ARTICLE> articles = new List<F_ARTICLE>();
+    public List<F_DOCLIGNE> Temp = new List<F_DOCLIGNE>();
+    public Syncfusion.Blazor.Data.Query LocalDataQuery = new Syncfusion.Blazor.Data.Query().Take(5);
+    protected override async Task OnInitializedAsync()
+    {
+        domaines.Add(new DomaineIntitule { DO_Domaine = 0, Intitule = "Ventes" });
+        domaines.Add(new DomaineIntitule { DO_Domaine = 1, Intitule = "Achats" });
+        domaines.Add(new DomaineIntitule { DO_Domaine = 2, Intitule = "Mouvements Stock" });
+        domaines.Add(new DomaineIntitule { DO_Domaine = 4, Intitule = "Documents Internes" });
+
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 0 });
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 1 });
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 2 });
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 3 });
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 4 });
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 5 });
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 6 });
+        types.Add(new TypeIntitule { DO_Domaine = 0, DO_Type = 7 });
+
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 10 });
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 11 });
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 12 });
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 13 });
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 14 });
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 15 });
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 16 });
+        types.Add(new TypeIntitule { DO_Domaine = 1, DO_Type = 17 });
+
+        types.Add(new TypeIntitule { DO_Domaine = 2, DO_Type = 20 });
+        types.Add(new TypeIntitule { DO_Domaine = 2, DO_Type = 21 });
+        types.Add(new TypeIntitule { DO_Domaine = 2, DO_Type = 22 });
+        lignes = db.F_DOCLIGNE.Where(a => a.AR_Ref == AR_Ref).OrderBy(a => a.DO_Date);
+        articles = db.F_ARTICLE.OrderBy(a => a.AR_Design).ToList();
+    }
+    private async Task Submit(bool close)
+    {
+
+    }
+    public async Task DetailsSelect(RowSelectingEventArgs<F_DOCLIGNE> args)
+    {
+        this.Temp.Add(args.Data);
+    }
+    public static string GetTypeIntitule(short? index)
+    {
+        string rs = "Autre document";
+        if (index == 0) { rs = "Devis"; }
+        if (index == 1) { rs = "Bons de commande vente"; }
+        if (index == 2) { rs = "Préparations de vente"; }
+        if (index == 3) { rs = "Bons de livraison vente"; }
+        if (index == 4) { rs = "Bons de retour vente"; }
+        if (index == 5) { rs = "Bons de retour vente"; }
+        if (index == 6) { rs = "Factures vente"; }
+        if (index == 7) { rs = "Factures comptabilisées vente"; }
+        if (index == 10) { rs = "Demandes d'achat"; }
+        if (index == 11) { rs = "Préparations de commande achat"; }
+        if (index == 12) { rs = "Bons de commande achat"; }
+        if (index == 13) { rs = "Bons de livraison achat"; }
+        if (index == 14) { rs = "Bons de retour achat"; }
+        if (index == 15) { rs = "Bons de retour achat"; }
+        if (index == 16) { rs = "Factures achat"; }
+        if (index == 17) { rs = "Factures comptabilisées achat"; }
+        if (index == 20) { rs = "Mouvements d'entrée"; }
+        if (index == 21) { rs = "Mouvements de sortie"; }
+        if (index == 23) { rs = "Mouvments de transfert"; }
+
+        return rs;
+    }
+    private class TypeIntitule
+    {
+        public short? DO_Type { get; set; }
+        public short? DO_Domaine { get; set; }
+        public string Intitule
+        {
+            get
+            {
+                return GetTypeIntitule(this.DO_Type ?? 0);
+            }
+            set
+            {
+
+            }
+        }
+    }
+    private class DomaineIntitule
+    {
+        public short? DO_Domaine { get; set; }
+        public string Intitule { get; set; }
+    }
+    List<DomaineIntitule> domaines = new List<DomaineIntitule>();
+    List<TypeIntitule> types = new List<TypeIntitule>();
+    public void OnContextMenuClick(ContextMenuClickEventArgs<F_DOCLIGNE> args)
+    {
+        /*if (args.Item.Id == "reaffacter")
+        {
+        //this.DefaultGrid.Copy(true);
+        string ms = "";
+        foreach(F_DOCLIGNE item in LigneGrid.GetSelectedRecordsAsync().Result)
+            {
+            ms = ms + item.cbMarq.ToString() + "\n";
+        }
+        Message.Success(ms);
+    }*/
+    }
+    private async Task Reaffecter()
+    {
+        bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous réaffecter les éléments selectionnés?", "Réaffectation");
+        if(isConfirm)
+        {
+            var dt = LigneGrid.GetSelectedRecordsAsync().Result;
+            foreach(F_DOCLIGNE item in dt)
+            {
+                var old_aud = new API_T_Audit_F_DOCLIGNE();
+                old_aud.AR_Ref = item.AR_Ref;
+                old_aud.DO_Date = item.DO_Date;
+                old_aud.DO_Type = item.DO_Type;
+                old_aud.DO_Piece = item.DO_Piece;
+                old_aud.Operation = "Suppression";
+                old_aud.DL_Qte = item.DL_Qte ?? 0;
+                old_aud.DL_PrixUnitaire = item.DL_PrixUnitaire ?? 0;
+                old_aud.DL_Remise01REM_Valeur = item.DL_Remise01REM_Valeur ?? 0;
+                old_aud.DL_Remise02REM_Valeur = item.DL_Remise02REM_Valeur ?? 0;
+                old_aud.DL_Remise03REM_Valeur = item.DL_Remise03REM_Valeur ?? 0;
+                old_aud.cbMarq = item.cbMarq;
+                old_aud.cbMarq = item.cbMarq;
+                old_aud.CT_Num = item.CT_Num;
+                old_aud.Timestamp = DateTime.Now;
+
+                db.API_T_Audit_F_DOCLIGNE.Add(old_aud);
+                db.SaveChanges();
+            }
+                /*var ar = db.F_ARTICLE.Where(a => a.AR_Ref == null).SingleOrDefault();
+                string q00 = @"INSERT INTO F_ARTSTOCK ([AR_Ref],[DE_No],[AS_QteMini],[AS_QteMaxi],[AS_MontSto],[AS_QteSto],[AS_QteRes],[AS_QteCom],[AS_Principal],[AS_QteResCM],[AS_QteComCM]
+                ,[AS_QtePrepa],[DP_NoPrincipal],[DP_NoControle],[AS_QteAControler],[AS_Mouvemente],[cbProt])
+
+                SELECT
+                b.AR_Ref,a.DE_No,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,0.000000,
+                0.000000,0.000000,0,0,0,0,0
+
+
+                FROM F_DEPOT a
+                        INNER JOIN F_ARTICLE b ON 1 = 1
+                        LEFT JOIN F_ARTSTOCK de ON a.DE_No = de.DE_No AND b.AR_Ref = de.AR_Ref
+
+
+                        WHERE b.AR_Ref = {0} AND de.AR_Ref IS NULL";
+                        db.Database.ExecuteSqlRaw(q00, AR_Ref_New);
+
+                        foreach(F_DOCLIGNE item in dt)
+                        {
+
+
+                        helpers.DisableTriggers(db, "F_DOCLIGNE", "UPD");
+                        helpers.DisableTriggers(db, "F_ARTSTOCK", "UPD");
+
+                        string q0 = @"UPDATE F_DOCLIGNE SET AR_Ref = {0}, DL_Design = {1} WHERE cbMarq = {2}"; 
+                        db.Database.ExecuteSqlRaw(q0, AR_Ref_New, ar.AR_Design, item.cbMarq);
+                        string q1 = @"UPDATE a SET a.AS_QteSto = ISNULL(b.Qte,0), a.AS_MontSto = ISNULL(c.PU,0) * ISNULL(b.Qte,0)
+
+                        FROM F_ARTSTOCK a
+                        LEFT JOIN
+                        (SELECT
+                        a.DE_No,
+                        a.AR_Ref,
+                        SUM(CASE WHEN a.DL_MvtStock = 1 THEN a.DL_Qte ELSE -a.DL_Qte END) Qte
+                        FROM F_DOCLIGNE a
+                        WHERE a.DL_MvtStock IN (1,3)
+                        GROUP BY
+                        a.DE_No,
+                        a.AR_Ref) b ON a.DE_No = b.DE_No AND a.AR_Ref = b.AR_Ref
+
+                        LEFT JOIN
+                        (
+                        (SELECT
+                        a.DE_No,
+                        a.AR_Ref,
+                        CASE WHEN SUM(a.DL_Qte) != 0 THEN SUM(a.DL_MontantHT)/SUM(a.DL_Qte) ELSE 0 END PU
+                        FROM F_DOCLIGNE a
+                        WHERE a.DL_MvtStock = 1
+                        GROUP BY a.AR_Ref,
+                        a.DE_No)
+                        ) c ON a.DE_No = c.DE_No AND a.AR_Ref = c.AR_Ref WHERE a.AR_Ref = {0}";
+                db.Database.ExecuteSqlRaw(q1,AR_Ref);
+                db.Database.ExecuteSqlRaw(q1, AR_Ref_New);
+                helpers.EnableTriggers(db, "F_DOCLIGNE", "UPD");
+                helpers.EnableTriggers(db, "F_ARTSTOCK", "UPD");
+            }
+            await UpdateGrid();*/
+
+            foreach(string Ref in AR_Ref_New)
+            {
+                var ar = db.F_ARTICLE.Where(a => a.AR_Ref == Ref).SingleOrDefault();
+                await DialogService.OpenAsync<MultipleArticles>(Ref,
+                new Dictionary<string, object>() { { "row", ar }, { "db", db }, { "dt", dt } },
+                new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "600px" });
+            }
+            UpdateStock(AR_Ref);
+            await UpdateGrid();
+        }
+    }
+    private async Task UpdateGrid()
+    {
+        lignes = db.F_DOCLIGNE.AsNoTracking().Where(a => a.AR_Ref == AR_Ref).OrderBy(a => a.DO_Date);
+    }
+    private void UpdateStock(string Ref)
+    {
+
+        string q00 = @"INSERT INTO F_ARTSTOCK ([AR_Ref],[DE_No],[AS_QteMini],[AS_QteMaxi],[AS_MontSto],[AS_QteSto],[AS_QteRes],[AS_QteCom],[AS_Principal],[AS_QteResCM],[AS_QteComCM]
+            ,[AS_QtePrepa],[DP_NoPrincipal],[DP_NoControle],[AS_QteAControler],[AS_Mouvemente],[cbProt])
+
+                SELECT
+                b.AR_Ref,a.DE_No,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,0.000000,
+                0.000000,0.000000,0,0,0,0,0
+
+
+                FROM F_DEPOT a
+                INNER JOIN F_ARTICLE b ON 1 = 1
+                LEFT JOIN F_ARTSTOCK de ON a.DE_No = de.DE_No AND b.AR_Ref = de.AR_Ref
+
+
+                WHERE b.AR_Ref = {0} AND de.AR_Ref IS NULL";
+        string q1 = @"UPDATE a SET a.AS_QteSto = ISNULL(b.Qte,0), a.AS_MontSto = ISNULL(c.PU,0) * ISNULL(b.Qte,0)
+
+                        FROM F_ARTSTOCK a
+                        LEFT JOIN
+                        (SELECT
+                        a.DE_No,
+                        a.AR_Ref,
+                        SUM(CASE WHEN a.DL_MvtStock = 1 THEN a.DL_Qte ELSE -a.DL_Qte END) Qte
+                        FROM F_DOCLIGNE a
+                        WHERE a.DL_MvtStock IN (1,3)
+                        GROUP BY
+                        a.DE_No,
+                        a.AR_Ref) b ON a.DE_No = b.DE_No AND a.AR_Ref = b.AR_Ref
+
+                        LEFT JOIN
+                        (
+                        (SELECT
+                        a.DE_No,
+                        a.AR_Ref,
+                        CASE WHEN SUM(a.DL_Qte) != 0 THEN SUM(a.DL_MontantHT)/SUM(a.DL_Qte) ELSE 0 END PU
+                        FROM F_DOCLIGNE a
+                        WHERE a.DL_MvtStock = 1
+                        GROUP BY a.AR_Ref,
+                        a.DE_No)
+                        ) c ON a.DE_No = c.DE_No AND a.AR_Ref = c.AR_Ref WHERE a.AR_Ref = {0}";
+        db.Database.ExecuteSqlRaw(q00, Ref);
+        db.Database.ExecuteSqlRaw(q1, Ref);
+
+    }
+}

@@ -28,4 +28,6 @@ public partial class API_V_BALANCEAGEECLIENT
     public decimal? _120J { get; set; }
 
     public decimal? _150J { get; set; }
+
+    public string Region { get; set; }
 }
