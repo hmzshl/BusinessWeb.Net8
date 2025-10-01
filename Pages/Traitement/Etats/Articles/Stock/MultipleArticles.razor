@@ -33,25 +33,32 @@
 @code 
 {
 
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
     [Parameter]
-    public DB db { get; set; }
-    [Parameter]
-    public List<F_DOCLIGNE> dt { get; set; }
+    public List<API_V_DOCLIGNE> dt { get; set; }
     [Parameter]
     public F_ARTICLE row { get; set; } = new F_ARTICLE();
     Decimal qte = 0;
     Decimal pu = 0;
-
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+    }
     private async Task Submit()
     {
         fn.DisableTriggers(db, "F_ARTSTOCK", "INS");
         fn.DisableTriggers(db, "F_ARTSTOCK", "UPD");
         fn.DisableTriggers(db, "F_DOCLIGNE", "INS");
         fn.DisableTriggers(db, "F_DOCLIGNE", "DEL");
-        foreach(F_DOCLIGNE item in dt)
+        foreach (API_V_DOCLIGNE item in dt)
         {
             var ln = new F_DOCLIGNE();
             fn.CopyData(item,ln);
+            ln.AR_RefNavigation = null;
             ln.DL_Qte = qte;
             ln.EU_Qte = qte;
             ln.DL_PrixUnitaire = pu;
@@ -68,7 +75,7 @@
             ln.DL_No = db.F_DOCLIGNE.Max(a => a.DL_No) + 1;
             db.F_DOCLIGNE.Add(ln);
             db.SaveChanges();
-
+            /*
             var aud = new API_T_Audit_F_DOCLIGNE();
             aud.AR_Ref = item.AR_Ref;
             aud.DO_Date = item.DO_Date;
@@ -84,8 +91,9 @@
             aud.cbMarq = item.cbMarq;
             aud.CT_Num = item.CT_Num;
             aud.Timestamp = DateTime.Now;
+            aud.PF_Num = "";
             db.API_T_Audit_F_DOCLIGNE.Add(aud);
-            db.SaveChanges();
+            db.SaveChanges();*/
 
             db.Database.ExecuteSqlRaw("DELETE FROM F_DOCLIGNEEMPL WHERE DL_No = {0}", item.DL_No);
             db.Database.ExecuteSqlRaw("DELETE FROM F_DOCLIGNE WHERE cbMarq = {0}",item.cbMarq);
@@ -96,7 +104,7 @@
 
         }
 
-        UpdateStock(row.AR_Ref);
+        await UpdateStock(row.AR_Ref);
 
         fn.EnableTriggers(db, "F_ARTSTOCK", "INS");
         fn.EnableTriggers(db, "F_ARTSTOCK", "UPD");
@@ -110,7 +118,7 @@
         DialogService.Close();
     }
 
-    private void UpdateStock(string Ref)
+    private async Task UpdateStock(string Ref)
     {
 
         string q00 = @"INSERT INTO F_ARTSTOCK ([AR_Ref],[DE_No],[AS_QteMini],[AS_QteMaxi],[AS_MontSto],[AS_QteSto],[AS_QteRes],[AS_QteCom],[AS_Principal],[AS_QteResCM],[AS_QteComCM]

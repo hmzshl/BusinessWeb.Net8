@@ -55,7 +55,7 @@
 						AllowExcelExport @ref=@DefaultGrid AllowFiltering>
 							<GridPageSettings PageSize="500" PageCount="10" />
 							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Excel"></GridFilterSettings>
-							<GridEvents Created="CreatedHandler" TValue="V_StockGlobal"></GridEvents>
+							<GridEvents OnRecordDoubleClick="RowDoubleClicked" Created="CreatedHandler" TValue="V_StockGlobal"></GridEvents>
 							<GridGroupSettings Columns="@(new string[] { "FA_Intitule" })" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates>
 								<CaptionTemplate>
 									@{
@@ -330,6 +330,13 @@ else
 
 		await LoadData();
 		IsLoaded = true;
+	}
+	protected async Task RowDoubleClicked(RecordDoubleClickEventArgs<V_StockGlobal> args)
+	{
+		await DialogService.OpenAsync<ArticlesFiche>(args.RowData.AR_Design,
+		new Dictionary<string, object>() { { "AR_Ref", args.RowData.AR_Ref } },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
+        await LoadData();
 	}
 	public void CreatedHandler(object args)
 	{
