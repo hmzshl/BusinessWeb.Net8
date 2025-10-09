@@ -2,7 +2,7 @@
 	<ToolbarItems>
 		<ToolbarItem Align="ItemAlign.Right">
 			<Template>
-				<SfButton Disabled IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
+				<SfButton IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
 			</Template>
 		</ToolbarItem>
 		<ToolbarItem Align="ItemAlign.Right">
@@ -79,7 +79,7 @@
 				</ToolbarItems>
 			</SfToolbar>
 
-			<div style="height: 60vh;" class="no-border small-grid">
+			<div style="height: 50vh;" class="no-border small-grid">
 				<SfGrid AllowRowDragAndDrop="true" Height="100%" DataSource="@lignes" AllowSelection @ref="DefaultGrid" AllowExcelExport>
 					<GridSelectionSettings PersistSelection Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
 					<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
@@ -97,15 +97,15 @@
 							
 							<Template>
 								@{
-									var dt = instruments.Where(a => a.id == (context as API_T_CertifReceptionLigne).Instrument).SingleOrDefault();
-									<div>@dt?.Intitule</div>
+									var dt = instruments.Where(a => a.AR_Ref == (context as API_T_CertifReceptionLigne).AR_Ref).SingleOrDefault();
+									<div>@dt?.AR_Design</div>
 								}
 							</Template>
 							<EditTemplate>
 								<SfDropDownList AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Query=@fn.LocalDataQuery
-												TValue="int" TItem="API_T_CertifInstrument" DataSource="@(db.API_T_CertifInstrument)" @bind-Value="@((context as API_T_CertifReceptionLigne).Instrument)">
-									<DropDownListEvents TValue="int" TItem="API_T_CertifInstrument" />
-									<DropDownListFieldSettings Text="Intitule" Value="id" />
+												TValue="string" TItem="F_ARTICLE" DataSource="@(db.F_ARTICLE.OrderBy(a => a.AR_Design))" @bind-Value="@((context as API_T_CertifReceptionLigne).AR_Ref)">
+									<DropDownListEvents TValue="string" TItem="F_ARTICLE" />
+									<DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
 								</SfDropDownList>
 							</EditTemplate>
 						</GridColumn>
@@ -132,7 +132,7 @@
 	private API_T_CertifReception row { get; set; } = new API_T_CertifReception();
 	private List<API_T_CertifReceptionLigne> lignes = new List<API_T_CertifReceptionLigne>();
 	private List<F_COMPTET> clients = new List<F_COMPTET>();
-	List<API_T_CertifInstrument> instruments = new List<API_T_CertifInstrument>();
+	List<F_ARTICLE> instruments = new List<F_ARTICLE>();
 	private SfGrid<API_T_CertifReceptionLigne> DefaultGrid;
 	public Syncfusion.Blazor.Data.Query LocalDataQuery = new Syncfusion.Blazor.Data.Query().Take(10);
 
@@ -143,7 +143,7 @@
 	{
 		db = session.db;
 		GC.Collect();
-		instruments = db.API_T_CertifInstrument.ToList();
+		instruments = db.F_ARTICLE.ToList();
 		clients = db.F_COMPTET.Where(a => a.CT_Type == 0)
 							.OrderBy(a => a.CT_Intitule)
 							.Select(a => new F_COMPTET
@@ -313,7 +313,7 @@
 
 		await DialogService.OpenAsync<ReportViewer>(row.NumeroEnregistrement,
 			new Dictionary<string, object>() {
-				{ "ReportName", "reports\\certification\\Reception" },
+				{ "ReportName", "reports\\certification\\ReceptionInstrument" },
 				{ "parameters", parameters }
 			},
 			new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });

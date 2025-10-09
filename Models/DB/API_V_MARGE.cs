@@ -86,4 +86,6 @@ public partial class API_V_MARGE
     public string CT_Ville { get; set; }
 
     public string CT_CodeRegion { get; set; }
+
+    public string Semaine { get; set; }
 }

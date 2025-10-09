@@ -22,4 +22,6 @@ public partial class API_T_CertifReceptionLigne
     public string Observations { get; set; }
 
     public int Instrument { get; set; }
+
+    public string AR_Ref { get; set; }
 }

@@ -353,7 +353,7 @@ else
     {
         await DialogService.OpenAsync<EntretiensFiche>(args.RowData.Piece,
     new Dictionary<string, object>() { { "Projet", Projet }, { "Materiel", Materiel }, { "id", args.RowData.id }, { "type", Int32.Parse(type) } },
-    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "850px", Height = "600px" });
+    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "850px", Height = "800px" });
          await LoadData();
     }
     private async Task Add()
@@ -361,7 +361,7 @@ else
 
         await DialogService.OpenAsync<EntretiensFiche>($"Ajouter un élément",
         new Dictionary<string, object>() { { "Projet", Projet }, { "Materiel", Materiel }, { "id", 0 }, { "type", Int32.Parse(type) } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "850px", Height = "600px" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "850px", Height = "800px" });
         await LoadData();
     }
     private async Task OnActionBegin(ActionEventArgs<API_V_MATERIELENTRETIEN> args)

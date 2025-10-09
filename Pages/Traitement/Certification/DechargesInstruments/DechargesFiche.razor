@@ -2,7 +2,7 @@
     <ToolbarItems>
         <ToolbarItem Align="ItemAlign.Right">
             <Template>
-                <SfButton  Disabled IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
+                <SfButton IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
             </Template>
         </ToolbarItem>
         <ToolbarItem Align="ItemAlign.Right">
@@ -56,7 +56,7 @@
                 </ToolbarItems>
             </SfToolbar>
 
-            <div style="height: 60vh;" class="no-border small-grid">
+            <div style="height: 50vh;" class="no-border small-grid">
                 <SfGrid AllowRowDragAndDrop="true" Height="100%" DataSource="@lignes" AllowSelection @ref="DefaultGrid" AllowExcelExport>
                     <GridSelectionSettings PersistSelection Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
@@ -73,8 +73,8 @@
                         <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Désignation" MinWidth="250px">
                             <Template>
                                 @{
-                                    var dt = instruments.Where(a => a.id == (context as API_T_CertifDechargeLigne).Instrument).SingleOrDefault();
-                                    <div>@dt?.Intitule</div>
+                                    var dt = instruments.Where(a => a.AR_Ref == (context as API_T_CertifDechargeLigne).AR_Ref).SingleOrDefault();
+                                    <div>@dt?.AR_Design</div>
                                 }
                             </Template>
                             <EditTemplate>
@@ -101,7 +101,7 @@
     private API_T_CertifDecharge row { get; set; } = new API_T_CertifDecharge();
     private List<API_T_CertifDechargeLigne> lignes = new List<API_T_CertifDechargeLigne>();
     private List<API_T_CertifReception> receptions = new List<API_T_CertifReception>();
-    List<API_T_CertifInstrument> instruments = new List<API_T_CertifInstrument>();
+    List<F_ARTICLE> instruments = new List<F_ARTICLE>();
     private SfGrid<API_T_CertifDechargeLigne> DefaultGrid;
     public Syncfusion.Blazor.Data.Query LocalDataQuery = new Syncfusion.Blazor.Data.Query().Take(10);
 
@@ -109,7 +109,7 @@
     {
         db = session.db;
         GC.Collect();
-        instruments = db.API_T_CertifInstrument.ToList();
+        instruments = db.F_ARTICLE.ToList();
         receptions = await db.API_T_CertifReception
                            .OrderByDescending(a => a.DateReception)
                            .ToListAsync();
@@ -169,7 +169,8 @@
                 FicheReceptionID = this.id,
                 Identification = i.Identification,
                 Accessoires = i.Accessoires,
-                Instrument = i.Instrument
+                Instrument = i.Instrument,
+                AR_Ref = i.AR_Ref
             }).ToList();
         }
     }
@@ -289,7 +290,7 @@
 
         await DialogService.OpenAsync<ReportViewer>(row.NumeroFiche,
             new Dictionary<string, object>() {
-                { "ReportName", "reports\\certification\\Decharge" },
+                { "ReportName", "reports\\certification\\DechargeInstrument" },
                 { "parameters", parameters }
             },
             new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });

@@ -99,8 +99,6 @@ public partial class API_V_CREGLEMENT
 
     public decimal? M12 { get; set; }
 
-    public string PROT_User { get; set; }
-
     public DateTime? cbCreation { get; set; }
 
     public DateTime? cbModification { get; set; }
@@ -108,4 +106,6 @@ public partial class API_V_CREGLEMENT
     public string CT_CodeRegion { get; set; }
 
     public string CT_Ville { get; set; }
+
+    public string Semaine { get; set; }
 }

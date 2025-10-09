@@ -16,4 +16,6 @@ public partial class API_T_CertifDechargeLigne
     public string Accessoires { get; set; }
 
     public int Instrument { get; set; }
+
+    public string AR_Ref { get; set; }
 }

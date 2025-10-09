@@ -189,9 +189,9 @@ public partial class API_V_DOCLIGNE
 
     public bool? IsStock { get; set; }
 
-    public string PROT_User { get; set; }
-
     public DateTime? cbCreation { get; set; }
 
     public DateTime? cbModification { get; set; }
+
+    public string Semaine { get; set; }
 }

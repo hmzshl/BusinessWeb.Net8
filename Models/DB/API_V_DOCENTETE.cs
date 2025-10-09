@@ -221,8 +221,6 @@ public partial class API_V_DOCENTETE
 
     public string Echeance { get; set; }
 
-    public string PROT_User { get; set; }
-
     public DateTime? cbCreation { get; set; }
 
     public DateTime? cbModification { get; set; }
@@ -232,4 +230,6 @@ public partial class API_V_DOCENTETE
     public decimal? DO_NetAPayer { get; set; }
 
     public decimal? DO_TotalHTNet { get; set; }
+
+    public string Semaine { get; set; }
 }

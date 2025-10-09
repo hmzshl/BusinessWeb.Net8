@@ -60,4 +60,6 @@ public partial class API_V_ACHAT
     public string CA_Num { get; set; }
 
     public string CA_Intitule { get; set; }
+
+    public string Semaine { get; set; }
 }
