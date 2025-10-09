@@ -266,7 +266,9 @@ else
 	{
 		loading = true;
 		await Task.Delay(1);
-		items = session.db.API_T_CertifSuiviDossier.Where(a => a.Date >= (date1 ?? new DateTime(1900, 1, 1)) && a.Date <= (date2 ?? new DateTime(2070, 12, 31))).OrderBy(a => a.Date).ToList();
+		items = session.db.API_T_CertifSuiviDossier.Where(a => a.Date >= (date1 ?? new DateTime(1900, 1, 1)) && a.Date <= (date2 ?? new DateTime(2070, 12, 31)))
+		.OrderByDescending(a => a.id)
+		.ToList();
 		loading = false;
 		await Task.Delay(1);
 	}
