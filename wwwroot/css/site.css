@@ -691,7 +691,7 @@ h4 {
 .ant-card-head-title {
     padding: 5px;
     font-size: 15px !important;
-    color: #4f46e5;
+    color: #111827;
 }
 
 .ant-card {
@@ -1290,7 +1290,7 @@ input.e-input, .e-input-group input.e-input, .e-input-group.e-control-wrapper in
 }
 
 input.e-input, .e-input-group input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input.e-input, .e-input-group.e-control-wrapper input, .e-float-input input, .e-float-input.e-input-group input, .e-float-input.e-control-wrapper input, .e-float-input.e-control-wrapper.e-input-group input, .e-input-group, .e-input-group.e-control-wrapper, .e-float-input, .e-float-input.e-control-wrapper {
-    border-radius: 0px !important;
+    border-radius: 5px !important;
 }
 
 
@@ -1354,7 +1354,7 @@ div#main-text {
 
 .e-input-group:not(.e-float-icon-left), .e-input-group.e-control-wrapper:not(.e-float-icon-left) {
     border-bottom: 1px solid;
-    border-color: #e0e0e0 !important;
+    border-color: #ede9e9 !important;
     height: 30px !important;
 }
 
@@ -1721,11 +1721,12 @@ td .e-numerictextbox {
 }
 
 .rz-dialog-titlebar {
-    padding: 5px 10px 5px 10px !important;
+    padding: 10px 15px 10px 15px !important;
     font-size: 15px;
     border-bottom: solid;
     border-bottom-color: #d9d6d6;
     border-bottom-width: thin;
+    background: inherit;
 }
 
 .rz-dialog-titlebar-close .rzi-times:hover {
@@ -1790,6 +1791,12 @@ div#main-text {
 
 .rz-dialog {
     background-color: #ffffff;
+    transition-property: box-shadow;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    border-radius: 24px !important;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+    border-color: rgb(168 85 247 / var(--tw-border-opacity, 1));
 }
 
 .rz-layout {
@@ -1819,28 +1826,8 @@ div#main-text {
     text-align: center;
 }
 
-td.e-rowcell .statustxt.e-activecolor {
-    color: #007d00;
-    background-color: #ccffcc;
-    border-radius: 10px;
-    padding-left: 5px;
-    padding-right: 5px;
-    position: relative;
-    text-align: center;
-}
-
 .statustemp.e-inactivecolor {
     background-color: #ffd7cc;
-    text-align: center;
-}
-
-td.e-rowcell .statustxt.e-inactivecolor {
-    color: #c40000;
-    background-color: #ffd7cc;
-    border-radius: 10px;
-    padding-left: 5px;
-    padding-right: 5px;
-    position: relative;
     text-align: center;
 }
 
@@ -1905,28 +1892,10 @@ td.e-rowcell .statustxt.e-inactivecolor {
     text-align: center;
 }
 
-td.e-rowcell .statustxt.e-activecolor {
-    color: #108f76;
-    background-color: #dffbe8;
-    border-radius: 10px;
-    padding-left: 5px;
-    padding-right: 5px;
-    position: relative;
-    text-align: center;
-}
+
 
 .statustemp.e-inactivecolor {
     background-color: #f3bbe1;
-    text-align: center;
-}
-
-td.e-rowcell .statustxt.e-inactivecolor {
-    color: #f30938;
-    background-color: #f5e7f1;
-    border-radius: 10px;
-    padding-left: 5px;
-    padding-right: 5px;
-    position: relative;
     text-align: center;
 }
 
@@ -2438,6 +2407,7 @@ html, body * {
     border-color: rgb(127.5,189,255);
     box-shadow: 0 0 0 1px rgba(0,123,255,.25) !important;
     transition: none !important;
+    border-radius: 5px !important;
 }
 
 .e-tab.e-fill .e-tab-header .e-toolbar-item.e-active.e-ileft .e-text-wrap, .e-tab.e-fill .e-tab-header .e-toolbar-item.e-active.e-iright .e-text-wrap {
@@ -2538,4 +2508,26 @@ td .rz-badge {
 .ant-statistic-content {
     font-size: 16px;
     font-weight: 600;
+}
+.e-toolbar {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    background: #fcfcfc;
+    border: 0 solid #e5e7eb;
+    box-shadow: none;
+    border-bottom: 0.1px solid #e5e7eb;
+    border-top: 0.1px solid #e5e7eb;
+}
+    .e-toolbar .e-toolbar-item .e-tbar-btn {
+        background: inherit;
+    }
+.e-input-group:not(.e-success):not(.e-warning):not(.e-error) input.e-input:focus, .e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error) input.e-input:focus, .e-input-group:not(.e-success):not(.e-warning):not(.e-error).e-input-focus input.e-input, .e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error).e-input-focus input.e-input, .e-input-group:not(.e-success):not(.e-warning):not(.e-error) textarea.e-input:focus, .e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error) textarea.e-input:focus {
+    border-radius: 5px !important; 
+}
+.e-popup.e-multi-select-list-wrapper.e-checkbox .e-dropdownbase .e-list-item.e-active, .e-popup.e-multi-select-list-wrapper.e-checkbox .e-dropdownbase .e-list-item.e-active.e-hover {
+    font-weight: normal;
+    border-bottom: solid 0.1px white;
+}
+.e-popup.e-ddl .e-dropdownbase {
+    min-height: 26px;
+    padding: 0px 0;
 }

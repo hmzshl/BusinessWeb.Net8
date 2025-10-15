@@ -1,0 +1,47 @@
+﻿<div class="flex flex-col @GetBorderClasses() p-6 text-center">
+    <dt class="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
+        @Title
+    </dt>
+    <dd class="order-1 text-5xl font-extrabold text-gray-700">@Value</dd>
+</div>
+
+@code {
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public int Position { get; set; } = 1;
+
+    [Parameter]
+    public int TotalCards { get; set; } = 3;
+
+    private string GetBorderClasses()
+    {
+        if (TotalCards <= 3)
+        {
+            return Position switch
+            {
+                1 => "border-b border-gray-100 sm:border-0 sm:border-r",
+                2 => "border-t border-b border-gray-100 sm:border-0 sm:border-l sm:border-r",
+                3 => "border-t border-gray-100 sm:border-0 sm:border-l",
+                _ => ""
+            };
+        }
+        else
+        {
+            // For 4-6 cards, use simpler border logic
+            var isLastInRow = Position % 3 == 0;
+            var isNotLastCard = Position < TotalCards;
+
+            if (TotalCards <= 6)
+            {
+                return $"border-b border-gray-100 {(isLastInRow || Position == TotalCards ? "" : "sm:border-r")}";
+            }
+
+            return "border-b border-gray-100";
+        }
+    }
+}

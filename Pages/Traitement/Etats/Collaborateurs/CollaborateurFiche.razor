@@ -38,13 +38,20 @@
                                                  </FormItem>
                                              </Card>
                                          </GridCol>
-                                         
-                                         <GridCol Xs="12" Md="3">
-                                            <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="CA TTC" Value="@row.MontantTTC.ToString("### ### ##0.00;-### ### ##0.00;0.00")" Suffix="@fn.getDevise(db)" />
-                                         </GridCol>
-                                         <GridCol Xs="12" Md="3">
-                                            <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-red" Title="Frais" Value="@row.MontantFrais.ToString("### ### ##0.00;-### ### ##0.00;0.00")" Suffix="@fn.getDevise(db)" />
-                                         </GridCol>
+
+                                        <GridCol Xs="12" Md="3">
+                                            <StatCard3 Color="StatColor.Green"
+                                                       Value="@row.MontantTTC.ToString("### ### ##0.00;-### ### ##0.00;0.00")"
+                                                       Title="CA TTC"
+                                                       ShowTrendText="false" />
+                                        </GridCol>
+
+                                        <GridCol Xs="12" Md="3">
+                                            <StatCard3 Color="StatColor.Red"
+                                                       Value="@row.MontantFrais.ToString("### ### ##0.00;-### ### ##0.00;0.00")"
+                                                       Title="Frais"
+                                                       ShowTrendText="false" />
+                                        </GridCol>
                                         <GridCol Xs="12" Md="18"></GridCol>
                                      <GridCol Xs="24" Md="11">
                                          <Card title="CA PAR CLIENT">

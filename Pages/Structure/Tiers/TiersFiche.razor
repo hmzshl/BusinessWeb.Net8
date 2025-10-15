@@ -40,27 +40,49 @@
 										</GridCol>
 
 										<GridCol Xs="12" Md="3">
-											<Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="CA TTC" Value="@((row.DL_MontantTTC ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+											<StatCard3 Color="StatColor.Green"
+													   Value="@((row.DL_MontantTTC ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+													   Title="CA TTC"
+													   ShowTrendText="false" />
 										</GridCol>
+
 										<GridCol Xs="12" Md="3">
-											<Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="Réglements" Value="@((row.RG_Montant ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+											<StatCard3 Color="StatColor.Blue"
+													   Value="@((row.RG_Montant ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+													   Title="Réglements"
+													   ShowTrendText="false" />
 										</GridCol>
+
 										<GridCol Xs="12" Md="3">
-											<Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="Solde Commercial" Value="@((row.SoldeCommercial ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+											<StatCard3 Color="StatColor.Purple"
+													   Value="@((row.SoldeCommercial ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+													   Title="Solde Commercial"
+													   ShowTrendText="false" />
 										</GridCol>
+
 										<GridCol Xs="12" Md="3">
-											<Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="Plafond" Value="@((row.CT_Encours ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+											<StatCard3 Color="StatColor.Amber"
+													   Value="@((row.CT_Encours ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+													   Title="Plafond"
+													   ShowTrendText="false" />
 										</GridCol>
+
 										@if (((row.SoldeCommercial ?? 0) - (row.CT_Encours ?? 0)) > 0)
 										{
 											<GridCol Xs="12" Md="3">
-												<Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-red" Title="Dépassement" Value="@(((row.SoldeCommercial??0) - (row.CT_Encours??0)).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+												<StatCard3 Color="StatColor.Red"
+														   Value="@(((row.SoldeCommercial??0) - (row.CT_Encours??0)).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+														   Title="Dépassement"
+														   ShowTrendText="false" />
 											</GridCol>
 										}
 										else
 										{
 											<GridCol Xs="12" Md="3">
-												<Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-green" Title="Reste" Value="@(((row.SoldeCommercial??0) - (row.CT_Encours??0)).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+												<StatCard3 Color="StatColor.Green"
+														   Value="@(((row.SoldeCommercial??0) - (row.CT_Encours??0)).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+														   Title="Reste"
+														   ShowTrendText="false" />
 											</GridCol>
 										}
 

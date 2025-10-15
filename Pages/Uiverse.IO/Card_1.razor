@@ -1,34 +1,50 @@
-﻿<div class="card-1">
-    <div class="content-1">
+﻿<div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 @GetBorderColor()" style="padding: 1rem;" >
+    <div class="flex justify-between items-start mb-4">
+        <div class="card-title font-semibold text-lg text-gray-800" style="font-family: Ubuntu;" >
+            @Title
+        </div>
         @if (!IsDetail)
         {
-            <div class="title outer dark" style="display: flex;justify-content: space-between;align-items: center;">
-                <div class="card-title">
-                    @Title
-                </div>
-                <div>
-                    <RadzenButton Click=@(args => NavigationManager.NavigateTo("/")) Icon="close" Size="Radzen.ButtonSize.Small" ButtonStyle="ButtonStyle.Light" Variant="Variant.Text" Style="    border-radius: 100px !important;
-    height: 30px !important;
-    width: 30px !important;
-    padding: 0px !important;
-    min-width: 20px !important
-    min-height: 20px !important; color: #000000" />
-                </div>
+            <div>
+                <RadzenButton Click=@(args => NavigationManager.NavigateTo("/"))
+                              Icon="close"
+                              Size="Radzen.ButtonSize.Small"
+                              ButtonStyle="ButtonStyle.Light"
+                              Variant="Variant.Text"
+                              Style="border-radius: 100px !important; height: 30px !important; width: 30px !important; padding: 0px !important; min-width: 20px !important; min-height: 20px !important; color: #000000" />
             </div>
         }
-        
-        <div class="description">
-            @ChildContent
-        </div>
+    </div>
+
+    <div class="description">
+        @ChildContent
     </div>
 </div>
 
-@code 
+@code
 {
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+
     [Parameter]
     public string Title { get; set; }
+
     [Parameter]
     public bool IsDetail { get; set; } = false;
+
+    [Parameter]
+    public StatColor Color { get; set; } = StatColor.Purple;
+
+    private string GetBorderColor()
+    {
+        return Color switch
+        {
+            StatColor.Blue => "border-blue-500",
+            StatColor.Green => "border-green-500",
+            StatColor.Purple => "border-purple-500",
+            StatColor.Amber => "border-amber-500",
+            StatColor.Red => "border-red-500",
+            _ => "border-blue-500"
+        };
+    }
 }

@@ -1,0 +1,19 @@
+﻿<div class="mb-12 text-center md:mb-0 md:border-r-2 dark:md:border-slate-500">
+    <div class="font-heading text-[2.6rem] font-bold dark:text-white lg:text-5xl xl:text-6xl">
+        @Value
+    </div>
+    <p class="text-sm font-medium uppercase tracking-widest text-gray-800 dark:text-slate-400 lg:text-base">
+        @Title
+    </p>
+</div>
+
+@code {
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool ShowBorder { get; set; } = true;
+}

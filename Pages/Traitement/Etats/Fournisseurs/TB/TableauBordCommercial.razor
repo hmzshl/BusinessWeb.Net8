@@ -98,19 +98,32 @@
              </SfToolbar>
              <GridRow>
 
-                 <GridCol Xs="12" Md="3">
-                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="CA HT" Value="@((dt?.Sum(a => a.DL_MontantHT)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
-                     
-                 </GridCol>
-                 <GridCol Xs="12" Md="3">
-                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="CA TTC" Value="@((dt?.Sum(a => a.DL_MontantTTC)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
-                 </GridCol>
-
-                 <GridCol Xs="12" Md="3">
-                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="Décaissements" Value="@((rg?.Sum(a => a.RG_Montant)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
-                 </GridCol>
                     <GridCol Xs="12" Md="3">
-                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-blue" Title="% Paiement" Value="@((dt.Sum(a => a.DL_MontantTTC) != 0.0m ? rg.Sum(a => a.RG_Montant) / dt.Sum(a => a.DL_MontantTTC) : 0.0m)?.ToString("### ### ##0.00 %;-### ### ##0.00 %;0.00"))" ValueStyle="color: #3f8600;" />
+                        <StatCard3 Color="StatColor.Green"
+                                   Value="@((dt?.Sum(a => a.DL_MontantHT)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+                                   Title="CA HT"
+                                   ShowTrendText="false" />
+                    </GridCol>
+
+                    <GridCol Xs="12" Md="3">
+                        <StatCard3 Color="StatColor.Green"
+                                   Value="@((dt?.Sum(a => a.DL_MontantTTC)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+                                   Title="CA TTC"
+                                   ShowTrendText="false" />
+                    </GridCol>
+
+                    <GridCol Xs="12" Md="3">
+                        <StatCard3 Color="StatColor.Blue"
+                                   Value="@((rg?.Sum(a => a.RG_Montant)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+                                   Title="Décaissements"
+                                   ShowTrendText="false" />
+                    </GridCol>
+
+                    <GridCol Xs="12" Md="3">
+                        <StatCard3 Color="StatColor.Blue"
+                                   Value="@((dt.Sum(a => a.DL_MontantTTC) != 0.0m ? rg.Sum(a => a.RG_Montant) / dt.Sum(a => a.DL_MontantTTC) : 0.0m)?.ToString("### ### ##0.00 %;-### ### ##0.00 %;0.00"))"
+                                   Title="% Paiement"
+                                   ShowTrendText="false" />
                     </GridCol>
                  <GridCol Xs="12" Md="6">
 
@@ -226,7 +239,7 @@
                             <div class="no-border grid-34" style="zoom: @session.zoomLevel;">
 
 
-                                <SfChart Title="Top 10 acheteurs" Width="90%" Theme="Syncfusion.Blazor.Theme.Fluent" Height="100%">
+                                <SfChart Title="Top 10 acheteurs" Width="90%" Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
                                     <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
                                         <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
@@ -252,7 +265,7 @@
                     </Card>
                         <Card>
                             <div class="no-border grid-34" style="zoom: @session.zoomLevel;">
-                                <SfAccumulationChart Title="Répartition des décaissements" EnableAnimation="true" Width="100%" Height="100%" Theme="Syncfusion.Blazor.Theme.Fluent" EnableBorderOnMouseMove="false" EnableSmartLabels="true">
+                                <SfAccumulationChart Title="Répartition des décaissements" EnableAnimation="true" Width="100%" Height="100%" Theme="Syncfusion.Blazor.Theme.Tailwind3" EnableBorderOnMouseMove="false" EnableSmartLabels="true">
                                     <AccumulationChartBorder Color="transparent"></AccumulationChartBorder>
                                     <AccumulationChartTooltipSettings Enable="true" Format="${point.x}"></AccumulationChartTooltipSettings>
                                     <AccumulationChartSeriesCollection>

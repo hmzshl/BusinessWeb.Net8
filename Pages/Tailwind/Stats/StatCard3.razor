@@ -1,0 +1,91 @@
+﻿<div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 @GetBorderColor()" style="margin: 5px;" >
+    <div class="flex justify-between items-start">
+        <div>
+            <p class="text-gray-500 text-sm font-medium" style="font-size: 0.75rem;" >@Title</p>
+            <h3 class="text-2xl font-bold mt-1 text-gray-800" style="font-size: 1.3rem;" >@Value</h3>
+        </div>
+        <div class="@GetIconBgColor() p-2 rounded-lg">
+            @IconContent
+        </div>
+    </div>
+    @if (ShowTrendText)
+    {
+        <div class="mt-4 flex items-center">
+            <span class="@GetTrendColor() text-sm font-medium flex items-center">
+                @if (IsPositiveTrend)
+                {
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                    </svg>
+                }
+                else
+                {
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                }
+                @TrendValue
+            </span>
+            <span class="text-gray-500 text-sm ml-2">@TrendText</span>
+        </div>
+    }
+
+</div>
+
+@code {
+    [Parameter]
+    public bool ShowTrendText { get; set; }
+    [Parameter]
+    public string Title { get; set; } = string.Empty;
+
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
+    [Parameter]
+    public string TrendValue { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool IsPositiveTrend { get; set; } = true;
+
+    [Parameter]
+    public string TrendText { get; set; } = "vs last month";
+
+    [Parameter]
+    public StatColor Color { get; set; } = StatColor.Blue;
+
+    [Parameter]
+    public RenderFragment? IconContent { get; set; }
+
+    private string GetBorderColor()
+    {
+        return Color switch
+        {
+            StatColor.Blue => "border-blue-500",
+            StatColor.Green => "border-green-500",
+            StatColor.Purple => "border-purple-500",
+            StatColor.Amber => "border-amber-500",
+            StatColor.Red => "border-red-500",
+            _ => "border-blue-500"
+        };
+    }
+
+    private string GetIconBgColor()
+    {
+        return Color switch
+        {
+            StatColor.Blue => "bg-blue-100",
+            StatColor.Green => "bg-green-100",
+            StatColor.Purple => "bg-purple-100",
+            StatColor.Amber => "bg-amber-100",
+            StatColor.Red => "bg-red-100",
+            _ => "bg-blue-100"
+        };
+    }
+
+    private string GetTrendColor()
+    {
+        return IsPositiveTrend ? "text-green-500" : "text-red-500";
+    }
+
+}
+

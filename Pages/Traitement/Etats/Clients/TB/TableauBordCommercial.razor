@@ -5,7 +5,7 @@
             <div class="grid-container small-grid" style="width: 100%;">
                 <SfToolbar CssClass="btns">
                     <ToolbarItems>
-                        @if(!session.IsMobile)
+                        @if (!session.IsMobile)
                         {
                             <ToolbarItem Align="ItemAlign.Left">
                                 <Template>
@@ -29,46 +29,46 @@
                         {
                             <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
                                 <Template>
-                                    <RadzenLabel Text="JOURNEE" Component="journee"/>
+                                    <RadzenLabel Text="JOURNEE" Component="journee" />
                                     <div style="margin-left: 15px;" id="journee">
                                         <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date" ShowTodayButton>
-                                         <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
-                                     </SfDatePicker>
+                                            <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
+                                        </SfDatePicker>
                                     </div>
 
-                             </Template>
-                         </ToolbarItem>
+                                </Template>
+                            </ToolbarItem>
                         }
 
-                     @if (periode == "mensuel")
+                        @if (periode == "mensuel")
                         {
                             <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
                                 <Template>
                                     <RadzenLabel Text="MOIS" Component="mois" />
                                     <div style="margin-left: 15px;" id="mois">
                                         <SfDropDownList Width="110px" AllowFiltering TValue="string" TItem="string" DataSource="@list_mois" @bind-Value="@mois">
-                                             <DropDownListFieldSettings Text="MoisAnnee" Value="MoisAnnee" />
-                                             <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => LoadData())"/>
-                                         </SfDropDownList>
+                                            <DropDownListFieldSettings Text="MoisAnnee" Value="MoisAnnee" />
+                                            <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => LoadData())" />
+                                        </SfDropDownList>
                                     </div>
 
-                                 </Template>
-                             </ToolbarItem>
+                                </Template>
+                            </ToolbarItem>
                         }
                         @if (periode == "annuel")
                         {
                             <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
                                 <Template>
-                                    <RadzenLabel Text="ANNEE" Component="annee"/>
+                                    <RadzenLabel Text="ANNEE" Component="annee" />
                                     <div style="margin-left: 15px;" id="annee">
                                         <SfDropDownList Width="110px" AllowFiltering TValue="string" TItem="string" DataSource="@list_annee" @bind-Value="@annee">
-                                             <DropDownListFieldSettings Text="Annee" Value="Annee" />
-                                             <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => LoadData())" />
-                                         </SfDropDownList>
+                                            <DropDownListFieldSettings Text="Annee" Value="Annee" />
+                                            <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => LoadData())" />
+                                        </SfDropDownList>
                                     </div>
 
-                                 </Template>
-                             </ToolbarItem>
+                                </Template>
+                            </ToolbarItem>
                         }
                         @if (periode == "date")
                         {
@@ -76,56 +76,57 @@
                                 <Template>
                                     <div style="margin-left: 15px;" id="debut">
                                         <SfDatePicker Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
-                                         <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
-                                     </SfDatePicker>
-                                 </div>
+                                            <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
+                                        </SfDatePicker>
+                                    </div>
 
-                             </Template>
-                         </ToolbarItem>
-                         
+                                </Template>
+                            </ToolbarItem>
+
                             <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
                                 <Template>
                                     <div style="margin-left: 15px;" id="fin">
                                         <SfDatePicker Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
-                                         <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
-                                     </SfDatePicker>
-                                 </div>
+                                            <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
+                                        </SfDatePicker>
+                                    </div>
 
-                             </Template>
-                         </ToolbarItem>
+                                </Template>
+                            </ToolbarItem>
                         }
                     </ToolbarItems>
-             </SfToolbar>
-             <GridRow>
+                </SfToolbar>
 
-                 <GridCol Xs="12" Md="3">
-                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="CA HT" Value="@((dt?.Sum(a => a.DL_MontantHT)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
-                     
-                 </GridCol>
+                <GridRow>
                     <GridCol Xs="12" Md="3">
-                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="Marge HT" Value="@((dt?.Sum(a => a.CMUPMarge)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
+                        <StatCard3 Color="StatColor.Green" Value="@((dt?.Sum(a => a.DL_MontantHT) ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" Title="CA HT" />
                     </GridCol>
-                     <GridCol Xs="12" Md="3">
-                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="Marge %" Value="@((dt.Sum(a => a.DL_MontantHT) != 0.0m ? dt.Sum(a => a.CMUPMarge) / dt.Sum(a => a.DL_MontantHT) : 0.0m)?.ToString("### ### ##0.00 %;-### ### ##0.00 %;0.00"))" ValueStyle="color: #3f8600;" />
-                    </GridCol>
-                 <GridCol Xs="12" Md="3">
-                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="CA TTC" Value="@((dt?.Sum(a => a.DL_MontantTTC)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
-                 </GridCol>
-
-                 <GridCol Xs="12" Md="3">
-                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-white" Title="Encaissements" Value="@((rg?.Sum(a => a.RG_Montant)??0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" ValueStyle="color: #3f8600;" Suffix="@fn.getDevise(db)" />
-                 </GridCol>
                     <GridCol Xs="12" Md="3">
-                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card st st-blue" Title="% Recoverement" Value="@(((dt.Sum(a => a.DL_MontantTTC) != 0.0m ? rg.Sum(a => a.RG_Montant) / dt.Sum(a => a.DL_MontantTTC) : 0.0m)??0).ToString("### ### ##0.00 %;-### ### ##0.00 %;0.00"))" ValueStyle="color: #3f8600;" />
+                        <StatCard3 Color="StatColor.Purple" Value="@((dt?.Sum(a => a.CMUPMarge) ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+                                   Title="Marge HT" />
                     </GridCol>
-                 <GridCol Xs="12" Md="6">
-
-                 </GridCol>
-
-                 <GridCol Xs="24" Md="9">
+                    <GridCol Xs="12" Md="3">
+                        <StatCard3 Color="StatColor.Purple"
+                                   Value="@((dt.Sum(a => a.DL_MontantHT) != 0.0m ? dt.Sum(a => a.CMUPMarge) / dt.Sum(a => a.DL_MontantHT) : 0.0m)?.ToString("### ### ##0.00 %;-### ### ##0.00 %;0.00"))"
+                                   Title="%" />
+                    </GridCol>
+                                        <GridCol Xs="12" Md="3">
+                        <StatCard3 Color="StatColor.Green" Value="@((dt?.Sum(a => a.DL_MontantTTC) ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" Title="CA TTC" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="3">
+                        <StatCard3 Color="StatColor.Blue"
+                                   Value="@((rg?.Sum(a => a.RG_Montant) ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+                                   Title="Encaissements" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="3">
+                        <StatCard3 Color="StatColor.Blue"
+                                   Title="% Recoverement"
+                                   Value="@(((dt.Sum(a => a.DL_MontantTTC) != 0.0m ? rg.Sum(a => a.RG_Montant) / dt.Sum(a => a.DL_MontantTTC) : 0.0m) ?? 0).ToString("### ### ##0.00 %;-### ### ##0.00 %;0.00"))" />
+                    </GridCol>
+                    <GridCol Xs="24" Md="9">
                         <Card title="CA PAR CLIENT">
                             <div class="no-border grid-67" style="zoom: @session.zoomLevel;">
-                                <SfGrid  AllowTextWrap Height="100%" DataSource="@(dt_client)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
+                                <SfGrid AllowTextWrap Height="100%" DataSource="@(dt_client)" Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })" AllowSorting>
                                     <GridAggregates>
                                         <GridAggregate>
                                             <GridAggregateColumns>
@@ -165,7 +166,7 @@
                                             </GridAggregateColumns>
                                         </GridAggregate>
                                     </GridAggregates>
-                                    <GridPageSettings PageSize="100"/>
+                                    <GridPageSettings PageSize="100" />
                                     <GridEvents OnRecordDoubleClick=@(args => ShowDetail(args, "client")) TValue="API_V_MARGE"></GridEvents>
                                     <GridColumns>
                                         <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Field="@nameof(API_V_MARGE.CT_Num)" HeaderText="Num" Visible=@(!session.IsMobile)>
@@ -204,11 +205,11 @@
                                 </SfGrid>
                             </div>
                         </Card>
-                 </GridCol>
-                 <GridCol Xs="24" Md="9">
+                    </GridCol>
+                    <GridCol Xs="24" Md="9">
                         <Card title="CA PAR ARTICLE">
                             <div class="no-border grid-67" style="zoom: @session.zoomLevel;">
-                                <SfGrid  AllowTextWrap Height="100%" DataSource="@(dt_article)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
+                                <SfGrid AllowTextWrap Height="100%" DataSource="@(dt_article)" Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })" AllowSorting>
                                     <GridAggregates>
                                         <GridAggregate>
                                             <GridAggregateColumns>
@@ -252,7 +253,7 @@
                                     <GridEvents OnRecordDoubleClick=@(args => ShowDetail(args, "article")) TValue="API_V_MARGE"></GridEvents>
                                     <GridColumns>
                                         <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Field="@nameof(API_V_MARGE.AR_Ref)" HeaderText="Référence" Visible=@(!session.IsMobile)>
-                                                                                        <Template>
+                                            <Template>
                                                 @{
                                                     var item = (context as API_V_MARGE);
                                                     <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 4px !important; padding-right: 4px !important;" Click="@(args => ShowArticle(item))" Shade="Shade.Darker" Variant="Variant.Text" Text="@item.AR_Ref" ButtonStyle="ButtonStyle.Secondary" />
@@ -286,13 +287,13 @@
                                 </SfGrid>
                             </div>
                         </Card>
-                 </GridCol>
-                 <GridCol Xs="24" Md="6">
+                    </GridCol>
+                    <GridCol Xs="24" Md="6">
                         <Card>
                             <div class="no-border grid-34" style="zoom: @session.zoomLevel;">
 
 
-                                <SfChart Title="C.A par représentant" Width="90%" Theme="Syncfusion.Blazor.Theme.Fluent" Height="100%">
+                                <SfChart Title="C.A par représentant" Width="90%" Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
                                     <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
                                         <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
@@ -321,11 +322,11 @@
                                         </ChartSeries>
                                     </ChartSeriesCollection>
                                 </SfChart>
-                          </div>
-                    </Card>
+                            </div>
+                        </Card>
                         <Card>
                             <div class="no-border grid-34" style="zoom: @session.zoomLevel;">
-                                <SfAccumulationChart Title="Répartition des encaissements" EnableAnimation="true" Width="100%" Height="100%" Theme="Syncfusion.Blazor.Theme.Fluent" EnableBorderOnMouseMove="false" EnableSmartLabels="true">
+                                <SfAccumulationChart Title="Répartition des encaissements" EnableAnimation="true" Width="100%" Height="100%" Theme="Syncfusion.Blazor.Theme.Tailwind3" EnableBorderOnMouseMove="false" EnableSmartLabels="true">
                                     <AccumulationChartBorder Color="transparent"></AccumulationChartBorder>
                                     <AccumulationChartTooltipSettings Enable="true" Format="${point.x}"></AccumulationChartTooltipSettings>
                                     <AccumulationChartSeriesCollection>
@@ -339,10 +340,10 @@
                                     <AccumulationChartLegendSettings Visible="false"></AccumulationChartLegendSettings>
                                 </SfAccumulationChart>
                             </div>
-                        </Card>  
-                 </GridCol>
-             </GridRow>
-             </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+            </div>
         </RadzenContent>
     </Card_1>
 }
@@ -386,17 +387,17 @@ else
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(1);
-                db = session.db;
+        db = session.db;
         GC.Collect();
 
         if (periode == "journalier")
         {
-            if(IsDateDetail) 
+            if (IsDateDetail)
             {
                 date1 = date;
                 date2 = date;
             }
-            else 
+            else
             {
                 date1 = DateTime.Today;
                 date2 = DateTime.Today;
@@ -406,7 +407,7 @@ else
         else if (periode == "mensuel")
         {
             list_mois = db.API_V_MARGE.Select(a => a.MoisAnnee).Distinct().OrderByDescending(a => a).ToList();
-            if(list_mois.Count() != 0)
+            if (list_mois.Count() != 0)
             {
                 mois = list_mois.First();
             }
@@ -414,7 +415,7 @@ else
         else if (periode == "annuel")
         {
             list_annee = db.API_V_MARGE.OrderByDescending(a => a.Annee).Select(a => a.Annee).Distinct().OrderByDescending(a => a).ToList();
-            if(list_annee.Count() != 0)
+            if (list_annee.Count() != 0)
             {
                 annee = list_annee.First();
             }
@@ -452,28 +453,28 @@ else
 
         dt_client = dt.GroupBy(a => new { a.CT_Intitule, a.CT_Num })
         .Select(a => new API_V_MARGE
-            {
-                CT_Num = a.Key.CT_Num,
-                CT_Intitule = a.Key.CT_Intitule,
-                DL_MontantHT = a.Sum(a => a.DL_MontantHT),
-                DL_MontantTTC = a.Sum(a => a.DL_MontantTTC),
-                CMUPCoutTotal = a.Sum(a => a.CMUPCoutTotal),
-                CMUPMarge = a.Sum(a => a.CMUPMarge),
-                CMUPMargeP = a.Sum(a => a.DL_MontantHT) != 0.0m ? a.Sum(a => a.CMUPMarge) / a.Sum(a => a.DL_MontantHT) : 0.0m
-            }).OrderByDescending(a => a.DL_MontantTTC).ToList();
+        {
+            CT_Num = a.Key.CT_Num,
+            CT_Intitule = a.Key.CT_Intitule,
+            DL_MontantHT = a.Sum(a => a.DL_MontantHT),
+            DL_MontantTTC = a.Sum(a => a.DL_MontantTTC),
+            CMUPCoutTotal = a.Sum(a => a.CMUPCoutTotal),
+            CMUPMarge = a.Sum(a => a.CMUPMarge),
+            CMUPMargeP = a.Sum(a => a.DL_MontantHT) != 0.0m ? a.Sum(a => a.CMUPMarge) / a.Sum(a => a.DL_MontantHT) : 0.0m
+        }).OrderByDescending(a => a.DL_MontantTTC).ToList();
 
         dt_article = dt.GroupBy(a => new { a.AR_Design, a.AR_Ref })
         .Select(a => new API_V_MARGE
-            {
-                AR_Ref = a.Key.AR_Ref,
-                AR_Design = a.Key.AR_Design,
-                DL_Qte = a.Sum(a => a.DL_Qte),
-                DL_MontantHT = a.Sum(a => a.DL_MontantHT),
-                DL_MontantTTC = a.Sum(a => a.DL_MontantTTC),
-                CMUPCoutTotal = a.Sum(a => a.CMUPCoutTotal),
-                CMUPMarge = a.Sum(a => a.CMUPMarge),
-                CMUPMargeP = a.Sum(a => a.DL_MontantHT) != 0.0m ? a.Sum(a => a.CMUPMarge) / a.Sum(a => a.DL_MontantHT) : 0.0m
-            }).OrderByDescending(a => a.DL_MontantTTC).ToList();
+        {
+            AR_Ref = a.Key.AR_Ref,
+            AR_Design = a.Key.AR_Design,
+            DL_Qte = a.Sum(a => a.DL_Qte),
+            DL_MontantHT = a.Sum(a => a.DL_MontantHT),
+            DL_MontantTTC = a.Sum(a => a.DL_MontantTTC),
+            CMUPCoutTotal = a.Sum(a => a.CMUPCoutTotal),
+            CMUPMarge = a.Sum(a => a.CMUPMarge),
+            CMUPMargeP = a.Sum(a => a.DL_MontantHT) != 0.0m ? a.Sum(a => a.CMUPMarge) / a.Sum(a => a.DL_MontantHT) : 0.0m
+        }).OrderByDescending(a => a.DL_MontantTTC).ToList();
 
         dt_chart = dt.GroupBy(a => new { a.CO_Nom }).Select(a => new API_V_MARGE { CO_Nom = a.Key.CO_Nom, DL_MontantHT = a.Sum(a => a.DL_MontantHT), CMUPMarge = a.Sum(a => a.CMUPMarge) }).OrderBy(a => a.DL_MontantHT).ToList();
         rg_chart = rg.GroupBy(a => new { a.R_Intitule }).Select(a => new API_V_CREGLEMENT { R_Intitule = a.Key.R_Intitule, RG_Montant = a.Sum(a => a.RG_Montant) }).ToList();
