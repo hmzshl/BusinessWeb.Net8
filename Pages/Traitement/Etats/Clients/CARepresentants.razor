@@ -30,152 +30,332 @@
                      </ToolbarItem>
                  </ToolbarItems>
              </SfToolbar>
-                <GridRow>
+                <Tabs TabPosition="AntDesign.TabPosition.Right">
+                    <TabPane Tab="Recap CA" Key="1">
+                        <GridRow>
 
-                    <GridCol Xs="24" Md="16">
-                        <Card>
-                            <div class="grid-80" style="zoom: @session.zoomLevel;">
-                                <SfGrid  Height="100%" DataSource="@(items)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
-                                    <GridPageSettings PageSize="100" />
-                                    <GridAggregates>
-                                        <GridAggregate>
-                                            <GridAggregateColumns>
-                                                <GridAggregateColumn Field="@nameof(API_V_MARGE.DL_MontantHT)" Type="AggregateType.Sum" Format="### ### ###">
-                                                    <FooterTemplate>
+                            <GridCol Xs="24" Md="16">
+                                <Card>
+                                    <div class="grid-80" style="zoom: @session.zoomLevel;">
+                                        <SfGrid Height="100%" ID="RecapGRID" DataSource="@(items)" AllowExcelExport @ref=RecapGRID Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })" AllowSorting>
+                                            <GridPageSettings PageSize="100" />
+                                            <GridEvents OnToolbarClick="ToolbarClickHandler_Recap" TValue="API_V_MARGE"></GridEvents>
+                                            <GridAggregates>
+                                                <GridAggregate>
+                                                    <GridAggregateColumns>
+                                                        <GridAggregateColumn Field="@nameof(API_V_MARGE.DL_MontantHT)" Type="AggregateType.Sum" Format="### ### ###">
+                                                            <FooterTemplate>
+                                                                @{
+                                                                    var SumValue = (context as AggregateTemplateContext);
+                                                                    <div>
+                                                                        @SumValue.Sum
+                                                                    </div>
+                                                                }
+                                                            </FooterTemplate>
+
+                                                        </GridAggregateColumn>
+                                                        <GridAggregateColumn Field="@nameof(API_V_MARGE.DL_MontantTTC)" Type="AggregateType.Sum" Format="### ### ###">
+                                                            <FooterTemplate>
+                                                                @{
+                                                                    var SumValue = (context as AggregateTemplateContext);
+                                                                    <div>
+                                                                        @SumValue.Sum
+                                                                    </div>
+                                                                }
+                                                            </FooterTemplate>
+
+                                                        </GridAggregateColumn>
+                                                        <GridAggregateColumn Field="@nameof(API_V_MARGE.CMUPCoutTotal)" Type="AggregateType.Sum" Format="### ### ###">
+                                                            <FooterTemplate>
+                                                                @{
+                                                                    var SumValue = (context as AggregateTemplateContext);
+                                                                    <div>
+                                                                        @SumValue.Sum
+                                                                    </div>
+                                                                }
+                                                            </FooterTemplate>
+
+                                                        </GridAggregateColumn>
+                                                        <GridAggregateColumn Field="@nameof(API_V_MARGE.CMUPMarge)" Type="AggregateType.Sum" Format="### ### ###">
+                                                            <FooterTemplate>
+                                                                @{
+                                                                    var SumValue = (context as AggregateTemplateContext);
+                                                                    <div>
+                                                                        @SumValue.Sum
+                                                                    </div>
+                                                                }
+                                                            </FooterTemplate>
+
+                                                        </GridAggregateColumn>
+                                                    </GridAggregateColumns>
+                                                </GridAggregate>
+                                            </GridAggregates>
+                                            <GridPageSettings PageSize="100" />
+                                            <GridEvents OnRecordDoubleClick="ShowDetail" TValue="API_V_MARGE"></GridEvents>
+                                            <GridColumns>
+                                                <GridColumn Width="350" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CO_Nom)" HeaderText="Représentant" />
+                                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_MontantHT)" HeaderText="CA HT" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_MontantTTC)" HeaderText="CA TTC" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUPCoutTotal)" HeaderText="Cout" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUPMarge)" HeaderText="Marge" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                                    <Template>
                                                         @{
-                                                            var SumValue = (context as AggregateTemplateContext);
-                                                            <div>
-                                                                @SumValue.Sum
-                                                            </div>
+                                                            var dt = (context as API_V_MARGE);
+                                                            if (dt?.CMUPMarge > 0)
+                                                            {
+                                                                <div style="text-align: right;">
+                                                                    <span class="statustxt e-activecolor">@dt.CMUPMarge?.ToString("N2")</span>
+                                                                </div>
+                                                            }
+                                                            if (dt?.CMUPMarge < 0)
+                                                            {
+                                                                <div style="text-align: right;">
+                                                                    <span class="statustxt e-inactivecolor">@dt.CMUPMarge?.ToString("N2")</span>
+                                                                </div>
+                                                            }
                                                         }
-                                                    </FooterTemplate>
-
-                                                </GridAggregateColumn>
-                                                <GridAggregateColumn Field="@nameof(API_V_MARGE.DL_MontantTTC)" Type="AggregateType.Sum" Format="### ### ###">
-                                                    <FooterTemplate>
+                                                    </Template>
+                                                </GridColumn>
+                                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUPMargeP)" HeaderText="%" Format="P2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                                    <Template>
                                                         @{
-                                                            var SumValue = (context as AggregateTemplateContext);
-                                                            <div>
-                                                                @SumValue.Sum
-                                                            </div>
+                                                            var dt = (context as API_V_MARGE);
+                                                            if (dt?.CMUPMargeP > 0)
+                                                            {
+                                                                <div style="text-align: right;">
+                                                                    <span class="statustxt e-activecolor">@dt.CMUPMargeP?.ToString("P2")<RadzenIcon Icon="arrow_upward" /></span>
+                                                                </div>
+                                                            }
+                                                            if (dt?.CMUPMargeP < 0)
+                                                            {
+                                                                <div style="text-align: right;">
+                                                                    <span class="statustxt e-inactivecolor">@dt.CMUPMargeP?.ToString("P2")<RadzenIcon Icon="arrow_downward" /></span>
+                                                                </div>
+                                                            }
                                                         }
-                                                    </FooterTemplate>
+                                                    </Template>
+                                                </GridColumn>
+                                            </GridColumns>
 
-                                                </GridAggregateColumn>
-                                                <GridAggregateColumn Field="@nameof(API_V_MARGE.CMUPCoutTotal)" Type="AggregateType.Sum" Format="### ### ###">
-                                                    <FooterTemplate>
-                                                        @{
-                                                            var SumValue = (context as AggregateTemplateContext);
-                                                            <div>
-                                                                @SumValue.Sum
-                                                            </div>
-                                                        }
-                                                    </FooterTemplate>
+                                        </SfGrid>
+                                    </div>
+                                </Card>
 
-                                                </GridAggregateColumn>
-                                                <GridAggregateColumn Field="@nameof(API_V_MARGE.CMUPMarge)" Type="AggregateType.Sum" Format="### ### ###">
-                                                    <FooterTemplate>
-                                                        @{
-                                                            var SumValue = (context as AggregateTemplateContext);
-                                                            <div>
-                                                                @SumValue.Sum
-                                                            </div>
-                                                        }
-                                                    </FooterTemplate>
+                            </GridCol>
+                            <GridCol Xs="24" Md="8">
+                                <Card>
+                                    <div class="grid-80" style="zoom: @session.zoomLevel;">
+                                        <SfChart Title="CA des top 30 REPRESENTANTS" Width="90%" Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                            <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
+                                            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
+                                                <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+                                                <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                                            </ChartPrimaryXAxis>
+                                            <ChartPrimaryYAxis LabelFormat="N2" EdgeLabelPlacement="EdgeLabelPlacement.Shift" Visible="false">
+                                                <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                                                <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                                            </ChartPrimaryYAxis>
+                                            <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+                                            <ChartLegendSettings Visible="true" EnableHighlight="true"></ChartLegendSettings>
+                                            <ChartSeriesCollection>
+                                                <ChartSeries DataSource="@chart_items" XName="CO_Nom" YName="DL_MontantHT" Name="C.A HT" Width="2" ColumnSpacing="0.1" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Bar">
+                                                    <ChartMarker>
+                                                        <ChartDataLabel Visible="true" Position="Syncfusion.Blazor.Charts.LabelPosition.Outer" Alignment="Syncfusion.Blazor.Charts.Alignment.Near">
+                                                            <ChartDataLabelFont FontWeight="700" Size="11"></ChartDataLabelFont>
+                                                        </ChartDataLabel>
+                                                    </ChartMarker>
+                                                </ChartSeries>
+                                                <ChartSeries DataSource="@chart_items" XName="CO_Nom" YName="CMUPMarge" Name="Marge" Width="2" ColumnSpacing="0.1" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Bar">
+                                                    <ChartMarker>
+                                                        <ChartDataLabel Visible="false" Position="Syncfusion.Blazor.Charts.LabelPosition.Outer" Alignment="Syncfusion.Blazor.Charts.Alignment.Near">
+                                                            <ChartDataLabelFont FontWeight="700" Size="11"></ChartDataLabelFont>
+                                                        </ChartDataLabel>
+                                                    </ChartMarker>
+                                                </ChartSeries>
+                                            </ChartSeriesCollection>
+                                        </SfChart>
+                                    </div>
+                                </Card>
 
-                                                </GridAggregateColumn>
-                                            </GridAggregateColumns>
-                                        </GridAggregate>
-                                    </GridAggregates>
-                                    <GridPageSettings PageSize="100" />
-                                    <GridEvents OnRecordDoubleClick="ShowDetail" TValue="API_V_MARGE"></GridEvents>
-                                    <GridColumns>
-                                        <GridColumn Width="350" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CO_Nom)" HeaderText="Représentant" />
-                                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_MontantHT)" HeaderText="CA HT" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_MontantTTC)" HeaderText="CA TTC" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUPCoutTotal)" HeaderText="Cout" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUPMarge)" HeaderText="Marge" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-                                            <Template>
+                            </GridCol>
+                        </GridRow>
+                    </TabPane>
+                    <TabPane Tab="CA Détaillé" Key="2">
+                        <GridRow>
+                            <GridCol Xs="24" Md="24">
+                                <div class="grid-80" style="zoom: @session.zoomLevel;">
+                                    <SfGrid Height="100%" DataSource="@(items_details)" ID="DetailGRID" AllowExcelExport @ref=DetailGRID Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })" AllowGrouping AllowSorting>
+                                        <GridPageSettings PageSize="100" />
+                                        <GridEvents OnToolbarClick="ToolbarClickHandler_Detail" TValue="API_V_MARGE"></GridEvents>
+                                        <GridGroupSettings Columns="@(new string[] { "CO_Nom", "AR_Design" })" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates>
+                                            <CaptionTemplate>
                                                 @{
-                                                    var dt = (context as API_V_MARGE);
-                                                    if (dt?.CMUPMarge > 0)
-                                                    {
-                                                        <div style="text-align: right;">
-                                                            <span class="statustxt e-activecolor">@dt.CMUPMarge?.ToString("N2")</span>
-                                                        </div>
-                                                    }
-                                                    if (dt?.CMUPMarge < 0)
-                                                    {
-                                                        <div style="text-align: right;">
-                                                            <span class="statustxt e-inactivecolor">@dt.CMUPMarge?.ToString("N2")</span>
-                                                        </div>
-                                                    }
+                                                    var ag = (context as CaptionTemplateContext);
+                                                    <div style="margin-left: 5px;">@ag.Key</div>
                                                 }
-                                            </Template>
-                                        </GridColumn>
-                                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUPMargeP)" HeaderText="%" Format="P2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-                                            <Template>
-                                                @{
-                                                    var dt = (context as API_V_MARGE);
-                                                    if (dt?.CMUPMargeP > 0)
-                                                    {
-                                                        <div style="text-align: right;">
-                                                            <span class="statustxt e-activecolor">@dt.CMUPMargeP?.ToString("P2")<RadzenIcon Icon="arrow_upward" /></span>
-                                                        </div>
+                                            </CaptionTemplate>
+                                        </GridGroupSettings>
+                                        <GridAggregates>
+                                            <GridAggregate>
+                                                <GridAggregateColumns>
+                                                    <GridAggregateColumn Field="@nameof(API_V_MARGE.DL_MontantHT)" Type="AggregateType.Sum" Format="### ### ###">
+                                                        <FooterTemplate>
+                                                            @{
+                                                                var SumValue = (context as AggregateTemplateContext);
+                                                                <div>
+                                                                    @SumValue.Sum
+                                                                </div>
+                                                            }
+                                                        </FooterTemplate>
+                                                        <GroupCaptionTemplate>
+                                                            @{
+                                                                var SumValue = (context as AggregateTemplateContext);
+                                                                <div>
+                                                                    @SumValue.Sum
+                                                                </div>
+                                                            }
+                                                        </GroupCaptionTemplate>
+
+                                                    </GridAggregateColumn>
+                                                    <GridAggregateColumn Field="@nameof(API_V_MARGE.DL_MontantTTC)" Type="AggregateType.Sum" Format="### ### ###">
+                                                        <FooterTemplate>
+                                                            @{
+                                                                var SumValue = (context as AggregateTemplateContext);
+                                                                <div>
+                                                                    @SumValue.Sum
+                                                                </div>
+                                                            }
+                                                        </FooterTemplate>
+                                                        <GroupCaptionTemplate>
+                                                            @{
+                                                                var SumValue = (context as AggregateTemplateContext);
+                                                                <div>
+                                                                    @SumValue.Sum
+                                                                </div>
+                                                            }
+                                                        </GroupCaptionTemplate>
+
+                                                    </GridAggregateColumn>
+                                                    <GridAggregateColumn Field="@nameof(API_V_MARGE.CMUPCoutTotal)" Type="AggregateType.Sum" Format="### ### ###">
+                                                        <FooterTemplate>
+                                                            @{
+                                                                var SumValue = (context as AggregateTemplateContext);
+                                                                <div>
+                                                                    @SumValue.Sum
+                                                                </div>
+                                                            }
+                                                        </FooterTemplate>
+                                                        <GroupCaptionTemplate>
+                                                            @{
+                                                                var SumValue = (context as AggregateTemplateContext);
+                                                                <div>
+                                                                    @SumValue.Sum
+                                                                </div>
+                                                            }
+                                                        </GroupCaptionTemplate>
+
+                                                    </GridAggregateColumn>
+                                                    <GridAggregateColumn Field="@nameof(API_V_MARGE.CMUPMarge)" Type="AggregateType.Sum" Format="### ### ###">
+                                                        <FooterTemplate>
+                                                            @{
+                                                                var SumValue = (context as AggregateTemplateContext);
+                                                                <div>
+                                                                    @SumValue.Sum
+                                                                </div>
+                                                            }
+                                                        </FooterTemplate>
+                                                        <GroupCaptionTemplate>
+                                                            @{
+                                                                var SumValue = (context as AggregateTemplateContext);
+                                                                <div>
+                                                                    @SumValue.Sum
+                                                                </div>
+                                                            }
+                                                        </GroupCaptionTemplate>
+
+                                                    </GridAggregateColumn>
+                                                    <GridAggregateColumn Field="@nameof(API_V_MARGE.DL_Qte)" Type="AggregateType.Sum" Format="### ### ###">
+                                                        <FooterTemplate>
+                                                            @{
+                                                                var SumValue = (context as AggregateTemplateContext);
+                                                                <div>
+                                                                    @SumValue.Sum
+                                                                </div>
+                                                            }
+                                                        </FooterTemplate>
+                                                        <GroupCaptionTemplate>
+                                                            @{
+                                                                var SumValue = (context as AggregateTemplateContext);
+                                                                <div>
+                                                                    @SumValue.Sum
+                                                                </div>
+                                                            }
+                                                        </GroupCaptionTemplate>
+
+                                                    </GridAggregateColumn>
+                                                </GridAggregateColumns>
+                                            </GridAggregate>
+                                        </GridAggregates>
+                                        <GridPageSettings PageSize="100" />
+                                        <GridEvents OnRecordDoubleClick="ShowDetail" TValue="API_V_MARGE"></GridEvents>
+                                        <GridColumns>
+                                            <GridColumn Width="350" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CO_Nom)" HeaderText="Représentant" />
+                                            <GridColumn Width="350" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.AR_Design)" HeaderText="Article" />
+                                            <GridColumn Width="350" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CT_Intitule)" HeaderText="Client" />
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DO_Date)" HeaderText="Date" Format="dd/MM/yy" />
+                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DO_Piece)" HeaderText="Pièce" />
+                                            <GridColumn Width="65" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_Qte)" HeaderText="Qté" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                            <GridColumn Width="65" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.PUNet)" HeaderText="PU" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                            <GridColumn Width="65" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_MontantHT)" HeaderText="CA HT" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                            <GridColumn Width="65" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_MontantTTC)" HeaderText="CA TTC" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                            <GridColumn Width="65" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUPCoutTotal)" HeaderText="Cout" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                            <GridColumn Width="65" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUPMarge)" HeaderText="Marge" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                                <Template>
+                                                    @{
+                                                        var dt = (context as API_V_MARGE);
+                                                        if (dt?.CMUPMarge > 0)
+                                                        {
+                                                            <div style="text-align: right;">
+                                                                <span class="statustxt e-activecolor">@dt.CMUPMarge?.ToString("N2")</span>
+                                                            </div>
+                                                        }
+                                                        if (dt?.CMUPMarge < 0)
+                                                        {
+                                                            <div style="text-align: right;">
+                                                                <span class="statustxt e-inactivecolor">@dt.CMUPMarge?.ToString("N2")</span>
+                                                            </div>
+                                                        }
                                                     }
-                                                    if (dt?.CMUPMargeP < 0)
-                                                    {
-                                                        <div style="text-align: right;">
-                                                            <span class="statustxt e-inactivecolor">@dt.CMUPMargeP?.ToString("P2")<RadzenIcon Icon="arrow_downward" /></span>
-                                                        </div>
+                                                </Template>
+                                            </GridColumn>
+                                            <GridColumn Width="65" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CMUPMargeP)" HeaderText="%" Format="P2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                                <Template>
+                                                    @{
+                                                        var dt = (context as API_V_MARGE);
+                                                        if (dt?.CMUPMargeP > 0)
+                                                        {
+                                                            <div style="text-align: right;">
+                                                                <span class="statustxt e-activecolor">@dt.CMUPMargeP?.ToString("P2")<RadzenIcon Icon="arrow_upward" /></span>
+                                                            </div>
+                                                        }
+                                                        if (dt?.CMUPMargeP < 0)
+                                                        {
+                                                            <div style="text-align: right;">
+                                                                <span class="statustxt e-inactivecolor">@dt.CMUPMargeP?.ToString("P2")<RadzenIcon Icon="arrow_downward" /></span>
+                                                            </div>
+                                                        }
                                                     }
-                                                }
-                                            </Template>
-                                        </GridColumn>
-                                    </GridColumns>
+                                                </Template>
+                                            </GridColumn>
+                                        </GridColumns>
 
-                                </SfGrid>
-                            </div>
-                        </Card>
-
-                    </GridCol>
-                    <GridCol Xs="24" Md="8">
-                        <Card>
-                            <div class="grid-80" style="zoom: @session.zoomLevel;">
-                                <SfChart Title="CA des top 30 REPRESENTANTS" Width="90%" Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
-                                    <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
-                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
-                                        <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
-                                        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
-                                    </ChartPrimaryXAxis>
-                                    <ChartPrimaryYAxis LabelFormat="N2" EdgeLabelPlacement="EdgeLabelPlacement.Shift" Visible="false">
-                                        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
-                                        <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
-                                    </ChartPrimaryYAxis>
-                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
-                                    <ChartLegendSettings Visible="true" EnableHighlight="true"></ChartLegendSettings>
-                                    <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@chart_items" XName="CO_Nom" YName="DL_MontantHT" Name="C.A HT" Width="2" ColumnSpacing="0.1" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Bar">
-                                            <ChartMarker>
-                                                <ChartDataLabel Visible="true" Position="Syncfusion.Blazor.Charts.LabelPosition.Outer" Alignment="Syncfusion.Blazor.Charts.Alignment.Near">
-                                                    <ChartDataLabelFont FontWeight="700" Size="11"></ChartDataLabelFont>
-                                                </ChartDataLabel>
-                                            </ChartMarker>
-                                        </ChartSeries>
-                                        <ChartSeries DataSource="@chart_items" XName="CO_Nom" YName="CMUPMarge" Name="Marge" Width="2" ColumnSpacing="0.1" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Bar">
-                                            <ChartMarker>
-                                                <ChartDataLabel Visible="false" Position="Syncfusion.Blazor.Charts.LabelPosition.Outer" Alignment="Syncfusion.Blazor.Charts.Alignment.Near">
-                                                    <ChartDataLabelFont FontWeight="700" Size="11"></ChartDataLabelFont>
-                                                </ChartDataLabel>
-                                            </ChartMarker>
-                                        </ChartSeries>
-                                    </ChartSeriesCollection>
-                                </SfChart>
-                            </div>
-                        </Card>
-
-                    </GridCol>
-                </GridRow>
+                                    </SfGrid>
+                                </div>
+                            </GridCol>
+                        </GridRow>
+                    </TabPane>
+                </Tabs>
+                
             </div>
 
         </RadzenContent>
@@ -195,7 +375,10 @@ else
     [CascadingParameter]
     public SessionDT session { get; set; } = new SessionDT();
     DB db = new DB();
+    SfGrid<API_V_MARGE> RecapGRID;
+    SfGrid<API_V_MARGE> DetailGRID;
     private List<API_V_MARGE> items = new List<API_V_MARGE>();
+    private List<API_V_MARGE> items_details = new List<API_V_MARGE>();
     private List<API_V_MARGE> chart_items = new List<API_V_MARGE>();
     DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
     DateTime? date2 = new DateTime(DateTime.Today.Year, 12, 31);
@@ -206,7 +389,7 @@ else
     bool IsLoaded = false;
     protected override async Task OnInitializedAsync()
     {
-                db = session.db;
+        db = session.db;
         GC.Collect();
         await Task.Delay(1);
         await LoadData();
@@ -216,7 +399,9 @@ else
     {
         IsLoaded = false;
         await Task.Delay(300);
-        items = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).GroupBy(a => new { a.CO_Nom })
+        items_details = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).ToList();
+        items = items_details
+        .GroupBy(a => new { a.CO_Nom })
                     .Select(a => new API_V_MARGE
                         {
                             CO_Nom = a.Key.CO_Nom,
@@ -236,5 +421,19 @@ else
         await DialogService.OpenAsync<DetailsMarge>(args.RowData.AR_Design,
         new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "ClassHeight", "grid-84" }, { "CO_Nom", args.RowData.CO_Nom } },
         new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
+    }
+    public async Task ToolbarClickHandler_Recap(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "RecapGRID_excelexport") //Id is combination of Grid's ID and itemname
+        {
+            await this.RecapGRID.ExportToExcelAsync();
+        }
+    }
+    public async Task ToolbarClickHandler_Detail(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if ((args.Item.Id?.ToLower()?.Contains("excelexport"))??false) //Id is combination of Grid's ID and itemname
+        {
+            await this.DetailGRID.ExportToExcelAsync();
+        }
     }
 }

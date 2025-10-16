@@ -24,10 +24,10 @@
         </ToolbarItems>
     </SfToolbar>
     <div class="@ClassHeight" style=" zoom: @session.zoomLevel;">
-        <SfGrid  @ref=DefaultGrid AllowExcelExport AllowReordering ShowColumnChooser ID="DetailAchatGRID" Height="100%" AllowGrouping=@(grouped > 0) AllowSelection EnableHover DataSource="@(items)" AllowSorting AllowFiltering>
+        <SfGrid  @ref=DefaultGrid AllowExcelExport AllowReordering ShowColumnChooser ID="DetailAchatGRID" EnablePersistence Height="100%" AllowGrouping=@(grouped > 0) AllowSelection EnableHover DataSource="@(items)" AllowSorting AllowFiltering>
              <GridPageSettings PageSize="100" />
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-            <GridEvents OnToolbarClick="ToolbarClickHandler" TValue="API_V_ACHAT"></GridEvents>
+            <GridEvents Created="CreatedHandler" OnToolbarClick="ToolbarClickHandler" TValue="API_V_ACHAT"></GridEvents>
          <GridGroupSettings Columns="@(getGroups())" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates EnableLazyLoading>
              <CaptionTemplate>
                  @{
@@ -181,6 +181,11 @@ else
             && ((Date1 != null && a.DO_Date >= Date1) || Date1 == null)
             && ((Date2 != null && a.DO_Date <= Date2) || Date2 == null)        
         ).OrderBy(a => a.DO_Date).ToList();
+    }
+    public void CreatedHandler(object args)
+    {
+        DefaultGrid.ClearFilteringAsync();
+        DefaultGrid.ClearSortingAsync(); DefaultGrid.SearchAsync("");
     }
     private string getTiers()
     {

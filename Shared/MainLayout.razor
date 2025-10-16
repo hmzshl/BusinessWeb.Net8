@@ -648,6 +648,7 @@
 																<Collapse Style="margin: 15px; margin: 15px;
 																		margin-left: 200px;
 																		margin-right: 200px;
+																		min-height: 80vh;
 																		padding: 50px;" DefaultActiveKey="@(new[]{key})">
 
 																	@foreach (string title in session?.Authorizes?.Where(a => a.Url != null && a.Url != "null").Select(a => a.Title).Distinct())
