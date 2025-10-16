@@ -187,7 +187,7 @@
                                     <SfGrid Height="100%" DataSource="@(items_details)" ID="DetailGRID" AllowExcelExport @ref=DetailGRID Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })" AllowGrouping AllowSorting>
                                         <GridPageSettings PageSize="100" />
                                         <GridEvents OnToolbarClick="ToolbarClickHandler_Detail" TValue="API_V_MARGE"></GridEvents>
-                                        <GridGroupSettings Columns="@(new string[] { "CO_Nom", "AR_Design" })" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates>
+                                        <GridGroupSettings Columns="@(new string[] { "CO_Nom"})" EnableLazyLoading ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates>
                                             <CaptionTemplate>
                                                 @{
                                                     var ag = (context as CaptionTemplateContext);
@@ -274,25 +274,6 @@
                                                         </GroupCaptionTemplate>
 
                                                     </GridAggregateColumn>
-                                                    <GridAggregateColumn Field="@nameof(API_V_MARGE.DL_Qte)" Type="AggregateType.Sum" Format="### ### ###">
-                                                        <FooterTemplate>
-                                                            @{
-                                                                var SumValue = (context as AggregateTemplateContext);
-                                                                <div>
-                                                                    @SumValue.Sum
-                                                                </div>
-                                                            }
-                                                        </FooterTemplate>
-                                                        <GroupCaptionTemplate>
-                                                            @{
-                                                                var SumValue = (context as AggregateTemplateContext);
-                                                                <div>
-                                                                    @SumValue.Sum
-                                                                </div>
-                                                            }
-                                                        </GroupCaptionTemplate>
-
-                                                    </GridAggregateColumn>
                                                 </GridAggregateColumns>
                                             </GridAggregate>
                                         </GridAggregates>
@@ -301,9 +282,6 @@
                                         <GridColumns>
                                             <GridColumn Width="350" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CO_Nom)" HeaderText="Représentant" />
                                             <GridColumn Width="350" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.AR_Design)" HeaderText="Article" />
-                                            <GridColumn Width="350" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.CT_Intitule)" HeaderText="Client" />
-                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DO_Date)" HeaderText="Date" Format="dd/MM/yy" />
-                                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DO_Piece)" HeaderText="Pièce" />
                                             <GridColumn Width="65" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_Qte)" HeaderText="Qté" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
                                             <GridColumn Width="65" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.PUNet)" HeaderText="PU" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
                                             <GridColumn Width="65" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MARGE.DL_MontantHT)" HeaderText="CA HT" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
@@ -399,7 +377,21 @@ else
     {
         IsLoaded = false;
         await Task.Delay(300);
-        items_details = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).ToList();
+        items_details = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null))
+        .GroupBy(a => new { a.CO_Nom, a.AR_Design })
+                            .Select(a => new API_V_MARGE
+                            {
+                                CO_Nom = a.Key.CO_Nom,
+                                AR_Design = a.Key.AR_Design,
+                                DL_Qte = a.Sum(a => a.DL_Qte),
+                                PUNet = a.Sum(a => a.DL_MontantHT) / (a.Sum(a => a.DL_Qte) == 0.0m ? 1.0m : a.Sum(a => a.DL_Qte)),
+                                DL_MontantHT = a.Sum(a => a.DL_MontantHT),
+                                DL_MontantTTC = a.Sum(a => a.DL_MontantTTC),
+                                CMUPCoutTotal = a.Sum(a => a.CMUPCoutTotal),
+                                CMUPMarge = a.Sum(a => a.CMUPMarge),
+                                CMUPMargeP = a.Sum(a => a.DL_MontantHT) != 0.0m ? a.Sum(a => a.CMUPMarge) / a.Sum(a => a.DL_MontantHT) : 0.0m
+                            })
+        .ToList();
         items = items_details
         .GroupBy(a => new { a.CO_Nom })
                     .Select(a => new API_V_MARGE
