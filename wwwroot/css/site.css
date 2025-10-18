@@ -2531,3 +2531,6 @@ td .rz-badge {
     min-height: 26px;
     padding: 0px 0;
 }
+audio, canvas, embed, iframe, img, object, svg, video {
+    display: unset !important;
+}
