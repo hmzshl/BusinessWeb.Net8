@@ -415,7 +415,7 @@ else
 
         dt_chart = dt.GroupBy(a => new { a.CO_Nom }).Select(a => new API_V_ACHAT { CO_Nom = a.Key.CO_Nom, DL_MontantHT = a.Sum(a => a.DL_MontantHT) }).OrderBy(a => a.DL_MontantHT).ToList();
         rg_chart = rg.GroupBy(a => new { a.R_Intitule }).Select(a => new API_V_CREGLEMENT { R_Intitule = a.Key.R_Intitule, RG_Montant = a.Sum(a => a.RG_Montant) }).ToList();
-        loading = true;
+        loading = false;
         await Task.Delay(1);
 
 

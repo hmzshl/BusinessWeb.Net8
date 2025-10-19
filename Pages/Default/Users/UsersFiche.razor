@@ -28,7 +28,7 @@
                         </FormItem>
                     </div>
                 </TabPane>
-                <TabPane Key="2" Tab="Sociétés">
+                <TabPane Disabled=@(Id == null) Key="2" Tab="Sociétés">
                     <div style="height: 50vh; padding: 10px;">
                         <SfGrid AllowFiltering="false" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(societes)" Height="100%">
                             <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog"></GridEditSettings>
@@ -88,6 +88,8 @@
                             <Collapse DefaultActiveKey="@(new[] { "1" })">
                                 @foreach (TSocieteUser ste in societes)
                                 {
+                                    <MudBlazor.MudButton OnClick=@(args => InitAuthSelect(ste.Societe)) Variant="MudBlazor.Variant.Text" Color="MudBlazor.Color.Primary" Style="margin: 2px;">Tout selectionner</MudBlazor.MudButton>
+                                    <MudBlazor.MudButton OnClick=@(args => InitAuthRemove(ste.Societe)) Variant="MudBlazor.Variant.Text" Color="MudBlazor.Color.Error" Style="margin: 2px;">Initializer</MudBlazor.MudButton>
                                     <Panel Key="@ste.id.ToString()">
                                         <HeaderTemplate>
                                             @sdb.TSocietes.Where(a => a.id == ste.Societe)?.SingleOrDefault()?.Intitule
@@ -333,7 +335,28 @@ else
         }
 
         roles = await sc.GetRoles();
+        StateHasChanged();
         IsLoaded = true;
+    }
+    private async Task InitAuthSelect(int ste)
+    {
+        var dt = sdb.TAuthorizes.Where(a => a.Societe == ste && a.UserID == Id);
+        foreach (TAuthorize item in dt)
+        {
+            item.Visible = true;
+        }
+        sdb.SaveChanges();
+        StateHasChanged();
+    }
+    private async Task InitAuthRemove(int ste)
+    {
+        var dt = sdb.TAuthorizes.Where(a => a.Societe == ste && a.UserID == Id);
+        foreach (TAuthorize item in dt)
+        {
+            item.Visible = false;
+        }
+        sdb.SaveChanges();
+        StateHasChanged();
     }
     private async Task InitCollas()
     {

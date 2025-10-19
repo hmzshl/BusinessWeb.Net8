@@ -228,7 +228,8 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Liste des personnels", Url = "personnels" });
 			//list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Liste des nomenclatures", Url = "nomenclatures" });
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Ordres de fabrications", Url = "ordres-fabrication" });
-			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Documents d'achats", Url = "fabrication-achats" });
+			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Documents de sorties", Url = "fabrication-sorties" });
+
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Pointage Personnels", Url = "pointage-personnel" });
 
 

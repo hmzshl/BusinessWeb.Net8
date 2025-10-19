@@ -123,6 +123,7 @@
 											@*<RadzenMenuItem Text="Liste des nomenclatures" Path="/nomenclatures" Visible=@(IsVisible("nomenclatures"))></RadzenMenuItem>*@
 											
 											<RadzenMenuItem Text="Ordres de fabrications" Path="/ordres-fabrication" Visible=@(IsVisible("ordres-fabrication"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Documents de sorties" Path="/fabrication-sorties" Visible=@(IsVisible("fabrication-sorties"))></RadzenMenuItem>
 											<RadzenMenuItem Text="Documents d'achats" Path="/fabrication-achats" Visible=@(IsVisible("fabrication-achats"))></RadzenMenuItem>
 											
 										</RadzenMenuItem>
@@ -224,28 +225,12 @@
 									if (session.SelectedAPP == 14)
 									{
 										<RadzenMenuItem Text="Ventes" Icon="people" Visible=@(TitleIsVisible("Ventes"))>
-											<RadzenMenuItem Text="Liste des clients" Path="/clients" Visible=@(IsVisible("clients"))></RadzenMenuItem>
-											<RadzenMenuItem Text="Documents">
-												<RadzenMenuItem Disabled Text="Devis" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
-												<RadzenMenuItem Disabled Text="Commandes" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
-												<RadzenMenuItem Text="Livraisons/Factures" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
-											</RadzenMenuItem>
-
-											<RadzenMenuItem Text="Balance agée" Path="/et-balanceagee-client" Visible=@(IsVisible("et-balanceagee-client"))></RadzenMenuItem>
-											<RadzenMenuItem Text="Réglements">
-												<RadzenMenuItem Text="Réglements clients" Path="/reglements-clients" Visible=@(IsVisible("reglements-clients"))></RadzenMenuItem>
-												<RadzenMenuItem Text="Echéances clients" Path="/et-echeances-clients" Visible=@(IsVisible("et-echeances-clients"))></RadzenMenuItem>
-											</RadzenMenuItem>
-
 											<RadzenMenuItem Text="Tableau de bord">
 												<RadzenMenuItem Text="Journalier" Path="/tb-commercial-journalier" Visible=@(IsVisible("tb-commercial-journalier"))></RadzenMenuItem>
 												<RadzenMenuItem Text="Mensuel" Path="/tb-commercial-mensuel" Visible=@(IsVisible("tb-commercial-mensuel"))></RadzenMenuItem>
 												<RadzenMenuItem Text="Annuel" Path="/tb-commercial-annuel" Visible=@(IsVisible("tb-commercial-annuel"))></RadzenMenuItem>
 												<RadzenMenuItem Text="Global" Path="/tb-commercial-global" Visible=@(IsVisible("tb-commercial-global"))></RadzenMenuItem>
 											</RadzenMenuItem>
-
-
-
 											<RadzenMenuItem Text="Chiffre d'affaire">
 												<RadzenMenuItem Text="Par Journée" Path="/et-ca-journee" Visible=@(IsVisible("et-ca-journee"))></RadzenMenuItem>
 												<RadzenMenuItem Text="Par Mois" Path="/et-ca-mois" Visible=@(IsVisible("et-ca-mois"))></RadzenMenuItem>
@@ -256,6 +241,25 @@
 												<RadzenMenuItem Text="Par Region" Path="/et-ca-region" Visible=@(IsVisible("et-ca-region"))></RadzenMenuItem>
 												<RadzenMenuItem Text="Par Affaire" Path="/et-ca-affaire" Visible=@(IsVisible("et-ca-affaire"))></RadzenMenuItem>
 											</RadzenMenuItem>
+											<RadzenMenuItem Text="Liste des clients" Path="/clients" Visible=@(IsVisible("clients"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Balance agée" Path="/et-balanceagee-client" Visible=@(IsVisible("et-balanceagee-client"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Documents">
+												<RadzenMenuItem Disabled Text="Devis" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
+												<RadzenMenuItem Disabled Text="Commandes" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Livraisons/Factures" Path="/releve-ventes" Visible=@(IsVisible("releve-ventes"))></RadzenMenuItem>
+											</RadzenMenuItem>
+
+											
+											<RadzenMenuItem Text="Réglements">
+												<RadzenMenuItem Text="Réglements clients" Path="/reglements-clients" Visible=@(IsVisible("reglements-clients"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Echéances clients" Path="/et-echeances-clients" Visible=@(IsVisible("et-echeances-clients"))></RadzenMenuItem>
+											</RadzenMenuItem>
+
+
+
+
+
+
 											<RadzenMenuItem Text="Comparatif">
 												<RadzenMenuItem Text="Par Année" Path="/et-vente-annuel" Visible=@(IsVisible("et-vente-annuel"))></RadzenMenuItem>
 												<RadzenMenuItem Text="Par Mois" Path="/et-vente-mensuel" Visible=@(IsVisible("et-vente-mensuel"))></RadzenMenuItem>
@@ -264,18 +268,6 @@
 
 										</RadzenMenuItem>
 										<RadzenMenuItem Text="Achats" Icon="shopping_cart_checkout" Visible=@(TitleIsVisible("Achats"))>
-											<RadzenMenuItem Text="Liste des fournisseurs" Path="/fournisseurs" Visible=@(IsVisible("fournisseurs"))></RadzenMenuItem>
-											<RadzenMenuItem Text="Documents">
-												<RadzenMenuItem Disabled Text="Commandes" Path="/releve-achats" Visible=@(IsVisible("releve-achats"))></RadzenMenuItem>
-												<RadzenMenuItem Text="Livraisons/Factures" Path="/releve-achats" Visible=@(IsVisible("releve-achats"))></RadzenMenuItem>
-											</RadzenMenuItem>
-
-											<RadzenMenuItem Text="Balance agée" Path="/et-balanceagee-fournisseur" Visible=@(IsVisible("et-balanceagee-fournisseur"))></RadzenMenuItem>
-											<RadzenMenuItem Text="Réglements">
-												<RadzenMenuItem Text="Réglements fournisseurs" Path="/reglements-fournisseurs" Visible=@(IsVisible("reglements-fournisseurs"))></RadzenMenuItem>
-												<RadzenMenuItem Text="Echéances fournisseurs" Path="/et-echeances-fournisseurs" Visible=@(IsVisible("et-echeances-fournisseurs"))></RadzenMenuItem>
-											</RadzenMenuItem>
-
 											<RadzenMenuItem Text="Tableau de bord">
 												<RadzenMenuItem Text="Journalier" Path="/tb-achat-journalier" Visible=@(IsVisible("tb-achat-journalier"))></RadzenMenuItem>
 												<RadzenMenuItem Text="Mensuel" Path="/tb-achat-mensuel" Visible=@(IsVisible("tb-achat-mensuel"))></RadzenMenuItem>
@@ -291,6 +283,20 @@
 												<RadzenMenuItem Text="Par Famille" Path="/et-achat-famille" Visible=@(IsVisible("et-achat-famille"))></RadzenMenuItem>
 												<RadzenMenuItem Text="Par Affaire" Path="/et-achat-affaire" Visible=@(IsVisible("et-achat-affaire"))></RadzenMenuItem>
 											</RadzenMenuItem>
+											<RadzenMenuItem Text="Liste des fournisseurs" Path="/fournisseurs" Visible=@(IsVisible("fournisseurs"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Balance agée" Path="/et-balanceagee-fournisseur" Visible=@(IsVisible("et-balanceagee-fournisseur"))></RadzenMenuItem>
+											<RadzenMenuItem Text="Documents">
+												<RadzenMenuItem Disabled Text="Commandes" Path="/releve-achats" Visible=@(IsVisible("releve-achats"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Livraisons/Factures" Path="/releve-achats" Visible=@(IsVisible("releve-achats"))></RadzenMenuItem>
+											</RadzenMenuItem>
+
+											
+											<RadzenMenuItem Text="Réglements">
+												<RadzenMenuItem Text="Réglements fournisseurs" Path="/reglements-fournisseurs" Visible=@(IsVisible("reglements-fournisseurs"))></RadzenMenuItem>
+												<RadzenMenuItem Text="Echéances fournisseurs" Path="/et-echeances-fournisseurs" Visible=@(IsVisible("et-echeances-fournisseurs"))></RadzenMenuItem>
+											</RadzenMenuItem>
+
+
 											<RadzenMenuItem Text="Comparatif">
 												<RadzenMenuItem Text="Par Année" Path="/et-achat-annuel" Visible=@(IsVisible("et-achat-annuel"))></RadzenMenuItem>
 												<RadzenMenuItem Text="Par Mois" Path="/et-achat-mensuel" Visible=@(IsVisible("et-achat-mensuel"))></RadzenMenuItem>
@@ -433,7 +439,7 @@
 																@if (license.IsFeaturePresentEx(7))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(7))">
+																		<Button Disabled=@(!AppAvailable(7)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(7))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/recycle.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -447,7 +453,7 @@
 																@if (license.IsFeaturePresentEx(4))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(4))">
+																		<Button Disabled=@(!AppAvailable(4)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(4))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/toolbox.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -461,7 +467,7 @@
 																@if (license.IsFeaturePresentEx(5))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(5))">
+																		<Button Disabled=@(!AppAvailable(5)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(5))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/taxi.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -475,7 +481,7 @@
 																@if (license.IsFeaturePresentEx(6))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(6))">
+																		<Button Disabled=@(!AppAvailable(6)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(6))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/profile.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -489,7 +495,7 @@
 																@if (license.IsFeaturePresentEx(10))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(10))">
+																		<Button Disabled=@(!AppAvailable(10)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(10))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/takeoff.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -504,7 +510,7 @@
 																@if (license.IsFeaturePresentEx(14))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(14))">
+																		<Button Disabled=@(!AppAvailable(14)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(14))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/piechart.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -517,7 +523,7 @@
 																@if (license.IsFeaturePresentEx(9))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(9))">
+																		<Button Disabled=@(!AppAvailable(9)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(9))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/tools.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -530,7 +536,7 @@
 																@if (license.IsFeaturePresentEx(18))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(18))">
+																		<Button Disabled=@(!AppAvailable(18)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(18))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/running.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -543,7 +549,7 @@
 																@if (license.IsFeaturePresentEx(19))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(19))">
+																		<Button Disabled=@(!AppAvailable(19)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(19))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/shoeprints.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -556,7 +562,7 @@
 															@if (license.IsFeaturePresentEx(20))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(20))">
+																		<Button Disabled=@(!AppAvailable(20)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(20))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/chart-2.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -570,7 +576,7 @@
 																@if (license.IsFeaturePresentEx(8))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(8))">
+																		<Button Disabled=@(!AppAvailable(8)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(8))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/camera.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -583,7 +589,7 @@
 																@if (license.IsFeaturePresentEx(12))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(12))">
+																		<Button Disabled=@(!AppAvailable(12)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(12))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/recycle.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -596,7 +602,7 @@
 																@if (license.IsFeaturePresentEx(13))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(13))">
+																		<Button Disabled=@(!AppAvailable(13)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(13))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/trends.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -609,7 +615,7 @@
 																@if (license.IsFeaturePresentEx(15))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(15))">
+																		<Button Disabled=@(!AppAvailable(15)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(15))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/map.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -622,7 +628,7 @@
 																@if (license.IsFeaturePresentEx(16))
 																{
 																	<div>
-																		<Button Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(16))">
+																		<Button Disabled=@(!AppAvailable(16)) Type="@AntDesign.ButtonType.Link" OnClick="@(args => SelectAPP(16))">
 																			<RadzenCard class="ant-card-hoverable green-card sh-card">
 																				<RadzenImage Path="/images/polaroids.png" Style="width: 70px; height: 70px;">
 																				</RadzenImage>
@@ -874,9 +880,14 @@
 	{
 		SyncDialog.AlertAsync(ex.ToString());
 	}
+	private bool AppAvailable(int app)
+	{
+		//var rs = session?.Authorizes?.Where(a => a.SelectedAPP == app && a.Societe == session?.Societe.id && a.Visible).Any();
+		return true;
+	}
 	protected override async Task OnInitializedAsync()
 	{
-		await Task.Delay(1);
+		await Task.Delay(100);
 		TLicense row = new TLicense();
 		var dt = sdb.TLicenses.OrderBy(a => a.id).ToList();
 		if (dt.Count() != 0)
@@ -894,7 +905,6 @@
 			if ((license.Status == LicenseStatus.Valid || license.MachineCodeAsString == macAddr))
 			{
 				await Init();
-				await InitAuth();
 			}
 			session.license = license;
 		}
@@ -902,34 +912,9 @@
 		{
 
 		}
+		StateHasChanged();
 		IsLoaded = true;
 
-	}
-	private async Task InitAuth()
-	{
-		/*
-		foreach (TSociete ste in societes)
-		{
-			var items = fn.AuthItems();
-			List<TAuthorize> auths = sdb.TAuthorizes.AsNoTracking().ToList();
-			foreach (AuthItems item in items)
-			{
-				var auth = auths.Where(a => a.Societe == ste.id && a.Url == item.Url && a.UserID == sc.User.Id).ToList();
-				if (auth.Count == 0)
-				{
-					var ln = new TAuthorize();
-					ln.UserID = sc.User.Id;
-					ln.Url = item.Url;
-					ln.Societe = ste.id;
-					ln.SelectedAPP = item.SelectedAPP ?? 0;
-					ln.Title = item.Title;
-					ln.Description = item.Description;
-
-					sdb.Add(ln);
-					}
-				}
-			}
-		sdb.SaveChanges();*/
 	}
 	private bool IsVisible(string url)
 	{
@@ -948,14 +933,14 @@
 	}
 	private async Task Init()
 	{
-		societes = sdb.TSocietes.ToList();
+		
 		if (sc.User != null)
 		{
+			societes = sdb.TSocietes.FromSqlRaw("SELECT a.* FROM T_Societe a WHERE a.id IN (SELECT Societe FROM T_SocieteUser WHERE UserID = {0})", sc.User.Id).ToList();
 			var user = sdb.AspNetUsers.FromSqlRaw("SELECT a.* FROM AspNetUsers a WHERE a.Id = {0}", sc.User?.Id);
 			if (user.Count() != 0)
 			{
 				session.Societe = societes.Where(a => a.id == user.First().SelectedSociete).SingleOrDefault() ?? societes?.First();
-				//session.SelectedAPP = user.First().SelectedAPP ?? 0;
 			}
 			else
 			{
@@ -1092,7 +1077,6 @@
 	}
 	private async Task UpdateAuth()
 	{
-		//await InitAuth();
 		if (session?.Societe != null && sc.User != null)
 		{
 			session.Authorizes = sdb.TAuthorizes.Where(a => a.Societe == session.Societe.id && a.UserID == sc.User.Id && a.SelectedAPP == session.SelectedAPP && a.Visible && fn.AuthItems().Select(b => b.Url).Contains(a.Url)).ToList();

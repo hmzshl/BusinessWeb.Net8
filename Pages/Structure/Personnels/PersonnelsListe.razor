@@ -5,36 +5,38 @@
 {
 	<Card_1 Title="LISTE DES PERSONNELS">
 		<RadzenContent Container="main">
-			<div class="grid-90" style="zoom: @session.zoomLevel;">
-				<SfGrid Height="100%" AllowResizing AllowSorting AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items"
-						Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport", "Add", "Delete" })">
-					<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-					<GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_PERSONNEL"></GridEvents>
-					<GridPageSettings PageSize="100"></GridPageSettings>
-					<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-					<GridTemplates>
-						<EmptyRecordTemplate>
-							<Empty></Empty>
-						</EmptyRecordTemplate>
-					</GridTemplates>
-					<GridColumns>
-						<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.Nom)" HeaderText="Nom"></GridColumn>
-						<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.Matricule)" HeaderText="Matricule"></GridColumn>
-						<GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.CIN)" HeaderText="CIN"></GridColumn>
-						<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.DateNaissance)" HeaderText="Naissance" Format="dd/MM/yy"></GridColumn>
-						<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.TelephonePerso)" HeaderText="Tél Person"></GridColumn>
-						<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.TelephonePro)" HeaderText="Tél Pro"></GridColumn>
-						<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.TelephoneAutre)" HeaderText="Autre Tél"></GridColumn>
-						<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.NationaliteIntitule)" HeaderText="Nationalité" />
-						<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.ContratIntitule)" HeaderText="Contrat" />
-						<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.SituationFamilialeIntitule)" HeaderText="Sit. Fam." />
-						<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.AgenceIntitule)" HeaderText="Agence" />
-						<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.DepartementIntitule)" HeaderText="Département" />
-						<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.FonctionIntitule)" HeaderText="Fonction" />
-					</GridColumns>
-					<SfSpinner @bind-Visible="@loading">
-					</SfSpinner>
-				</SfGrid>
+			<div class="grid-90">
+				<div style="zoom: @session.zoomLevel; height: 100%;" >
+					<SfGrid Height="100%" AllowResizing AllowSorting AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items"
+							Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport", "Add", "Delete" })">
+						<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+						<GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_PERSONNEL"></GridEvents>
+						<GridPageSettings PageSize="100"></GridPageSettings>
+						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+						<GridTemplates>
+							<EmptyRecordTemplate>
+								<Empty></Empty>
+							</EmptyRecordTemplate>
+						</GridTemplates>
+						<GridColumns>
+							<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.Nom)" HeaderText="Nom"></GridColumn>
+							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.Matricule)" HeaderText="Matricule"></GridColumn>
+							<GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.CIN)" HeaderText="CIN"></GridColumn>
+							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.DateNaissance)" HeaderText="Naissance" Format="dd/MM/yy"></GridColumn>
+							<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.TelephonePerso)" HeaderText="Tél Person"></GridColumn>
+							<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.TelephonePro)" HeaderText="Tél Pro"></GridColumn>
+							<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.TelephoneAutre)" HeaderText="Autre Tél"></GridColumn>
+							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.NationaliteIntitule)" HeaderText="Nationalité" />
+							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.ContratIntitule)" HeaderText="Contrat" />
+							<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.SituationFamilialeIntitule)" HeaderText="Sit. Fam." />
+							<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.AgenceIntitule)" HeaderText="Agence" />
+							<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.DepartementIntitule)" HeaderText="Département" />
+							<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_PERSONNEL.FonctionIntitule)" HeaderText="Fonction" />
+						</GridColumns>
+						<SfSpinner @bind-Visible="@loading">
+						</SfSpinner>
+					</SfGrid>
+				</div>
 			</div>
 		</RadzenContent>
 	</Card_1>
