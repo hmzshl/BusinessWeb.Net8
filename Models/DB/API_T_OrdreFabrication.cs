@@ -31,6 +31,8 @@ public partial class API_T_OrdreFabrication
 
     public DateTime? DateLivraison { get; set; }
 
+    public bool StockCreated { get; set; }
+
     public virtual ICollection<API_T_OrdreFabricationLigne> API_T_OrdreFabricationLigne { get; set; } = new List<API_T_OrdreFabricationLigne>();
 
     public virtual ICollection<API_T_OrdreFabricationPointage> API_T_OrdreFabricationPointage { get; set; } = new List<API_T_OrdreFabricationPointage>();

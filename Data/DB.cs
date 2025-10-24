@@ -4220,6 +4220,7 @@ public partial class DB : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.Statut).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabrication_Statut");
+            entity.Property(e => e.StockCreated).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabrication_StockCreated");
 
             entity.HasOne(d => d.CA_NumNavigation).WithMany(p => p.API_T_OrdreFabrication)
                 .HasPrincipalKey(p => p.CA_Num)
@@ -4254,6 +4255,12 @@ public partial class DB : DbContext
             entity.Property(e => e.PreparationCreated).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabricationDetail_PreparationCreated");
             entity.Property(e => e.Qte)
                 .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabricationDetail_Qte")
+                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.QtePreparation)
+                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabricationDetail_QtePreparation")
+                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.QteStock)
+                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabricationDetail_QteStock")
                 .HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.API_T_OrdreFabricationDetail)
