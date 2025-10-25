@@ -29,14 +29,28 @@
 						</GridCol>
 						<GridCol Xs="24" Md="17">
 							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Client" LabelColSpan="4">
-								<SfDropDownList Query="@fn.LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0).Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Num+" - "+a.CT_Intitule}))" @bind-Value="@row.CT_Num">
+								<SfDropDownList Query="@fn.LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" 
+								DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0))" @bind-Value="@row.CT_Num">
 									<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 									<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+									<DropDownListTemplates TItem="F_COMPTET">
+										<ValueTemplate>
+											<div style="padding: 2px 5px;">
+												<b>@context.CT_Num</b> - @context.CT_Intitule
+											</div>
+										</ValueTemplate>
+										<ItemTemplate>
+											<div>
+												<b>@context.CT_Num</b> - @context.CT_Intitule
+											</div>
+										</ItemTemplate>
+									</DropDownListTemplates>
 								</SfDropDownList>
 							</FormItem>
 
 							<FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse" LabelColSpan="4">
-								<SfDropDownList Readonly Query="@fn.LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0))" @bind-Value="@row.CT_Num">
+								<SfDropDownList Readonly Query="@fn.LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" 
+								DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0))" @bind-Value="@row.CT_Num">
 									<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 									<DropDownListFieldSettings Text="CT_Adresse" Value="CT_Num" />
 								</SfDropDownList>
@@ -49,10 +63,10 @@
 			<GridCol Xs="24" Md="7">
 
 			</GridCol>
-			<GridCol Xs="24" Md="3">
+			<GridCol Xs="24" Md="4">
 				<label style="font-size: 13px;" class="ant-form-item-label">Date</label>
 			</GridCol>
-			<GridCol Xs="24" Md="5">
+			<GridCol Xs="24" Md="4">
 				<label style="font-size: 13px;" class="ant-form-item-label">Référence</label>
 			</GridCol>
 			<GridCol Xs="24" Md="9">
@@ -70,10 +84,10 @@
 								
 							</RadzenStack>
 						</GridCol>
-						<GridCol Xs="24" Md="3">
+						<GridCol Xs="24" Md="4">
 							<SfDatePicker TValue="DateTime?" @bind-Value="@row.OrdreMissionDate" />
 						</GridCol>
-						<GridCol Xs="24" Md="5">
+						<GridCol Xs="24" Md="4">
 							<SfTextBox @bind-Value="@row.OrdreMissionRef" />
 						</GridCol>
 						<GridCol Xs="24" Md="9">
@@ -90,10 +104,10 @@
 
 							</RadzenStack>
 						</GridCol>
-						<GridCol Xs="24" Md="3">
+						<GridCol Xs="24" Md="4">
 							<SfDatePicker TValue="DateTime?" @bind-Value="@row.RapportMissionDate" />
 						</GridCol>
-						<GridCol Xs="24" Md="5">
+						<GridCol Xs="24" Md="4">
 							<SfTextBox @bind-Value="@row.RapportMissionRef" />
 						</GridCol>
 						<GridCol Xs="24" Md="9">
@@ -109,10 +123,10 @@
 
 							</RadzenStack>
 						</GridCol>
-						<GridCol Xs="24" Md="3">
+						<GridCol Xs="24" Md="4">
 							<SfDatePicker TValue="DateTime?" @bind-Value="@row.BordereauEnvoiDate" />
 						</GridCol>
-						<GridCol Xs="24" Md="5">
+						<GridCol Xs="24" Md="4">
 							<SfTextBox @bind-Value="@row.BordereauEnvoiRef" />
 						</GridCol>
 						<GridCol Xs="24" Md="9">
@@ -128,10 +142,10 @@
 
 							</RadzenStack>
 						</GridCol>
-						<GridCol Xs="24" Md="3">
+						<GridCol Xs="24" Md="4">
 							<SfDatePicker TValue="DateTime?" @bind-Value="@row.FicheReceptionDate" />
 						</GridCol>
-						<GridCol Xs="24" Md="5">
+						<GridCol Xs="24" Md="4">
 							<SfTextBox @bind-Value="@row.FicheReceptionRef" />
 						</GridCol>
 						<GridCol Xs="24" Md="9">
@@ -147,10 +161,10 @@
 
 							</RadzenStack>
 						</GridCol>
-						<GridCol Xs="24" Md="3">
+						<GridCol Xs="24" Md="4">
 							<SfDatePicker TValue="DateTime?" @bind-Value="@row.DechargeMaterielDate" />
 						</GridCol>
-						<GridCol Xs="24" Md="5">
+						<GridCol Xs="24" Md="4">
 							<SfTextBox @bind-Value="@row.DechargeMaterielRef" />
 						</GridCol>
 						<GridCol Xs="24" Md="9">
@@ -166,10 +180,10 @@
 
 							</RadzenStack>
 						</GridCol>
-						<GridCol Xs="24" Md="3">
+						<GridCol Xs="24" Md="4">
 							<SfDatePicker TValue="DateTime?" @bind-Value="@row.EnqueteSatisfactionDate" />
 						</GridCol>
-						<GridCol Xs="24" Md="5">
+						<GridCol Xs="24" Md="4">
 							<SfTextBox @bind-Value="@row.EnqueteSatisfactionRef" />
 						</GridCol>
 						<GridCol Xs="24" Md="9">
@@ -192,10 +206,10 @@
 
 							</RadzenStack>
 						</GridCol>
-						<GridCol Xs="24" Md="3">
+						<GridCol Xs="24" Md="4">
 							<SfDatePicker TValue="DateTime?" @bind-Value="@row.FeuilleMesureDate" />
 						</GridCol>
-						<GridCol Xs="24" Md="5">
+						<GridCol Xs="24" Md="4">
 							<SfTextBox @bind-Value="@row.FeuilleMesureRef" />
 						</GridCol>
 						<GridCol Xs="24" Md="9">
@@ -212,10 +226,10 @@
 
 							</RadzenStack>
 						</GridCol>
-						<GridCol Xs="24" Md="3">
+						<GridCol Xs="24" Md="4">
 							<SfDatePicker TValue="DateTime?" @bind-Value="@row.CertificatEtalonnageDate" />
 						</GridCol>
-						<GridCol Xs="24" Md="5">
+						<GridCol Xs="24" Md="4">
 							<SfTextBox @bind-Value="@row.CertificatEtalonnageRef" />
 						</GridCol>
 						<GridCol Xs="24" Md="9">
@@ -231,10 +245,10 @@
 
 							</RadzenStack>
 						</GridCol>
-						<GridCol Xs="24" Md="3">
+						<GridCol Xs="24" Md="4">
 							<SfDatePicker TValue="DateTime?" @bind-Value="@row.FeuilleCalculIncertitudeDate" />
 						</GridCol>
-						<GridCol Xs="24" Md="5">
+						<GridCol Xs="24" Md="4">
 							<SfTextBox @bind-Value="@row.FeuilleCalculIncertitudeRef" />
 						</GridCol>
 						<GridCol Xs="24" Md="9">
@@ -250,10 +264,10 @@
 
 							</RadzenStack>
 						</GridCol>
-						<GridCol Xs="24" Md="3">
+						<GridCol Xs="24" Md="4">
 							<SfDatePicker TValue="DateTime?" @bind-Value="@row.ConstatsVerificationDate" />
 						</GridCol>
-						<GridCol Xs="24" Md="5">
+						<GridCol Xs="24" Md="4">
 							<SfTextBox @bind-Value="@row.ConstatsVerificationRef" />
 						</GridCol>
 						<GridCol Xs="24" Md="9">
@@ -269,10 +283,10 @@
 
 							</RadzenStack>
 						</GridCol>
-						<GridCol Xs="24" Md="3">
+						<GridCol Xs="24" Md="4">
 							<SfDatePicker TValue="DateTime?" @bind-Value="@row.FicheAnomalieTechniqueDate" />
 						</GridCol>
-						<GridCol Xs="24" Md="5">
+						<GridCol Xs="24" Md="4">
 							<SfTextBox @bind-Value="@row.FicheAnomalieTechniqueRef" />
 						</GridCol>
 						<GridCol Xs="24" Md="9">
@@ -288,10 +302,10 @@
 
 							</RadzenStack>
 						</GridCol>
-						<GridCol Xs="24" Md="3">
+						<GridCol Xs="24" Md="4">
 							<SfDatePicker TValue="DateTime?" @bind-Value="@row.AutresDate" />
 						</GridCol>
-						<GridCol Xs="24" Md="5">
+						<GridCol Xs="24" Md="4">
 							<SfTextBox @bind-Value="@row.AutresRef" />
 						</GridCol>
 						<GridCol Xs="24" Md="9">

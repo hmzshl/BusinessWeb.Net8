@@ -2,7 +2,7 @@
 @attribute [Authorize(Roles = "Super Admin,Admin,Direction, Responsable RH,Responsable Materiel, Assistant Chantier")]
 @if (IsLoaded)
 {
-	<Card_1 Title="LISTE DES ORDRES DE FABRICATION">
+	<Card_1 Title="@Title">
 		<RadzenContent Container="main">
 			<div class="grid-90">
 				<div style="zoom: @session.zoomLevel; height: 100%;">
@@ -63,7 +63,22 @@
 									}
 								</Template>
 							</GridColumn>
-							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.PreparationCreated)" HeaderText="Transferé">
+							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.StockCreated)" HeaderText="TR.Magasin">
+								<Template>
+									@{
+										var dt = (context as API_T_OrdreFabrication);
+										if (dt.StockCreated)
+										{
+											<RadzenIcon IconStyle="IconStyle.Success" Icon="check_circle" style="font-weight: 600;" />
+										}
+										else
+										{
+											<RadzenIcon IconStyle="IconStyle.Warning" Icon="schedule" style="font-weight: 600;" />
+										}
+									}
+								</Template>
+							</GridColumn>
+							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.PreparationCreated)" HeaderText="DA.Crée">
 								<Template>
 									@{
 										var dt = (context as API_T_OrdreFabrication);
@@ -104,7 +119,10 @@ else
 	DB db = new DB();
 	//Components
 	private SfGrid<API_T_OrdreFabrication> DefaultGrid;
-
+	[Parameter]
+	public bool StockCreated { get; set; } = false;
+	[Parameter]
+	public string Title { get; set; } = "LISTE DES ORDRES DE FABRICATION";
 
 	private List<API_T_OrdreFabrication> items = new List<API_T_OrdreFabrication>();
 	bool loading = false;
@@ -121,6 +139,7 @@ else
 	private async Task LoadData()
 	{
 		items = session.db.API_T_OrdreFabrication
+        .Where(a => (StockCreated && a.StockCreated) || (!StockCreated))
 		.Include(a => a.ResponsableNavigation)
 		.Include(a => a.CA_NumNavigation)
 		.Include(a => a.CT_NumNavigation)
@@ -133,14 +152,14 @@ else
 	{
 
 		await DialogService.OpenAsync<OrdreFabricationFiche>(args.RowData.Numero,
-	new Dictionary<string, object>() { { "id", args.RowData.id } },
+	new Dictionary<string, object>() { { "id", args.RowData.id }, { "StockCreated", StockCreated } },
 	new Radzen.DialogOptions() { Width = "95%", Height = "95%", CloseDialogOnEsc = false, Style="max-width: 1500px;" });
 		await LoadData();
 	}
 	private async Task Add()
 	{
 		await DialogService.OpenAsync<OrdreFabricationFiche>($"Ajouter un élément",
-		new Dictionary<string, object>() { { "id", 0 } },
+		new Dictionary<string, object>() { { "id", 0 }, { "StockCreated", StockCreated } },
 		new Radzen.DialogOptions() { Width = "95%", Height = "95%", CloseDialogOnEsc = false, Style = "max-width: 1500px;" });
 		await LoadData();
 	}

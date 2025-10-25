@@ -41,6 +41,18 @@
 									TValue="string" TItem="F_COMPTET" DataSource="@clients" @bind-Value="@row.CT_Num">
 						<DropDownListEvents TValue="string" TItem="F_COMPTET" ValueChange="@OnClientChange" />
 						<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+						<DropDownListTemplates TItem="F_COMPTET">
+							<ValueTemplate>
+								<div style="padding: 2px 5px;">
+									<b>@context.CT_Num</b> - @context.CT_Intitule
+								</div>
+							</ValueTemplate>
+							<ItemTemplate>
+								<div>
+									<b>@context.CT_Num</b> - @context.CT_Intitule
+								</div>
+							</ItemTemplate>
+						</DropDownListTemplates>
 					</SfDropDownList>
 				</FormItem>
 				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Nom Client">
@@ -145,12 +157,7 @@
 		GC.Collect();
 		instruments = db.F_ARTICLE.ToList();
 		clients = db.F_COMPTET.Where(a => a.CT_Type == 0)
-							.OrderBy(a => a.CT_Intitule)
-							.Select(a => new F_COMPTET
-							{
-								CT_Num = a.CT_Num,
-								CT_Intitule = a.CT_Num + " - " + a.CT_Intitule
-							}).ToList();
+							.OrderBy(a => a.CT_Intitule).ToList();
 
 		if (id == 0)
 		{

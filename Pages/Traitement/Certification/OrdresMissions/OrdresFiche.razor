@@ -51,9 +51,21 @@
 			<Card Style="height: 135px;">
 				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Client">
 					<SfDropDownList Query="@LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET"
-									DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0).OrderBy(a => a.CT_Intitule).Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule}))" @bind-Value="@row.CT_Num">
+									DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0).OrderBy(a => a.CT_Intitule))" @bind-Value="@row.CT_Num">
 						<DropDownListEvents TValue="string" TItem="F_COMPTET" />
 						<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+						<DropDownListTemplates TItem="F_COMPTET">
+							<ValueTemplate>
+								<div style="padding: 2px 5px;">
+									<b>@context.CT_Num</b> - @context.CT_Intitule
+								</div>
+							</ValueTemplate>
+							<ItemTemplate>
+								<div>
+									<b>@context.CT_Num</b> - @context.CT_Intitule
+								</div>
+							</ItemTemplate>
+						</DropDownListTemplates>
 					</SfDropDownList>
 				</FormItem>
 				<FormItem LabelAlign="AntLabelAlignType.Left" Label="Mission">
