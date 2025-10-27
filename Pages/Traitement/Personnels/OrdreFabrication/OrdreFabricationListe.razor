@@ -9,7 +9,7 @@
 					<SfGrid Height="100%" AllowResizing AllowSorting AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid"
 							AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items"
 							Toolbar="@(new List<object>() { "ColumnChooser", "Search", "Add", "Delete" })">
-						<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+						<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(!StockCreated)" AllowDeleting="@(!StockCreated)" AllowEditing="@(!StockCreated)" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
 						<GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_T_OrdreFabrication"></GridEvents>
 						<GridPageSettings PageSize="100"></GridPageSettings>
 						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
@@ -145,7 +145,7 @@ else
 		.Include(a => a.CT_NumNavigation)
 		.Include(a => a.API_T_OrdreFabricationLigne)
 		.ThenInclude(a => a.AR_RefNavigation)
-		.OrderBy(a => a.Date).ToList();
+		.OrderByDescending(a => a.Date).ToList();
 	}
 
 	protected async Task Edit(RecordDoubleClickEventArgs<API_T_OrdreFabrication> args)
