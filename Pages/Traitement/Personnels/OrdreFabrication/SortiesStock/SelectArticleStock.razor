@@ -1,0 +1,189 @@
+﻿<div style="height: 83vh">
+    <SfGrid  Height="100%" AllowTextWrap AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+            Toolbar="@(new List<object>() { "ColumnChooser", "Search"})">
+
+        <GridEvents TValue="API_V_ARTICLE"></GridEvents>
+        <GridPageSettings PageSize="100"></GridPageSettings>
+        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+        <GridTemplates>
+            <EmptyRecordTemplate>
+                <Empty></Empty>
+            </EmptyRecordTemplate>
+        </GridTemplates>
+        <GridColumns>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AR_Ref)" HeaderText="Référence" Width="100"></GridColumn>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AR_Design)" HeaderText="Désignation"></GridColumn>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Famille" Field=@nameof(API_V_ARTICLE.FA_Intitule) Width="180"></GridColumn>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.EtatStock)" HeaderText="Stock" Width="100"></GridColumn>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Qté Stock" Field=@nameof(API_V_ARTICLE.AS_QteSto) Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Width="80">
+            </GridColumn>
+            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Qté Sortie" Field=@nameof(API_V_ARTICLE.AR_QteOperatoire) Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Width="80">
+                <Template>
+                    @{
+                        var dt = (context as API_V_ARTICLE);
+                        <SfNumericTextBox @bind-Value=@dt.AR_QteOperatoire Min="0" ShowSpinButton="false" Format="### ### ##0.00;-### ### ##0.00;#" Decimals="2"></SfNumericTextBox>
+                    }
+                </Template>
+            </GridColumn>
+            <GridColumn Width="80px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                <Template>
+                    @{
+                        var data = (API_V_ARTICLE)context;
+                        <div style="text-align: center;">
+                            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="save" Size="Radzen.ButtonSize.Small" Click=@(args => RowSelected(data))
+                                          Variant="Variant.Flat" Shade="Shade.Lighter" @onclick:stopPropagation="true" Text="Ajouter" />
+                        </div>
+                    }
+                </Template>
+            </GridColumn>
+        </GridColumns>
+        <SfSpinner @bind-Visible="@loading">
+        </SfSpinner>
+    </SfGrid>
+</div>
+
+
+
+
+
+@code
+{
+        [CascadingParameter]
+        public SessionDT session { get; set; } = new SessionDT();
+        DB db = new DB();
+        Helpers helpers = new Helpers();
+
+    private IEnumerable<API_V_ARTICLE> items;
+    List<API_V_ARTICLE> rows = new List<API_V_ARTICLE>();
+    bool loading = true;
+    [Parameter] public string DO_Piece { get; set; }
+    [Parameter] public string DO_Ref { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        loading = true;
+        await Task.Delay(1);
+        items = db.API_V_ARTICLE
+        .FromSqlRaw(@"SELECT a.* FROM API_V_ARTICLE a WHERE a.AR_Ref IN (
+
+
+                        SELECT
+                        dt.AR_Ref
+                        FROM API_T_OrdreFabrication a
+                        INNER JOIN API_T_OrdreFabricationLigne ln ON a.id = ln.Ordre
+                        INNER JOIN API_T_OrdreFabricationDetail dt ON ln.id = dt.Ligne
+
+                        WHERE a.Numero = {0})", DO_Ref)
+        .Where(a => a.AR_SuiviStock == 2).ToList();
+        loading = false;
+        await Task.Delay(1);
+    }
+    private async Task Submit(API_V_ARTICLE args)
+    {
+        var doc = om.CIAL().FactoryDocumentStock.ReadPiece(DocumentType.DocumentTypeStockMouvOut,DO_Piece);
+        IBODocumentStockLigne3 ligne = doc.FactoryDocumentLigne.Create() as IBODocumentStockLigne3;
+        if((args.AR_QteOperatoire??0) == 0)
+        {
+            args.AR_QteOperatoire = 1;
+        }
+        ligne.SetDefaultArticleReference(args.AR_Ref, (double)(args.AR_QteOperatoire??1));
+        ligne.DL_Design = args.AR_Design;
+        ligne.Write();
+    }
+    private async Task UpdateStock(API_V_ARTICLE args)
+    {
+        helpers.DisableTriggers(db, "F_ARTSTOCK", "INS");
+        helpers.DisableTriggers(db, "F_ARTSTOCK", "UPD");
+        string q00 = @"INSERT INTO F_ARTSTOCK ([AR_Ref],[DE_No],[AS_QteMini],[AS_QteMaxi],[AS_MontSto],[AS_QteSto],[AS_QteRes],[AS_QteCom],[AS_Principal],[AS_QteResCM],[AS_QteComCM]
+                    ,[AS_QtePrepa],[DP_NoPrincipal],[DP_NoControle],[AS_QteAControler],[AS_Mouvemente],[cbProt])
+
+            SELECT
+            b.AR_Ref,a.DE_No,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,0.000000,
+            0.000000,0.000000,0,0,0,0,0
+
+
+            FROM F_DEPOT a
+            INNER JOIN API_V_ARTICLE b ON 1 = 1
+            LEFT JOIN F_ARTSTOCK de ON a.DE_No = de.DE_No AND b.AR_Ref = de.AR_Ref
+
+
+            WHERE b.AR_Ref = {0} AND de.AR_Ref IS NULL";
+
+        string q1 = @"UPDATE a SET a.AS_QteSto = ISNULL(b.Qte,0), a.AS_MontSto = ISNULL(c.PU,0) * ISNULL(b.Qte,0)
+
+						FROM F_ARTSTOCK a
+						LEFT JOIN
+						(SELECT
+						a.DE_No,
+						a.AR_Ref,
+						SUM(CASE WHEN a.DL_MvtStock = 1 THEN a.DL_Qte ELSE -a.DL_Qte END) Qte
+						FROM F_DOCLIGNE a
+						WHERE a.DL_MvtStock IN (1,3)
+						GROUP BY
+						a.DE_No,
+						a.AR_Ref) b ON a.DE_No = b.DE_No AND a.AR_Ref = b.AR_Ref
+
+						LEFT JOIN
+						(
+						(SELECT
+						a.DE_No,
+						a.AR_Ref,
+						CASE WHEN SUM(a.DL_Qte) != 0 THEN SUM(a.DL_MontantHT)/SUM(a.DL_Qte) ELSE 0 END PU
+						FROM F_DOCLIGNE a
+						WHERE a.DL_MvtStock = 1
+						GROUP BY a.AR_Ref,
+						a.DE_No)
+						) c ON a.DE_No = c.DE_No AND a.AR_Ref = c.AR_Ref WHERE a.AR_Ref = {0}";
+        db.Database.ExecuteSqlRaw(q00, args.AR_Ref);
+        db.Database.ExecuteSqlRaw(q1, args.AR_Ref);
+        helpers.EnableTriggers(db, "F_ARTSTOCK", "INS");
+        helpers.EnableTriggers(db, "F_ARTSTOCK", "UPD");
+    }
+    private async Task RowSelected(API_V_ARTICLE args)
+    {
+
+        await Submit(args);
+        await UpdateStock(args);
+        DialogService.Close();
+    }
+
+}
+
+
+<style>
+    .statustemp.e-activecolor {
+        background-color: #ccffcc;
+        text-align: center;
+    }
+
+    td.e-rowcell .statustxt.e-activecolor {
+        color: #007d00;
+        background-color: #ccffcc;
+        border-radius: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        position: relative;
+        text-align: center;
+    }
+
+    .statustemp.e-inactivecolor {
+        background-color: #ffd7cc;
+        text-align: center;
+    }
+
+    td.e-rowcell .statustxt.e-inactivecolor {
+        color: #c40000;
+        background-color: #ffd7cc;
+        border-radius: 10px;
+        padding-left: 5px;
+        padding-right: 5px;
+        position: relative;
+        text-align: center;
+    }
+</style>

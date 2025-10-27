@@ -5,21 +5,25 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>ND_128x128.ico</ApplicationIcon>
     <OutputType>Exe</OutputType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Pages\Components\CA\**" />
     <Compile Remove="Pages\Components\Dashboard\**" />
     <Compile Remove="Pages\Structure\Informations\**" />
+    <Compile Remove="Pages\Traitement\Clients\**" />
     <Content Remove="Pages\Components\CA\**" />
     <Content Remove="Pages\Components\Dashboard\**" />
     <Content Remove="Pages\Structure\Informations\**" />
+    <Content Remove="Pages\Traitement\Clients\**" />
     <EmbeddedResource Remove="Pages\Components\CA\**" />
     <EmbeddedResource Remove="Pages\Components\Dashboard\**" />
     <EmbeddedResource Remove="Pages\Structure\Informations\**" />
+    <EmbeddedResource Remove="Pages\Traitement\Clients\**" />
     <None Remove="Pages\Components\CA\**" />
     <None Remove="Pages\Components\Dashboard\**" />
     <None Remove="Pages\Structure\Informations\**" />
+    <None Remove="Pages\Traitement\Clients\**" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="appsettings.Development.json" />
@@ -27,11 +31,11 @@
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Objets100cLib">
-      <WrapperTool>tlbimp</WrapperTool>
-      <VersionMinor>2</VersionMinor>
-      <VersionMajor>9</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>5</VersionMajor>
       <Guid>8b42efd1-11de-4af5-8f95-2901702d7a46</Guid>
       <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
       <Isolated>false</Isolated>
       <EmbedInteropTypes>true</EmbedInteropTypes>
     </COMReference>
@@ -142,9 +146,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SfResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Pages\Traitement\Clients\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="LogicNP.CryptoLicensing">

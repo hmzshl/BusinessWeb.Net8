@@ -1,0 +1,129 @@
+﻿@page "/fabrication-sorties"
+
+
+
+@if (IsLoaded)
+{
+    <Card_1 Title="@Title">
+        <RadzenContent Container="main">
+            <div class="grid-90">
+                <div style="zoom: @session.zoomLevel; height: 100%;">
+                    <SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                            Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport", "Add", "Delete" })">
+                        <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                        <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_DOCENTETE"></GridEvents>
+                        <GridPageSettings PageSize="100"></GridPageSettings>
+                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <Empty></Empty>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                        <GridColumns>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Piece)" HeaderText="Pièce"></GridColumn>
+                            <GridColumn Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Ref)" HeaderText="O.F"></GridColumn>
+                            <GridColumn Width="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CA_Num)" HeaderText="N° Affaire"></GridColumn>
+                            <GridColumn MinWidth="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CA_Intitule)" HeaderText="Affairee"></GridColumn>
+                            <GridColumn MinWidth="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DE_Intitule)" HeaderText="Dépot"></GridColumn>
+                            <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantHT)" HeaderText="Montant HT" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                        </GridColumns>
+                        <SfSpinner @bind-Visible="@_loading">
+                        </SfSpinner>
+
+
+                    </SfGrid>
+                </div>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+<style>
+    #components-layout-demo-responsive .logo {
+        height: 32px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: 16px;
+    }
+
+    .site-layout-sub-header-background {
+        background: #fff;
+    }
+
+    .site-layout-background {
+        background: #fff;
+    }
+</style>
+
+@code {
+	bool IsLoaded = false;
+    //Parameters
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    [Parameter] public int CT_Type { get; set; } = 0;
+    [Parameter] public int DO_Domaine { get; set; } = 0;
+    [Parameter] public int DO_Type { get; set; } = 0;
+    [Parameter] public string Title { get; set; } = "";
+    [Parameter] public bool IsDemandeAchat { get; set; } = false;
+    [Parameter] public bool IsConsommation { get; set; } = false;
+    //End Parameters
+    private IEnumerable<API_V_DOCENTETE> items;
+    bool _loading = false;
+
+
+    private SfGrid<API_V_DOCENTETE> DefaultGrid;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(100);
+        db = session.db;
+        GC.Collect();
+        await UpdateGrid();
+		IsLoaded = true;
+	}
+    private async Task UpdateGrid()
+    {
+        items = db.API_V_DOCENTETE.Where(a => a.DO_Type == 21).OrderByDescending(a => a.DO_Date).ToList();
+    }
+
+    protected async Task Edit(RecordDoubleClickEventArgs<API_V_DOCENTETE> args)
+    {
+        await DialogService.OpenAsync<ConsommationsFiche>(args.RowData.DO_Piece,
+        new Dictionary<string, object>() { { "cbMarq", args.RowData.cbMarq } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1024px", Height = "95%" });
+        await UpdateGrid();
+    }
+
+    private async Task Add()
+    {
+        await DialogService.OpenAsync<ConsommationsFiche>($"Ajouter un élément",
+        new Dictionary<string, object>() { { "cbMarq", 0 }},
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1024px", Height = "95%" });
+        await UpdateGrid();
+    }
+
+    private async Task OnActionBegin(ActionEventArgs<API_V_DOCENTETE> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Delete
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await Add();
+        }
+
+    }
+}
+

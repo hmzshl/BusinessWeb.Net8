@@ -111,7 +111,7 @@ namespace BusinessWeb.Controllers.SAGE_Save
                         }
                     }
 
-                    mDoc.RecalculTotaux(true);
+                    //mDoc.RecalculTotaux(true);
                     mDoc.WriteDefault();
                 }
 

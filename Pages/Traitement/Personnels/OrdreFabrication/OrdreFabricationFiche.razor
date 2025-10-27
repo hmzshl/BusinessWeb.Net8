@@ -2,12 +2,12 @@
 <AntDesign.Spin Spinning=Refreshing Size="large" Tip="Création de la préparation de commande en cours...">
     <SfToolbar CssClass="btns">
         <ToolbarItems>
-            <ToolbarItem Visible=@(sc.IsInRole("Admin", "Magasinier")) Disabled=@(row.id == 0) Align="ItemAlign.Right">
+            <ToolbarItem Visible=@(sc.IsInRole("Admin", "Magasinier") && StockCreated) Disabled=@(row.id == 0) Align="ItemAlign.Right">
                 <Template>
                     <SfButton OnClick=@CreateCommande IconCss="e-icons e-send">Créer une préparation de commande</SfButton>
                 </Template>
             </ToolbarItem>
-            <ToolbarItem Visible=@(sc.IsInRole("Admin", "Chef Chantier")) Disabled=@(row.id == 0 || row.StockCreated) Align="ItemAlign.Right">
+            <ToolbarItem Visible=@(sc.IsInRole("Admin", "Chef Chantier") && !StockCreated) Disabled=@(row.id == 0 || row.StockCreated) Align="ItemAlign.Right">
                 <Template>
                     <SfButton OnClick=@TransfertMagasin IconCss="e-icons e-send">Transferer vers magasinier</SfButton>
                 </Template>

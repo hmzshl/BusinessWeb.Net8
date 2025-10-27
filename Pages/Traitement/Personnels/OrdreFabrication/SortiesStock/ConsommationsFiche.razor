@@ -1,0 +1,303 @@
+﻿@if (IsLoaded)
+{
+    <SfToolbar CssClass="btns">
+        <ToolbarItems>
+            <ToolbarItem Disabled Align="ItemAlign.Right">
+                <Template>
+                    <SfButton IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
+                </Template>
+            </ToolbarItem>
+            <ToolbarItem Align="ItemAlign.Right">
+                <Template>
+                    <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit(true))">Enregistrer</SfButton>
+                </Template>
+            </ToolbarItem>
+        </ToolbarItems>
+    </SfToolbar>
+    <div>
+        <GridRow>
+            <GridCol Xs="24" Md="24">
+                <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="FormContext">
+                    <SfTab CssClass="e-fill">
+                        <TabEvents Selecting="@(args => fn.DisableTabSelect(args))" /><TabItems>
+                            <TabItem>
+                                <ChildContent>
+                                    <TabHeader Text="Entéte"></TabHeader>
+                                </ChildContent>
+                                <ContentTemplate>
+                                    <GridRow>
+                                        <GridCol Xs="24" Md="7">
+                                            <Card>
+                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="7">
+                                                    <SfDatePicker Readonly="@(lignes.Count() != 0)" TValue="DateTime ?" @bind-Value="@row.DO_Date" />
+                                                </FormItem>
+                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro" LabelColSpan="7">
+                                                    <SfTextBox @bind-Value="@row.DO_Piece" Readonly />
+                                                </FormItem>
+                                            </Card>
+                                        </GridCol>
+                                        <GridCol Xs="24" Md="7">
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="O.F" LabelColSpan="7">
+                                                @if (this.cbMarq == 0)
+                                                {
+                                                    <Syncfusion.Blazor.MultiColumnComboBox.SfMultiColumnComboBox FloatLabelType="FloatLabelType.Never" OnValueSelect="@(args => OFUpdated(args.ItemData.Numero))" TValue="string" TItem="API_T_OrdreFabrication"
+                                                                                                                 @bind-Value="@row.DO_Ref"
+                                                                                                                 DataSource="@(db.API_T_OrdreFabrication)"
+                                                                                                                 PopupWidth="850px" ValueField="Numero" TextField="Numero">
+                                                        <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumns>
+                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.Date)" Header="Date" Width="50px" Format="dd/MM/yy"/>
+                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.Numero)" Header="Numero" Width="80px" />
+                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.Reference)" Header="Reference" Width="70px" />
+                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.CA_Num)" Header="N° Affaire" Width="70px" />
+                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.CA_Num)" Header="Affaire" Width="100px">
+                                                                <Template>
+                                                                    @{
+                                                                        var dt = (context as API_T_OrdreFabrication);
+                                                                        <div>@affaires.Where(a => a.CA_Num == dt.CA_Num).SingleOrDefault()?.CA_Intitule</div>
+                                                                    }
+                                                                </Template>
+                                                            </Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn>
+                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.CT_Num)" Header="N° Client" Width="60px" />
+                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.CT_Num)" Header="Client" Width="120px">
+                                                                <Template>
+                                                                    @{
+                                                                        var dt = (context as API_T_OrdreFabrication);
+                                                                        <div>@clients.Where(a => a.CT_Num == dt.CT_Num).SingleOrDefault()?.CT_Intitule</div>
+                                                                    }
+                                                                </Template>
+                                                            </Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn>
+                                                        </Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumns>
+                                                    </Syncfusion.Blazor.MultiColumnComboBox.SfMultiColumnComboBox>
+                                                }
+                                                else
+                                                {
+                                                    <SfTextBox FloatLabelType="FloatLabelType.Never" @bind-Value="@(row.DO_Ref)" Readonly />
+                                                }
+                                            </FormItem>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Affaire" LabelColSpan="7">
+                                                <SfTextBox @bind-Value="@row.CA_Num" Readonly />
+                                            </FormItem>
+                                        </GridCol>
+                                        <GridCol Xs="24" Md="10">
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Affaire" LabelColSpan="5">
+                                                <SfDropDownList FloatLabelType="FloatLabelType.Never" Readonly
+                                                                AllowFiltering TValue="string" TItem="F_COMPTEA" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+                                                                DataSource="@(affaires)"
+                                                                @bind-Value="@row.CA_Num">
+                                                    <DropDownListEvents TValue="string" TItem="F_COMPTEA" />
+                                                    <DropDownListFieldSettings Text="CA_Intitule" Value="CA_Num" />
+                                                </SfDropDownList>
+                                            </FormItem>
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Client" LabelColSpan="5">
+                                                <SfDropDownList FloatLabelType="FloatLabelType.Never" Readonly
+                                                                AllowFiltering TValue="string" TItem="F_COMPTET" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+                                                                DataSource="@(clients)"
+                                                                @bind-Value="CT_Num">
+                                                    <DropDownListEvents TValue="string" TItem="F_COMPTET" />
+                                                    <DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+                                                </SfDropDownList>
+                                            </FormItem>
+                                        </GridCol>
+
+                                    </GridRow>
+                                </ContentTemplate>
+                            </TabItem>
+                        </TabItems>
+                    </SfTab>
+                </Form>
+
+            </GridCol>
+
+
+            <GridCol Xs="24" Md="24">
+                <Card>
+                    <div style="height: 48vh;">
+                        <SfGrid Height="100%" @ref=@MainGrid AllowRowDragAndDrop="true" Toolbar="@(new List<string>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
+                            <GridEvents OnActionBegin="OnActionBegin" TValue="F_DOCLIGNE"></GridEvents>
+                            <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
+                            <GridEditSettings AllowAdding AllowDeleting ShowDeleteConfirmDialog>
+                                <HeaderTemplate>
+
+                                </HeaderTemplate>
+                            </GridEditSettings>
+                            <GridTemplates>
+                                <EmptyRecordTemplate>
+                                    <Empty></Empty>
+                                </EmptyRecordTemplate>
+                            </GridTemplates>
+                            <GridColumns>
+                                <GridColumn AllowEditing="false" Width="10" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="cbMarq" HeaderText="#" Visible="false" IsPrimaryKey="true" />
+                                <GridColumn AllowEditing="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_Ref" HeaderText="Référence" />
+                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Design" HeaderText="Désignation" />
+                                <GridColumn Width="80" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Qte" HeaderText="Qté" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                <GridColumn Width="80" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PrixUnitaire" HeaderText="PU" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Visible="false">
+                                    <EditTemplate>
+
+                                    </EditTemplate>
+                                </GridColumn>
+                                <GridColumn AllowEditing="false" Width="80" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT" HeaderText="Montant HT" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Visible="false">
+                                    <EditTemplate>
+
+                                    </EditTemplate>
+                                </GridColumn>
+                            </GridColumns>
+
+
+                        </SfGrid>
+                    </div>
+
+                </Card>
+
+            </GridCol>
+        </GridRow>
+    </div>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+
+
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    [Parameter] public int cbMarq { get; set; }
+    DB db = new DB();
+    public F_DOCENTETE row = new F_DOCENTETE();
+    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
+    SfGrid<F_DOCLIGNE> MainGrid;
+    List<F_DOCLIGNE> lignes = new List<F_DOCLIGNE>();
+    bool loading = true;
+    bool IsLoaded = false;
+    IEnumerable<F_COMPTEA> affaires;
+    IEnumerable<F_COMPTET> clients;
+    string CT_Num;
+    private async Task UpdateLignes()
+    {
+        lignes = db.F_DOCLIGNE.Where(a => a.DO_Type == row.DO_Type && a.DO_Piece == row.DO_Piece).OrderBy(a => a.cbMarq).ToList();
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(100);
+        db = session.db;
+        GC.Collect();
+        if (cbMarq == 0)
+        {
+            await Init();
+        }
+        else
+        {
+
+            row = db.F_DOCENTETE.Where(a => a.cbMarq == cbMarq).SingleOrDefault();
+            await OFUpdated(row.DO_Ref);
+            await UpdateLignes();
+
+        }
+        affaires = db.F_COMPTEA.FromSqlRaw(@"SELECT
+				a.*
+				FROM F_COMPTEA a
+				INNER JOIN P_ANALYTIQUE b ON a.N_Analytique = b.cbMarq
+				WHERE b.A_Intitule = 'Affaires'");
+        clients = db.F_COMPTET.Where(a => a.CT_Type == 0);
+        IsLoaded = true;
+    }
+    private async Task Init()
+    {
+        if(cbMarq == 0)
+        {
+            var doc = om.CIAL().FactoryDocumentStock.CreateType(DocumentType.DocumentTypeStockMouvOut);
+            doc.SetDefault();
+            doc.SetDefaultDO_Piece();
+            row.DO_Date = DateTime.Today;
+            row.DE_No = 1;
+            row.DO_Piece = doc.DO_Piece;
+
+        }
+    }
+    private async Task OFUpdated(string OF)
+    {
+        if(OF != null)
+        {
+            var dt = db.API_T_OrdreFabrication.Where(a => a.Numero == OF);
+            if (dt.Any())
+            {
+                row.CA_Num = dt.First().CA_Num;
+                CT_Num = dt.First().CT_Num;
+            }
+        }
+    }
+    private async Task Print()
+    {
+
+    }
+    private async Task Add()
+    {
+        if (cbMarq == 0)
+        {
+            await Submit(false);
+        }
+
+        await DialogService.OpenAsync<SelectArticleStock>("",
+        new Dictionary<string, object>() { { "DO_Piece", row.DO_Piece }, { "DO_Ref", row.DO_Ref } },
+        new Radzen.DialogOptions() { Width = "1000px", Height = "95%" });
+
+        await UpdateLignes();
+    }
+    protected async Task Delete()
+    {
+
+    }
+    private async Task Submit(bool close)
+    {
+        try
+        {
+            if (cbMarq == 0)
+            {
+                var doc = om.CIAL().FactoryDocumentStock.CreateType(DocumentType.DocumentTypeStockMouvOut);
+                doc.SetDefault();
+                doc.SetDefaultDO_Piece();
+                doc.DO_Ref = row.DO_Ref;
+                if (row.CA_Num != null)
+                {
+                    var bP = om.CPTA().FactoryAnalytique.ReadIntitule("Affaires");
+                    doc.CompteA = om.CPTA().FactoryCompteA.ReadNumero(bP, row.CA_Num);
+
+                }
+
+                doc.Write();
+                row = db.F_DOCENTETE.Where(a => a.DO_Piece == doc.DO_Piece && a.DO_Type == 21).SingleOrDefault();
+                cbMarq = row.cbMarq;
+
+            }
+            else
+            {
+                
+            }
+            if (close == true)
+            {
+                DialogService.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            await Message.Warning(ex.ToString());
+        }        
+    }
+    private async Task OnActionBegin(ActionEventArgs<F_DOCLIGNE> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await Add();
+        }
+
+    }
+}

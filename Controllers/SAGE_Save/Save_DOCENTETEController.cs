@@ -85,7 +85,7 @@ namespace BusinessWeb.Controllers.SAGE_Save
                 IBODocumentVente3 mDoc = (IBODocumentVente3)mProcessDoc.Document;
 
                 // Désactivation du recalcul automatique des totaux
-                mDoc.SetAutoRecalculTotaux(false);
+                //mDoc.SetAutoRecalculTotaux(false);
 
                 // Affectation du client au document
                 mDoc.SetDefaultClient(oCial.CptaApplication.FactoryClient.ReadNumero(docEntete.DO_Tiers));
