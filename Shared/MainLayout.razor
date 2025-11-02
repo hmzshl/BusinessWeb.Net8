@@ -886,7 +886,7 @@
 	}
 	protected override async Task OnInitializedAsync()
 	{
-		await Task.Delay(100);
+		await Task.Delay(500);
 		TLicense row = new TLicense();
 		var dt = sdb.TLicenses.OrderBy(a => a.id).ToList();
 		if (dt.Count() != 0)
@@ -932,7 +932,7 @@
 	}
 	private async Task Init()
 	{
-		
+
 		if (sc.User != null)
 		{
 			societes = sdb.TSocietes.FromSqlRaw("SELECT a.* FROM T_Societe a WHERE a.id IN (SELECT Societe FROM T_SocieteUser WHERE UserID = {0})", sc.User.Id).ToList();
@@ -969,11 +969,13 @@
 
 			if (screenHeight < 1080)
 			{
-				session.zoomLevel = ((1 / (scaleLevel)) * 0.9).ToString(System.Globalization.CultureInfo.InvariantCulture);
+				//session.zoomLevel = ((1 / (scaleLevel)) * 0.9).ToString(System.Globalization.CultureInfo.InvariantCulture);
+				session.zoomLevel = (1).ToString(System.Globalization.CultureInfo.InvariantCulture);
 			}
 			else
 			{
-				session.zoomLevel = (1 / (scaleLevel)).ToString(System.Globalization.CultureInfo.InvariantCulture);
+				//session.zoomLevel = (1 / (scaleLevel)).ToString(System.Globalization.CultureInfo.InvariantCulture);
+				session.zoomLevel = (1).ToString(System.Globalization.CultureInfo.InvariantCulture);
 			}
 
 		}

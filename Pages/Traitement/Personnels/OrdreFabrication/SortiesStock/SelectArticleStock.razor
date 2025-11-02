@@ -69,18 +69,7 @@
     {
         loading = true;
         await Task.Delay(1);
-        items = db.API_V_ARTICLE
-        .FromSqlRaw(@"SELECT a.* FROM API_V_ARTICLE a WHERE a.AR_Ref IN (
-
-
-                        SELECT
-                        dt.AR_Ref
-                        FROM API_T_OrdreFabrication a
-                        INNER JOIN API_T_OrdreFabricationLigne ln ON a.id = ln.Ordre
-                        INNER JOIN API_T_OrdreFabricationDetail dt ON ln.id = dt.Ligne
-
-                        WHERE a.Numero = {0})", DO_Ref)
-        .Where(a => a.AR_SuiviStock == 2).ToList();
+        items = db.API_V_ARTICLE.Where(a => a.AR_SuiviStock == 2 && a.AR_Sommeil == 1).ToList();
         loading = false;
         await Task.Delay(1);
     }

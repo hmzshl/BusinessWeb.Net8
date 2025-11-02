@@ -77,31 +77,34 @@
                     </div>
                 </Template>
                 <EditTemplate>
-                    <div style="text-align: right;">
-                        @((qte * (context as API_T_OrdreFabricationDetail).Qte).ToString("### ### ##0.0;-### ### ##0.0;#"))
-                    </div>
+                    @{
+                        <SfNumericTextBox Value="@(qte * (context as API_T_OrdreFabricationDetail).Qte)" 
+                        Enabled="false" ShowClearButton="false" ShowSpinButton="false"
+                                          Format="### ### ##0.0;-### ### ##0.0;#" Decimals="2" />
+                    }
                 </EditTemplate>
             </GridColumn>
-            <GridColumn AllowEditing=@(!StockCreated) HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.Qte) HeaderText="Qté.Totale"
+            <GridColumn AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.QteStock) HeaderText="Stock"
+                        Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+            </GridColumn>
+            <GridColumn AllowEditing="@(StockCreated)" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="110" Field=@nameof(API_T_OrdreFabricationDetail.QtePreparation) HeaderText="A.commander"
                         Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                 <Template>
-                    <div style="text-align: right;">
-                        @((qte * (context as API_T_OrdreFabricationDetail).Qte).ToString("### ### ##0.0;-### ### ##0.0;#"))
-                    </div>
+                    @{
+                        <div style="text-align: right;">
+                            @(((context as API_T_OrdreFabricationDetail).QtePreparation).ToString("### ### ##0.0;-### ### ##0.0;#"))
+                        </div>
+                    }
                 </Template>
                 <EditTemplate>
-                    <div style="text-align: right;">
-                        @((qte * (context as API_T_OrdreFabricationDetail).Qte).ToString("### ### ##0.0;-### ### ##0.0;#"))
-                    </div>
+                    @{
+                        var dt = (context as API_T_OrdreFabricationDetail);
+                        <SfNumericTextBox @bind-Value="@dt.QtePreparation" Enabled="@((!dt.PreparationCreated) && StockCreated)" ShowClearButton="false" ShowSpinButton="false"
+                                          Format="### ### ##0.0;-### ### ##0.0;#" Decimals="2" />
+                    }
                 </EditTemplate>
             </GridColumn>
-            <GridColumn AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.QteStock) HeaderText="Stock"
-                        Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-            </GridColumn>
-            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="110" Field=@nameof(API_T_OrdreFabricationDetail.QtePreparation) HeaderText="A.commander"
-                        Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-            </GridColumn>
-            <GridColumn AllowEditing="false" Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationDetail.NumDA) HeaderText="NumDA"></GridColumn>
+            <GridColumn AllowEditing="false" AllowAdding="false" Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationDetail.NumDA) HeaderText="NumDA"></GridColumn>
 
             @*
 				<GridColumn AllowSorting="false" AllowFiltering="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="70" Field=@nameof(API_T_OrdreFabricationDetail.Qte) HeaderText="Total"
@@ -220,12 +223,14 @@
     List<V_UEMA_Conso> conso = new List<V_UEMA_Conso>();
     [Parameter]
     public bool StockCreated { get; set; } = false;
+    API_T_OrdreFabricationLigne row = new API_T_OrdreFabricationLigne();
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(1);
         db = session.db;
         GC.Collect();
         articles = db.F_ARTICLE;
+        row = db.API_T_OrdreFabricationLigne.Include(a => a.OrdreNavigation).FirstOrDefault(a => a.id == this.ligne);
         await UpdateGrid();
         await UpdateConso();
         IsLoaded = true;
@@ -309,6 +314,8 @@
                 {
                     API_T_OrdreFabricationDetail item = args.Data;
                     item.Ligne = this.ligne;
+                    item.QtePreparation = item.Qte * row.Qte;
+                    item.QteStock = db.F_ARTSTOCK.Where(a => a.AR_Ref == item.AR_Ref).Sum(a => a.AS_QteSto) ?? 0;
                     db.Add(item);
                     db.SaveChanges();
                     //await UpdateGrid();
