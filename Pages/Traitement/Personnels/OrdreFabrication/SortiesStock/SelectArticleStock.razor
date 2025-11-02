@@ -69,7 +69,7 @@
     {
         loading = true;
         await Task.Delay(1);
-        items = db.API_V_ARTICLE.Where(a => a.AR_SuiviStock == 2 && a.AR_Sommeil == 1).ToList();
+        items = db.API_V_ARTICLE.Where(a => a.AR_SuiviStock == 2 && a.AR_Sommeil == 0).ToList();
         loading = false;
         await Task.Delay(1);
     }
