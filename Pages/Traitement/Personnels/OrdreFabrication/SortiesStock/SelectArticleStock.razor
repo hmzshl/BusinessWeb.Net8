@@ -1,4 +1,4 @@
-﻿<AntDesign.Spin Spinning=Refreshing Size="large" Tip="Création de la préparation de commande en cours...">
+﻿<AntDesign.Spin Spinning=Refreshing Size="large" Tip="Création de la ligne en cours...">
     <div class="dg-parent">
         <div style="height: 80vh">
             <SfGrid Height="100%" AllowTextWrap AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
@@ -72,6 +72,10 @@
         loading = true;
         await Task.Delay(1);
         items = db.API_V_ARTICLE.Where(a => a.AR_SuiviStock == 2 && a.AR_Sommeil == 0).ToList();
+        foreach (var item in items)
+        {
+            item.AR_QteOperatoire = 0;
+        };
         loading = false;
         await Task.Delay(1);
     }
@@ -90,13 +94,13 @@
     private async Task SubmitListe()
     {
         Refreshing = true;
+        await Task.Delay(100);
         StateHasChanged();
         foreach (var item in items.Where(a => a.AR_QteOperatoire > 0))
         {
             await Submit(item);
         }
-        Refreshing = false;
-        StateHasChanged();
+        DialogService.Close();
     }
     private async Task Quitter()
     {

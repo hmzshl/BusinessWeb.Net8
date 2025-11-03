@@ -115,7 +115,7 @@
                         <SfGrid Height="100%" @ref=@MainGrid AllowRowDragAndDrop="true" Toolbar="@(new List<string>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
                             <GridEvents OnActionBegin="OnActionBegin" TValue="F_DOCLIGNE"></GridEvents>
                             <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
-                            <GridEditSettings AllowAdding AllowDeleting ShowDeleteConfirmDialog>
+                            <GridEditSettings AllowAdding="@(row.DO_Ref != null && row.DO_Ref != "")" AllowDeleting ShowDeleteConfirmDialog>
                                 <HeaderTemplate>
 
                                 </HeaderTemplate>
@@ -209,12 +209,12 @@ else
     {
         if(cbMarq == 0)
         {
-            var doc = om.CIAL().FactoryDocumentStock.CreateType(DocumentType.DocumentTypeStockMouvOut);
-            doc.SetDefault();
-            doc.SetDefaultDO_Piece();
+            //var doc = om.CIAL().FactoryDocumentStock.CreateType(DocumentType.DocumentTypeStockMouvOut);
+            //doc.SetDefault();
+            //doc.SetDefaultDO_Piece();
             row.DO_Date = DateTime.Today;
             row.DE_No = 1;
-            row.DO_Piece = doc.DO_Piece;
+            //row.DO_Piece = doc.DO_Piece;
 
         }
     }
