@@ -1,46 +1,47 @@
-﻿<div style="height: 83vh">
-    <SfGrid  Height="100%" AllowTextWrap AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
-            Toolbar="@(new List<object>() { "ColumnChooser", "Search"})">
+﻿<AntDesign.Spin Spinning=Refreshing Size="large" Tip="Création de la préparation de commande en cours...">
+    <div class="dg-parent">
+        <div style="height: 80vh">
+            <SfGrid Height="100%" AllowTextWrap AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                    Toolbar="@(new List<object>() { "ColumnChooser", "Search" })">
 
-        <GridEvents TValue="API_V_ARTICLE"></GridEvents>
-        <GridPageSettings PageSize="100"></GridPageSettings>
-        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-        <GridTemplates>
-            <EmptyRecordTemplate>
-                <Empty></Empty>
-            </EmptyRecordTemplate>
-        </GridTemplates>
-        <GridColumns>
-            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AR_Ref)" HeaderText="Référence" Width="100"></GridColumn>
-            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AR_Design)" HeaderText="Désignation"></GridColumn>
-            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Famille" Field=@nameof(API_V_ARTICLE.FA_Intitule) Width="180"></GridColumn>
-            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.EtatStock)" HeaderText="Stock" Width="100"></GridColumn>
-            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Qté Stock" Field=@nameof(API_V_ARTICLE.AS_QteSto) Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Width="80">
-            </GridColumn>
-            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Qté Sortie" Field=@nameof(API_V_ARTICLE.AR_QteOperatoire) Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Width="80">
-                <Template>
-                    @{
-                        var dt = (context as API_V_ARTICLE);
-                        <SfNumericTextBox @bind-Value=@dt.AR_QteOperatoire Min="0" ShowSpinButton="false" Format="### ### ##0.00;-### ### ##0.00;#" Decimals="2"></SfNumericTextBox>
-                    }
-                </Template>
-            </GridColumn>
-            <GridColumn Width="80px" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
-                <Template>
-                    @{
-                        var data = (API_V_ARTICLE)context;
-                        <div style="text-align: center;">
-                            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="save" Size="Radzen.ButtonSize.Small" Click=@(args => RowSelected(data))
-                                          Variant="Variant.Flat" Shade="Shade.Lighter" @onclick:stopPropagation="true" Text="Ajouter" />
-                        </div>
-                    }
-                </Template>
-            </GridColumn>
-        </GridColumns>
-        <SfSpinner @bind-Visible="@loading">
-        </SfSpinner>
-    </SfGrid>
-</div>
+                <GridEvents TValue="API_V_ARTICLE"></GridEvents>
+                <GridPageSettings PageSize="100"></GridPageSettings>
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                <GridTemplates>
+                    <EmptyRecordTemplate>
+                        <Empty></Empty>
+                    </EmptyRecordTemplate>
+                </GridTemplates>
+                <GridColumns>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AR_Ref)" HeaderText="Référence" Width="100"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AR_Design)" HeaderText="Désignation"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Famille" Field=@nameof(API_V_ARTICLE.FA_Intitule) Width="180"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.EtatStock)" HeaderText="Stock" Width="100"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Qté Stock" Field=@nameof(API_V_ARTICLE.AS_QteSto) Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Width="90">
+                    </GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Qté Sortie" Field=@nameof(API_V_ARTICLE.AR_QteOperatoire) Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Width="100">
+                        <Template>
+                            @{
+                                var dt = (context as API_V_ARTICLE);
+                                <SfNumericTextBox @bind-Value=@dt.AR_QteOperatoire Min="0" ShowSpinButton="false" Format="### ### ##0.00;-### ### ##0.00;#" Decimals="2"></SfNumericTextBox>
+                            }
+                        </Template>
+                    </GridColumn>
+                </GridColumns>
+                <SfSpinner @bind-Visible="@loading">
+                </SfSpinner>
+            </SfGrid>
+
+        </div>
+        <div class="btns-end">
+            <SfButton IconCss="e-icons e-close" OnClick="Quitter">Annuler</SfButton>
+            <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="SubmitListe">Enregistrer</SfButton>
+        </div>
+    </div>
+</AntDesign.Spin>
+
+
+
 
 
 
@@ -48,16 +49,17 @@
 
 @code
 {
-        [CascadingParameter]
-        public SessionDT session { get; set; } = new SessionDT();
-        DB db = new DB();
-        Helpers helpers = new Helpers();
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    Helpers helpers = new Helpers();
 
     private IEnumerable<API_V_ARTICLE> items;
     List<API_V_ARTICLE> rows = new List<API_V_ARTICLE>();
     bool loading = true;
     [Parameter] public string DO_Piece { get; set; }
     [Parameter] public string DO_Ref { get; set; }
+    bool Refreshing = false;
     protected override async Task OnInitializedAsync()
     {
         db = session.db;
@@ -79,11 +81,26 @@
         IBODocumentStockLigne3 ligne = doc.FactoryDocumentLigne.Create() as IBODocumentStockLigne3;
         if((args.AR_QteOperatoire??0) == 0)
         {
-            args.AR_QteOperatoire = 1;
+            args.AR_QteOperatoire = 0;
         }
         ligne.SetDefaultArticleReference(args.AR_Ref, (double)(args.AR_QteOperatoire??1));
         ligne.DL_Design = args.AR_Design;
         ligne.Write();
+    }
+    private async Task SubmitListe()
+    {
+        Refreshing = true;
+        StateHasChanged();
+        foreach (var item in items.Where(a => a.AR_QteOperatoire > 0))
+        {
+            await Submit(item);
+        }
+        Refreshing = false;
+        StateHasChanged();
+    }
+    private async Task Quitter()
+    {
+        DialogService.Close();
     }
     private async Task UpdateStock(API_V_ARTICLE args)
     {
