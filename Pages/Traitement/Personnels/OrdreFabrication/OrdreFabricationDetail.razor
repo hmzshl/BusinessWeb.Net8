@@ -239,6 +239,7 @@
     private async Task UpdateGrid()
     {
         items = db.API_T_OrdreFabricationDetail
+        .AsNoTracking()
         .Include(a => a.AR_RefNavigation)
         .Where(a => a.Ligne == this.ligne).ToList();
     }
@@ -298,7 +299,7 @@
 
 
                     ";
-        conso = db.Database.SqlQueryRaw<V_UEMA_Conso>(q1, ligne).ToList();
+        //conso = db.Database.SqlQueryRaw<V_UEMA_Conso>(q1, ligne).ToList();
     }
     public async Task EditGrid(ActionEventArgs<API_T_OrdreFabricationDetail> args)
     {

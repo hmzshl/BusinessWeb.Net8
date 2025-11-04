@@ -422,20 +422,22 @@
 						}
 
 						doc.Write();
-
-						foreach (API_T_OrdreFabricationLigne ln in lignes.Where(a => a.API_T_OrdreFabricationDetail.Where(b => b.PreparationCreated == false).Any()))
+						foreach (API_T_OrdreFabricationLigne ln in lignes.Where(a => a.API_T_OrdreFabricationDetail.Where(b => b.PreparationCreated == false && b.QtePreparation > 0).Any()))
 						{
 							IBODocumentAchatLigne3 ligne3 = doc.FactoryDocumentLigne.Create() as IBODocumentAchatLigne3;
 							ligne3.DL_Design = "---------------------------------------------------------------------";
 							ligne3.Write();
-
-							foreach (API_T_OrdreFabricationDetail ln2 in ln.API_T_OrdreFabricationDetail.Where(b => b.PreparationCreated == false && b.QtePreparation > 0))
+                            var dt = db.API_T_OrdreFabricationDetail.AsNoTracking().Where(b => b.Ligne == ln.id && b.PreparationCreated == false && b.QtePreparation > 0).ToList();
+							var dt2 = db.API_T_OrdreFabricationDetail.Where(b => b.Ligne == ln.id && b.PreparationCreated == false && b.QtePreparation > 0).ToList();
+							foreach (API_T_OrdreFabricationDetail ln2 in dt)
 							{
 								IBODocumentAchatLigne3 ligne2 = doc.FactoryDocumentLigne.Create() as IBODocumentAchatLigne3;
 								ligne2.SetDefaultArticleReference(ln2.AR_Ref, (double)(ln2.QtePreparation));
 								ligne2.DL_Design = ln2.AR_RefNavigation?.AR_Design;
 								ligne2.Write();
-
+							}
+							foreach (API_T_OrdreFabricationDetail ln2 in dt2)
+							{
 								ln2.PreparationCreated = true;
 								ln2.NumDA = doc.DO_Piece;
 							}
