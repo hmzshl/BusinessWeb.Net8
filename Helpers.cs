@@ -1839,33 +1839,33 @@ namespace BusinessWeb
 
 			return list;
 		}
-		public List<Items> getApps()
-		{
-			List<Items> list = new List<Items>();
+        public List<Items> getApps()
+        {
+            List<Items> list = new List<Items>();
 
-			list.Add(new Items { Id = 1, Name = "Achats", Icon = "shopping_cart" });
-			list.Add(new Items { Id = 2, Name = "Ventes", Icon = "monetization_on" });
-			list.Add(new Items { Id = 3, Name = "Stock", Icon = "inventory" });
-			list.Add(new Items { Id = 4, Name = "Projets", Icon = "home_repair_service" });
-			list.Add(new Items { Id = 5, Name = "Matériels", Icon = "local_shipping" });
-			list.Add(new Items { Id = 6, Name = "Personnels", Icon = "group" });
-			list.Add(new Items { Id = 7, Name = "Caisse", Icon = "local_atm" });
-			list.Add(new Items { Id = 8, Name = "Comptabilité", Icon = "analytics" });
-			list.Add(new Items { Id = 9, Name = "Outils", Icon = "construction" });
-			list.Add(new Items { Id = 10, Name = "Agence Voyage", Icon = "flight" });
-			list.Add(new Items { Id = 11, Name = "Tableau de bord", Icon = "analytics" });
-			list.Add(new Items { Id = 12, Name = "Caisse", Icon = "local_atm" });
-			list.Add(new Items { Id = 13, Name = "Banque", Icon = "account_balance" });
-			list.Add(new Items { Id = 14, Name = "Etats", Icon = "moving" });
-			list.Add(new Items { Id = 15, Name = "Certification", Icon = "description" });
-			list.Add(new Items { Id = 16, Name = "Transfert Données", Icon = "sync_alt" });
-			list.Add(new Items { Id = 18, Name = "Utilisateurs", Icon = "people" });
-			list.Add(new Items { Id = 19, Name = "Traçabilité", Icon = "update" });
-            list.Add(new Items { Id = 20, Name = "Food Cost", Icon = "bakery_dining" });
+            list.Add(new Items { Id = 1, Name = "Achats", Icon = "shopping_cart", Description = "Gestion des achats, fournisseurs et commandes d'approvisionnement" });
+            list.Add(new Items { Id = 2, Name = "Ventes", Icon = "monetization_on", Description = "Gestion commerciale, clients, devis et facturation" });
+            list.Add(new Items { Id = 3, Name = "Stock", Icon = "inventory", Description = "Gestion des stocks, inventaire et mouvements d'articles" });
+            list.Add(new Items { Id = 4, Name = "Projets", Icon = "home_repair_service", Description = "Suivi des projets, chantiers et gestion des marchés" });
+            list.Add(new Items { Id = 5, Name = "Matériels", Icon = "local_shipping", Description = "Gestion du parc matériel, entretien et maintenance" });
+            list.Add(new Items { Id = 6, Name = "Personnels", Icon = "group", Description = "Gestion des ressources humaines et pointage du personnel" });
+            list.Add(new Items { Id = 7, Name = "Caisse", Icon = "local_atm", Description = "Gestion de caisse et opérations de trésorerie" });
+            list.Add(new Items { Id = 8, Name = "Comptabilité", Icon = "analytics", Description = "Comptabilité générale, analytique et états financiers" });
+            list.Add(new Items { Id = 9, Name = "Outils", Icon = "construction", Description = "Outils et utilitaires pour la gestion d'entreprise" });
+            list.Add(new Items { Id = 10, Name = "Agence Voyage", Icon = "flight", Description = "Réservations voyages et services touristiques" });
+            list.Add(new Items { Id = 11, Name = "Tableau de bord", Icon = "analytics", Description = "Tableaux de bord et indicateurs de performance" });
+            list.Add(new Items { Id = 12, Name = "Caisse", Icon = "local_atm", Description = "Caisse institutionnelle et gestion des fonds" });
+            list.Add(new Items { Id = 13, Name = "Banque", Icon = "account_balance", Description = "Opérations bancaires et gestion des comptes" });
+            list.Add(new Items { Id = 14, Name = "Etats", Icon = "moving", Description = "États financiers, rapports et analyses d'activité" });
+            list.Add(new Items { Id = 15, Name = "Certification", Icon = "description", Description = "Certification qualité et processus métier" });
+            list.Add(new Items { Id = 16, Name = "Transfert Données", Icon = "sync_alt", Description = "Synchronisation et transfert des données systèmes" });
+            list.Add(new Items { Id = 18, Name = "Utilisateurs", Icon = "people", Description = "Gestion des utilisateurs, profils et autorisations" });
+            list.Add(new Items { Id = 19, Name = "Traçabilité", Icon = "update", Description = "Traçabilité et historique des opérations système" });
+            list.Add(new Items { Id = 20, Name = "Food Cost", Icon = "bakery_dining", Description = "Calcul et analyse des coûts alimentaires et restauration" });
 
             return list;
-		}
-		public List<Items> ModeSoumission()
+        }
+        public List<Items> ModeSoumission()
 		{
 			List<Items> list = new List<Items>();
 

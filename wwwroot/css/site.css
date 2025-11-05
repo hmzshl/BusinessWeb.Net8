@@ -336,7 +336,6 @@ body {
 }
 
 .rz-panel-menu .rz-navigation-item-link {
-    padding: 5px !important;
     font-size: 95% !important;
 }
 
@@ -365,7 +364,8 @@ body {
 }
 
 .rz-sidebar-toggle {
-    padding: 0px !important;
+    margin-inline-end: 0px !important;
+    padding: 5px !important;
 }
 
 .rz-text-align-right, .rz-text-align-left {
