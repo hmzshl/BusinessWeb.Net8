@@ -56,8 +56,9 @@
              </ToolbarItems>
          </SfToolbar>
         }
-        <SfGrid  @ref=DefaultGrid Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowSorting AllowFiltering>
+        <SfGrid  @ref=DefaultGrid EnablePersistence ID="ReleveGRID" Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowSorting AllowFiltering>
              <GridPageSettings PageSize="100" />
+            <GridEvents Created="CreatedHandler" TValue="API_V_RELEVE"></GridEvents>
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
              <GridAggregates>
                  <GridAggregate>
@@ -260,6 +261,11 @@ else
             && ((date2 != null && a.DO_Date <= date2) || date2 == null)                               
         ).Where(a => (a.CO_No2 == CO_No && CO_No != 0) || (CO_No == 0))
             .OrderBy(a => a.DO_Date).ToList();
+    }
+    public void CreatedHandler(object args)
+    {
+        DefaultGrid.ClearFilteringAsync();
+        DefaultGrid.ClearSortingAsync(); DefaultGrid.SearchAsync("");
     }
     private string getTiers()
     {

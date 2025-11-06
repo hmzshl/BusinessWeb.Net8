@@ -41,8 +41,10 @@
 				<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.ExportToExcelAsync()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
 			</ToolbarItems>
 		</SfToolbar>
-		<SfGrid  AllowReordering ShowColumnChooser ID="DetailsEntetesGRID" Height="100%" AllowSelection EnableHover DataSource="@(items)" @ref=@DefaultGrid AllowSorting AllowFiltering>
+		<SfGrid  AllowReordering ShowColumnChooser ID="DetailsEntetesGRID" Height="100%" AllowSelection 
+		EnableHover DataSource="@(items)" @ref=@DefaultGrid AllowSorting AllowFiltering EnablePersistence >
 			<GridPageSettings PageSize="100" />
+			<GridEvents Created="CreatedHandler" TValue="API_V_DOCENTETE"></GridEvents>
 			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 			<GridAggregates>
 				<GridAggregate>
@@ -169,6 +171,11 @@ else
 			&& ((!IsLivraison) || (IsLivraison && liv.Contains(a.DO_Type ?? 0))))
 
 			.OrderBy(a => a.DO_Date).ToList();
+	}
+	public void CreatedHandler(object args)
+	{
+		DefaultGrid.ClearFilteringAsync();
+		DefaultGrid.ClearSortingAsync(); DefaultGrid.SearchAsync("");
 	}
 	private string getTiers()
 	{

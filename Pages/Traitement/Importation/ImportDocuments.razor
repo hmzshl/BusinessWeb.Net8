@@ -1,8 +1,9 @@
 ﻿@using Syncfusion.Blazor.ProgressBar
 @if(loading) 
 {
-	<SfSpinner @bind-Visible="@loading" Label="@("Importation en cours..."+progress+"")">
-	</SfSpinner>
+	<AntDesign.Spin Size="large" Spinning=loading Style="margin-top: 50px;">
+
+	</AntDesign.Spin>
 }
 else 
 {

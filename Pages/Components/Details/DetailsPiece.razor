@@ -207,21 +207,21 @@
 			</GridCol>
 			<GridCol Xs="12" Md="3">
 				<StatCard3 Color="StatColor.Green"
-						   Value="@((row.DL_MontantHT).ToString("### ### ##0.00;-### ### ##0.00;#"))"
+						   Value="@((row.DL_MontantHT).ToString("### ### ##0.00"))"
 						   Title="Montant HT"
 						   ShowTrendText="false" />
 			</GridCol>
 
 			<GridCol Xs="12" Md="3">
 				<StatCard3 Color="StatColor.Blue"
-						   Value="@(((row.DL_MontantTVA??0)).ToString("### ### ##0.00;-### ### ##0.00;#"))"
+						   Value="@(((row.DL_MontantTVA ?? 0)).ToString("### ### ##0.00"))"
 						   Title="Montant TVA"
 						   ShowTrendText="false" />
 			</GridCol>
 
 			<GridCol Xs="12" Md="3">
 				<StatCard3 Color="StatColor.Green"
-						   Value="@((row.DL_MontantTTC).ToString("### ### ##0.00;-### ### ##0.00;#"))"
+						   Value="@((row.DL_MontantTTC).ToString("### ### ##0.00"))"
 						   Title="Montant TTC"
 						   ShowTrendText="false" />
 			</GridCol>

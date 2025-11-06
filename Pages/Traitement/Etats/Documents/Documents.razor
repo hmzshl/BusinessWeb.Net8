@@ -69,12 +69,13 @@
 					}
 					else
 					{
-						<SfGrid AllowReordering AllowFiltering AllowSorting Height="100%" AllowResizing AllowSelection ShowColumnChooser="true" ID="ReleveDocumentGrid" @ref="DefaultGrid" 
+						<SfGrid AllowReordering AllowFiltering AllowSorting Height="100%" EnablePersistence AllowResizing AllowSelection ShowColumnChooser="true" 
+						ID="ReleveDocumentGrid" @ref="DefaultGrid" 
 						AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" EnableVirtualization >
 							<GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
 							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 							<GridPageSettings PageSize="100"></GridPageSettings>
-							<GridEvents OnRecordDoubleClick="@(args => ShowPiece(args.RowData.DO_Piece,args.RowData.DO_Type))" TValue="API_V_RELEVE"></GridEvents>
+							<GridEvents Created="CreatedHandler" OnRecordDoubleClick="@(args => ShowPiece(args.RowData.DO_Piece, args.RowData.DO_Type))" TValue="API_V_RELEVE"></GridEvents>
 							<GridTemplates>
 								<EmptyRecordTemplate>
 									<Empty></Empty>
@@ -239,6 +240,11 @@ else
 		await UpdateGrid();
 		IsLoaded = true;
 
+	}
+	public void CreatedHandler(object args)
+	{
+		DefaultGrid.ClearFilteringAsync();
+		DefaultGrid.ClearSortingAsync(); DefaultGrid.SearchAsync("");
 	}
 	private async Task UpdateTypes()
 	{

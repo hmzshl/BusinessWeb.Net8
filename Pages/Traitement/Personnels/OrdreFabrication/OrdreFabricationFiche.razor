@@ -1,5 +1,5 @@
 ﻿
-<AntDesign.Spin Spinning=Refreshing Size="large" Tip="Création de la préparation de commande en cours...">
+<AntDesign.Spin Size="large" Spinning=Refreshing Style="margin-top: 50px;">
 	<SfToolbar CssClass="btns">
 		<ToolbarItems>
 			<ToolbarItem Visible=@(sc.IsInRole("Admin", "Magasinier") && StockCreated) Disabled=@(row.id == 0) Align="ItemAlign.Right">
