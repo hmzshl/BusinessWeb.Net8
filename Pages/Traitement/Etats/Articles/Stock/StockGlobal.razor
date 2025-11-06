@@ -9,9 +9,6 @@
 			<div class="grid-90">
 				<SfToolbar CssClass="btns">
 					<ToolbarItems>
-						<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
-						<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.ExportToExcelAsync()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
-						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
 						<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
 							<Template>
 								<SfTextBox Width="300px" Placeholder="RECHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
@@ -39,21 +36,17 @@
 								</SfDatePicker>
 							</Template>
 						</ToolbarItem>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1, 1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+						<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.ExportToExcelAsync()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+						<ToolbarItem OnClick=@(args => (LoadData())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
 
 					</ToolbarItems>
 				</SfToolbar>
-				<div class="grid-84" style="zoom: @session.zoomLevel;">
-					@if (Loading)
-					{
-						<div class="center-screen">
-							<Loading_1 />
-						</div>
-					}
-					else
-					{
+				<AntDesign.Spin Size="large" Spinning=Loading Style="margin-top: 50px;">
+					<div class="grid-84" style="zoom: @session.zoomLevel;">
 						<SfGrid ShowColumnChooser EnablePersistence ID="StockGrid" AllowSelection Height="100%" DataSource="@(items)" EnableHover AllowPaging AllowSorting
-						AllowExcelExport @ref=@DefaultGrid AllowFiltering>
-							<GridPageSettings PageSize="500" PageCount="10" />
+								AllowExcelExport @ref=@DefaultGrid AllowFiltering>
+							<GridPageSettings PageSize="200" PageCount="10" />
 							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Excel"></GridFilterSettings>
 							<GridEvents OnRecordDoubleClick="RowDoubleClicked" Created="CreatedHandler" TValue="V_StockGlobal"></GridEvents>
 							<GridGroupSettings Columns="@(new string[] { "FA_Intitule" })" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates>
@@ -281,9 +274,8 @@
 							</GridColumns>
 
 						</SfGrid>
-					}
-
-				</div>
+					</div>
+				</AntDesign.Spin>
 			</div>
 
 		</RadzenContent>

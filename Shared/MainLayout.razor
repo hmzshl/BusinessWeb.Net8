@@ -35,12 +35,6 @@
                                 <RadzenMenu Class="ls-parent" Style="flex: 1;">
                                     <RadzenMenuItem Text="Applications" Icon="dashboard" Click="@(args => SelectAPP(0))" />
                                     <RadzenMenuItem Visible=@(session.SelectedAPP != 0) Text="@APP()" Icon="@Icon()" Path="/" />
-                                    <!-- Dynamic Menu Content based on Selected App -->
-                                    @if (session.Societe?.id > 0 && session.SelectedAPP > 0)
-                                    {
-                                        //@BuildAppMenuContent()
-                                    }
-
                                     <!-- Societe Selection -->
                                     <RadzenMenuItem Class="ls-child-right" Text="@(session?.Societe?.Intitule ?? "Société")" Icon="home_filled">
                                         @foreach (TSociete item in societes)
@@ -64,7 +58,7 @@
                             </RadzenStack>
                         </RadzenHeader>
 
-                        <RadzenSidebar @bind-Expanded="@sidebarExpanded">
+                        <RadzenSidebar @bind-Expanded="@sidebarExpanded" Style="position: relative;">
                             @if (session.SelectedAPP == 0)
                             {
                                 @BuildApplicationsDashboard()
@@ -73,6 +67,9 @@
                             {
                                 @BuildAppSidebarMenu()
                             }
+                            <div class="rz-p-4" style="position: absolute; bottom: 0; left: 0; right: 0; border-top: 1px solid #e0e0e0;">
+                                NOVELDATA Ⓒ 2025
+                            </div>
                         </RadzenSidebar>
 
                         <RadzenBody>
@@ -129,11 +126,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(250);
+        await Task.Delay(500);
         await InitializeLicense();
         await InitializeSession();
         IsLoaded = true;
-        StateHasChanged();
     }
 
     private async Task InitializeLicense()
@@ -212,7 +208,7 @@
         }
     };
 
-    private RenderFragment BuildApplicationsDashboard() => @<RadzenPanelMenu Style="width: 100%;">
+    private RenderFragment BuildApplicationsDashboard() => @<RadzenPanelMenu Style="width: 100%;" DisplayStyle="@(sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)" ShowArrow="false">
 @{
     var availableApps = GetAvailableApplications();
 
@@ -223,27 +219,69 @@
     }
 </RadzenPanelMenu>;
 
-    
-private RenderFragment BuildAppSidebarMenu() => @<RadzenPanelMenu Style="width: 100%;">
+private RenderFragment BuildAppSidebarMenu() => @<RadzenPanelMenu Multiple="false" Style="width: 100%;" DisplayStyle="@(sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)" ShowArrow="false">
 @{
     var authorizedItems = session.Authorizes?
     .Where(a => a.Visible && !string.IsNullOrEmpty(a.Url))
     .ToList() ?? new List<TAuthorize>();
 
-    var groupedItems = authorizedItems
+    var groupedItems = fn.AuthItems()
+    .Where(a => authorizedItems.Select(b => b.Url).Contains(a.Url) && a.SelectedAPP == session.SelectedAPP)
     .GroupBy(a => a.Title)
     .ToList();
 
-    foreach (var group in groupedItems)
+    foreach (var titleGroup in groupedItems)
     {
-    <RadzenPanelMenuItem Text="@group.Key" Expanded="false">
-        @foreach (var item in group)
-                {
-        <RadzenPanelMenuItem Text="@item.Description" Path="@item.Url" />
+        var titleIcon = titleGroup.First().TitleIcon;
+
+            <RadzenPanelMenuItem Text="@titleGroup.Key" Icon="@titleIcon" Expanded="false">
+                @{
+                    // Group items by SousGroupe if HasSousGroupe is true
+                    var sousGroupes = titleGroup
+                    .Where(x => x.HasSousGroupe && !string.IsNullOrEmpty(x.SousGroupe))
+                    .Select(x => x.SousGroupe)
+                    .Distinct()
+                    .ToList();
+
+                    if (sousGroupes.Any())
+                    {
+                        // Items with SousGroupe
+                        foreach (var sousGroupe in sousGroupes)
+                        {
+                            var sousGroupItems = titleGroup
+                            .Where(x => x.SousGroupe == sousGroupe)
+                            .ToList();
+
+                            <RadzenPanelMenuItem Text="@sousGroupe" Expanded="false">
+                                @foreach (var item in sousGroupItems)
+                                {
+                                    <RadzenPanelMenuItem Text="@item.Description" Path="@item.Url" />
+                                }
+                            </RadzenPanelMenuItem>
+                        }
+
+                        // Items without SousGroupe
+                        var noSousGroupItems = titleGroup
+                        .Where(x => !x.HasSousGroupe || string.IsNullOrEmpty(x.SousGroupe))
+                        .ToList();
+
+                        foreach (var item in noSousGroupItems)
+                        {
+                            <RadzenPanelMenuItem Text="@item.Description" Path="@item.Url" />
+                        }
+                    }
+                    else
+                    {
+                        // No SousGroupe grouping needed
+                        foreach (var item in titleGroup)
+                        {
+                            <RadzenPanelMenuItem Text="@item.Description" Path="@item.Url" />
+                        }
+                    }
                 }
-    </RadzenPanelMenuItem>
+            </RadzenPanelMenuItem>
     }
-    }
+}
 </RadzenPanelMenu>;
 
 private RenderFragment BuildApplicationsGrid() => @<div style="padding: 2rem;">
@@ -273,23 +311,24 @@ private RenderFragment BuildApplicationsGrid() => @<div style="padding: 2rem;">
             }
         </RadzenStack>
     </RadzenStack>
-</div>;
+</div>
+        ;
 
-// Helper Methods
-private bool IsLicenseValid()
-{
-    return (license.Status == LicenseStatus.Valid || license.MachineCodeAsString == macAddr) &&
-           license.DateExpires.Date >= DateTime.UtcNow.Date;
-}
+    // Helper Methods
+    private bool IsLicenseValid()
+    {
+        return (license.Status == LicenseStatus.Valid || license.MachineCodeAsString == macAddr) &&
+               license.DateExpires.Date >= DateTime.UtcNow.Date;
+    }
 
-private bool HasAccessToCurrentPage()
-{
+    private bool HasAccessToCurrentPage()
+    {
     var currentUrl = NavigationManager.Uri.Replace(NavigationManager.BaseUri, "");
-    if (string.IsNullOrEmpty(currentUrl) || currentUrl == "/")
-        return true;
+        if (string.IsNullOrEmpty(currentUrl) || currentUrl == "/")
+            return true;
 
     return session?.Authorizes?.Any(a => a.Url == currentUrl && a.Visible) ?? false;
-}
+    }
 
 private List<Items> GetAvailableApplications()
 {
