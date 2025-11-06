@@ -82,11 +82,11 @@ builder.Services.AddDbContext<BusinessWeb.Data.BusinessWebDBContext>(options =>
 {
 	options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"), o => o.UseCompatibilityLevel(100));
 	options.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
-}, ServiceLifetime.Transient);
+}, ServiceLifetime.Scoped);
 builder.Services.AddDbContext<BusinessWeb.Data.DB>(options =>
 {
 	options.UseSqlServer(builder.Configuration.GetConnectionString("APIDB"), o => o.UseCompatibilityLevel(100));
-}, ServiceLifetime.Transient);
+}, ServiceLifetime.Scoped);
 builder.Services.AddHttpClient("BusinessWeb").AddHeaderPropagation(o => o.Headers.Add("Cookie"));
 builder.Services.AddHeaderPropagation(o => o.Headers.Add("Cookie"));
 builder.Services.AddAuthentication();
@@ -99,7 +99,7 @@ builder.Services.AddDbContext<ApplicationIdentityDbContext>(options =>
 {
 	options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"), o => o.UseCompatibilityLevel(100));
 	options.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
-}, ServiceLifetime.Transient);
+}, ServiceLifetime.Scoped);
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationIdentityDbContext>().AddDefaultTokenProviders();
 builder.Services.AddControllers().AddOData(o =>
 {
