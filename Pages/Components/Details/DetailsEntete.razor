@@ -41,9 +41,9 @@
 				<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.ExportToExcelAsync()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
 			</ToolbarItems>
 		</SfToolbar>
-		<SfGrid  AllowReordering ShowColumnChooser ID="DetailsEntetesGRID" Height="100%" AllowSelection 
+		<SfGrid  AllowReordering AllowPaging ShowColumnChooser ID="DetailsEntetesGRID" Height="100%" AllowSelection 
 		EnableHover DataSource="@(items)" @ref=@DefaultGrid AllowSorting AllowFiltering EnablePersistence >
-			<GridPageSettings PageSize="100" />
+			<GridPageSettings PageSize="200" />
 			<GridEvents Created="CreatedHandler" TValue="API_V_DOCENTETE"></GridEvents>
 			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 			<GridAggregates>

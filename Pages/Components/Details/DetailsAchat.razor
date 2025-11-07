@@ -24,8 +24,8 @@
         </ToolbarItems>
     </SfToolbar>
     <div class="@ClassHeight" style=" zoom: @session.zoomLevel;">
-        <SfGrid  @ref=DefaultGrid AllowExcelExport AllowReordering ShowColumnChooser ID="DetailAchatGRID" EnablePersistence Height="100%" AllowGrouping=@(grouped > 0) AllowSelection EnableHover DataSource="@(items)" AllowSorting AllowFiltering>
-             <GridPageSettings PageSize="100" />
+        <SfGrid  @ref=DefaultGrid AllowPaging AllowExcelExport AllowReordering ShowColumnChooser ID="DetailAchatGRID" EnablePersistence Height="100%" AllowGrouping=@(grouped > 0) AllowSelection EnableHover DataSource="@(items)" AllowSorting AllowFiltering>
+             <GridPageSettings PageSize="200" />
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
             <GridEvents Created="CreatedHandler" OnToolbarClick="ToolbarClickHandler" TValue="API_V_ACHAT"></GridEvents>
          <GridGroupSettings Columns="@(getGroups())" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates EnableLazyLoading>

@@ -23,8 +23,8 @@
 		</ToolbarItems>
 	</SfToolbar>
 	<div class="@ClassHeight" style=" zoom: @session.zoomLevel;">
-		<SfGrid  @ref=DefaultGrid ID="DetailMargeGRID" EnablePersistence AllowExcelExport Height="100%" AllowGrouping=@(grouped > 0) AllowSelection EnableHover DataSource="@(items)" ShowColumnChooser AllowReordering AllowSorting AllowFiltering>
-			<GridPageSettings PageSize="100" />
+		<SfGrid AllowPaging @ref=DefaultGrid ID="DetailMargeGRID" EnablePersistence AllowExcelExport Height="100%" AllowGrouping=@(grouped > 0) AllowSelection EnableHover DataSource="@(items)" ShowColumnChooser AllowReordering AllowSorting AllowFiltering>
+			<GridPageSettings PageSize="200" />
 			<GridEvents Created="CreatedHandler" OnToolbarClick="ToolbarClickHandler" TValue="API_V_MARGE"></GridEvents>
 			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 			<GridGroupSettings Columns="@(getGroups())" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates EnableLazyLoading>

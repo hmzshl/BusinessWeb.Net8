@@ -49,13 +49,13 @@
 					}
 					else
 					{
-						<SfGrid ID="EcritureGRID" EnablePersistence AllowFiltering AllowReordering AllowSorting Height="100%"
+						<SfGrid ID="EcritureGRID" EnablePersistence AllowFiltering AllowReordering AllowSorting Height="100%" AllowPaging
 						AllowResizing AllowSelection ShowColumnChooser="true" @ref="DefaultGrid" AllowPdfExport="true" 
 						AllowExcelExport="true" DataSource="@items" EnableVirtualization ContextMenuItems="@(contextMenu())">
 							<GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
 							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 							<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
-							<GridPageSettings PageSize="100"></GridPageSettings>
+							<GridPageSettings PageSize="200"></GridPageSettings>
 							<GridEvents ContextMenuItemClicked="OnContextMenuClick" Created="CreatedHandler" TValue="API_V_ECRITUREC"></GridEvents>
 							<GridTemplates>
 								<EmptyRecordTemplate>

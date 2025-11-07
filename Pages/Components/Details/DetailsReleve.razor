@@ -56,8 +56,8 @@
              </ToolbarItems>
          </SfToolbar>
         }
-        <SfGrid  @ref=DefaultGrid EnablePersistence ID="ReleveGRID" Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowSorting AllowFiltering>
-             <GridPageSettings PageSize="100" />
+        <SfGrid AllowPaging @ref=DefaultGrid EnablePersistence ID="ReleveGRID" Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowSorting AllowFiltering>
+             <GridPageSettings PageSize="200" />
             <GridEvents Created="CreatedHandler" TValue="API_V_RELEVE"></GridEvents>
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
              <GridAggregates>

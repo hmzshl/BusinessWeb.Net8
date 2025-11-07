@@ -47,7 +47,7 @@
 					<div class="grid-84" style="zoom: @session.zoomLevel;">
 						<SfGrid ShowColumnChooser EnablePersistence ID="StockGrid" AllowSelection Height="100%" DataSource="@(items)" EnableHover AllowPaging AllowSorting
 								AllowExcelExport @ref=@DefaultGrid AllowFiltering>
-							<GridPageSettings PageSize="200" PageCount="10" />
+							<GridPageSettings PageSize="200"/>
 							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Excel"></GridFilterSettings>
 							<GridEvents OnRecordDoubleClick="RowDoubleClicked" Created="CreatedHandler" TValue="V_StockGlobal"></GridEvents>
 							<GridGroupSettings Columns="@(new string[] { "FA_Intitule" })" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates>

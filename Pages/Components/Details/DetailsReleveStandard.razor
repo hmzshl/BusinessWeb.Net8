@@ -43,8 +43,8 @@
              </ToolbarItems>
          </SfToolbar>
         }
-        <SfGrid  @ref=DefaultGrid Height="100%" AllowSelection EnableHover DataSource="@(items)">
-             <GridPageSettings PageSize="100" />
+        <SfGrid AllowPaging @ref=DefaultGrid Height="100%" AllowSelection EnableHover DataSource="@(items)">
+             <GridPageSettings PageSize="200" />
          <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
              <GridAggregates>
                  <GridAggregate>

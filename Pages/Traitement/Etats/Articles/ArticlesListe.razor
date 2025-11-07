@@ -29,12 +29,12 @@
 					</ToolbarItems>
 				</SfToolbar>
 				<div class="grid-84" style="zoom: @session.zoomLevel;">
-					<SfGrid EnableVirtualization Height="100%" AllowResizing AllowFiltering AllowSorting AllowReordering AllowSelection 
+					<SfGrid EnableVirtualization Height="100%" AllowResizing AllowFiltering AllowSorting AllowReordering AllowSelection
 					AllowMultiSorting ShowColumnChooser="true" ID="ArticleGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" 
-					AllowPaging="false" DataSource="@items">
+					AllowPaging="true" DataSource="@items">
 						<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="false" AllowDeleting="false" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
 						<GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="Edit" TValue="API_V_ARTICLE"></GridEvents>
-						<GridPageSettings PageSize="100"></GridPageSettings>
+						<GridPageSettings PageSize="200"></GridPageSettings>
 						<GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
 						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 						<GridTemplates>

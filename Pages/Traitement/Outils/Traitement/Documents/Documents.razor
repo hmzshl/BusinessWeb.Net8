@@ -70,13 +70,13 @@
 					}
 					else
 					{
-						<SfGrid EnablePersistence AllowFiltering AllowReordering AllowSorting Height="100%" AllowResizing AllowSelection 
+						<SfGrid EnablePersistence AllowFiltering AllowReordering AllowSorting Height="100%" AllowResizing AllowSelection AllowPaging
 						ShowColumnChooser="true" ID="DocumentGrid" @ref="DefaultGrid" 
 						AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" EnableVirtualization ContextMenuItems="@(contextMenu())">
 							<GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
 							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 							<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
-							<GridPageSettings PageSize="100"></GridPageSettings>
+							<GridPageSettings PageSize="200"></GridPageSettings>
 							<GridEvents Created="CreatedHandler" OnRecordDoubleClick="@(args => ShowPiece(args.RowData.DO_Piece,args.RowData.DO_Type))" ContextMenuItemClicked="OnContextMenuClick" TValue="API_V_DOCENTETE"></GridEvents>
 							<GridTemplates>
 								<EmptyRecordTemplate>
