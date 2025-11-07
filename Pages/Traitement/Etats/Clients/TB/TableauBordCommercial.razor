@@ -100,10 +100,10 @@
                     </SfToolbar>
                     <GridRow>
                         <GridCol Xs="12" Md="3">
-                            <StatCard3 Color="StatColor.Green" Value="@((dt?.Sum(a => a.DL_MontantHT) ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" Title="CA HT" />
+                            <StatCard3 Color="StatColor.Green" Value="@((dt?.Sum(a => a.DL_MontantHT) ?? 0).ToString("N2"))" Title="CA HT" />
                         </GridCol>
                         <GridCol Xs="12" Md="3">
-                            <StatCard3 Color="StatColor.Purple" Value="@((dt?.Sum(a => a.CMUPMarge) ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+                            <StatCard3 Color="StatColor.Purple" Value="@((dt?.Sum(a => a.CMUPMarge) ?? 0).ToString("N2"))"
                                        Title="Marge HT" />
                         </GridCol>
                         <GridCol Xs="12" Md="3">
@@ -112,11 +112,11 @@
                                        Title="%" />
                         </GridCol>
                         <GridCol Xs="12" Md="3">
-                            <StatCard3 Color="StatColor.Green" Value="@((dt?.Sum(a => a.DL_MontantTTC) ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))" Title="CA TTC" />
+                            <StatCard3 Color="StatColor.Green" Value="@((dt?.Sum(a => a.DL_MontantTTC) ?? 0).ToString("N2"))" Title="CA TTC" />
                         </GridCol>
                         <GridCol Xs="12" Md="3">
                             <StatCard3 Color="StatColor.Blue"
-                                       Value="@((rg?.Sum(a => a.RG_Montant) ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+                                       Value="@((rg?.Sum(a => a.RG_Montant) ?? 0).ToString("N2"))"
                                        Title="Encaissements" />
                         </GridCol>
                         <GridCol Xs="12" Md="3">

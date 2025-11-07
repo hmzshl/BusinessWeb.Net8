@@ -101,21 +101,21 @@
 
                         <GridCol Xs="12" Md="3">
                             <StatCard3 Color="StatColor.Green"
-                                       Value="@((dt?.Sum(a => a.DL_MontantHT) ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+                                       Value="@((dt?.Sum(a => a.DL_MontantHT) ?? 0).ToString("N2"))"
                                        Title="CA HT"
                                        ShowTrendText="false" />
                         </GridCol>
 
                         <GridCol Xs="12" Md="3">
                             <StatCard3 Color="StatColor.Green"
-                                       Value="@((dt?.Sum(a => a.DL_MontantTTC) ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+                                       Value="@((dt?.Sum(a => a.DL_MontantTTC) ?? 0).ToString("N2"))"
                                        Title="CA TTC"
                                        ShowTrendText="false" />
                         </GridCol>
 
                         <GridCol Xs="12" Md="3">
                             <StatCard3 Color="StatColor.Blue"
-                                       Value="@((rg?.Sum(a => a.RG_Montant) ?? 0).ToString("### ### ##0.00;-### ### ##0.00;0.00"))"
+                                       Value="@((rg?.Sum(a => a.RG_Montant) ?? 0).ToString("N2"))"
                                        Title="Décaissements"
                                        ShowTrendText="false" />
                         </GridCol>

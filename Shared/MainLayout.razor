@@ -111,6 +111,39 @@
             </CascadingValue>
         </ChildContent>
         <ErrorContent Context="ex">
+            <div style="padding: 2rem;">
+                <RadzenCard>
+                    <div style="padding: 1.5rem;">
+                        <RadzenStack Orientation="Radzen.Orientation.Vertical" Gap="1rem">
+                            <RadzenText Style="font-size: 1.25rem; font-weight: bold; color: #e74c3c;">
+                                <RadzenIcon Icon="error" Style="margin-right: 0.5rem;" />
+                                Erreur
+                            </RadzenText>
+
+                            <RadzenText Style="font-weight: bold;">
+                                @ex.Message
+                            </RadzenText>
+
+                            <RadzenAccordion>
+                                <Items>
+                                    <RadzenAccordionItem Text="Détails techniques" Icon="code"
+                                                         ExpandTitle="Afficher les détails techniques"
+                                                         CollapseTitle="Masquer les détails techniques">
+                                        <RadzenText Style="font-size: 0.8rem; white-space: pre-wrap; font-family: monospace; background: #f8f9fa; padding: 1rem; border-radius: 4px;">
+                                            @ex.ToString()
+                                        </RadzenText>
+                                    </RadzenAccordionItem>
+                                </Items>
+                            </RadzenAccordion>
+
+                            <RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1rem" Style="margin-top: 1rem;">
+                                <RadzenButton Click="@GoBack" Text="Accueil" Icon="home" />
+                                <RadzenButton Click="@Reload" Text="Réessayer" Icon="refresh" ButtonStyle="ButtonStyle.Secondary" />
+                            </RadzenStack>
+                        </RadzenStack>
+                    </div>
+                </RadzenCard>
+            </div>
         </ErrorContent>
     </ErrorBoundary>
 }
@@ -152,7 +185,14 @@
             Console.WriteLine($"License initialization error: {ex.Message}");
         }
     }
-
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+    private void Reload()
+    {
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    }
     private async Task InitializeSession()
     {
         if (sc.User != null)
