@@ -427,8 +427,12 @@
 							IBODocumentAchatLigne3 ligne3 = doc.FactoryDocumentLigne.Create() as IBODocumentAchatLigne3;
 							ligne3.DL_Design = "---------------------------------------------------------------------";
 							ligne3.Write();
-                            var dt = db.API_T_OrdreFabricationDetail.AsNoTracking().Where(b => b.Ligne == ln.id && b.PreparationCreated == false && b.QtePreparation > 0).ToList();
-							var dt2 = db.API_T_OrdreFabricationDetail.Where(b => b.Ligne == ln.id && b.PreparationCreated == false && b.QtePreparation > 0).ToList();
+                            var dt = db.API_T_OrdreFabricationDetail
+							.Include(a => a.AR_RefNavigation)
+							.AsNoTracking().Where(b => b.Ligne == ln.id && b.PreparationCreated == false && b.QtePreparation > 0).ToList();
+							var dt2 = db.API_T_OrdreFabricationDetail
+							.Include(a => a.AR_RefNavigation)
+							.Where(b => b.Ligne == ln.id && b.PreparationCreated == false && b.QtePreparation > 0).ToList();
 							foreach (API_T_OrdreFabricationDetail ln2 in dt)
 							{
 								IBODocumentAchatLigne3 ligne2 = doc.FactoryDocumentLigne.Create() as IBODocumentAchatLigne3;
