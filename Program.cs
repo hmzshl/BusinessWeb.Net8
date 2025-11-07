@@ -40,18 +40,6 @@ if (WindowsServiceHelpers.IsWindowsService())
 	Directory.SetCurrentDirectory(AppContext.BaseDirectory);
 }
 
-// Configure Serilog
-Log.Logger = new LoggerConfiguration()
-	.MinimumLevel.Debug()
-	.WriteTo.File(
-		path: Path.Combine(AppContext.BaseDirectory, "logs", "service-log.txt"),
-		rollingInterval: RollingInterval.Day
-	)
-	.CreateLogger();
-
-builder.Host.UseSerilog(); // Integrate Serilog
-
-
 builder.Services.AddWindowsService(); // Add this
 builder.Host.UseWindowsService();
 builder.WebHost.UseUrls("http://*:5000");
