@@ -133,6 +133,11 @@
     
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="LogicNP.CryptoLicensing">
+      <HintPath>C:\Users\Administrator\Documents\LogicNP.CryptoLicensing.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Resources\SfResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -140,7 +145,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Update="Pages\Traitement\Etats\Clients\CAAffaires.razor">
+    <Content Update="Pages\Traitement\Etats\Clients\CA\CAAffaires.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
   </ItemGroup>
@@ -149,10 +154,5 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SfResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="LogicNP.CryptoLicensing">
-      <HintPath>..\..\..\..\Documents\LogicNP.CryptoLicensing.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>
