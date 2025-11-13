@@ -47,7 +47,6 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 {
 	serverOptions.ListenAnyIP(5000); // Force listen on all interfaces
 });
-
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
@@ -61,6 +60,7 @@ builder.Services.AddScoped<DialogService>();
 builder.Services.AddScoped<NotificationService>();
 builder.Services.AddScoped<TooltipService>();
 builder.Services.AddScoped<ContextMenuService>();
+builder.Services.AddScoped<ReportService>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<BusinessWeb.BusinessWebDBService>();
 builder.Services.AddScoped<BusinessWeb.Helpers>();
@@ -167,13 +167,13 @@ app.UseRouting();
 app.UseCors("NewPolicy");
 app.UseAuthorization();
 app.UseAntiforgery();
-app.UseMiddleware<ApiKeyMiddleware>();
+//app.UseMiddleware<ApiKeyMiddleware>();
 app.UseEndpoints(endpoints =>
 {
 	endpoints.MapControllers();
 });
 app.UseCors();
-app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>().Database.Migrate();
+await app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>().Database.MigrateAsync();
 app.MapControllers();
 app.MapRazorComponents<App>()
 	.AddInteractiveServerRenderMode();
