@@ -58,6 +58,8 @@
     <PackageReference Include="BoldReports.Data.WebData" Version="11.1.18" />
     <PackageReference Include="BoldReports.Net.Core" Version="11.1.18" />
     <PackageReference Include="FluentValidation" Version="12.1.0" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.3.0" />
     <PackageReference Include="Microsoft.Build" Version="17.10.4" />
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.14.0" />
@@ -134,7 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="LogicNP.CryptoLicensing">
-      <HintPath>C:\Users\Administrator\Documents\LogicNP.CryptoLicensing.dll</HintPath>
+      <HintPath>..\..\..\..\Documents\LogicNP.CryptoLicensing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
