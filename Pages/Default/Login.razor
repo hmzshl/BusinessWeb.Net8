@@ -1,65 +1,118 @@
-﻿
-
-<RadzenLayout style="background: url('images/login.jpg'); background-size: cover;">
-    <RadzenBody>
-        <div class="container" style="height: 100%; max-width: 900px;"  >
-            <div class="row align-items-center " style="height: 100%">
-                <div class="col-12 py-3">
-                    <RadzenCard class="rz-shadow-5" style="padding: 0; overflow: hidden">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-12 col-md-6 rz-background-color-primary p-5 position-relative" style="background: linear-gradient(to right, #203154, #3F9DBF ) !important;">
-                                    <RadzenText Text="Bienvenue!" TextStyle="Radzen.Blazor.TextStyle.H2" class="mt-3 mt-md-5 pt-0 pt-md-5 mb-4 rz-color-white d-none d-sm-block" />
-                                    <RadzenText TextStyle="Radzen.Blazor.TextStyle.Body1" class="mb-5 pb-0 pb-md-5 rz-color-white d-none d-sm-block">
-                                        Remplissez vos identifiants de connexion pour continuer.
-                                    </RadzenText>
+﻿<ErrorBoundary @ref="errorBoundary">
+    <ChildContent>
+        <RadzenLayout style="background: url('images/login.jpg'); background-size: cover;">
+            <RadzenBody>
+                <div class="container" style="height: 100%; max-width: 900px;">
+                    <div class="row align-items-center " style="height: 100%">
+                        <div class="col-12 py-3">
+                            <RadzenCard class="rz-shadow-5" style="padding: 0; overflow: hidden">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6 rz-background-color-primary p-5 position-relative" style="background: linear-gradient(to right, #203154, #3F9DBF ) !important;">
+                                            <RadzenText Text="Bienvenue!" TextStyle="Radzen.Blazor.TextStyle.H2" class="mt-3 mt-md-5 pt-0 pt-md-5 mb-4 rz-color-white d-none d-sm-block" />
+                                            <RadzenText TextStyle="Radzen.Blazor.TextStyle.Body1" class="mb-5 pb-0 pb-md-5 rz-color-white d-none d-sm-block">
+                                                Remplissez vos identifiants de connexion pour continuer.
+                                            </RadzenText>
+                                        </div>
+                                        <div class="col-12 col-md-6 p-5">
+                                            <RadzenText Text="Login" TextStyle="Radzen.Blazor.TextStyle.H5" class="mb-4" TagName="Radzen.Blazor.TagName.H2" />
+                                            <RadzenRow>
+                                                <RadzenColumn SizeMD="12">
+                                                    <RadzenTemplateForm Action="@($" account/login?redirectUrl={redirectUrl}")" Data="@("login")"
+                                                                        Method="post">
+                                                        <RadzenAlert Shade="Radzen.Shade.Lighter" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Danger" Visible="@errorVisible">@error</RadzenAlert>
+                                                        <RadzenAlert Shade="Radzen.Shade.Lighter" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Info" Visible="@infoVisible">@info</RadzenAlert>
+                                                        <RadzenLogin LoginText="SE CONNECTER" PasswordText="Mot de passe" UserText="Nom d'utilisateur" AllowResetPassword="false" AllowRegister="false" />
+                                                    </RadzenTemplateForm>
+                                                </RadzenColumn>
+                                            </RadzenRow>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-12 col-md-6 p-5">
-                                    <RadzenText Text="Login" TextStyle="Radzen.Blazor.TextStyle.H5" class="mb-4" TagName="Radzen.Blazor.TagName.H2" />
-                                    <RadzenRow>
-                                        <RadzenColumn SizeMD="12">
-                                            <RadzenTemplateForm Action="@($" account/login?redirectUrl={redirectUrl}")" Data="@("login")"
-                                                                Method="post">
-                                                <RadzenAlert Shade="Radzen.Shade.Lighter" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Danger" Visible="@errorVisible">@error</RadzenAlert>
-                                                <RadzenAlert Shade="Radzen.Shade.Lighter" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Info" Visible="@infoVisible">@info</RadzenAlert>
-                                                <RadzenLogin LoginText="SE CONNECTER" PasswordText="Mot de passe" UserText="Nom d'utilisateur" AllowResetPassword="false" AllowRegister="false" />
-                                            </RadzenTemplateForm>
-                                        </RadzenColumn>
-                                    </RadzenRow>
-                                </div>
-                            </div>
+                            </RadzenCard>
+                            <RadzenText Text="BusinessWeb, Copyright to NOVELDATA SARLAU Ⓒ 2025" TextStyle="Radzen.Blazor.TextStyle.Caption" TextAlign="Radzen.TextAlign.Center" Style="width: 100%; margin-top: 20px" TagName="Radzen.Blazor.TagName.P" />
                         </div>
-                    </RadzenCard>
-                    <RadzenText Text="BusinessWeb, Copyright to NOVELDATA SARLAU Ⓒ 2025" TextStyle="Radzen.Blazor.TextStyle.Caption" TextAlign="Radzen.TextAlign.Center" Style="width: 100%; margin-top: 20px" TagName="Radzen.Blazor.TagName.P" />
+                    </div>
                 </div>
-            </div>
+            </RadzenBody>
+        </RadzenLayout>
+    </ChildContent>
+    <ErrorContent Context="ex">
+        <div style="padding: 2rem;">
+            <RadzenCard>
+                <div style="padding: 1.5rem;">
+                    <RadzenStack Orientation="Radzen.Orientation.Vertical" Gap="1rem">
+                        <RadzenText Style="font-size: 1.25rem; font-weight: bold; color: #e74c3c;">
+                            <RadzenIcon Icon="error" Style="margin-right: 0.5rem;" />
+                            Erreur
+                        </RadzenText>
+
+                        <RadzenText Style="font-weight: bold;">
+                            @ex.Message
+                        </RadzenText>
+
+                        <RadzenAccordion>
+                            <Items>
+                                <RadzenAccordionItem Text="Détails techniques" Icon="code"
+                                                     ExpandTitle="Afficher les détails techniques"
+                                                     CollapseTitle="Masquer les détails techniques">
+                                    <RadzenText Style="font-size: 0.8rem; white-space: pre-wrap; font-family: monospace; background: #f8f9fa; padding: 1rem; border-radius: 4px;">
+                                        @ex.ToString()
+                                    </RadzenText>
+                                </RadzenAccordionItem>
+                            </Items>
+                        </RadzenAccordion>
+
+                        <RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1rem" Style="margin-top: 1rem;">
+                            <RadzenButton Click="@GoBack" Text="Accueil" Icon="home" />
+                            <RadzenButton Click="@Reload" Text="Réessayer" Icon="refresh" ButtonStyle="ButtonStyle.Secondary" />
+                        </RadzenStack>
+                    </RadzenStack>
+                </div>
+            </RadzenCard>
         </div>
-    </RadzenBody>
-</RadzenLayout>
+    </ErrorContent>
+</ErrorBoundary>
+
+
+
+
 
 
 @code {
-        protected string redirectUrl;
-        protected string error;
-        protected string info;
-        protected bool errorVisible;
-        protected bool infoVisible;
+    protected string redirectUrl;
+    protected string error;
+    protected string info;
+    protected bool errorVisible;
+    protected bool infoVisible;
+    ErrorBoundary errorBoundary;
 
-        [Inject]
-        protected SecurityService Security { get; set; }
+    [Inject]
+    protected SecurityService Security { get; set; }
 
-        protected override async Task OnInitializedAsync()
-        {
-            var query = System.Web.HttpUtility.ParseQueryString(new Uri(NavigationManager.ToAbsoluteUri(NavigationManager.Uri).ToString()).Query);
+    protected override async Task OnInitializedAsync()
+    {
+        var query = System.Web.HttpUtility.ParseQueryString(new Uri(NavigationManager.ToAbsoluteUri(NavigationManager.Uri).ToString()).Query);
 
-            error = query.Get("error");
+        error = query.Get("error");
 
-            info = query.Get("info");
+        info = query.Get("info");
 
-            redirectUrl = query.Get("redirectUrl");
+        redirectUrl = query.Get("redirectUrl");
 
-            errorVisible = !string.IsNullOrEmpty(error);
+        errorVisible = !string.IsNullOrEmpty(error);
 
-            infoVisible = !string.IsNullOrEmpty(info);
-        }
+        infoVisible = !string.IsNullOrEmpty(info);
+
+        await sdb.Database.MigrateAsync();
+
+    }
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+    private void Reload()
+    {
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+    }
 }
