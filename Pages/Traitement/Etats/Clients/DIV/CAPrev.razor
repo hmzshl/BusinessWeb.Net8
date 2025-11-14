@@ -65,7 +65,7 @@
 								<GridCol Xs="24" Md="24" Style="margin: 5px;">
 									<h2 style="font-weight: 600; font-size: 15px; margin: 5px;">CHIFFRE D'AFFAIRE PAR CLIENT</h2>
 									<div class="no-border grid-67" style="zoom: @session.zoomLevel;">
-										<SfGrid AllowTextWrap Height="100%" DataSource="@items" AllowSorting GridLines="GridLine.Both">
+										<SfGrid AllowTextWrap Height="100%" DataSource="@items" AllowSorting>
 											<GridAggregates>
 												<GridAggregate>
 													<GridAggregateColumns>
@@ -167,7 +167,7 @@
 								<GridCol Xs="24" Md="24" Style="margin: 5px;">
 									<h2 style="font-weight: 600; font-size: 15px; margin: 5px;">DEVIS EN COURS</h2>
 									<div style="height: 35vh;">
-										<SfGrid AllowTextWrap Height="100%" DataSource="@devis" AllowSorting GridLines="GridLine.Both">
+										<SfGrid AllowTextWrap Height="100%" DataSource="@devis" AllowSorting>
 											<GridAggregates>
 												<GridAggregate>
 													<GridAggregateColumns>
@@ -185,9 +185,9 @@
 											<GridPageSettings PageSize="100" />
 											<GridEvents TValue="API_V_DOCENTETE"></GridEvents>
 											<GridColumns>
-												<GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Date)" Format="dd/MM/yy" HeaderText="Ref" />
-												<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Piece)" HeaderText="Ref" />
-												<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CT_Intitule)" HeaderText="Client" />
+												<GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Date)" Format="dd/MM/yy" HeaderText="Date" />
+												<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Piece)" HeaderText="Pièce" />
+												<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CT_Intitule)" HeaderText="Client" />
 												<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Ref)" HeaderText="Ref" />
 												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantHT)" HeaderText="HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
 											</GridColumns>
@@ -197,7 +197,7 @@
 								<GridCol Xs="24" Md="24" Style="margin: 5px;">
 									<h2 style="font-weight: 600; font-size: 15px; margin: 5px;">COMMANDES EN COURS</h2>
 									<div style="height: 35vh;">
-										<SfGrid AllowTextWrap Height="100%" DataSource="@commandes" AllowSorting GridLines="GridLine.Both">
+										<SfGrid AllowTextWrap Height="100%" DataSource="@commandes" AllowSorting>
 											<GridAggregates>
 												<GridAggregate>
 													<GridAggregateColumns>
@@ -215,9 +215,9 @@
 											<GridPageSettings PageSize="100" />
 											<GridEvents TValue="API_V_DOCENTETE"></GridEvents>
 											<GridColumns>
-												<GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Date)" Format="dd/MM/yy" HeaderText="Ref" />
-												<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Piece)" HeaderText="Ref" />
-												<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CT_Intitule)" HeaderText="Client" />
+												<GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Date)" Format="dd/MM/yy" HeaderText="Date" />
+												<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Piece)" HeaderText="Pièce" />
+												<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CT_Intitule)" HeaderText="Client" />
 												<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Ref)" HeaderText="Ref" />
 												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantHT)" HeaderText="HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
 											</GridColumns>
