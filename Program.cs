@@ -173,7 +173,7 @@ app.UseEndpoints(endpoints =>
 	endpoints.MapControllers();
 });
 app.UseCors();
-//await app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>().Database.MigrateAsync();
+await app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>().Database.MigrateAsync();
 app.MapControllers();
 app.MapRazorComponents<App>()
 	.AddInteractiveServerRenderMode();
