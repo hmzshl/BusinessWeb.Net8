@@ -3,7 +3,6 @@
 @using Microsoft.AspNetCore.Components
 @inject IJSRuntime JSRuntime
 @using BusinessWeb.Data;
-
 <div id="report-viewer" style="width: 100%; height: 100%;" />
 
 @code {
@@ -20,7 +19,7 @@
              viewerOptions.Parameters.Add(parameter);
         }      
         viewerOptions.ReportName = ReportName;
-        viewerOptions.ServiceURL = "/api/BoldReportsSQL/" + session.db.Database.GetConnectionString().Replace("\\","FFFFFFF");
+        viewerOptions.ServiceURL = "/api/BoldReportsSQL/"+session.Societe.id;
         await JSRuntime.InvokeVoidAsync("BoldReports.RenderViewer", "report-viewer", viewerOptions);
     }
 

@@ -38,29 +38,29 @@
 									<GridRow>
 										<GridCol Xs="24" Md="6">
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Enregis" LabelColSpan="10">
-												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Numero" />
+												<SfTextBox  @bind-Value="@row.Numero" />
 											</FormItem>
 
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="10">
-												<SfDatePicker Readonly="@(row.Statut != 0)" TValue="DateTime?" @bind-Value="@row.Date" />
+												<SfDatePicker  TValue="DateTime?" @bind-Value="@row.Date" />
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Tél./ Fax" LabelColSpan="10">
-												<SfTextBox Readonly="@(row.Statut != 0 || (row.OldCompte??false))" @bind-Value="@row.Telephone" />
+												<SfTextBox Readonly="@((row.OldCompte??false))" @bind-Value="@row.Telephone" />
 											</FormItem>
 
 										</GridCol>
 										<GridCol Xs="24" Md="6">
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Client Existant" LabelColSpan="10">
-												<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.OldCompte"></SfSwitch>
+												<SfSwitch  @bind-Checked="@row.OldCompte"></SfSwitch>
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Demande par" LabelColSpan="10">
-												<SfDropDownList Readonly="@(row.Statut != 0)" TValue="int" TItem="Items" DataSource="@fn.DemandePar()" @bind-Value="@row.DemandePar">
+												<SfDropDownList  TValue="int" TItem="Items" DataSource="@fn.DemandePar()" @bind-Value="@row.DemandePar">
 													<DropDownListEvents TValue="int" TItem="Items" />
 													<DropDownListFieldSettings Text="Name" Value="Id" />
 												</SfDropDownList>
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Fonction" LabelColSpan="10">
-												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.FonctionInterlocuteur" />
+												<SfTextBox  @bind-Value="@row.FonctionInterlocuteur" />
 											</FormItem>
 										</GridCol>
 										<GridCol Xs="24" Md="12">
@@ -74,21 +74,21 @@
 												}
 												else 
 												{
-													<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.RaisonSocial" />
+													<SfTextBox  @bind-Value="@row.RaisonSocial" />
 												}
 												
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse" LabelColSpan="5">
-												<SfTextBox Readonly="@(row.Statut != 0 || (row.OldCompte??false))" @bind-Value="@row.Adresse" />
+												<SfTextBox Readonly="@((row.OldCompte??false))" @bind-Value="@row.Adresse" />
 											</FormItem>
 
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Interlocuteur" LabelColSpan="5">
-												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Interlocuteur" />
+												<SfTextBox  @bind-Value="@row.Interlocuteur" />
 											</FormItem>
 											@if (row.DemandePar == 3)
 											{
 												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Autre" LabelColSpan="5">
-													<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.DemandeParAutre" />
+													<SfTextBox  @bind-Value="@row.DemandeParAutre" />
 												</FormItem>
 											}
 										</GridCol>
@@ -113,30 +113,30 @@
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Voulez-vous nos Preuves de raccordement?" LabelColSpan="8">
 												<GridRow>
 													<GridCol Xs="24" Md="6">
-														<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.PreuvesRaccord"></SfSwitch>
+														<SfSwitch  @bind-Checked="@row.PreuvesRaccord"></SfSwitch>
 													</GridCol>
 													<GridCol Xs="24" Md="16">
-														<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PreuvesRaccordChar" />
+														<SfTextBox  @bind-Value="@row.PreuvesRaccordChar" />
 													</GridCol>
 												</GridRow>
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Voulez-vous notre liste de personnel qualifié?" LabelColSpan="8">
 												<GridRow>
 													<GridCol Xs="24" Md="6">
-														<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row._ListePersonnelQualifie"></SfSwitch>
+														<SfSwitch  @bind-Checked="@row._ListePersonnelQualifie"></SfSwitch>
 													</GridCol>
 													<GridCol Xs="24" Md="16">
-														<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.ListePersonnelQualifieChar" />
+														<SfTextBox  @bind-Value="@row.ListePersonnelQualifieChar" />
 													</GridCol>
 												</GridRow>
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Voulez vous faire un audit au laboratoire?" LabelColSpan="8">
 												<GridRow>
 													<GridCol Xs="24" Md="6">
-														<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row._AuditAuLaboratoire"></SfSwitch>
+														<SfSwitch  @bind-Checked="@row._AuditAuLaboratoire"></SfSwitch>
 													</GridCol>
 													<GridCol Xs="24" Md="16">
-														<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.AuditAuLaboratoireChar" />
+														<SfTextBox  @bind-Value="@row.AuditAuLaboratoireChar" />
 													</GridCol>
 												</GridRow>
 
@@ -144,20 +144,20 @@
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Vous voulez consultez notre PMQ? " LabelColSpan="8">
 												<GridRow>
 													<GridCol Xs="24" Md="6">
-														<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.PMQ"></SfSwitch>
+														<SfSwitch  @bind-Checked="@row.PMQ"></SfSwitch>
 													</GridCol>
 													<GridCol Xs="24" Md="16">
-														<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PMQChar" />
+														<SfTextBox  @bind-Value="@row.PMQChar" />
 													</GridCol>
 												</GridRow>
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Vous voulez notre procédure de traitement de réclamation?" LabelColSpan="8">
 												<GridRow>
 													<GridCol Xs="24" Md="6">
-														<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.ProcedureTraitementReclamation"></SfSwitch>
+														<SfSwitch  @bind-Checked="@row.ProcedureTraitementReclamation"></SfSwitch>
 													</GridCol>
 													<GridCol Xs="24" Md="16">
-														<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.ProcedureTraitementReclamationChar" />
+														<SfTextBox  @bind-Value="@row.ProcedureTraitementReclamationChar" />
 													</GridCol>
 												</GridRow>
 											</FormItem>
@@ -172,23 +172,23 @@
 									<GridRow>
 										<GridCol Xs="24" Md="11">
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Lieu de prestation" LabelColSpan="13">
-												<SfDropDownList Readonly="@(row.Statut != 0)" TValue="int" TItem="Items" DataSource="@fn.LieuPrestation()" @bind-Value="@row.LieuPrestationInt">
+												<SfDropDownList  TValue="int" TItem="Items" DataSource="@fn.LieuPrestation()" @bind-Value="@row.LieuPrestationInt">
 													<DropDownListEvents TValue="int" TItem="Items" />
 													<DropDownListFieldSettings Text="Name" Value="Id" />
 												</SfDropDownList>
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Les opérations attendues" LabelColSpan="13">
-												<SfDropDownList Readonly="@(row.Statut != 0)" TValue="int" TItem="Items" DataSource="@fn.OperationAttendues()" @bind-Value="@row.OperationsAttenduesInt">
+												<SfDropDownList  TValue="int" TItem="Items" DataSource="@fn.OperationAttendues()" @bind-Value="@row.OperationsAttenduesInt">
 													<DropDownListEvents TValue="int" TItem="Items" />
 													<DropDownListFieldSettings Text="Name" Value="Id" />
 												</SfDropDownList>
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Périodicité étalonnage étiquettes" LabelColSpan="13">
 												<RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
-													<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.PeriodiciteEtalonnageEtiquettes"></SfSwitch>
+													<SfSwitch  @bind-Checked="@row.PeriodiciteEtalonnageEtiquettes"></SfSwitch>
 													@if (@row.PeriodiciteEtalonnageEtiquettes)
 													{
-														<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PeriodiciteEtalonnageEtiquettesPeriode" />
+														<SfTextBox  @bind-Value="@row.PeriodiciteEtalonnageEtiquettesPeriode" />
 													}
 
 												</RadzenStack>
@@ -196,33 +196,33 @@
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Périodicité étalonnage rapports" LabelColSpan="13">
 												<RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
-													<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.PeriodiciteEtalonnageRapports"></SfSwitch>
+													<SfSwitch  @bind-Checked="@row.PeriodiciteEtalonnageRapports"></SfSwitch>
 													@if (@row.PeriodiciteEtalonnageRapports)
 													{
-														<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PeriodiciteEtalonnageRapportsPeriode" />
+														<SfTextBox  @bind-Value="@row.PeriodiciteEtalonnageRapportsPeriode" />
 													}
 
 												</RadzenStack>
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Relance pour l’étalonnage annuel" LabelColSpan="13">
-												<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.RelanceEtalonnageAnnuel"></SfSwitch>
+												<SfSwitch  @bind-Checked="@row.RelanceEtalonnageAnnuel"></SfSwitch>
 											</FormItem>
 										</GridCol>
 										<GridCol Xs="24" Md="13">
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date souhaitée de la prestation" LabelColSpan="12">
-												<SfDatePicker Readonly="@(row.Statut != 0)" TValue="DateTime?" @bind-Value="@row.DateSouhaiteePrestation" />
+												<SfDatePicker  TValue="DateTime?" @bind-Value="@row.DateSouhaiteePrestation" />
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date de transmission des documents" LabelColSpan="12">
-												<SfDatePicker Readonly="@(row.Statut != 0)" TValue="DateTime?" @bind-Value="@row.DateTransmissionDocuments" />
+												<SfDatePicker  TValue="DateTime?" @bind-Value="@row.DateTransmissionDocuments" />
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse de livraison /expédition" LabelColSpan="12">
-												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.AdresseLivraisonExpedition" />
+												<SfTextBox  @bind-Value="@row.AdresseLivraisonExpedition" />
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Mode de livraison /expédition" LabelColSpan="12">
-												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.ModeLivraisonExpedition" />
+												<SfTextBox  @bind-Value="@row.ModeLivraisonExpedition" />
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Prise en charge du transport" LabelColSpan="12">
-												<SfDropDownList Readonly="@(row.Statut != 0)" TValue="int" TItem="Items" DataSource="@fn.PriseChargeTransport()" @bind-Value="@row.PriseChargeTransportInt">
+												<SfDropDownList  TValue="int" TItem="Items" DataSource="@fn.PriseChargeTransport()" @bind-Value="@row.PriseChargeTransportInt">
 													<DropDownListEvents TValue="int" TItem="Items" />
 													<DropDownListFieldSettings Text="Name" Value="Id" />
 												</SfDropDownList>
@@ -236,7 +236,7 @@
 									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Nature de préstation" LabelColSpan="6">
 
 										<RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
-											<SfDropDownList Readonly="@(row.Statut != 0)" Width="240px" TValue="int" TItem="Items" DataSource="@fn.NaturePrestation()" @bind-Value="@row.NaturePrestation">
+											<SfDropDownList  Width="240px" TValue="int" TItem="Items" DataSource="@fn.NaturePrestation()" @bind-Value="@row.NaturePrestation">
 												<DropDownListEvents TValue="int" TItem="Items" />
 												<DropDownListFieldSettings Text="Name" Value="Id" />
 											</SfDropDownList>
@@ -248,7 +248,7 @@
 									</FormItem>
 									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Methode Etalonnage" LabelColSpan="6">
 										<RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
-											<SfDropDownList Readonly="@(row.Statut != 0)" Width="170px" TValue="int" TItem="Items" DataSource="@fn.MethodeEtalonnage()" @bind-Value="@row.MethodeEtalonnange">
+											<SfDropDownList  Width="170px" TValue="int" TItem="Items" DataSource="@fn.MethodeEtalonnage()" @bind-Value="@row.MethodeEtalonnange">
 												<DropDownListEvents TValue="int" TItem="Items" />
 												<DropDownListFieldSettings Text="Name" Value="Id" />
 											</SfDropDownList>
@@ -260,7 +260,7 @@
 
 									</FormItem>
 									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Avis sur la pertinence de la méthode" LabelColSpan="6">
-										<SfDropDownList Readonly="@(row.Statut != 0)" Width="170px" TValue="int" TItem="Items" DataSource="@fn.PertinenceMethode()" @bind-Value="@row.AvisPertinenceMethode">
+										<SfDropDownList  Width="170px" TValue="int" TItem="Items" DataSource="@fn.PertinenceMethode()" @bind-Value="@row.AvisPertinenceMethode">
 											<DropDownListEvents TValue="int" TItem="Items" />
 											<DropDownListFieldSettings Text="Name" Value="Id" />
 										</SfDropDownList>
@@ -268,23 +268,23 @@
 
 									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Points d’étalonnage" LabelColSpan="6">
 										<RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="1px">
-											<SfDropDownList Readonly="@(row.Statut != 0)" Width="170px" TValue="int" TItem="Items" DataSource="@fn.PointsEtalonnage()" @bind-Value="@row.PointsEtalonnage">
+											<SfDropDownList  Width="170px" TValue="int" TItem="Items" DataSource="@fn.PointsEtalonnage()" @bind-Value="@row.PointsEtalonnage">
 												<DropDownListEvents TValue="int" TItem="Items" />
 												<DropDownListFieldSettings Text="Name" Value="Id" />
 											</SfDropDownList>
 											@if (@row.PointsEtalonnage == 3)
 											{
-												<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.PointsEtalonnageAutre" />
+												<SfTextBox  @bind-Value="@row.PointsEtalonnageAutre" />
 											}
 
 										</RadzenStack>
 
 									</FormItem>
 									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Capacité et disponibilité des ressources nécessaires" LabelColSpan="6">
-										<SfSwitch Disabled="@(row.Statut != 0)" @bind-Checked="@row.CapaciteDisponibiliteRessourcesNecessaires"></SfSwitch>
+										<SfSwitch  @bind-Checked="@row.CapaciteDisponibiliteRessourcesNecessaires"></SfSwitch>
 									</FormItem>
 									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Commentaire" LabelColSpan="6">
-										<SfTextBox Readonly="@(row.Statut != 0)" @bind-Value="@row.Commentaire" />
+										<SfTextBox  @bind-Value="@row.Commentaire" />
 									</FormItem>
 								</Card>
 							</GridCol>
