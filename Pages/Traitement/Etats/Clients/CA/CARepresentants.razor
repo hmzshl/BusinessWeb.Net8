@@ -1,5 +1,6 @@
 ﻿@page "/et-ca-representant"
 @attribute [Authorize]
+@implements IDisposable
 
 @if (IsLoaded)
 {
@@ -37,7 +38,7 @@
                             <GridCol Xs="24" Md="16">
                                 <Card>
                                     <div class="grid-80" style="zoom: @session.zoomLevel;">
-                                        <SfGrid Height="100%" ID="RecapGRID" DataSource="@(items)" AllowExcelExport @ref=RecapGRID Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })" AllowSorting>
+                                        <SfGrid EnableVirtualization Height="100%" ID="RecapGRID" DataSource="@(items)" AllowExcelExport @ref=RecapGRID Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })" AllowSorting>
                                             <GridPageSettings PageSize="100" />
                                             <GridEvents OnToolbarClick="ToolbarClickHandler_Recap" TValue="API_V_MARGE"></GridEvents>
                                             <GridAggregates>
@@ -360,6 +361,7 @@ else
     private List<API_V_MARGE> chart_items = new List<API_V_MARGE>();
     DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
     DateTime? date2 = new DateTime(DateTime.Today.Year, 12, 31);
+    IEnumerable<API_V_MARGE> data;
     string FormatAsUSD(object value)
     {
         return ((double)value).ToString("N0");
@@ -369,6 +371,7 @@ else
     {
         db = session.db;
         GC.Collect();
+        data = db.API_V_MARGE;
         await Task.Delay(1);
         await LoadData();
         IsLoaded = true;
@@ -377,7 +380,7 @@ else
     {
         IsLoaded = false;
         await Task.Delay(300);
-        items_details = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null))
+        items_details = data.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null))
         .GroupBy(a => new { a.CO_Nom, a.AR_Design })
                             .Select(a => new API_V_MARGE
                             {
@@ -427,5 +430,17 @@ else
         {
             await this.DetailGRID.ExportToExcelAsync();
         }
+    }
+    public void Dispose()
+    {
+        // Help garbage collection by clearing references
+        items?.Clear();
+        items_details?.Clear();
+        chart_items?.Clear();
+
+        items = null;
+        items_details = null;
+        chart_items = null;
+        data = null;
     }
 }

@@ -77,7 +77,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		[HttpGet("DO_Date/{DateDebut}/{DateFin}")]
 		public async Task<ActionResult<IEnumerable<API_V_MARGE>>> GetAPI_V_MARGEByDO_Date(DateTime DateDebut, DateTime DateFin)
 		{
-			setDB(); return await _db.API_V_MARGE.Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
+			setDB(); var dt = _db.API_V_MARGE; return await dt.Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
 		}
 
 

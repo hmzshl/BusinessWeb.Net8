@@ -1,4 +1,5 @@
-﻿@if (IsLoaded)
+﻿@implements IDisposable
+@if (IsLoaded)
 {
     <Card_1 Title="@title" IsDetail="@IsDetail">
         <RadzenContent Container="main">
@@ -127,7 +128,7 @@
                         <GridCol Xs="24" Md="9">
                             <Card title="CA PAR CLIENT">
                                 <div class="no-border grid-67" style="zoom: @session.zoomLevel;">
-                                    <SfGrid AllowTextWrap Height="100%" DataSource="@(dt_client)" Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })" AllowSorting>
+                                    <SfGrid AllowTextWrap EnableVirtualization Height="100%" DataSource="@(dt_client)" Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })" AllowSorting>
                                         <GridAggregates>
                                             <GridAggregate>
                                                 <GridAggregateColumns>
@@ -210,7 +211,7 @@
                         <GridCol Xs="24" Md="9">
                             <Card title="CA PAR ARTICLE">
                                 <div class="no-border grid-67" style="zoom: @session.zoomLevel;">
-                                    <SfGrid AllowTextWrap Height="100%" DataSource="@(dt_article)" Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })" AllowSorting>
+                                    <SfGrid AllowTextWrap EnableVirtualization Height="100%" DataSource="@(dt_article)" Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })" AllowSorting>
                                         <GridAggregates>
                                             <GridAggregate>
                                                 <GridAggregateColumns>
@@ -387,13 +388,14 @@ else
     List<API_V_MARGE> dt_client = new List<API_V_MARGE>();
     List<API_V_CREGLEMENT> rg = new List<API_V_CREGLEMENT>();
     List<API_V_CREGLEMENT> rg_chart = new List<API_V_CREGLEMENT>();
+    IEnumerable<API_V_MARGE> data;
 
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(1);
         db = session.db;
         GC.Collect();
-
+        data = db.API_V_MARGE;
         if (periode == "journalier")
         {
             if (IsDateDetail)
@@ -408,9 +410,10 @@ else
             }
 
         }
+
         else if (periode == "mensuel")
         {
-            list_mois = db.API_V_MARGE.Select(a => a.MoisAnnee).Distinct().OrderByDescending(a => a).ToList();
+            list_mois = data.Select(a => a.MoisAnnee).Distinct().OrderByDescending(a => a).ToList();
             if (list_mois.Count() != 0)
             {
                 mois = list_mois.First();
@@ -418,7 +421,7 @@ else
         }
         else if (periode == "annuel")
         {
-            list_annee = db.API_V_MARGE.OrderByDescending(a => a.Annee).Select(a => a.Annee).Distinct().OrderByDescending(a => a).ToList();
+            list_annee = data.Select(a => a.Annee).Distinct().OrderByDescending(a => a).ToList();
             if (list_annee.Count() != 0)
             {
                 annee = list_annee.First();
@@ -436,22 +439,22 @@ else
         await Task.Delay(1);
         if (periode == "journalier")
         {
-            dt = db.API_V_MARGE.Where(a => a.DO_Date == date1).ToList();
+            dt = data.Where(a => a.DO_Date == date1).ToList();
             rg = db.API_V_CREGLEMENT.Where(a => a.RG_Date == date1 && a.RG_Type == 0).ToList();
         }
         else if (periode == "mensuel")
         {
-            dt = db.API_V_MARGE.Where(a => a.MoisAnnee == mois).ToList();
+            dt = data.Where(a => a.MoisAnnee == mois).ToList();
             rg = db.API_V_CREGLEMENT.Where(a => a.MoisAnnee == mois && a.RG_Type == 0).ToList();
         }
         else if (periode == "annuel")
         {
-            dt = db.API_V_MARGE.Where(a => a.Annee == annee).ToList();
+            dt = data.Where(a => a.Annee == annee).ToList();
             rg = db.API_V_CREGLEMENT.Where(a => a.Annee == annee && a.RG_Type == 0).ToList();
         }
         else
         {
-            dt = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).ToList();
+            dt = data.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).ToList();
             rg = db.API_V_CREGLEMENT.Where(a => ((date1 != null && a.RG_Date >= date1) || date1 == null) && ((date2 != null && a.RG_Date <= date2) || date2 == null) && a.RG_Type == 0).ToList();
         }
 
@@ -516,5 +519,16 @@ else
         await DialogService.OpenAsync<BusinessWeb.Pages.Traitement.Etats.Articles.ArticlesFiche>(args.AR_Design,
         new Dictionary<string, object>() { { "cbMarq", cbMarq } },
         new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
+    }
+    public void Dispose()
+    {
+        // Help garbage collection by clearing references
+        data = null;
+        dt = null;
+        rg = null;
+        dt_client = null;
+        dt_article = null;
+        dt_chart = null;
+        rg_chart = null;
     }
 }

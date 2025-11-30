@@ -165,12 +165,12 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_MARGE>>> GetAPI_LT_MARGEByDO_Date(DateTime DateDebut, DateTime DateFin)
 		{
 			setDB();
-			List<API_V_MARGE> dt = await _db.API_V_MARGE.Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
+			List<API_V_MARGE> dt = await _db.API_V_MARGE.ToListAsync();
 
 			try
 			{
 				var rs = new List<API_LT_MARGE>();
-				foreach (var item in dt)
+				foreach (var item in dt.Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin))
 				{
 					var lt = new API_LT_MARGE();
 					fn.CopyData(item, lt);

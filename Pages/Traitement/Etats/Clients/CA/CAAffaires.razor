@@ -1,6 +1,6 @@
 ﻿@page "/et-ca-affaire"
 @attribute [Authorize]
-
+@implements IDisposable
 @if (IsLoaded)
 {
     <Card_1 Title="CHIFFRE D'AFFAIRE PAR AFFAIRE">
@@ -16,28 +16,28 @@
                         </ToolbarItem>
                         <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
                             <Template>
-                                <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
-                                 <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
-                             </SfDatePicker>
-                         </Template>
-                     </ToolbarItem>
-                     <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-                         <Template>
-                             <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
-                                 <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
-                             </SfDatePicker>
-                         </Template>
-                     </ToolbarItem>
-                 </ToolbarItems>
-             </SfToolbar>
+                                <SfDatePicker Width="140px" TValue="DateTime ?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
+                                    <DatePickerEvents TValue="DateTime ?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
+                                </SfDatePicker>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDatePicker Width="140px" TValue="DateTime ?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
+                                    <DatePickerEvents TValue="DateTime ?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
+                                </SfDatePicker>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
 
                 <GridRow>
 
                     <GridCol Xs="24" Md="16">
                         <Card>
                             <div class="grid-80" style="zoom: @session.zoomLevel;">
-                                <SfGrid  Height="100%" DataSource="@(items)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
-                                    <GridPageSettings PageSize="100"/>
+                                <SfGrid EnableVirtualization Height="100%" DataSource="@(items)" Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })" AllowSorting>
+                                    <GridPageSettings PageSize="100" />
                                     <GridAggregates>
                                         <GridAggregate>
                                             <GridAggregateColumns>
@@ -202,6 +202,7 @@ else
     private List<API_V_MARGE> chart_items = new List<API_V_MARGE>();
     DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
     DateTime? date2 = new DateTime(DateTime.Today.Year, 12, 31);
+    IEnumerable<API_V_MARGE> data;
     string FormatAsUSD(object value)
     {
         return ((double)value).ToString("N0");
@@ -209,7 +210,8 @@ else
     bool IsLoaded = false;
     protected override async Task OnInitializedAsync()
     {
-                db = session.db;
+        db = session.db;
+        data = db.API_V_MARGE;
         GC.Collect();
         await Task.Delay(1);
         await LoadData();
@@ -219,7 +221,7 @@ else
     {
         IsLoaded = false;
         await Task.Delay(300);
-        items = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).GroupBy(a => new { a.CA_Num, a.CA_Intitule })
+        items = data.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).GroupBy(a => new { a.CA_Num, a.CA_Intitule })
    .Select(a => new API_V_MARGE
    {
        CA_Num = a.Key.CA_Num,
@@ -241,5 +243,15 @@ else
         await DialogService.OpenAsync<DetailsMarge>(args.RowData.CA_Intitule,
         new Dictionary<string, object>() { { "Date1", date1 }, { "Date2", date2 }, { "CA_Num", args.RowData.CA_Num }, { "ClassHeight", "grid-84" } },
         new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
+    }
+    public void Dispose()
+    {
+        // Help garbage collection by clearing references
+        items?.Clear();
+        chart_items?.Clear();
+
+        items = null;
+        chart_items = null;
+        data = null;
     }
 }

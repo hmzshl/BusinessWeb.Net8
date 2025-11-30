@@ -1,6 +1,6 @@
 ﻿@page "/et-ca-client"
 @attribute [Authorize]
-
+@implements IDisposable
 @if (IsLoaded)
 {
     <Card_1 Title="CHIFFRE D'AFFAIRE PAR CLIENT">
@@ -36,7 +36,7 @@
                     <GridCol Xs="24" Md="16">
                         <Card>
                             <div class="grid-80" style="zoom: @session.zoomLevel;">
-                                <SfGrid  Height="100%" DataSource="@(items)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
+                                <SfGrid EnableVirtualization Height="100%" DataSource="@(items)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
                                     <GridPageSettings PageSize="100" />
                                     <GridAggregates>
                                         <GridAggregate>
@@ -202,6 +202,7 @@ else
     private List<API_V_MARGE> chart_items = new List<API_V_MARGE>();
     DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
     DateTime? date2 = new DateTime(DateTime.Today.Year, 12, 31);
+    IEnumerable<API_V_MARGE> data;
     string FormatAsUSD(object value)
     {
         return ((double)value).ToString("N0");
@@ -210,7 +211,9 @@ else
     protected override async Task OnInitializedAsync()
     {
                 db = session.db;
+
         GC.Collect();
+        data = db.API_V_MARGE;
         await Task.Delay(1);
         await LoadData();
         IsLoaded = true;
@@ -219,7 +222,7 @@ else
     {
         IsLoaded = false;
         await Task.Delay(300);
-        items = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).GroupBy(a => new { a.CT_Intitule, a.CT_Num })
+        items = data.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).GroupBy(a => new { a.CT_Intitule, a.CT_Num })
                     .Select(a => new API_V_MARGE
                         {
                             CT_Num = a.Key.CT_Num,
@@ -254,5 +257,15 @@ else
         {
             args.Cell.AddClass(new string[] { "td-pos" });
         }  
+    }
+    public void Dispose()
+    {
+        // Help garbage collection by clearing references
+        items?.Clear();
+        chart_items?.Clear();
+
+        items = null;
+        chart_items = null;
+        data = null;
     }
 }

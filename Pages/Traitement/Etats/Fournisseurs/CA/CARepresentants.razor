@@ -35,7 +35,7 @@
                     <GridCol Xs="24" Md="16">
                         <Card>
                             <div class="grid-80" style="zoom: @session.zoomLevel;">
-                                <SfGrid  Height="100%" DataSource="@(items)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
+                                <SfGrid EnableVirtualization Height="100%" DataSource="@(items)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowSorting>
                                     <GridPageSettings PageSize="100" />
                                     <GridAggregates>
                                         <GridAggregate>
