@@ -177,6 +177,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 					rs.Add(lt);
 
 				}
+				dt = null;
 				return Ok(rs);
 			}
 			catch (Exception ex)
