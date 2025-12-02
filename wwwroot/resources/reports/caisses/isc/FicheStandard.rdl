@@ -1,32 +1,26 @@
-<?xml version="1.0"?>
-<Report xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition">
   <ReportSections>
     <ReportSection>
       <Body>
-        <Style>
-          <FontFamily>Arial</FontFamily>
-          <FontSize>10.00002pt</FontSize>
-          <Border>
-            <Style>None</Style>
-          </Border>
-        </Style>
+        <Height>105.0002pt</Height>
         <ReportItems>
           <Textbox Name="TextBox4">
-            <Left>241.5pt</Left>
-            <Top>18.75pt</Top>
-            <Height>18.75pt</Height>
-            <Width>156pt</Width>
+            <Left>241.5004pt</Left>
+            <Top>6.75001pt</Top>
+            <Height>18.75008pt</Height>
+            <Width>156.0004pt</Width>
             <Style>
               <BackgroundColor>#ffffff</BackgroundColor>
               <FontFamily>Arial</FontFamily>
-              <FontSize>10.00002pt</FontSize>
+              <FontSize>10.00008pt</FontSize>
               <VerticalAlign>Middle</VerticalAlign>
-              <PaddingLeft>7.5pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
+              <PaddingLeft>7.49992pt</PaddingLeft>
+              <PaddingRight>2.00013pt</PaddingRight>
+              <PaddingTop>2.00013pt</PaddingTop>
+              <PaddingBottom>2.00013pt</PaddingBottom>
               <Border>
-                <Width>0.24975pt</Width>
+                <Width>0.24973pt</Width>
                 <Color>#676767</Color>
                 <Style>Solid</Style>
               </Border>
@@ -39,7 +33,7 @@
                   <TextRun>
                     <Value>VISA BENEFICIAIRE</Value>
                     <Style>
-                      <FontSize>9pt</FontSize>
+                      <FontSize>9.00001pt</FontSize>
                       <FontWeight>ExtraBold</FontWeight>
                       <Color>#676767</Color>
                     </Style>
@@ -47,28 +41,28 @@
                 </TextRuns>
                 <Style>
                   <FontFamily>Arial</FontFamily>
-                  <FontSize>10.00002pt</FontSize>
+                  <FontSize>10.00008pt</FontSize>
                   <TextAlign>Center</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
           </Textbox>
           <Textbox Name="TextBox5">
-            <Left>241.5pt</Left>
-            <Top>36.75pt</Top>
-            <Height>90.75pt</Height>
-            <Width>156pt</Width>
+            <Left>241.5004pt</Left>
+            <Top>24.75004pt</Top>
+            <Height>49.50008pt</Height>
+            <Width>156.0002pt</Width>
             <Style>
               <BackgroundColor>#ffffff</BackgroundColor>
               <FontFamily>Arial</FontFamily>
-              <FontSize>10.00002pt</FontSize>
+              <FontSize>10.00008pt</FontSize>
               <VerticalAlign>Top</VerticalAlign>
-              <PaddingLeft>7.5pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
+              <PaddingLeft>7.49992pt</PaddingLeft>
+              <PaddingRight>2.00013pt</PaddingRight>
+              <PaddingTop>2.00013pt</PaddingTop>
+              <PaddingBottom>2.00013pt</PaddingBottom>
               <Border>
-                <Width>0.24975pt</Width>
+                <Width>0.24973pt</Width>
                 <Color>#676767</Color>
                 <Style>Solid</Style>
               </Border>
@@ -82,34 +76,35 @@
                     <Value />
                     <Style>
                       <FontFamily>Arial</FontFamily>
+                      <FontSize>10.00008pt</FontSize>
                       <Color>black</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
                 <Style>
                   <FontFamily>Arial</FontFamily>
-                  <FontSize>10.00002pt</FontSize>
+                  <FontSize>10.00008pt</FontSize>
                   <TextAlign>Left</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
           </Textbox>
           <Textbox Name="TextBox3">
-            <Left>408pt</Left>
-            <Top>36.75pt</Top>
-            <Height>90.75pt</Height>
-            <Width>157.5pt</Width>
+            <Left>408.0006pt</Left>
+            <Top>24.75004pt</Top>
+            <Height>49.50008pt</Height>
+            <Width>157.5002pt</Width>
             <Style>
               <BackgroundColor>#ffffff</BackgroundColor>
               <FontFamily>Arial</FontFamily>
-              <FontSize>10.00002pt</FontSize>
+              <FontSize>10.00008pt</FontSize>
               <VerticalAlign>Top</VerticalAlign>
-              <PaddingLeft>7.5pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
+              <PaddingLeft>7.49992pt</PaddingLeft>
+              <PaddingRight>2.00013pt</PaddingRight>
+              <PaddingTop>2.00013pt</PaddingTop>
+              <PaddingBottom>2.00013pt</PaddingBottom>
               <Border>
-                <Width>0.24975pt</Width>
+                <Width>0.24973pt</Width>
                 <Color>#676767</Color>
                 <Style>Solid</Style>
               </Border>
@@ -123,34 +118,35 @@
                     <Value />
                     <Style>
                       <FontFamily>Arial</FontFamily>
+                      <FontSize>10.00008pt</FontSize>
                       <Color>black</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
                 <Style>
                   <FontFamily>Arial</FontFamily>
-                  <FontSize>10.00002pt</FontSize>
+                  <FontSize>10.00008pt</FontSize>
                   <TextAlign>Left</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
           </Textbox>
           <Textbox Name="TextBox2">
-            <Left>408pt</Left>
-            <Top>18.75pt</Top>
-            <Height>18.75pt</Height>
-            <Width>157.5pt</Width>
+            <Left>408.0006pt</Left>
+            <Top>6.75001pt</Top>
+            <Height>18.75008pt</Height>
+            <Width>157.5002pt</Width>
             <Style>
               <BackgroundColor>#ffffff</BackgroundColor>
               <FontFamily>Arial</FontFamily>
-              <FontSize>10.00002pt</FontSize>
+              <FontSize>10.00008pt</FontSize>
               <VerticalAlign>Middle</VerticalAlign>
-              <PaddingLeft>7.5pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
+              <PaddingLeft>7.49992pt</PaddingLeft>
+              <PaddingRight>2.00013pt</PaddingRight>
+              <PaddingTop>2.00013pt</PaddingTop>
+              <PaddingBottom>2.00013pt</PaddingBottom>
               <Border>
-                <Width>0.24975pt</Width>
+                <Width>0.24973pt</Width>
                 <Color>#676767</Color>
                 <Style>Solid</Style>
               </Border>
@@ -163,7 +159,7 @@
                   <TextRun>
                     <Value>VISA CAISSEIR</Value>
                     <Style>
-                      <FontSize>9pt</FontSize>
+                      <FontSize>9.00001pt</FontSize>
                       <FontWeight>ExtraBold</FontWeight>
                       <Color>#676767</Color>
                     </Style>
@@ -171,48 +167,131 @@
                 </TextRuns>
                 <Style>
                   <FontFamily>Arial</FontFamily>
-                  <FontSize>10.00002pt</FontSize>
+                  <FontSize>10.00008pt</FontSize>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+          </Textbox>
+          <Textbox Name="TextBox11">
+            <Left>72.00011pt</Left>
+            <Top>78.00012pt</Top>
+            <Height>22.50003pt</Height>
+            <Width>492.7512pt</Width>
+            <Style>
+              <BackgroundColor>#ffffff</BackgroundColor>
+              <FontFamily>Arial</FontFamily>
+              <FontSize>10.00008pt</FontSize>
+              <VerticalAlign>Middle</VerticalAlign>
+              <PaddingLeft>7.49992pt</PaddingLeft>
+              <PaddingRight>15.00012pt</PaddingRight>
+              <PaddingTop>2.00013pt</PaddingTop>
+              <PaddingBottom>2.00013pt</PaddingBottom>
+              <Border>
+                <Width>0.24973pt</Width>
+                <Color>#676767</Color>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value> </Value>
+                    <Style>
+                      <FontSize>7.4999pt</FontSize>
+                      <FontWeight>SemiBold</FontWeight>
+                      <Color>#676767</Color>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value />
+                    <Style>
+                      <FontSize>7.4999pt</FontSize>
+                      <FontWeight>SemiBold</FontWeight>
+                      <Color>#676767</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <FontFamily>Arial</FontFamily>
+                  <TextAlign>Right</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+          </Textbox>
+          <Textbox Name="TextBox12">
+            <Left>9.75002pt</Left>
+            <Top>78.00012pt</Top>
+            <Height>22.50003pt</Height>
+            <Width>63.0001pt</Width>
+            <Style>
+              <FontFamily>Arial</FontFamily>
+              <FontSize>10.00008pt</FontSize>
+              <VerticalAlign>Middle</VerticalAlign>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Globals!OverallPageNumber+"/"+Globals!TotalPages</Value>
+                    <Style>
+                      <FontSize>7.49992pt</FontSize>
+                      <FontWeight>SemiBold</FontWeight>
+                      <Color>#676767</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <FontFamily>Arial</FontFamily>
+                  <FontSize>10.00008pt</FontSize>
                   <TextAlign>Center</TextAlign>
                 </Style>
               </Paragraph>
             </Paragraphs>
           </Textbox>
         </ReportItems>
-        <Height>146.25pt</Height>
+        <Style>
+          <FontFamily>Arial</FontFamily>
+          <FontSize>10.00008pt</FontSize>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
       </Body>
-      <Width>574.875pt</Width>
+      <Width>574.8761pt</Width>
       <Page>
         <PageHeight>841.6818pt</PageHeight>
-        <PageWidth>595.4413pt</PageWidth>
+        <PageWidth>595.4412pt</PageWidth>
         <PageHeader>
-          <Style>
-            <FontFamily>Arial</FontFamily>
-            <FontSize>10.00002pt</FontSize>
-            <Border>
-              <Style>None</Style>
-            </Border>
-          </Style>
-          <Height>451.5pt</Height>
+          <Height>241.5pt</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
             <Textbox Name="TextBox10">
-              <Left>12pt</Left>
-              <Top>11.25pt</Top>
-              <Height>82.5pt</Height>
+              <Left>11.99992pt</Left>
+              <Top>11.25016pt</Top>
+              <Height>75.75pt</Height>
               <Width>193.5pt</Width>
               <Style>
                 <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
+                <PaddingTop>2.00013pt</PaddingTop>
+                <PaddingBottom>2.00013pt</PaddingBottom>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#999999</Color>
                   <Style>Solid</Style>
                 </Border>
               </Style>
@@ -224,7 +303,7 @@
                     <TextRun>
                       <Value>=First(Fields!D_RaisonSoc.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>13.5pt</FontSize>
+                        <FontSize>13.50002pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -232,29 +311,29 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Center</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
             <Textbox Name="TextBox13">
-              <Left>12pt</Left>
-              <Top>151.5pt</Top>
-              <Height>18.75pt</Height>
-              <Width>66pt</Width>
+              <Left>278.2383pt</Left>
+              <Top>91.48828pt</Top>
+              <Height>18.75008pt</Height>
+              <Width>66.00001pt</Width>
               <Style>
                 <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Top</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
+                <PaddingTop>2.00013pt</PaddingTop>
+                <PaddingBottom>2.00013pt</PaddingBottom>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#999999</Color>
                   <Style>Solid</Style>
                 </Border>
               </Style>
@@ -266,7 +345,7 @@
                     <TextRun>
                       <Value>NUMERO</Value>
                       <Style>
-                        <FontSize>7.5pt</FontSize>
+                        <FontSize>7.49992pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -274,29 +353,29 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
             <Textbox Name="TextBox14">
-              <Left>12pt</Left>
-              <Top>169.5pt</Top>
-              <Height>18.75pt</Height>
-              <Width>66pt</Width>
+              <Left>278.2383pt</Left>
+              <Top>109.4883pt</Top>
+              <Height>18.75008pt</Height>
+              <Width>66.00001pt</Width>
               <Style>
                 <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Top</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
+                <PaddingTop>2.00013pt</PaddingTop>
+                <PaddingBottom>2.00013pt</PaddingBottom>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#999999</Color>
                   <Style>Solid</Style>
                 </Border>
               </Style>
@@ -308,7 +387,7 @@
                     <TextRun>
                       <Value>DATE</Value>
                       <Style>
-                        <FontSize>7.5pt</FontSize>
+                        <FontSize>7.49992pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -316,28 +395,28 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
             <Textbox Name="TextBox17">
-              <Left>12pt</Left>
-              <Top>109.5pt</Top>
-              <Height>36.75pt</Height>
-              <Width>260.1pt</Width>
+              <Left>11.98828pt</Left>
+              <Top>91.48828pt</Top>
+              <Height>36.75006pt</Height>
+              <Width>260.0981pt</Width>
               <Style>
                 <BackgroundColor>#0a3f57</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
+                <PaddingTop>2.00013pt</PaddingTop>
+                <PaddingBottom>2.00013pt</PaddingBottom>
                 <Border>
-                  <Width>0.24975pt</Width>
+                  <Width>0.24973pt</Width>
                   <Color>#b3b2b3</Color>
                   <Style>None</Style>
                 </Border>
@@ -350,7 +429,7 @@
                     <TextRun>
                       <Value>=First(Fields!TypeIntitule.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>15pt</FontSize>
+                        <FontSize>15.00012pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>#ffffff</Color>
                       </Style>
@@ -358,28 +437,28 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
             <Textbox Name="TextBox15">
-              <Left>77.25pt</Left>
-              <Top>151.5pt</Top>
-              <Height>18.75pt</Height>
-              <Width>194.1pt</Width>
+              <Left>343.5pt</Left>
+              <Top>91.48828pt</Top>
+              <Height>18.75008pt</Height>
+              <Width>222.598pt</Width>
               <Style>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
+                <PaddingTop>2.00013pt</PaddingTop>
+                <PaddingBottom>2.00013pt</PaddingBottom>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#999999</Color>
                   <Style>Solid</Style>
                 </Border>
                 <LeftBorder>
@@ -394,7 +473,7 @@
                     <TextRun>
                       <Value>=First(Fields!Numero.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -402,28 +481,28 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
             <Textbox Name="TextBox16">
-              <Left>77.25pt</Left>
-              <Top>169.5pt</Top>
-              <Height>18.75pt</Height>
-              <Width>194.1pt</Width>
+              <Left>343.5pt</Left>
+              <Top>109.4883pt</Top>
+              <Height>18.75008pt</Height>
+              <Width>222.598pt</Width>
               <Style>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
+                <PaddingTop>2.00013pt</PaddingTop>
+                <PaddingBottom>2.00013pt</PaddingBottom>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#999999</Color>
                   <Style>Solid</Style>
                 </Border>
                 <LeftBorder>
@@ -438,7 +517,7 @@
                     <TextRun>
                       <Value>=First(Fields!Date.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Format>dd/MM/yyyy</Format>
                         <Color>#676767</Color>
@@ -447,29 +526,27 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
             <Textbox Name="TextBox18">
-              <Left>204.75pt</Left>
-              <Top>11.25pt</Top>
-              <Height>82.5pt</Height>
+              <Left>204.7505pt</Left>
+              <Top>11.25016pt</Top>
+              <Height>75.75pt</Height>
               <Width>67.5pt</Width>
               <Style>
                 <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#999999</Color>
                   <Style>Solid</Style>
                 </Border>
               </Style>
@@ -481,7 +558,7 @@
                     <TextRun>
                       <Value>Adresse</Value>
                       <Style>
-                        <FontSize>9pt</FontSize>
+                        <FontSize>7.5pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -489,8 +566,8 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
                     <TextAlign>Left</TextAlign>
+                    <LineHeight>0.99750pt</LineHeight>
                   </Style>
                 </Paragraph>
                 <Paragraph>
@@ -498,7 +575,7 @@
                     <TextRun>
                       <Value>Téléphone</Value>
                       <Style>
-                        <FontSize>9pt</FontSize>
+                        <FontSize>7.5pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -507,6 +584,7 @@
                   <Style>
                     <FontFamily>Arial</FontFamily>
                     <TextAlign>Left</TextAlign>
+                    <LineHeight>0.99750pt</LineHeight>
                   </Style>
                 </Paragraph>
                 <Paragraph>
@@ -514,7 +592,7 @@
                     <TextRun>
                       <Value>Email</Value>
                       <Style>
-                        <FontSize>9pt</FontSize>
+                        <FontSize>7.5pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -523,6 +601,7 @@
                   <Style>
                     <FontFamily>Arial</FontFamily>
                     <TextAlign>Left</TextAlign>
+                    <LineHeight>0.99750pt</LineHeight>
                   </Style>
                 </Paragraph>
                 <Paragraph>
@@ -530,7 +609,7 @@
                     <TextRun>
                       <Value>IF</Value>
                       <Style>
-                        <FontSize>9pt</FontSize>
+                        <FontSize>7.5pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -539,6 +618,7 @@
                   <Style>
                     <FontFamily>Arial</FontFamily>
                     <TextAlign>Left</TextAlign>
+                    <LineHeight>0.99750pt</LineHeight>
                   </Style>
                 </Paragraph>
                 <Paragraph>
@@ -546,7 +626,7 @@
                     <TextRun>
                       <Value>RC</Value>
                       <Style>
-                        <FontSize>9pt</FontSize>
+                        <FontSize>7.5pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -555,6 +635,7 @@
                   <Style>
                     <FontFamily>Arial</FontFamily>
                     <TextAlign>Left</TextAlign>
+                    <LineHeight>0.99750pt</LineHeight>
                   </Style>
                 </Paragraph>
                 <Paragraph>
@@ -562,7 +643,7 @@
                     <TextRun>
                       <Value>ICE</Value>
                       <Style>
-                        <FontSize>9pt</FontSize>
+                        <FontSize>7.5pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -571,26 +652,25 @@
                   <Style>
                     <FontFamily>Arial</FontFamily>
                     <TextAlign>Left</TextAlign>
+                    <LineHeight>0.99750pt</LineHeight>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
             <Textbox Name="TextBox19">
-              <Left>271.5pt</Left>
-              <Top>11.25pt</Top>
-              <Height>82.5pt</Height>
+              <Left>271.5005pt</Left>
+              <Top>11.25016pt</Top>
+              <Height>75.75pt</Height>
               <Width>295.5pt</Width>
               <Style>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#999999</Color>
                   <Style>Solid</Style>
                 </Border>
                 <LeftBorder>
@@ -605,7 +685,7 @@
                     <TextRun>
                       <Value>=First(Fields!API_Adresse.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>Normal</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -613,7 +693,7 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
@@ -622,7 +702,7 @@
                     <TextRun>
                       <Value>=First(Fields!API_Telephone.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>Normal</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -630,6 +710,7 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
@@ -638,7 +719,7 @@
                     <TextRun>
                       <Value>=First(Fields!API_Email.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>Normal</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -646,6 +727,7 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
@@ -654,7 +736,7 @@
                     <TextRun>
                       <Value>=First(Fields!API_IdF.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>Normal</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -662,6 +744,7 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
@@ -670,7 +753,7 @@
                     <TextRun>
                       <Value>=First(Fields!API_RC.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>Normal</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -678,6 +761,7 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
@@ -686,7 +770,7 @@
                     <TextRun>
                       <Value>=First(Fields!API_ICE.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>Normal</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -694,28 +778,27 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
             <Textbox Name="TextBox47">
-              <Left>11.69531pt</Left>
-              <Top>247.043pt</Top>
-              <Height>24pt</Height>
-              <Width>134.0977pt</Width>
+              <Left>11.97656pt</Left>
+              <Top>160.043pt</Top>
+              <Height>13.50002pt</Height>
+              <Width>134.0979pt</Width>
               <Style>
                 <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#b3b3b3</Color>
                   <Style>Solid</Style>
                 </Border>
               </Style>
@@ -727,7 +810,7 @@
                     <TextRun>
                       <Value>BENEFICIAIRE</Value>
                       <Style>
-                        <FontSize>7.5pt</FontSize>
+                        <FontSize>7.49992pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -735,28 +818,26 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
             <Textbox Name="TextBox48">
-              <Left>145.3242pt</Left>
-              <Top>247.043pt</Top>
-              <Height>24pt</Height>
-              <Width>421.1953pt</Width>
+              <Left>145.6172pt</Left>
+              <Top>160.043pt</Top>
+              <Height>13.50002pt</Height>
+              <Width>421.1958pt</Width>
               <Style>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#b3b3b3</Color>
                   <Style>Solid</Style>
                 </Border>
                 <LeftBorder>
@@ -771,7 +852,7 @@
                     <TextRun>
                       <Value>=First(Fields!Personnel1.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -779,29 +860,27 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
             <Textbox Name="TextBox24">
-              <Left>12.14062pt</Left>
-              <Top>293.0859pt</Top>
-              <Height>24pt</Height>
-              <Width>134.0977pt</Width>
+              <Left>12.12891pt</Left>
+              <Top>185.3789pt</Top>
+              <Height>13.50002pt</Height>
+              <Width>134.0979pt</Width>
               <Style>
                 <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#b3b3b3</Color>
                   <Style>Solid</Style>
                 </Border>
               </Style>
@@ -813,7 +892,7 @@
                     <TextRun>
                       <Value>MOTIF</Value>
                       <Style>
-                        <FontSize>7.5pt</FontSize>
+                        <FontSize>7.49992pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -821,7 +900,7 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
@@ -829,20 +908,18 @@
             </Textbox>
             <Textbox Name="TextBox30">
               <Left>145.7813pt</Left>
-              <Top>293.0859pt</Top>
-              <Height>24pt</Height>
-              <Width>421.1953pt</Width>
+              <Top>185.3789pt</Top>
+              <Height>13.50002pt</Height>
+              <Width>421.1958pt</Width>
               <Style>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#b3b3b3</Color>
                   <Style>Solid</Style>
                 </Border>
                 <LeftBorder>
@@ -857,7 +934,7 @@
                     <TextRun>
                       <Value>=First(Fields!Libelle.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -865,29 +942,27 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
             <Textbox Name="TextBox31">
-              <Left>12pt</Left>
-              <Top>316.3359pt</Top>
-              <Height>24pt</Height>
-              <Width>134.0977pt</Width>
+              <Left>11.98828pt</Left>
+              <Top>198.1289pt</Top>
+              <Height>13.50002pt</Height>
+              <Width>134.0979pt</Width>
               <Style>
                 <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#b3b3b3</Color>
                   <Style>Solid</Style>
                 </Border>
               </Style>
@@ -899,7 +974,7 @@
                     <TextRun>
                       <Value>MONTANT</Value>
                       <Style>
-                        <FontSize>7.5pt</FontSize>
+                        <FontSize>7.49992pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -907,7 +982,7 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
@@ -915,20 +990,18 @@
             </Textbox>
             <Textbox Name="TextBox32">
               <Left>145.6289pt</Left>
-              <Top>316.3359pt</Top>
-              <Height>24pt</Height>
-              <Width>421.1953pt</Width>
+              <Top>198.1289pt</Top>
+              <Height>13.50002pt</Height>
+              <Width>421.1958pt</Width>
               <Style>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#b3b3b3</Color>
                   <Style>Solid</Style>
                 </Border>
                 <LeftBorder>
@@ -943,7 +1016,7 @@
                     <TextRun>
                       <Value>=Sum(Fields!Montant.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Format>### ### ##0.00 DHS</Format>
                         <Color>#676767</Color>
@@ -952,7 +1025,7 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
@@ -960,21 +1033,19 @@
             </Textbox>
             <Textbox Name="TextBox33">
               <Left>11.98828pt</Left>
-              <Top>339.5977pt</Top>
-              <Height>24pt</Height>
-              <Width>134.0977pt</Width>
+              <Top>210.5977pt</Top>
+              <Height>13.50002pt</Height>
+              <Width>134.0979pt</Width>
               <Style>
                 <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#b3b3b3</Color>
                   <Style>Solid</Style>
                 </Border>
               </Style>
@@ -986,7 +1057,7 @@
                     <TextRun>
                       <Value>MONTANT EN LETTRE</Value>
                       <Style>
-                        <FontSize>7.5pt</FontSize>
+                        <FontSize>7.49992pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -994,7 +1065,7 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
@@ -1002,20 +1073,18 @@
             </Textbox>
             <Textbox Name="TextBox34">
               <Left>145.3125pt</Left>
-              <Top>339.5977pt</Top>
-              <Height>24pt</Height>
-              <Width>421.4883pt</Width>
+              <Top>210.5977pt</Top>
+              <Height>13.50002pt</Height>
+              <Width>421.4889pt</Width>
               <Style>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#b3b3b3</Color>
                   <Style>Solid</Style>
                 </Border>
                 <LeftBorder>
@@ -1030,7 +1099,7 @@
                     <TextRun>
                       <Value>=First(Fields!MontantLettre.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -1038,7 +1107,7 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
@@ -1046,21 +1115,19 @@
             </Textbox>
             <Textbox Name="TextBox40">
               <Left>11.84766pt</Left>
-              <Top>200.25pt</Top>
-              <Height>24pt</Height>
-              <Width>134.0977pt</Width>
+              <Top>134.25pt</Top>
+              <Height>13.50002pt</Height>
+              <Width>134.0979pt</Width>
               <Style>
                 <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#b3b3b3</Color>
                   <Style>Solid</Style>
                 </Border>
               </Style>
@@ -1072,7 +1139,7 @@
                     <TextRun>
                       <Value>CAISSE</Value>
                       <Style>
-                        <FontSize>7.5pt</FontSize>
+                        <FontSize>7.49992pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -1080,7 +1147,7 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
@@ -1088,20 +1155,18 @@
             </Textbox>
             <Textbox Name="TextBox41">
               <Left>145.4883pt</Left>
-              <Top>200.25pt</Top>
-              <Height>24pt</Height>
-              <Width>421.1953pt</Width>
+              <Top>134.25pt</Top>
+              <Height>13.50002pt</Height>
+              <Width>421.1958pt</Width>
               <Style>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#b3b3b3</Color>
                   <Style>Solid</Style>
                 </Border>
                 <LeftBorder>
@@ -1116,7 +1181,7 @@
                     <TextRun>
                       <Value>=First(Fields!Caisse1.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -1124,7 +1189,7 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
@@ -1132,21 +1197,19 @@
             </Textbox>
             <Textbox Name="TextBox6">
               <Left>11.83594pt</Left>
-              <Top>223.6406pt</Top>
-              <Height>24pt</Height>
-              <Width>134.0977pt</Width>
+              <Top>147.1406pt</Top>
+              <Height>13.50002pt</Height>
+              <Width>134.0979pt</Width>
               <Style>
                 <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#b3b3b3</Color>
                   <Style>Solid</Style>
                 </Border>
               </Style>
@@ -1158,7 +1221,7 @@
                     <TextRun>
                       <Value>TIERS</Value>
                       <Style>
-                        <FontSize>7.5pt</FontSize>
+                        <FontSize>7.49992pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -1166,7 +1229,7 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
@@ -1174,20 +1237,18 @@
             </Textbox>
             <Textbox Name="TextBox7">
               <Left>145.4766pt</Left>
-              <Top>223.6406pt</Top>
-              <Height>24pt</Height>
-              <Width>421.1953pt</Width>
+              <Top>147.1406pt</Top>
+              <Height>13.50002pt</Height>
+              <Width>421.1958pt</Width>
               <Style>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#b3b3b3</Color>
                   <Style>Solid</Style>
                 </Border>
                 <LeftBorder>
@@ -1202,7 +1263,7 @@
                     <TextRun>
                       <Value>=First(Fields!CT_Intitule.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -1210,29 +1271,27 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
             <Textbox Name="TextBox8">
-              <Left>12.14062pt</Left>
-              <Top>270.1406pt</Top>
-              <Height>24pt</Height>
-              <Width>134.0977pt</Width>
+              <Left>12.12891pt</Left>
+              <Top>172.3359pt</Top>
+              <Height>13.50002pt</Height>
+              <Width>134.0979pt</Width>
               <Style>
                 <BackgroundColor>#ffffff</BackgroundColor>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#b3b3b3</Color>
                   <Style>Solid</Style>
                 </Border>
               </Style>
@@ -1244,7 +1303,7 @@
                     <TextRun>
                       <Value>AFFECTATION</Value>
                       <Style>
-                        <FontSize>7.5pt</FontSize>
+                        <FontSize>7.49992pt</FontSize>
                         <FontWeight>Bold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -1252,7 +1311,7 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
@@ -1260,20 +1319,18 @@
             </Textbox>
             <Textbox Name="TextBox9">
               <Left>145.7813pt</Left>
-              <Top>270.1406pt</Top>
-              <Height>24pt</Height>
-              <Width>421.1953pt</Width>
+              <Top>172.3359pt</Top>
+              <Height>13.50002pt</Height>
+              <Width>421.1958pt</Width>
               <Style>
                 <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
+                <FontSize>10.00008pt</FontSize>
                 <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
+                <PaddingLeft>7.49992pt</PaddingLeft>
+                <PaddingRight>2.00013pt</PaddingRight>
                 <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
+                  <Width>0.24973pt</Width>
+                  <Color>#b3b3b3</Color>
                   <Style>Solid</Style>
                 </Border>
                 <LeftBorder>
@@ -1288,7 +1345,7 @@
                     <TextRun>
                       <Value>=First(Fields!AffectationIntitule.Value,"DataSet1")</Value>
                       <Style>
-                        <FontSize>8.25pt</FontSize>
+                        <FontSize>8.24997pt</FontSize>
                         <FontWeight>ExtraBold</FontWeight>
                         <Color>#676767</Color>
                       </Style>
@@ -1296,119 +1353,41 @@
                   </TextRuns>
                   <Style>
                     <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
+                    <FontSize>10.00008pt</FontSize>
                     <TextAlign>Left</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
             </Textbox>
           </ReportItems>
-        </PageHeader>
-        <PageFooter>
           <Style>
             <FontFamily>Arial</FontFamily>
-            <FontSize>10.00002pt</FontSize>
+            <FontSize>10.00008pt</FontSize>
             <Border>
               <Style>None</Style>
             </Border>
           </Style>
-          <Height>40.5pt</Height>
+        </PageHeader>
+        <PageFooter>
+          <Height>12.00002pt</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
-          <ReportItems>
-            <Textbox Name="TextBox38">
-              <Left>12pt</Left>
-              <Top>6.75pt</Top>
-              <Height>22.5pt</Height>
-              <Width>63pt</Width>
-              <Style>
-                <FontFamily>Arial</FontFamily>
-                <VerticalAlign>Middle</VerticalAlign>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Globals!OverallPageNumber+"/"+Globals!TotalPages</Value>
-                      <Style>
-                        <FontSize>7.5pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
-                        <Color>#676767</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <FontFamily>Arial</FontFamily>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-            </Textbox>
-            <Textbox Name="TextBox1">
-              <Left>74.25pt</Left>
-              <Top>6.75pt</Top>
-              <Height>22.5pt</Height>
-              <Width>492.75pt</Width>
-              <Style>
-                <BackgroundColor>#ffffff</BackgroundColor>
-                <FontFamily>Arial</FontFamily>
-                <FontSize>10.00002pt</FontSize>
-                <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>7.5pt</PaddingLeft>
-                <PaddingRight>15pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-                <Border>
-                  <Width>0.24975pt</Width>
-                  <Color>#676767</Color>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>Copyright to H.S</Value>
-                      <Style>
-                        <FontSize>7.5pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
-                        <Color>#676767</Color>
-                      </Style>
-                    </TextRun>
-                    <TextRun>
-                      <Value />
-                      <Style>
-                        <FontSize>7.5pt</FontSize>
-                        <FontWeight>SemiBold</FontWeight>
-                        <Color>#676767</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <FontFamily>Arial</FontFamily>
-                    <FontSize>10.00002pt</FontSize>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-            </Textbox>
-          </ReportItems>
+          <Style>
+            <FontFamily>Arial</FontFamily>
+            <FontSize>10.00008pt</FontSize>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
         </PageFooter>
-        <LeftMargin>7.5pt</LeftMargin>
-        <RightMargin>7.5pt</RightMargin>
-        <TopMargin>7.5pt</TopMargin>
-        <BottomMargin>7.5pt</BottomMargin>
+        <LeftMargin>7.49992pt</LeftMargin>
+        <RightMargin>7.49992pt</RightMargin>
+        <TopMargin>7.49992pt</TopMargin>
+        <BottomMargin>7.49992pt</BottomMargin>
         <ColumnSpacing>33.78903pt</ColumnSpacing>
         <Style>
           <FontFamily>Arial</FontFamily>
-          <FontSize>10.00002pt</FontSize>
+          <FontSize>10.00008pt</FontSize>
           <Border>
             <Style>None</Style>
           </Border>
@@ -1416,20 +1395,60 @@
       </Page>
     </ReportSection>
   </ReportSections>
-  <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="DataSource1">
+      <rd:SecurityType>Integrated</rd:SecurityType>
       <ConnectionProperties>
         <DataProvider>SQL</DataProvider>
         <ConnectString>Data Source=(local);Initial Catalog=BIJOU;</ConnectString>
         <IntegratedSecurity>true</IntegratedSecurity>
       </ConnectionProperties>
-      <rd:SecurityType>Integrated</rd:SecurityType>
-      <rd:ImpersonateUser>false</rd:ImpersonateUser>
     </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>DataSource1</DataSourceName>
+        <CommandText>SELECT 
+a.*,
+b.*,
+cs.C_Nom Caisse,
+pr.Nom Personnel,
+mt.Intitule Materiel,
+ca.CA_Intitule,
+ct.CT_Intitule,
+pj.Objet,
+pj.NumeroMarche,
+ds.API_Adresse,
+ds.API_Email,
+ds.API_ICE,
+ds.API_IdF,
+ds.API_Patente,
+ds.API_RC,
+ds.API_Telephone,
+ds.API_Web,
+ds.D_RaisonSoc,
+CASE WHEN a.Sense = 0 THEN 'RECETTE DE CAISSE' ELSE 'DEPENSE DE CAISSE' END TypeIntitule
+FROM API_V_CAISSEENTETE a
+INNER JOIN API_T_Caisse cs ON a.Caisse = cs.id
+LEFT JOIN API_T_Projet pj ON a.Projet = pj.id
+LEFT JOIN API_T_Personnel pr ON a.Personnel = pr.id
+LEFT JOIN API_T_Materiel mt ON a.Materiel = mt.id
+LEFT JOIN F_COMPTET ct ON a.CT_Num = ct.CT_Num
+LEFT JOIN F_COMPTEA ca ON a.CA_Num =ca.CA_Num
+LEFT JOIN API_T_CaisseLigne b ON a.id = b.Entete
+LEFT JOIN P_DOSSIER ds ON 1 = 1
+
+
+
+WHERE a.id = @id
+--WHERE a.id = 4</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@id">
+            <Value>=Parameters!id.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
       <Fields>
         <Field Name="id">
           <DataField>id</DataField>
@@ -1543,6 +1562,18 @@
           <DataField>AffectationIntitule</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Remarque">
+          <DataField>Remarque</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Reference">
+          <DataField>Reference</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Valide">
+          <DataField>Valide</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
         <Field Name="id1">
           <DataField>id1</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
@@ -1566,6 +1597,38 @@
         <Field Name="Montant1">
           <DataField>Montant1</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Creation">
+          <DataField>Creation</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="Modification">
+          <DataField>Modification</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="CreationIP">
+          <DataField>CreationIP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationIP">
+          <DataField>ModificationIP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreationHost">
+          <DataField>CreationHost</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationHost">
+          <DataField>ModificationHost</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="CreationUser">
+          <DataField>CreationUser</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ModificationUser">
+          <DataField>ModificationUser</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Caisse1">
           <DataField>Caisse1</DataField>
@@ -1636,54 +1699,13 @@
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
-      <Query>
-        <DataSourceName>DataSource1</DataSourceName>
-        <CommandType>Text</CommandType>
-        <CommandText>SELECT 
-a.*,
-b.*,
-cs.C_Nom Caisse,
-pr.Nom Personnel,
-mt.Intitule Materiel,
-ca.CA_Intitule,
-ct.CT_Intitule,
-pj.Objet,
-pj.NumeroMarche,
-ds.API_Adresse,
-ds.API_Email,
-ds.API_ICE,
-ds.API_IdF,
-ds.API_Patente,
-ds.API_RC,
-ds.API_Telephone,
-ds.API_Web,
-ds.D_RaisonSoc,
-CASE WHEN a.Sense = 0 THEN 'RECETTE DE CAISSE' ELSE 'DEPENSE DE CAISSE' END TypeIntitule
-FROM API_V_CAISSEENTETE a
-INNER JOIN API_T_Caisse cs ON a.Caisse = cs.id
-LEFT JOIN API_T_Projet pj ON a.Projet = pj.id
-LEFT JOIN API_T_Personnel pr ON a.Personnel = pr.id
-LEFT JOIN API_T_Materiel mt ON a.Materiel = mt.id
-LEFT JOIN F_COMPTET ct ON a.CT_Num = ct.CT_Num
-LEFT JOIN F_COMPTEA ca ON a.CA_Num =ca.CA_Num
-LEFT JOIN API_T_CaisseLigne b ON a.id = b.Entete
-LEFT JOIN P_DOSSIER ds ON 1 = 1
-
-
-
-WHERE a.id = @id</CommandText>
-        <QueryParameters>
-          <QueryParameter Name="@id">
-            <Value>=Parameters!id.Value</Value>
-          </QueryParameter>
-        </QueryParameters>
-      </Query>
     </DataSet>
   </DataSets>
   <ReportParameters>
     <ReportParameter Name="id">
       <DataType>Integer</DataType>
       <Prompt>id</Prompt>
+      <Nullable>true</Nullable>
       <Hidden>true</Hidden>
     </ReportParameter>
   </ReportParameters>
