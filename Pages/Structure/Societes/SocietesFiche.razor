@@ -1,4 +1,5 @@
-﻿
+﻿@using BusinessWeb.Services
+
 <SfToolbar CssClass="btns">
     <ToolbarItems>
         <ToolbarItem Align="ItemAlign.Right">
@@ -88,6 +89,8 @@
 
                             </Card>
                             <Divider></Divider>
+                            <div>@codeclient</div>
+                            <div>@codefournisseur</div>
                             <RadzenStack Style="padding: 10px;" Gap="10px" Orientation="Radzen.Orientation.Vertical" AlignItems="AlignItems.End">
                                 @if (!connected)
                                 {
@@ -103,7 +106,7 @@
                                     </div>
                                     
                                 }
-                                <SfButton style="width: 180px;" IconCss="e-icons e-check" OnClick="@(args => { connected = fn.CheckSteDB(row); StateHasChanged(); })">Tester la connexion</SfButton>
+                                <SfButton style="width: 180px;" IconCss="e-icons e-check" OnClick="@(args => { connected = fn.CheckSteDB(row); StateHasChanged(); GetCodes();})">Tester la connexion</SfButton>
                             </RadzenStack>
 
                         </GridCol>
@@ -190,6 +193,7 @@
     [CascadingParameter]
     public SessionDT session { get; set; }
     DB db = new DB();
+    SageComptetService sageComptetService;
     private TSociete row = new TSociete();
     private API_T_Config config = new API_T_Config();
     private P_DOSSIER dossier = new P_DOSSIER();
@@ -197,6 +201,8 @@
     protected bool errorVisible;
     private ICollection<TSocieteUser> items;
     bool connected = false;
+    private string codeclient = "";
+    private string codefournisseur = "";
 
 
     protected override async Task OnInitializedAsync()
@@ -210,6 +216,7 @@
             if (fn.CheckSteDB(row))
             {
                 db = fn.getDb(row);
+
                 try
                 {
                     var dt = db.API_T_Config;
@@ -230,8 +237,14 @@
 
                 }
             }
+            sageComptetService = new SageComptetService(db);
 
         }
+    }
+    private async Task GetCodes()
+    {
+        codeclient = sageComptetService.GetNextClientCode();
+        codefournisseur = sageComptetService.GetNextFournisseurCode();
     }
     protected async Task Submit()
     {
