@@ -407,6 +407,7 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Ventes", Url = "imp-ventes", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Achats", Url = "imp-achats", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Réglements", Url = "imp-regl", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Ecritures comptables", Url = "imp-comptabilite", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Séquentialité Factures", Url = "seq-fa", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Solde clients", Url = "solde-clients", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 

@@ -1,7 +1,7 @@
 ﻿@if (IsLoaded)
 {
 
-	<AntDesign.Spin Spinning=loading Size="large" Tip="Veuillez patienter s'il vous plait...">
+	<AntDesign.Spin Spinning=loading Size="large">
 		<Card_1 Title="@title">
 			<RadzenContent Container="main">
 				<div class="grid-90">
@@ -41,7 +41,7 @@
 
 							<ToolbarItem Align="ItemAlign.Right">
 								<Template>
-									<SfButton IconCss="e-icons e-sorting-1" OnClick="Compare">Comparer</SfButton>
+									<SfButton IconCss="e-icons e-refresh" OnClick="Compare">Comparer</SfButton>
 								</Template>
 							</ToolbarItem>
 							<ToolbarItem Align="ItemAlign.Right">
@@ -57,7 +57,7 @@
 						AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
 
 							<GridEvents TValue="RAPPRO_DOCENTETE" Created="CreatedHandler"></GridEvents>
-							<GridPageSettings PageSize="100"></GridPageSettings>
+							<GridPageSettings PageSize="500"></GridPageSettings>
 							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 							<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
 							<GridTemplates>
@@ -146,6 +146,7 @@
 										}
 									</Template>
 								</GridColumn>
+								<GridColumn Type="ColumnType.CheckBox" Width="50" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
 							</GridColumns>
 						</SfGrid>
 					</div>
