@@ -1,36 +1,46 @@
-﻿<RadzenContent Container="main">
-    <div class="grid-90" style="zoom: @session.zoomLevel;">
-        <SfGrid  Height="100%" AllowResizing AllowSorting AllowReordering AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
-                Toolbar="@(new List<object>() { "Search", "ExcelExport","Add", "Delete"})">
-            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-            <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="RowDoubleClicked" TValue="F_COMPTET"></GridEvents>
-            <GridPageSettings PageSize="100"></GridPageSettings>
-            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-            <GridTemplates>
-                <EmptyRecordTemplate>
-                    <Empty></Empty>
-                </EmptyRecordTemplate>
-            </GridTemplates>
-            <GridColumns>
-                <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Num)" HeaderText="Numéro" />
-                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Intitule)" HeaderText="Intitule" Width="300"></GridColumn>
-                <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Ville)" HeaderText="Ville"></GridColumn>
-                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Adresse)" HeaderText="Adresse"></GridColumn>
-                <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Telephone)" HeaderText="Téléphone"></GridColumn>
-                <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_EMail)" HeaderText="Email"></GridColumn>
-                 <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Chiffre d'affaire">
-                   <GridColumns>
-                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="CA Réalisé"></GridColumn>
-                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="%"></GridColumn>
-                   </GridColumns>
-                 </GridColumn>
-            </GridColumns>
-            <SfSpinner @bind-Visible="@loading">
-            </SfSpinner>
-        </SfGrid>
-    </div>
+﻿@if (IsLoaded)
+{
+    <RadzenContent Container="main">
+        <div class="grid-90" style="zoom: @session.zoomLevel;">
+            <SfGrid Height="100%" AllowResizing AllowSorting AllowReordering AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                    Toolbar="@(new List<object>() { "Search", "ExcelExport", "Add", "Delete" })">
+                <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                <GridEvents OnActionBegin="OnActionBegin" OnToolbarClick="ToolbarClickHandler" OnRecordDoubleClick="RowDoubleClicked" TValue="F_COMPTET"></GridEvents>
+                <GridPageSettings PageSize="100"></GridPageSettings>
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                <GridTemplates>
+                    <EmptyRecordTemplate>
+                        <Empty></Empty>
+                    </EmptyRecordTemplate>
+                </GridTemplates>
+                <GridColumns>
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Num)" HeaderText="Numéro" />
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Intitule)" HeaderText="Intitule" Width="300"></GridColumn>
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Ville)" HeaderText="Ville"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Adresse)" HeaderText="Adresse"></GridColumn>
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_Telephone)" HeaderText="Téléphone"></GridColumn>
+                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_COMPTET.CT_EMail)" HeaderText="Email"></GridColumn>
+                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Chiffre d'affaire">
+                        <GridColumns>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="CA Réalisé"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="%"></GridColumn>
+                        </GridColumns>
+                    </GridColumn>
+                </GridColumns>
+                <SfSpinner @bind-Visible="@loading">
+                </SfSpinner>
+            </SfGrid>
+        </div>
 
-</RadzenContent>
+    </RadzenContent>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
 
 
 
@@ -46,14 +56,16 @@
     private SfGrid<F_COMPTET> DefaultGrid;
     private ICollection<F_COMPTET> items;
     bool loading = true;
-
+    bool IsLoaded = false;
 
 
     protected override async Task OnInitializedAsync()
     {
-                db = session.db;
+        await Task.Delay(1);
+        db = session.db;
         GC.Collect();
         await Task.Run(UpdateGrid);
+        IsLoaded = true;
     }
     private async Task UpdateGrid()
     {

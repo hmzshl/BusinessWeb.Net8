@@ -77,14 +77,14 @@
     {
         await DialogService.OpenAsync<SitesFiche>($"{args.RowData.Intitule}",
         new Dictionary<string, object>() { { "id", args.RowData.id } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "700px" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "800px" });
         await LoadData();
     }
     private async Task Add()
     {
         await DialogService.OpenAsync<SitesFiche>($"Ajouter un élément",
         new Dictionary<string, object>() { { "id", 0 } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "700px" });
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "800px" });
         await LoadData();
     }
     private async Task OnActionBegin(ActionEventArgs<API_T_Site> args)

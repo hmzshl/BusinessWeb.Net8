@@ -110,13 +110,13 @@
         {
             await DialogService.OpenAsync<ProjetsFiche>(args.RowData.CA_Intitule,
   new Dictionary<string, object>() { { "id", args.RowData.id } },
-  new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "98%" });
+  new Radzen.DialogOptions() {  Width = "1000px", Height = "98%" });
         }
         else
         {
             await DialogService.OpenAsync<ProjetsFiche>(args.RowData.CA_Intitule,
     new Dictionary<string, object>() { { "id", args.RowData.id } },
-    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "98%" });
+    new Radzen.DialogOptions() {  Width = "98%", Height = "98%" });
         }
 
         await UpdateGrid();
@@ -126,7 +126,7 @@
     {
         await DialogService.OpenAsync<ProjetsFiche>($"Ajouter un élément",
         new Dictionary<string, object>() { { "id", 0 } },
-        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "98%" });
+        new Radzen.DialogOptions() {  Width = "1000px", Height = "98%" });
 
         await UpdateGrid();
     }

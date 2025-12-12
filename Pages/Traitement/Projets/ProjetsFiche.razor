@@ -1,22 +1,22 @@
 ﻿<SfToolbar CssClass="btns">
     <ToolbarItems>
-        @if(!IsAppelOffre) 
+        @if (!IsAppelOffre)
         {
-          <ToolbarItem Align="ItemAlign.Right">
-            <Template>
-                <SfDropDownButton IconCss="e-icons e-print" Content="Imprimer">
-                    <DropDownMenuItems>
-                        <DropDownMenuItem Text="Fiche projet"></DropDownMenuItem>
-                        <DropDownMenuItem Text="Bordoreaux des prix"></DropDownMenuItem>
-                        <DropDownMenuItem Text="Achats"></DropDownMenuItem>
-                        <DropDownMenuItem Text="Livraisons"></DropDownMenuItem>
-                        <DropDownMenuItem Text="Attachements"></DropDownMenuItem>
-                        <DropDownMenuItem Text="Depenses de caisse"></DropDownMenuItem>
-                        <DropDownMenuItem Text="Consommations gasoil"></DropDownMenuItem>
-                        <DropDownMenuItem Text="Depenses matériels"></DropDownMenuItem>
-                    </DropDownMenuItems>
-                </SfDropDownButton>
-            </Template>
+            <ToolbarItem Align="ItemAlign.Right">
+                <Template>
+                    <SfDropDownButton IconCss="e-icons e-print" Content="Imprimer">
+                        <DropDownMenuItems>
+                            <DropDownMenuItem Text="Fiche projet"></DropDownMenuItem>
+                            <DropDownMenuItem Text="Bordoreaux des prix"></DropDownMenuItem>
+                            <DropDownMenuItem Text="Achats"></DropDownMenuItem>
+                            <DropDownMenuItem Text="Livraisons"></DropDownMenuItem>
+                            <DropDownMenuItem Text="Attachements"></DropDownMenuItem>
+                            <DropDownMenuItem Text="Depenses de caisse"></DropDownMenuItem>
+                            <DropDownMenuItem Text="Consommations gasoil"></DropDownMenuItem>
+                            <DropDownMenuItem Text="Depenses matériels"></DropDownMenuItem>
+                        </DropDownMenuItems>
+                    </SfDropDownButton>
+                </Template>
             </ToolbarItem>
         }
         else
@@ -35,7 +35,7 @@
         </ToolbarItem>
     </ToolbarItems>
 </SfToolbar>
-<div >
+<div>
     <GridRow>
         <GridCol Xs="24" Md="24">
             <EditForm @ref=form Model="@row" Context="EditContext">
@@ -45,154 +45,266 @@
                 </div>
                 <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="row">
                     <SfTab CssClass="e-fill">
-                        <TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/><TabItems>
+                        <TabEvents Selecting="@(args => fn.DisableTabSelect(args))" /><TabItems>
                             <TabItem>
                                 <ChildContent>
                                     <TabHeader Text="Identification"></TabHeader>
                                 </ChildContent>
                                 <ContentTemplate>
                                     <GridRow>
+                                        <GridCol Xs="24" Md="24" Style="margin-bottom: 8px;">
+                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Maitre d'ouvrage" Required LabelColSpan="@(3 * getCol())">
+                                                <div class="ls-parent">
+                                                    <div class="ls-child-left">
+                                                        <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Readonly="@(!IsAppelOffre)" AllowFiltering TValue="string" TItem="F_COMPTET" DataSource="@(clients)" @bind-Value="@row.CT_Num">
+                                                            <DropDownListEvents TValue="string" TItem="F_COMPTET" />
+                                                            <DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+                                                        </SfDropDownList>
+                                                    </div>
+                                                    <div class="ls-child-right">
+                                                        <RadzenButton Icon="reorder" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                    </div>
+                                                </div>
+
+                                            </FormItem>
+                                        </GridCol>
                                         <GridCol Xs="24" Md="24">
-                                            <Card>
-                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Maitre d'ouvrage" Required LabelColSpan="@(3*getCol())">
-                                                     <div class="ls-parent">
-                                                         <div class="ls-child-left">
-                                                             <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" Readonly="@(!IsAppelOffre)" AllowFiltering TValue="string" TItem="F_COMPTET" DataSource="@(clients)" @bind-Value="@row.CT_Num">
-                                                                 <DropDownListEvents TValue="string" TItem="F_COMPTET" />
-                                                                 <DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
-                                                             </SfDropDownList>
-                                                         </div>
-                                                         <div class="ls-child-right">
-                                                             <RadzenButton Icon="reorder" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                         </div>
-                                                     </div>
+                                            <SfRichTextEditor ShowCharCount="true" AutoSaveOnIdle="true" @bind-Value="@(row.ObjetDetail)" Placeholder="Objet">
+                                                <RichTextEditorToolbarSettings Items="@Tools" />
+                                                <RichTextEditorQuickToolbarSettings Table="@TableQuickToolbarItems" />
+                                                <RichTextEditorEvents ValueChange="@(args => row.Objet = RemoveHtmlTags(args.Value))"></RichTextEditorEvents>
+
+                                            </SfRichTextEditor>
+                                        </GridCol>
+                                        <Divider></Divider>
+                                        <GridCol Xs="24" Md="24">
+                                            <h3>Appel d'offre</h3>
+                                            <GridRow>
+                                                <GridCol Xs="24" Md="@(6 * getCol())">
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Zone" LabelColSpan="12" Required>
+                                                        <div class="ls-parent">
+                                                            <div class="ls-child-left">
+                                                                <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="int" TItem="API_T_Site" DataSource="@(zones)" @bind-Value="@row.Site">
+                                                                    <DropDownListEvents TValue="int" TItem="API_T_Site" />
+                                                                    <DropDownListFieldSettings Text="Intitule" Value="id" />
+                                                                </SfDropDownList>
+                                                            </div>
+                                                            <div class="ls-child-right">
+                                                                <RadzenButton Icon="reorder" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                            </div>
+                                                        </div>
 
                                                     </FormItem>
-                                                </Card>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Ville" LabelColSpan="12" Required>
+                                                        <div class="ls-parent">
+                                                            <div class="ls-child-left">
+                                                                <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="int" TItem="API_T_Ville" DataSource="@(villes)" @bind-Value="@row.Ville">
+                                                                    <DropDownListEvents TValue="int" TItem="API_T_Ville" />
+                                                                    <DropDownListFieldSettings Text="Intitule" Value="id" />
+                                                                </SfDropDownList>
+                                                            </div>
+                                                            <div class="ls-child-right">
+                                                                <RadzenButton Icon="reorder" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                            </div>
+                                                        </div>
+
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Code Affaire" Required LabelColSpan="12">
+                                                        <SfTextBox Readonly @bind-Value="@(row.CA_Num)" />
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Soumissionnement" LabelColSpan="12">
+                                                        <SfDropDownList TValue="int?" TItem="Items" DataSource="@helpers.ModeSoumission()" @bind-Value="@row.ModeSoumission">
+                                                            <DropDownListEvents TValue="int?" TItem="Items" />
+                                                            <DropDownListFieldSettings Text="Name" Value="Id" />
+                                                        </SfDropDownList>
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Chef Chantier" LabelColSpan="12">
+                                                        <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="AspNetUser" DataSource="@EtendueService.GetAspNetUsers().Result" @bind-Value="@row.Utilisateur">
+                                                            <DropDownListEvents TValue="string" TItem="AspNetUser" />
+                                                            <DropDownListFieldSettings Text="UserName" Value="Id" />
+                                                        </SfDropDownList>
+                                                    </FormItem>
                                                 </GridCol>
-                                                <GridCol Xs="24" Md="24">
-                                                      <SfRichTextEditor ShowCharCount="true" AutoSaveOnIdle="true" @bind-Value="@(row.ObjetDetail)" Placeholder="Objet">
-                                                            <RichTextEditorToolbarSettings Items="@Tools" />
-                                                            <RichTextEditorQuickToolbarSettings Table="@TableQuickToolbarItems" />
-                                                 <RichTextEditorEvents ValueChange="@(args => row.Objet = RemoveHtmlTags(args.Value))"></RichTextEditorEvents>
-                                                 
-                                                    </SfRichTextEditor>
+                                                <GridCol Xs="24" Md="@(6 * getCol())">
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Appel d'offre" LabelColSpan="12">
+                                                        <SfTextBox @bind-Value="@row.NumeroAppelOffre" />
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant Estimé" LabelColSpan="12">
+                                                        <SfNumericTextBox @bind-Value="@(row.MontantAppelOffreEstime)" ShowSpinButton="false" Decimals="2" Format="N2" />
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Type" LabelColSpan="12">
+                                                        <SfDropDownList TValue="int?" TItem="Items" DataSource="@helpers.TypeAppelOffre()" @bind-Value="@row.TypeAppelOffre">
+                                                            <DropDownListEvents TValue="int?" TItem="Items" />
+                                                            <DropDownListFieldSettings Text="Name" Value="Id" />
+                                                        </SfDropDownList>
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Publication" LabelColSpan="12">
+                                                        <SfDatePicker TValue="DateTime ?" @bind-Value="@(row.DatePublication)" />
+                                                    </FormItem>
+                                                    <FormItem LabelAlign="AntLabelAlignType.Left" Label="Ouverture des pils" LabelColSpan="12">
+                                                        <SfDatePicker TValue="DateTime ?" @bind-Value="@(row.DateOuverturePils)" />
+                                                    </FormItem>
                                                 </GridCol>
-                                                <Divider></Divider>
-                                                <GridCol Xs="24" Md="24">
-                                                <Card Title="Appel d'offre">
+                                                <GridCol Xs="24" Md="@(12 * getCol())">
+                                                    <h3>Caution Provisoire</h3>
+                                                    <div class="no-border small-grid" style="height: 150px;">
+                                                        <SfGrid AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(Cautions)" Height="100%">
+                                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                                            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                                                                <HeaderTemplate>
+
+                                                                </HeaderTemplate>
+                                                            </GridEditSettings>
+                                                            <GridEvents OnActionBegin="@(args => UpdateCaution(args, 0))" TValue="API_T_Caution"></GridEvents>
+                                                            <GridColumns>
+                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Caution.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Caution.Type) HeaderText="Type">
+                                                                    <Template Context="caution">
+                                                                        @{
+                                                                            var dt = (fn.TypeCaution().Where(a => a.Id == (caution as API_T_Caution).Type)?.SingleOrDefault());
+                                                                            <div>@dt?.Name</div>
+                                                                        }
+                                                                    </Template>
+                                                                    <EditTemplate Context="caution">
+                                                                        <SfDropDownList Placeholder="Type" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.TypeCaution().Where(a => a.Id == 0))" TValue="int?" TItem="Items" @bind-Value="@((caution as API_T_Caution).Type)">
+                                                                            <DropDownListEvents TValue="int?" TItem="Items" />
+                                                                            <DropDownListFieldSettings Text="Name" Value="Id" />
+                                                                        </SfDropDownList>
+                                                                    </EditTemplate>
+                                                                </GridColumn>
+                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80" Field=@nameof(API_T_Caution.DateRetraitBanque) HeaderText="Retrait" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80" Field=@nameof(API_T_Caution.DateRetourBanque) HeaderText="Retour" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="180" Field=@nameof(API_T_Caution.Banque) HeaderText="Banque"></GridColumn>
+                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80" Field=@nameof(API_T_Caution.MontantEstime) HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" EditorSettings="@fn.cellParams()"></GridColumn>
+                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120" Field=@nameof(API_T_Caution.Reference) HeaderText="Réf"></GridColumn>
+                                                                <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                                                    <Template Context="caution">
+                                                                        @{
+                                                                            var dt = (caution as API_T_Caution);
+                                                                            <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                                            <RadzenButton Click="@(args => UploadFile("Caution", dt.id, null))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                                        }
+
+                                                                    </Template>
+                                                                    <EditTemplate>
+
+                                                                    </EditTemplate>
+                                                                </GridColumn>
+                                                            </GridColumns>
+                                                        </SfGrid>
+                                                    </div>
+                                                </GridCol>
+                                            </GridRow>
+                                        </GridCol>
+                                        @if (!IsAppelOffre)
+                                        {
+                                            <Divider></Divider>
+                                            <GridCol Xs="24" Md="24">
+                                                <h3>Marché</h3>
                                                 <GridRow>
-                                                    <GridCol Xs="24" Md="@(6*getCol())">
-                                                        <Card>
+                                                    <GridCol Xs="24" Md="6">
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Marché" Required LabelColSpan="12">
+                                                            <SfTextBox @bind-Value="@(row.NumeroMarche)" />
+                                                        </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Ordre de service" LabelColSpan="12">
+                                                            <SfDatePicker TValue="DateTime ?" @bind-Value="@(row.DateOrdreService)" />
+                                                        </FormItem>
 
-                                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Zone" LabelColSpan="12" Required>
-                                                                 <div class="ls-parent">
-                                                                     <div class="ls-child-left">
-                                                                         <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="int" TItem="API_T_Site" DataSource="@(zones)" @bind-Value="@row.Site">
-                                                                             <DropDownListEvents TValue="int" TItem="API_T_Site" />
-                                                                             <DropDownListFieldSettings Text="Intitule" Value="id" />
-                                                                         </SfDropDownList>
-                                                                     </div>
-                                                                     <div class="ls-child-right">
-                                                                         <RadzenButton Icon="reorder" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                                     </div>
-                                                                 </div>
-
-                                                                </FormItem>
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Ville" LabelColSpan="12" Required>
-                                                                 <div class="ls-parent">
-                                                                     <div class="ls-child-left">
-                                                                         <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="int" TItem="API_T_Ville" DataSource="@(villes)" @bind-Value="@row.Ville">
-                                                                             <DropDownListEvents TValue="int" TItem="API_T_Ville" />
-                                                                             <DropDownListFieldSettings Text="Intitule" Value="id" />
-                                                                         </SfDropDownList>
-                                                                     </div>
-                                                                     <div class="ls-child-right">
-                                                                         <RadzenButton Icon="reorder" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                                     </div>
-                                                                 </div>
-
-                                                                </FormItem>
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Code Affaire" Required LabelColSpan="12">
-                                                                <SfTextBox Readonly @bind-Value="@(row.CA_Num)" />
-                                                            </FormItem>
-                                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Soumissionnement" LabelColSpan="12">
-                                                                <SfDropDownList TValue="int?" TItem="Items" DataSource="@helpers.ModeSoumission()" @bind-Value="@row.ModeSoumission">
-                                                                    <DropDownListEvents TValue="int?" TItem="Items" />
-                                                                    <DropDownListFieldSettings Text="Name" Value="Id" />
-                                                                </SfDropDownList>
-                                                            </FormItem>
-                                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Chef Chantier" LabelColSpan="12">
-                                                                <SfDropDownList FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="AspNetUser" DataSource="@EtendueService.GetAspNetUsers().Result" @bind-Value="@row.Utilisateur">
-                                                                    <DropDownListEvents TValue="string" TItem="AspNetUser" />
-                                                                    <DropDownListFieldSettings Text="UserName" Value="Id" />
-                                                                </SfDropDownList>
-                                                            </FormItem>
-
-                                                        </Card>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Ordre notification " LabelColSpan="12">
+                                                            <SfDatePicker TValue="DateTime ?" @bind-Value="@(row.DateOrdreNotification)" />
+                                                        </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Enregistrement" LabelColSpan="12">
+                                                            <SfDatePicker TValue="DateTime ?" @bind-Value="@(row.DateEnregistrement)" />
+                                                        </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Récéption déf prévue" LabelColSpan="12">
+                                                            <SfDatePicker TValue="DateTime ?" @bind-Value="@(row.DateReceptionDefinitivePrevue)" />
+                                                        </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Réception déf effective" LabelColSpan="12">
+                                                            <SfDatePicker TValue="DateTime ?" @bind-Value="@(row.DateReceptionDefinitiveEffective)" />
+                                                        </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Résultat marché" LabelColSpan="12">
+                                                            <SfDropDownList TValue="int" TItem="Items" DataSource="@helpers.ResultatMarche()" @bind-Value="@row.ResultatMarche">
+                                                                <DropDownListEvents TValue="int" TItem="Items" />
+                                                                <DropDownListFieldSettings Text="Name" Value="Id" />
+                                                            </SfDropDownList>
+                                                        </FormItem>
                                                     </GridCol>
-                                                    <GridCol Xs="24" Md="@(6*getCol())">
-                                                        <Card>
+                                                    <GridCol Xs="24" Md="6">
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Type Marché" LabelColSpan="12">
+                                                            <SfDropDownList TValue="int" TItem="Items" DataSource="@helpers.TypeMarche()" @bind-Value="@row.TypeMarche">
+                                                                <DropDownListEvents TValue="int" TItem="Items" />
+                                                                <DropDownListFieldSettings Text="Name" Value="Id" />
+                                                            </SfDropDownList>
+                                                        </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Situation Marché" LabelColSpan="12">
 
-                                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Appel d'offre" LabelColSpan="12">
-                                                                <SfTextBox @bind-Value="@row.NumeroAppelOffre"/>
-                                                            </FormItem>
-                                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant Estimé" LabelColSpan="12">
-                                                                <SfNumericTextBox @bind-Value="@(row.MontantAppelOffreEstime)" ShowSpinButton="false" Decimals="2" Format="N2" />
-                                                            </FormItem>
-                                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Type" LabelColSpan="12">
-                                                                <SfDropDownList TValue="int?" TItem="Items" DataSource="@helpers.TypeAppelOffre()" @bind-Value="@row.TypeAppelOffre">
-                                                                    <DropDownListEvents TValue="int?" TItem="Items" />
-                                                                    <DropDownListFieldSettings Text="Name" Value="Id" />
-                                                                </SfDropDownList>
-                                                            </FormItem>
-                                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Publication" LabelColSpan="12">
-                                                                <SfDatePicker TValue="DateTime?" @bind-Value="@(row.DatePublication)" />
-                                                            </FormItem>
-                                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Ouverture des pils" LabelColSpan="12">
-                                                                <SfDatePicker TValue="DateTime?" @bind-Value="@(row.DateOuverturePils)" />
-                                                            </FormItem>
-                                                        </Card>
+                                                            <SfDropDownList TValue="int" TItem="Items" DataSource="@helpers.SituationMarche()" @bind-Value="@row.SituationMarche">
+                                                                <DropDownListEvents TValue="int" TItem="Items" />
+                                                                <DropDownListFieldSettings Text="Name" Value="Id" />
+                                                            </SfDropDownList>
+                                                        </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Phase Marché" LabelColSpan="12">
+                                                            <SfDropDownList TValue="int" TItem="Items" DataSource="@helpers.PhaseMarche()" @bind-Value="@row.PhaseMarche">
+                                                                <DropDownListEvents TValue="int" TItem="Items" />
+                                                                <DropDownListFieldSettings Text="Name" Value="Id" />
+                                                            </SfDropDownList>
+                                                        </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Cout marché" LabelColSpan="12">
+                                                            <SfNumericTextBox @bind-Value="@(row.CoutMarchePrevisionnel)" ShowSpinButton="false" Decimals="2" Format="N2" />
+                                                        </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant TTC" LabelColSpan="12">
+                                                            <SfNumericTextBox @bind-Value="@(row.TotalMarcheTTC)" ShowSpinButton="false" Decimals="2" Format="N2" />
+                                                        </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant HT" LabelColSpan="12">
+                                                            <SfNumericTextBox @bind-Value="@(row.TotalMarcheHT)" ShowSpinButton="false" Decimals="2" Format="N2" />
+                                                        </FormItem>
+                                                        <FormItem LabelAlign="AntLabelAlignType.Left" Label="PV" LabelColSpan="12">
+                                                            <RadzenButton Click="@(args => ShowFile(row.ResultatMarchePV))" Disabled=@(row.ResultatMarchePV == null) Icon="visibility" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                            <RadzenButton Click="@(args => UploadFile("Projet", row.id, "ResultatMarchePV"))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                        </FormItem>
                                                     </GridCol>
-                                                    <GridCol Xs="24" Md="@(12*getCol())">
-                                                        <Card>
-                                                            <h5>Caution Provisoire</h5>
-                                                            <div class="no-border small-grid" style="height: 150px;">
-                                                              <SfGrid  AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(Cautions)" Height="100%">
+                                                    <GridCol Xs="24" Md="12">
+                                                        <h3>Caution</h3>
+                                                        <div class="no-border small-grid" style="height: 150px;">
+                                                            <SfGrid AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(CautionsMarche)" Height="100%">
                                                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                                                                 <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
-                                                                                                                                        <HeaderTemplate>
+                                                                    <HeaderTemplate>
 
                                                                     </HeaderTemplate>
                                                                 </GridEditSettings>
-                                                                <GridEvents OnActionBegin="@(args=>UpdateCaution(args,0))" TValue="API_T_Caution"></GridEvents>
+                                                                <GridEvents OnActionBegin="@(args => UpdateCaution(args, 1))" TValue="API_T_Caution"></GridEvents>
                                                                 <GridColumns>
                                                                     <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Caution.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
-                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Caution.Type) HeaderText="Type">
+                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130" Field=@nameof(API_T_Caution.Type) HeaderText="Type">
                                                                         <Template Context="caution">
                                                                             @{
                                                                                 var dt = (fn.TypeCaution().Where(a => a.Id == (caution as API_T_Caution).Type)?.SingleOrDefault());
                                                                                 <div>@dt?.Name</div>
                                                                             }
+
                                                                         </Template>
                                                                         <EditTemplate Context="caution">
-                                                                            <SfDropDownList Placeholder="Type" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.TypeCaution().Where(a => a.Id == 0))" TValue="int?" TItem="Items" @bind-Value="@((caution as API_T_Caution).Type)">
+                                                                            <SfDropDownList Placeholder="Type" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.TypeCaution().Where(a => a.Id != 0))" TValue="int?" TItem="Items" @bind-Value="@((caution as API_T_Caution).Type)">
                                                                                 <DropDownListEvents TValue="int?" TItem="Items" />
                                                                                 <DropDownListFieldSettings Text="Name" Value="Id" />
                                                                             </SfDropDownList>
                                                                         </EditTemplate>
                                                                     </GridColumn>
-                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80" Field=@nameof(API_T_Caution.DateRetraitBanque) HeaderText="Retrait" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80" Field=@nameof(API_T_Caution.DateRetourBanque) HeaderText="Retour" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="180" Field=@nameof(API_T_Caution.Banque) HeaderText="Banque"></GridColumn>
-                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80" Field=@nameof(API_T_Caution.MontantEstime) HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" EditorSettings="@fn.cellParams()"></GridColumn>
-                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120" Field=@nameof(API_T_Caution.Reference) HeaderText="Réf"></GridColumn>
-                                                                    <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateRetraitBanque) HeaderText="Retrait" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateRetourBanque) HeaderText="Retour" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateDepotClient) HeaderText="D.Client" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateAnnulationPrevue) HeaderText="Annul" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120" Field=@nameof(API_T_Caution.Banque) HeaderText="Banque"></GridColumn>
+                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.MontantEstime) HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" EditorSettings="@fn.cellParams()"></GridColumn>
+                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.Taux) HeaderText="Taux" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" EditorSettings="@fn.cellParams()"></GridColumn>
+                                                                    <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="90" Field=@nameof(API_T_Caution.Reference) HeaderText="Réf"></GridColumn>
+                                                                    <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="50" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                                                         <Template Context="caution">
                                                                             @{
                                                                                 var dt = (caution as API_T_Caution);
                                                                                 <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                                                <RadzenButton Click="@(args => UploadFile("Caution", dt.id,null))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                                                <RadzenButton Click="@(args => UploadFile("Caution", dt.id, null))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
                                                                             }
 
                                                                         </Template>
@@ -200,151 +312,16 @@
 
                                                                         </EditTemplate>
                                                                     </GridColumn>
+
+
+
                                                                 </GridColumns>
                                                             </SfGrid>
-                                                            </div>
-                                                            
-                                                        </Card>
+                                                        </div>
                                                     </GridCol>
+
+
                                                 </GridRow>
-                                            </Card>
-                                        </GridCol>
-                                        @if (!IsAppelOffre)
-                                        {
-                                            <Divider></Divider>
-                                            <GridCol Xs="24" Md="24">
-                                                <Card Title="Marché">
-                                                    <GridRow>
-                                                        <GridCol Xs="24" Md="6">
-                                                            <Card Style="height: 200px;">
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Marché" Required LabelColSpan="12">
-                                                                <SfTextBox @bind-Value="@(row.NumeroMarche)" />
-                                                                </FormItem>
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Ordre de service" LabelColSpan="12">
-                                                                <SfDatePicker TValue="DateTime?" @bind-Value="@(row.DateOrdreService)" />
-                                                                </FormItem>
-
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Ordre notification " LabelColSpan="12">
-                                                                <SfDatePicker TValue="DateTime?" @bind-Value="@(row.DateOrdreNotification)" />
-                                                                </FormItem>
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Enregistrement" LabelColSpan="12">
-                                                                <SfDatePicker TValue="DateTime?" @bind-Value="@(row.DateEnregistrement)" />
-                                                                </FormItem>
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Récéption déf prévue" LabelColSpan="12">
-                                                                <SfDatePicker TValue="DateTime?" @bind-Value="@(row.DateReceptionDefinitivePrevue)" />
-                                                                </FormItem>
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Réception déf effective" LabelColSpan="12">
-                                                                <SfDatePicker TValue="DateTime?" @bind-Value="@(row.DateReceptionDefinitiveEffective)" />
-                                                                </FormItem>
-                                                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Résultat marché" LabelColSpan="12">
-                                                                    <SfDropDownList TValue="int" TItem="Items" DataSource="@helpers.ResultatMarche()" @bind-Value="@row.ResultatMarche">
-                                                                    <DropDownListEvents TValue="int" TItem="Items" />
-                                                                    <DropDownListFieldSettings Text="Name" Value="Id" />
-                                                                </SfDropDownList>
-                                                                </FormItem>
-
-                                                                </Card>
-                                                                </GridCol>
-                                                                <GridCol Xs="24" Md="6">
-                                                                <Card Style="height: 200px;">
-
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Type Marché" LabelColSpan="12">
-                                                                <SfDropDownList TValue="int" TItem="Items" DataSource="@helpers.TypeMarche()" @bind-Value="@row.TypeMarche">
-                                                                    <DropDownListEvents TValue="int" TItem="Items" />
-                                                                    <DropDownListFieldSettings Text="Name" Value="Id" />
-                                                                </SfDropDownList>
-                                                                </FormItem>
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Situation Marché" LabelColSpan="12">
-
-                                                                <SfDropDownList TValue="int" TItem="Items" DataSource="@helpers.SituationMarche()" @bind-Value="@row.SituationMarche">
-                                                                    <DropDownListEvents TValue="int" TItem="Items" />
-                                                                    <DropDownListFieldSettings Text="Name" Value="Id" />
-                                                                </SfDropDownList>
-                                                                </FormItem>
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Phase Marché" LabelColSpan="12">
-                                                                <SfDropDownList TValue="int" TItem="Items" DataSource="@helpers.PhaseMarche()" @bind-Value="@row.PhaseMarche">
-                                                                    <DropDownListEvents TValue="int" TItem="Items" />
-                                                                    <DropDownListFieldSettings Text="Name" Value="Id" />
-                                                                </SfDropDownList>
-                                                                </FormItem>
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Cout marché" LabelColSpan="12">
-                                                                <SfNumericTextBox @bind-Value="@(row.CoutMarchePrevisionnel)" ShowSpinButton="false" Decimals="2" Format="N2" />
-                                                                </FormItem>
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant TTC" LabelColSpan="12">
-                                                                <SfNumericTextBox @bind-Value="@(row.TotalMarcheTTC)" ShowSpinButton="false" Decimals="2" Format="N2" />
-                                                                </FormItem>
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant HT" LabelColSpan="12">
-                                                                <SfNumericTextBox @bind-Value="@(row.TotalMarcheHT)" ShowSpinButton="false" Decimals="2" Format="N2" />
-                                                                </FormItem>
-                                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="PV" LabelColSpan="12">
-                                                                    <RadzenButton Click="@(args => ShowFile(row.ResultatMarchePV))" Disabled=@(row.ResultatMarchePV == null) Icon="visibility" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                                    <RadzenButton Click="@(args => UploadFile("Projet", row.id,"ResultatMarchePV"))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                                </FormItem>
-                                                                </Card>
-                                                                </GridCol>
-                                                                <GridCol Xs="24" Md="12">
-                                                                <Card>
-                                                                <h5>Caution</h5>
-                                                                <div class="no-border small-grid" style="height: 150px;">
-                                                                     <SfGrid  AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(CautionsMarche)" Height="100%">
-                                                                         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                                                                         <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
-                                                                             <HeaderTemplate>
-
-                                                                             </HeaderTemplate>
-                                                                         </GridEditSettings>
-                                                                         <GridEvents OnActionBegin="@(args=>UpdateCaution(args,1))" TValue="API_T_Caution"></GridEvents>
-                                                                         <GridColumns>
-                                                                             <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Caution.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
-                                                                             <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130" Field=@nameof(API_T_Caution.Type) HeaderText="Type">
-                                                                                 <Template Context="caution">
-                                                                                     @{
-                                                                                        var dt = (fn.TypeCaution().Where(a => a.Id == (caution as API_T_Caution).Type)?.SingleOrDefault());
-                                                                                        <div>@dt?.Name</div>
-                                                                                    }
-
-                                                                                </Template>
-                                                                                <EditTemplate Context="caution">
-                                                                                    <SfDropDownList Placeholder="Type" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(fn.TypeCaution().Where(a => a.Id != 0))" TValue="int?" TItem="Items" @bind-Value="@((caution as API_T_Caution).Type)">
-                                                                                        <DropDownListEvents TValue="int?" TItem="Items" />
-                                                                                        <DropDownListFieldSettings Text="Name" Value="Id" />
-                                                                                    </SfDropDownList>
-                                                                                </EditTemplate>
-                                                                            </GridColumn>
-                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateRetraitBanque) HeaderText="Retrait" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateRetourBanque) HeaderText="Retour" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateDepotClient) HeaderText="D.Client" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.DateAnnulationPrevue) HeaderText="Annul" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120" Field=@nameof(API_T_Caution.Banque) HeaderText="Banque"></GridColumn>
-                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.MontantEstime) HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" EditorSettings="@fn.cellParams()"></GridColumn>
-                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="60" Field=@nameof(API_T_Caution.Taux) HeaderText="Taux" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" EditorSettings="@fn.cellParams()"></GridColumn>
-                                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="90" Field=@nameof(API_T_Caution.Reference) HeaderText="Réf"></GridColumn>
-                                                                            <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="50" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-                                                                                <Template Context="caution">
-                                                                                    @{
-                                                                                        var dt = (caution as API_T_Caution);
-                                                                                        <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                                                        <RadzenButton Click="@(args => UploadFile("Caution", dt.id,null))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                                                    }
-
-                                                                                </Template>
-                                                                                <EditTemplate>
-
-                                                                                </EditTemplate>
-                                                                            </GridColumn>
-
-
-
-                                                                        </GridColumns>
-                                                                    </SfGrid>
-                                                                </div>
-                                                                
-                                                            </Card>
-                                                        </GridCol>
-
-
-                                                    </GridRow>
-                                                </Card>
                                             </GridCol>
                                         }
 
@@ -360,21 +337,21 @@
                                     </ChildContent>
                                     <ContentTemplate>
                                         <GridRow>
-                                           <GridCol Xs="24" Md="24">
-                                               <div style="height: 70vh;" class="no-border">
-                                                   <SfGrid  Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(Assurances)">
-                                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                                                    <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
-                                                                                                                            <HeaderTemplate>
+                                            <GridCol Xs="24" Md="24">
+                                                <div style="height: 70vh;" class="no-border">
+                                                    <SfGrid Height="100%" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(Assurances)">
+                                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                                        <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                                                            <HeaderTemplate>
 
-                                                                    </HeaderTemplate>
-                                                    </GridEditSettings>
-                                                    <GridEvents OnActionBegin="UpdateAssurance" TValue="API_T_Assurance"></GridEvents>
-                                                    <GridColumns>
-                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Assurance.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
-                                                        <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Type">
-                                                            <Template Context="date">
-                                                                @{
+                                                            </HeaderTemplate>
+                                                        </GridEditSettings>
+                                                        <GridEvents OnActionBegin="UpdateAssurance" TValue="API_T_Assurance"></GridEvents>
+                                                        <GridColumns>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Assurance.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Type">
+                                                                <Template Context="date">
+                                                                    @{
                                                                         var dt = (fn.TypeAssurance().Where(a => a.Id == (date as API_T_Assurance).Type));
                                                                     }
                                                                     @if (dt.Count() != 0)
@@ -389,11 +366,11 @@
                                                                     </SfDropDownList>
                                                                 </EditTemplate>
                                                             </GridColumn>
-                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Assurance.Fournisseur) HeaderText="Fournisseur"></GridColumn>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Assurance.Fournisseur) HeaderText="Fournisseur"></GridColumn>
                                                             <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Mode Paiement">
-                                                            <Template Context="date">
-                                                                @{
-                                                                    var dt = (db.API_T_Information.Where(a => a.id == (date as API_T_Assurance).ModePaiement));
+                                                                <Template Context="date">
+                                                                    @{
+                                                                        var dt = (db.API_T_Information.Where(a => a.id == (date as API_T_Assurance).ModePaiement));
                                                                     }
                                                                     @if (dt.Count() != 0)
                                                                     {
@@ -401,32 +378,32 @@
                                                                     }
                                                                 </Template>
                                                                 <EditTemplate Context="date">
-                                                                <SfDropDownList Placeholder="Mode Paiement" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(db.API_T_Information.Where(a => a.Tab == 6).OrderBy(a => a.Valeur).ToList())" TValue="int?" TItem="API_T_Information" @bind-Value="@((date as API_T_Assurance).ModePaiement)">
+                                                                    <SfDropDownList Placeholder="Mode Paiement" FloatLabelType="Syncfusion.Blazor.Inputs.FloatLabelType.Always" DataSource="@(db.API_T_Information.Where(a => a.Tab == 6).OrderBy(a => a.Valeur).ToList())" TValue="int?" TItem="API_T_Information" @bind-Value="@((date as API_T_Assurance).ModePaiement)">
                                                                         <DropDownListEvents TValue="int?" TItem="API_T_Information" />
                                                                         <DropDownListFieldSettings Text="Valeur" Value="id" />
                                                                     </SfDropDownList>
                                                                 </EditTemplate>
                                                             </GridColumn>
-                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Assurance.DateDebut) HeaderText="Date Début" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Assurance.DateFin) HeaderText="Date Fin" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Assurance.DateDebut) HeaderText="Date Début" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_Assurance.DateFin) HeaderText="Date Fin" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
                                                             <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                                                 <Template Context="cs">
                                                                     @{
                                                                         var dt = (cs as API_T_Assurance);
                                                                         <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                                        <RadzenButton Click="@(args => UploadFile("Assurance", dt.id,null))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                                        <RadzenButton Click="@(args => UploadFile("Assurance", dt.id, null))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
                                                                     }
 
                                                                 </Template>
-                                                                                                                                        <EditTemplate>
+                                                                <EditTemplate>
 
-                                                                        </EditTemplate>
+                                                                </EditTemplate>
                                                             </GridColumn>
-                                                    </GridColumns>
-                                                </SfGrid>
+                                                        </GridColumns>
+                                                    </SfGrid>
                                                 </div>
-                                               
-                                           </GridCol>
+
+                                            </GridCol>
                                         </GridRow>
                                     </ContentTemplate>
                                 </TabItem>
@@ -436,51 +413,50 @@
                                     </ChildContent>
                                     <ContentTemplate>
                                         <div class="no-border">
-                                           <GridRow>
-                                            <GridCol Xs="24" Md="12">
-                                                <Card Title="Planning décomptes">
-                                                        <SfGrid  class="small-grid" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(ProjetPlanningDecomptes)">
-                                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                                                    <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
-                                                                                                                            <HeaderTemplate>
+                                            <GridRow>
+                                                <GridCol Xs="24" Md="12">
+                                                    <h3>Planning décomptes</h3>
+                                                    <SfGrid class="small-grid" AllowSelection Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(ProjetPlanningDecomptes)">
+                                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                                        <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                                                            <HeaderTemplate>
 
-                                                                    </HeaderTemplate>
-                                                    </GridEditSettings>
-                                                    <GridEvents OnActionBegin="UpdateProjetPlanningDecompte" TValue="API_T_ProjetPlanningDecompte"></GridEvents>
-                                                    <GridColumns>
-                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetPlanningDecompte.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
-                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetPlanningDecompte.Description) HeaderText="Description"></GridColumn>
-                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetPlanningDecompte.DatePrevue) HeaderText="Date Prévue" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                            </HeaderTemplate>
+                                                        </GridEditSettings>
+                                                        <GridEvents OnActionBegin="UpdateProjetPlanningDecompte" TValue="API_T_ProjetPlanningDecompte"></GridEvents>
+                                                        <GridColumns>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetPlanningDecompte.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetPlanningDecompte.Description) HeaderText="Description"></GridColumn>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetPlanningDecompte.DatePrevue) HeaderText="Date Prévue" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
                                                             <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                                                 <Template Context="cs">
                                                                     @{
                                                                         var dt = (cs as API_T_ProjetPlanningDecompte);
                                                                         <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                                        <RadzenButton Click="@(args => UploadFile("ProjetPlanningDecompte", dt.id,null))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                                        <RadzenButton Click="@(args => UploadFile("ProjetPlanningDecompte", dt.id, null))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
                                                                     }
 
                                                                 </Template>
-                                                                                                                                        <EditTemplate>
+                                                                <EditTemplate>
 
-                                                                        </EditTemplate>
+                                                                </EditTemplate>
                                                             </GridColumn>
-                                                    </GridColumns>
+                                                        </GridColumns>
                                                     </SfGrid>
-                                                    </Card>
-<Card Title="Réceptions">
-                                                        <SfGrid  class="small-grid" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(ProjetReceptions)">
-                                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                                                    <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
-                                                                                                                            <HeaderTemplate>
+                                                    <h3>Réceptions</h3>
+                                                    <SfGrid class="small-grid" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(ProjetReceptions)">
+                                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                                        <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                                                            <HeaderTemplate>
 
-                                                                    </HeaderTemplate>
-                                                    </GridEditSettings>
-                                                    <GridEvents OnActionBegin="UpdateProjetReception" TValue="API_T_ProjetReception"></GridEvents>
-                                                    <GridColumns>
-                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetReception.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
-                                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Nature">
-                                                            <Template Context="date">
-                                                                @{
+                                                            </HeaderTemplate>
+                                                        </GridEditSettings>
+                                                        <GridEvents OnActionBegin="UpdateProjetReception" TValue="API_T_ProjetReception"></GridEvents>
+                                                        <GridColumns>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetReception.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Nature">
+                                                                <Template Context="date">
+                                                                    @{
                                                                         var dt = (fn.Receptions().Where(a => a.Id == (date as API_T_ProjetReception).Type));
                                                                     }
                                                                     @if (dt.Count() != 0)
@@ -496,103 +472,100 @@
                                                                 </EditTemplate>
                                                             </GridColumn>
                                                             <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetReception.DateReception) HeaderText="Date Récéption" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                                                                        <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                                            <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
                                                                 <Template Context="cs">
                                                                     @{
                                                                         var dt = (cs as API_T_ProjetReception);
                                                                         <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                                        <RadzenButton Click="@(args => UploadFile("ProjetReception", dt.id,null))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                                        <RadzenButton Click="@(args => UploadFile("ProjetReception", dt.id, null))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
                                                                     }
 
                                                                 </Template>
-                                                                    <EditTemplate>
+                                                                <EditTemplate>
 
-                                                                    </EditTemplate>
+                                                                </EditTemplate>
                                                             </GridColumn>
                                                         </GridColumns>
                                                     </SfGrid>
-                                                </Card>
-                                                    <Card Title="Arréts/Reprises">
-                                                        <SfGrid  class="small-grid" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(ProjetDates)">
-                                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                                                            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(!IsArret())" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                                                    <h3>Arréts/Reprises</h3>
+                                                    <SfGrid class="small-grid" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(ProjetDates)">
+                                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                                        <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(!IsArret())" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                                                            <HeaderTemplate>
+
+                                                            </HeaderTemplate>
+                                                        </GridEditSettings>
+                                                        <GridEvents OnActionBegin="UpdateProjetDate" TValue="API_T_ProjetDate"></GridEvents>
+                                                        <GridColumns>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetDate.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetDate.DateArret) HeaderText="Date Arrét" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetDate.DateReprise) HeaderText="Date Reprise" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetDate.Motif) HeaderText="Motif"></GridColumn>
+                                                            <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                                                <Template Context="cs">
+                                                                    @{
+                                                                        var dt = (cs as API_T_ProjetDate);
+                                                                        <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                                        <RadzenButton Click="@(args => UploadFile("ProjetDate", dt.id, null))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                                    }
+
+                                                                </Template>
+                                                                <EditTemplate>
+
+                                                                </EditTemplate>
+                                                            </GridColumn>
+                                                        </GridColumns>
+                                                    </SfGrid>
+                                                    <h3>Avenants officiels</h3>
+                                                    <SfGrid class="small-grid" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(ProjetAvenants)">
+                                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                                        <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog"></GridEditSettings>
+                                                        <GridEvents OnActionBegin="UpdateProjetAvenant" TValue="API_T_ProjetAvenant"></GridEvents>
+                                                        <GridColumns>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetAvenant.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true">
                                                                 <HeaderTemplate>
 
                                                                 </HeaderTemplate>
-                                                            </GridEditSettings>
-                                                            <GridEvents OnActionBegin="UpdateProjetDate" TValue="API_T_ProjetDate"></GridEvents>
-                                                            <GridColumns>
-                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetDate.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
-                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetDate.DateArret) HeaderText="Date Arrét" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetDate.DateReprise) HeaderText="Date Reprise" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetDate.Motif) HeaderText="Motif"></GridColumn>
-                                                                <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-                                                                    <Template Context="cs">
-                                                                        @{
-                                                                            var dt = (cs as API_T_ProjetDate);
-                                                                            <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                                            <RadzenButton Click="@(args => UploadFile("ProjetDate", dt.id,null))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                                        }
+                                                            </GridColumn>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetAvenant.Libelle) HeaderText="Libellé"></GridColumn>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetAvenant.DateAvenant) HeaderText="Date" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
+                                                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetAvenant.MontantAvenant) HeaderText="Montant" Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(parameters)"></GridColumn>
+                                                            <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                                                <Template Context="cs">
+                                                                    @{
+                                                                        var dt = (cs as API_T_ProjetAvenant);
+                                                                        <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                                        <RadzenButton Click="@(args => UploadFile("ProjetAvenant", dt.id, null))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                                    }
 
-                                                                    </Template>
-                                                                    <EditTemplate>
+                                                                </Template>
+                                                                <EditTemplate>
 
-                                                                    </EditTemplate>
-                                                                </GridColumn>
-                                                            </GridColumns>
-                                                        </SfGrid>
-                                                    </Card>
-                                                    <Card Title="Avenants officiels">
-                                                        <SfGrid  class="small-grid" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(ProjetAvenants)">
-                                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-                                                            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog"></GridEditSettings>
-                                                            <GridEvents OnActionBegin="UpdateProjetAvenant" TValue="API_T_ProjetAvenant"></GridEvents>
-                                                            <GridColumns>
-                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetAvenant.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true">
-                                                                    <HeaderTemplate>
-
-                                                                    </HeaderTemplate>
-                                                                </GridColumn>
-                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_ProjetAvenant.Libelle) HeaderText="Libellé"></GridColumn>
-                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetAvenant.DateAvenant) HeaderText="Date" Format="dd/MM/yy" EditType="EditType.DatePickerEdit"></GridColumn>
-                                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150" Field=@nameof(API_T_ProjetAvenant.MontantAvenant) HeaderText="Montant" Format="N2" EditType="EditType.NumericEdit" EditorSettings="@(parameters)"></GridColumn>
-                                                                <GridColumn ShowInColumnChooser="false" AllowEditing="false" AllowAdding="false" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-                                                                    <Template Context="cs">
-                                                                        @{
-                                                                            var dt = (cs as API_T_ProjetAvenant);
-                                                                            <RadzenButton Disabled=@(dt.Fichier == null) Icon="visibility" Click="@(args => ShowFile(dt.Fichier))" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                                            <RadzenButton Click="@(args => UploadFile("ProjetAvenant", dt.id,null))" Icon="upload_file" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-                                                                        }
-
-                                                                    </Template>
-                                                                    <EditTemplate>
-
-                                                                    </EditTemplate>
-                                                                </GridColumn>
-                                                            </GridColumns>
-                                                        </SfGrid>
-                                                    </Card>
-                                                    </GridCol>
-                                                    <GridCol Xs="24" Md="12">
-                                                        <div style="padding: 10px;">
+                                                                </EditTemplate>
+                                                            </GridColumn>
+                                                        </GridColumns>
+                                                    </SfGrid>
+                                                </GridCol>
+                                                <GridCol Xs="24" Md="12">
+                                                    <div style="padding: 10px;">
                                                         <GridRow>
                                                             <GridCol Xs="24" Md="12">
-                                                                <h5>Delai Estimé</h5>
+                                                                <h3>Delai Estimé</h3>
                                                                 <GridRow>
                                                                     <GridCol Xl="24" Md="24">
-                                                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Nbr Jours Estimés" TValue="int?" Value="@(((row.DateReceptionDefinitivePrevue??DateTime.Today)-(row.DateOrdreService??DateTime.Today)).Days)" ValueStyle="color: #DCE2DD ;" Suffix="JOURS" />
+                                                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Nbr Jours Estimés" TValue="int?" Value="@(((row.DateReceptionDefinitivePrevue ?? DateTime.Today) - (row.DateOrdreService ?? DateTime.Today)).Days)" ValueStyle="color: #DCE2DD ;" Suffix="JOURS" />
                                                                     </GridCol>
                                                                     <GridCol Xl="24" Md="24">
-                                                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Nbr Mois Estimés" TValue="int?" Value="@((((row.DateReceptionDefinitivePrevue??DateTime.Today)-(row.DateOrdreService??DateTime.Today)).Days)/30)" ValueStyle="color: #DCE2DD ;" Suffix="MOIS" />
+                                                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Nbr Mois Estimés" TValue="int?" Value="@((((row.DateReceptionDefinitivePrevue ?? DateTime.Today) - (row.DateOrdreService ?? DateTime.Today)).Days) / 30)" ValueStyle="color: #DCE2DD ;" Suffix="MOIS" />
                                                                     </GridCol>
                                                                     <GridCol Xl="24" Md="24">
-                                                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Nbr Années Estimés" TValue="int?" Value="@((((row.DateReceptionDefinitivePrevue??DateTime.Today)-(row.DateOrdreService??DateTime.Today)).Days)/365)" ValueStyle="color: #DCE2DD ;" Suffix="ANNEES" />
+                                                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Nbr Années Estimés" TValue="int?" Value="@((((row.DateReceptionDefinitivePrevue ?? DateTime.Today) - (row.DateOrdreService ?? DateTime.Today)).Days) / 365)" ValueStyle="color: #DCE2DD ;" Suffix="ANNEES" />
                                                                     </GridCol>
                                                                 </GridRow>
 
                                                             </GridCol>
                                                             <GridCol Xs="24" Md="12">
-                                                                <h5>Arréts</h5>
+                                                                <h3>Arréts</h3>
                                                                 <GridRow>
                                                                     <GridCol Xl="24" Md="24">
                                                                         <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Statut" TValue="string" Value="@StautArret()" ValueStyle="color: #DCE2DD ;" />
@@ -601,13 +574,13 @@
                                                                         <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Nbr Jours arréts" TValue="int?" Value="@getArrets()" ValueStyle="color: #DCE2DD ;" Suffix="JOURS" />
                                                                     </GridCol>
                                                                     <GridCol Xl="24" Md="24">
-                                                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Nouvelle Récép. Prév." TValue="string" Value="@(((row.DateReceptionDefinitivePrevue??DateTime.Today).AddDays(getArrets())).ToShortDateString())" ValueStyle="color: #DCE2DD ;" />
+                                                                        <Statistic CultureInfo=@(new System.Globalization.CultureInfo("en-US")) Class="ant-card" Title="Nouvelle Récép. Prév." TValue="string" Value="@(((row.DateReceptionDefinitivePrevue ?? DateTime.Today).AddDays(getArrets())).ToShortDateString())" ValueStyle="color: #DCE2DD ;" />
                                                                     </GridCol>
                                                                 </GridRow>
 
                                                             </GridCol>
                                                             <GridCol Xs="24" Md="24">
-                                                                <h5>Réalisation</h5>
+                                                                <h3>Réalisation</h3>
                                                                 <Card>
                                                                     <SfProgressBar @ref="CircularInstance" Type="Syncfusion.Blazor.ProgressBar.ProgressType.Circular" ID="CircularSegment"
                                                                                    Height="200px" Width="100%" TrackThickness="15" ProgressThickness="15"
@@ -628,14 +601,14 @@
 
                                                             </GridCol>
                                                         </GridRow>
-                                                        </div>
-                                                    
-                                            </GridCol>
-  
+                                                    </div>
 
-                                        </GridRow>
+                                                </GridCol>
+
+
+                                            </GridRow>
                                         </div>
-                                        
+
 
                                     </ContentTemplate>
                                 </TabItem>
@@ -649,24 +622,26 @@
                                             int bd = 0;
                                             if (dt.Count() != 0)
                                             {
-                                                bd = (dt?.First()?.id)??0;
+                                                bd = (dt?.First()?.id) ?? 0;
                                                 <BusinessWeb.Pages.Traitement.Projets.BordereauxPrix.BordereauxFiche id="@bd" IsDetail="true"></BusinessWeb.Pages.Traitement.Projets.BordereauxPrix.BordereauxFiche>
                                             }
-                                            
+
                                         }
                                     </ContentTemplate>
                                 </TabItem>
-                                @if(1 == 0) {
-                                   <TabItem>
-                                    <ChildContent>
-                                        <TabHeader Text="Achats"></TabHeader>
-                                    </ChildContent>
-                                    <ContentTemplate>
-                                        <BusinessWeb.Pages.Traitement.Gestion.Documents.DocumentsListe IsProjet="true" CA_Num="@row.CA_Num" DO_Domaine="1" Title="LISTE DES ACHATS"></BusinessWeb.Pages.Traitement.Gestion.Documents.DocumentsListe>
-                                    </ContentTemplate>
-                                </TabItem>
+                                @if (1 == 0)
+                                {
+                                    <TabItem>
+                                        <ChildContent>
+                                            <TabHeader Text="Achats"></TabHeader>
+                                        </ChildContent>
+                                        <ContentTemplate>
+                                            <BusinessWeb.Pages.Traitement.Gestion.Documents.DocumentsListe IsProjet="true" CA_Num="@row.CA_Num" DO_Domaine="1" Title="LISTE DES ACHATS"></BusinessWeb.Pages.Traitement.Gestion.Documents.DocumentsListe>
+                                        </ContentTemplate>
+                                    </TabItem>
                                 }
-                                @if(1 == 0) {
+                                @if (1 == 0)
+                                {
                                     <TabItem>
                                         <ChildContent>
                                             <TabHeader Text="Livraisons"></TabHeader>
@@ -676,13 +651,13 @@
                                         </ContentTemplate>
                                     </TabItem>
                                 }
-                               
+
                                 <TabItem>
                                     <ChildContent>
                                         <TabHeader Text="Attachements"></TabHeader>
                                     </ChildContent>
                                     <ContentTemplate>
-                                        <BusinessWeb.Pages.Traitement.Projets.Attachements.AttachementsListe IsList="false" Projet="@id" IsAttachement="true" grid_ClassHeight="grid-78"></BusinessWeb.Pages.Traitement.Projets.Attachements.AttachementsListe>
+                                        <BusinessWeb.Pages.Traitement.Projets.Attachements.AttachementsListe IsList="false" Projet="@id" IsAttachement="true" grid_height="76vh"></BusinessWeb.Pages.Traitement.Projets.Attachements.AttachementsListe>
                                     </ContentTemplate>
                                 </TabItem>
                                 <TabItem>
@@ -690,10 +665,10 @@
                                         <TabHeader Text="Décomptes"></TabHeader>
                                     </ChildContent>
                                     <ContentTemplate>
-                                        <BusinessWeb.Pages.Traitement.Projets.Attachements.AttachementsListe IsList="false" Projet="@id" IsDecompte="true" grid_ClassHeight="grid-78"></BusinessWeb.Pages.Traitement.Projets.Attachements.AttachementsListe>
+                                        <BusinessWeb.Pages.Traitement.Projets.Attachements.AttachementsListe IsList="false" Projet="@id" IsDecompte="true" grid_height="76vh"></BusinessWeb.Pages.Traitement.Projets.Attachements.AttachementsListe>
                                     </ContentTemplate>
                                 </TabItem>
-                                @if(1 == 0) 
+                                @if (1 == 0)
                                 {
                                     <TabItem>
                                         <ChildContent>
@@ -739,7 +714,7 @@
                     </SfTab>
                 </Form>
             </EditForm>
-            
+
 
         </GridCol>
 
@@ -776,7 +751,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-                db = session.db;
+        db = session.db;
         GC.Collect();
         clients = db.F_COMPTET.Where(a => a.CT_Type == 0).Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Intitule + " (" + a.CT_Num + ")" }).ToList();
         zones = db.API_T_Site.ToList();
@@ -802,14 +777,14 @@
             await UpdateData();
         }
         IsAppelOffre = (row.IsAppelOffre ?? true);
-        
+
 
     }
 
     static string RemoveHtmlTags(string input)
     {
         string pattern = @"<[^>]+>|&nbsp;";
-        string cleanText = Regex.Replace((input??""), pattern, string.Empty);
+        string cleanText = Regex.Replace((input ?? ""), pattern, string.Empty);
         return cleanText;
     }
 
@@ -828,7 +803,7 @@
             {
                 arrets = arrets + ((item.DateReprise ?? DateTime.Today) - (item.DateArret ?? DateTime.Today)).Days;
             }
-            days = (DateTime.Today - row.DateOrdreService).Value.Days - arrets;
+            days = (DateTime.Today - (row.DateOrdreService ?? DateTime.Today)).Days - arrets;
         }
         return days;
     }
@@ -836,7 +811,7 @@
     {
         int arrets = 0;
         var dt = db.API_T_ProjetDate.AsNoTracking().Where(a => a.Projet == id);
-        if(dt.Count() != 0)
+        if (dt.Count() != 0)
         {
             foreach (API_T_ProjetDate item in dt)
             {
@@ -873,13 +848,13 @@
         ProjetDates = db.API_T_ProjetDate.Where(a => a.Projet == id).AsNoTracking().OrderBy(a => a.DateArret).ToList();
         ProjetReceptions = db.API_T_ProjetReception.Where(a => a.Projet == id).AsNoTracking().OrderBy(a => a.DateReception).ToList();
         ProjetAvenants = db.API_T_ProjetAvenant.Where(a => a.Projet == id).AsNoTracking().OrderBy(a => a.DateAvenant).ToList();
-        Assurances =  db.API_T_Assurance.Where(a => a.Projet == id).AsNoTracking().OrderBy(a => a.id).ToList();
+        Assurances = db.API_T_Assurance.Where(a => a.Projet == id).AsNoTracking().OrderBy(a => a.id).ToList();
     }
     private async Task Submit(bool close)
     {
         try
         {
-            if(form.EditContext.Validate())
+            if (form.EditContext.Validate())
             {
                 if (id == 0)
                 {
@@ -898,7 +873,9 @@
                     ca.N_Analytique = 3;
                     ca.CA_Classement = affaire;
                     db.F_COMPTEA.Add(ca);
+                    fn.DisableTriggers(db, "F_COMPTEA", "INS");
                     db.SaveChanges();
+                    fn.EnableTriggers(db, "F_COMPTEA", "INS");
                     row.CA_Num = affaire;
                     row.IsAppelOffre = IsAppelOffre;
                     db.API_T_Projet.Add(row);
@@ -930,7 +907,7 @@
     }
     private int getCol()
     {
-        if(IsAppelOffre) 
+        if (IsAppelOffre)
         {
             return 2;
         }
@@ -940,7 +917,8 @@
     }
     public async Task UpdateProjetPlanningDecompte(ActionEventArgs<API_T_ProjetPlanningDecompte> args)
     {
-        if(form.EditContext.Validate()) {
+        if (form.EditContext.Validate())
+        {
             if (id == 0)
             {
                 await Submit(false);
@@ -981,7 +959,7 @@
                 db.SaveChanges();
             }
         }
-        else 
+        else
         {
             args.Cancel = true;
         }
@@ -989,7 +967,8 @@
     }
     public async Task UpdateProjetReception(ActionEventArgs<API_T_ProjetReception> args)
     {
-        if(form.EditContext.Validate()) {
+        if (form.EditContext.Validate())
+        {
             if (id == 0)
             {
                 await Submit(false);
@@ -1030,7 +1009,7 @@
                 db.SaveChanges();
             }
         }
-        else 
+        else
         {
             args.Cancel = true;
         }
@@ -1038,7 +1017,8 @@
     }
     public async Task UpdateProjetAvenant(ActionEventArgs<API_T_ProjetAvenant> args)
     {
-        if(form.EditContext.Validate()) {
+        if (form.EditContext.Validate())
+        {
             if (id == 0)
             {
                 await Submit(false);
@@ -1078,7 +1058,7 @@
                 db.SaveChanges();
             }
         }
-        else 
+        else
         {
             args.Cancel = true;
         }
@@ -1086,7 +1066,7 @@
     }
     public async Task UpdateAssurance(ActionEventArgs<API_T_Assurance> args)
     {
-        if(form.EditContext.Validate()) 
+        if (form.EditContext.Validate())
         {
             if (id == 0)
             {
@@ -1136,7 +1116,7 @@
     }
     public async Task UpdateProjetDate(ActionEventArgs<API_T_ProjetDate> args)
     {
-        if(form.EditContext.Validate()) 
+        if (form.EditContext.Validate())
         {
             if (id == 0)
             {
@@ -1210,7 +1190,7 @@
     }
     public async Task UpdateCaution(ActionEventArgs<API_T_Caution> args, int etape)
     {
-        if(form.EditContext.Validate())
+        if (form.EditContext.Validate())
         {
             if (id == 0)
             {
@@ -1253,7 +1233,7 @@
                 db.SaveChanges();
             }
         }
-        else 
+        else
         {
             args.Cancel = true;
         }
@@ -1286,7 +1266,7 @@
     }
     private async Task EtapeSuivante()
     {
-        if(form.EditContext.Validate())
+        if (form.EditContext.Validate())
         {
             bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment passer à l'étape suivante?", "Etape suivante");
             if (isConfirm)
@@ -1303,7 +1283,7 @@
     private async Task InitBD()
     {
         var dt = db.API_T_Bordereau.Where(a => a.Projet == this.id);
-        if(!(dt.Count() != 0))
+        if (!(dt.Count() != 0))
         {
             var itm = new API_T_Bordereau();
             itm.Date = DateTime.Today;
