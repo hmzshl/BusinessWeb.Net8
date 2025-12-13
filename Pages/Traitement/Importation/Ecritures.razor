@@ -1,4 +1,5 @@
 ﻿@page "/imp-comptabilite"
+@using BusinessWeb.Services
 @attribute [Authorize(Roles = "Super Admin,Admin,Direction")]
 
 @if (IsLoaded)
@@ -45,7 +46,7 @@
 							</ToolbarItem>
 							<ToolbarItem Align="ItemAlign.Right">
 								<Template>
-									<SfButton IconCss="e-icons e-arrow-down" IsPrimary OnClick="Transferer">Importer</SfButton>
+									<SfButton IconCss="e-icons e-arrow-down" IsPrimary OnClick="Transferer">Transferer</SfButton>
 								</Template>
 							</ToolbarItem>
 
@@ -53,11 +54,11 @@
 						</ToolbarItems>
 					</SfToolbar>
 					<div class="grid-84" style="zoom: @session.zoomLevel;">
-						<SfGrid EnablePersistence ID="TransfertGrid" @ref=@DefaultGrid Height="100%" RowRenderingMode="RowDirection.Horizontal"
+						<SfGrid ID="TransfertEcritureGrid" @ref=@DefaultGrid Height="100%" RowRenderingMode="RowDirection.Horizontal"
 						AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
 
 							<GridEvents TValue="API_V_ECRITUREC" Created="CreatedHandler"></GridEvents>
-							<GridPageSettings PageSize="500"></GridPageSettings>
+							<GridPageSettings PageSize="200"></GridPageSettings>
 							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 							<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
 							<GridTemplates>
@@ -210,7 +211,7 @@ else
 	}
 	private async Task Tester()
 	{
-		
+
 	}
 	private async Task Transferer()
 	{
@@ -242,7 +243,51 @@ else
 	}
 	private void TransferTask()
 	{
-		
+		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+		db1 = fn.getDb(ste1 ?? new TSociete());
+		db2 = fn.getDb(ste2 ?? new TSociete());
+		if (dt.Any())
+		{
+			var ecritures = db1.F_ECRITUREC.Where(a => dt.Select(b => b.cbMarq).Contains(a.cbMarq))
+			.Include(a => a.CG_NumNavigation)
+			.Include(a => a.CT_NumNavigation);
+			SageService sg = new SageService(db2);
+			var journaux = db1.F_JOURNAUX;
+			foreach(var item in ecritures)
+			{
+				if (!sg.CompteG.AccountExists(item.CG_Num))
+				{
+					var ln = new F_COMPTEG();
+					fn.CopyData(item.CG_NumNavigation,ln);
+					sg.CompteG.AddCompteg(ln);
+				}
+				if (item.CT_NumNavigation != null)
+				{
+					if (!sg.CompteT.CodeExists(item.CT_Num))
+					{
+						var ln = new F_COMPTET();
+						fn.CopyData(item.CT_NumNavigation, ln);
+						sg.CompteT.AddComptet(ln);
+					}
+				}
+				if (!sg.Journaux.JournalExists(item.JO_Num))
+				{
+					var journal = journaux.FirstOrDefault(a => a.JO_Num == item.JO_Num);
+					if (journal != null)
+					{
+						var ln = new F_JOURNAUX();
+						fn.CopyData(journal, ln);
+						sg.Journaux.AddJournal(ln);
+					}
+
+				}
+
+				var ec = new F_ECRITUREC();
+				fn.CopyData(item, ec);
+				 sg.Ecriture.AddEcriture(item);
+			}
+
+		}
 	}
 
 }
