@@ -290,7 +290,7 @@ else
 				fn.CopyData(item, ec);
 				fn.DisableTriggers(db2, "F_JMOUV", "INS");
 				fn.DisableTriggers(db2, "F_ECRITUREC", "INS");
-				var row2 = sg.Ecriture.AddEcriture(item).Result;
+			    var row2 = sg.Ecriture.AddEcriture(item).Result;
 				fn.EnableTriggers(db2, "F_JMOUV", "INS");
 				fn.EnableTriggers(db2, "F_ECRITUREC", "INS");
 

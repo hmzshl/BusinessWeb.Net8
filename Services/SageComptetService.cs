@@ -26,8 +26,6 @@ public class SageComptetService
 
 		// Set default values based on your data pattern
 		SetDefaultValues(row);
-
-		// Add to database
 		_context.F_COMPTET.Add(row);
 		await _context.SaveChangesAsync();
 
@@ -85,7 +83,7 @@ public class SageComptetService
 		}
 
 		// Default values from your sample data
-		var defaultDate = new DateTime(2000, 1, 1);
+		var defaultDate = new DateTime(1753, 1, 1);
 		row.CT_SvDateCreate = defaultDate;
 		row.CT_SvDateIncid = defaultDate;
 		row.CT_SvDateMaj = defaultDate;
@@ -93,6 +91,8 @@ public class SageComptetService
 		row.CT_DateFermeDebut = defaultDate;
 		row.CT_DateFermeFin = defaultDate;
 		row.CT_DateMAJ = defaultDate;
+		row.cbCreation  = DateTime.Now;
+		row.cbModification = DateTime.Now;
 
 		// Default numeric values
 		row.CT_Encours = row.CT_Encours ?? 0;
@@ -135,6 +135,47 @@ public class SageComptetService
 		row.CT_BonAPayer = row.CT_BonAPayer ?? 0;
 		row.CT_DelaiTransport = row.CT_DelaiTransport ?? 0;
 		row.CT_DelaiAppro = row.CT_DelaiAppro ?? 0;
+
+
+
+
+		row.API_T_AgenceContrat = null;
+		row.API_T_CertifPointage = null;
+		row.API_T_FC_Charges = null;
+		row.API_T_FC_MasseSalariale = null;
+		row.API_T_FC_Repas = null;
+		row.API_T_OrdreFabrication = null;
+		row.F_ABOENTETECT_NumCentraleNavigation = null;
+		row.F_ABOENTETECT_NumPayeurNavigation = null;
+		row.F_ABONNEMENT = null;
+		row.F_ARTCLIENT = null;
+		row.F_ARTFOURNISS = null;
+		row.F_CAISSE = null;
+		row.F_COMPTEA = null;
+		row.F_COMPTEANavigation = null;
+		row.F_COMPTETG = null;
+		row.F_COMPTETINFOS = null;
+		row.F_COMPTETMEDIA = null;
+		row.F_COMPTETMODELE = null;
+		row.F_COMPTETRAPPEL = null;
+		row.F_CONTACTT = null;
+		row.F_CREGLEMENTCT_NumPayeurNavigation = null;
+		row.F_CREGLEMENTCT_NumPayeurOrigNavigation = null;
+		row.F_DOCENTETECT_NumCentraleNavigation = null;
+		row.F_DOCENTETECT_NumPayeurNavigation = null;
+		row.F_DRECOUVREMENT = null;
+		row.F_ECRITUREC = null;
+		row.F_FAMCLIENT = null;
+		row.F_FAMFOURNISS = null;
+		row.F_LIVRAISON = null;
+		row.F_REGLEMENTT = null;
+		row.F_REGTAXE = null;
+		row.F_TARIF = null;
+		row.F_TICKETARCHIVE = null;
+		row.cbCO_NoNavigation = null;
+		row.cbDE_NoNavigation = null;
+		row.cbMR_NoNavigation = null;
+		row.cbPI_NoEchangeNavigation = null;
 	}
 
 	// ===== CODE GENERATION METHODS =====

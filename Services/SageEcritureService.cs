@@ -73,8 +73,8 @@ namespace BusinessWeb.Services
 			row.EC_NoLink = row.EC_NoLink ?? 0;
 			row.EC_Jour = row.EC_Jour ?? (short?)(row.EC_Date?.Day ?? DateTime.Now.Day);
 
-			// Default dates to 1900-01-01 (Sage default for empty dates)
-			var defaultDate = new DateTime(1900, 1, 1);
+			// Default dates to 1753-01-01 (Sage default for empty dates)
+			var defaultDate = new DateTime(1753, 1, 1);
 			row.EC_Echeance = row.EC_Echeance ?? defaultDate;
 			row.EC_DatePenal = row.EC_DatePenal ?? defaultDate;
 			row.EC_DateRelance = row.EC_DateRelance ?? defaultDate;
@@ -113,6 +113,18 @@ namespace BusinessWeb.Services
 			row.cbProt = row.cbProt ?? 0;
 			row.cbReplication = row.cbReplication ?? 0;
 			row.cbFlag = row.cbFlag ?? 0;
+
+			// TEMPORARY: Clear all navigation properties before saving
+			// This helps isolate if the problem is in F_ECRITUREC or related entities
+			row.F_BONAPAYERHISTO = null;
+			row.F_ECRITUREA = null;
+			row.F_ECRITURECMEDIA = null;
+			row.CG_NumNavigation = null;
+			row.CT_NumNavigation = null;
+			row.TA_CodeNavigation = null;
+			row.F_DRECOUVREMENTEC = null;
+			row.F_REGREVISION = null;
+			row.F_REGTAXE = null;
 		}
 
 		// ===== JMOUV MANAGEMENT =====
