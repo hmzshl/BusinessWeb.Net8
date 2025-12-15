@@ -17,7 +17,6 @@ public partial class F_JMOUV
 
     public short? JM_Impression { get; set; }
 
-
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }

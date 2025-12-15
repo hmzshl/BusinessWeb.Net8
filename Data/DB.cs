@@ -13563,14 +13563,14 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_NumCont)
                 .HasMaxLength(17)
                 .IsUnicode(false);
-            entity.Property(e => e.EC_Date).HasColumnType("smalldatetime");
-            entity.Property(e => e.EC_DateOp).HasColumnType("smalldatetime");
-            entity.Property(e => e.EC_DatePenal).HasColumnType("smalldatetime");
-            entity.Property(e => e.EC_DateRappro).HasColumnType("smalldatetime");
-            entity.Property(e => e.EC_DateRegle).HasColumnType("smalldatetime");
-            entity.Property(e => e.EC_DateRelance).HasColumnType("smalldatetime");
+            entity.Property(e => e.EC_Date).HasColumnType("datetime");
+            entity.Property(e => e.EC_DateOp).HasColumnType("datetime");
+            entity.Property(e => e.EC_DatePenal).HasColumnType("datetime");
+            entity.Property(e => e.EC_DateRappro).HasColumnType("datetime");
+            entity.Property(e => e.EC_DateRegle).HasColumnType("datetime");
+            entity.Property(e => e.EC_DateRelance).HasColumnType("datetime");
             entity.Property(e => e.EC_Devise).HasColumnType("numeric(24, 6)");
-            entity.Property(e => e.EC_Echeance).HasColumnType("smalldatetime");
+            entity.Property(e => e.EC_Echeance).HasColumnType("datetime");
             entity.Property(e => e.EC_Intitule)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -13599,7 +13599,7 @@ public partial class DB : DbContext
             entity.Property(e => e.EC_TresoPiece)
                 .HasMaxLength(17)
                 .IsUnicode(false);
-            entity.Property(e => e.JM_Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.JM_Date).HasColumnType("datetime");
             entity.Property(e => e.JO_Num)
                 .IsRequired()
                 .HasMaxLength(7)
