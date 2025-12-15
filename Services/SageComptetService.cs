@@ -21,18 +21,11 @@ public class SageComptetService
 			throw new ArgumentException("CT_Intitule is required");
 
 		// Check if code already exists
-		if ( _context.F_COMPTET.Any(c => c.CT_Num == row.CT_Num))
+		if (_context.F_COMPTET.Any(c => c.CT_Num == row.CT_Num))
 			throw new ArgumentException($"Code '{row.CT_Num}' already exists");
 
 		// Set default values based on your data pattern
 		SetDefaultValues(row);
-
-		// Generate unique IDs
-		row.cbCreation = DateTime.Now;
-		row.CT_DateMAJ = DateTime.Now;
-
-		// Set cbCT_Num (byte array version of CT_Num)
-		row.cbCT_Num = GetBytes(row.CT_Num);
 
 		// Set cbCT_Intitule/Raccourci if not provided
 		if (string.IsNullOrEmpty(row.CT_Raccourci))
@@ -72,9 +65,6 @@ public class SageComptetService
 			// Set defaults
 			SetDefaultValues(row);
 
-			// Set unique IDs
-			row.CT_DateMAJ = DateTime.Now;
-
 			// Set byte arrays
 			row.cbCT_Num = GetBytes(row.CT_Num);
 
@@ -111,13 +101,13 @@ public class SageComptetService
 		}
 
 		// Default values from your sample data
-		var defaultDate = new DateTime(1753, 1, 1);
-		row.CT_SvDateCreate = row.CT_SvDateCreate ?? defaultDate;
-		row.CT_SvDateIncid = row.CT_SvDateIncid ?? defaultDate;
-		row.CT_SvDateMaj = row.CT_SvDateMaj ?? defaultDate;
-		row.CT_SvDateBilan = row.CT_SvDateBilan ?? defaultDate;
-		row.CT_DateFermeDebut = row.CT_DateFermeDebut ?? defaultDate;
-		row.CT_DateFermeFin = row.CT_DateFermeFin ?? defaultDate;
+		var defaultDate = new DateTime(1900, 1, 1);
+		row.CT_SvDateCreate = defaultDate;
+		row.CT_SvDateIncid = defaultDate;
+		row.CT_SvDateMaj = defaultDate;
+		row.CT_SvDateBilan = defaultDate;
+		row.CT_DateFermeDebut = defaultDate;
+		row.CT_DateFermeFin = defaultDate;
 
 		// Default numeric values
 		row.CT_Encours = row.CT_Encours ?? 0;
@@ -160,7 +150,6 @@ public class SageComptetService
 		row.CT_BonAPayer = row.CT_BonAPayer ?? 0;
 		row.CT_DelaiTransport = row.CT_DelaiTransport ?? 0;
 		row.CT_DelaiAppro = row.CT_DelaiAppro ?? 0;
-
 
 		// Set classement from intitule if not provided
 		if (string.IsNullOrEmpty(row.CT_Classement))

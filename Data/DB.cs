@@ -14865,7 +14865,6 @@ public partial class DB : DbContext
             entity.HasIndex(e => new { e.cbJO_Num, e.JM_Date }, "IJM_JONUM").IsUnique();
 
             entity.Property(e => e.JM_Date).HasColumnType("smalldatetime");
-            entity.Property(e => e.JM_DateCloture).HasColumnType("smalldatetime");
             entity.Property(e => e.JO_Num)
                 .IsRequired()
                 .HasMaxLength(7)

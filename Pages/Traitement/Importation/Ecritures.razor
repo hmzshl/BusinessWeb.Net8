@@ -248,7 +248,7 @@ else
 		db2 = fn.getDb(ste2 ?? new TSociete());
 		if (dt.Any())
 		{
-			var ecritures = db1.F_ECRITUREC.Where(a => dt.Select(b => b.cbMarq).Contains(a.cbMarq))
+			var ecritures = db1.F_ECRITUREC.AsNoTracking().Where(a => dt.Select(b => b.EC_No).Contains(a.EC_No))
 			.Include(a => a.CG_NumNavigation)
 			.Include(a => a.CT_NumNavigation);
 			SageService sg = new SageService(db2);
@@ -259,7 +259,7 @@ else
 				{
 					var ln = new F_COMPTEG();
 					fn.CopyData(item.CG_NumNavigation,ln);
-					sg.CompteG.AddCompteg(ln);
+					var row = sg.CompteG.AddCompteg(ln).Result;
 				}
 				if (item.CT_NumNavigation != null)
 				{
@@ -267,7 +267,7 @@ else
 					{
 						var ln = new F_COMPTET();
 						fn.CopyData(item.CT_NumNavigation, ln);
-						sg.CompteT.AddComptet(ln);
+						var row = sg.CompteT.AddComptet(ln).Result;
 					}
 				}
 				if (!sg.Journaux.JournalExists(item.JO_Num))
@@ -277,14 +277,21 @@ else
 					{
 						var ln = new F_JOURNAUX();
 						fn.CopyData(journal, ln);
-						sg.Journaux.AddJournal(ln);
+						fn.DisableTriggers(db2,"F_JOURNAUX","INS");
+						var row = sg.Journaux.AddJournal(ln).Result;
+						fn.EnableTriggers(db2, "F_JOURNAUX", "INS");
 					}
 
 				}
 
 				var ec = new F_ECRITUREC();
 				fn.CopyData(item, ec);
-				 sg.Ecriture.AddEcriture(item);
+				fn.DisableTriggers(db2, "F_JMOUV", "INS");
+				fn.DisableTriggers(db2, "F_ECRITUREC", "INS");
+				var row2 = sg.Ecriture.AddEcriture(item).Result;
+				fn.EnableTriggers(db2, "F_JMOUV", "INS");
+				fn.EnableTriggers(db2, "F_ECRITUREC", "INS");
+
 			}
 
 		}

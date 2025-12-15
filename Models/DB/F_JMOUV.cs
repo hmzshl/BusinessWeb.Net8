@@ -17,7 +17,6 @@ public partial class F_JMOUV
 
     public short? JM_Impression { get; set; }
 
-    public DateTime? JM_DateCloture { get; set; }
 
     public short? cbProt { get; set; }
 

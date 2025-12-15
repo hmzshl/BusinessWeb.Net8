@@ -73,8 +73,8 @@ namespace BusinessWeb.Services
 			row.EC_NoLink = row.EC_NoLink ?? 0;
 			row.EC_Jour = row.EC_Jour ?? (short?)(row.EC_Date?.Day ?? DateTime.Now.Day);
 
-			// Default dates to 1753-01-01 (Sage default for empty dates)
-			var defaultDate = new DateTime(1753, 1, 1);
+			// Default dates to 1900-01-01 (Sage default for empty dates)
+			var defaultDate = new DateTime(1900, 1, 1);
 			row.EC_Echeance = row.EC_Echeance ?? defaultDate;
 			row.EC_DatePenal = row.EC_DatePenal ?? defaultDate;
 			row.EC_DateRelance = row.EC_DateRelance ?? defaultDate;
@@ -132,8 +132,7 @@ namespace BusinessWeb.Services
 					JM_Cloture = 0, // Non clôturé
 					JM_Impression = 0, // Non imprimé
 					cbProt = 0,
-					cbMarq = await GetNextJmouvMarq(),
-					cbCreateur = "SYSTEM"
+					cbCreateur = "BWB"
 				};
 
 				_context.F_JMOUV.Add(jmouv);

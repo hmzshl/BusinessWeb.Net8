@@ -36,7 +36,7 @@
 			SetDefaultValues(row);
 
 			// Set system fields
-			row.cbCreateur = "SYSTEM";
+			row.cbCreateur = "BWB";
 
 			// Set byte arrays
 			row.cbJO_Num = GetBytes(row.JO_Num);
@@ -75,7 +75,7 @@
 				SetDefaultValues(row);
 
 				// Set system fields
-				row.cbCreateur = "SYSTEM";
+				row.cbCreateur = "BWB";
 
 				// Set byte arrays
 				row.cbJO_Num = GetBytes(row.JO_Num);

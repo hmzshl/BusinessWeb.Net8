@@ -30,7 +30,7 @@ namespace BusinessWeb.Services
 			SetDefaultValues(row);
 
 			// Generate unique IDs (ignore cbMarq since it's auto-generated)
-			row.cbCreateur = "SYSTEM";
+			row.cbCreateur = "BWB";
 
 			// Set byte arrays
 			row.cbCG_Num = GetBytes(row.CG_Num);
@@ -78,7 +78,7 @@ namespace BusinessWeb.Services
 				SetDefaultValues(row);
 
 				// Set system fields
-				row.cbCreateur = "SYSTEM";
+				row.cbCreateur = "BWB";
 
 				// Set byte arrays
 				row.cbCG_Num = GetBytes(row.CG_Num);
