@@ -267,7 +267,9 @@ else
 					{
 						var ln = new F_COMPTET();
 						fn.CopyData(item.CT_NumNavigation, ln);
+						fn.DisableTriggers(db2, "F_COMPTET", "INS");
 						var row = sg.CompteT.AddComptet(ln).Result;
+						fn.EnableTriggers(db2, "F_COMPTET", "INS");
 					}
 				}
 				if (!sg.Journaux.JournalExists(item.JO_Num))

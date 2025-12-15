@@ -27,13 +27,6 @@ public class SageComptetService
 		// Set default values based on your data pattern
 		SetDefaultValues(row);
 
-		// Set cbCT_Intitule/Raccourci if not provided
-		if (string.IsNullOrEmpty(row.CT_Raccourci))
-			row.CT_Raccourci = GenerateRaccourci(row.CT_Intitule);
-
-		if (row.cbCT_Raccourci == null || row.cbCT_Raccourci.Length == 0)
-			row.cbCT_Raccourci = GetBytes(row.CT_Raccourci);
-
 		// Add to database
 		_context.F_COMPTET.Add(row);
 		await _context.SaveChangesAsync();
@@ -65,15 +58,6 @@ public class SageComptetService
 			// Set defaults
 			SetDefaultValues(row);
 
-			// Set byte arrays
-			row.cbCT_Num = GetBytes(row.CT_Num);
-
-			if (string.IsNullOrEmpty(row.CT_Raccourci))
-				row.CT_Raccourci = GenerateRaccourci(row.CT_Intitule);
-
-			if (row.cbCT_Raccourci == null || row.cbCT_Raccourci.Length == 0)
-				row.cbCT_Raccourci = GetBytes(row.CT_Raccourci);
-
 			_context.F_COMPTET.Add(row);
 			results.Add(row);
 		}
@@ -101,13 +85,14 @@ public class SageComptetService
 		}
 
 		// Default values from your sample data
-		var defaultDate = new DateTime(1900, 1, 1);
+		var defaultDate = new DateTime(2000, 1, 1);
 		row.CT_SvDateCreate = defaultDate;
 		row.CT_SvDateIncid = defaultDate;
 		row.CT_SvDateMaj = defaultDate;
 		row.CT_SvDateBilan = defaultDate;
 		row.CT_DateFermeDebut = defaultDate;
 		row.CT_DateFermeFin = defaultDate;
+		row.CT_DateMAJ = defaultDate;
 
 		// Default numeric values
 		row.CT_Encours = row.CT_Encours ?? 0;
@@ -150,13 +135,6 @@ public class SageComptetService
 		row.CT_BonAPayer = row.CT_BonAPayer ?? 0;
 		row.CT_DelaiTransport = row.CT_DelaiTransport ?? 0;
 		row.CT_DelaiAppro = row.CT_DelaiAppro ?? 0;
-
-		// Set classement from intitule if not provided
-		if (string.IsNullOrEmpty(row.CT_Classement))
-			row.CT_Classement = row.CT_Intitule;
-
-		if (row.cbCT_Classement == null || row.cbCT_Classement.Length == 0)
-			row.cbCT_Classement = GetBytes(row.CT_Classement);
 	}
 
 	// ===== CODE GENERATION METHODS =====
