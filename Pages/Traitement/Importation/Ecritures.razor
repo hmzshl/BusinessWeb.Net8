@@ -267,9 +267,7 @@ else
 					{
 						var ln = new F_COMPTET();
 						fn.CopyData(item.CT_NumNavigation, ln);
-						fn.DisableTriggers(db2, "F_COMPTET", "INS");
 						var row = sg.CompteT.AddComptet(ln).Result;
-						fn.EnableTriggers(db2, "F_COMPTET", "INS");
 					}
 				}
 				if (!sg.Journaux.JournalExists(item.JO_Num))
@@ -279,20 +277,14 @@ else
 					{
 						var ln = new F_JOURNAUX();
 						fn.CopyData(journal, ln);
-						fn.DisableTriggers(db2,"F_JOURNAUX","INS");
 						var row = sg.Journaux.AddJournal(ln).Result;
-						fn.EnableTriggers(db2, "F_JOURNAUX", "INS");
 					}
 
 				}
 
 				var ec = new F_ECRITUREC();
 				fn.CopyData(item, ec);
-				fn.DisableTriggers(db2, "F_JMOUV", "INS");
-				fn.DisableTriggers(db2, "F_ECRITUREC", "INS");
 			    var row2 = sg.Ecriture.AddEcriture(item).Result;
-				fn.EnableTriggers(db2, "F_JMOUV", "INS");
-				fn.EnableTriggers(db2, "F_ECRITUREC", "INS");
 
 			}
 

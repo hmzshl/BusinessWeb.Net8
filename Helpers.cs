@@ -627,7 +627,7 @@ namespace BusinessWeb
 			optionBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
 
 			DB db = new DB(optionBuilder.Options);
-			db.Database.Migrate();
+            db.Database.Migrate();
 			db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "ChefChantier", "VARCHAR(100)"));
 			db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "Demandeur", "VARCHAR(100)"));
 
