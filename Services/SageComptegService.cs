@@ -78,6 +78,7 @@ namespace BusinessWeb.Services
             row.cbReplication = row.cbReplication ?? 0;
             row.cbFlag = row.cbFlag ?? 0;
             row.CG_Raccourci = "";
+            row.cbCreateur = "BWB";
         }
 
         // ===== DÉTERMINER LE TYPE DE COMPTE (PLAN COMPTABLE MAROCAIN) =====

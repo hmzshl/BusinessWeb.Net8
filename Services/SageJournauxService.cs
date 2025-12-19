@@ -128,6 +128,7 @@
             row.cbProt = row.cbProt ?? 0;
             row.cbReplication = row.cbReplication ?? 0;
             row.cbFlag = row.cbFlag ?? 0;
+            row.cbCreateur = "BWB";
         }
 
         // ===== DÉTERMINER LE TYPE DE JOURNAL POUR LE MAROC =====

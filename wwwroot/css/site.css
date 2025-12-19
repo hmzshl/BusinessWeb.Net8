@@ -1645,6 +1645,7 @@ td .e-numerictextbox {
 .e-grid .e-pager {
     display: flex !important;
     align-items: center !important;
+    padding-top: 3px;
 }
 
 .e-pager.sf-pager .e-pagercontainer {
@@ -2530,4 +2531,7 @@ audio, canvas, embed, iframe, img, object, svg, video {
 }
 .rz-dialog-confirm, .rz-dialog-alert {
     max-width: 800px;
+}
+.e-constant{
+    color: #ffffff;
 }

@@ -196,7 +196,7 @@ namespace BusinessWeb.Services
             row.CT_BonAPayer = row.CT_BonAPayer ?? 0;
             row.CT_DelaiTransport = row.CT_DelaiTransport ?? 0;
             row.CT_DelaiAppro = row.CT_DelaiAppro ?? 0;
-            row.CT_Raccourci = "";
+            row.CT_Raccourci = "BWB";
 
         }
 

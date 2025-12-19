@@ -5,290 +5,334 @@
 @if (IsLoaded)
 {
 
-	<AntDesign.Spin Spinning=loading Size="large">
-		<Card_1 Title="ECRITURES COMPTABLES">
-			<RadzenContent Container="main">
-				<div class="grid-90">
-					<SfToolbar>
-						<ToolbarItems>
-							<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
-								<Template>
-									<SfDropDownList Width="200" TItem="TSociete" TValue="TSociete" Placeholder="Base de données" @bind-Value="@ste2" DataSource="@(societes)">
-										<DropDownListEvents TItem="TSociete" TValue="TSociete" />
-										<DropDownListFieldSettings Text="Intitule" Value="id" />
-									</SfDropDownList>
-								</Template>
+    <AntDesign.Spin Spinning=loading Size="large">
+        <Card_1 Title="ECRITURES COMPTABLES">
+            <RadzenContent Container="main">
+                <div class="grid-90">
+                    <SfToolbar>
+                        <ToolbarItems>
+                            <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                                <Template>
+                                    <SfDropDownList Width="200" TItem="TSociete" TValue="TSociete" Placeholder="Base de données" @bind-Value="@ste2" DataSource="@(societes)">
+                                        <DropDownListEvents TItem="TSociete" TValue="TSociete" />
+                                        <DropDownListFieldSettings Text="Intitule" Value="id" />
+                                    </SfDropDownList>
+                                </Template>
 
-							</ToolbarItem>
-							<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
-							<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-								<Template>
-									<SfDatePicker Width="140px" ShowClearButton ShowTodayButton Placeholder="Date Début" TValue="DateTime ?" @bind-Value="@row.do_date1" />
-								</Template>
+                            </ToolbarItem>
+                            <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+                            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                <Template>
+                                    <SfDatePicker Width="140px" ShowClearButton ShowTodayButton Placeholder="Date Début" TValue="DateTime ?" @bind-Value="@row.do_date1" />
+                                </Template>
 
-							</ToolbarItem>
-							<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-								<Template>
-									<SfDatePicker Width="140px" ShowClearButton ShowTodayButton Placeholder="Date Fin" TValue="DateTime ?" @bind-Value="@row.do_date2" />
-								</Template>
+                            </ToolbarItem>
+                            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                <Template>
+                                    <SfDatePicker Width="140px" ShowClearButton ShowTodayButton Placeholder="Date Fin" TValue="DateTime ?" @bind-Value="@row.do_date2" />
+                                </Template>
 
-							</ToolbarItem>
+                            </ToolbarItem>
 
-							<ToolbarItem Align="ItemAlign.Right">
-								<Template>
-									<SfButton IconCss="e-icons e-refresh" OnClick="Refresh">Actualiser</SfButton>
-								</Template>
-							</ToolbarItem>
-							<ToolbarItem Align="ItemAlign.Right">
-								<Template>
-									<SfButton IconCss="e-icons e-circle-info" OnClick="Tester">Tester</SfButton>
-								</Template>
-							</ToolbarItem>
-							<ToolbarItem Align="ItemAlign.Right">
-								<Template>
-									<SfButton IconCss="e-icons e-arrow-down" IsPrimary OnClick="Transferer">Transferer</SfButton>
-								</Template>
-							</ToolbarItem>
+                            <ToolbarItem Align="ItemAlign.Right">
+                                <Template>
+                                    <SfButton IconCss="e-icons e-refresh" OnClick="Refresh">Actualiser</SfButton>
+                                </Template>
+                            </ToolbarItem>
+                            <ToolbarItem Align="ItemAlign.Right">
+                                <Template>
+                                    <SfButton IconCss="e-icons e-arrow-down" IsPrimary OnClick="Transferer">Transferer</SfButton>
+                                </Template>
+                            </ToolbarItem>
 
 
-						</ToolbarItems>
-					</SfToolbar>
-					<div class="grid-84" style="zoom: @session.zoomLevel;">
-						<SfGrid ID="TransfertEcritureGrid" @ref=@DefaultGrid Height="100%" RowRenderingMode="RowDirection.Horizontal"
-						AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
+                        </ToolbarItems>
+                    </SfToolbar>
+                    <div class="grid-84" style="zoom: @session.zoomLevel;">
+                        <SfGrid ID="TransfertEcritureGrid" @ref=@DefaultGrid Height="100%" RowRenderingMode="RowDirection.Horizontal"
+                                AllowFiltering EnableVirtualization AllowResizing AllowSorting AllowReordering AllowSelection ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items">
 
-							<GridEvents TValue="API_V_ECRITUREC" Created="CreatedHandler"></GridEvents>
-							<GridPageSettings PageSize="200"></GridPageSettings>
-							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-							<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
-							<GridTemplates>
-								<EmptyRecordTemplate>
-									<Empty></Empty>
-								</EmptyRecordTemplate>
-							</GridTemplates>
-							<GridColumns>
-								<GridColumn Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Sta">
-									<Template>
-										@{
-											var dt = (context as API_V_ECRITUREC);
-											if (dt.EC_Cloture == 1)
-											{
-												<RadzenIcon Icon="lock" IconStyle="IconStyle.Success" />
-											}
-											else
-											{
-												<RadzenIcon Icon="lock_open" IconStyle="IconStyle.Primary" />
-											}
-										}
-									</Template>
-								</GridColumn>
-								<GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.MV_Date)" HeaderText="Date" />
-								<GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Echeance)" HeaderText="Date Ech" />
-								<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.JO_Num)" HeaderText="N° Jou" />
-								<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.JO_Intitule)" HeaderText="Journal" />
-								<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CG_Num)" HeaderText="Compte" />
-								<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CG_Intitule)" Visible="false" HeaderText="Intitulé Compte" />
-								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Piece)" HeaderText="Pièce" />
-								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_RefPiece)" HeaderText="Numéro" />
-								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CT_Num)" HeaderText="N° Tiers" />
-								<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CT_Intitule)" HeaderText="Tiers" />
-								<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Reference)" HeaderText="Référence" />
-								<GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Intitule)" HeaderText="Libellé" />
-								<GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.Debit)" HeaderText="Débit" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-								<GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.Credit)" HeaderText="Crédit" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-								<GridColumn Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="LT">
-									<Template>
-										@{
-											var dt = (context as API_V_ECRITUREC);
-											if (dt.EC_Lettre == 1)
-											{
-												<RadzenIcon Icon="swap_horizontal_circle" IconStyle="IconStyle.Success" />
-											}
-										}
-									</Template>
-								</GridColumn>
-								<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Lettrage)" HeaderText="Lettre" Visible="false" />
-								<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_DateRappro)" Format="dd/MM/yy" HeaderText="DT Rap" Visible="false" />
-								<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_TresoPiece)" HeaderText="N° Rap" Visible="false" />
-								<GridColumn Type="ColumnType.CheckBox" Width="50" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
-							</GridColumns>
+                            <GridEvents TValue="API_V_ECRITUREC" Created="CreatedHandler"></GridEvents>
+                            <GridPageSettings PageSizes="@(new List<int> { 100, 200, 500, 1000, 10000 })" PageSize="100"></GridPageSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
+                            <GridTemplates>
+                                <EmptyRecordTemplate>
+                                    <Empty></Empty>
+                                </EmptyRecordTemplate>
+                            </GridTemplates>
+                            <GridColumns>
+                                <GridColumn Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Sta">
+                                    <Template>
+                                        @{
+                                            var dt = (context as API_V_ECRITUREC);
+                                            if (dt.EC_Cloture == 1)
+                                            {
+                                                <RadzenIcon Icon="lock" IconStyle="IconStyle.Success" />
+                                            }
+                                            else
+                                            {
+                                                <RadzenIcon Icon="lock_open" IconStyle="IconStyle.Primary" />
+                                            }
+                                        }
+                                    </Template>
+                                </GridColumn>
+                                <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.MV_Date)" HeaderText="Date" />
+                                <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Echeance)" HeaderText="Date Ech" />
+                                <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.JO_Num)" HeaderText="N° Jou" />
+                                <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.JO_Intitule)" HeaderText="Journal" />
+                                <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CG_Num)" HeaderText="Compte" />
+                                <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CG_Intitule)" Visible="false" HeaderText="Intitulé Compte" />
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Piece)" HeaderText="Pièce" />
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_RefPiece)" HeaderText="Numéro" />
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CT_Num)" HeaderText="N° Tiers" />
+                                <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.CT_Intitule)" HeaderText="Tiers" />
+                                <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Reference)" HeaderText="Référence" />
+                                <GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Intitule)" HeaderText="Libellé" />
+                                <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.Debit)" HeaderText="Débit" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.Credit)" HeaderText="Crédit" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                <GridColumn Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="LT">
+                                    <Template>
+                                        @{
+                                            var dt = (context as API_V_ECRITUREC);
+                                            if (dt.EC_Lettre == 1)
+                                            {
+                                                <RadzenIcon Icon="swap_horizontal_circle" IconStyle="IconStyle.Success" />
+                                            }
+                                        }
+                                    </Template>
+                                </GridColumn>
+                                <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Lettrage)" HeaderText="Lettre" Visible="false" />
+                                <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_DateRappro)" Format="dd/MM/yy" HeaderText="DT Rap" Visible="false" />
+                                <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_TresoPiece)" HeaderText="N° Rap" Visible="false" />
+                                <GridColumn Type="ColumnType.CheckBox" Width="50" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                            </GridColumns>
 
-						</SfGrid>
-					</div>
-				</div>
-			</RadzenContent>
-		</Card_1>
-	</AntDesign.Spin>
+                        </SfGrid>
+                    </div>
+                </div>
+            </RadzenContent>
+        </Card_1>
+    </AntDesign.Spin>
 
 }
 else
 {
-			<div class="center-screen">
-				<Loading_1 />
-			</div>
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
 }
 
 
 
 @code
 {
-	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
-	DB db = new DB();
-	bool loading = false;
-	List<API_V_ECRITUREC> items = new List<API_V_ECRITUREC>();
-	List<TSociete> societes = new List<TSociete>();
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    bool loading = false;
+    List<API_V_ECRITUREC> items = new List<API_V_ECRITUREC>();
+    List<TSociete> societes = new List<TSociete>();
 
-	TSociete ste1 = new TSociete();
-	TSociete ste2 = new TSociete();
-	DB db1;
-	DB db2;
-	bool IsLoaded = false;
-	data row = new data();
-	SfGrid<API_V_ECRITUREC> DefaultGrid;
+    TSociete ste1 = new TSociete();
+    TSociete ste2 = new TSociete();
+    DB db1;
+    DB db2;
+    bool IsLoaded = false;
+    data row = new data();
+    SfGrid<API_V_ECRITUREC> DefaultGrid;
 
-	protected override async Task OnInitializedAsync()
-	{
-		await Task.Delay(100);
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(100);
 
-		db = session.db;
-		GC.Collect();
-		ste1 = session.Societe;
-		societes = sdb.TSocietes.Where(a => a.id != (ste1 ?? (new TSociete())).id).ToList();
-		if (societes.Count() != 0)
-		{
-			ste2 = societes.First();
-		}
-		IsLoaded = true;
+        db = session.db;
+        GC.Collect();
+        ste1 = session.Societe;
+        societes = sdb.TSocietes.Where(a => a.id != (ste1 ?? (new TSociete())).id).ToList();
+        if (societes.Count() != 0)
+        {
+            ste2 = societes.First();
+        }
+        IsLoaded = true;
 
-	}
-	public void CreatedHandler(object args)
-	{
-		DefaultGrid.ClearFilteringAsync();
-		DefaultGrid.ClearSortingAsync(); DefaultGrid.SearchAsync("");
-	}
-	private async Task Refresh()
-	{
+    }
+    public void CreatedHandler(object args)
+    {
+        DefaultGrid.ClearFilteringAsync();
+        DefaultGrid.ClearSortingAsync(); DefaultGrid.SearchAsync("");
+    }
+    private async Task Refresh()
+    {
 
-		try
-		{
-			loading = true;
-			StateHasChanged();
-			await Task.Delay(100);
-			await Task.Run(() =>
-			{
-				UpdateGrid();
-			});
-		}
-		catch (Exception ex)
-		{
-			await DialogService.Alert(ex.ToString());
-		}
-		finally
-		{
-			loading = false;
-			StateHasChanged();
-		}
-
-
+        try
+        {
+            loading = true;
+            StateHasChanged();
+            await Task.Delay(100);
+            await Task.Run(() =>
+            {
+                UpdateGrid();
+            });
+        }
+        catch (Exception ex)
+        {
+            await DialogService.Alert(ex.ToString());
+        }
+        finally
+        {
+            loading = false;
+            StateHasChanged();
+        }
 
 
-	}
-	private void UpdateGrid()
-	{
-		if (ste1 != null && ste2 != null)
-		{
-			if (ste1.id != 0 && ste2.id != 0)
-			{
-				row.do_date1 = (row.do_date1) ?? (DateTime.Today);
-				row.do_date2 = (row.do_date2) ?? (DateTime.Today);
 
-				db1 = fn.getDb(ste1 ?? new TSociete());
-				db2 = fn.getDb(ste2 ?? new TSociete());
-				items = db1.API_V_ECRITUREC.Where(a => a.MV_Date >= row.do_date1 && a.MV_Date <= row.do_date2).ToList();
 
-			}
-		}
-	}
-	private async Task Tester()
-	{
+    }
+    private void UpdateGrid()
+    {
+        if (ste1 != null && ste2 != null)
+        {
+            if (ste1.id != 0 && ste2.id != 0)
+            {
+                row.do_date1 = (row.do_date1) ?? (DateTime.Today);
+                row.do_date2 = (row.do_date2) ?? (DateTime.Today);
 
-	}
-	private async Task Transferer()
-	{
-		bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment importer les éléments selectionnés?");
-		if (isConfirm)
-		{
-			try
-			{
-				loading = true;
-				StateHasChanged();
-				await Task.Delay(100);
-				await Task.Run(() =>
-				{
-					TransferTask();
-					UpdateGrid();
-				});
-			}
-			catch (Exception ex)
-			{
-				await DialogService.Alert(ex.ToString());
-			}
-			finally
-			{
-				loading = false;
-				StateHasChanged();
-			}
+                db1 = fn.getDb(ste1 ?? new TSociete());
+                db2 = fn.getDb(ste2 ?? new TSociete());
+                items = db1.API_V_ECRITUREC.Where(a => a.MV_Date >= row.do_date1 && a.MV_Date <= row.do_date2).ToList();
 
-		}
-	}
-	private void TransferTask()
-	{
-		var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
-		db1 = fn.getDb(ste1 ?? new TSociete());
-		db2 = fn.getDb(ste2 ?? new TSociete());
-		if (dt.Any())
-		{
-			var ecritures = db1.F_ECRITUREC.AsNoTracking().Where(a => dt.Select(b => b.EC_No).Contains(a.EC_No))
-			.Include(a => a.CG_NumNavigation)
-			.Include(a => a.CT_NumNavigation);
-			SageService sg = new SageService(db2);
-			var journaux = db1.F_JOURNAUX;
-			foreach(var item in ecritures)
-			{
-				if (!sg.CompteG.AccountExists(item.CG_Num))
-				{
-					var ln = new F_COMPTEG();
-					fn.CopyData(item.CG_NumNavigation,ln);
-					var row = sg.CompteG.AddCompteg(ln).Result;
-				}
-				if (item.CT_NumNavigation != null)
-				{
-					if (!sg.CompteT.CodeExists(item.CT_Num))
-					{
-						var ln = new F_COMPTET();
-						fn.CopyData(item.CT_NumNavigation, ln);
-						var row = sg.CompteT.AddComptet(ln).Result;
-					}
-				}
-				if (!sg.Journaux.JournalExists(item.JO_Num))
-				{
-					var journal = journaux.FirstOrDefault(a => a.JO_Num == item.JO_Num);
-					if (journal != null)
-					{
-						var ln = new F_JOURNAUX();
-						fn.CopyData(journal, ln);
-						var row = sg.Journaux.AddJournal(ln).Result;
-					}
+            }
+        }
+    }
+    private async Task Tester()
+    {
 
-				}
+    }
+    private async Task Transferer()
+    {
+        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+        if (!IsEcrituresBalanced(dt))
+        {
 
-				var ec = new F_ECRITUREC();
-				fn.CopyData(item, ec);
-			    var row2 = sg.Ecriture.AddEcriture(item).Result;
+            _ = _notice.Error(new()
+            {
+                Message = "Erreur",
+                Description = "Les ecritures selectionnées ne sont pas équilibrées! Merci de modifier la selection.",
+                Duration = 10,
+                Placement = NotificationPlacement.BottomRight
+            });
 
-			}
+        }
+        else
+        {
+            bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment importer les éléments selectionnés?");
+            if (isConfirm)
+            {
+                try
+                {
+                    loading = true;
+                    StateHasChanged();
+                    await Task.Delay(100);
+                    await Task.Run(() =>
+                    {
+                        TransferTask();
+                        //UpdateGrid();
+                    });
+                }
+                catch (Exception ex)
+                {
+                    await DialogService.Alert(ex.ToString());
+                }
+                finally
+                {
+                    loading = false;
+                    StateHasChanged();
+                }
 
-		}
-	}
+            }
+        }
+
+    }
+    public bool IsEcrituresBalanced(List<API_V_ECRITUREC> ecritures)
+    {
+        // Group by Journal Number and month/year
+        var grouped = ecritures
+            .GroupBy(e => new
+            {
+                Journal = e.JO_Num,
+                Month = e.JM_Date.Month,
+                Year = e.JM_Date.Year
+            });
+
+        // Check if all groups are balanced
+        foreach (var group in grouped)
+        {
+            decimal totalDebit = group
+                .Where(e => e.EC_Sens == 0)
+                .Sum(e => e.EC_Montant ?? 0);
+
+            decimal totalCredit = group
+                .Where(e => e.EC_Sens == 1)
+                .Sum(e => e.EC_Montant ?? 0);
+
+            // Using tolerance for decimal comparison
+            if (Math.Abs(totalDebit - totalCredit) > 0.01m)
+            {
+                return false; // Found an unbalanced group
+            }
+        }
+
+        return true; // All groups are balanced
+    }
+    private void TransferTask()
+    {
+        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+        db1 = fn.getDb(ste1 ?? new TSociete());
+        db2 = fn.getDb(ste2 ?? new TSociete());
+        if (dt.Any())
+        {
+            var ecritures = db1.F_ECRITUREC.AsNoTracking().Where(a => dt.Select(b => b.EC_No).Contains(a.EC_No))
+            .Include(a => a.CG_NumNavigation)
+            .Include(a => a.CT_NumNavigation);
+            SageService sg = new SageService(db2);
+            var journaux = db1.F_JOURNAUX;
+            foreach (var item in ecritures)
+            {
+                if (!sg.CompteG.AccountExists(item.CG_Num))
+                {
+                    var ln = new F_COMPTEG();
+                    fn.CopyData(item.CG_NumNavigation, ln);
+                    var row = sg.CompteG.AddCompteg(ln).Result;
+                }
+                if (item.CT_NumNavigation != null)
+                {
+                    if (!sg.CompteT.CodeExists(item.CT_Num))
+                    {
+                        var ln = new F_COMPTET();
+                        fn.CopyData(item.CT_NumNavigation, ln);
+                        var row = sg.CompteT.AddComptet(ln).Result;
+                    }
+                }
+                if (!sg.Journaux.JournalExists(item.JO_Num))
+                {
+                    var journal = journaux.FirstOrDefault(a => a.JO_Num == item.JO_Num);
+                    if (journal != null)
+                    {
+                        var ln = new F_JOURNAUX();
+                        fn.CopyData(journal, ln);
+                        var row = sg.Journaux.AddJournal(ln).Result;
+                    }
+
+                }
+
+                var ec = new F_ECRITUREC();
+                fn.CopyData(item, ec);
+                var row2 = sg.Ecriture.AddEcriture(item).Result;
+
+            }
+
+        }
+
+    }
 
 }

@@ -127,7 +127,9 @@ namespace BusinessWeb.Services
             row.cbProt = row.cbProt ?? 0;
             row.cbReplication = row.cbReplication ?? 0;
             row.cbFlag = row.cbFlag ?? 0;
-            row.cbCreateur = row.cbCreateur ?? "BWB";
+            row.cbCreateur = "BWB";
+            row.EC_Lettrage = "";
+            row.EC_Lettre = 0;
 
             // Supprimer les propriétés de navigation pour éviter les problèmes
             ClearNavigationProperties(row);
