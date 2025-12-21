@@ -130,9 +130,12 @@ namespace BusinessWeb.Services
             row.cbCreateur = "BWB";
             row.EC_Lettrage = "";
             row.EC_Lettre = 0;
+            row.EC_StatFinexKap = 0;
+			row.EC_DateCloture = row.EC_DateOp ?? defaultDate;
 
-            // Supprimer les propriétés de navigation pour éviter les problèmes
-            ClearNavigationProperties(row);
+
+			// Supprimer les propriétés de navigation pour éviter les problèmes
+			ClearNavigationProperties(row);
         }
 
         // ===== DÉTERMINER LE TAUX DE TVA POUR LE MAROC =====

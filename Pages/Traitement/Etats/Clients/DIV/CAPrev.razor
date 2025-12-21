@@ -171,7 +171,7 @@
 											<GridAggregates>
 												<GridAggregate>
 													<GridAggregateColumns>
-														<GridAggregateColumn Field="@nameof(API_V_DOCENTETE.DL_MontantHT)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+														<GridAggregateColumn Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
 															<FooterTemplate>
 																@{
 																	var SumValue = (context as AggregateTemplateContext);
@@ -189,7 +189,7 @@
 												<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Piece)" HeaderText="Pièce" />
 												<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CT_Intitule)" HeaderText="Client" />
 												<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Ref)" HeaderText="Ref" />
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantHT)" HeaderText="HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" HeaderText="TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
 											</GridColumns>
 										</SfGrid>
 									</div>
@@ -201,7 +201,7 @@
 											<GridAggregates>
 												<GridAggregate>
 													<GridAggregateColumns>
-														<GridAggregateColumn Field="@nameof(API_V_DOCENTETE.DL_MontantHT)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+														<GridAggregateColumn Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
 															<FooterTemplate>
 																@{
 																	var SumValue = (context as AggregateTemplateContext);
@@ -219,7 +219,7 @@
 												<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Piece)" HeaderText="Pièce" />
 												<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CT_Intitule)" HeaderText="Client" />
 												<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Ref)" HeaderText="Ref" />
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantHT)" HeaderText="HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" HeaderText="TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
 											</GridColumns>
 										</SfGrid>
 									</div>
@@ -302,9 +302,9 @@ else
 				{
 					CT_Num = g.Key.DO_Tiers ?? "N/A",
 					CT_Intitule = g.Key.CT_Intitule ?? "Client Inconnu",
-					CA_Devis = g.Where(x => x.DO_Type == 0).Sum(x => x.DL_MontantHT), // Devis
-					CA_Commandes = g.Where(x => x.DO_Type == 1).Sum(x => x.DL_MontantHT), // Bon de commande
-					CA_Factures = g.Where(x => x.DO_Type == 7 || x.DO_Type == 6).Sum(x => x.DL_MontantHT) // Facture
+					CA_Devis = g.Where(x => x.DO_Type == 0 && x.DO_Statut == 2).Sum(x => x.DL_MontantTTC), // Devis
+					CA_Commandes = g.Where(x => x.DO_Type == 1).Sum(x => x.DL_MontantTTC), // Bon de commande
+					CA_Factures = g.Where(x => x.DO_Type == 7 || x.DO_Type == 6).Sum(x => x.DL_MontantTTC) // Facture
 				})
 				.Where(x => x.CA_Total > 0) // Only show clients with some activity
 				.OrderByDescending(x => x.CA_Total)
@@ -319,7 +319,7 @@ else
 			// Detailed documents for the bottom grid
 			detailed_documents = all_documents
 				.OrderByDescending(x => x.DO_Date)
-				.ThenByDescending(x => x.DL_MontantHT)
+				.ThenByDescending(x => x.DL_MontantTTC)
 				.ToList();
 			devis = all_documents.Where(a => a.DO_Type == 0).OrderByDescending(a => a.DO_Date).ToList();
 			commandes = all_documents.Where(a => a.DO_Type == 1).OrderByDescending(a => a.DO_Date).ToList();

@@ -196,7 +196,15 @@ namespace BusinessWeb.Services
             row.CT_BonAPayer = row.CT_BonAPayer ?? 0;
             row.CT_DelaiTransport = row.CT_DelaiTransport ?? 0;
             row.CT_DelaiAppro = row.CT_DelaiAppro ?? 0;
-            row.CT_Raccourci = "BWB";
+            row.cbCreateur = "BWB";
+            row.CT_AnnulationCR = 0;
+            row.CT_Facebook = "";
+            row.CT_CessionCreance = 0;
+            row.CT_LinkedIn = "";
+            row.CT_ExclureTrait = 0;
+            row.CT_GDPR = 0;
+            row.CT_Prospect = row.CT_Prospect ?? 0;
+            row.MR_No = 0;
 
         }
 

@@ -557,7 +557,7 @@ namespace BusinessWeb
 			{
 				foreach (var childProperty in childProperties)
 				{
-					if (parentProperty.Name == childProperty.Name && parentProperty.PropertyType == childProperty.PropertyType && parentProperty.Name != "cbMarq" && parentProperty.Name != "id" && parentProperty.Name != "DL_No" && (!parentProperty.Name.ToUpper().Contains("NAVIGATION")))
+					if (parentProperty.Name == childProperty.Name && parentProperty.PropertyType == childProperty.PropertyType && parentProperty.Name != "cbModification" && parentProperty.Name != "cbCreation" && parentProperty.Name != "cbMarq" && parentProperty.Name != "id" && parentProperty.Name != "DL_No" && (!parentProperty.Name.ToUpper().Contains("NAVIGATION")))
 					{
 						childProperty.SetValue(child, parentProperty.GetValue(parent));
 						break;

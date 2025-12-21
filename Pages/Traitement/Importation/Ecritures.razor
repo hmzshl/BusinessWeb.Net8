@@ -293,7 +293,8 @@ else
         {
             var ecritures = db1.F_ECRITUREC.AsNoTracking().Where(a => dt.Select(b => b.EC_No).Contains(a.EC_No))
             .Include(a => a.CG_NumNavigation)
-            .Include(a => a.CT_NumNavigation);
+            .Include(a => a.CT_NumNavigation)
+            .OrderBy(a => a.EC_No);
             SageService sg = new SageService(db2);
             var journaux = db1.F_JOURNAUX;
             foreach (var item in ecritures)

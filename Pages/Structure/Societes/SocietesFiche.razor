@@ -3,22 +3,23 @@
 <SfToolbar CssClass="btns">
     <ToolbarItems>
         <ToolbarItem Align="ItemAlign.Right">
-                <Template>
-                    <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit())">Enregistrer</SfButton>
-                </Template>
-            </ToolbarItem>
+            <Template>
+                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit())">Enregistrer</SfButton>
+            </Template>
+        </ToolbarItem>
     </ToolbarItems>
 </SfToolbar>
 <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="8">
     <SfTab CssClass="e-fill">
-        <TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/>
-            <TabItems>
-                <TabItem>
+        <TabEvents Selecting="@(args => fn.DisableTabSelect(args))" />
+        <TabItems>
+            <TabItem>
                 <ChildContent>
                     <TabHeader Text="Informations"></TabHeader>
                 </ChildContent>
                 <ContentTemplate>
-                     <GridRow>
+
+                    <GridRow>
                         <GridCol Xs="24" Md="24">
                             <Card>
                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Intitulé" LabelColSpan="4">
@@ -61,11 +62,10 @@
                                     <SfTextBox @bind-Value="@row.Patente" />
                                 </FormItem>
                             </Card>
-
                         </GridCol>
-                     </GridRow>
+                    </GridRow>
                 </ContentTemplate>
-                </TabItem>
+            </TabItem>
             <TabItem>
                 <ChildContent>
                     <TabHeader Text="Base de données"></TabHeader>
@@ -89,24 +89,22 @@
 
                             </Card>
                             <Divider></Divider>
-                            <div>@codeclient</div>
-                            <div>@codefournisseur</div>
                             <RadzenStack Style="padding: 10px;" Gap="10px" Orientation="Radzen.Orientation.Vertical" AlignItems="AlignItems.End">
                                 @if (!connected)
                                 {
                                     <div style="width: 100%;">
                                         <SfMessage ShowCloseIcon="false" Severity="MessageSeverity.Error">Vérifier votre connexion</SfMessage>
                                     </div>
-                                    
+
                                 }
                                 else
                                 {
                                     <div style="width: 100%;">
                                         <SfMessage ShowCloseIcon="false" Severity="MessageSeverity.Success">Connexion établie</SfMessage>
                                     </div>
-                                    
+
                                 }
-                                <SfButton style="width: 180px;" IconCss="e-icons e-check" OnClick="@(args => { connected = fn.CheckSteDB(row); StateHasChanged(); GetCodes();})">Tester la connexion</SfButton>
+                                <SfButton style="width: 180px;" IconCss="e-icons e-check" OnClick="@(args => { connected = fn.CheckSteDB(row); StateHasChanged(); })">Tester la connexion</SfButton>
                             </RadzenStack>
 
                         </GridCol>
@@ -178,7 +176,7 @@
                 </ContentTemplate>
             </TabItem>
 
-            </TabItems>
+        </TabItems>
     </SfTab>
     <GridRow>
 
@@ -187,13 +185,12 @@
     </GridRow>
 </Form>
 
-@code 
+@code
 {
     [Parameter] public int id { get; set; } = 0;
     [CascadingParameter]
     public SessionDT session { get; set; }
     DB db = new DB();
-    SageComptetService sageComptetService;
     private TSociete row = new TSociete();
     private API_T_Config config = new API_T_Config();
     private P_DOSSIER dossier = new P_DOSSIER();
@@ -201,10 +198,6 @@
     protected bool errorVisible;
     private ICollection<TSocieteUser> items;
     bool connected = false;
-    private string codeclient = "";
-    private string codefournisseur = "";
-
-
     protected override async Task OnInitializedAsync()
     {
 
@@ -237,15 +230,10 @@
 
                 }
             }
-            sageComptetService = new SageComptetService(db);
 
         }
     }
-    private async Task GetCodes()
-    {
-        //codeclient = sageComptetService.GetNextClientCode();
-        //codefournisseur = sageComptetService.();
-    }
+
     protected async Task Submit()
     {
 
@@ -309,7 +297,7 @@
         }
         else
         {
-            try 
+            try
             {
                 sdb.SaveChanges();
                 @if (fn.CheckSteDB(row))
@@ -336,7 +324,7 @@
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -372,9 +360,9 @@
 
 
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            
+
         }
 
 
@@ -388,18 +376,18 @@
         string rs = @"IF NOT EXISTS (SELECT 1
                                         FROM INFORMATION_SCHEMA.COLUMNS
                                         WHERE upper(TABLE_NAME) = 'P_DOSSIER'
-                                        AND upper(COLUMN_NAME) = '"+col+"')"
-                                +@"BEGIN
-                                    ALTER TABLE dbo.P_DOSSIER ADD "+col+" VARCHAR(100);"
-                                +"END";
+                                        AND upper(COLUMN_NAME) = '" + col + "')"
+                                + @"BEGIN
+                                    ALTER TABLE dbo.P_DOSSIER ADD " + col + " VARCHAR(100);"
+                                + "END";
         return rs;
     }
     private string getUpdateQuery(string col, string value)
     {
-        string rs = @"UPDATE P_DOSSIER SET "+col+" = '"+value+"'";
+        string rs = @"UPDATE P_DOSSIER SET " + col + " = '" + value + "'";
         return rs;
     }
-    protected async Task AddUser() 
+    protected async Task AddUser()
     {
         await DialogService.OpenAsync<AddUtilisateur>($"Ajouter un utilisateur",
         new Dictionary<string, object>() { { "SocieteID", id } },
