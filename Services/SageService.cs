@@ -12,6 +12,7 @@ namespace BusinessWeb.Services
 		public SageComptetService CompteT;
 		public SageEcritureService Ecriture;
 		public DocCurrentPieceService CurrentPiece;
+		public DocumentService Document;
 
 		// Other services can be added as you create them
 		// private readonly SageArticlesService _articlesService;
@@ -25,6 +26,7 @@ namespace BusinessWeb.Services
 			CompteT = new SageComptetService(context);
 			Ecriture = new SageEcritureService(context);
 			CurrentPiece = new DocCurrentPieceService(context);
+			Document = new DocumentService(context, CurrentPiece);
 
 		}
 	}
