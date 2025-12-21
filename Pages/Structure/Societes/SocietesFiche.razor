@@ -209,6 +209,7 @@
             if (fn.CheckSteDB(row))
             {
                 db = fn.getDb(row);
+                await CreateDoc();
 
                 try
                 {
@@ -232,6 +233,19 @@
             }
 
         }
+    }
+
+    private async Task CreateDoc()
+    {
+        var sg = new SageService(db);
+        var doc = new DocumentEntete();
+        doc.Date = DateTime.Today;
+        doc.Depot = 1;
+        doc.Tiers = "CISEL";
+        doc.Type = DocumentTypeDO.DevisClient;
+
+        var rs = await sg.Document.CreateDocument(doc);
+
     }
 
     protected async Task Submit()
