@@ -47,5 +47,15 @@ public partial class F_DEPOTCONTACT
 
     public short? cbFlag { get; set; }
 
+    public string DC_Facebook { get; set; }
+
+    public string DC_LinkedIn { get; set; }
+
+    public string DC_Skype { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_DEPOT DE_NoNavigation { get; set; }
 }

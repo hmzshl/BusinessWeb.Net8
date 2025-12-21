@@ -37,7 +37,41 @@ public partial class F_PROTECTIONCPTA
 
     public int? PROT_ApplicationRight { get; set; }
 
+    public short? PROT_AllowExternalAccess { get; set; }
+
+    public short? cbProt { get; set; }
+
     public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public Guid? PROT_Guid { get; set; }
+
+    public byte[] PROT_Hash { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
+    public string PROT_ProviderType { get; set; }
+
+    public Guid? PROT_ProviderID_AAD { get; set; }
+
+    public byte[] PROT_ProviderID_AD { get; set; }
+
+    public short? PROT_ServiceOffice365Actif { get; set; }
+
+    public Guid? PROT_ServiceOffice365UserId { get; set; }
+
+    public short? PROT_ServiceSageIDActif { get; set; }
+
+    public Guid? PROT_ServiceSageIDUserId { get; set; }
 
     public virtual ICollection<F_COLLABORATEUR> F_COLLABORATEUR { get; set; } = new List<F_COLLABORATEUR>();
 

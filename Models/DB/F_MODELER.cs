@@ -25,6 +25,10 @@ public partial class F_MODELER
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual ICollection<F_COMPTET> F_COMPTET { get; set; } = new List<F_COMPTET>();
 
     public virtual ICollection<F_EMODELER> F_EMODELER { get; set; } = new List<F_EMODELER>();

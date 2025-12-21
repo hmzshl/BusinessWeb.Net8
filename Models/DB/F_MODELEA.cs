@@ -41,6 +41,10 @@ public partial class F_MODELEA
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual ICollection<F_EMODELEA> F_EMODELEA { get; set; } = new List<F_EMODELEA>();
 
     public virtual F_PIECE PI_NoNavigation { get; set; }

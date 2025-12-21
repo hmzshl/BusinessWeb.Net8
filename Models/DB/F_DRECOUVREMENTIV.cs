@@ -67,6 +67,10 @@ public partial class F_DRECOUVREMENTIV
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_DRECOUVREMENT DR_NumNavigation { get; set; }
 
     public virtual F_ESCENARIO cbES_NoNavigation { get; set; }

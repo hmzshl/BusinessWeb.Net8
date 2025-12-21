@@ -15,8 +15,6 @@ public partial class F_FAMILLE
 
     public string FA_Intitule { get; set; }
 
-    public byte[] cbFA_Intitule { get; set; }
-
     public short? FA_UniteVen { get; set; }
 
     public decimal? FA_Coef { get; set; }
@@ -133,6 +131,8 @@ public partial class F_FAMILLE
 
     public short? FA_Fictif { get; set; }
 
+    public short? FA_Criticite { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -144,6 +144,12 @@ public partial class F_FAMILLE
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
+    public byte[] cbFA_Intitule { get; set; }
 
     public virtual F_CATALOGUE cbCL_No1Navigation { get; set; }
 

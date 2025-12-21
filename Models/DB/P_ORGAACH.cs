@@ -267,6 +267,12 @@ public partial class P_ORGAACH
 
     public short? D_Coche129 { get; set; }
 
+    public short? D_Coche130 { get; set; }
+
+    public short? D_Coche131 { get; set; }
+
+    public short? D_Coche132 { get; set; }
+
     public short? D_Saisie { get; set; }
 
     public short? D_Confirme { get; set; }
@@ -288,4 +294,8 @@ public partial class P_ORGAACH
     public short? cbIndice { get; set; }
 
     public int cbMarq { get; set; }
+
+    public short? D_Perdu { get; set; }
+
+    public short? D_Archive { get; set; }
 }

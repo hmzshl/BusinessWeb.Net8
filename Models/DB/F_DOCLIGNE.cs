@@ -17,15 +17,9 @@ public partial class F_DOCLIGNE
 
     public string DO_Piece { get; set; }
 
-    public byte[] cbDO_Piece { get; set; }
-
     public string DL_PieceBC { get; set; }
 
-    public byte[] cbDL_PieceBC { get; set; }
-
     public string DL_PieceBL { get; set; }
-
-    public byte[] cbDL_PieceBL { get; set; }
 
     public DateTime? DO_Date { get; set; }
 
@@ -36,6 +30,8 @@ public partial class F_DOCLIGNE
     public int? DL_Ligne { get; set; }
 
     public string DO_Ref { get; set; }
+
+    public byte[] cbDO_Ref { get; set; }
 
     public short? DL_TNomencl { get; set; }
 
@@ -163,8 +159,6 @@ public partial class F_DOCLIGNE
 
     public string DL_PiecePL { get; set; }
 
-    public byte[] cbDL_PiecePL { get; set; }
-
     public DateTime? DL_DatePL { get; set; }
 
     public decimal? DL_QtePL { get; set; }
@@ -193,19 +187,57 @@ public partial class F_DOCLIGNE
 
     public string DL_CodeTaxe3 { get; set; }
 
-    public int cbMarq { get; set; }
-
-    public DateTime? cbCreation { get; set; }
-
-    public Guid? cbCreationUser { get; set; }
-
-    public DateTime? cbModification { get; set; }
+    public int? DL_PieceOFProd { get; set; }
 
     public string DL_PieceDE { get; set; }
 
     public DateTime? DL_DateDE { get; set; }
 
     public decimal? DL_QteDE { get; set; }
+
+    public string DL_Operation { get; set; }
+
+    public int? DL_NoSousTotal { get; set; }
+
+    public short? cbProt { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public int? CA_No { get; set; }
+
+    public int? cbCA_No { get; set; }
+
+    public byte[] cbHash { get; set; }
+
+    public short? cbHashVersion { get; set; }
+
+    public DateTime? cbHashDate { get; set; }
+
+    public int? cbHashOrder { get; set; }
+
+    public short? DO_DocType { get; set; }
+
+    public byte[] cbDO_Piece { get; set; }
+
+    public byte[] cbDL_PieceBC { get; set; }
+
+    public byte[] cbDL_PieceBL { get; set; }
+
+    public byte[] cbDL_PiecePL { get; set; }
+
+    public byte[] cbDL_PieceDE { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 

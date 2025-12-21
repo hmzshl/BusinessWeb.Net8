@@ -15,8 +15,6 @@ public partial class P_RECOUVREMENT
 
     public string CG_NumPerte { get; set; }
 
-    public string R_Modele { get; set; }
-
     public string CG_NumDouteux { get; set; }
 
     public int cbMarq { get; set; }

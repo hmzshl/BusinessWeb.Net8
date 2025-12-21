@@ -11,8 +11,6 @@ public partial class F_BONAPAYERHISTOCIAL
 
     public string DO_Piece { get; set; }
 
-    public byte[] cbDO_Piece { get; set; }
-
     public short? BP_Type { get; set; }
 
     public int? CO_No { get; set; }
@@ -38,4 +36,10 @@ public partial class F_BONAPAYERHISTOCIAL
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public byte[] cbDO_Piece { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 }

@@ -31,5 +31,11 @@ public partial class F_COMPTETMODELE
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
+    public short? CM_TypeModele { get; set; }
+
     public virtual F_COMPTET CT_NumNavigation { get; set; }
 }

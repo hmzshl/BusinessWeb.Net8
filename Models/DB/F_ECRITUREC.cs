@@ -123,6 +123,10 @@ public partial class F_ECRITUREC
 
     public Guid? EC_FactureGUID { get; set; }
 
+    public DateTime? EC_DateCloture { get; set; }
+
+    public short? EC_StatFinexKap { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -135,9 +139,23 @@ public partial class F_ECRITUREC
 
     public short? cbFlag { get; set; }
 
+    public Guid? EC_FactureFile { get; set; }
+
+    public byte[] cbHash { get; set; }
+
+    public short? cbHashVersion { get; set; }
+
+    public DateTime? cbHashDate { get; set; }
+
+    public int? cbHashOrder { get; set; }
+
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
+
+    public Guid? EC_PaymentID { get; set; }
+
+    public string EC_PayNowUrl { get; set; }
 
     public virtual F_COMPTEG CG_NumNavigation { get; set; }
 

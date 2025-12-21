@@ -11,8 +11,6 @@ public partial class F_DOCENTETEINFOS
 
     public string DO_Piece { get; set; }
 
-    public byte[] cbDO_Piece { get; set; }
-
     public string DI_Code { get; set; }
 
     public byte[] cbDI_Code { get; set; }
@@ -36,4 +34,10 @@ public partial class F_DOCENTETEINFOS
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public byte[] cbDO_Piece { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 }

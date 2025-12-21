@@ -15,8 +15,6 @@ public partial class F_CONDITION
 
     public string EC_Enumere { get; set; }
 
-    public byte[] cbEC_Enumere { get; set; }
-
     public decimal? EC_Quantite { get; set; }
 
     public string CO_Ref { get; set; }
@@ -29,6 +27,8 @@ public partial class F_CONDITION
 
     public short? CO_Principal { get; set; }
 
+    public string CO_EdiCode { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -40,6 +40,12 @@ public partial class F_CONDITION
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
+    public byte[] cbEC_Enumere { get; set; }
 
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 }

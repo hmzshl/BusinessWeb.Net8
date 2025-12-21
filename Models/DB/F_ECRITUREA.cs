@@ -33,6 +33,10 @@ public partial class F_ECRITUREA
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_ECRITUREC EC_NoNavigation { get; set; }
 
     public virtual F_COMPTEA F_COMPTEA { get; set; }

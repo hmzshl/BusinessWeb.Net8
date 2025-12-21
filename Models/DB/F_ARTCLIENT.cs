@@ -65,7 +65,9 @@ public partial class F_ARTCLIENT
 
     public short? cbFlag { get; set; }
 
-    public virtual ICollection<API_T_FC_Repas> API_T_FC_Repas { get; set; } = new List<API_T_FC_Repas>();
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 

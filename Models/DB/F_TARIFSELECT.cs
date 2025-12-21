@@ -27,5 +27,9 @@ public partial class F_TARIFSELECT
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_TARIF TF_NoNavigation { get; set; }
 }

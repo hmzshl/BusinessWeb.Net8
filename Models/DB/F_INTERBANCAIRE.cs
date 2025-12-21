@@ -138,4 +138,14 @@ public partial class F_INTERBANCAIRE
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
+    public int? PI_No { get; set; }
+
+    public int? cbPI_No { get; set; }
+
+    public virtual F_PIECE cbPI_NoNavigation { get; set; }
 }

@@ -28,4 +28,6 @@ public partial class P_REGLEMENT
     public short? cbIndice { get; set; }
 
     public int cbMarq { get; set; }
+
+    public short? R_PaiementLigne { get; set; }
 }

@@ -125,7 +125,7 @@ public partial class API_V_ECRITUREC
 
     public decimal? Credit { get; set; }
 
-    public string PROT_User { get; set; }
+    public int? PROT_User { get; set; }
 
     public DateTime? cbCreation { get; set; }
 

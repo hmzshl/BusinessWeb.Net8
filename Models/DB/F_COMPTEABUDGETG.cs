@@ -65,6 +65,10 @@ public partial class F_COMPTEABUDGETG
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTEG CG_NumNavigation { get; set; }
 
     public virtual F_COMPTEABUDGET F_COMPTEABUDGET { get; set; }

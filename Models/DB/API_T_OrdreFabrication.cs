@@ -37,8 +37,6 @@ public partial class API_T_OrdreFabrication
 
     public virtual ICollection<API_T_OrdreFabricationPointage> API_T_OrdreFabricationPointage { get; set; } = new List<API_T_OrdreFabricationPointage>();
 
-    public virtual F_COMPTEA CA_NumNavigation { get; set; }
-
     public virtual F_COMPTET CT_NumNavigation { get; set; }
 
     public virtual API_T_Personnel ResponsableNavigation { get; set; }

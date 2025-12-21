@@ -20,10 +20,4 @@ public partial class API_T_FC_Repas
     public int? CepMAX { get; set; }
 
     public virtual ICollection<API_T_FC_RepasCompose> API_T_FC_RepasCompose { get; set; } = new List<API_T_FC_RepasCompose>();
-
-    public virtual F_ARTICLE AR_RefNavigation { get; set; }
-
-    public virtual F_COMPTET CT_NumNavigation { get; set; }
-
-    public virtual F_ARTCLIENT LigneNavigation { get; set; }
 }

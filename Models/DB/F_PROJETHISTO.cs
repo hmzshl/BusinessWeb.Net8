@@ -69,6 +69,10 @@ public partial class F_PROJETHISTO
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_ARTICLE AR_RefComposantNavigation { get; set; }
 
     public virtual F_ARTICLE AR_RefComposeNavigation { get; set; }

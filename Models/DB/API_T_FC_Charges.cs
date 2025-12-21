@@ -20,6 +20,4 @@ public partial class API_T_FC_Charges
     public decimal? Qté { get; set; }
 
     public decimal? PU { get; set; }
-
-    public virtual F_COMPTET CT_NumNavigation { get; set; }
 }

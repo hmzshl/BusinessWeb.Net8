@@ -23,6 +23,10 @@ public partial class F_CAISSECAISSIER
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_CAISSE CA_NoNavigation { get; set; }
 
     public virtual F_COLLABORATEUR CO_NoNavigation { get; set; }

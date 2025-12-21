@@ -189,6 +189,10 @@ public partial class F_PIECEG
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual ICollection<F_PIECEA> F_PIECEA { get; set; } = new List<F_PIECEA>();
 
     public virtual F_PIECE PI_NoNavigation { get; set; }

@@ -25,5 +25,13 @@ public partial class F_ECRITURECMEDIA
 
     public short? cbFlag { get; set; }
 
+    public string EM_TypeMIME { get; set; }
+
+    public string EM_Origine { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_ECRITUREC EC_NoNavigation { get; set; }
 }

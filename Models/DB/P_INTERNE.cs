@@ -271,6 +271,12 @@ public partial class P_INTERNE
 
     public short? D_Coche129 { get; set; }
 
+    public short? D_Coche130 { get; set; }
+
+    public short? D_Coche131 { get; set; }
+
+    public short? D_Coche132 { get; set; }
+
     public short? D_Saisie { get; set; }
 
     public short? D_Confirme { get; set; }

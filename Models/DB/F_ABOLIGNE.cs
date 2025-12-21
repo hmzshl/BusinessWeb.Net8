@@ -139,6 +139,8 @@ public partial class F_ABOLIGNE
 
     public string AL_CodeTaxe3 { get; set; }
 
+    public int? AL_NoSousTotal { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -150,6 +152,10 @@ public partial class F_ABOLIGNE
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 
     public virtual F_ABOENTETE AB_NoNavigation { get; set; }
 

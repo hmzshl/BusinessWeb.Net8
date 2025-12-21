@@ -57,6 +57,10 @@ public partial class F_GAMSTOCK
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 
     public virtual F_DEPOT DE_NoNavigation { get; set; }

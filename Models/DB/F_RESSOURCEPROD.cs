@@ -35,8 +35,6 @@ public partial class F_RESSOURCEPROD
 
     public string RP_Commentaire { get; set; }
 
-    public DateTime? RP_DateCreation { get; set; }
-
     public short? RP_TypeRess { get; set; }
 
     public string RP_CodeExterne { get; set; }
@@ -136,6 +134,16 @@ public partial class F_RESSOURCEPROD
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public string RP_Facebook { get; set; }
+
+    public string RP_LinkedIn { get; set; }
+
+    public string RP_Skype { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 
     public virtual F_ARTICLE AR_RefDefautNavigation { get; set; }
 

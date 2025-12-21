@@ -51,6 +51,10 @@ public partial class F_ARTCOMPTA
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTEG ACP_ComptaCPT_CompteGNavigation { get; set; }
 
     public virtual F_TAXE ACP_ComptaCPT_Taxe1Navigation { get; set; }

@@ -43,6 +43,8 @@ public partial class F_ARTSTOCK
 
     public decimal? AS_QteAControler { get; set; }
 
+    public short? AS_Mouvemente { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -54,6 +56,10 @@ public partial class F_ARTSTOCK
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 

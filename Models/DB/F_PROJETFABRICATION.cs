@@ -31,8 +31,6 @@ public partial class F_PROJETFABRICATION
 
     public string DO_Piece { get; set; }
 
-    public byte[] cbDO_Piece { get; set; }
-
     public short? PF_Type { get; set; }
 
     public string CT_Num { get; set; }
@@ -50,6 +48,12 @@ public partial class F_PROJETFABRICATION
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public byte[] cbDO_Piece { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 
     public virtual ICollection<F_PROJETHISTO> F_PROJETHISTO { get; set; } = new List<F_PROJETHISTO>();
 

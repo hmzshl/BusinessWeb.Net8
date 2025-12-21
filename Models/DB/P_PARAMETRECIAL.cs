@@ -173,7 +173,7 @@ public partial class P_PARAMETRECIAL
 
     public string P_ExonerationTVA { get; set; }
 
-    public short? P_ImpressionValide { get; set; }
-
     public int cbMarq { get; set; }
+
+    public string AR_Ref { get; set; }
 }

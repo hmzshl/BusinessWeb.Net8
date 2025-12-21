@@ -40,4 +40,8 @@ public partial class F_FAMTARIFQTE
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 }

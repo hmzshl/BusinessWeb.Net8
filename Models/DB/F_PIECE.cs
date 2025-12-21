@@ -35,7 +35,13 @@ public partial class F_PIECE
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual ICollection<F_COMPTET> F_COMPTET { get; set; } = new List<F_COMPTET>();
+
+    public virtual ICollection<F_INTERBANCAIRE> F_INTERBANCAIRE { get; set; } = new List<F_INTERBANCAIRE>();
 
     public virtual ICollection<F_MODELEA> F_MODELEA { get; set; } = new List<F_MODELEA>();
 

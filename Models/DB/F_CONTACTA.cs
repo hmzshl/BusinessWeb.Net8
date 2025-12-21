@@ -51,5 +51,15 @@ public partial class F_CONTACTA
 
     public short? cbFlag { get; set; }
 
+    public string CA_Facebook { get; set; }
+
+    public string CA_LinkedIn { get; set; }
+
+    public string CA_Skype { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTEA F_COMPTEA { get; set; }
 }

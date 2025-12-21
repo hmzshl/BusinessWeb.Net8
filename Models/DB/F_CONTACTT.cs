@@ -49,6 +49,16 @@ public partial class F_CONTACTT
 
     public short? cbFlag { get; set; }
 
+    public string CT_Facebook { get; set; }
+
+    public string CT_LinkedIn { get; set; }
+
+    public string CT_Skype { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTET CT_NumNavigation { get; set; }
 
     public virtual ICollection<F_DRECOUVREMENT> F_DRECOUVREMENT { get; set; } = new List<F_DRECOUVREMENT>();

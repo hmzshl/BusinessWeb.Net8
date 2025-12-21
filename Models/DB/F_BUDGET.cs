@@ -907,5 +907,9 @@ public partial class F_BUDGET
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual ICollection<F_EBUDGET> F_EBUDGET { get; set; } = new List<F_EBUDGET>();
 }

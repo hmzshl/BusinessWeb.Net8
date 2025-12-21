@@ -46,4 +46,8 @@ public partial class P_DEVISE
     public short? cbIndice { get; set; }
 
     public int cbMarq { get; set; }
+
+    public DateTime? D_UpdateDate { get; set; }
+
+    public string D_UpdateTime { get; set; }
 }

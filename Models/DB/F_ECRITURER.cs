@@ -55,6 +55,10 @@ public partial class F_ECRITURER
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTEG CG_NumNavigation { get; set; }
 
     public virtual F_COMPTEA F_COMPTEA { get; set; }

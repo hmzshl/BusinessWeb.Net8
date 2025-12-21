@@ -27,5 +27,9 @@ public partial class F_FAMMODELE
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_MODELE MO_NoNavigation { get; set; }
 }

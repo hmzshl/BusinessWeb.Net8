@@ -15,8 +15,6 @@ public partial class F_LIVRAISON
 
     public string LI_Intitule { get; set; }
 
-    public byte[] cbLI_Intitule { get; set; }
-
     public string LI_Adresse { get; set; }
 
     public string LI_Complement { get; set; }
@@ -54,6 +52,12 @@ public partial class F_LIVRAISON
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
+    public byte[] cbLI_Intitule { get; set; }
 
     public virtual F_COMPTET CT_NumNavigation { get; set; }
 

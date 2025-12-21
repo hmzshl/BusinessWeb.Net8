@@ -57,6 +57,10 @@ public partial class F_ARTCOMPO
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 
     public virtual F_RESSOURCEPROD RP_CodeNavigation { get; set; }

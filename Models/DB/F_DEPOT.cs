@@ -49,6 +49,12 @@ public partial class F_DEPOT
 
     public short? DE_Exclure { get; set; }
 
+    public short? DE_Souche01 { get; set; }
+
+    public short? DE_Souche02 { get; set; }
+
+    public short? DE_Souche03 { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -60,6 +66,10 @@ public partial class F_DEPOT
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 
     public virtual ICollection<F_ABOENTETE> F_ABOENTETE { get; set; } = new List<F_ABOENTETE>();
 

@@ -25,5 +25,9 @@ public partial class F_ECALENDRIER
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_CALENDRIER CAL_NoNavigation { get; set; }
 }

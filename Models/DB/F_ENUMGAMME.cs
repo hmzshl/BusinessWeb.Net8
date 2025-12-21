@@ -13,8 +13,6 @@ public partial class F_ENUMGAMME
 
     public string EG_Enumere { get; set; }
 
-    public byte[] cbEG_Enumere { get; set; }
-
     public decimal? EG_BorneSup { get; set; }
 
     public short? cbProt { get; set; }
@@ -28,4 +26,10 @@ public partial class F_ENUMGAMME
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
+    public byte[] cbEG_Enumere { get; set; }
 }

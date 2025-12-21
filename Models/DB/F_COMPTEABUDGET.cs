@@ -891,6 +891,10 @@ public partial class F_COMPTEABUDGET
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTEA F_COMPTEA { get; set; }
 
     public virtual ICollection<F_COMPTEABUDGETG> F_COMPTEABUDGETG { get; set; } = new List<F_COMPTEABUDGETG>();

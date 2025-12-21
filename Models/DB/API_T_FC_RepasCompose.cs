@@ -23,9 +23,5 @@ public partial class API_T_FC_RepasCompose
 
     public virtual ICollection<API_T_FC_RepasComposeDetail> API_T_FC_RepasComposeDetail { get; set; } = new List<API_T_FC_RepasComposeDetail>();
 
-    public virtual F_ARTICLE AR_RefNavigation { get; set; }
-
     public virtual API_T_FC_Repas RepasNavigation { get; set; }
-
-    public virtual API_T_Information TypeNavigation { get; set; }
 }

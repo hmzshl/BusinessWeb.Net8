@@ -36,7 +36,10 @@
 							<GridColumn MinWidth="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.CA_Num)" HeaderText="Affaire">
 								<Template>
 									<div>
-										@((context as API_T_OrdreFabrication)?.CA_NumNavigation?.CA_Intitule)
+										@*
+											@((context as API_T_OrdreFabrication)?.CA_NumNavigation?.CA_Intitule)
+										*@
+										
 									</div>
 
 								</Template>
@@ -141,7 +144,6 @@ else
 		items = session.db.API_T_OrdreFabrication
         .Where(a => (StockCreated && a.StockCreated) || (!StockCreated))
 		.Include(a => a.ResponsableNavigation)
-		.Include(a => a.CA_NumNavigation)
 		.Include(a => a.CT_NumNavigation)
 		.Include(a => a.API_T_OrdreFabricationLigne)
 		.ThenInclude(a => a.AR_RefNavigation)

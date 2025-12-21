@@ -117,6 +117,10 @@ public partial class F_ABONNEMENT
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTET CT_NumNavigation { get; set; }
 
     public virtual F_ABOENTETE F_ABOENTETE { get; set; }

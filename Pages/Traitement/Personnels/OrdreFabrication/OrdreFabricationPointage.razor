@@ -167,7 +167,10 @@
 									<GridColumn Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affaire">
 										<Template>
 											<div>
-												@((context as API_T_OrdreFabricationPointage).OrdreNavigation?.CA_NumNavigation?.CA_Intitule)
+												@*
+													@((context as API_T_OrdreFabricationPointage).OrdreNavigation?.CA_NumNavigation?.CA_Intitule)
+												*@
+												
 											</div>
 										</Template>
 										<EditTemplate>
@@ -255,7 +258,6 @@ else
 		items = db.API_T_OrdreFabricationPointage
 		.Include(a => a.PresonnelNavigation)
 		.Include(a => a.OrdreNavigation)
-		.ThenInclude(a => a.CA_NumNavigation)
 		.Include(a => a.OrdreNavigation)
 		.ThenInclude(a => a.CT_NumNavigation)
 		.Include(a => a.OrdreNavigation)

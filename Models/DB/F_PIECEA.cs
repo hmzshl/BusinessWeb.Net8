@@ -37,5 +37,9 @@ public partial class F_PIECEA
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_PIECEG F_PIECEG { get; set; }
 }

@@ -31,8 +31,6 @@ public partial class F_CAISSE
 
     public short? CA_IdentifCaissier { get; set; }
 
-    public DateTime? CA_DateCreation { get; set; }
-
     public short? N_Comptoir { get; set; }
 
     public short? N_Clavier { get; set; }
@@ -58,6 +56,10 @@ public partial class F_CAISSE
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 
     public virtual F_COMPTET CT_NumNavigation { get; set; }
 

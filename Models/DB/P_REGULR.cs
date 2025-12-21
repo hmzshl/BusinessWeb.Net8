@@ -7,9 +7,7 @@ namespace BusinessWeb.Models.DB;
 
 public partial class P_REGULR
 {
-    public string JO_NumExercice { get; set; }
-
-    public string JO_NumSituation { get; set; }
+    public string JO_Num { get; set; }
 
     public int? PI_NoCharge { get; set; }
 
@@ -18,6 +16,8 @@ public partial class P_REGULR
     public int? PI_NoProduit { get; set; }
 
     public int? PI_NoCl { get; set; }
+
+    public short? R_BaseProrata { get; set; }
 
     public int cbMarq { get; set; }
 }

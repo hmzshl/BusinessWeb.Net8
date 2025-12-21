@@ -29,6 +29,8 @@ public partial class F_ARTENUMREF
 
     public string AE_EdiCode { get; set; }
 
+    public byte[] cbAE_EdiCode { get; set; }
+
     public short? AE_Sommeil { get; set; }
 
     public short? cbProt { get; set; }
@@ -42,6 +44,10 @@ public partial class F_ARTENUMREF
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 }

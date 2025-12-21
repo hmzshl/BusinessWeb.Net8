@@ -13,8 +13,6 @@ public partial class F_DOCENTETE
 
     public string DO_Piece { get; set; }
 
-    public byte[] cbDO_Piece { get; set; }
-
     public DateTime? DO_Date { get; set; }
 
     public string DO_Ref { get; set; }
@@ -113,8 +111,6 @@ public partial class F_DOCENTETE
 
     public int? CA_No { get; set; }
 
-    public int? cbCA_No { get; set; }
-
     public int? CO_NoCaissier { get; set; }
 
     public int? cbCO_NoCaissier { get; set; }
@@ -187,6 +183,10 @@ public partial class F_DOCENTETE
 
     public string DO_PieceOrig { get; set; }
 
+    public Guid? DO_GUID { get; set; }
+
+    public short? DO_EStatut { get; set; }
+
     public short? DO_DemandeRegul { get; set; }
 
     public int? ET_No { get; set; }
@@ -205,6 +205,8 @@ public partial class F_DOCENTETE
 
     public decimal? DO_TotalHT { get; set; }
 
+    public short? DO_StatutBAP { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -217,11 +219,31 @@ public partial class F_DOCENTETE
 
     public short? cbFlag { get; set; }
 
-    public string ChefChantier { get; set; }
+    public short? DO_Escompte { get; set; }
 
-    public string Demandeur { get; set; }
+    public byte[] cbHash { get; set; }
 
-    public string CT_NumOld { get; set; }
+    public short? cbHashVersion { get; set; }
+
+    public DateTime? cbHashDate { get; set; }
+
+    public int? cbHashOrder { get; set; }
+
+    public int? cbCA_No { get; set; }
+
+    public short? DO_DocType { get; set; }
+
+    public short? DO_TypeCalcul { get; set; }
+
+    public Guid? DO_FactureFile { get; set; }
+
+    public byte[] cbDO_Piece { get; set; }
+
+    public byte[] cbDO_PieceOrig { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 
     public decimal? DO_TotalHTNet { get; set; }
 
@@ -229,9 +251,21 @@ public partial class F_DOCENTETE
 
     public decimal? DO_NetAPayer { get; set; }
 
-    public DateTime? cbCreation { get; set; }
+    public decimal? DO_MontantRegle { get; set; }
 
-    public Guid? cbCreationUser { get; set; }
+    public Guid? DO_RefPaiement { get; set; }
+
+    public string DO_AdressePaiement { get; set; }
+
+    public short? DO_PaiementLigne { get; set; }
+
+    public short? DO_MotifDevis { get; set; }
+
+    public string CT_NumOld { get; set; }
+
+    public string ChefChantier { get; set; }
+
+    public string Demandeur { get; set; }
 
     public virtual F_COMPTEG CG_NumNavigation { get; set; }
 

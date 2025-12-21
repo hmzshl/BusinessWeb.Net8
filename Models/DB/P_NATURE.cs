@@ -250,4 +250,24 @@ public partial class P_NATURE
     public short? cbIndice { get; set; }
 
     public int cbMarq { get; set; }
+
+    public short? N_Nature01CG_LettrageSaisie { get; set; }
+
+    public short? N_Nature02CG_LettrageSaisie { get; set; }
+
+    public short? N_Nature03CG_LettrageSaisie { get; set; }
+
+    public short? N_Nature04CG_LettrageSaisie { get; set; }
+
+    public short? N_Nature05CG_LettrageSaisie { get; set; }
+
+    public short? N_Nature06CG_LettrageSaisie { get; set; }
+
+    public short? N_Nature07CG_LettrageSaisie { get; set; }
+
+    public short? N_Nature08CG_LettrageSaisie { get; set; }
+
+    public short? N_Nature09CG_LettrageSaisie { get; set; }
+
+    public short? N_Nature10CG_LettrageSaisie { get; set; }
 }

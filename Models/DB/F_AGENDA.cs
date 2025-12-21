@@ -63,6 +63,10 @@ public partial class F_AGENDA
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_DEPOT cbDE_NoNavigation { get; set; }
 
     public virtual F_DOCLIGNE cbDL_NoNavigation { get; set; }

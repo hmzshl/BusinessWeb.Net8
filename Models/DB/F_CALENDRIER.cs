@@ -99,6 +99,10 @@ public partial class F_CALENDRIER
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual ICollection<F_ECALENDRIER> F_ECALENDRIER { get; set; } = new List<F_ECALENDRIER>();
 
     public virtual ICollection<F_RESSOURCEPROD> F_RESSOURCEPROD { get; set; } = new List<F_RESSOURCEPROD>();

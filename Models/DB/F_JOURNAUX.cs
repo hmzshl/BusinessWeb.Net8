@@ -51,5 +51,11 @@ public partial class F_JOURNAUX
 
     public short? cbFlag { get; set; }
 
+    public short? JO_LettrageSaisie { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTEG CG_NumNavigation { get; set; }
 }

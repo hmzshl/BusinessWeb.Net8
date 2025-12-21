@@ -39,5 +39,11 @@ public partial class F_COMPTETRAPPEL
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
+    public string CR_RefRappel { get; set; }
+
     public virtual F_COMPTET CT_NumNavigation { get; set; }
 }

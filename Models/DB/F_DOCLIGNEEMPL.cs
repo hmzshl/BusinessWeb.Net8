@@ -27,6 +27,10 @@ public partial class F_DOCLIGNEEMPL
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_DOCLIGNE DL_NoNavigation { get; set; }
 
     public virtual F_DEPOTEMPL DP_NoNavigation { get; set; }

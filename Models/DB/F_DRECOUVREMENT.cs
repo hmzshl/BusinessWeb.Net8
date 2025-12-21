@@ -57,6 +57,10 @@ public partial class F_DRECOUVREMENT
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTET CT_NumNavigation { get; set; }
 
     public virtual ICollection<F_CONTACTR> F_CONTACTR { get; set; } = new List<F_CONTACTR>();

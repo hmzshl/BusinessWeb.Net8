@@ -25,5 +25,9 @@ public partial class F_EPROTECTIONCIAL
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_PROTECTIONCIAL PROT_NoNavigation { get; set; }
 }

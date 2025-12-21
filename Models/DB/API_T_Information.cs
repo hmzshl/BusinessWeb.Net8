@@ -30,8 +30,4 @@ public partial class API_T_Information
     public string ModificationUser { get; set; }
 
     public virtual ICollection<API_T_AgenceOffre> API_T_AgenceOffre { get; set; } = new List<API_T_AgenceOffre>();
-
-    public virtual ICollection<API_T_FC_MasseSalariale> API_T_FC_MasseSalariale { get; set; } = new List<API_T_FC_MasseSalariale>();
-
-    public virtual ICollection<API_T_FC_RepasCompose> API_T_FC_RepasCompose { get; set; } = new List<API_T_FC_RepasCompose>();
 }

@@ -25,6 +25,10 @@ public partial class F_GLOSSAIRE
 
     public string GL_Text { get; set; }
 
+    public string GL_TextLangue1 { get; set; }
+
+    public string GL_TextLangue2 { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -36,6 +40,10 @@ public partial class F_GLOSSAIRE
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 
     public virtual ICollection<F_ARTGLOSS> F_ARTGLOSS { get; set; } = new List<F_ARTGLOSS>();
 }

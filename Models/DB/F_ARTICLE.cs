@@ -81,6 +81,8 @@ public partial class F_ARTICLE
 
     public string AR_EdiCode { get; set; }
 
+    public byte[] cbAR_EdiCode { get; set; }
+
     public string AR_CodeBarre { get; set; }
 
     public byte[] cbAR_CodeBarre { get; set; }
@@ -207,6 +209,10 @@ public partial class F_ARTICLE
 
     public short? AR_TypeLancement { get; set; }
 
+    public short? AR_Cycle { get; set; }
+
+    public short? AR_Criticite { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -222,10 +228,6 @@ public partial class F_ARTICLE
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
-
-    public virtual ICollection<API_T_FC_Repas> API_T_FC_Repas { get; set; } = new List<API_T_FC_Repas>();
-
-    public virtual ICollection<API_T_FC_RepasCompose> API_T_FC_RepasCompose { get; set; } = new List<API_T_FC_RepasCompose>();
 
     public virtual ICollection<API_T_OrdreFabricationDetail> API_T_OrdreFabricationDetail { get; set; } = new List<API_T_OrdreFabricationDetail>();
 

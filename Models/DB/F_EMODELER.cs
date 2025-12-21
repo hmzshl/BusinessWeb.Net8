@@ -43,5 +43,9 @@ public partial class F_EMODELER
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_MODELER MR_NoNavigation { get; set; }
 }

@@ -889,6 +889,10 @@ public partial class F_COMPTEGBUDGET
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTEG CG_NumNavigation { get; set; }
 
     public virtual ICollection<F_COMPTEGBUDGETA> F_COMPTEGBUDGETA { get; set; } = new List<F_COMPTEGBUDGETA>();

@@ -61,8 +61,6 @@ public partial class F_CREGLEMENT
 
     public int? CA_No { get; set; }
 
-    public int? cbCA_No { get; set; }
-
     public int? CO_NoCaissier { get; set; }
 
     public int? cbCO_NoCaissier { get; set; }
@@ -105,6 +103,28 @@ public partial class F_CREGLEMENT
 
     public short? cbFlag { get; set; }
 
+    public short? RG_Valide { get; set; }
+
+    public byte[] cbHash { get; set; }
+
+    public short? cbHashVersion { get; set; }
+
+    public DateTime? cbHashDate { get; set; }
+
+    public int? cbHashOrder { get; set; }
+
+    public int? cbCA_No { get; set; }
+
+    public decimal? RG_Anterieur { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
+    public decimal? RG_MontantCommission { get; set; }
+
+    public decimal? RG_MontantNet { get; set; }
+
     public bool? Encaiss { get; set; }
 
     public bool? Rappro { get; set; }
@@ -120,10 +140,6 @@ public partial class F_CREGLEMENT
     public bool? Incorpore { get; set; }
 
     public string Remarque { get; set; }
-
-    public DateTime? cbCreation { get; set; }
-
-    public Guid? cbCreationUser { get; set; }
 
     public virtual F_COMPTEG CG_NumContNavigation { get; set; }
 

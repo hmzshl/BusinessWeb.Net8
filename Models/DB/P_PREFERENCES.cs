@@ -104,4 +104,8 @@ public partial class P_PREFERENCES
     public short? PR_EFacture { get; set; }
 
     public int cbMarq { get; set; }
+
+    public short? PR_ClotureMajCpta { get; set; }
+
+    public short? PR_ExportStructCpta { get; set; }
 }

@@ -56,4 +56,14 @@ public partial class F_CONTACTD
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public string CD_Facebook { get; set; }
+
+    public string CD_LinkedIn { get; set; }
+
+    public string CD_Skype { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 }

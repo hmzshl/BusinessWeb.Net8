@@ -33,5 +33,9 @@ public partial class F_COMPTER
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual ICollection<F_COMPTEG> F_COMPTEG { get; set; } = new List<F_COMPTEG>();
 }

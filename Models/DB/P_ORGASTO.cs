@@ -267,6 +267,12 @@ public partial class P_ORGASTO
 
     public short? D_Coche129 { get; set; }
 
+    public short? D_Coche130 { get; set; }
+
+    public short? D_Coche131 { get; set; }
+
+    public short? D_Coche132 { get; set; }
+
     public short? cbIndice { get; set; }
 
     public int cbMarq { get; set; }

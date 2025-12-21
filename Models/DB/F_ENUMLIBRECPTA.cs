@@ -13,8 +13,6 @@ public partial class F_ENUMLIBRECPTA
 
     public string EL_Intitule { get; set; }
 
-    public byte[] cbEL_Intitule { get; set; }
-
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -26,4 +24,10 @@ public partial class F_ENUMLIBRECPTA
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
+    public byte[] cbEL_Intitule { get; set; }
 }

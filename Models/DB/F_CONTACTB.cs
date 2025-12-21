@@ -46,4 +46,14 @@ public partial class F_CONTACTB
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public string CB_Facebook { get; set; }
+
+    public string CB_LinkedIn { get; set; }
+
+    public string CB_Skype { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 }

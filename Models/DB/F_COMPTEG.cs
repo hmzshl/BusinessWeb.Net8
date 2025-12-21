@@ -69,6 +69,12 @@ public partial class F_COMPTEG
 
     public short? cbFlag { get; set; }
 
+    public short? CG_LettrageSaisie { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTER CR_NumNavigation { get; set; }
 
     public virtual ICollection<F_ABOENTETE> F_ABOENTETE { get; set; } = new List<F_ABOENTETE>();

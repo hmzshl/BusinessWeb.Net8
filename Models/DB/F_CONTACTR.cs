@@ -61,5 +61,15 @@ public partial class F_CONTACTR
 
     public short? cbFlag { get; set; }
 
+    public string CR_Facebook { get; set; }
+
+    public string CR_LinkedIn { get; set; }
+
+    public string CR_Skype { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_DRECOUVREMENT DR_NumNavigation { get; set; }
 }

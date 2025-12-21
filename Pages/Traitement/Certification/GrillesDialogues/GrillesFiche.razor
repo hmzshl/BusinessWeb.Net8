@@ -45,7 +45,7 @@
 												<SfDatePicker  TValue="DateTime?" @bind-Value="@row.Date" />
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Tél./ Fax" LabelColSpan="10">
-												<SfTextBox Readonly="@((row.OldCompte??false))" @bind-Value="@row.Telephone" />
+												<SfTextBox Readonly="@((row.OldCompte))" @bind-Value="@row.Telephone" />
 											</FormItem>
 
 										</GridCol>
@@ -65,7 +65,7 @@
 										</GridCol>
 										<GridCol Xs="24" Md="12">
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Raison sociale" LabelColSpan="5">
-												@if(row.OldCompte??false)
+												@if(row.OldCompte)
 												{
 													<SfDropDownList Query="@fn.LocalDataQuery" PopupHeight="300px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" TValue="string" TItem="F_COMPTET" DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0).Select(a => new F_COMPTET {CT_Num = a.CT_Num, CT_Intitule = a.CT_Num+" - "+a.CT_Intitule}))" @bind-Value="@row.CT_Num">
 														<DropDownListEvents ValueChange=@(args => UpdateInfos()) TValue="string" TItem="F_COMPTET" />
@@ -79,7 +79,7 @@
 												
 											</FormItem>
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Adresse" LabelColSpan="5">
-												<SfTextBox Readonly="@((row.OldCompte??false))" @bind-Value="@row.Adresse" />
+												<SfTextBox Readonly="@((row.OldCompte))" @bind-Value="@row.Adresse" />
 											</FormItem>
 
 											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Interlocuteur" LabelColSpan="5">

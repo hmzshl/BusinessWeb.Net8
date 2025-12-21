@@ -41,6 +41,10 @@ public partial class F_ESCENARIO
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual ICollection<F_DRECOUVREMENTIV> F_DRECOUVREMENTIV { get; set; } = new List<F_DRECOUVREMENTIV>();
 
     public virtual F_SCENARIO SC_NoNavigation { get; set; }

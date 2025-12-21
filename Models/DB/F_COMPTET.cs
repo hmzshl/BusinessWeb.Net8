@@ -241,23 +241,39 @@ public partial class F_COMPTET
 
     public string CT_LangueISO2 { get; set; }
 
+    public short? CT_AnnulationCR { get; set; }
+
+    public short? CT_CessionCreance { get; set; }
+
+    public short? cbProt { get; set; }
+
     public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
+
+    public string CT_Facebook { get; set; }
+
+    public string CT_LinkedIn { get; set; }
+
+    public short? CT_ExclureTrait { get; set; }
+
+    public short? CT_GDPR { get; set; }
+
+    public short? CT_Prospect { get; set; }
+
+    public byte[] cbCG_NumPrinc { get; set; }
 
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
 
-    public DateTime? cbModification { get; set; }
-
-    public virtual ICollection<API_T_AgenceContrat> API_T_AgenceContrat { get; set; } = new List<API_T_AgenceContrat>();
-
     public virtual ICollection<API_T_CertifPointage> API_T_CertifPointage { get; set; } = new List<API_T_CertifPointage>();
-
-    public virtual ICollection<API_T_FC_Charges> API_T_FC_Charges { get; set; } = new List<API_T_FC_Charges>();
-
-    public virtual ICollection<API_T_FC_MasseSalariale> API_T_FC_MasseSalariale { get; set; } = new List<API_T_FC_MasseSalariale>();
-
-    public virtual ICollection<API_T_FC_Repas> API_T_FC_Repas { get; set; } = new List<API_T_FC_Repas>();
 
     public virtual ICollection<API_T_OrdreFabrication> API_T_OrdreFabrication { get; set; } = new List<API_T_OrdreFabrication>();
 

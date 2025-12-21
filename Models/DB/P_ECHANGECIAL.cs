@@ -29,5 +29,7 @@ public partial class P_ECHANGECIAL
 
     public short? E_SousTrait { get; set; }
 
+    public short? E_SousTraitCommande { get; set; }
+
     public int cbMarq { get; set; }
 }

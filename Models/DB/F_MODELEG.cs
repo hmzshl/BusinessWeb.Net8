@@ -31,5 +31,9 @@ public partial class F_MODELEG
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual ICollection<F_EMODELEG> F_EMODELEG { get; set; } = new List<F_EMODELEG>();
 }

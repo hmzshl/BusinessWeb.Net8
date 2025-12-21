@@ -22,4 +22,12 @@ public partial class P_DOSSIERCIAL
     public short? D_ValiditePeriod { get; set; }
 
     public int cbMarq { get; set; }
+
+    public DateTime? D_DerniereCloture { get; set; }
+
+    public string D_ImprimeFacture { get; set; }
+
+    public string D_ImprimeCGV { get; set; }
+
+    public string D_FormatParamCpta { get; set; }
 }

@@ -31,9 +31,9 @@ public partial class API_T_CertifEntete
 
     public decimal Montant { get; set; }
 
-    public DateTime? DateLivraison { get; set; }
-
     public string NumeroRapportMission { get; set; }
+
+    public DateTime? DateLivraison { get; set; }
 
     public short? Souche { get; set; }
 

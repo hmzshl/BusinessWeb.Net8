@@ -43,10 +43,6 @@ public partial class P_FISCAL
 
     public string CG_NumMAJEcartC { get; set; }
 
-    public string CG_NumMAJRembours { get; set; }
-
-    public string BP_CodeMAJRembours { get; set; }
-
     public string CG_NumMAJApur { get; set; }
 
     public string F_Arrondissement { get; set; }
@@ -86,8 +82,6 @@ public partial class P_FISCAL
     public string F_EDITelephone { get; set; }
 
     public string F_EDIEMail { get; set; }
-
-    public short? F_EDICession { get; set; }
 
     public string F_DeclNom { get; set; }
 
@@ -137,5 +131,31 @@ public partial class P_FISCAL
 
     public string F_OGAEMail { get; set; }
 
+    public DateTime? F_EDIDateCession { get; set; }
+
     public int cbMarq { get; set; }
+
+    public string F_MAJConstante01CG_NumMAJConstante { get; set; }
+
+    public string F_MAJConstante01BP_CodeMAJConstante { get; set; }
+
+    public string F_MAJConstante02CG_NumMAJConstante { get; set; }
+
+    public string F_MAJConstante02BP_CodeMAJConstante { get; set; }
+
+    public string F_MAJConstante03CG_NumMAJConstante { get; set; }
+
+    public string F_MAJConstante03BP_CodeMAJConstante { get; set; }
+
+    public string F_MAJConstante04CG_NumMAJConstante { get; set; }
+
+    public string F_MAJConstante04BP_CodeMAJConstante { get; set; }
+
+    public string F_MAJConstante05CG_NumMAJConstante { get; set; }
+
+    public string F_MAJConstante05BP_CodeMAJConstante { get; set; }
+
+    public string F_MAJConstante06CG_NumMAJConstante { get; set; }
+
+    public string F_MAJConstante06BP_CodeMAJConstante { get; set; }
 }

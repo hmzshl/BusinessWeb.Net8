@@ -35,6 +35,10 @@ public partial class F_CATALOGUE
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual ICollection<F_ARTICLE> F_ARTICLEcbCL_No1Navigation { get; set; } = new List<F_ARTICLE>();
 
     public virtual ICollection<F_ARTICLE> F_ARTICLEcbCL_No2Navigation { get; set; } = new List<F_ARTICLE>();

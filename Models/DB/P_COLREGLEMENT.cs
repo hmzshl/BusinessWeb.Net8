@@ -62,4 +62,12 @@ public partial class P_COLREGLEMENT
     public short? CR_ColReglement23 { get; set; }
 
     public int cbMarq { get; set; }
+
+    public short? CR_ColReglement24 { get; set; }
+
+    public short? CR_ColReglement25 { get; set; }
+
+    public short? CR_ColReglement26 { get; set; }
+
+    public short? CR_ColReglement27 { get; set; }
 }

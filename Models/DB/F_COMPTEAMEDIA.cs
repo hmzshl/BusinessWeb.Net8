@@ -29,5 +29,13 @@ public partial class F_COMPTEAMEDIA
 
     public short? cbFlag { get; set; }
 
+    public string ME_TypeMIME { get; set; }
+
+    public string ME_Origine { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTEA F_COMPTEA { get; set; }
 }

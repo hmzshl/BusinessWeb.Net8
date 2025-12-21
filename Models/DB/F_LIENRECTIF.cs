@@ -11,11 +11,7 @@ public partial class F_LIENRECTIF
 
     public string LR_Rectifiee { get; set; }
 
-    public byte[] cbLR_Rectifiee { get; set; }
-
     public string LR_Rectificative { get; set; }
-
-    public byte[] cbLR_Rectificative { get; set; }
 
     public short? cbProt { get; set; }
 
@@ -28,4 +24,12 @@ public partial class F_LIENRECTIF
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public byte[] cbLR_Rectifiee { get; set; }
+
+    public byte[] cbLR_Rectificative { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 }

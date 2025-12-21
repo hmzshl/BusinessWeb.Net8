@@ -27,6 +27,10 @@ public partial class F_MODELE
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual ICollection<F_ARTMODELE> F_ARTMODELE { get; set; } = new List<F_ARTMODELE>();
 
     public virtual ICollection<F_FAMMODELE> F_FAMMODELE { get; set; } = new List<F_FAMMODELE>();

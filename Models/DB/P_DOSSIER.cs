@@ -235,8 +235,6 @@ public partial class P_DOSSIER
 
     public short? D_NotSaisieSommeil { get; set; }
 
-    public short? D_NormeDGI { get; set; }
-
     public DateTime? D_ArchivePeriod { get; set; }
 
     public int? D_ECNoCloture01 { get; set; }
@@ -261,5 +259,39 @@ public partial class P_DOSSIER
 
     public decimal? D_ForfaitImpayes { get; set; }
 
+    public string D_CodeOctave { get; set; }
+
     public int cbMarq { get; set; }
+
+    public string D_Facebook { get; set; }
+
+    public string D_LinkedIn { get; set; }
+
+    public short? D_UpdateDevise { get; set; }
+
+    public short? D_UpdateDeviseSaisie { get; set; }
+
+    public short? D_Laf { get; set; }
+
+    public decimal? D_PasEcriture { get; set; }
+
+    public Guid? D_Logo { get; set; }
+
+    public string API_ICE { get; set; }
+
+    public string API_Patente { get; set; }
+
+    public string API_IdF { get; set; }
+
+    public string API_RC { get; set; }
+
+    public string API_Telephone { get; set; }
+
+    public string API_Email { get; set; }
+
+    public string API_Web { get; set; }
+
+    public string API_Adresse { get; set; }
+
+    public string API_Ville { get; set; }
 }

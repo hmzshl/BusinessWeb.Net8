@@ -27,5 +27,9 @@ public partial class F_EMODELEA
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_MODELEA MA_NoNavigation { get; set; }
 }

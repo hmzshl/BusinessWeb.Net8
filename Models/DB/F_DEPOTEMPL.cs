@@ -33,6 +33,10 @@ public partial class F_DEPOTEMPL
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_DEPOT DE_NoNavigation { get; set; }
 
     public virtual ICollection<F_ARTSTOCKEMPL> F_ARTSTOCKEMPL { get; set; } = new List<F_ARTSTOCKEMPL>();

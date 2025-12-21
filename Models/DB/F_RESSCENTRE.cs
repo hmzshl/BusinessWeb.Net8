@@ -27,6 +27,10 @@ public partial class F_RESSCENTRE
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_RESSOURCEPROD RP_CodeCentreNavigation { get; set; }
 
     public virtual F_RESSOURCEPROD RP_CodeRessourceNavigation { get; set; }

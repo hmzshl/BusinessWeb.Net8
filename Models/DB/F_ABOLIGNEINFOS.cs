@@ -33,5 +33,9 @@ public partial class F_ABOLIGNEINFOS
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_ABOLIGNE AL_NoNavigation { get; set; }
 }

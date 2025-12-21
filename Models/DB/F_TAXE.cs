@@ -57,6 +57,10 @@ public partial class F_TAXE
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_COMPTEG CG_NumNavigation { get; set; }
 
     public virtual ICollection<F_ABOLIGNE> F_ABOLIGNEAL_CodeTaxe1Navigation { get; set; } = new List<F_ABOLIGNE>();

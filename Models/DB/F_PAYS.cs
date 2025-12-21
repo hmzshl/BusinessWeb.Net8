@@ -23,6 +23,8 @@ public partial class F_PAYS
 
     public short? PA_SEPA { get; set; }
 
+    public int? PA_No { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -34,4 +36,8 @@ public partial class F_PAYS
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 }

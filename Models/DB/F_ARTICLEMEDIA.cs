@@ -27,5 +27,13 @@ public partial class F_ARTICLEMEDIA
 
     public short? cbFlag { get; set; }
 
+    public string ME_TypeMIME { get; set; }
+
+    public string ME_Origine { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 }

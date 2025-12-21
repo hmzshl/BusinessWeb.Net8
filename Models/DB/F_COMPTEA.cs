@@ -55,15 +55,21 @@ public partial class F_COMPTEA
 
     public short? CA_ModeFacturation { get; set; }
 
+    public short? cbProt { get; set; }
+
     public int cbMarq { get; set; }
+
+    public string cbCreateur { get; set; }
+
+    public DateTime? cbModification { get; set; }
+
+    public int? cbReplication { get; set; }
+
+    public short? cbFlag { get; set; }
 
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
-
-    public DateTime? cbModification { get; set; }
-
-    public virtual ICollection<API_T_OrdreFabrication> API_T_OrdreFabrication { get; set; } = new List<API_T_OrdreFabrication>();
 
     public virtual F_COMPTEABUDGET F_COMPTEABUDGET { get; set; }
 

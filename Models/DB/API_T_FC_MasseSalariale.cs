@@ -20,8 +20,4 @@ public partial class API_T_FC_MasseSalariale
     public decimal? Charges { get; set; }
 
     public string Libelle { get; set; }
-
-    public virtual F_COMPTET CT_NumNavigation { get; set; }
-
-    public virtual API_T_Information FonctionNavigation { get; set; }
 }

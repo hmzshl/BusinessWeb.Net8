@@ -101,13 +101,13 @@ public partial class API_T_CertifGrilleDialogue
 
     public string DemandeParAutre { get; set; }
 
-    public int PriseChargeTransportInt { get; set; }
-
     public string PeriodiciteEtalonnageEtiquettesPeriode { get; set; }
 
     public string PeriodiciteEtalonnageRapportsPeriode { get; set; }
 
     public string PointsEtalonnageAutre { get; set; }
+
+    public int PriseChargeTransportInt { get; set; }
 
     public string NaturePrestationAutre { get; set; }
 
@@ -127,7 +127,7 @@ public partial class API_T_CertifGrilleDialogue
 
     public string ModificationUser { get; set; }
 
-    public bool? OldCompte { get; set; }
+    public bool OldCompte { get; set; }
 
     public virtual ICollection<API_T_CertifAutoclaves> API_T_CertifAutoclaves { get; set; } = new List<API_T_CertifAutoclaves>();
 
