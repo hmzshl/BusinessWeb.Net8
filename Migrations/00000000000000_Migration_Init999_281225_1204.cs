@@ -9,41 +9,38 @@ namespace BusinessWeb.Migrations
 	{
 		protected override void Up(MigrationBuilder migrationBuilder)
 		{
-			string q1 = @"CREATE TABLE [dbo].[API_T_AREdit_Hist](
-						[id] [int] IDENTITY(1,1) NOT NULL,
-						[DateOP] [datetime] NULL,
-						[OldDate] [datetime] NULL,
-						[OldPiece] [varchar](40) NULL,
-						[OldCT_Num] [varchar](40) NULL,
-						[OldAR_Ref] [varchar](40) NULL,
-						[OldDesign] [varchar](100) NULL,
-						[OldQte] [decimal](24, 6) NULL,
-						[OldPU] [decimal](24, 6) NULL,
-						[OldTaxe] [decimal](24, 6) NULL,
-						[OldRem] [decimal](24, 6) NULL,
-						[OldHT] [decimal](24, 6) NULL,
-						[OldTTC] [decimal](24, 6) NULL,
-						[NewDate] [datetime] NULL,
-						[NewPiece] [varchar](40) NULL,
-						[NewCT_Num] [varchar](40) NULL,
-						[NewAR_Ref] [varchar](40) NULL,
-						[NewDesign] [varchar](100) NULL,
-						[NewQte] [decimal](24, 6) NULL,
-						[NewPU] [decimal](24, 6) NULL,
-						[NewTaxe] [decimal](24, 6) NULL,
-						[NewRem] [decimal](24, 6) NULL,
-						[NewHT] [decimal](24, 6) NULL,
-						[NewTTC] [decimal](24, 6) NULL,
-						[OldCT_Intitule] [varchar](100) NULL,
-						[NewCT_Intitule] [varchar](100) NULL,
-						[OldcbMarq] [int] NULL,
-						[NewcbMarq] [int] NULL,
-					 CONSTRAINT [Pk_API_T_AREdit_Hist_id] PRIMARY KEY CLUSTERED 
-					(
-						[id] ASC
-					)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-					) ON [PRIMARY]
-					GO";
+			string q1 = @"CREATE TABLE dbo.API_T_AREdit_Hist ( 
+							id                   int NOT NULL   IDENTITY ,
+							DateOP               datetime     ,
+							OldDate              datetime     ,
+							OldPiece             varchar(40)     ,
+							OldCT_Num            varchar(40)     ,
+							OldAR_Ref            varchar(40)     ,
+							OldDesign            varchar(100)     ,
+							OldQte               decimal(24,6)     ,
+							OldPU                decimal(24,6)     ,
+							OldTaxe              decimal(24,6)     ,
+							OldRem               decimal(24,6)     ,
+							OldHT                decimal(24,6)     ,
+							OldTTC               decimal(24,6)     ,
+							NewDate              datetime     ,
+							NewPiece             varchar(40)     ,
+							NewCT_Num            varchar(40)     ,
+							NewAR_Ref            varchar(40)     ,
+							NewDesign            varchar(100)     ,
+							NewQte               decimal(24,6)     ,
+							NewPU                decimal(24,6)     ,
+							NewTaxe              decimal(24,6)     ,
+							NewRem               decimal(24,6)     ,
+							NewHT                decimal(24,6)     ,
+							NewTTC               decimal(24,6)     ,
+							OldCT_Intitule       varchar(100)     ,
+							NewCT_Intitule       varchar(100)     ,
+							OldcbMarq            int     ,
+							NewcbMarq            int     ,
+							CONSTRAINT Pk_API_T_AREdit_Hist_id PRIMARY KEY  ( id ) 
+						 );
+						";
 			string q2 = @"CREATE VIEW [dbo].[API_V_ORDREFABRICATION]
 						AS
 						SELECT 
