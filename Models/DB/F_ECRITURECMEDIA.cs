@@ -13,6 +13,10 @@ public partial class F_ECRITURECMEDIA
 
     public string EM_Commentaire { get; set; }
 
+    public string EM_TypeMIME { get; set; }
+
+    public string EM_Origine { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -25,13 +29,11 @@ public partial class F_ECRITURECMEDIA
 
     public short? cbFlag { get; set; }
 
-    public string EM_TypeMIME { get; set; }
-
-    public string EM_Origine { get; set; }
-
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
+
+    public string EM_GedId { get; set; }
 
     public virtual F_ECRITUREC EC_NoNavigation { get; set; }
 }

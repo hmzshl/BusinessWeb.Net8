@@ -26,7 +26,7 @@ namespace BusinessWeb.Services
 			CompteT = new SageComptetService(context);
 			Ecriture = new SageEcritureService(context);
 			CurrentPiece = new DocCurrentPieceService(context);
-			Document = new DocumentService(context, CurrentPiece);
+			Document = new DocumentService(context);
 
 		}
 	}

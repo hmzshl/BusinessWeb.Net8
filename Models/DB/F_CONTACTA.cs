@@ -39,6 +39,12 @@ public partial class F_CONTACTA
 
     public int? CA_No { get; set; }
 
+    public string CA_Facebook { get; set; }
+
+    public string CA_LinkedIn { get; set; }
+
+    public string CA_Skype { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -50,12 +56,6 @@ public partial class F_CONTACTA
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
-
-    public string CA_Facebook { get; set; }
-
-    public string CA_LinkedIn { get; set; }
-
-    public string CA_Skype { get; set; }
 
     public DateTime? cbCreation { get; set; }
 

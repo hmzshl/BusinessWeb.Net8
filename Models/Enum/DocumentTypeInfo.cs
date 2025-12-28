@@ -229,7 +229,7 @@ namespace BusinessWeb.Models.Enum
 		/// </summary>
 		public static short GetDONumberFromDocumentTypeDO(DocumentTypeDO typeDO)
 		{
-			return (short)((int)typeDO % 10);
+			return (short)((int)typeDO);
 		}
 
 		/// <summary>

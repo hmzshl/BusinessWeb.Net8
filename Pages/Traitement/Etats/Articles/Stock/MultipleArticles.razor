@@ -1,4 +1,7 @@
-﻿<div class="dg-parent">
+﻿@using LinqToDB;
+@using LinqToDB.Data;
+@using LinqToDB.EntityFrameworkCore;
+<div class="dg-parent">
     <div>
         <GridRow>
             <GridCol Xs="24" Md="24">
@@ -54,64 +57,144 @@
         fn.DisableTriggers(db, "F_ARTSTOCK", "UPD");
         fn.DisableTriggers(db, "F_DOCLIGNE", "INS");
         fn.DisableTriggers(db, "F_DOCLIGNE", "DEL");
-        foreach (API_V_DOCLIGNE item in dt)
+
+        try
         {
-            var ln = new F_DOCLIGNE();
-            fn.CopyData(item,ln);
-            ln.AR_RefNavigation = null;
-            ln.DL_Qte = qte;
-            ln.EU_Qte = qte;
-            ln.DL_PrixUnitaire = pu;
-            ln.DL_PUTTC = pu + (pu * item.DL_Taxe1 / 100);
-            ln.DL_CMUP = row.AR_PrixAch;
-            ln.DL_PrixRU = row.AR_PrixAch;
-            ln.DL_MontantHT = ((ln.DL_PrixUnitaire - (ln.DL_PrixUnitaire * ln.DL_Remise01REM_Valeur / 100)) 
-            - ((ln.DL_PrixUnitaire - (ln.DL_PrixUnitaire * ln.DL_Remise01REM_Valeur / 100)) * ln.DL_Remise02REM_Valeur / 100)
-            - ((ln.DL_MontantHT = (ln.DL_PrixUnitaire - (ln.DL_PrixUnitaire * ln.DL_Remise01REM_Valeur / 100))
-            - ((ln.DL_PrixUnitaire - (ln.DL_PrixUnitaire * ln.DL_Remise01REM_Valeur / 100)) * ln.DL_Remise02REM_Valeur / 100)) * ln.DL_Remise03REM_Valeur / 100)) * ln.DL_Qte;
-            ln.DL_MontantTTC = ln.DL_MontantHT + (ln.DL_MontantHT * ln.DL_Taxe1 / 100);
-            ln.AR_Ref = row.AR_Ref;
-            ln.DL_Design = row.AR_Design;
-            ln.DL_No = db.F_DOCLIGNE.Max(a => a.DL_No) + 1;
-            db.F_DOCLIGNE.Add(ln);
-            db.SaveChanges();
-            /*
-            var aud = new API_T_Audit_F_DOCLIGNE();
-            aud.AR_Ref = item.AR_Ref;
-            aud.DO_Date = item.DO_Date;
-            aud.DO_Type = item.DO_Type;
-            aud.DO_Piece = item.DO_Piece;
-            aud.Operation = "Suppression";
-            aud.DL_Qte = item.DL_Qte ?? 0;
-            aud.DL_PrixUnitaire = item.DL_PrixUnitaire ?? 0;
-            aud.DL_Remise01REM_Valeur = item.DL_Remise01REM_Valeur ?? 0;
-            aud.DL_Remise02REM_Valeur = item.DL_Remise02REM_Valeur ?? 0;
-            aud.DL_Remise03REM_Valeur = item.DL_Remise03REM_Valeur ?? 0;
-            aud.cbMarq = item.cbMarq;
-            aud.cbMarq = item.cbMarq;
-            aud.CT_Num = item.CT_Num;
-            aud.Timestamp = DateTime.Now;
-            aud.PF_Num = "";
-            db.API_T_Audit_F_DOCLIGNE.Add(aud);
-            db.SaveChanges();*/
+            // Get max DL_No using Entity Framework (synchronous)
+            var maxDL_No = db.F_DOCLIGNE.Max(a => a.DL_No);
+            var newLines = new List<F_DOCLIGNE>();
+            var auditEntries = new List<API_T_Audit_F_DOCLIGNE>();
 
-            db.Database.ExecuteSqlRaw("DELETE FROM F_DOCLIGNEEMPL WHERE DL_No = {0}", item.DL_No);
-            db.Database.ExecuteSqlRaw("DELETE FROM F_DOCLIGNE WHERE cbMarq = {0}",item.cbMarq);
+            // Collect items to delete
+            var itemsToDelete = new List<(int DL_No, int cbMarq)>();
 
-            
+            foreach (API_V_DOCLIGNE item in dt)
+            {
+                maxDL_No++;
 
+                // Create new document line
+                var ln = CreateDocumentLine(item, maxDL_No??0);
+                newLines.Add(ln);
 
+                // Create audit entry
+                auditEntries.Add(CreateAuditEntry(item));
 
+                // Store delete info
+                itemsToDelete.Add((item.DL_No ?? 0, item.cbMarq));
+            }
+
+            // Use LinqToDB for bulk operations
+            using var _db = db.CreateLinqToDBConnection();
+
+            // Perform all operations in a transaction
+            using (var transaction = await _db.BeginTransactionAsync())
+            {
+                try
+                {
+                    // Bulk insert new lines
+                    if (newLines.Any())
+                    {
+                        await _db.BulkCopyAsync(new BulkCopyOptions
+                        {
+                            BulkCopyType = BulkCopyType.MultipleRows
+                        }, newLines);
+                    }
+
+                    // Bulk insert audit entries
+                    if (auditEntries.Any())
+                    {
+                        await _db.BulkCopyAsync(new BulkCopyOptions
+                        {
+                            BulkCopyType = BulkCopyType.MultipleRows
+                        }, auditEntries);
+                    }
+
+                    // Delete operations using LinqToDB
+                    if (itemsToDelete.Any())
+                    {
+                        var dlNos = itemsToDelete.Select(x => x.DL_No).Distinct().ToArray();
+                        var cbMarqs = itemsToDelete.Select(x => x.cbMarq).Distinct().ToArray();
+
+                        // Delete from F_DOCLIGNEEMPL
+                        await _db.GetTable<F_DOCLIGNEEMPL>()
+                            .Where(x => dlNos.Contains(x.DL_No))
+                            .DeleteAsync();
+
+                        // Delete from F_DOCLIGNE
+                        await _db.GetTable<F_DOCLIGNE>()
+                            .Where(x => cbMarqs.Contains(x.cbMarq))
+                            .DeleteAsync();
+                    }
+
+                    await transaction.CommitAsync();
+                }
+                catch
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            }
+
+            // Update stock (if UpdateStock uses EF, keep it separate)
+            await UpdateStock(row.AR_Ref);
         }
+        finally
+        {
+            fn.EnableTriggers(db, "F_ARTSTOCK", "INS");
+            fn.EnableTriggers(db, "F_ARTSTOCK", "UPD");
+            fn.EnableTriggers(db, "F_DOCLIGNE", "INS");
+            fn.EnableTriggers(db, "F_DOCLIGNE", "DEL");
 
-        await UpdateStock(row.AR_Ref);
+            DialogService.Close();
+        }
+    }
 
-        fn.EnableTriggers(db, "F_ARTSTOCK", "INS");
-        fn.EnableTriggers(db, "F_ARTSTOCK", "UPD");
-        fn.EnableTriggers(db, "F_DOCLIGNE", "INS");
-        fn.EnableTriggers(db, "F_DOCLIGNE", "DEL");
+    private F_DOCLIGNE CreateDocumentLine(API_V_DOCLIGNE item, int dlNo)
+    {
+        var ln = new F_DOCLIGNE();
+        fn.CopyData(item, ln);
 
-        DialogService.Close();
+        ln.AR_RefNavigation = null;
+        ln.DL_Qte = qte;
+        ln.EU_Qte = qte;
+        ln.DL_PrixUnitaire = pu;
+        ln.DL_PUTTC = pu + (pu * (item.DL_Taxe1 / 100));
+        ln.DL_CMUP = row.AR_PrixAch;
+        ln.DL_PrixRU = row.AR_PrixAch;
+
+        // Calculate amounts more clearly
+        decimal priceAfterRem1 = ln.DL_PrixUnitaire - (ln.DL_PrixUnitaire * ln.DL_Remise01REM_Valeur / 100) ?? 0;
+        decimal priceAfterRem2 = priceAfterRem1 - (priceAfterRem1 * ln.DL_Remise02REM_Valeur / 100) ?? 0;
+        decimal priceAfterRem3 = priceAfterRem2 - (priceAfterRem2 * ln.DL_Remise03REM_Valeur / 100) ?? 0;
+
+        ln.DL_MontantHT = Math.Round((priceAfterRem3 * ln.DL_Qte) ?? 0, 2);
+        ln.DL_MontantTTC = Math.Round(ln.DL_MontantHT + (ln.DL_MontantHT * ln.DL_Taxe1 / 100) ?? 0, 2);
+        ln.AR_Ref = row.AR_Ref;
+        ln.DL_Design = row.AR_Design;
+        ln.DL_No = dlNo;
+
+        return ln;
+    }
+
+    private API_T_Audit_F_DOCLIGNE CreateAuditEntry(API_V_DOCLIGNE item)
+    {
+        return new API_T_Audit_F_DOCLIGNE
+        {
+            AR_Ref = item.AR_Ref,
+            DO_Date = item.DO_Date,
+            DO_Type = item.DO_Type,
+            DO_Piece = item.DO_Piece,
+            Operation = "Modification",
+            DL_Qte = item.DL_Qte ?? 0,
+            DL_PrixUnitaire = item.DL_PrixUnitaire ?? 0,
+            DL_Remise01REM_Valeur = item.DL_Remise01REM_Valeur ?? 0,
+            DL_Remise02REM_Valeur = item.DL_Remise02REM_Valeur ?? 0,
+            DL_Remise03REM_Valeur = item.DL_Remise03REM_Valeur ?? 0,
+            cbMarq = item.cbMarq,
+            CT_Num = item.CT_Num,
+            Timestamp = DateTime.Now,
+            PF_Num = ""
+        };
     }
     private async Task Annuler()
     {

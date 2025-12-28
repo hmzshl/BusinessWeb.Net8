@@ -29,7 +29,5 @@ public partial class F_REPCOM
 
     public Guid? cbCreationUser { get; set; }
 
-    public virtual F_COLLABORATEUR CO_NoNavigation { get; set; }
-
     public virtual F_TARIF TF_NoNavigation { get; set; }
 }

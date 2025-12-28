@@ -123,6 +123,12 @@ public partial class F_RESSOURCEPROD
 
     public string RP_Horaire0702RP_PlageFin { get; set; }
 
+    public string RP_Facebook { get; set; }
+
+    public string RP_LinkedIn { get; set; }
+
+    public string RP_Skype { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -135,19 +141,11 @@ public partial class F_RESSOURCEPROD
 
     public short? cbFlag { get; set; }
 
-    public string RP_Facebook { get; set; }
-
-    public string RP_LinkedIn { get; set; }
-
-    public string RP_Skype { get; set; }
-
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
 
     public virtual F_ARTICLE AR_RefDefautNavigation { get; set; }
-
-    public virtual F_CALENDRIER CAL_NoNavigation { get; set; }
 
     public virtual F_DEPOT DE_NoNavigation { get; set; }
 

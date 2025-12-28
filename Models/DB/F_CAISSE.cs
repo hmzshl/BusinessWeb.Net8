@@ -61,8 +61,6 @@ public partial class F_CAISSE
 
     public Guid? cbCreationUser { get; set; }
 
-    public virtual F_COMPTET CT_NumNavigation { get; set; }
-
     public virtual F_DEPOT DE_NoNavigation { get; set; }
 
     public virtual ICollection<F_AFFICHEURCAISSE> F_AFFICHEURCAISSE { get; set; } = new List<F_AFFICHEURCAISSE>();
@@ -76,8 +74,4 @@ public partial class F_CAISSE
     public virtual ICollection<F_REGLEARCHIVE> F_REGLEARCHIVE { get; set; } = new List<F_REGLEARCHIVE>();
 
     public virtual ICollection<F_TICKETARCHIVE> F_TICKETARCHIVE { get; set; } = new List<F_TICKETARCHIVE>();
-
-    public virtual F_COLLABORATEUR cbCO_NoCaissierNavigation { get; set; }
-
-    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
 }

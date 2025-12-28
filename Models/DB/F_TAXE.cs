@@ -61,55 +61,15 @@ public partial class F_TAXE
 
     public Guid? cbCreationUser { get; set; }
 
+    public int MEX_No { get; set; }
+
     public virtual F_COMPTEG CG_NumNavigation { get; set; }
 
-    public virtual ICollection<F_ABOLIGNE> F_ABOLIGNEAL_CodeTaxe1Navigation { get; set; } = new List<F_ABOLIGNE>();
-
-    public virtual ICollection<F_ABOLIGNE> F_ABOLIGNEAL_CodeTaxe2Navigation { get; set; } = new List<F_ABOLIGNE>();
-
-    public virtual ICollection<F_ABOLIGNE> F_ABOLIGNEAL_CodeTaxe3Navigation { get; set; } = new List<F_ABOLIGNE>();
-
-    public virtual ICollection<F_ARTCOMPTA> F_ARTCOMPTAACP_ComptaCPT_Taxe1Navigation { get; set; } = new List<F_ARTCOMPTA>();
-
-    public virtual ICollection<F_ARTCOMPTA> F_ARTCOMPTAACP_ComptaCPT_Taxe2Navigation { get; set; } = new List<F_ARTCOMPTA>();
-
-    public virtual ICollection<F_ARTCOMPTA> F_ARTCOMPTAACP_ComptaCPT_Taxe3Navigation { get; set; } = new List<F_ARTCOMPTA>();
-
-    public virtual ICollection<F_ARTCOMPTA> F_ARTCOMPTAACP_ComptaCPT_TaxeAnc1Navigation { get; set; } = new List<F_ARTCOMPTA>();
-
-    public virtual ICollection<F_ARTCOMPTA> F_ARTCOMPTAACP_ComptaCPT_TaxeAnc2Navigation { get; set; } = new List<F_ARTCOMPTA>();
-
-    public virtual ICollection<F_ARTCOMPTA> F_ARTCOMPTAACP_ComptaCPT_TaxeAnc3Navigation { get; set; } = new List<F_ARTCOMPTA>();
-
     public virtual ICollection<F_COMPTEG> F_COMPTEG { get; set; } = new List<F_COMPTEG>();
-
-    public virtual ICollection<F_DOCENTETE> F_DOCENTETEDO_CodeTaxe1Navigation { get; set; } = new List<F_DOCENTETE>();
-
-    public virtual ICollection<F_DOCENTETE> F_DOCENTETEDO_CodeTaxe2Navigation { get; set; } = new List<F_DOCENTETE>();
-
-    public virtual ICollection<F_DOCENTETE> F_DOCENTETEDO_CodeTaxe3Navigation { get; set; } = new List<F_DOCENTETE>();
-
-    public virtual ICollection<F_DOCLIGNE> F_DOCLIGNEDL_CodeTaxe1Navigation { get; set; } = new List<F_DOCLIGNE>();
-
-    public virtual ICollection<F_DOCLIGNE> F_DOCLIGNEDL_CodeTaxe2Navigation { get; set; } = new List<F_DOCLIGNE>();
-
-    public virtual ICollection<F_DOCLIGNE> F_DOCLIGNEDL_CodeTaxe3Navigation { get; set; } = new List<F_DOCLIGNE>();
 
     public virtual ICollection<F_ECRITUREC> F_ECRITUREC { get; set; } = new List<F_ECRITUREC>();
 
     public virtual ICollection<F_ETAXE> F_ETAXE { get; set; } = new List<F_ETAXE>();
-
-    public virtual ICollection<F_FAMCOMPTA> F_FAMCOMPTAFCP_ComptaCPT_Taxe1Navigation { get; set; } = new List<F_FAMCOMPTA>();
-
-    public virtual ICollection<F_FAMCOMPTA> F_FAMCOMPTAFCP_ComptaCPT_Taxe2Navigation { get; set; } = new List<F_FAMCOMPTA>();
-
-    public virtual ICollection<F_FAMCOMPTA> F_FAMCOMPTAFCP_ComptaCPT_Taxe3Navigation { get; set; } = new List<F_FAMCOMPTA>();
-
-    public virtual ICollection<F_FAMCOMPTA> F_FAMCOMPTAFCP_ComptaCPT_TaxeAnc1Navigation { get; set; } = new List<F_FAMCOMPTA>();
-
-    public virtual ICollection<F_FAMCOMPTA> F_FAMCOMPTAFCP_ComptaCPT_TaxeAnc2Navigation { get; set; } = new List<F_FAMCOMPTA>();
-
-    public virtual ICollection<F_FAMCOMPTA> F_FAMCOMPTAFCP_ComptaCPT_TaxeAnc3Navigation { get; set; } = new List<F_FAMCOMPTA>();
 
     public virtual ICollection<F_REGTAXE> F_REGTAXETA_Code01Navigation { get; set; } = new List<F_REGTAXE>();
 

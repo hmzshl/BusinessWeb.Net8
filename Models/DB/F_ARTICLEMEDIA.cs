@@ -15,6 +15,10 @@ public partial class F_ARTICLEMEDIA
 
     public string ME_Fichier { get; set; }
 
+    public string ME_TypeMIME { get; set; }
+
+    public string ME_Origine { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -27,13 +31,11 @@ public partial class F_ARTICLEMEDIA
 
     public short? cbFlag { get; set; }
 
-    public string ME_TypeMIME { get; set; }
-
-    public string ME_Origine { get; set; }
-
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
+
+    public string ME_GedId { get; set; }
 
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 }

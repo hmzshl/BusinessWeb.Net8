@@ -81,7 +81,7 @@
     }
     private async Task Submit(API_V_ARTICLE args)
     {
-        var doc = om.CIAL().FactoryDocumentStock.ReadPiece(DocumentType.DocumentTypeStockMouvOut,DO_Piece);
+        /*var doc = om.CIAL().FactoryDocumentStock.ReadPiece(DocumentType.DocumentTypeStockMouvOut,DO_Piece);
         IBODocumentStockLigne3 ligne = doc.FactoryDocumentLigne.Create() as IBODocumentStockLigne3;
         if((args.AR_QteOperatoire??0) == 0)
         {
@@ -89,7 +89,7 @@
         }
         ligne.SetDefaultArticleReference(args.AR_Ref, (double)(args.AR_QteOperatoire??1));
         ligne.DL_Design = args.AR_Design;
-        ligne.Write();
+        ligne.Write();*/
     }
     private async Task SubmitListe()
     {

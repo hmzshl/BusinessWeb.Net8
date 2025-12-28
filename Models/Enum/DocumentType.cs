@@ -4,13 +4,7 @@ namespace BusinessWeb.Models.Enum
 	/// <summary>
 	/// Document domaine types
 	/// </summary>
-	public enum DocumentDomaine
-	{
-		Vente = 0,
-		Achat = 1,
-		Stock = 2,
-		Autre = 4
-	}
+
 
 	/// <summary>
 	/// Document types for F_DOCCURRENTPIECE (DC_IdCol)
@@ -56,6 +50,47 @@ namespace BusinessWeb.Models.Enum
 		DocumentInterne4 = 3, // SP
 		DocumentInterne5 = 4, // RP
 		DocumentInterne6 = 6  // SR
+	}
+	public enum DocumentTypeMVT
+	{
+		// Vente (Domaine = 0)
+		DevisClient = 0,          // DE
+		BonCommandeClient = 0,    // BC
+		PreparationLivraisonClient = 0,       // PL
+		BonLivraisonClient = 3,   // BL
+		BonRetourClient = 1,      // BR
+		BonAvoirClient = 0,       // BA
+		FactureClient = 3,        // FA
+		FactureRetourClient = 1, // FR
+		FactureAvoirClient = 0,   // FV
+
+		// Achat (Domaine = 1)
+		DemandeAchatFournisseur = 0,   // DA
+		PreparationCommandeFournisseur = 0, // PC
+		BonCommandeFournisseur = 0,      // FBC
+		BonLivraisonFournisseur = 1,      // FBL
+		BonRetourFournisseur = 3,      // FBR
+		BonAvoirFournisseur = 0,      // FBA
+		FactureFournisseur = 1,      // FFA
+		FactureRetourFournisseur = 3, // FRF
+		FactureAvoirFournisseur = 0, // FRV
+
+		// Stock (Domaine = 2)
+		MouvementEntree = 1, // ME
+		MouvementSortie = 3, // MS
+		Declassement = 0,    // DS
+		Transfert = 0,       // MT
+		PreparationFabrication = 0,     // PF
+		OrdreFabrication = 0, // OF
+		BonFabrication = 0,  // BF
+
+		// Autre (Domaine = 4)
+		DocumentInterne1 = 0,          // CA
+		DocumentInterne2 = 0,          // BI
+		DocumentInterne3 = 0,         // RC
+		DocumentInterne4 = 0, // SP
+		DocumentInterne5 = 0, // RP
+		DocumentInterne6 = 0  // SR
 	}
 
 	/// <summary>
@@ -108,7 +143,21 @@ namespace BusinessWeb.Models.Enum
 		Retour = 1,      // Facture de retour
 		Avoir = 2        // Facture d'avoir
 	}
-
+	public enum DocumentDomaine
+	{
+		Vente = 0,
+		Achat = 1,
+		Stock = 2,
+		Autre = 4
+	}
+	public class DocumentType 
+	{
+		public short? Domaine { get; set; }
+		public short? DC_Id { get; set; }
+		public short? DO_Id { get; set; }
+		public short? Provenance { get; set; }
+		public short? Mvt { get; set; }
+	}
 	/// <summary>
 	/// Combined key for DocumentTypeDC (requires domaine + dcId)
 	/// </summary>

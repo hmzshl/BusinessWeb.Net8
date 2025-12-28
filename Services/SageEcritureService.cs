@@ -130,7 +130,6 @@ namespace BusinessWeb.Services
             row.cbCreateur = "BWB";
             row.EC_Lettrage = "";
             row.EC_Lettre = 0;
-            row.EC_StatFinexKap = 0;
 			row.EC_DateCloture = row.EC_DateOp ?? defaultDate;
 
 

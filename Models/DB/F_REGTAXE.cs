@@ -199,6 +199,26 @@ public partial class F_REGTAXE
 
     public Guid? cbCreationUser { get; set; }
 
+    public short? RT_TypeLigne01 { get; set; }
+
+    public short? RT_TypeLigne02 { get; set; }
+
+    public short? RT_TypeLigne03 { get; set; }
+
+    public short? RT_TypeLigne04 { get; set; }
+
+    public short? RT_TypeLigne05 { get; set; }
+
+    public short? RT_TypeLigne06 { get; set; }
+
+    public short? RT_TypeLigne07 { get; set; }
+
+    public short? RT_TypeLigne08 { get; set; }
+
+    public short? RT_TypeLigne09 { get; set; }
+
+    public short? RT_TypeLigne10 { get; set; }
+
     public virtual F_COMPTEG CG_Num01Navigation { get; set; }
 
     public virtual F_COMPTEG CG_Num02Navigation { get; set; }

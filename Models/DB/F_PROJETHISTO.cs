@@ -77,7 +77,5 @@ public partial class F_PROJETHISTO
 
     public virtual F_ARTICLE AR_RefComposeNavigation { get; set; }
 
-    public virtual F_PROJETFABRICATION PF_NumNavigation { get; set; }
-
     public virtual F_PROJETPLANNING PP_NoNavigation { get; set; }
 }

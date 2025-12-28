@@ -15,6 +15,8 @@ public partial class F_CONDITION
 
     public string EC_Enumere { get; set; }
 
+    public byte[] cbEC_Enumere { get; set; }
+
     public decimal? EC_Quantite { get; set; }
 
     public string CO_Ref { get; set; }
@@ -44,8 +46,6 @@ public partial class F_CONDITION
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
-
-    public byte[] cbEC_Enumere { get; set; }
 
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 }

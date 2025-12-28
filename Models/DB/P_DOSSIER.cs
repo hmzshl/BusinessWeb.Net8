@@ -79,8 +79,6 @@ public partial class P_DOSSIER
 
     public short? D_Ventil { get; set; }
 
-    public short? D_Edi { get; set; }
-
     public short? D_Archivage01 { get; set; }
 
     public short? D_Archivage02 { get; set; }
@@ -261,8 +259,6 @@ public partial class P_DOSSIER
 
     public string D_CodeOctave { get; set; }
 
-    public int cbMarq { get; set; }
-
     public string D_Facebook { get; set; }
 
     public string D_LinkedIn { get; set; }
@@ -271,11 +267,67 @@ public partial class P_DOSSIER
 
     public short? D_UpdateDeviseSaisie { get; set; }
 
+    public int cbMarq { get; set; }
+
     public short? D_Laf { get; set; }
 
     public decimal? D_PasEcriture { get; set; }
 
     public Guid? D_Logo { get; set; }
+
+    public short? D_InsereLogo { get; set; }
+
+    public short? D_CreateProspect { get; set; }
+
+    public short? D_ReportNoEcriture { get; set; }
+
+    public short? D_RegimeFEC { get; set; }
+
+    public DateTime? D_TVADateAcompte { get; set; }
+
+    public string BM_Intitule { get; set; }
+
+    public short? D_ConserveMaj { get; set; }
+
+    public DateTime? D_DebutExo06 { get; set; }
+
+    public DateTime? D_DebutExo07 { get; set; }
+
+    public DateTime? D_DebutExo08 { get; set; }
+
+    public DateTime? D_DebutExo09 { get; set; }
+
+    public DateTime? D_DebutExo10 { get; set; }
+
+    public DateTime? D_FinExo06 { get; set; }
+
+    public DateTime? D_FinExo07 { get; set; }
+
+    public DateTime? D_FinExo08 { get; set; }
+
+    public DateTime? D_FinExo09 { get; set; }
+
+    public DateTime? D_FinExo10 { get; set; }
+
+    public short? D_Archivage06 { get; set; }
+
+    public short? D_Archivage07 { get; set; }
+
+    public short? D_Archivage08 { get; set; }
+
+    public short? D_Archivage09 { get; set; }
+
+    public short? D_Archivage10 { get; set; }
+
+    public int? D_ECNoCloture06 { get; set; }
+
+    public int? D_ECNoCloture07 { get; set; }
+
+    public int? D_ECNoCloture08 { get; set; }
+
+    public int? D_ECNoCloture09 { get; set; }
+
+    public int? D_ECNoCloture10 { get; set; }
 
     public string API_ICE { get; set; }
 

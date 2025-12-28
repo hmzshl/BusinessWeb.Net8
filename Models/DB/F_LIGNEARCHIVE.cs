@@ -9,6 +9,8 @@ public partial class F_LIGNEARCHIVE
 {
     public string TA_Piece { get; set; }
 
+    public byte[] cbTA_Piece { get; set; }
+
     public string AR_Ref { get; set; }
 
     public byte[] cbAR_Ref { get; set; }
@@ -97,8 +99,6 @@ public partial class F_LIGNEARCHIVE
 
     public short? cbFlag { get; set; }
 
-    public byte[] cbTA_Piece { get; set; }
-
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
@@ -106,6 +106,4 @@ public partial class F_LIGNEARCHIVE
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 
     public virtual F_TICKETARCHIVE TA_PieceNavigation { get; set; }
-
-    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
 }

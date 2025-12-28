@@ -39,6 +39,8 @@ public partial class F_JOURNAUX
 
     public short? JO_SuiviTreso { get; set; }
 
+    public short? JO_LettrageSaisie { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -51,11 +53,13 @@ public partial class F_JOURNAUX
 
     public short? cbFlag { get; set; }
 
-    public short? JO_LettrageSaisie { get; set; }
-
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
+
+    public short? JO_Protec { get; set; }
+
+    public string JO_PersoLibelle { get; set; }
 
     public virtual F_COMPTEG CG_NumNavigation { get; set; }
 }

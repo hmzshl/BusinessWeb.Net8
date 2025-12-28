@@ -117,8 +117,6 @@ public partial class F_PROJETPLANNING
 
     public virtual ICollection<F_PROJETHISTO> F_PROJETHISTO { get; set; } = new List<F_PROJETHISTO>();
 
-    public virtual F_PROJETFABRICATION PF_NumNavigation { get; set; }
-
     public virtual F_RESSOURCEPROD RP_CodeNavigation { get; set; }
 
     public virtual F_DEPOT cbDE_NoNavigation { get; set; }

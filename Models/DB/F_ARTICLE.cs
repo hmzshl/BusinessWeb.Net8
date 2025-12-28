@@ -229,6 +229,10 @@ public partial class F_ARTICLE
 
     public Guid? cbCreationUser { get; set; }
 
+    public short? AR_InterdireCommande { get; set; }
+
+    public short? AR_Exclure { get; set; }
+
     public virtual ICollection<API_T_OrdreFabricationDetail> API_T_OrdreFabricationDetail { get; set; } = new List<API_T_OrdreFabricationDetail>();
 
     public virtual ICollection<API_T_OrdreFabricationLigne> API_T_OrdreFabricationLigne { get; set; } = new List<API_T_OrdreFabricationLigne>();

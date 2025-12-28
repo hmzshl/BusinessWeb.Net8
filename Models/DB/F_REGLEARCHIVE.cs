@@ -9,6 +9,8 @@ public partial class F_REGLEARCHIVE
 {
     public string TA_Piece { get; set; }
 
+    public byte[] cbTA_Piece { get; set; }
+
     public decimal? RA_Montant { get; set; }
 
     public short? N_Devise { get; set; }
@@ -34,8 +36,6 @@ public partial class F_REGLEARCHIVE
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
-
-    public byte[] cbTA_Piece { get; set; }
 
     public DateTime? cbCreation { get; set; }
 

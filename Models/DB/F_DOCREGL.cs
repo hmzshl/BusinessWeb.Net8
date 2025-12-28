@@ -15,6 +15,8 @@ public partial class F_DOCREGL
 
     public string DO_Piece { get; set; }
 
+    public byte[] cbDO_Piece { get; set; }
+
     public short? DR_TypeRegl { get; set; }
 
     public DateTime? DR_Date { get; set; }
@@ -37,6 +39,12 @@ public partial class F_DOCREGL
 
     public short? N_Reglement { get; set; }
 
+    public int? CA_No { get; set; }
+
+    public int? cbCA_No { get; set; }
+
+    public short? DO_DocType { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -49,9 +57,9 @@ public partial class F_DOCREGL
 
     public short? cbFlag { get; set; }
 
-    public int? CA_No { get; set; }
+    public DateTime? cbCreation { get; set; }
 
-    public int? cbCA_No { get; set; }
+    public Guid? cbCreationUser { get; set; }
 
     public byte[] cbHash { get; set; }
 
@@ -61,13 +69,13 @@ public partial class F_DOCREGL
 
     public int? cbHashOrder { get; set; }
 
-    public short? DO_DocType { get; set; }
+    public Guid? DR_RefPaiement { get; set; }
 
-    public byte[] cbDO_Piece { get; set; }
+    public string DR_AdressePaiement { get; set; }
 
-    public DateTime? cbCreation { get; set; }
+    public string DO_PieceAcompte { get; set; }
 
-    public Guid? cbCreationUser { get; set; }
+    public byte[] cbDO_PieceAcompte { get; set; }
 
     public virtual ICollection<F_REGLECH> F_REGLECH { get; set; } = new List<F_REGLECH>();
 }

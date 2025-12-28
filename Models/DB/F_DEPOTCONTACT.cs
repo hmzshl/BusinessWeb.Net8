@@ -35,6 +35,12 @@ public partial class F_DEPOTCONTACT
 
     public int? DC_No { get; set; }
 
+    public string DC_Facebook { get; set; }
+
+    public string DC_LinkedIn { get; set; }
+
+    public string DC_Skype { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -46,12 +52,6 @@ public partial class F_DEPOTCONTACT
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
-
-    public string DC_Facebook { get; set; }
-
-    public string DC_LinkedIn { get; set; }
-
-    public string DC_Skype { get; set; }
 
     public DateTime? cbCreation { get; set; }
 

@@ -103,7 +103,35 @@ public partial class F_CALENDRIER
 
     public Guid? cbCreationUser { get; set; }
 
-    public virtual ICollection<F_ECALENDRIER> F_ECALENDRIER { get; set; } = new List<F_ECALENDRIER>();
+    public short? CAL_OrderDay01 { get; set; }
 
-    public virtual ICollection<F_RESSOURCEPROD> F_RESSOURCEPROD { get; set; } = new List<F_RESSOURCEPROD>();
+    public short? CAL_OrderDay02 { get; set; }
+
+    public short? CAL_OrderDay03 { get; set; }
+
+    public short? CAL_OrderDay04 { get; set; }
+
+    public short? CAL_OrderDay05 { get; set; }
+
+    public short? CAL_OrderDay06 { get; set; }
+
+    public short? CAL_OrderDay07 { get; set; }
+
+    public short? CAL_DeliveryDay01 { get; set; }
+
+    public short? CAL_DeliveryDay02 { get; set; }
+
+    public short? CAL_DeliveryDay03 { get; set; }
+
+    public short? CAL_DeliveryDay04 { get; set; }
+
+    public short? CAL_DeliveryDay05 { get; set; }
+
+    public short? CAL_DeliveryDay06 { get; set; }
+
+    public short? CAL_DeliveryDay07 { get; set; }
+
+    public virtual ICollection<F_COMPTET> F_COMPTET { get; set; } = new List<F_COMPTET>();
+
+    public virtual ICollection<F_ECALENDRIER> F_ECALENDRIER { get; set; } = new List<F_ECALENDRIER>();
 }

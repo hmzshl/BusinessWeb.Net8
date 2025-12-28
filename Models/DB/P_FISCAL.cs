@@ -133,8 +133,6 @@ public partial class P_FISCAL
 
     public DateTime? F_EDIDateCession { get; set; }
 
-    public int cbMarq { get; set; }
-
     public string F_MAJConstante01CG_NumMAJConstante { get; set; }
 
     public string F_MAJConstante01BP_CodeMAJConstante { get; set; }
@@ -158,4 +156,12 @@ public partial class P_FISCAL
     public string F_MAJConstante06CG_NumMAJConstante { get; set; }
 
     public string F_MAJConstante06BP_CodeMAJConstante { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public short? F_TVADebitOption { get; set; }
+
+    public DateTime? F_TVADebitDateApplication { get; set; }
+
+    public DateTime? F_TVADebitDateResiliation { get; set; }
 }

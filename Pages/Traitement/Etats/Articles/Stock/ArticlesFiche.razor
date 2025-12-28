@@ -2,10 +2,11 @@
     <GridCol Xs="24" Md="17">
         <Card Title="Documents à réaffecter">
             <div style="height: 80vh;">
-                <SfGrid Height="100%" AllowSelection @ref="LigneGrid" DataSource="@(lignes)" AllowPaging ContextMenuItems="@(new List<Object>() { "Reaffecter", new ContextMenuItemModel { Text = "Réaffecter cet article", Target = ".e-content", Id = "reaffacter" } })">
-                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                <SfGrid Height="100%" AllowSelection @ref="LigneGrid" DataSource="@(lignes)" AllowPaging AllowFiltering AllowSorting 
+                 ContextMenuItems="@(new List<Object>() { "Reaffecter", new ContextMenuItemModel { Text = "Réaffecter cet article", Target = ".e-content", Id = "reaffacter" } })">
+                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                     <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
-                    <GridPageSettings PageSize="100"></GridPageSettings>
+                    <GridPageSettings PageSize="500"></GridPageSettings>
                     <GridEvents TValue="API_V_DOCLIGNE" RowSelecting="DetailsSelect" ContextMenuItemClicked="OnContextMenuClick"></GridEvents>
                     <GridAggregates>
                         <GridAggregate>

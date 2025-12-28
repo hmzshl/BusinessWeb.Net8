@@ -78,6 +78,4 @@ public partial class F_ARTFOURNISS
     public Guid? cbCreationUser { get; set; }
 
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
-
-    public virtual F_COMPTET CT_NumNavigation { get; set; }
 }

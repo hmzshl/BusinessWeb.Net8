@@ -55,19 +55,5 @@ public partial class F_ARTCOMPTA
 
     public Guid? cbCreationUser { get; set; }
 
-    public virtual F_COMPTEG ACP_ComptaCPT_CompteGNavigation { get; set; }
-
-    public virtual F_TAXE ACP_ComptaCPT_Taxe1Navigation { get; set; }
-
-    public virtual F_TAXE ACP_ComptaCPT_Taxe2Navigation { get; set; }
-
-    public virtual F_TAXE ACP_ComptaCPT_Taxe3Navigation { get; set; }
-
-    public virtual F_TAXE ACP_ComptaCPT_TaxeAnc1Navigation { get; set; }
-
-    public virtual F_TAXE ACP_ComptaCPT_TaxeAnc2Navigation { get; set; }
-
-    public virtual F_TAXE ACP_ComptaCPT_TaxeAnc3Navigation { get; set; }
-
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 }

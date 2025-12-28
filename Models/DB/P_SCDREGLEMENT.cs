@@ -16,4 +16,6 @@ public partial class P_SCDREGLEMENT
     public short? cbIndice { get; set; }
 
     public int cbMarq { get; set; }
+
+    public short? SCD_Arrondir { get; set; }
 }

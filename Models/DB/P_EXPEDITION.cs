@@ -25,9 +25,9 @@ public partial class P_EXPEDITION
 
     public short? E_TypeLigneFranco { get; set; }
 
+    public short? E_TypeCalcul { get; set; }
+
     public short? cbIndice { get; set; }
 
     public int cbMarq { get; set; }
-
-    public short? E_TypeCalcul { get; set; }
 }

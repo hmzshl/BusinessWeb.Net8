@@ -67,6 +67,10 @@ public partial class F_AGENDA
 
     public Guid? cbCreationUser { get; set; }
 
+    public short? AG_Calendrier { get; set; }
+
+    public int? AG_Contact { get; set; }
+
     public virtual F_DEPOT cbDE_NoNavigation { get; set; }
 
     public virtual F_DOCLIGNE cbDL_NoNavigation { get; set; }

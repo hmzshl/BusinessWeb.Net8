@@ -15,10 +15,12 @@
 		</ToolbarItems>
 	</SfToolbar>
 	<div class="@ClassHeight" style=" zoom: @session.zoomLevel;">
-		<SfGrid TValue="API_V_ARTICLEMVT" Height="100%" AllowSelection="true" EnableHover="true" DataSource="@details.OrderBy(a => a.DL_DateBL)" AllowTextWrap AllowExcelExport>
+		<SfGrid EnableVirtualization AllowFiltering AllowSorting TValue="API_V_ARTICLEMVT" Height="100%" 
+		AllowSelection="true" EnableHover="true" DataSource="@details.OrderBy(a => a.DL_DateBL)" AllowTextWrap AllowExcelExport>
 			<GridEvents TValue="API_V_ARTICLEMVT"></GridEvents>
 			<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox" />
 			<GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
+            <GridPageSettings PageSize="500" />
 			<GridAggregates>
 				<GridAggregate>
 					<GridAggregateColumns>

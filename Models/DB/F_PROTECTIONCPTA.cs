@@ -39,6 +39,10 @@ public partial class F_PROTECTIONCPTA
 
     public short? PROT_AllowExternalAccess { get; set; }
 
+    public Guid? PROT_Guid { get; set; }
+
+    public byte[] PROT_Hash { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -50,10 +54,6 @@ public partial class F_PROTECTIONCPTA
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
-
-    public Guid? PROT_Guid { get; set; }
-
-    public byte[] PROT_Hash { get; set; }
 
     public DateTime? cbCreation { get; set; }
 
@@ -71,7 +71,7 @@ public partial class F_PROTECTIONCPTA
 
     public short? PROT_ServiceSageIDActif { get; set; }
 
-    public Guid? PROT_ServiceSageIDUserId { get; set; }
+    public string PROT_ServiceSageIDUserId { get; set; }
 
     public virtual ICollection<F_COLLABORATEUR> F_COLLABORATEUR { get; set; } = new List<F_COLLABORATEUR>();
 

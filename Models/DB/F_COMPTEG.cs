@@ -57,6 +57,8 @@ public partial class F_COMPTEG
 
     public short? CG_ReportAnal { get; set; }
 
+    public short? CG_LettrageSaisie { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -69,17 +71,11 @@ public partial class F_COMPTEG
 
     public short? cbFlag { get; set; }
 
-    public short? CG_LettrageSaisie { get; set; }
-
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
 
     public virtual F_COMPTER CR_NumNavigation { get; set; }
-
-    public virtual ICollection<F_ABOENTETE> F_ABOENTETE { get; set; } = new List<F_ABOENTETE>();
-
-    public virtual ICollection<F_ARTCOMPTA> F_ARTCOMPTA { get; set; } = new List<F_ARTCOMPTA>();
 
     public virtual ICollection<F_COMPTEABUDGETG> F_COMPTEABUDGETG { get; set; } = new List<F_COMPTEABUDGETG>();
 
@@ -93,14 +89,6 @@ public partial class F_COMPTEG
 
     public virtual ICollection<F_COMPTETG> F_COMPTETG { get; set; } = new List<F_COMPTETG>();
 
-    public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCG_NumContNavigation { get; set; } = new List<F_CREGLEMENT>();
-
-    public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCG_NumEcartNavigation { get; set; } = new List<F_CREGLEMENT>();
-
-    public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCG_NumNavigation { get; set; } = new List<F_CREGLEMENT>();
-
-    public virtual ICollection<F_DOCENTETE> F_DOCENTETE { get; set; } = new List<F_DOCENTETE>();
-
     public virtual ICollection<F_EBUDGET> F_EBUDGET { get; set; } = new List<F_EBUDGET>();
 
     public virtual ICollection<F_ECRITUREC> F_ECRITUREC { get; set; } = new List<F_ECRITUREC>();
@@ -110,8 +98,6 @@ public partial class F_COMPTEG
     public virtual ICollection<F_ECRITURER> F_ECRITURER { get; set; } = new List<F_ECRITURER>();
 
     public virtual ICollection<F_ETAXE> F_ETAXE { get; set; } = new List<F_ETAXE>();
-
-    public virtual ICollection<F_FAMCOMPTA> F_FAMCOMPTA { get; set; } = new List<F_FAMCOMPTA>();
 
     public virtual ICollection<F_JOURNAUX> F_JOURNAUX { get; set; } = new List<F_JOURNAUX>();
 

@@ -291,11 +291,13 @@ public partial class P_ORGAACH
 
     public string D_LibelleValide { get; set; }
 
+    public short? D_Perdu { get; set; }
+
+    public short? D_Archive { get; set; }
+
     public short? cbIndice { get; set; }
 
     public int cbMarq { get; set; }
 
-    public short? D_Perdu { get; set; }
-
-    public short? D_Archive { get; set; }
+    public short? D_Coche133 { get; set; }
 }

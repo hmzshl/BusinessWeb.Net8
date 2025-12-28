@@ -99,13 +99,17 @@ public partial class F_ABOENTETE
 
     public Guid? cbCreationUser { get; set; }
 
+    public int? EB_No { get; set; }
+
+    public string AE_RefExterne { get; set; }
+
+    public int? CFAR_No { get; set; }
+
+    public int? cbCFAR_No { get; set; }
+
+    public string AE_CodeService { get; set; }
+
     public virtual F_ABONNEMENT AB_NoNavigation { get; set; }
-
-    public virtual F_COMPTEG CG_NumNavigation { get; set; }
-
-    public virtual F_COMPTET CT_NumCentraleNavigation { get; set; }
-
-    public virtual F_COMPTET CT_NumPayeurNavigation { get; set; }
 
     public virtual F_DEPOT DE_NoNavigation { get; set; }
 
@@ -114,8 +118,4 @@ public partial class F_ABOENTETE
     public virtual ICollection<F_ABOLIGNE> F_ABOLIGNE { get; set; } = new List<F_ABOLIGNE>();
 
     public virtual ICollection<F_ABOREGLEMENT> F_ABOREGLEMENT { get; set; } = new List<F_ABOREGLEMENT>();
-
-    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
-
-    public virtual F_LIVRAISON cbLI_NoNavigation { get; set; }
 }

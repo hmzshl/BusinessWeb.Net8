@@ -37,6 +37,12 @@ public partial class F_CONTACTT
 
     public int? CT_No { get; set; }
 
+    public string CT_Facebook { get; set; }
+
+    public string CT_LinkedIn { get; set; }
+
+    public string CT_Skype { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -49,15 +55,13 @@ public partial class F_CONTACTT
 
     public short? cbFlag { get; set; }
 
-    public string CT_Facebook { get; set; }
-
-    public string CT_LinkedIn { get; set; }
-
-    public string CT_Skype { get; set; }
-
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
+
+    public string DN_Id { get; set; }
+
+    public byte[] cbDN_Id { get; set; }
 
     public virtual F_COMPTET CT_NumNavigation { get; set; }
 

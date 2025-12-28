@@ -59,9 +59,11 @@ public partial class F_LIVRAISON
 
     public byte[] cbLI_Intitule { get; set; }
 
+    public string LI_Commentaire { get; set; }
+
+    public short? LI_DelaiTransport { get; set; }
+
+    public short? LI_AdresseFact { get; set; }
+
     public virtual F_COMPTET CT_NumNavigation { get; set; }
-
-    public virtual ICollection<F_ABOENTETE> F_ABOENTETE { get; set; } = new List<F_ABOENTETE>();
-
-    public virtual ICollection<F_DOCENTETE> F_DOCENTETE { get; set; } = new List<F_DOCENTETE>();
 }

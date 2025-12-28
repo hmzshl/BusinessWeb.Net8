@@ -11,6 +11,8 @@ public partial class F_ENUMCOND
 
     public string EC_Enumere { get; set; }
 
+    public byte[] cbEC_Enumere { get; set; }
+
     public decimal? EC_Quantite { get; set; }
 
     public string EC_EdiCode { get; set; }
@@ -30,6 +32,4 @@ public partial class F_ENUMCOND
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
-
-    public byte[] cbEC_Enumere { get; set; }
 }

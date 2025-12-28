@@ -45,7 +45,7 @@ namespace BusinessWeb.Services
 			if (highestPiece != null)
 			{
 				// If we found a higher piece number in documents, use it
-				return IncrementPieceNumber(highestPiece);
+				return highestPiece;
 			}
 
 			// If no higher piece found in documents, use the value from F_DOCCURRENTPIECE or default
@@ -145,12 +145,6 @@ namespace BusinessWeb.Services
 						   d.DO_Type == doType &&
 						   d.DO_Piece == pieceNumber &&
 						   (souche == null || d.DO_Souche == souche));
-
-			if (provenance.HasValue)
-			{
-				query = query.Where(d => d.DO_Provenance == (short)provenance.Value);
-			}
-
 			return await query.AnyAsync();
 		}
 

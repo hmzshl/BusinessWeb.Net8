@@ -61,6 +61,8 @@ public partial class F_CREGLEMENT
 
     public int? CA_No { get; set; }
 
+    public int? cbCA_No { get; set; }
+
     public int? CO_NoCaissier { get; set; }
 
     public int? cbCO_NoCaissier { get; set; }
@@ -91,6 +93,14 @@ public partial class F_CREGLEMENT
 
     public int? RG_NoBonAchat { get; set; }
 
+    public short? RG_Valide { get; set; }
+
+    public decimal? RG_Anterieur { get; set; }
+
+    public decimal? RG_MontantCommission { get; set; }
+
+    public decimal? RG_MontantNet { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -103,7 +113,9 @@ public partial class F_CREGLEMENT
 
     public short? cbFlag { get; set; }
 
-    public short? RG_Valide { get; set; }
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 
     public byte[] cbHash { get; set; }
 
@@ -112,18 +124,6 @@ public partial class F_CREGLEMENT
     public DateTime? cbHashDate { get; set; }
 
     public int? cbHashOrder { get; set; }
-
-    public int? cbCA_No { get; set; }
-
-    public decimal? RG_Anterieur { get; set; }
-
-    public DateTime? cbCreation { get; set; }
-
-    public Guid? cbCreationUser { get; set; }
-
-    public decimal? RG_MontantCommission { get; set; }
-
-    public decimal? RG_MontantNet { get; set; }
 
     public bool? Encaiss { get; set; }
 
@@ -141,19 +141,7 @@ public partial class F_CREGLEMENT
 
     public string Remarque { get; set; }
 
-    public virtual F_COMPTEG CG_NumContNavigation { get; set; }
-
-    public virtual F_COMPTEG CG_NumEcartNavigation { get; set; }
-
-    public virtual F_COMPTEG CG_NumNavigation { get; set; }
-
-    public virtual F_COMPTET CT_NumPayeurNavigation { get; set; }
-
-    public virtual F_COMPTET CT_NumPayeurOrigNavigation { get; set; }
-
     public virtual ICollection<F_REGLECH> F_REGLECH { get; set; } = new List<F_REGLECH>();
 
     public virtual F_CAISSE cbCA_NoNavigation { get; set; }
-
-    public virtual F_COLLABORATEUR cbCO_NoCaissierNavigation { get; set; }
 }

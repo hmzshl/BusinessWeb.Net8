@@ -49,6 +49,12 @@ public partial class F_CONTACTR
 
     public string CR_Pays { get; set; }
 
+    public string CR_Facebook { get; set; }
+
+    public string CR_LinkedIn { get; set; }
+
+    public string CR_Skype { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -60,12 +66,6 @@ public partial class F_CONTACTR
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
-
-    public string CR_Facebook { get; set; }
-
-    public string CR_LinkedIn { get; set; }
-
-    public string CR_Skype { get; set; }
 
     public DateTime? cbCreation { get; set; }
 

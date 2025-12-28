@@ -17,9 +17,15 @@ public partial class F_DOCLIGNE
 
     public string DO_Piece { get; set; }
 
+    public byte[] cbDO_Piece { get; set; }
+
     public string DL_PieceBC { get; set; }
 
+    public byte[] cbDL_PieceBC { get; set; }
+
     public string DL_PieceBL { get; set; }
+
+    public byte[] cbDL_PieceBL { get; set; }
 
     public DateTime? DO_Date { get; set; }
 
@@ -159,6 +165,8 @@ public partial class F_DOCLIGNE
 
     public string DL_PiecePL { get; set; }
 
+    public byte[] cbDL_PiecePL { get; set; }
+
     public DateTime? DL_DatePL { get; set; }
 
     public decimal? DL_QtePL { get; set; }
@@ -191,6 +199,8 @@ public partial class F_DOCLIGNE
 
     public string DL_PieceDE { get; set; }
 
+    public byte[] cbDL_PieceDE { get; set; }
+
     public DateTime? DL_DateDE { get; set; }
 
     public decimal? DL_QteDE { get; set; }
@@ -198,6 +208,12 @@ public partial class F_DOCLIGNE
     public string DL_Operation { get; set; }
 
     public int? DL_NoSousTotal { get; set; }
+
+    public int? CA_No { get; set; }
+
+    public int? cbCA_No { get; set; }
+
+    public short? DO_DocType { get; set; }
 
     public short? cbProt { get; set; }
 
@@ -211,9 +227,9 @@ public partial class F_DOCLIGNE
 
     public short? cbFlag { get; set; }
 
-    public int? CA_No { get; set; }
+    public DateTime? cbCreation { get; set; }
 
-    public int? cbCA_No { get; set; }
+    public Guid? cbCreationUser { get; set; }
 
     public byte[] cbHash { get; set; }
 
@@ -223,29 +239,9 @@ public partial class F_DOCLIGNE
 
     public int? cbHashOrder { get; set; }
 
-    public short? DO_DocType { get; set; }
-
-    public byte[] cbDO_Piece { get; set; }
-
-    public byte[] cbDL_PieceBC { get; set; }
-
-    public byte[] cbDL_PieceBL { get; set; }
-
-    public byte[] cbDL_PiecePL { get; set; }
-
-    public byte[] cbDL_PieceDE { get; set; }
-
-    public DateTime? cbCreation { get; set; }
-
-    public Guid? cbCreationUser { get; set; }
+    public string DL_RefExterne { get; set; }
 
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
-
-    public virtual F_TAXE DL_CodeTaxe1Navigation { get; set; }
-
-    public virtual F_TAXE DL_CodeTaxe2Navigation { get; set; }
-
-    public virtual F_TAXE DL_CodeTaxe3Navigation { get; set; }
 
     public virtual ICollection<F_AGENDA> F_AGENDA { get; set; } = new List<F_AGENDA>();
 
@@ -258,8 +254,6 @@ public partial class F_DOCLIGNE
     public virtual ICollection<F_DOCLIGNE> InversecbDL_NoLinkNavigation { get; set; } = new List<F_DOCLIGNE>();
 
     public virtual F_RESSOURCEPROD RP_CodeNavigation { get; set; }
-
-    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
 
     public virtual F_DEPOT cbDE_NoNavigation { get; set; }
 

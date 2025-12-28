@@ -17,6 +17,8 @@ public partial class F_REGLECH
 
     public string DO_Piece { get; set; }
 
+    public byte[] cbDO_Piece { get; set; }
+
     public decimal? RC_Montant { get; set; }
 
     public short? RG_TypeReg { get; set; }
@@ -32,8 +34,6 @@ public partial class F_REGLECH
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
-
-    public byte[] cbDO_Piece { get; set; }
 
     public DateTime? cbCreation { get; set; }
 

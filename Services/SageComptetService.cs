@@ -199,7 +199,6 @@ namespace BusinessWeb.Services
             row.cbCreateur = "BWB";
             row.CT_AnnulationCR = 0;
             row.CT_Facebook = "";
-            row.CT_CessionCreance = 0;
             row.CT_LinkedIn = "";
             row.CT_ExclureTrait = 0;
             row.CT_GDPR = 0;

@@ -242,7 +242,7 @@
         doc.Date = DateTime.Today;
         doc.Depot = 1;
         doc.Tiers = "CISEL";
-        doc.Type = DocumentTypeDO.DevisClient;
+        doc.TypeDO = DocumentTypeDO.DevisClient;
 
         var rs = await sg.Document.CreateDocument(doc);
 

@@ -43,11 +43,11 @@ public partial class P_DEVISE
 
     public string D_CodeISONum { get; set; }
 
-    public short? cbIndice { get; set; }
-
-    public int cbMarq { get; set; }
-
     public DateTime? D_UpdateDate { get; set; }
 
     public string D_UpdateTime { get; set; }
+
+    public short? cbIndice { get; set; }
+
+    public int cbMarq { get; set; }
 }

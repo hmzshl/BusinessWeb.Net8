@@ -7,6 +7,8 @@ namespace BusinessWeb.Models.DB;
 
 public partial class P_SECURITYSTRATEGYCIAL
 {
+    public short? SECUR_PwdStrong { get; set; }
+
     public short? SECUR_PwdRenouv { get; set; }
 
     public short? SECUR_PwdComplex { get; set; }
@@ -16,6 +18,4 @@ public partial class P_SECURITYSTRATEGYCIAL
     public short? SECUR_PwdRequired { get; set; }
 
     public int cbMarq { get; set; }
-
-    public short? SECUR_PwdStrong { get; set; }
 }

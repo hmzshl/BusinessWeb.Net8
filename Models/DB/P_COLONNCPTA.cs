@@ -255,9 +255,11 @@ public partial class P_COLONNCPTA
 
     public short? C_Coche124 { get; set; }
 
-    public short? C_Coche125 { get; set; }
-
     public short? cbIndice { get; set; }
 
     public int cbMarq { get; set; }
+
+    public short? C_Coche125 { get; set; }
+
+    public short? C_Coche126 { get; set; }
 }

@@ -105,6 +105,21 @@
                                 <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_Lettrage)" HeaderText="Lettre" Visible="false" />
                                 <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_DateRappro)" Format="dd/MM/yy" HeaderText="DT Rap" Visible="false" />
                                 <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_TresoPiece)" HeaderText="N° Rap" Visible="false" />
+                                <GridColumn Width="50" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ECRITUREC.EC_LettrageQ)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Etat" Visible="true">
+                                    <Template>
+                                        @{
+                                            var dt = (context as API_V_ECRITUREC);
+                                            if (dt.EC_LettrageQ == "OK")
+                                            {
+                                                <span style="color:green;font-weight:bold">@dt.EC_LettrageQ</span>
+                                            }
+                                            else
+                                            {
+                                                <span style="color:red;font-weight:bold">@dt.EC_LettrageQ</span>
+                                            }
+                                        }
+                                    </Template>
+                                </GridColumn>
                                 <GridColumn Type="ColumnType.CheckBox" Width="50" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
                             </GridColumns>
 
@@ -200,11 +215,33 @@ else
                 db1 = fn.getDb(ste1 ?? new TSociete());
                 db2 = fn.getDb(ste2 ?? new TSociete());
                 items = db1.API_V_ECRITUREC.Where(a => a.MV_Date >= row.do_date1 && a.MV_Date <= row.do_date2).ToList();
+                var dt2 = db2.API_V_ECRITUREC.Where(a => a.MV_Date >= row.do_date1 && a.MV_Date <= row.do_date2).ToList();
 
+                foreach (var item in items)
+                {
+                    // Check if a matching row exists in dt2
+                    var existsInDt2 = dt2.Any(d2 =>
+                        d2.JM_Date == item.JM_Date &&
+                        d2.JO_Num == item.JO_Num &&
+                        d2.CT_Num == item.CT_Num &&
+                        d2.EC_Sens == item.EC_Sens &&
+                        d2.EC_Intitule == item.EC_Intitule &&
+                        d2.CG_Num == item.CG_Num &&
+                        d2.EC_Montant == item.EC_Montant &&
+                        d2.EC_RefPiece == item.EC_RefPiece &&
+                        d2.EC_Piece == item.EC_Piece
+                    );
+
+                    item.EC_LettrageQ = existsInDt2 ? "OK" : "N/A";
+                }
             }
         }
     }
     private async Task Tester()
+    {
+
+    }
+    private async Task Compare()
     {
 
     }
@@ -236,7 +273,7 @@ else
                     await Task.Run(() =>
                     {
                         TransferTask();
-                        //UpdateGrid();
+                        UpdateGrid();
                     });
                 }
                 catch (Exception ex)

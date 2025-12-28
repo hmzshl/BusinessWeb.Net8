@@ -121,8 +121,6 @@ public partial class F_ABONNEMENT
 
     public Guid? cbCreationUser { get; set; }
 
-    public virtual F_COMPTET CT_NumNavigation { get; set; }
-
     public virtual F_ABOENTETE F_ABOENTETE { get; set; }
 
     public virtual ICollection<F_ABOPERIODE> F_ABOPERIODE { get; set; } = new List<F_ABOPERIODE>();

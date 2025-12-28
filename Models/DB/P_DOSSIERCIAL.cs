@@ -7,21 +7,13 @@ namespace BusinessWeb.Models.DB;
 
 public partial class P_DOSSIERCIAL
 {
-    public string D_RaisonS { get; set; }
-
     public string D_FormatQte { get; set; }
 
     public string D_FormatPrix { get; set; }
 
-    public short? N_DeviseCompte { get; set; }
-
-    public short? N_DeviseEquival { get; set; }
-
     public DateTime? D_ArchivePeriod { get; set; }
 
     public short? D_ValiditePeriod { get; set; }
-
-    public int cbMarq { get; set; }
 
     public DateTime? D_DerniereCloture { get; set; }
 
@@ -30,4 +22,12 @@ public partial class P_DOSSIERCIAL
     public string D_ImprimeCGV { get; set; }
 
     public string D_FormatParamCpta { get; set; }
+
+    public int cbMarq { get; set; }
+
+    public int? CAL_No { get; set; }
+
+    public string D_ImprimeCGVLangue1 { get; set; }
+
+    public string D_ImprimeCGVLangue2 { get; set; }
 }

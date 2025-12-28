@@ -257,7 +257,7 @@ else
         {
             if (cbMarq == 0)
             {
-                var doc = om.CIAL().FactoryDocumentStock.CreateType(DocumentType.DocumentTypeStockMouvOut);
+                /*var doc = om.CIAL().FactoryDocumentStock.CreateType(DocumentType.DocumentTypeStockMouvOut);
                 doc.SetDefault();
                 doc.SetDefaultDO_Piece();
                 doc.DO_Ref = row.DO_Ref;
@@ -270,7 +270,7 @@ else
 
                 doc.Write();
                 row = db.F_DOCENTETE.Where(a => a.DO_Piece == doc.DO_Piece && a.DO_Type == 21).SingleOrDefault();
-                cbMarq = row.cbMarq;
+                cbMarq = row.cbMarq;*/
 
             }
             else

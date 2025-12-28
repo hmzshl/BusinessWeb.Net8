@@ -15,6 +15,8 @@ public partial class F_TICKETARCHIVE
 
     public string TA_Piece { get; set; }
 
+    public byte[] cbTA_Piece { get; set; }
+
     public DateTime? TA_Date { get; set; }
 
     public string TA_Heure { get; set; }
@@ -24,6 +26,8 @@ public partial class F_TICKETARCHIVE
     public byte[] cbCT_Num { get; set; }
 
     public string DO_Piece { get; set; }
+
+    public byte[] cbDO_Piece { get; set; }
 
     public short? cbProt { get; set; }
 
@@ -37,21 +41,13 @@ public partial class F_TICKETARCHIVE
 
     public short? cbFlag { get; set; }
 
-    public byte[] cbTA_Piece { get; set; }
-
-    public byte[] cbDO_Piece { get; set; }
-
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
 
     public virtual F_CAISSE CA_NoNavigation { get; set; }
 
-    public virtual F_COMPTET CT_NumNavigation { get; set; }
-
     public virtual ICollection<F_LIGNEARCHIVE> F_LIGNEARCHIVE { get; set; } = new List<F_LIGNEARCHIVE>();
 
     public virtual ICollection<F_REGLEARCHIVE> F_REGLEARCHIVE { get; set; } = new List<F_REGLEARCHIVE>();
-
-    public virtual F_COLLABORATEUR cbCO_NoCaissierNavigation { get; set; }
 }

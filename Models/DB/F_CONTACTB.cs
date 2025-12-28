@@ -35,6 +35,12 @@ public partial class F_CONTACTB
 
     public int? CB_No { get; set; }
 
+    public string CB_Facebook { get; set; }
+
+    public string CB_LinkedIn { get; set; }
+
+    public string CB_Skype { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -46,12 +52,6 @@ public partial class F_CONTACTB
     public int? cbReplication { get; set; }
 
     public short? cbFlag { get; set; }
-
-    public string CB_Facebook { get; set; }
-
-    public string CB_LinkedIn { get; set; }
-
-    public string CB_Skype { get; set; }
 
     public DateTime? cbCreation { get; set; }
 

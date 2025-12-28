@@ -308,4 +308,204 @@ public partial class P_CATCOMPTA
     public string CA_ComptaSto50 { get; set; }
 
     public int cbMarq { get; set; }
+
+    public short? CA_HorsFranceVen01 { get; set; }
+
+    public short? CA_HorsFranceVen02 { get; set; }
+
+    public short? CA_HorsFranceVen03 { get; set; }
+
+    public short? CA_HorsFranceVen04 { get; set; }
+
+    public short? CA_HorsFranceVen05 { get; set; }
+
+    public short? CA_HorsFranceVen06 { get; set; }
+
+    public short? CA_HorsFranceVen07 { get; set; }
+
+    public short? CA_HorsFranceVen08 { get; set; }
+
+    public short? CA_HorsFranceVen09 { get; set; }
+
+    public short? CA_HorsFranceVen10 { get; set; }
+
+    public short? CA_HorsFranceVen11 { get; set; }
+
+    public short? CA_HorsFranceVen12 { get; set; }
+
+    public short? CA_HorsFranceVen13 { get; set; }
+
+    public short? CA_HorsFranceVen14 { get; set; }
+
+    public short? CA_HorsFranceVen15 { get; set; }
+
+    public short? CA_HorsFranceVen16 { get; set; }
+
+    public short? CA_HorsFranceVen17 { get; set; }
+
+    public short? CA_HorsFranceVen18 { get; set; }
+
+    public short? CA_HorsFranceVen19 { get; set; }
+
+    public short? CA_HorsFranceVen20 { get; set; }
+
+    public short? CA_HorsFranceVen21 { get; set; }
+
+    public short? CA_HorsFranceVen22 { get; set; }
+
+    public short? CA_HorsFranceVen23 { get; set; }
+
+    public short? CA_HorsFranceVen24 { get; set; }
+
+    public short? CA_HorsFranceVen25 { get; set; }
+
+    public short? CA_HorsFranceVen26 { get; set; }
+
+    public short? CA_HorsFranceVen27 { get; set; }
+
+    public short? CA_HorsFranceVen28 { get; set; }
+
+    public short? CA_HorsFranceVen29 { get; set; }
+
+    public short? CA_HorsFranceVen30 { get; set; }
+
+    public short? CA_HorsFranceVen31 { get; set; }
+
+    public short? CA_HorsFranceVen32 { get; set; }
+
+    public short? CA_HorsFranceVen33 { get; set; }
+
+    public short? CA_HorsFranceVen34 { get; set; }
+
+    public short? CA_HorsFranceVen35 { get; set; }
+
+    public short? CA_HorsFranceVen36 { get; set; }
+
+    public short? CA_HorsFranceVen37 { get; set; }
+
+    public short? CA_HorsFranceVen38 { get; set; }
+
+    public short? CA_HorsFranceVen39 { get; set; }
+
+    public short? CA_HorsFranceVen40 { get; set; }
+
+    public short? CA_HorsFranceVen41 { get; set; }
+
+    public short? CA_HorsFranceVen42 { get; set; }
+
+    public short? CA_HorsFranceVen43 { get; set; }
+
+    public short? CA_HorsFranceVen44 { get; set; }
+
+    public short? CA_HorsFranceVen45 { get; set; }
+
+    public short? CA_HorsFranceVen46 { get; set; }
+
+    public short? CA_HorsFranceVen47 { get; set; }
+
+    public short? CA_HorsFranceVen48 { get; set; }
+
+    public short? CA_HorsFranceVen49 { get; set; }
+
+    public short? CA_HorsFranceVen50 { get; set; }
+
+    public short? CA_HorsFranceAch01 { get; set; }
+
+    public short? CA_HorsFranceAch02 { get; set; }
+
+    public short? CA_HorsFranceAch03 { get; set; }
+
+    public short? CA_HorsFranceAch04 { get; set; }
+
+    public short? CA_HorsFranceAch05 { get; set; }
+
+    public short? CA_HorsFranceAch06 { get; set; }
+
+    public short? CA_HorsFranceAch07 { get; set; }
+
+    public short? CA_HorsFranceAch08 { get; set; }
+
+    public short? CA_HorsFranceAch09 { get; set; }
+
+    public short? CA_HorsFranceAch10 { get; set; }
+
+    public short? CA_HorsFranceAch11 { get; set; }
+
+    public short? CA_HorsFranceAch12 { get; set; }
+
+    public short? CA_HorsFranceAch13 { get; set; }
+
+    public short? CA_HorsFranceAch14 { get; set; }
+
+    public short? CA_HorsFranceAch15 { get; set; }
+
+    public short? CA_HorsFranceAch16 { get; set; }
+
+    public short? CA_HorsFranceAch17 { get; set; }
+
+    public short? CA_HorsFranceAch18 { get; set; }
+
+    public short? CA_HorsFranceAch19 { get; set; }
+
+    public short? CA_HorsFranceAch20 { get; set; }
+
+    public short? CA_HorsFranceAch21 { get; set; }
+
+    public short? CA_HorsFranceAch22 { get; set; }
+
+    public short? CA_HorsFranceAch23 { get; set; }
+
+    public short? CA_HorsFranceAch24 { get; set; }
+
+    public short? CA_HorsFranceAch25 { get; set; }
+
+    public short? CA_HorsFranceAch26 { get; set; }
+
+    public short? CA_HorsFranceAch27 { get; set; }
+
+    public short? CA_HorsFranceAch28 { get; set; }
+
+    public short? CA_HorsFranceAch29 { get; set; }
+
+    public short? CA_HorsFranceAch30 { get; set; }
+
+    public short? CA_HorsFranceAch31 { get; set; }
+
+    public short? CA_HorsFranceAch32 { get; set; }
+
+    public short? CA_HorsFranceAch33 { get; set; }
+
+    public short? CA_HorsFranceAch34 { get; set; }
+
+    public short? CA_HorsFranceAch35 { get; set; }
+
+    public short? CA_HorsFranceAch36 { get; set; }
+
+    public short? CA_HorsFranceAch37 { get; set; }
+
+    public short? CA_HorsFranceAch38 { get; set; }
+
+    public short? CA_HorsFranceAch39 { get; set; }
+
+    public short? CA_HorsFranceAch40 { get; set; }
+
+    public short? CA_HorsFranceAch41 { get; set; }
+
+    public short? CA_HorsFranceAch42 { get; set; }
+
+    public short? CA_HorsFranceAch43 { get; set; }
+
+    public short? CA_HorsFranceAch44 { get; set; }
+
+    public short? CA_HorsFranceAch45 { get; set; }
+
+    public short? CA_HorsFranceAch46 { get; set; }
+
+    public short? CA_HorsFranceAch47 { get; set; }
+
+    public short? CA_HorsFranceAch48 { get; set; }
+
+    public short? CA_HorsFranceAch49 { get; set; }
+
+    public short? CA_HorsFranceAch50 { get; set; }
 }
