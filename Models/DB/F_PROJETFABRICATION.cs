@@ -55,5 +55,11 @@ public partial class F_PROJETFABRICATION
 
     public Guid? cbCreationUser { get; set; }
 
+    public virtual ICollection<F_PROJETHISTO> F_PROJETHISTO { get; set; } = new List<F_PROJETHISTO>();
+
+    public virtual ICollection<F_PROJETLIGNE> F_PROJETLIGNE { get; set; } = new List<F_PROJETLIGNE>();
+
+    public virtual ICollection<F_PROJETPLANNING> F_PROJETPLANNING { get; set; } = new List<F_PROJETPLANNING>();
+
     public virtual F_DEPOT cbDE_NoNavigation { get; set; }
 }

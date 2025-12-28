@@ -90,14 +90,17 @@
 											@{
 												var dt = (context as API_T_OrdreFabricationPointage);
 												<RadzenFormField AllowFloatingLabel="false" Text="O.F" Style="width: 100%;">
-													<RadzenDropDownDataGrid Density="Density.Compact" PageSize="500" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" PopupStyle="min-width: 450px;"
-																			PagerHorizontalAlign="Radzen.HorizontalAlign.Left" @bind-Value=@dt.Ordre Data=@(db.API_T_OrdreFabrication)
-																			TextProperty="@nameof(API_T_OrdreFabrication.Numero)" ValueProperty="@nameof(API_T_OrdreFabrication.id)" TValue="int"
+													<RadzenDropDownDataGrid Density="Density.Compact" PageSize="500" 
+													FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" PopupStyle="min-width: 750px;"
+																			PagerHorizontalAlign="Radzen.HorizontalAlign.Left" @bind-Value=@dt.Ordre Data=@(db.API_V_ORDREFABRICATION)
+																			TextProperty="@nameof(API_V_ORDREFABRICATION.Numero)" ValueProperty="@nameof(API_V_ORDREFABRICATION.id)" TValue="int"
 																			AllowColumnResize="true" AllowFilteringByAllStringColumns="true">
 														<Columns>
-															<RadzenDropDownDataGridColumn Property="@nameof(API_T_OrdreFabrication.Date)" Title="Date" FormatString="{0:d}" Width="100px" />
-															<RadzenDropDownDataGridColumn Property="@nameof(API_T_OrdreFabrication.Numero)" Title="Numero" Width="150px" />
-															<RadzenDropDownDataGridColumn Property="@nameof(API_T_OrdreFabrication.Reference)" Title="Reference" Width="100px" />
+															<RadzenDropDownDataGridColumn Property="@nameof(API_V_ORDREFABRICATION.Date)" Title="Date" FormatString="{0:d}" Width="80px" />
+															<RadzenDropDownDataGridColumn Property="@nameof(API_V_ORDREFABRICATION.Numero)" Title="Numero" Width="100px" />
+															<RadzenDropDownDataGridColumn Property="@nameof(API_V_ORDREFABRICATION.Reference)" Title="Reference" Width="100px" />
+															<RadzenDropDownDataGridColumn Property="@nameof(API_V_ORDREFABRICATION.CT_Intitule)" Title="Client" Width="160px" />
+															<RadzenDropDownDataGridColumn Property="@nameof(API_V_ORDREFABRICATION.AR_Refs)" Title="Machines" Width="260px" />
 														</Columns>
 													</RadzenDropDownDataGrid>
 												</RadzenFormField>

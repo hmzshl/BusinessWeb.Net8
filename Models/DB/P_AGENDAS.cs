@@ -16,6 +16,4 @@ public partial class P_AGENDAS
     public short? cbIndice { get; set; }
 
     public int cbMarq { get; set; }
-
-    public short? A_Calendrier { get; set; }
 }

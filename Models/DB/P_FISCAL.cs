@@ -158,10 +158,4 @@ public partial class P_FISCAL
     public string F_MAJConstante06BP_CodeMAJConstante { get; set; }
 
     public int cbMarq { get; set; }
-
-    public short? F_TVADebitOption { get; set; }
-
-    public DateTime? F_TVADebitDateApplication { get; set; }
-
-    public DateTime? F_TVADebitDateResiliation { get; set; }
 }

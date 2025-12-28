@@ -59,10 +59,6 @@ public partial class F_CONTACTT
 
     public Guid? cbCreationUser { get; set; }
 
-    public string DN_Id { get; set; }
-
-    public byte[] cbDN_Id { get; set; }
-
     public virtual F_COMPTET CT_NumNavigation { get; set; }
 
     public virtual ICollection<F_DRECOUVREMENT> F_DRECOUVREMENT { get; set; } = new List<F_DRECOUVREMENT>();

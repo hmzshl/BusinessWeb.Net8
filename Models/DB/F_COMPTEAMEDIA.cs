@@ -37,7 +37,5 @@ public partial class F_COMPTEAMEDIA
 
     public Guid? cbCreationUser { get; set; }
 
-    public string ME_GedId { get; set; }
-
     public virtual F_COMPTEA F_COMPTEA { get; set; }
 }

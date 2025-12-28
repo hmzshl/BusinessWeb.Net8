@@ -298,6 +298,4 @@ public partial class P_ORGAACH
     public short? cbIndice { get; set; }
 
     public int cbMarq { get; set; }
-
-    public short? D_Coche133 { get; set; }
 }

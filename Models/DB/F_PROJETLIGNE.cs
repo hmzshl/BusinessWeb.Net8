@@ -34,4 +34,6 @@ public partial class F_PROJETLIGNE
     public Guid? cbCreationUser { get; set; }
 
     public virtual F_DOCLIGNE DL_NoNavigation { get; set; }
+
+    public virtual F_PROJETFABRICATION PF_NumNavigation { get; set; }
 }

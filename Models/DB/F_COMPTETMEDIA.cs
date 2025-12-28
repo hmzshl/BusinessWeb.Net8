@@ -35,7 +35,5 @@ public partial class F_COMPTETMEDIA
 
     public Guid? cbCreationUser { get; set; }
 
-    public string ME_GedId { get; set; }
-
     public virtual F_COMPTET CT_NumNavigation { get; set; }
 }

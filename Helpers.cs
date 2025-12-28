@@ -410,6 +410,8 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Ecritures comptables", Url = "imp-comptabilite", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Séquentialité Factures", Url = "seq-fa", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Solde clients", Url = "solde-clients", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Stock par date", Url = "et-stock-global-article", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 16, Title = "Traitement", Description = "Articles modifiés", Url = "imp-art-hist", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 
 			// FOOD COST
 			list.Add(new AuthItems { SelectedAPP = 20, Title = "Traitement", Description = "Affaires", Url = "fc-affaires", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });

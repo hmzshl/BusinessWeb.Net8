@@ -25,9 +25,9 @@ public partial class P_REGLEMENT
 
     public string R_EdiCode { get; set; }
 
+    public short? R_PaiementLigne { get; set; }
+
     public short? cbIndice { get; set; }
 
     public int cbMarq { get; set; }
-
-    public short? R_PaiementLigne { get; set; }
 }

@@ -157,17 +157,21 @@ public partial class F_ABOLIGNE
 
     public Guid? cbCreationUser { get; set; }
 
-    public short? AL_NbPeriodes { get; set; }
-
-    public string AL_RefExterne { get; set; }
-
     public virtual F_ABOENTETE AB_NoNavigation { get; set; }
+
+    public virtual F_TAXE AL_CodeTaxe1Navigation { get; set; }
+
+    public virtual F_TAXE AL_CodeTaxe2Navigation { get; set; }
+
+    public virtual F_TAXE AL_CodeTaxe3Navigation { get; set; }
 
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 
     public virtual ICollection<F_ABOLIGNEINFOS> F_ABOLIGNEINFOS { get; set; } = new List<F_ABOLIGNEINFOS>();
 
     public virtual F_RESSOURCEPROD RP_CodeNavigation { get; set; }
+
+    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
 
     public virtual F_DEPOT cbDE_NoNavigation { get; set; }
 }

@@ -71,8 +71,6 @@ public partial class F_DRECOUVREMENTIV
 
     public Guid? cbCreationUser { get; set; }
 
-    public string IV_GedId { get; set; }
-
     public virtual F_DRECOUVREMENT DR_NumNavigation { get; set; }
 
     public virtual F_ESCENARIO cbES_NoNavigation { get; set; }

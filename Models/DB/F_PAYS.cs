@@ -40,6 +40,4 @@ public partial class F_PAYS
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
-
-    public short? PA_Localisation { get; set; }
 }

@@ -147,6 +147,8 @@ public partial class F_RESSOURCEPROD
 
     public virtual F_ARTICLE AR_RefDefautNavigation { get; set; }
 
+    public virtual F_CALENDRIER CAL_NoNavigation { get; set; }
+
     public virtual F_DEPOT DE_NoNavigation { get; set; }
 
     public virtual ICollection<F_ABOLIGNE> F_ABOLIGNE { get; set; } = new List<F_ABOLIGNE>();

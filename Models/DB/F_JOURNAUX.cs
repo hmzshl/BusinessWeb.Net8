@@ -57,9 +57,5 @@ public partial class F_JOURNAUX
 
     public Guid? cbCreationUser { get; set; }
 
-    public short? JO_Protec { get; set; }
-
-    public string JO_PersoLibelle { get; set; }
-
     public virtual F_COMPTEG CG_NumNavigation { get; set; }
 }

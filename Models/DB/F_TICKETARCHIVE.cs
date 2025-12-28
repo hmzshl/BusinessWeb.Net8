@@ -47,7 +47,11 @@ public partial class F_TICKETARCHIVE
 
     public virtual F_CAISSE CA_NoNavigation { get; set; }
 
+    public virtual F_COMPTET CT_NumNavigation { get; set; }
+
     public virtual ICollection<F_LIGNEARCHIVE> F_LIGNEARCHIVE { get; set; } = new List<F_LIGNEARCHIVE>();
 
     public virtual ICollection<F_REGLEARCHIVE> F_REGLEARCHIVE { get; set; } = new List<F_REGLEARCHIVE>();
+
+    public virtual F_COLLABORATEUR cbCO_NoCaissierNavigation { get; set; }
 }

@@ -137,6 +137,7 @@
 
             // Update stock (if UpdateStock uses EF, keep it separate)
             await UpdateStock(row.AR_Ref);
+            db.SaveChanges();
         }
         finally
         {
@@ -172,6 +173,34 @@
         ln.AR_Ref = row.AR_Ref;
         ln.DL_Design = row.AR_Design;
         ln.DL_No = dlNo;
+
+        var hist = new API_T_AREdit_Hist();
+        hist.DateOP = DateTime.Now; 
+        hist.OldAR_Ref = item.AR_Ref;
+        hist.NewAR_Ref = ln.AR_Ref;
+        hist.OldDesign = item.DL_Design;
+        hist.NewDesign = ln.DL_Design;
+        hist.OldQte = item.DL_Qte ?? 0;
+        hist.NewQte = ln.DL_Qte ?? 0;
+        hist.OldPU = item.DL_PrixUnitaire ?? 0;
+        hist.NewPU = ln.DL_PrixUnitaire ?? 0;
+        hist.NewCT_Intitule = sc.User.Name;
+        hist.OldCT_Num = item.CT_Num;
+        hist.OldCT_Intitule = item.CT_Intitule;
+        hist.OldDate = item.DO_Date;
+        hist.NewDate = ln.DO_Date;
+        hist.OldPiece = item.DO_Piece;
+        hist.NewPiece = ln.DO_Piece;
+        hist.OldcbMarq = item.cbMarq;
+        hist.NewcbMarq = ln.cbMarq;
+        hist.OldHT = item.DL_MontantHT ?? 0;
+        hist.NewHT = ln.DL_MontantHT ?? 0;
+        hist.OldTTC = item.DL_MontantTTC ?? 0;
+        hist.NewTTC = ln.DL_MontantTTC ?? 0;
+
+
+        db.Add(hist);
+
 
         return ln;
     }

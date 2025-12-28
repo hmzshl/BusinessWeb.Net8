@@ -67,6 +67,8 @@ public partial class F_TARIF
 
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 
+    public virtual F_COMPTET CT_NumNavigation { get; set; }
+
     public virtual ICollection<F_REPCOM> F_REPCOM { get; set; } = new List<F_REPCOM>();
 
     public virtual ICollection<F_TARIFREMISE> F_TARIFREMISE { get; set; } = new List<F_TARIFREMISE>();

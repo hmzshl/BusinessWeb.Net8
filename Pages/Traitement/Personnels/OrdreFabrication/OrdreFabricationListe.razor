@@ -10,7 +10,7 @@
 							AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items"
 							Toolbar="@(new List<object>() { "ColumnChooser", "Search", "Add", "Delete" })">
 						<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(!StockCreated)" AllowDeleting="@(!StockCreated)" AllowEditing="@(!StockCreated)" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-						<GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_T_OrdreFabrication"></GridEvents>
+						<GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_ORDREFABRICATION"></GridEvents>
 						<GridPageSettings PageSize="100"></GridPageSettings>
 						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
 						<GridTemplates>
@@ -19,57 +19,24 @@
 							</EmptyRecordTemplate>
 						</GridTemplates>
 						<GridColumns>
-							<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
-							<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.Numero)" HeaderText="Numéro"></GridColumn>
-							<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.DateLivraison)" HeaderText="Date Livraison" Format="dd/MM/yy"></GridColumn>
-							<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.NumCommande)" HeaderText="Numéro B.C"></GridColumn>
-							<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.CT_Num)" HeaderText="N° Client"></GridColumn>
-							<GridColumn MinWidth="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.CT_Num)" HeaderText="Client">
-								<Template>
-									<div>
-										@((context as API_T_OrdreFabrication)?.CT_NumNavigation?.CT_Intitule)
-									</div>
+							<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ORDREFABRICATION.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
+							<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ORDREFABRICATION.Numero)" HeaderText="Numéro"></GridColumn>
+							<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ORDREFABRICATION.DateLivraison)" HeaderText="Date Livraison" Format="dd/MM/yy"></GridColumn>
+							<GridColumn Width="130" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ORDREFABRICATION.NumCommande)" HeaderText="Numéro B.C"></GridColumn>
+							<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ORDREFABRICATION.CT_Num)" HeaderText="N° Client"></GridColumn>
+							<GridColumn MinWidth="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ORDREFABRICATION.CT_Intitule)" HeaderText="Client">
 
-								</Template>
 							</GridColumn>
-							<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.CA_Num)" HeaderText="N° Affaire"></GridColumn>
-							<GridColumn MinWidth="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.CA_Num)" HeaderText="Affaire">
-								<Template>
-									<div>
-										@*
-											@((context as API_T_OrdreFabrication)?.CA_NumNavigation?.CA_Intitule)
-										*@
-										
-									</div>
+							<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ORDREFABRICATION.CA_Num)" HeaderText="N° Affaire"></GridColumn>
+							<GridColumn MinWidth="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ORDREFABRICATION.CA_Intitule)" HeaderText="Affaire">
 
-								</Template>
 							</GridColumn>
-							<GridColumn MinWidth="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.CA_Num)" HeaderText="Responsable">
-								<Template>
-									<div>
-										@((context as API_T_OrdreFabrication)?.ResponsableNavigation?.Nom)
-									</div>
-
-								</Template>
+							<GridColumn MinWidth="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ORDREFABRICATION.AR_Refs)" HeaderText="Détails">
 							</GridColumn>
-							<GridColumn MinWidth="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.CA_Num)" HeaderText="Détails">
+							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ORDREFABRICATION.StockCreated)" HeaderText="TR.Magasin">
 								<Template>
 									@{
-										var dt = (context as API_T_OrdreFabrication);
-										foreach (API_T_OrdreFabricationLigne item in dt?.API_T_OrdreFabricationLigne)
-										{
-											<div>
-												<b>@item?.Qte.ToString("0")</b> @item.AR_RefNavigation?.AR_Design
-											</div>
-										}
-
-									}
-								</Template>
-							</GridColumn>
-							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.StockCreated)" HeaderText="TR.Magasin">
-								<Template>
-									@{
-										var dt = (context as API_T_OrdreFabrication);
+										var dt = (context as API_V_ORDREFABRICATION);
 										if (dt.StockCreated)
 										{
 											<RadzenIcon IconStyle="IconStyle.Success" Icon="check_circle" style="font-weight: 600;" />
@@ -81,10 +48,10 @@
 									}
 								</Template>
 							</GridColumn>
-							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_OrdreFabrication.PreparationCreated)" HeaderText="DA.Crée">
+							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ORDREFABRICATION.PreparationCreated)" HeaderText="DA.Crée">
 								<Template>
 									@{
-										var dt = (context as API_T_OrdreFabrication);
+										var dt = (context as API_V_ORDREFABRICATION);
 										if (dt.PreparationCreated)
 										{
 											<RadzenIcon IconStyle="IconStyle.Success" Icon="check_circle" style="font-weight: 600;" />
@@ -121,13 +88,13 @@ else
 	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
 	DB db = new DB();
 	//Components
-	private SfGrid<API_T_OrdreFabrication> DefaultGrid;
+	private SfGrid<API_V_ORDREFABRICATION> DefaultGrid;
 	[Parameter]
 	public bool StockCreated { get; set; } = false;
 	[Parameter]
 	public string Title { get; set; } = "LISTE DES ORDRES DE FABRICATION";
 
-	private List<API_T_OrdreFabrication> items = new List<API_T_OrdreFabrication>();
+	private List<API_V_ORDREFABRICATION> items = new List<API_V_ORDREFABRICATION>();
 	bool loading = false;
 	bool IsLoaded = false;
 	protected override async Task OnInitializedAsync()
@@ -141,16 +108,12 @@ else
 	}
 	private async Task LoadData()
 	{
-		items = session.db.API_T_OrdreFabrication
+		items = session.db.API_V_ORDREFABRICATION
         .Where(a => (StockCreated && a.StockCreated) || (!StockCreated))
-		.Include(a => a.ResponsableNavigation)
-		.Include(a => a.CT_NumNavigation)
-		.Include(a => a.API_T_OrdreFabricationLigne)
-		.ThenInclude(a => a.AR_RefNavigation)
 		.OrderByDescending(a => a.Date).ToList();
 	}
 
-	protected async Task Edit(RecordDoubleClickEventArgs<API_T_OrdreFabrication> args)
+	protected async Task Edit(RecordDoubleClickEventArgs<API_V_ORDREFABRICATION> args)
 	{
 
 		await DialogService.OpenAsync<OrdreFabricationFiche>(args.RowData.Numero,
@@ -165,7 +128,7 @@ else
 		new Radzen.DialogOptions() { Width = "95%", Height = "95%", CloseDialogOnEsc = false, Style = "max-width: 1500px;" });
 		await LoadData();
 	}
-	private async Task OnActionBegin(ActionEventArgs<API_T_OrdreFabrication> args)
+	private async Task OnActionBegin(ActionEventArgs<API_V_ORDREFABRICATION> args)
 	{
 		if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
 	|| args.RequestType == Syncfusion.Blazor.Grids.Action.Print
@@ -180,9 +143,9 @@ else
 		}
 		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
 		{
-			db.Database.ExecuteSqlRaw("DELETE FROM API_T_OrdreFabricationDetail WHERE Ligne IN (SELECT id FROM API_T_OrdreFabricationLigne WHERE Ordre = {0})", args.Data.id);
-			db.Database.ExecuteSqlRaw("DELETE FROM API_T_OrdreFabricationLigne WHERE Ordre = {0}", args.Data.id);
-			db.Database.ExecuteSqlRaw("DELETE FROM API_T_OrdreFabrication WHERE id = {0}", args.Data.id);
+			db.Database.ExecuteSqlRaw("DELETE FROM API_V_ORDREFABRICATIONDetail WHERE Ligne IN (SELECT id FROM API_V_ORDREFABRICATIONLigne WHERE Ordre = {0})", args.Data.id);
+			db.Database.ExecuteSqlRaw("DELETE FROM API_V_ORDREFABRICATIONLigne WHERE Ordre = {0}", args.Data.id);
+			db.Database.ExecuteSqlRaw("DELETE FROM API_V_ORDREFABRICATION WHERE id = {0}", args.Data.id);
 			db.SaveChanges();
 			await LoadData();
 		}

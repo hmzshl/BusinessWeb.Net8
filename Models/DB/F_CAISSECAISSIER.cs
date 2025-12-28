@@ -28,4 +28,6 @@ public partial class F_CAISSECAISSIER
     public Guid? cbCreationUser { get; set; }
 
     public virtual F_CAISSE CA_NoNavigation { get; set; }
+
+    public virtual F_COLLABORATEUR CO_NoNavigation { get; set; }
 }

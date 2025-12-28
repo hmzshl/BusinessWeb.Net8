@@ -106,4 +106,6 @@ public partial class F_LIGNEARCHIVE
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 
     public virtual F_TICKETARCHIVE TA_PieceNavigation { get; set; }
+
+    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
 }

@@ -69,13 +69,5 @@ public partial class F_DOCREGL
 
     public int? cbHashOrder { get; set; }
 
-    public Guid? DR_RefPaiement { get; set; }
-
-    public string DR_AdressePaiement { get; set; }
-
-    public string DO_PieceAcompte { get; set; }
-
-    public byte[] cbDO_PieceAcompte { get; set; }
-
     public virtual ICollection<F_REGLECH> F_REGLECH { get; set; } = new List<F_REGLECH>();
 }

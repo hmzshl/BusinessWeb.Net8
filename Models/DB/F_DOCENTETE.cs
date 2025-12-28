@@ -261,35 +261,31 @@ public partial class F_DOCENTETE
 
     public int? cbHashOrder { get; set; }
 
-    public short? DO_Conversion { get; set; }
-
-    public short? DO_TVADebit { get; set; }
-
-    public int? EB_No { get; set; }
-
-    public string DO_RefExterne { get; set; }
-
-    public int? CFAR_No { get; set; }
-
-    public int? cbCFAR_No { get; set; }
-
-    public int? FAC_No { get; set; }
-
-    public int? cbFAC_No { get; set; }
-
-    public short? DO_Exclure { get; set; }
-
-    public string DO_CodeService { get; set; }
-
-    public string CT_NumOld { get; set; }
-
     public string ChefChantier { get; set; }
 
     public string Demandeur { get; set; }
 
+    public string CT_NumOld { get; set; }
+
+    public virtual F_COMPTEG CG_NumNavigation { get; set; }
+
+    public virtual F_COMPTET CT_NumCentraleNavigation { get; set; }
+
     public virtual F_COMPTET CT_NumPayeurNavigation { get; set; }
+
+    public virtual F_TAXE DO_CodeTaxe1Navigation { get; set; }
+
+    public virtual F_TAXE DO_CodeTaxe2Navigation { get; set; }
+
+    public virtual F_TAXE DO_CodeTaxe3Navigation { get; set; }
 
     public virtual F_CAISSE cbCA_NoNavigation { get; set; }
 
+    public virtual F_COLLABORATEUR cbCO_NoCaissierNavigation { get; set; }
+
+    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
+
     public virtual F_DEPOT cbDE_NoNavigation { get; set; }
+
+    public virtual F_LIVRAISON cbLI_NoNavigation { get; set; }
 }

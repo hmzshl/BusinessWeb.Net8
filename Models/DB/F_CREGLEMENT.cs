@@ -141,7 +141,19 @@ public partial class F_CREGLEMENT
 
     public string Remarque { get; set; }
 
+    public virtual F_COMPTEG CG_NumContNavigation { get; set; }
+
+    public virtual F_COMPTEG CG_NumEcartNavigation { get; set; }
+
+    public virtual F_COMPTEG CG_NumNavigation { get; set; }
+
+    public virtual F_COMPTET CT_NumPayeurNavigation { get; set; }
+
+    public virtual F_COMPTET CT_NumPayeurOrigNavigation { get; set; }
+
     public virtual ICollection<F_REGLECH> F_REGLECH { get; set; } = new List<F_REGLECH>();
 
     public virtual F_CAISSE cbCA_NoNavigation { get; set; }
+
+    public virtual F_COLLABORATEUR cbCO_NoCaissierNavigation { get; set; }
 }

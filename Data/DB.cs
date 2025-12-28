@@ -18,6 +18,8 @@ public partial class DB : DbContext
     {
     }
 
+    public virtual DbSet<API_T_AREdit_Hist> API_T_AREdit_Hist { get; set; }
+
     public virtual DbSet<API_T_Affectation> API_T_Affectation { get; set; }
 
     public virtual DbSet<API_T_AgenceArticle> API_T_AgenceArticle { get; set; }
@@ -270,6 +272,8 @@ public partial class DB : DbContext
 
     public virtual DbSet<API_V_CAISSEENTETE> API_V_CAISSEENTETE { get; set; }
 
+    public virtual DbSet<API_V_CAPREV> API_V_CAPREV { get; set; }
+
     public virtual DbSet<API_V_CBSESSION> API_V_CBSESSION { get; set; }
 
     public virtual DbSet<API_V_CERTIFENTETE> API_V_CERTIFENTETE { get; set; }
@@ -297,6 +301,8 @@ public partial class DB : DbContext
     public virtual DbSet<API_V_MATERIEL> API_V_MATERIEL { get; set; }
 
     public virtual DbSet<API_V_MATERIELENTRETIEN> API_V_MATERIELENTRETIEN { get; set; }
+
+    public virtual DbSet<API_V_ORDREFABRICATION> API_V_ORDREFABRICATION { get; set; }
 
     public virtual DbSet<API_V_PERSONNEL> API_V_PERSONNEL { get; set; }
 
@@ -796,6 +802,57 @@ public partial class DB : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<API_T_AREdit_Hist>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_AREdit_Hist_id");
+
+            entity.Property(e => e.DateOP).HasColumnType("datetime");
+            entity.Property(e => e.NewAR_Ref)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.NewCT_Intitule)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.NewCT_Num)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.NewDate).HasColumnType("datetime");
+            entity.Property(e => e.NewDesign)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.NewHT).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.NewPU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.NewPiece)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.NewQte).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.NewRem).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.NewTTC).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.NewTaxe).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.OldAR_Ref)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.OldCT_Intitule)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.OldCT_Num)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.OldDate).HasColumnType("datetime");
+            entity.Property(e => e.OldDesign)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.OldHT).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.OldPU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.OldPiece)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.OldQte).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.OldRem).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.OldTTC).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.OldTaxe).HasColumnType("decimal(24, 6)");
+        });
+
         modelBuilder.Entity<API_T_Affectation>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Affectation_id");
@@ -985,6 +1042,11 @@ public partial class DB : DbContext
             entity.Property(e => e.RemiseInfant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Taux).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Tax).HasColumnType("decimal(24, 6)");
+
+            entity.HasOne(d => d.TiersNavigation).WithMany(p => p.API_T_AgenceContrat)
+                .HasForeignKey(d => d.Tiers)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_api_t_agencecontrat");
         });
 
         modelBuilder.Entity<API_T_AgenceContratDate>(entity =>
@@ -5734,6 +5796,93 @@ public partial class DB : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<API_V_CAPREV>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("API_V_CAPREV");
+
+            entity.Property(e => e.AR_Design)
+                .HasMaxLength(69)
+                .IsUnicode(false);
+            entity.Property(e => e.AR_Ref)
+                .IsRequired()
+                .HasMaxLength(19)
+                .IsUnicode(false);
+            entity.Property(e => e.Annee).HasMaxLength(4000);
+            entity.Property(e => e.CA_BC).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.CA_BL).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.CA_DE).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.CA_DE_BC).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.CA_FA).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.CA_Intitule)
+                .HasMaxLength(35)
+                .IsUnicode(false);
+            entity.Property(e => e.CA_Num)
+                .HasMaxLength(13)
+                .IsUnicode(false);
+            entity.Property(e => e.CA_Prev).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.CMUP).HasColumnType("numeric(38, 6)");
+            entity.Property(e => e.CMUPCoutTotal).HasColumnType("numeric(38, 6)");
+            entity.Property(e => e.CMUPMarge).HasColumnType("numeric(38, 6)");
+            entity.Property(e => e.CMUPMargeP).HasColumnType("numeric(38, 6)");
+            entity.Property(e => e.CO_Nom)
+                .IsRequired()
+                .HasMaxLength(71)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_CodeRegion)
+                .HasMaxLength(25)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Intitule)
+                .HasMaxLength(69)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Num)
+                .IsRequired()
+                .HasMaxLength(17)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Ville)
+                .HasMaxLength(35)
+                .IsUnicode(false);
+            entity.Property(e => e.DE_Intitule)
+                .HasMaxLength(35)
+                .IsUnicode(false);
+            entity.Property(e => e.DL_MontantHT).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.DL_MontantTTC).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.DL_MontantTVA).HasColumnType("numeric(25, 6)");
+            entity.Property(e => e.DL_Qte).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.DL_Taxe1).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.DO_Date).HasColumnType("datetime");
+            entity.Property(e => e.DO_Piece)
+                .IsRequired()
+                .HasMaxLength(13)
+                .IsUnicode(false);
+            entity.Property(e => e.DPCoutTotal).HasColumnType("numeric(38, 6)");
+            entity.Property(e => e.DPMarge).HasColumnType("numeric(38, 6)");
+            entity.Property(e => e.DPMargeP).HasColumnType("numeric(38, 6)");
+            entity.Property(e => e.DernierPUAchat).HasColumnType("numeric(38, 14)");
+            entity.Property(e => e.EtapeCommande)
+                .IsRequired()
+                .HasMaxLength(15)
+                .IsUnicode(false);
+            entity.Property(e => e.FA_CodeFamille)
+                .HasMaxLength(11)
+                .IsUnicode(false);
+            entity.Property(e => e.FA_Intitule)
+                .HasMaxLength(69)
+                .IsUnicode(false);
+            entity.Property(e => e.Mois).HasMaxLength(4000);
+            entity.Property(e => e.MoisAnnee).HasMaxLength(4000);
+            entity.Property(e => e.PACoutTotal).HasColumnType("numeric(38, 6)");
+            entity.Property(e => e.PAMarge).HasColumnType("numeric(38, 6)");
+            entity.Property(e => e.PAMargeP).HasColumnType("numeric(38, 6)");
+            entity.Property(e => e.PU).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.PUAchat).HasColumnType("numeric(38, 14)");
+            entity.Property(e => e.PUNet).HasColumnType("numeric(38, 14)");
+            entity.Property(e => e.Remise1).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.Remise2).HasColumnType("numeric(24, 6)");
+            entity.Property(e => e.Remise3).HasColumnType("numeric(24, 6)");
+        });
+
         modelBuilder.Entity<API_V_CBSESSION>(entity =>
         {
             entity
@@ -6860,6 +7009,40 @@ public partial class DB : DbContext
             entity.Property(e => e.Qte).HasColumnType("decimal(38, 6)");
         });
 
+        modelBuilder.Entity<API_V_ORDREFABRICATION>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("API_V_ORDREFABRICATION");
+
+            entity.Property(e => e.CA_Intitule)
+                .HasMaxLength(35)
+                .IsUnicode(false);
+            entity.Property(e => e.CA_Num)
+                .HasMaxLength(13)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Intitule)
+                .HasMaxLength(69)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(17)
+                .IsUnicode(false);
+            entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.DateLivraison).HasColumnType("smalldatetime");
+            entity.Property(e => e.NumCommande)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.NumPreparationCommande)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.Numero)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Reference)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<API_V_PERSONNEL>(entity =>
         {
             entity
@@ -7262,8 +7445,6 @@ public partial class DB : DbContext
 
             entity.HasIndex(e => e.cbCT_NumCentrale, "IAE_CENTRALE");
 
-            entity.HasIndex(e => e.CFAR_No, "IAE_CFARNO");
-
             entity.HasIndex(e => e.cbCG_Num, "IAE_CGNUM");
 
             entity.HasIndex(e => e.DE_No, "IAE_DEPOT");
@@ -7278,9 +7459,6 @@ public partial class DB : DbContext
 
             entity.HasIndex(e => e.AB_No, "UKA_F_ABOENTETE_AB_No").IsUnique();
 
-            entity.Property(e => e.AE_CodeService)
-                .HasMaxLength(101)
-                .IsUnicode(false);
             entity.Property(e => e.AE_Contact)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -7299,9 +7477,6 @@ public partial class DB : DbContext
             entity.Property(e => e.AE_Cours).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.AE_Ref)
                 .HasMaxLength(17)
-                .IsUnicode(false);
-            entity.Property(e => e.AE_RefExterne)
-                .HasMaxLength(51)
                 .IsUnicode(false);
             entity.Property(e => e.AE_TxEscompte).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.CA_Num)
@@ -7352,11 +7527,36 @@ public partial class DB : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKA_F_ABOENTETE_AB_No");
 
+            entity.HasOne(d => d.CG_NumNavigation).WithMany(p => p.F_ABOENTETE)
+                .HasPrincipalKey(p => p.CG_Num)
+                .HasForeignKey(d => d.CG_Num)
+                .HasConstraintName("FKA_CPTAF_ABOENTETE_CG_Num");
+
+            entity.HasOne(d => d.CT_NumCentraleNavigation).WithMany(p => p.F_ABOENTETECT_NumCentraleNavigation)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_NumCentrale)
+                .HasConstraintName("FKA_CPTAF_ABOENTETE_CT_NumCentrale");
+
+            entity.HasOne(d => d.CT_NumPayeurNavigation).WithMany(p => p.F_ABOENTETECT_NumPayeurNavigation)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_NumPayeur)
+                .HasConstraintName("FKA_CPTAF_ABOENTETE_CT_NumPayeur");
+
             entity.HasOne(d => d.DE_NoNavigation).WithMany(p => p.F_ABOENTETE)
                 .HasPrincipalKey(p => p.DE_No)
                 .HasForeignKey(d => d.DE_No)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKA_F_ABOENTETE_DE_No");
+
+            entity.HasOne(d => d.cbCO_NoNavigation).WithMany(p => p.F_ABOENTETE)
+                .HasPrincipalKey(p => p.CO_No)
+                .HasForeignKey(d => d.cbCO_No)
+                .HasConstraintName("FKA_CPTAF_ABOENTETE_CO_No");
+
+            entity.HasOne(d => d.cbLI_NoNavigation).WithMany(p => p.F_ABOENTETE)
+                .HasPrincipalKey(p => p.LI_No)
+                .HasForeignKey(d => d.cbLI_No)
+                .HasConstraintName("FKA_CPTAF_ABOENTETE_LI_No");
         });
 
         modelBuilder.Entity<F_ABOENTETEINFOS>(entity =>
@@ -7498,9 +7698,6 @@ public partial class DB : DbContext
             entity.Property(e => e.AL_Ref)
                 .HasMaxLength(17)
                 .IsUnicode(false);
-            entity.Property(e => e.AL_RefExterne)
-                .HasMaxLength(51)
-                .IsUnicode(false);
             entity.Property(e => e.AL_Remise01REM_Valeur).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.AL_Remise02REM_Valeur).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.AL_Remise03REM_Valeur).HasColumnType("numeric(24, 6)");
@@ -7556,6 +7753,21 @@ public partial class DB : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKA_F_ABOLIGNE_AB_No");
 
+            entity.HasOne(d => d.AL_CodeTaxe1Navigation).WithMany(p => p.F_ABOLIGNEAL_CodeTaxe1Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.AL_CodeTaxe1)
+                .HasConstraintName("FKA_CPTAF_ABOLIGNE_AL_CodeTaxe1");
+
+            entity.HasOne(d => d.AL_CodeTaxe2Navigation).WithMany(p => p.F_ABOLIGNEAL_CodeTaxe2Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.AL_CodeTaxe2)
+                .HasConstraintName("FKA_CPTAF_ABOLIGNE_AL_CodeTaxe2");
+
+            entity.HasOne(d => d.AL_CodeTaxe3Navigation).WithMany(p => p.F_ABOLIGNEAL_CodeTaxe3Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.AL_CodeTaxe3)
+                .HasConstraintName("FKA_CPTAF_ABOLIGNE_AL_CodeTaxe3");
+
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_ABOLIGNE)
                 .HasPrincipalKey(p => p.AR_Ref)
                 .HasForeignKey(d => d.AR_Ref)
@@ -7565,6 +7777,11 @@ public partial class DB : DbContext
                 .HasPrincipalKey(p => p.RP_Code)
                 .HasForeignKey(d => d.RP_Code)
                 .HasConstraintName("FKA_F_ABOLIGNE_RP_Code");
+
+            entity.HasOne(d => d.cbCO_NoNavigation).WithMany(p => p.F_ABOLIGNE)
+                .HasPrincipalKey(p => p.CO_No)
+                .HasForeignKey(d => d.cbCO_No)
+                .HasConstraintName("FKA_CPTAF_ABOLIGNE_CO_No");
 
             entity.HasOne(d => d.cbDE_NoNavigation).WithMany(p => p.F_ABOLIGNE)
                 .HasPrincipalKey(p => p.DE_No)
@@ -7709,6 +7926,11 @@ public partial class DB : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbReplication).HasDefaultValue(0);
+
+            entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_ABONNEMENT)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_Num)
+                .HasConstraintName("FKA_CPTAF_ABONNEMENT_CT_Num");
         });
 
         modelBuilder.Entity<F_ABOPERIODE>(entity =>
@@ -8084,6 +8306,11 @@ public partial class DB : DbContext
                 .HasForeignKey(d => d.AR_Ref)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKA_F_ARTCLIENT_AR_Ref");
+
+            entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_ARTCLIENT)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_Num)
+                .HasConstraintName("FKA_CPTAF_ARTCLIENT_CT_Num");
         });
 
         modelBuilder.Entity<F_ARTCOMPO>(entity =>
@@ -8244,6 +8471,41 @@ public partial class DB : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbReplication).HasDefaultValue(0);
+
+            entity.HasOne(d => d.ACP_ComptaCPT_CompteGNavigation).WithMany(p => p.F_ARTCOMPTA)
+                .HasPrincipalKey(p => p.CG_Num)
+                .HasForeignKey(d => d.ACP_ComptaCPT_CompteG)
+                .HasConstraintName("FKA_CPTAF_ARTCOMPTA_ACP_C_COMPTEG");
+
+            entity.HasOne(d => d.ACP_ComptaCPT_Taxe1Navigation).WithMany(p => p.F_ARTCOMPTAACP_ComptaCPT_Taxe1Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.ACP_ComptaCPT_Taxe1)
+                .HasConstraintName("FKA_CPTAF_ARTCOMPTA_ACP_C_Taxe1");
+
+            entity.HasOne(d => d.ACP_ComptaCPT_Taxe2Navigation).WithMany(p => p.F_ARTCOMPTAACP_ComptaCPT_Taxe2Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.ACP_ComptaCPT_Taxe2)
+                .HasConstraintName("FKA_CPTAF_ARTCOMPTA_ACP_C_Taxe2");
+
+            entity.HasOne(d => d.ACP_ComptaCPT_Taxe3Navigation).WithMany(p => p.F_ARTCOMPTAACP_ComptaCPT_Taxe3Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.ACP_ComptaCPT_Taxe3)
+                .HasConstraintName("FKA_CPTAF_ARTCOMPTA_ACP_C_Taxe3");
+
+            entity.HasOne(d => d.ACP_ComptaCPT_TaxeAnc1Navigation).WithMany(p => p.F_ARTCOMPTAACP_ComptaCPT_TaxeAnc1Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.ACP_ComptaCPT_TaxeAnc1)
+                .HasConstraintName("FKA_CPTAF_ARTCOMPTA_ACP_C_TaxeAnc1");
+
+            entity.HasOne(d => d.ACP_ComptaCPT_TaxeAnc2Navigation).WithMany(p => p.F_ARTCOMPTAACP_ComptaCPT_TaxeAnc2Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.ACP_ComptaCPT_TaxeAnc2)
+                .HasConstraintName("FKA_CPTAF_ARTCOMPTA_ACP_C_TaxeAnc2");
+
+            entity.HasOne(d => d.ACP_ComptaCPT_TaxeAnc3Navigation).WithMany(p => p.F_ARTCOMPTAACP_ComptaCPT_TaxeAnc3Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.ACP_ComptaCPT_TaxeAnc3)
+                .HasConstraintName("FKA_CPTAF_ARTCOMPTA_ACP_C_TaxeAnc3");
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.F_ARTCOMPTA)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -8415,6 +8677,12 @@ public partial class DB : DbContext
                 .HasForeignKey(d => d.AR_Ref)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKA_F_ARTFOURNISS_AR_Ref");
+
+            entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_ARTFOURNISS)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_Num)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKA_CPTAF_ARTFOURNISS_CT_Num");
         });
 
         modelBuilder.Entity<F_ARTGAMME>(entity =>
@@ -8785,9 +9053,6 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.ME_Fichier)
                 .HasMaxLength(259)
-                .IsUnicode(false);
-            entity.Property(e => e.ME_GedId)
-                .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.ME_Origine)
                 .HasMaxLength(255)
@@ -9822,11 +10087,27 @@ public partial class DB : DbContext
             entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
+            entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_CAISSE)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_Num)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKA_CPTAF_CAISSE_CT_Num");
+
             entity.HasOne(d => d.DE_NoNavigation).WithMany(p => p.F_CAISSE)
                 .HasPrincipalKey(p => p.DE_No)
                 .HasForeignKey(d => d.DE_No)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKA_F_CAISSE_DE_No");
+
+            entity.HasOne(d => d.cbCO_NoNavigation).WithMany(p => p.F_CAISSEcbCO_NoNavigation)
+                .HasPrincipalKey(p => p.CO_No)
+                .HasForeignKey(d => d.cbCO_No)
+                .HasConstraintName("FKA_CPTAF_CAISSE_RE_NO");
+
+            entity.HasOne(d => d.cbCO_NoCaissierNavigation).WithMany(p => p.F_CAISSEcbCO_NoCaissierNavigation)
+                .HasPrincipalKey(p => p.CO_No)
+                .HasForeignKey(d => d.cbCO_NoCaissier)
+                .HasConstraintName("FKA_CPTAF_CAISSE_RE_NOCAI");
         });
 
         modelBuilder.Entity<F_CAISSECAISSIER>(entity =>
@@ -9866,6 +10147,12 @@ public partial class DB : DbContext
                 .HasForeignKey(d => d.CA_No)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKA_F_CAISSECAISSIER_CA_No");
+
+            entity.HasOne(d => d.CO_NoNavigation).WithMany(p => p.F_CAISSECAISSIER)
+                .HasPrincipalKey(p => p.CO_No)
+                .HasForeignKey(d => d.CO_No)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKA_CPTAF_CAISSECAISSIER_RE_NO");
         });
 
         modelBuilder.Entity<F_CALENDRIER>(entity =>
@@ -10121,6 +10408,11 @@ public partial class DB : DbContext
                 .HasPrincipalKey(p => p.AR_Ref)
                 .HasForeignKey(d => d.AR_Ref)
                 .HasConstraintName("FKA_F_CLAVIER_AR_Ref");
+
+            entity.HasOne(d => d.cbCO_NoNavigation).WithMany(p => p.F_CLAVIER)
+                .HasPrincipalKey(p => p.CO_No)
+                .HasForeignKey(d => d.cbCO_No)
+                .HasConstraintName("FKA_CPTAF_CLAVIER_RE_NO");
         });
 
         modelBuilder.Entity<F_CMLIEN>(entity =>
@@ -10178,11 +10470,7 @@ public partial class DB : DbContext
 
             entity.HasIndex(e => new { e.CO_ChargeRecouvr, e.cbCO_Nom, e.cbCO_Prenom }, "ICO_CHARGERECOUVR");
 
-            entity.HasIndex(e => new { e.CO_ChefVentes, e.cbCO_Nom, e.cbCO_Prenom }, "ICO_CHEFVENTES");
-
             entity.HasIndex(e => e.CO_No, "ICO_CONO").IsUnique();
-
-            entity.HasIndex(e => new { e.CO_NoChefVentes, e.CO_No }, "ICO_CONOCHEFVENTES");
 
             entity.HasIndex(e => new { e.CO_Financier, e.cbCO_Nom, e.cbCO_Prenom }, "ICO_FINANCIER");
 
@@ -10375,7 +10663,6 @@ public partial class DB : DbContext
                     tb.HasTrigger("TG_CBUPD_F_COMPTEA");
                     tb.HasTrigger("TG_DEL_CIALF_COMPTEA");
                     tb.HasTrigger("TG_DEL_F_COMPTEA");
-                    tb.HasTrigger("TG_DEL_IMMOF_COMPTEA");
                     tb.HasTrigger("TG_INS_F_COMPTEA");
                     tb.HasTrigger("TG_UPD_F_COMPTEA");
                 });
@@ -11048,9 +11335,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ME_Fichier)
                 .HasMaxLength(259)
                 .IsUnicode(false);
-            entity.Property(e => e.ME_GedId)
-                .HasMaxLength(255)
-                .IsUnicode(false);
             entity.Property(e => e.ME_Origine)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -11092,7 +11376,6 @@ public partial class DB : DbContext
                     tb.HasTrigger("TG_CBINS_F_COMPTEG");
                     tb.HasTrigger("TG_CBUPD_F_COMPTEG");
                     tb.HasTrigger("TG_DEL_F_COMPTEG");
-                    tb.HasTrigger("TG_DEL_TRESF_COMPTEG");
                     tb.HasTrigger("TG_INS_F_COMPTEG");
                     tb.HasTrigger("TG_UPD_F_COMPTEG");
                 });
@@ -11923,10 +12206,9 @@ public partial class DB : DbContext
                     tb.HasTrigger("TG_DEL_CIALF_COMPTET");
                     tb.HasTrigger("TG_DEL_F_COMPTET");
                     tb.HasTrigger("TG_INS_F_COMPTET");
+                    tb.HasTrigger("TG_Prospect");
                     tb.HasTrigger("TG_UPD_F_COMPTET");
                 });
-
-            entity.HasIndex(e => e.cbCAL_No, "FKIA_F_COMPTET_CAL_No");
 
             entity.HasIndex(e => new { e.N_Analytique, e.CA_Num }, "FKIA_F_COMPTET_CA_Num");
 
@@ -11942,8 +12224,6 @@ public partial class DB : DbContext
 
             entity.HasIndex(e => e.cbPI_NoEchange, "FKIA_F_COMPTET_PI_NoEchange");
 
-            entity.HasIndex(e => e.CAL_No, "ICT_CALNO");
-
             entity.HasIndex(e => new { e.N_Analytique, e.cbCA_Num, e.cbCT_Num }, "ICT_CANUM");
 
             entity.HasIndex(e => new { e.N_Analytique, e.cbCA_Num, e.CT_Type, e.cbCT_Num }, "ICT_CANUMTYPE");
@@ -11957,8 +12237,6 @@ public partial class DB : DbContext
             entity.HasIndex(e => e.CO_No, "ICT_CONO");
 
             entity.HasIndex(e => e.DE_No, "ICT_DENO");
-
-            entity.HasIndex(e => e.cbDN_Id, "ICT_DNIDTIERS");
 
             entity.HasIndex(e => e.cbCT_Num, "ICT_NUM").IsUnique();
 
@@ -12040,10 +12318,6 @@ public partial class DB : DbContext
                 .HasMaxLength(9)
                 .IsUnicode(false);
             entity.Property(e => e.CT_Encours).HasColumnType("numeric(24, 6)");
-            entity.Property(e => e.CT_FEAutreIdentifVal)
-                .HasMaxLength(81)
-                .IsUnicode(false);
-            entity.Property(e => e.CT_FEDateSynchro).HasColumnType("datetime");
             entity.Property(e => e.CT_Facebook)
                 .HasMaxLength(35)
                 .IsUnicode(false);
@@ -12154,9 +12428,6 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Ville)
                 .HasMaxLength(35)
                 .IsUnicode(false);
-            entity.Property(e => e.DN_Id)
-                .HasMaxLength(37)
-                .IsUnicode(false);
             entity.Property(e => e.cbCA_Num)
                 .HasMaxLength(14)
                 .HasComputedColumnSql("(CONVERT([varbinary](14),isnull([CA_Num],'')))", false);
@@ -12189,9 +12460,6 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreation)
                 .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
                 .HasColumnType("datetime");
-            entity.Property(e => e.cbDN_Id)
-                .HasMaxLength(38)
-                .HasComputedColumnSql("(CONVERT([varbinary](38),isnull([DN_Id],'')))", false);
             entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
@@ -12203,11 +12471,6 @@ public partial class DB : DbContext
                 .HasPrincipalKey(p => p.CG_Num)
                 .HasForeignKey(d => d.CG_NumPrinc)
                 .HasConstraintName("FKA_F_COMPTET_CG_Num");
-
-            entity.HasOne(d => d.cbCAL_NoNavigation).WithMany(p => p.F_COMPTET)
-                .HasPrincipalKey(p => p.CAL_No)
-                .HasForeignKey(d => d.cbCAL_No)
-                .HasConstraintName("FKA_F_COMPTET_CAL_No");
 
             entity.HasOne(d => d.cbCO_NoNavigation).WithMany(p => p.F_COMPTET)
                 .HasPrincipalKey(p => p.CO_No)
@@ -12357,6 +12620,12 @@ public partial class DB : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbReplication).HasDefaultValue(0);
+
+            entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_COMPTETINFOS)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_Num)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKA_CPTAF_COMPTETINFOS_CT_Num");
         });
 
         modelBuilder.Entity<F_COMPTETMEDIA>(entity =>
@@ -12386,9 +12655,6 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.ME_Fichier)
                 .HasMaxLength(259)
-                .IsUnicode(false);
-            entity.Property(e => e.ME_GedId)
-                .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.ME_Origine)
                 .HasMaxLength(255)
@@ -12439,9 +12705,6 @@ public partial class DB : DbContext
 
             entity.HasIndex(e => new { e.cbCT_Num, e.CM_Creator, e.CM_Type, e.CM_TypeModele }, "ICM_CREATOR");
 
-            entity.Property(e => e.CM_EMail)
-                .HasMaxLength(255)
-                .IsUnicode(false);
             entity.Property(e => e.CM_Modele)
                 .HasMaxLength(259)
                 .IsUnicode(false);
@@ -12490,7 +12753,7 @@ public partial class DB : DbContext
 
             entity.HasIndex(e => e.CT_Num, "FKIA_F_COMPTETRAPPEL_CT_Num");
 
-            entity.HasIndex(e => new { e.cbCT_Num, e.CR_Date }, "ICR_DATE").IsUnique();
+            entity.HasIndex(e => new { e.cbCT_Num, e.CR_Date }, "ICR_DATE").IsDescending(false, true);
 
             entity.Property(e => e.CR_Date).HasColumnType("datetime");
             entity.Property(e => e.CR_Echeance).HasColumnType("datetime");
@@ -12968,8 +13231,6 @@ public partial class DB : DbContext
 
             entity.HasIndex(e => e.CT_Num, "FKIA_F_CONTACTT_CT_Num");
 
-            entity.HasIndex(e => e.cbDN_Id, "ICT_DNIDCONT");
-
             entity.HasIndex(e => e.CT_No, "ICT_NO").IsUnique();
 
             entity.HasIndex(e => new { e.cbCT_Num, e.cbCT_Nom, e.cbCT_Prenom }, "ICT_NOM").IsUnique();
@@ -13009,9 +13270,6 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Telephone)
                 .HasMaxLength(21)
                 .IsUnicode(false);
-            entity.Property(e => e.DN_Id)
-                .HasMaxLength(37)
-                .IsUnicode(false);
             entity.Property(e => e.cbCT_Nom)
                 .HasMaxLength(36)
                 .HasComputedColumnSql("(CONVERT([varbinary](36),isnull([CT_Nom],'')))", false);
@@ -13029,9 +13287,6 @@ public partial class DB : DbContext
             entity.Property(e => e.cbCreation)
                 .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
                 .HasColumnType("datetime");
-            entity.Property(e => e.cbDN_Id)
-                .HasMaxLength(38)
-                .HasComputedColumnSql("(CONVERT([varbinary](38),isnull([DN_Id],'')))", false);
             entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbModification)
                 .HasDefaultValueSql("(CONVERT([datetime2](0),getdate()))")
@@ -13188,10 +13443,40 @@ public partial class DB : DbContext
                 .HasComputedColumnSql("(CONVERT([varbinary](14),space((14)-(len(isnull([RG_Piece],''))+(1)))+isnull([RG_Piece],'')))", false);
             entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
+            entity.HasOne(d => d.CG_NumNavigation).WithMany(p => p.F_CREGLEMENTCG_NumNavigation)
+                .HasPrincipalKey(p => p.CG_Num)
+                .HasForeignKey(d => d.CG_Num)
+                .HasConstraintName("FKA_CPTAF_CREGLEMENT_CG_Num");
+
+            entity.HasOne(d => d.CG_NumContNavigation).WithMany(p => p.F_CREGLEMENTCG_NumContNavigation)
+                .HasPrincipalKey(p => p.CG_Num)
+                .HasForeignKey(d => d.CG_NumCont)
+                .HasConstraintName("FKA_CPTAF_CREGLEMENT_CG_NumCont");
+
+            entity.HasOne(d => d.CG_NumEcartNavigation).WithMany(p => p.F_CREGLEMENTCG_NumEcartNavigation)
+                .HasPrincipalKey(p => p.CG_Num)
+                .HasForeignKey(d => d.CG_NumEcart)
+                .HasConstraintName("FKA_CPTAF_CREGLEMENT_CG_NumEcart");
+
+            entity.HasOne(d => d.CT_NumPayeurNavigation).WithMany(p => p.F_CREGLEMENTCT_NumPayeurNavigation)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_NumPayeur)
+                .HasConstraintName("FKA_CPTAF_CREGLEMENT_CT_NumPayeur");
+
+            entity.HasOne(d => d.CT_NumPayeurOrigNavigation).WithMany(p => p.F_CREGLEMENTCT_NumPayeurOrigNavigation)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_NumPayeurOrig)
+                .HasConstraintName("FKA_CPTAF_CREGLEMENT_CT_NumPayeurOrig");
+
             entity.HasOne(d => d.cbCA_NoNavigation).WithMany(p => p.F_CREGLEMENT)
                 .HasPrincipalKey(p => p.CA_No)
                 .HasForeignKey(d => d.cbCA_No)
                 .HasConstraintName("FKA_F_CREGLEMENT_CA_No");
+
+            entity.HasOne(d => d.cbCO_NoCaissierNavigation).WithMany(p => p.F_CREGLEMENT)
+                .HasPrincipalKey(p => p.CO_No)
+                .HasForeignKey(d => d.cbCO_NoCaissier)
+                .HasConstraintName("FKA_CPTAF_CREGLEMENT_RE_NOCAISSIER");
         });
 
         modelBuilder.Entity<F_CYCLECONS>(entity =>
@@ -13563,8 +13848,6 @@ public partial class DB : DbContext
 
             entity.HasIndex(e => e.cbDE_No, "FKIA_F_DOCENTETE_DE_No");
 
-            entity.HasIndex(e => e.cbFAC_No, "FKIA_F_DOCENTETE_FAC_No");
-
             entity.HasIndex(e => e.cbCA_Num, "IDO_ANAL");
 
             entity.HasIndex(e => new { e.CA_No, e.DO_Attente, e.DO_Date, e.DO_Heure, e.cbDO_Tiers }, "IDO_CAISSE");
@@ -13572,8 +13855,6 @@ public partial class DB : DbContext
             entity.HasIndex(e => e.CO_NoCaissier, "IDO_CAISSIER");
 
             entity.HasIndex(e => e.cbCT_NumCentrale, "IDO_CENTRALE");
-
-            entity.HasIndex(e => e.CFAR_No, "IDO_CFARNO");
 
             entity.HasIndex(e => e.cbCG_Num, "IDO_CGNUM");
 
@@ -13588,8 +13869,6 @@ public partial class DB : DbContext
             entity.HasIndex(e => e.LI_No, "IDO_DEPOTCL");
 
             entity.HasIndex(e => new { e.DO_Domaine, e.DO_Souche }, "IDO_DOMSOUCHE");
-
-            entity.HasIndex(e => e.FAC_No, "IDO_FACNO");
 
             entity.HasIndex(e => e.cbDO_FactureFrs, "IDO_FACTURE");
 
@@ -13640,9 +13919,6 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.DO_AdressePaiement)
                 .HasMaxLength(255)
-                .IsUnicode(false);
-            entity.Property(e => e.DO_CodeService)
-                .HasMaxLength(101)
                 .IsUnicode(false);
             entity.Property(e => e.DO_CodeTaxe1)
                 .HasMaxLength(5)
@@ -13702,9 +13978,6 @@ public partial class DB : DbContext
             entity.Property(e => e.DO_Ref)
                 .HasMaxLength(17)
                 .IsUnicode(false);
-            entity.Property(e => e.DO_RefExterne)
-                .HasMaxLength(51)
-                .IsUnicode(false);
             entity.Property(e => e.DO_Taxe1).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DO_Taxe2).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DO_Taxe3).HasColumnType("numeric(24, 6)");
@@ -13762,20 +14035,60 @@ public partial class DB : DbContext
             entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
-            entity.HasOne(d => d.CT_NumPayeurNavigation).WithMany(p => p.F_DOCENTETE)
+            entity.HasOne(d => d.CG_NumNavigation).WithMany(p => p.F_DOCENTETE)
+                .HasPrincipalKey(p => p.CG_Num)
+                .HasForeignKey(d => d.CG_Num)
+                .HasConstraintName("FKA_CPTAF_DOCENTETE_CG_Num");
+
+            entity.HasOne(d => d.CT_NumCentraleNavigation).WithMany(p => p.F_DOCENTETECT_NumCentraleNavigation)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_NumCentrale)
+                .HasConstraintName("FKA_CPTAF_DOCENTETE_CT_NumCentrale");
+
+            entity.HasOne(d => d.CT_NumPayeurNavigation).WithMany(p => p.F_DOCENTETECT_NumPayeurNavigation)
                 .HasPrincipalKey(p => p.CT_Num)
                 .HasForeignKey(d => d.CT_NumPayeur)
                 .HasConstraintName("FKA_CPTAF_DOCENTETE_CT_NumPayeur");
+
+            entity.HasOne(d => d.DO_CodeTaxe1Navigation).WithMany(p => p.F_DOCENTETEDO_CodeTaxe1Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.DO_CodeTaxe1)
+                .HasConstraintName("FKA_CPTAF_DOCENTETE_DO_CodeTaxe1");
+
+            entity.HasOne(d => d.DO_CodeTaxe2Navigation).WithMany(p => p.F_DOCENTETEDO_CodeTaxe2Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.DO_CodeTaxe2)
+                .HasConstraintName("FKA_CPTAF_DOCENTETE_DO_CodeTaxe2");
+
+            entity.HasOne(d => d.DO_CodeTaxe3Navigation).WithMany(p => p.F_DOCENTETEDO_CodeTaxe3Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.DO_CodeTaxe3)
+                .HasConstraintName("FKA_CPTAF_DOCENTETE_DO_CodeTaxe3");
 
             entity.HasOne(d => d.cbCA_NoNavigation).WithMany(p => p.F_DOCENTETE)
                 .HasPrincipalKey(p => p.CA_No)
                 .HasForeignKey(d => d.cbCA_No)
                 .HasConstraintName("FKA_F_DOCENTETE_CA_No");
 
+            entity.HasOne(d => d.cbCO_NoNavigation).WithMany(p => p.F_DOCENTETEcbCO_NoNavigation)
+                .HasPrincipalKey(p => p.CO_No)
+                .HasForeignKey(d => d.cbCO_No)
+                .HasConstraintName("FKA_CPTAF_DOCENTETE_RE_NO");
+
+            entity.HasOne(d => d.cbCO_NoCaissierNavigation).WithMany(p => p.F_DOCENTETEcbCO_NoCaissierNavigation)
+                .HasPrincipalKey(p => p.CO_No)
+                .HasForeignKey(d => d.cbCO_NoCaissier)
+                .HasConstraintName("FKA_CPTAF_DOCENTETE_RE_NOCAISSIER");
+
             entity.HasOne(d => d.cbDE_NoNavigation).WithMany(p => p.F_DOCENTETE)
                 .HasPrincipalKey(p => p.DE_No)
                 .HasForeignKey(d => d.cbDE_No)
                 .HasConstraintName("FKA_F_DOCENTETE_DE_No");
+
+            entity.HasOne(d => d.cbLI_NoNavigation).WithMany(p => p.F_DOCENTETE)
+                .HasPrincipalKey(p => p.LI_No)
+                .HasForeignKey(d => d.cbLI_No)
+                .HasConstraintName("FKA_CPTAF_DOCENTETE_LI_No");
         });
 
         modelBuilder.Entity<F_DOCENTETEINFOS>(entity =>
@@ -14008,9 +14321,6 @@ public partial class DB : DbContext
             entity.Property(e => e.DL_QteBL).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_QteDE).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_QtePL).HasColumnType("numeric(24, 6)");
-            entity.Property(e => e.DL_RefExterne)
-                .HasMaxLength(51)
-                .IsUnicode(false);
             entity.Property(e => e.DL_Remise01REM_Valeur).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_Remise02REM_Valeur).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.DL_Remise03REM_Valeur).HasColumnType("numeric(24, 6)");
@@ -14099,10 +14409,30 @@ public partial class DB : DbContext
                 .HasForeignKey(d => d.AR_Ref)
                 .HasConstraintName("FKA_F_DOCLIGNE_AR_Ref");
 
+            entity.HasOne(d => d.DL_CodeTaxe1Navigation).WithMany(p => p.F_DOCLIGNEDL_CodeTaxe1Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.DL_CodeTaxe1)
+                .HasConstraintName("FKA_CPTAF_DOCLIGNE_DL_CodeTaxe1");
+
+            entity.HasOne(d => d.DL_CodeTaxe2Navigation).WithMany(p => p.F_DOCLIGNEDL_CodeTaxe2Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.DL_CodeTaxe2)
+                .HasConstraintName("FKA_CPTAF_DOCLIGNE_DL_CodeTaxe2");
+
+            entity.HasOne(d => d.DL_CodeTaxe3Navigation).WithMany(p => p.F_DOCLIGNEDL_CodeTaxe3Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.DL_CodeTaxe3)
+                .HasConstraintName("FKA_CPTAF_DOCLIGNE_DL_CodeTaxe3");
+
             entity.HasOne(d => d.RP_CodeNavigation).WithMany(p => p.F_DOCLIGNE)
                 .HasPrincipalKey(p => p.RP_Code)
                 .HasForeignKey(d => d.RP_Code)
                 .HasConstraintName("FKA_F_DOCLIGNE_RP_Code");
+
+            entity.HasOne(d => d.cbCO_NoNavigation).WithMany(p => p.F_DOCLIGNE)
+                .HasPrincipalKey(p => p.CO_No)
+                .HasForeignKey(d => d.cbCO_No)
+                .HasConstraintName("FKA_CPTAF_DOCLIGNE_RE_NO");
 
             entity.HasOne(d => d.cbDE_NoNavigation).WithMany(p => p.F_DOCLIGNE)
                 .HasPrincipalKey(p => p.DE_No)
@@ -14262,11 +14592,10 @@ public partial class DB : DbContext
                     tb.HasTrigger("TG_CBINS_F_DOCREGL");
                     tb.HasTrigger("TG_CBUPD_F_DOCREGL");
                     tb.HasTrigger("TG_DEL_F_DOCREGL");
+                    tb.HasTrigger("TG_DateEcheance");
                     tb.HasTrigger("TG_INS_F_DOCREGL");
                     tb.HasTrigger("TG_UPD_F_DOCREGL");
                 });
-
-            entity.HasIndex(e => new { e.cbDO_PieceAcompte, e.DR_No }, "IDR_ACOMPTE");
 
             entity.HasIndex(e => e.EC_No, "IDR_ECNO");
 
@@ -14280,12 +14609,6 @@ public partial class DB : DbContext
 
             entity.Property(e => e.DO_Piece)
                 .HasMaxLength(13)
-                .IsUnicode(false);
-            entity.Property(e => e.DO_PieceAcompte)
-                .HasMaxLength(13)
-                .IsUnicode(false);
-            entity.Property(e => e.DR_AdressePaiement)
-                .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.DR_Date).HasColumnType("datetime");
             entity.Property(e => e.DR_Libelle)
@@ -14306,9 +14629,6 @@ public partial class DB : DbContext
             entity.Property(e => e.cbDO_Piece)
                 .HasMaxLength(14)
                 .HasComputedColumnSql("(CONVERT([varbinary](14),space((14)-(len(isnull([DO_Piece],''))+(1)))+isnull([DO_Piece],'')))", false);
-            entity.Property(e => e.cbDO_PieceAcompte)
-                .HasMaxLength(14)
-                .HasComputedColumnSql("(CONVERT([varbinary](14),space((14)-(len([DO_PieceAcompte])+(1)))+[DO_PieceAcompte]))", false);
             entity.Property(e => e.cbFlag).HasDefaultValue((short)0);
             entity.Property(e => e.cbHash).HasMaxLength(32);
             entity.Property(e => e.cbHashDate).HasColumnType("datetime");
@@ -14511,9 +14831,6 @@ public partial class DB : DbContext
                 .HasMaxLength(259)
                 .IsUnicode(false);
             entity.Property(e => e.IV_FraiImpaye).HasColumnType("numeric(24, 6)");
-            entity.Property(e => e.IV_GedId)
-                .HasMaxLength(255)
-                .IsUnicode(false);
             entity.Property(e => e.IV_Heure)
                 .HasMaxLength(9)
                 .IsUnicode(false)
@@ -14764,7 +15081,7 @@ public partial class DB : DbContext
 
             entity.HasIndex(e => new { e.cbEC_RefPiece, e.JM_Date, e.EC_Jour }, "IEC_REFPIECE");
 
-            entity.HasIndex(e => e.cbSAC_Id, "IEC_SACID");
+            entity.HasIndex(e => new { e.EC_StatFinexKap, e.cbCT_Num, e.JM_Date, e.EC_Jour, e.EC_No }, "IEC_STATFINEXKAP");
 
             entity.HasIndex(e => e.cbTA_Code, "IEC_TACODE");
 
@@ -14828,9 +15145,6 @@ public partial class DB : DbContext
                 .IsRequired()
                 .HasMaxLength(7)
                 .IsUnicode(false);
-            entity.Property(e => e.SAC_Id)
-                .HasMaxLength(37)
-                .IsUnicode(false);
             entity.Property(e => e.TA_Code)
                 .HasMaxLength(5)
                 .IsUnicode(false);
@@ -14866,9 +15180,6 @@ public partial class DB : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbReplication).HasDefaultValue(0);
-            entity.Property(e => e.cbSAC_Id)
-                .HasMaxLength(38)
-                .HasComputedColumnSql("(CONVERT([varbinary](38),isnull([SAC_Id],'')))", false);
             entity.Property(e => e.cbTA_Code)
                 .HasMaxLength(6)
                 .HasComputedColumnSql("(CONVERT([varbinary](6),isnull([TA_Code],'')))", false);
@@ -14913,9 +15224,6 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.EM_Fichier)
                 .HasMaxLength(259)
-                .IsUnicode(false);
-            entity.Property(e => e.EM_GedId)
-                .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.EM_Origine)
                 .HasMaxLength(255)
@@ -15830,6 +16138,12 @@ public partial class DB : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbReplication).HasDefaultValue(0);
+
+            entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_FAMCLIENT)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_Num)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKA_CPTAF_FAMCLIENT_CT_Num");
         });
 
         modelBuilder.Entity<F_FAMCOMPTA>(entity =>
@@ -15898,6 +16212,41 @@ public partial class DB : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbReplication).HasDefaultValue(0);
+
+            entity.HasOne(d => d.FCP_ComptaCPT_CompteGNavigation).WithMany(p => p.F_FAMCOMPTA)
+                .HasPrincipalKey(p => p.CG_Num)
+                .HasForeignKey(d => d.FCP_ComptaCPT_CompteG)
+                .HasConstraintName("FKA_CPTAF_FAMCOMPTA_FCP_C_COMPTEG");
+
+            entity.HasOne(d => d.FCP_ComptaCPT_Taxe1Navigation).WithMany(p => p.F_FAMCOMPTAFCP_ComptaCPT_Taxe1Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.FCP_ComptaCPT_Taxe1)
+                .HasConstraintName("FKA_CPTAF_FAMCOMPTA_FCP_C_Taxe1");
+
+            entity.HasOne(d => d.FCP_ComptaCPT_Taxe2Navigation).WithMany(p => p.F_FAMCOMPTAFCP_ComptaCPT_Taxe2Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.FCP_ComptaCPT_Taxe2)
+                .HasConstraintName("FKA_CPTAF_FAMCOMPTA_FCP_C_Taxe2");
+
+            entity.HasOne(d => d.FCP_ComptaCPT_Taxe3Navigation).WithMany(p => p.F_FAMCOMPTAFCP_ComptaCPT_Taxe3Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.FCP_ComptaCPT_Taxe3)
+                .HasConstraintName("FKA_CPTAF_FAMCOMPTA_FCP_C_Taxe3");
+
+            entity.HasOne(d => d.FCP_ComptaCPT_TaxeAnc1Navigation).WithMany(p => p.F_FAMCOMPTAFCP_ComptaCPT_TaxeAnc1Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.FCP_ComptaCPT_TaxeAnc1)
+                .HasConstraintName("FKA_CPTAF_FAMCOMPTA_FCP_C_TaxeAnc1");
+
+            entity.HasOne(d => d.FCP_ComptaCPT_TaxeAnc2Navigation).WithMany(p => p.F_FAMCOMPTAFCP_ComptaCPT_TaxeAnc2Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.FCP_ComptaCPT_TaxeAnc2)
+                .HasConstraintName("FKA_CPTAF_FAMCOMPTA_FCP_C_TaxeAnc2");
+
+            entity.HasOne(d => d.FCP_ComptaCPT_TaxeAnc3Navigation).WithMany(p => p.F_FAMCOMPTAFCP_ComptaCPT_TaxeAnc3Navigation)
+                .HasPrincipalKey(p => p.TA_Code)
+                .HasForeignKey(d => d.FCP_ComptaCPT_TaxeAnc3)
+                .HasConstraintName("FKA_CPTAF_FAMCOMPTA_FCP_C_TaxeAnc3");
         });
 
         modelBuilder.Entity<F_FAMFOURNISS>(entity =>
@@ -15954,6 +16303,12 @@ public partial class DB : DbContext
                 .HasColumnType("datetime");
             entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbReplication).HasDefaultValue(0);
+
+            entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_FAMFOURNISS)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_Num)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKA_CPTAF_FAMFOURNISS_CT_Num");
         });
 
         modelBuilder.Entity<F_FAMILLE>(entity =>
@@ -16622,9 +16977,6 @@ public partial class DB : DbContext
                 .IsRequired()
                 .HasMaxLength(7)
                 .IsUnicode(false);
-            entity.Property(e => e.JO_PersoLibelle)
-                .HasMaxLength(69)
-                .IsUnicode(false);
             entity.Property(e => e.cbCG_Num)
                 .HasMaxLength(14)
                 .HasComputedColumnSql("(CONVERT([varbinary](14),isnull([CG_Num],'')))", false);
@@ -16840,6 +17192,11 @@ public partial class DB : DbContext
                 .HasForeignKey(d => d.TA_Piece)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKA_F_LIGNEARCHIVE_TA_Piece");
+
+            entity.HasOne(d => d.cbCO_NoNavigation).WithMany(p => p.F_LIGNEARCHIVE)
+                .HasPrincipalKey(p => p.CO_No)
+                .HasForeignKey(d => d.cbCO_No)
+                .HasConstraintName("FKA_CPTAF_LIGNEARCHIVE_RE_NO");
         });
 
         modelBuilder.Entity<F_LIVRAISON>(entity =>
@@ -16857,8 +17214,6 @@ public partial class DB : DbContext
                 });
 
             entity.HasIndex(e => e.CT_Num, "FKIA_F_LIVRAISON_CT_Num");
-
-            entity.HasIndex(e => new { e.LI_AdresseFact, e.cbCT_Num }, "ILI_ADRESSEFACT");
 
             entity.HasIndex(e => new { e.cbCT_Num, e.cbLI_Intitule }, "ILI_INT");
 
@@ -16878,9 +17233,6 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.LI_CodeRegion)
                 .HasMaxLength(25)
-                .IsUnicode(false);
-            entity.Property(e => e.LI_Commentaire)
-                .HasMaxLength(69)
                 .IsUnicode(false);
             entity.Property(e => e.LI_Complement)
                 .HasMaxLength(35)
@@ -17085,10 +17437,8 @@ public partial class DB : DbContext
                     tb.HasTrigger("TG_CBINS_F_MANDAT");
                     tb.HasTrigger("TG_CBUPD_F_MANDAT");
                     tb.HasTrigger("TG_DEL_F_MANDAT");
-                    tb.HasTrigger("TG_DEL_TRESF_MANDAT");
                     tb.HasTrigger("TG_INS_F_MANDAT");
                     tb.HasTrigger("TG_UPD_F_MANDAT");
-                    tb.HasTrigger("TG_UPD_TRESF_MANDAT");
                 });
 
             entity.HasIndex(e => new { e.CT_Num, e.BT_Num }, "FKIA_F_MANDAT_BT_Num");
@@ -17937,6 +18287,8 @@ public partial class DB : DbContext
 
             entity.HasIndex(e => e.cbCT_Num, "IPF_TIERS");
 
+            entity.HasIndex(e => e.PF_Num, "UKA_F_PROJETFABRICATION_PF_Num").IsUnique();
+
             entity.Property(e => e.CA_Num)
                 .HasMaxLength(13)
                 .IsUnicode(false);
@@ -18008,6 +18360,8 @@ public partial class DB : DbContext
             entity.HasIndex(e => e.AR_RefComposant, "FKIA_F_PROJETHISTO_AR_RefComposant");
 
             entity.HasIndex(e => e.AR_RefCompose, "FKIA_F_PROJETHISTO_AR_RefCompose");
+
+            entity.HasIndex(e => e.PF_Num, "FKIA_F_PROJETHISTO_PF_Num");
 
             entity.HasIndex(e => e.PP_No, "FKIA_F_PROJETHISTO_PP_No");
 
@@ -18089,6 +18443,12 @@ public partial class DB : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKA_F_PROJETHISTO_AR_RefCompose");
 
+            entity.HasOne(d => d.PF_NumNavigation).WithMany(p => p.F_PROJETHISTO)
+                .HasPrincipalKey(p => p.PF_Num)
+                .HasForeignKey(d => d.PF_Num)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKA_F_PROJETHISTO_PF_Num");
+
             entity.HasOne(d => d.PP_NoNavigation).WithMany(p => p.F_PROJETHISTO)
                 .HasPrincipalKey(p => p.PP_No)
                 .HasForeignKey(d => d.PP_No)
@@ -18105,12 +18465,11 @@ public partial class DB : DbContext
                     tb.HasTrigger("TG_CBDEL_F_PROJETLIGNE");
                     tb.HasTrigger("TG_CBINS_F_PROJETLIGNE");
                     tb.HasTrigger("TG_CBUPD_F_PROJETLIGNE");
-                    tb.HasTrigger("TG_DEL_F_PROJETLIGNE");
-                    tb.HasTrigger("TG_INS_F_PROJETLIGNE");
-                    tb.HasTrigger("TG_UPD_F_PROJETLIGNE");
                 });
 
             entity.HasIndex(e => e.DL_No, "FKIA_F_PROJETLIGNE_DL_No");
+
+            entity.HasIndex(e => e.PF_Num, "FKIA_F_PROJETLIGNE_PF_Num");
 
             entity.HasIndex(e => e.DL_No, "IPL_LIGNE");
 
@@ -18142,6 +18501,12 @@ public partial class DB : DbContext
                 .HasPrincipalKey(p => p.DL_No)
                 .HasForeignKey(d => d.DL_No)
                 .HasConstraintName("FKA_F_PROJETLIGNE_DL_No");
+
+            entity.HasOne(d => d.PF_NumNavigation).WithMany(p => p.F_PROJETLIGNE)
+                .HasPrincipalKey(p => p.PF_Num)
+                .HasForeignKey(d => d.PF_Num)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKA_F_PROJETLIGNE_PF_Num");
         });
 
         modelBuilder.Entity<F_PROJETPLANNING>(entity =>
@@ -18163,6 +18528,8 @@ public partial class DB : DbContext
             entity.HasIndex(e => e.AR_RefCompose, "FKIA_F_PROJETPLANNING_AR_RefCompose");
 
             entity.HasIndex(e => e.cbDE_No, "FKIA_F_PROJETPLANNING_DE_No");
+
+            entity.HasIndex(e => e.PF_Num, "FKIA_F_PROJETPLANNING_PF_Num");
 
             entity.HasIndex(e => e.RP_Code, "FKIA_F_PROJETPLANNING_RP_Code");
 
@@ -18280,6 +18647,12 @@ public partial class DB : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKA_F_PROJETPLANNING_AR_RefCompose");
 
+            entity.HasOne(d => d.PF_NumNavigation).WithMany(p => p.F_PROJETPLANNING)
+                .HasPrincipalKey(p => p.PF_Num)
+                .HasForeignKey(d => d.PF_Num)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKA_F_PROJETPLANNING_PF_Num");
+
             entity.HasOne(d => d.RP_CodeNavigation).WithMany(p => p.F_PROJETPLANNING)
                 .HasPrincipalKey(p => p.RP_Code)
                 .HasForeignKey(d => d.RP_Code)
@@ -18336,9 +18709,6 @@ public partial class DB : DbContext
             entity.Property(e => e.PROT_ProviderType)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.PROT_ServiceSageIDUserId)
-                .HasMaxLength(255)
-                .IsUnicode(false);
             entity.Property(e => e.PROT_User)
                 .IsRequired()
                 .HasMaxLength(35)
@@ -18380,8 +18750,6 @@ public partial class DB : DbContext
                     tb.HasTrigger("TG_INS_F_PROTECTIONCPTA");
                     tb.HasTrigger("TG_UPD_CIALF_PROTECTIONCPTA");
                     tb.HasTrigger("TG_UPD_F_PROTECTIONCPTA");
-                    tb.HasTrigger("TG_UPD_IMMOF_PROTECTIONCPTA");
-                    tb.HasTrigger("TG_UPD_TRESF_PROTECTIONCPTA");
                 });
 
             entity.HasIndex(e => e.cbPROT_UserProfil, "FKIA_F_PROTECTIONCPTA_PROT_UserProfil");
@@ -18412,9 +18780,6 @@ public partial class DB : DbContext
                 .HasMaxLength(68)
                 .IsFixedLength();
             entity.Property(e => e.PROT_ProviderType)
-                .HasMaxLength(255)
-                .IsUnicode(false);
-            entity.Property(e => e.PROT_ServiceSageIDUserId)
                 .HasMaxLength(255)
                 .IsUnicode(false);
             entity.Property(e => e.PROT_User)
@@ -19052,6 +19417,12 @@ public partial class DB : DbContext
             entity.Property(e => e.cbProt).HasDefaultValue((short)0);
             entity.Property(e => e.cbReplication).HasDefaultValue(0);
 
+            entity.HasOne(d => d.CO_NoNavigation).WithMany(p => p.F_REPCOM)
+                .HasPrincipalKey(p => p.CO_No)
+                .HasForeignKey(d => d.CO_No)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKA_CPTAF_REPCOM_RE_NO");
+
             entity.HasOne(d => d.TF_NoNavigation).WithMany(p => p.F_REPCOM)
                 .HasPrincipalKey(p => p.TF_No)
                 .HasForeignKey(d => d.TF_No)
@@ -19387,6 +19758,11 @@ public partial class DB : DbContext
                 .HasForeignKey(d => d.AR_RefDefaut)
                 .HasConstraintName("FKA_F_RESSOURCEPROD_AR_Ref");
 
+            entity.HasOne(d => d.CAL_NoNavigation).WithMany(p => p.F_RESSOURCEPROD)
+                .HasPrincipalKey(p => p.CAL_No)
+                .HasForeignKey(d => d.CAL_No)
+                .HasConstraintName("FKA_CPTAF_RESSOURCEPROD_CAL_No");
+
             entity.HasOne(d => d.DE_NoNavigation).WithMany(p => p.F_RESSOURCEPROD)
                 .HasPrincipalKey(p => p.DE_No)
                 .HasForeignKey(d => d.DE_No)
@@ -19500,6 +19876,11 @@ public partial class DB : DbContext
                 .HasPrincipalKey(p => p.AR_Ref)
                 .HasForeignKey(d => d.AR_Ref)
                 .HasConstraintName("FKA_F_TARIF_AR_Ref");
+
+            entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_TARIF)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_Num)
+                .HasConstraintName("FKA_CPTAF_TARIF_CT_Num");
         });
 
         modelBuilder.Entity<F_TARIFCOND>(entity =>
@@ -19811,8 +20192,6 @@ public partial class DB : DbContext
 
             entity.HasIndex(e => e.cbTA_Intitule, "ITA_INT");
 
-            entity.HasIndex(e => e.MEX_No, "ITA_MENTION");
-
             entity.HasIndex(e => e.TA_No, "ITA_NO").IsUnique();
 
             entity.HasIndex(e => new { e.cbTA_Regroup, e.cbTA_Code }, "ITA_REGROUP");
@@ -19954,6 +20333,17 @@ public partial class DB : DbContext
                 .HasForeignKey(d => d.CA_No)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FKA_F_TICKETARCHIVE_CA_No");
+
+            entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.F_TICKETARCHIVE)
+                .HasPrincipalKey(p => p.CT_Num)
+                .HasForeignKey(d => d.CT_Num)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FKA_CPTAF_TICKETARCHIVE_CT_Num");
+
+            entity.HasOne(d => d.cbCO_NoCaissierNavigation).WithMany(p => p.F_TICKETARCHIVE)
+                .HasPrincipalKey(p => p.CO_No)
+                .HasForeignKey(d => d.cbCO_NoCaissier)
+                .HasConstraintName("FKA_CPTAF_TICKETARCHIVE_RE_NO");
         });
 
         modelBuilder.Entity<P_ABOCLI>(entity =>
@@ -20944,9 +21334,6 @@ public partial class DB : DbContext
             entity.Property(e => e.API_Web)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.BM_Intitule)
-                .HasMaxLength(35)
-                .IsUnicode(false);
             entity.Property(e => e.CG_NumANBenef)
                 .HasMaxLength(13)
                 .IsUnicode(false);
@@ -20999,11 +21386,6 @@ public partial class DB : DbContext
             entity.Property(e => e.D_DebutExo03).HasColumnType("datetime");
             entity.Property(e => e.D_DebutExo04).HasColumnType("datetime");
             entity.Property(e => e.D_DebutExo05).HasColumnType("datetime");
-            entity.Property(e => e.D_DebutExo06).HasColumnType("datetime");
-            entity.Property(e => e.D_DebutExo07).HasColumnType("datetime");
-            entity.Property(e => e.D_DebutExo08).HasColumnType("datetime");
-            entity.Property(e => e.D_DebutExo09).HasColumnType("datetime");
-            entity.Property(e => e.D_DebutExo10).HasColumnType("datetime");
             entity.Property(e => e.D_EMail)
                 .HasMaxLength(69)
                 .IsUnicode(false);
@@ -21024,11 +21406,6 @@ public partial class DB : DbContext
             entity.Property(e => e.D_FinExo03).HasColumnType("datetime");
             entity.Property(e => e.D_FinExo04).HasColumnType("datetime");
             entity.Property(e => e.D_FinExo05).HasColumnType("datetime");
-            entity.Property(e => e.D_FinExo06).HasColumnType("datetime");
-            entity.Property(e => e.D_FinExo07).HasColumnType("datetime");
-            entity.Property(e => e.D_FinExo08).HasColumnType("datetime");
-            entity.Property(e => e.D_FinExo09).HasColumnType("datetime");
-            entity.Property(e => e.D_FinExo10).HasColumnType("datetime");
             entity.Property(e => e.D_ForfaitImpayes).HasColumnType("numeric(24, 6)");
             entity.Property(e => e.D_FormatQtes)
                 .HasMaxLength(31)
@@ -21065,7 +21442,6 @@ public partial class DB : DbContext
             entity.Property(e => e.D_Site)
                 .HasMaxLength(69)
                 .IsUnicode(false);
-            entity.Property(e => e.D_TVADateAcompte).HasColumnType("datetime");
             entity.Property(e => e.D_Telecopie)
                 .HasMaxLength(21)
                 .IsUnicode(false);
@@ -21125,14 +21501,11 @@ public partial class DB : DbContext
             entity.Property(e => e.D_ImprimeCGV)
                 .HasMaxLength(259)
                 .IsUnicode(false);
-            entity.Property(e => e.D_ImprimeCGVLangue1)
-                .HasMaxLength(259)
-                .IsUnicode(false);
-            entity.Property(e => e.D_ImprimeCGVLangue2)
-                .HasMaxLength(259)
-                .IsUnicode(false);
             entity.Property(e => e.D_ImprimeFacture)
                 .HasMaxLength(259)
+                .IsUnicode(false);
+            entity.Property(e => e.D_RaisonS)
+                .HasMaxLength(35)
                 .IsUnicode(false);
         });
 
@@ -21416,8 +21789,6 @@ public partial class DB : DbContext
             entity.Property(e => e.F_Recette)
                 .HasMaxLength(13)
                 .IsUnicode(false);
-            entity.Property(e => e.F_TVADebitDateApplication).HasColumnType("datetime");
-            entity.Property(e => e.F_TVADebitDateResiliation).HasColumnType("datetime");
             entity.Property(e => e.JO_NumMAJ)
                 .HasMaxLength(7)
                 .IsUnicode(false);
@@ -21814,9 +22185,6 @@ public partial class DB : DbContext
                 });
 
             entity.Property(e => e.AR_Ref)
-                .HasMaxLength(19)
-                .IsUnicode(false);
-            entity.Property(e => e.AR_RefAcompte)
                 .HasMaxLength(19)
                 .IsUnicode(false);
             entity.Property(e => e.P_CreditCaisse)

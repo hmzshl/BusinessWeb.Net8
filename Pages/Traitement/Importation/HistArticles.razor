@@ -1,0 +1,89 @@
+﻿@page "/imp-art-hist"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction, Responsable RH,Responsable Materiel, Assistant Chantier")]
+@if (IsLoaded)
+{
+	<Card_1 Title="Historique modifications des articles">
+		<RadzenContent Container="main">
+			<div class="grid-90">
+				<div style="zoom: @session.zoomLevel; height: 100%;">
+					<SfGrid Height="100%" AllowResizing AllowSorting AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid"
+							AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items"
+							Toolbar="@(new List<object>() { "Search" })">
+						<GridPageSettings PageSize="100"></GridPageSettings>
+						<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+						<GridTemplates>
+							<EmptyRecordTemplate>
+								<Empty></Empty>
+							</EmptyRecordTemplate>
+						</GridTemplates>
+						<GridColumns>
+							<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.DateOP)" HeaderText="Creation" Format="dd/MM/yy"></GridColumn>
+							<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.OldDate)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
+							<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.OldPiece)" HeaderText="Numéro"></GridColumn>
+							<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.OldCT_Num)" HeaderText="N° Tiers"></GridColumn>
+							<GridColumn Width="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.OldCT_Intitule)" HeaderText="Tiers"/>
+							<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Old">
+								<GridColumns>
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.OldAR_Ref)" HeaderText="Réf"></GridColumn>
+									<GridColumn Width="240" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.OldDesign)" HeaderText="Désignation"></GridColumn>
+                                    <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.OldQte)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Format="N2" HeaderText="Qté" />
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.OldPU)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Format="N2" HeaderText="PU" />
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.OldHT)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Format="N2" HeaderText="HT" />
+									
+								</GridColumns>
+							</GridColumn>
+							<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="New">
+								<GridColumns>
+									<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.NewAR_Ref)" HeaderText="Réf"></GridColumn>
+									<GridColumn Width="240" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.NewDesign)" HeaderText="Désignation"></GridColumn>
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.NewQte)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Format="N2" HeaderText="Qté" />
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.NewPU)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Format="N2" HeaderText="PU" />
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_AREdit_Hist.NewHT)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Format="N2" HeaderText="HT" />
+									
+								</GridColumns>
+							</GridColumn>
+						</GridColumns>
+						<SfSpinner @bind-Visible="@loading">
+						</SfSpinner>
+					</SfGrid>
+				</div>
+			</div>
+		</RadzenContent>
+	</Card_1>
+}
+else
+{
+	<div class="center-screen">
+		<Loading_1 />
+	</div>
+}
+
+
+
+
+@code
+{
+
+	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+	DB db = new DB();
+	//Components
+	private SfGrid<API_T_AREdit_Hist> DefaultGrid;
+	private List<API_T_AREdit_Hist> items = new List<API_T_AREdit_Hist>();
+	bool loading = false;
+	bool IsLoaded = false;
+	protected override async Task OnInitializedAsync()
+	{
+		await Task.Delay(1);
+		db = session.db;
+		GC.Collect();
+		await LoadData();
+		IsLoaded = true;
+
+	}
+	private async Task LoadData()
+	{
+		items = session.db.API_T_AREdit_Hist
+		.OrderByDescending(a => a.DateOP).ToList();
+	}
+
+}

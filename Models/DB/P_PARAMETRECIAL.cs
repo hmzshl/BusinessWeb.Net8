@@ -176,18 +176,4 @@ public partial class P_PARAMETRECIAL
     public string AR_Ref { get; set; }
 
     public int cbMarq { get; set; }
-
-    public short? P_Calendrier { get; set; }
-
-    public short? P_AlerteNegatif { get; set; }
-
-    public string AR_RefAcompte { get; set; }
-
-    public int? EB_No { get; set; }
-
-    public short? P_LogoFacturX { get; set; }
-
-    public short? P_EmplLogoFacturX { get; set; }
-
-    public short? P_FormatFacture { get; set; }
 }

@@ -32,4 +32,6 @@ public partial class F_FAMCLIENT
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
+
+    public virtual F_COMPTET CT_NumNavigation { get; set; }
 }

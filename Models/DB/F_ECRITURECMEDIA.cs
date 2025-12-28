@@ -33,7 +33,5 @@ public partial class F_ECRITURECMEDIA
 
     public Guid? cbCreationUser { get; set; }
 
-    public string EM_GedId { get; set; }
-
     public virtual F_ECRITUREC EC_NoNavigation { get; set; }
 }

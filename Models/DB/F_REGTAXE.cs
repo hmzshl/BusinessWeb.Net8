@@ -187,6 +187,10 @@ public partial class F_REGTAXE
 
     public short? cbFlag { get; set; }
 
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
+
     public byte[] cbHash { get; set; }
 
     public short? cbHashVersion { get; set; }
@@ -194,30 +198,6 @@ public partial class F_REGTAXE
     public DateTime? cbHashDate { get; set; }
 
     public int? cbHashOrder { get; set; }
-
-    public DateTime? cbCreation { get; set; }
-
-    public Guid? cbCreationUser { get; set; }
-
-    public short? RT_TypeLigne01 { get; set; }
-
-    public short? RT_TypeLigne02 { get; set; }
-
-    public short? RT_TypeLigne03 { get; set; }
-
-    public short? RT_TypeLigne04 { get; set; }
-
-    public short? RT_TypeLigne05 { get; set; }
-
-    public short? RT_TypeLigne06 { get; set; }
-
-    public short? RT_TypeLigne07 { get; set; }
-
-    public short? RT_TypeLigne08 { get; set; }
-
-    public short? RT_TypeLigne09 { get; set; }
-
-    public short? RT_TypeLigne10 { get; set; }
 
     public virtual F_COMPTEG CG_Num01Navigation { get; set; }
 

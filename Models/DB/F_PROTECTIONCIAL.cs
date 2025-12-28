@@ -55,7 +55,7 @@ public partial class F_PROTECTIONCIAL
 
     public short? PROT_ServiceSageIDActif { get; set; }
 
-    public string PROT_ServiceSageIDUserId { get; set; }
+    public Guid? PROT_ServiceSageIDUserId { get; set; }
 
     public short? cbProt { get; set; }
 

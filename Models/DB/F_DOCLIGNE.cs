@@ -239,9 +239,13 @@ public partial class F_DOCLIGNE
 
     public int? cbHashOrder { get; set; }
 
-    public string DL_RefExterne { get; set; }
-
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
+
+    public virtual F_TAXE DL_CodeTaxe1Navigation { get; set; }
+
+    public virtual F_TAXE DL_CodeTaxe2Navigation { get; set; }
+
+    public virtual F_TAXE DL_CodeTaxe3Navigation { get; set; }
 
     public virtual ICollection<F_AGENDA> F_AGENDA { get; set; } = new List<F_AGENDA>();
 
@@ -254,6 +258,8 @@ public partial class F_DOCLIGNE
     public virtual ICollection<F_DOCLIGNE> InversecbDL_NoLinkNavigation { get; set; } = new List<F_DOCLIGNE>();
 
     public virtual F_RESSOURCEPROD RP_CodeNavigation { get; set; }
+
+    public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
 
     public virtual F_DEPOT cbDE_NoNavigation { get; set; }
 

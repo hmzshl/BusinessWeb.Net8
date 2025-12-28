@@ -35,7 +35,5 @@ public partial class F_ARTICLEMEDIA
 
     public Guid? cbCreationUser { get; set; }
 
-    public string ME_GedId { get; set; }
-
     public virtual F_ARTICLE AR_RefNavigation { get; set; }
 }

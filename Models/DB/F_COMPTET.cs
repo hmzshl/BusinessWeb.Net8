@@ -271,59 +271,7 @@ public partial class F_COMPTET
 
     public Guid? cbCreationUser { get; set; }
 
-    public short? CT_OrderDay01 { get; set; }
-
-    public short? CT_OrderDay02 { get; set; }
-
-    public short? CT_OrderDay03 { get; set; }
-
-    public short? CT_OrderDay04 { get; set; }
-
-    public short? CT_OrderDay05 { get; set; }
-
-    public short? CT_OrderDay06 { get; set; }
-
-    public short? CT_OrderDay07 { get; set; }
-
-    public short? CT_DeliveryDay01 { get; set; }
-
-    public short? CT_DeliveryDay02 { get; set; }
-
-    public short? CT_DeliveryDay03 { get; set; }
-
-    public short? CT_DeliveryDay04 { get; set; }
-
-    public short? CT_DeliveryDay05 { get; set; }
-
-    public short? CT_DeliveryDay06 { get; set; }
-
-    public short? CT_DeliveryDay07 { get; set; }
-
-    public int? CAL_No { get; set; }
-
-    public int? cbCAL_No { get; set; }
-
-    public short? CT_FEAssujetti { get; set; }
-
-    public short? CT_FEAutreIdentifType { get; set; }
-
-    public string CT_FEAutreIdentifVal { get; set; }
-
-    public short? CT_FEEntiteType { get; set; }
-
-    public short? CT_FEEmission { get; set; }
-
-    public short? CT_FEApplication { get; set; }
-
-    public DateTime? CT_FEDateSynchro { get; set; }
-
-    public short? CT_ModeTest { get; set; }
-
-    public short? CT_Confiance { get; set; }
-
-    public string DN_Id { get; set; }
-
-    public byte[] cbDN_Id { get; set; }
+    public virtual ICollection<API_T_AgenceContrat> API_T_AgenceContrat { get; set; } = new List<API_T_AgenceContrat>();
 
     public virtual ICollection<API_T_CertifPointage> API_T_CertifPointage { get; set; } = new List<API_T_CertifPointage>();
 
@@ -331,11 +279,25 @@ public partial class F_COMPTET
 
     public virtual F_COMPTEG CG_NumPrincNavigation { get; set; }
 
+    public virtual ICollection<F_ABOENTETE> F_ABOENTETECT_NumCentraleNavigation { get; set; } = new List<F_ABOENTETE>();
+
+    public virtual ICollection<F_ABOENTETE> F_ABOENTETECT_NumPayeurNavigation { get; set; } = new List<F_ABOENTETE>();
+
+    public virtual ICollection<F_ABONNEMENT> F_ABONNEMENT { get; set; } = new List<F_ABONNEMENT>();
+
+    public virtual ICollection<F_ARTCLIENT> F_ARTCLIENT { get; set; } = new List<F_ARTCLIENT>();
+
+    public virtual ICollection<F_ARTFOURNISS> F_ARTFOURNISS { get; set; } = new List<F_ARTFOURNISS>();
+
+    public virtual ICollection<F_CAISSE> F_CAISSE { get; set; } = new List<F_CAISSE>();
+
     public virtual F_COMPTEA F_COMPTEA { get; set; }
 
     public virtual F_COMPTEA F_COMPTEANavigation { get; set; }
 
     public virtual ICollection<F_COMPTETG> F_COMPTETG { get; set; } = new List<F_COMPTETG>();
+
+    public virtual ICollection<F_COMPTETINFOS> F_COMPTETINFOS { get; set; } = new List<F_COMPTETINFOS>();
 
     public virtual ICollection<F_COMPTETMEDIA> F_COMPTETMEDIA { get; set; } = new List<F_COMPTETMEDIA>();
 
@@ -345,11 +307,21 @@ public partial class F_COMPTET
 
     public virtual ICollection<F_CONTACTT> F_CONTACTT { get; set; } = new List<F_CONTACTT>();
 
-    public virtual ICollection<F_DOCENTETE> F_DOCENTETE { get; set; } = new List<F_DOCENTETE>();
+    public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCT_NumPayeurNavigation { get; set; } = new List<F_CREGLEMENT>();
+
+    public virtual ICollection<F_CREGLEMENT> F_CREGLEMENTCT_NumPayeurOrigNavigation { get; set; } = new List<F_CREGLEMENT>();
+
+    public virtual ICollection<F_DOCENTETE> F_DOCENTETECT_NumCentraleNavigation { get; set; } = new List<F_DOCENTETE>();
+
+    public virtual ICollection<F_DOCENTETE> F_DOCENTETECT_NumPayeurNavigation { get; set; } = new List<F_DOCENTETE>();
 
     public virtual ICollection<F_DRECOUVREMENT> F_DRECOUVREMENT { get; set; } = new List<F_DRECOUVREMENT>();
 
     public virtual ICollection<F_ECRITUREC> F_ECRITUREC { get; set; } = new List<F_ECRITUREC>();
+
+    public virtual ICollection<F_FAMCLIENT> F_FAMCLIENT { get; set; } = new List<F_FAMCLIENT>();
+
+    public virtual ICollection<F_FAMFOURNISS> F_FAMFOURNISS { get; set; } = new List<F_FAMFOURNISS>();
 
     public virtual ICollection<F_LIVRAISON> F_LIVRAISON { get; set; } = new List<F_LIVRAISON>();
 
@@ -357,7 +329,9 @@ public partial class F_COMPTET
 
     public virtual ICollection<F_REGTAXE> F_REGTAXE { get; set; } = new List<F_REGTAXE>();
 
-    public virtual F_CALENDRIER cbCAL_NoNavigation { get; set; }
+    public virtual ICollection<F_TARIF> F_TARIF { get; set; } = new List<F_TARIF>();
+
+    public virtual ICollection<F_TICKETARCHIVE> F_TICKETARCHIVE { get; set; } = new List<F_TICKETARCHIVE>();
 
     public virtual F_COLLABORATEUR cbCO_NoNavigation { get; set; }
 

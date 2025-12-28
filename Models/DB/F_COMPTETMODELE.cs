@@ -19,6 +19,8 @@ public partial class F_COMPTETMODELE
 
     public short? CM_NbExemplaire { get; set; }
 
+    public short? CM_TypeModele { get; set; }
+
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -34,14 +36,6 @@ public partial class F_COMPTETMODELE
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
-
-    public short? CM_TypeModele { get; set; }
-
-    public short? CM_ServiceContact { get; set; }
-
-    public string CM_EMail { get; set; }
-
-    public short? CM_SendTous { get; set; }
 
     public virtual F_COMPTET CT_NumNavigation { get; set; }
 }
