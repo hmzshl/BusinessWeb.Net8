@@ -124,7 +124,7 @@ namespace BusinessWeb.Services
 			}
 		}
 
-		private string IncrementPieceNumber(string currentPiece)
+		public string IncrementPieceNumber(string currentPiece)
 		{
 			if (string.IsNullOrEmpty(currentPiece))
 				return "00001";
@@ -149,7 +149,7 @@ namespace BusinessWeb.Services
 		/// <summary>
 		/// Creates document entête
 		/// </summary>
-		private async Task<F_DOCENTETE> CreateDocEntete(Document.DocumentEntete document)
+		public async Task<F_DOCENTETE> CreateDocEntete(Document.DocumentEntete document)
 		{
 			var now = DateTime.Now;
 
@@ -210,7 +210,7 @@ namespace BusinessWeb.Services
 		/// <summary>
 		/// Sets default values for F_DOCENTETE
 		/// </summary>
-		private void SetDocEnteteDefaults(F_DOCENTETE docEntete)
+		public void SetDocEnteteDefaults(F_DOCENTETE docEntete)
 		{
 			var now = DateTime.Now;
 			var defaultDate = new DateTime(1753, 1, 1);
@@ -365,7 +365,7 @@ namespace BusinessWeb.Services
 		/// <summary>
 		/// Creates document lignes
 		/// </summary>
-		private async Task<List<F_DOCLIGNE>> CreateDocLignes(List<Document.DocumentLigne> lignes, F_DOCENTETE entete, short? Mvt)
+		public async Task<List<F_DOCLIGNE>> CreateDocLignes(List<Document.DocumentLigne> lignes, F_DOCENTETE entete, short? Mvt)
 		{
 			var fDocLignes = new List<F_DOCLIGNE>();
 			var now = DateTime.Now;
@@ -451,7 +451,7 @@ namespace BusinessWeb.Services
 			public string Designation { get; set; }
 
 		}
-		private async Task UpdateTotals(F_DOCENTETE doc)
+		public async Task UpdateTotals(F_DOCENTETE doc)
 		{
 			var lignes = _context.F_DOCLIGNE.Where(l => l.DO_Piece == doc.DO_Piece && l.DO_Type == doc.DO_Type && l.DL_Valorise == 1).ToList();
 			var entete = _context.F_DOCENTETE.FirstOrDefault(e => e.DO_Piece == doc.DO_Piece && e.DO_Type == doc.DO_Type);
@@ -461,12 +461,12 @@ namespace BusinessWeb.Services
 			entete.DO_NetAPayer = entete.DO_TotalTTC;
 			_context.SaveChanges();
 		}
-		private void UpdateLigneTotals(F_DOCLIGNE ligne)
+		public void UpdateLigneTotals(F_DOCLIGNE ligne)
 		{
 			ligne.DL_MontantHT = ligne.DL_Qte * ligne.DL_PrixUnitaire;
 			ligne.DL_MontantTTC = ligne.DL_MontantHT + (((ligne.DL_Taxe1 ?? 0) / 100) * ligne.DL_MontantHT);
 		}
-		private void UpdateStock(string AR_Ref, int DE_No)
+		public void UpdateStock(string AR_Ref, int DE_No)
 		{
 
 			// Calculate stock: Entree (1) adds to stock, Sortie (3) subtracts from stock
@@ -525,7 +525,7 @@ namespace BusinessWeb.Services
 				_context.SaveChanges();
 			}
 		}
-		private DefaultsAR GetDefaultsAR(F_DOCENTETE entete, string AR_Ref)
+		public DefaultsAR GetDefaultsAR(F_DOCENTETE entete, string AR_Ref)
 		{
 			DefaultsAR rs = new DefaultsAR();
 			var ar = _context.F_ARTICLE.FirstOrDefault(a => a.AR_Ref == AR_Ref);
@@ -601,7 +601,7 @@ namespace BusinessWeb.Services
 		}       /// <summary>
 				/// Sets default values for F_DOCLIGNE
 				/// </summary>
-		private void SetDocLigneDefaults(F_DOCLIGNE docLigne)
+		public void SetDocLigneDefaults(F_DOCLIGNE docLigne)
 		{
 			var defaultDate = new DateTime(1753, 1, 1);
 			// Set defaults for null numeric fields
@@ -711,7 +711,7 @@ namespace BusinessWeb.Services
 
 		// ===== HELPER METHODS =====
 
-		private async Task<string> GenerateDocumentNumber()
+		public async Task<string> GenerateDocumentNumber()
 		{
 			// Simple document number generation - you might want to implement your own logic
 			var maxNumber = _context.F_DOCENTETE
@@ -720,7 +720,7 @@ namespace BusinessWeb.Services
 			return (maxNumber + 1).ToString("D6");
 		}
 
-		private decimal? CalculateTVA(Document.DocumentLigne ligne)
+		public decimal? CalculateTVA(Document.DocumentLigne ligne)
 		{
 			if (string.IsNullOrEmpty(ligne.CodeTVA))
 				return ligne.TotalHT * 0.20m;
@@ -735,7 +735,7 @@ namespace BusinessWeb.Services
 			};
 		}
 
-		private decimal CalculateTotalTVA(List<Document.DocumentLigne> lignes)
+		public decimal CalculateTotalTVA(List<Document.DocumentLigne> lignes)
 		{
 			return lignes.Sum(l => CalculateTVA(l) ?? 0);
 		}

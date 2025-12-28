@@ -1,7 +1,7 @@
 ﻿<AntDesign.Spin Size="large" Spinning=Refreshing Style="margin-top: 50px;">
     <div class="dg-parent">
         <div style="height: 80vh">
-            <SfGrid Height="100%" AllowTextWrap AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+            <SfGrid Height="100%" AllowTextWrap EnableVirtualization AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
                     Toolbar="@(new List<object>() { "ColumnChooser", "Search" })">
 
                 <GridEvents TValue="API_V_ARTICLE"></GridEvents>
@@ -79,26 +79,26 @@
         loading = false;
         await Task.Delay(1);
     }
-    private async Task Submit(API_V_ARTICLE args)
-    {
-        /*var doc = om.CIAL().FactoryDocumentStock.ReadPiece(DocumentType.DocumentTypeStockMouvOut,DO_Piece);
-        IBODocumentStockLigne3 ligne = doc.FactoryDocumentLigne.Create() as IBODocumentStockLigne3;
-        if((args.AR_QteOperatoire??0) == 0)
-        {
-            args.AR_QteOperatoire = 0;
-        }
-        ligne.SetDefaultArticleReference(args.AR_Ref, (double)(args.AR_QteOperatoire??1));
-        ligne.DL_Design = args.AR_Design;
-        ligne.Write();*/
-    }
     private async Task SubmitListe()
     {
         Refreshing = true;
         await Task.Delay(100);
         StateHasChanged();
+        var sg = new SageService(db);
+        var doc = db.F_DOCENTETE.FirstOrDefault(a => a.DO_Piece == DO_Piece && a.DO_Type == 21);
+        var lignes = new List<DocumentLigne>();
         foreach (var item in items.Where(a => a.AR_QteOperatoire > 0))
         {
-            await Submit(item);
+            var ligne = new DocumentLigne();
+            ligne.RefArticle = item.AR_Ref;
+            ligne.Qte = item.AR_QteOperatoire ?? 1;
+            lignes.Add(ligne);
+        }
+
+        await sg.Document.CreateDocLignes(lignes,doc,3);
+        foreach(var item in lignes)
+        {
+            sg.Document.UpdateStock(item.RefArticle,1);
         }
         DialogService.Close();
     }
@@ -106,62 +106,7 @@
     {
         DialogService.Close();
     }
-    private async Task UpdateStock(API_V_ARTICLE args)
-    {
-        helpers.DisableTriggers(db, "F_ARTSTOCK", "INS");
-        helpers.DisableTriggers(db, "F_ARTSTOCK", "UPD");
-        string q00 = @"INSERT INTO F_ARTSTOCK ([AR_Ref],[DE_No],[AS_QteMini],[AS_QteMaxi],[AS_MontSto],[AS_QteSto],[AS_QteRes],[AS_QteCom],[AS_Principal],[AS_QteResCM],[AS_QteComCM]
-                    ,[AS_QtePrepa],[DP_NoPrincipal],[DP_NoControle],[AS_QteAControler],[AS_Mouvemente],[cbProt])
 
-            SELECT
-            b.AR_Ref,a.DE_No,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000,0,0.000000,
-            0.000000,0.000000,0,0,0,0,0
-
-
-            FROM F_DEPOT a
-            INNER JOIN API_V_ARTICLE b ON 1 = 1
-            LEFT JOIN F_ARTSTOCK de ON a.DE_No = de.DE_No AND b.AR_Ref = de.AR_Ref
-
-
-            WHERE b.AR_Ref = {0} AND de.AR_Ref IS NULL";
-
-        string q1 = @"UPDATE a SET a.AS_QteSto = ISNULL(b.Qte,0), a.AS_MontSto = ISNULL(c.PU,0) * ISNULL(b.Qte,0)
-
-						FROM F_ARTSTOCK a
-						LEFT JOIN
-						(SELECT
-						a.DE_No,
-						a.AR_Ref,
-						SUM(CASE WHEN a.DL_MvtStock = 1 THEN a.DL_Qte ELSE -a.DL_Qte END) Qte
-						FROM F_DOCLIGNE a
-						WHERE a.DL_MvtStock IN (1,3)
-						GROUP BY
-						a.DE_No,
-						a.AR_Ref) b ON a.DE_No = b.DE_No AND a.AR_Ref = b.AR_Ref
-
-						LEFT JOIN
-						(
-						(SELECT
-						a.DE_No,
-						a.AR_Ref,
-						CASE WHEN SUM(a.DL_Qte) != 0 THEN SUM(a.DL_MontantHT)/SUM(a.DL_Qte) ELSE 0 END PU
-						FROM F_DOCLIGNE a
-						WHERE a.DL_MvtStock = 1
-						GROUP BY a.AR_Ref,
-						a.DE_No)
-						) c ON a.DE_No = c.DE_No AND a.AR_Ref = c.AR_Ref WHERE a.AR_Ref = {0}";
-        db.Database.ExecuteSqlRaw(q00, args.AR_Ref);
-        db.Database.ExecuteSqlRaw(q1, args.AR_Ref);
-        helpers.EnableTriggers(db, "F_ARTSTOCK", "INS");
-        helpers.EnableTriggers(db, "F_ARTSTOCK", "UPD");
-    }
-    private async Task RowSelected(API_V_ARTICLE args)
-    {
-
-        await Submit(args);
-        await UpdateStock(args);
-        DialogService.Close();
-    }
 
 }
 

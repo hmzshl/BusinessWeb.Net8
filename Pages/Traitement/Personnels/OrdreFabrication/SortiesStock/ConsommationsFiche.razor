@@ -9,7 +9,7 @@
             </ToolbarItem>
             <ToolbarItem Align="ItemAlign.Right">
                 <Template>
-                    <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit(true))">Enregistrer</SfButton>
+                    <SfButton IconCss="e-icons e-save" Disabled="@(!(row.DO_Ref != null && row.DO_Ref != ""))" IsPrimary="true" OnClick="@(args => Submit(true))">Enregistrer</SfButton>
                 </Template>
             </ToolbarItem>
         </ToolbarItems>
@@ -45,7 +45,7 @@
                                                                                                                  DataSource="@(db.API_T_OrdreFabrication)"
                                                                                                                  PopupWidth="850px" ValueField="Numero" TextField="Numero">
                                                         <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumns>
-                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.Date)" Header="Date" Width="50px" Format="dd/MM/yy"/>
+                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.Date)" Header="Date" Width="50px" Format="dd/MM/yy" />
                                                             <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.Numero)" Header="Numero" Width="80px" />
                                                             <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.Reference)" Header="Reference" Width="70px" />
                                                             <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.CA_Num)" Header="N° Affaire" Width="70px" />
@@ -163,10 +163,10 @@ else
 
 
 @code {
-    [CascadingParameter]
-    public SessionDT session { get; set; } = new SessionDT();
-    [Parameter] public int cbMarq { get; set; }
-    DB db = new DB();
+        [CascadingParameter]
+        public SessionDT session { get; set; } = new SessionDT();
+        [Parameter] public int cbMarq { get; set; }
+        DB db = new DB();
     public F_DOCENTETE row = new F_DOCENTETE();
     NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
     SfGrid<F_DOCLIGNE> MainGrid;
@@ -175,6 +175,8 @@ else
     bool IsLoaded = false;
     IEnumerable<F_COMPTEA> affaires;
     IEnumerable<F_COMPTET> clients;
+
+
     string CT_Num;
     private async Task UpdateLignes()
     {
@@ -207,20 +209,22 @@ else
     }
     private async Task Init()
     {
-        if(cbMarq == 0)
+        if (cbMarq == 0)
         {
-            //var doc = om.CIAL().FactoryDocumentStock.CreateType(DocumentType.DocumentTypeStockMouvOut);
-            //doc.SetDefault();
-            //doc.SetDefaultDO_Piece();
+            var doc = new DocumentEntete();
+            doc.TypeDO = DocumentTypeDO.MouvementSortie;
+            doc.Souche = 0;
+            var sg = new SageService(db);
             row.DO_Date = DateTime.Today;
             row.DE_No = 1;
-            //row.DO_Piece = doc.DO_Piece;
+            row.DO_Piece = sg.Document.GetCurrentPieceNumber(doc);
 
         }
     }
+
     private async Task OFUpdated(string OF)
     {
-        if(OF != null)
+        if (OF != null)
         {
             var dt = db.API_T_OrdreFabrication.Where(a => a.Numero == OF);
             if (dt.Any())
@@ -243,7 +247,7 @@ else
 
         await DialogService.OpenAsync<SelectArticleStock>("",
         new Dictionary<string, object>() { { "DO_Piece", row.DO_Piece }, { "DO_Ref", row.DO_Ref } },
-        new Radzen.DialogOptions() { Width = "1000px", Height = "95%" });
+        new Radzen.DialogOptions() { Width = "960px", Height = "90%" });
 
         await UpdateLignes();
     }
@@ -257,27 +261,37 @@ else
         {
             if (cbMarq == 0)
             {
-                /*var doc = om.CIAL().FactoryDocumentStock.CreateType(DocumentType.DocumentTypeStockMouvOut);
-                doc.SetDefault();
-                doc.SetDefaultDO_Piece();
-                doc.DO_Ref = row.DO_Ref;
-                if (row.CA_Num != null)
+                StateHasChanged();
+
+                await Task.Delay(100);
+                await Task.Run(() =>
                 {
-                    var bP = om.CPTA().FactoryAnalytique.ReadIntitule("Affaires");
-                    doc.CompteA = om.CPTA().FactoryCompteA.ReadNumero(bP, row.CA_Num);
+                    var sg = new SageService(db);
+                    var dc = sg.Document.CreateDocument(
+                                     new DocumentEntete
+                                     {
+                                         Tiers = "1",
+                                         Date = DateTime.Today,
+                                         TypeDO = DocumentTypeDO.MouvementSortie,
+                                         Souche = 0,
+                                         DateLivraison = DateTime.Today,
+                                         Entete1 = sc.User.Name,
+                                         Affaire = row.CA_Num,
+                                         Reference = row.DO_Ref
+                                     }
+                                 );
 
-                }
-
-                doc.Write();
-                row = db.F_DOCENTETE.Where(a => a.DO_Piece == doc.DO_Piece && a.DO_Type == 21).SingleOrDefault();
-                cbMarq = row.cbMarq;*/
+                    row = db.F_DOCENTETE.Where(a => a.DO_Piece == dc.Result.DocumentNumber && a.DO_Type == 21).SingleOrDefault();
+                    cbMarq = row.cbMarq;
+                });
 
             }
             else
             {
-                
+                // Handle existing document case
             }
-            if (close == true)
+
+            if (close)
             {
                 DialogService.Close();
             }
@@ -285,7 +299,7 @@ else
         catch (Exception ex)
         {
             await Message.Warning(ex.ToString());
-        }        
+        }
     }
     private async Task OnActionBegin(ActionEventArgs<F_DOCLIGNE> args)
     {

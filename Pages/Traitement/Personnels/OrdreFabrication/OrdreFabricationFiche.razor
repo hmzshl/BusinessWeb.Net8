@@ -439,10 +439,9 @@
                         var dc = sg.Document.CreateDocument(
                                          new DocumentEntete
                                          {
-                                             //Tiers = "368",
-                                             Tiers = "1",
+                                             Tiers = "368",
                                              Date = DateTime.Today,
-                                             TypeDO = DocumentTypeDO.MouvementSortie,
+                                             TypeDO = DocumentTypeDO.PreparationCommandeFournisseur,
                                              Souche = 0,
                                              Reference = row.Numero,
                                              DateLivraison = row.DateLivraison ?? DateTime.Today,
