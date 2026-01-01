@@ -271,8 +271,6 @@ public partial class F_COMPTET
 
     public Guid? cbCreationUser { get; set; }
 
-    public virtual ICollection<API_T_AgenceContrat> API_T_AgenceContrat { get; set; } = new List<API_T_AgenceContrat>();
-
     public virtual ICollection<API_T_CertifPointage> API_T_CertifPointage { get; set; } = new List<API_T_CertifPointage>();
 
     public virtual ICollection<API_T_OrdreFabrication> API_T_OrdreFabrication { get; set; } = new List<API_T_OrdreFabrication>();

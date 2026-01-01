@@ -90,8 +90,32 @@ namespace BusinessWeb.Services
 			{
 				pieceNumber = "00001";
 			}
+			var allPieces = GetAllPieces(document);
+			if (allPieces.Any() && allPieces.Contains(pieceNumber))
+			{
+				pieceNumber = IncrementPieceNumber(allPieces.Max());
+			}
 
 			return pieceNumber;
+		}
+		public List<string> GetAllPieces(DocumentEntete document)
+		{
+			var pieceNumbers = new List<string>();
+			var dt1 = _context.F_DOCENTETE
+				.Where(a => a.DO_Type == (short?)document.TypeDO && a.DO_Domaine == (short?)(document.documentType.Domaine))
+				.Select(a => a.DO_Piece)
+				.ToList();
+
+			var dt2 = _context.F_DOCLIGNE
+			.Where(a => a.DO_Type == (short?)document.TypeDO && a.DO_Domaine == (short?)(document.documentType.Domaine))
+			.Select(a => a.DO_Piece)
+			.Distinct()
+			.ToList();
+
+			pieceNumbers.AddRange(dt1);
+			pieceNumbers.AddRange(dt2);
+
+			return pieceNumbers;
 		}
 		private async Task UpdateCurrentPieceNumberInTable(DocumentEntete document)
 		{
@@ -407,6 +431,8 @@ namespace BusinessWeb.Services
 					cbReplication = 0,
 					cbFlag = 0,
 					cbCreation = now,
+					DL_CMUP = defaultsAR.CMUP ?? 0,
+					DL_PrixRU = defaultsAR.CMUP ?? 0
 				};
 
 
@@ -444,11 +470,13 @@ namespace BusinessWeb.Services
 		{
 
 			public decimal? PU { get; set; }
+			public decimal? CMUP { get; set; }
 			public int? DE_No { get; set; }
 			public string Unite { get; set; }
 			public string CodeTaxe { get; set; }
 			public decimal? TauxTaxe { get; set; }
 			public string Designation { get; set; }
+
 
 		}
 		public async Task UpdateTotals(F_DOCENTETE doc)
@@ -597,6 +625,15 @@ namespace BusinessWeb.Services
 			{
 				rs.DE_No = 0;
 			}
+			var cmup = _context.F_ARTSTOCK.FirstOrDefault(a => a.AR_Ref == AR_Ref && a.DE_No == entete.DE_No);
+			if (cmup != null)
+			{
+				rs.CMUP = cmup.AS_MontSto / (cmup.AS_QteSto == 0 ? 1 : cmup.AS_QteSto);
+				if(entete.DO_Domaine > 1)
+				{
+					rs.PU = rs.CMUP;
+				}
+			}
 			return rs;
 		}       /// <summary>
 				/// Sets default values for F_DOCLIGNE
@@ -687,6 +724,7 @@ namespace BusinessWeb.Services
 			docLigne.DL_NoLink = docLigne.DL_NoLink ?? 0;
 			docLigne.DL_PieceOFProd = docLigne.DL_PieceOFProd ?? 0;
 			docLigne.cbCO_No = docLigne.CO_No;
+			docLigne.cbDE_No = docLigne.DE_No;
 
 
 			// Set audit fields only if null

@@ -269,13 +269,13 @@ public partial class P_DOSSIER
 
     public short? D_UpdateDeviseSaisie { get; set; }
 
+    public int cbMarq { get; set; }
+
     public short? D_Laf { get; set; }
 
     public decimal? D_PasEcriture { get; set; }
 
     public Guid? D_Logo { get; set; }
-
-    public int cbMarq { get; set; }
 
     public string API_ICE { get; set; }
 
@@ -292,6 +292,4 @@ public partial class P_DOSSIER
     public string API_Web { get; set; }
 
     public string API_Adresse { get; set; }
-
-    public string API_Ville { get; set; }
 }

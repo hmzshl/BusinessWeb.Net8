@@ -107,15 +107,9 @@ public partial class F_ECRITUREC
 
     public string EC_Reference { get; set; }
 
-    public short? EC_StatusRegle { get; set; }
-
     public decimal? EC_MontantRegle { get; set; }
 
     public DateTime? EC_DateRegle { get; set; }
-
-    public int? EC_RIB { get; set; }
-
-    public DateTime? EC_DateOp { get; set; }
 
     public int? EC_NoCloture { get; set; }
 
@@ -125,13 +119,7 @@ public partial class F_ECRITUREC
 
     public DateTime? EC_DateCloture { get; set; }
 
-    public short? EC_StatFinexKap { get; set; }
-
     public Guid? EC_FactureFile { get; set; }
-
-    public Guid? EC_PaymentID { get; set; }
-
-    public string EC_PayNowUrl { get; set; }
 
     public short? cbProt { get; set; }
 
@@ -145,10 +133,6 @@ public partial class F_ECRITUREC
 
     public short? cbFlag { get; set; }
 
-    public DateTime? cbCreation { get; set; }
-
-    public Guid? cbCreationUser { get; set; }
-
     public byte[] cbHash { get; set; }
 
     public short? cbHashVersion { get; set; }
@@ -156,6 +140,10 @@ public partial class F_ECRITUREC
     public DateTime? cbHashDate { get; set; }
 
     public int? cbHashOrder { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 
     public virtual F_COMPTEG CG_NumNavigation { get; set; }
 

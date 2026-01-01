@@ -261,11 +261,11 @@ public partial class F_DOCENTETE
 
     public int? cbHashOrder { get; set; }
 
+    public string CT_NumOld { get; set; }
+
     public string ChefChantier { get; set; }
 
     public string Demandeur { get; set; }
-
-    public string CT_NumOld { get; set; }
 
     public virtual F_COMPTEG CG_NumNavigation { get; set; }
 

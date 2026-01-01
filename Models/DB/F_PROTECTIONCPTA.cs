@@ -43,20 +43,6 @@ public partial class F_PROTECTIONCPTA
 
     public byte[] PROT_Hash { get; set; }
 
-    public string PROT_ProviderType { get; set; }
-
-    public Guid? PROT_ProviderID_AAD { get; set; }
-
-    public byte[] PROT_ProviderID_AD { get; set; }
-
-    public short? PROT_ServiceOffice365Actif { get; set; }
-
-    public Guid? PROT_ServiceOffice365UserId { get; set; }
-
-    public short? PROT_ServiceSageIDActif { get; set; }
-
-    public Guid? PROT_ServiceSageIDUserId { get; set; }
-
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -72,6 +58,20 @@ public partial class F_PROTECTIONCPTA
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
+
+    public string PROT_ProviderType { get; set; }
+
+    public Guid? PROT_ProviderID_AAD { get; set; }
+
+    public byte[] PROT_ProviderID_AD { get; set; }
+
+    public short? PROT_ServiceOffice365Actif { get; set; }
+
+    public Guid? PROT_ServiceOffice365UserId { get; set; }
+
+    public short? PROT_ServiceSageIDActif { get; set; }
+
+    public Guid? PROT_ServiceSageIDUserId { get; set; }
 
     public virtual ICollection<F_COLLABORATEUR> F_COLLABORATEUR { get; set; } = new List<F_COLLABORATEUR>();
 

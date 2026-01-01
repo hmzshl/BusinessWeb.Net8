@@ -76,6 +76,4 @@ public partial class API_T_AgenceContrat
     public virtual ICollection<API_T_AgenceContratLigne> API_T_AgenceContratLigne { get; set; } = new List<API_T_AgenceContratLigne>();
 
     public virtual ICollection<API_T_AgenceOffre> API_T_AgenceOffre { get; set; } = new List<API_T_AgenceOffre>();
-
-    public virtual F_COMPTET TiersNavigation { get; set; }
 }

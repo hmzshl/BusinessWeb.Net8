@@ -187,10 +187,6 @@ public partial class F_REGTAXE
 
     public short? cbFlag { get; set; }
 
-    public DateTime? cbCreation { get; set; }
-
-    public Guid? cbCreationUser { get; set; }
-
     public byte[] cbHash { get; set; }
 
     public short? cbHashVersion { get; set; }
@@ -198,6 +194,10 @@ public partial class F_REGTAXE
     public DateTime? cbHashDate { get; set; }
 
     public int? cbHashOrder { get; set; }
+
+    public DateTime? cbCreation { get; set; }
+
+    public Guid? cbCreationUser { get; set; }
 
     public virtual F_COMPTEG CG_Num01Navigation { get; set; }
 

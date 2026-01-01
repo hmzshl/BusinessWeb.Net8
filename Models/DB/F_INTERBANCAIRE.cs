@@ -127,10 +127,6 @@ public partial class F_INTERBANCAIRE
 
     public short? IB_RapproCompExPos { get; set; }
 
-    public int? PI_No { get; set; }
-
-    public int? cbPI_No { get; set; }
-
     public short? cbProt { get; set; }
 
     public int cbMarq { get; set; }
@@ -146,6 +142,10 @@ public partial class F_INTERBANCAIRE
     public DateTime? cbCreation { get; set; }
 
     public Guid? cbCreationUser { get; set; }
+
+    public int? PI_No { get; set; }
+
+    public int? cbPI_No { get; set; }
 
     public virtual F_PIECE cbPI_NoNavigation { get; set; }
 }
