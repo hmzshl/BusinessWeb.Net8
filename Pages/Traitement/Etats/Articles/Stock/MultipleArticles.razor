@@ -48,6 +48,11 @@
     protected override async Task OnInitializedAsync()
     {
         db = session.db;
+        if (dt.Any())
+        {
+            qte = dt.First().DL_Qte ?? 0;
+            pu = dt.First().DL_PrixUnitaire ?? 0;
+        }
         GC.Collect();
         await Task.Delay(1);
     }
