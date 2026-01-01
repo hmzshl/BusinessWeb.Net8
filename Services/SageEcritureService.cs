@@ -94,7 +94,6 @@ namespace BusinessWeb.Services
             row.EC_DateRelance = row.EC_DateRelance ?? defaultDate;
             row.EC_DateRappro = row.EC_DateRappro ?? defaultDate;
             row.EC_DateRegle = row.EC_DateRegle ?? defaultDate;
-            row.EC_DateOp = row.EC_DateOp ?? defaultDate;
 
             // Valeurs numériques par défaut
             row.EC_Parite = row.EC_Parite ?? 0;
@@ -118,8 +117,6 @@ namespace BusinessWeb.Services
             row.EC_Norme = row.EC_Norme ?? 0;
             row.TA_Provenance = row.TA_Provenance ?? 0;
             row.EC_PenalType = row.EC_PenalType ?? 0;
-            row.EC_StatusRegle = row.EC_StatusRegle ?? 0;
-            row.EC_RIB = row.EC_RIB ?? 0;
             row.EC_NoCloture = row.EC_NoCloture ?? 0;
             row.EC_ExportRappro = row.EC_ExportRappro ?? 0;
 
@@ -130,7 +127,6 @@ namespace BusinessWeb.Services
             row.cbCreateur = "BWB";
             row.EC_Lettrage = "";
             row.EC_Lettre = 0;
-			row.EC_DateCloture = row.EC_DateOp ?? defaultDate;
 
 
 			// Supprimer les propriétés de navigation pour éviter les problèmes
@@ -446,9 +442,6 @@ namespace BusinessWeb.Services
 
             if (fromDate.HasValue)
                 query = query.Where(e => e.EC_Date >= fromDate.Value);
-
-            if (nonRegleesOnly)
-                query = query.Where(e => e.EC_StatusRegle == 0);
 
             return await query
                 .OrderBy(e => e.EC_Date)
