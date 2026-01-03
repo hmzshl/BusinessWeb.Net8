@@ -12,7 +12,7 @@ public partial class DB : DbContext
     public DB()
     {
 
-	}
+	}   
 	public DB(DbContextOptions<DB> options)
         : base(options)
     {
@@ -177,6 +177,10 @@ public partial class DB : DbContext
     public virtual DbSet<API_T_MaterielEntretienDetail> API_T_MaterielEntretienDetail { get; set; }
 
     public virtual DbSet<API_T_Nantissement> API_T_Nantissement { get; set; }
+
+    public virtual DbSet<API_T_NoteFraisEntete> API_T_NoteFraisEntete { get; set; }
+
+    public virtual DbSet<API_T_NoteFraisLigne> API_T_NoteFraisLigne { get; set; }
 
     public virtual DbSet<API_T_OrdreFabrication> API_T_OrdreFabrication { get; set; }
 
@@ -4147,6 +4151,89 @@ public partial class DB : DbContext
                 .HasForeignKey(d => d.Projet)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_api_t_nantissement");
+        });
+
+        modelBuilder.Entity<API_T_NoteFraisEntete>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_NoteFraisEntete_id");
+
+            entity.Property(e => e.Affectation).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Affectation");
+            entity.Property(e => e.CA_Num)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Creation)
+                .HasDefaultValueSql("(getdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Creation");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.Materiel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Materiel");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
+            entity.Property(e => e.Montant)
+                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Montant")
+                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.MontantLettre)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.NoteFrais).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_NoteFrais");
+            entity.Property(e => e.Numero)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Personnel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Personnel");
+            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Projet");
+            entity.Property(e => e.Reference)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Remarque)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Representant).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Representant");
+            entity.Property(e => e.Sense).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Sense");
+            entity.Property(e => e.Site).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Site");
+            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Type");
+            entity.Property(e => e.Valide).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Valide");
+            entity.Property(e => e.ValideDate).HasColumnType("smalldatetime");
+        });
+
+        modelBuilder.Entity<API_T_NoteFraisLigne>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_NoteFraisLigne_id");
+
+            entity.Property(e => e.Affectation).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisLigne_Affectation");
+            entity.Property(e => e.Creation)
+                .HasDefaultValueSql("(getdate())")
+                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisLigne_Creation");
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.Entete).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisLigne_Entete");
+            entity.Property(e => e.Libelle)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
+            entity.Property(e => e.Montant)
+                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisLigne_Montant")
+                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU)
+                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisLigne_PU")
+                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Qte)
+                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisLigne_Qte")
+                .HasColumnType("decimal(24, 6)");
+
+            entity.HasOne(d => d.EnteteNavigation).WithMany(p => p.API_T_NoteFraisLigne)
+                .HasForeignKey(d => d.Entete)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_api_t_NoteFraisligne");
         });
 
         modelBuilder.Entity<API_T_OrdreFabrication>(entity =>
