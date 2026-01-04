@@ -417,6 +417,16 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 20, Title = "Traitement", Description = "Affaires", Url = "fc-affaires", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 20, Title = "Traitement", Description = "Charges", Url = "fc-charges", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 
+			// NOTE FRAIS
+			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Tableau de bord", Url = "nf-tb", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Notes de frais", Url = "nf-list", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Affectations", Url = "nf-aff", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Personnels", Url = "nf-per", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Materiels", Url = "nf-mat", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Affaires", Url = "nf-aff", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Client", Url = "nf-cls", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Fournisseurs", Url = "nf-frs", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+
 			return list;
 		}
 		public string getTiers(int type)
@@ -1861,8 +1871,9 @@ namespace BusinessWeb
             list.Add(new Items { Id = 18, Name = "Utilisateurs", Icon = "people", Description = "Gestion des utilisateurs, profils et autorisations" });
             list.Add(new Items { Id = 19, Name = "Traçabilité", Icon = "update", Description = "Traçabilité et historique des opérations système" });
             list.Add(new Items { Id = 20, Name = "Food Cost", Icon = "bakery_dining", Description = "Calcul et analyse des coûts alimentaires et restauration" });
+			list.Add(new Items { Id = 21, Name = "Notes de frais", Icon = "money", Description = "Gestion et suivi des dépenses professionnelles et remboursements" });
 
-            return list;
+			return list;
         }
         public List<Items> ModeSoumission()
 		{
