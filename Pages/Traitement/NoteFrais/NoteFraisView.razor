@@ -1,222 +1,178 @@
-﻿<RadzenContent Container="main">
-	<div class="grid-90">
-		<SfToolbar>
-			<ToolbarItems>
-				<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+﻿@page "/nf-list"
+@attribute [Authorize]
 
-				<ToolbarItem Visible=@(sc.IsInRole("Admin") && caisses.Any()) OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-print"></ToolbarItem>
-				<ToolbarItem Visible=@(sc.IsInRole("Admin") && caisses.Any()) OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.ExportToExcelAsync()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
-				<ToolbarItem Visible="@(caisses.Any())" TooltipText="Incorporer des pièces" Text="Incorporer des pièces" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-upload-1"></ToolbarItem>
-				<ToolbarItem Visible="@(caisses.Any())" TooltipText="Supprimer" Text="Supprimer" OnClick=@(args => (DefaultGrid.DeleteRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-trash"></ToolbarItem>
-				<ToolbarItem Visible="@(caisses.Any())" TooltipText="Ajouter" Text="Ajouter" OnClick=@(args => (DefaultGrid.AddRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-circle-add"></ToolbarItem>
-				<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+@if (IsLoaded)
+{
+    <Card_1 Title="NOTES DE FRAIS">
+        <RadzenContent Container="main">
+            <div class="grid-90">
+                <SfToolbar>
+                    <ToolbarItems>
+                        <ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1, 1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+
+                        <ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-print"></ToolbarItem>
+                        <ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.ExportToExcelAsync()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+
+                        <ToolbarItem TooltipText="Supprimer" Text="Supprimer" OnClick=@(args => (DefaultGrid.DeleteRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-trash"></ToolbarItem>
+                        <ToolbarItem TooltipText="Ajouter" Text="Ajouter" OnClick=@(args => (DefaultGrid.AddRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-circle-add"></ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
 
 
-				<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
-					<Template>
-						<SfTextBox Width="180px" Placeholder="RECHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
-					</Template>
-				</ToolbarItem>
-				<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-					<Template>
-						@Caisses
-					</Template>
-				</ToolbarItem>
-				<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-					<Template>
-						@Date1
-					</Template>
-				</ToolbarItem>
-				<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-					<Template>
-						@Date2
-					</Template>
-				</ToolbarItem>
+                        <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                            <Template>
+                                <SfTextBox Width="180px" Placeholder="RECHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime ?" @bind-Value="@date1" Width="140px" Placeholder="Date Début" TValue="DateTime?">
+                                    <DatePickerEvents TValue="DateTime ?" ValueChange="@(args => (LoadData()))"> </DatePickerEvents>
+                                </SfDatePicker>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime ?" @bind-Value="@date2" Width="140px" Placeholder="Date Fin" TValue="DateTime?">
+                                    <DatePickerEvents TValue="DateTime ?" ValueChange="@(args => (LoadData()))"> </DatePickerEvents>
+                                </SfDatePicker>
+                            </Template>
+                        </ToolbarItem>
 
-			</ToolbarItems>
-		</SfToolbar>
-		<div class="grid-84" style="zoom: @session.zoomLevel;">
-			<SfGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection
-					AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items">
-				<GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding AllowDeleting Mode="Syncfusion.Blazor.Grids.EditMode.Dialog">
+                    </ToolbarItems>
+                </SfToolbar>
+                <div class="grid-84" style="zoom: @session.zoomLevel;">
+                    <SfGrid Height="100%" AllowResizing AllowSelection AllowMultiSorting ShowColumnChooser="true"
+                            ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items">
+                        <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                        <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_T_NoteFraisEntete"></GridEvents>
+                        <GridPageSettings PageSize="100"></GridPageSettings>
+                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <Empty></Empty>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                        <GridColumns>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Numero)" HeaderText="Numéro"></GridColumn>
+                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
+                            <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Libelle)" HeaderText="Libellé"></GridColumn>
+                            <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.CT_Num)" HeaderText="CT Num"></GridColumn>
+                            <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.CA_Num)" HeaderText="CA Num"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Personnel)" HeaderText="Personnel"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Materiel)" HeaderText="Matériel"></GridColumn>
+                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Montant)" HeaderText="Montant"></GridColumn>
+                            <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.MontantLettre)" HeaderText="Montant en Lettres"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Type)" HeaderText="Type"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Site)" HeaderText="Site"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Projet)" HeaderText="Projet"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Affectation)" HeaderText="Affectation"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Representant)" HeaderText="Représentant"></GridColumn>
+                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Reference)" HeaderText="Référence"></GridColumn>
+                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Remarque)" HeaderText="Remarque"></GridColumn>
+                            <GridColumn Visible="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Valide)" HeaderText="Validé"></GridColumn>
+                            <GridColumn Visible="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.ValideDate)" HeaderText="Date Validation" Format="dd/MM/yy"></GridColumn>
+                            <GridColumn Visible="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Creation)" HeaderText="Création" Format="dd/MM/yy HH:mm"></GridColumn>
+                            <GridColumn Visible="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Modification)" HeaderText="Modification" Format="dd/MM/yy HH:mm"></GridColumn>
+                        </GridColumns>
+                        <SfSpinner @bind-Visible="@loading">
+                        </SfSpinner>
+                    </SfGrid>
+                </div>
 
-				</GridEditSettings>
-				<GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_CAISSEENTETE"></GridEvents>
-				<GridPageSettings PageSize="100"></GridPageSettings>
-				<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-				<GridTemplates>
-					<EmptyRecordTemplate>
-						<Empty></Empty>
-					</EmptyRecordTemplate>
-				</GridTemplates>
-				<GridAggregates>
-					<GridAggregate>
-						<GridAggregateColumns>
-							<GridAggregateColumn Field="Montant" Type="AggregateType.Sum" Format="N2">
-								<FooterTemplate>
-									@{
-										var SumValue = (context as AggregateTemplateContext);
-										<div>
-											@SumValue.Sum
-										</div>
-									}
-								</FooterTemplate>
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
 
-							</GridAggregateColumn>
-						</GridAggregateColumns>
-					</GridAggregate>
-				</GridAggregates>
-				<GridColumns>
-					<GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CAISSEENTETE.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
-					<GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CAISSEENTETE.Numero)" HeaderText="Piece"></GridColumn>
-					<GridColumn AllowSorting="false" AllowFiltering="false" Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CAISSEENTETE.Libelle)" HeaderText="Motif"></GridColumn>
-					<GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Bénéficiaire" Field="@nameof(API_V_CAISSEENTETE.PersonnelIntitule)"></GridColumn>
-					<GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affectation" Field="@nameof(API_V_CAISSEENTETE.AffectationIntitule)"></GridColumn>
-					<GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° Tiers" Field="@nameof(API_V_CAISSEENTETE.CT_NumProjet)"></GridColumn>
-					<GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Tiers" Field="@nameof(API_V_CAISSEENTETE.CT_Intitule)"></GridColumn>
-					<GridColumn AllowSorting="false" AllowFiltering="false" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Aff" Field="@nameof(API_V_CAISSEENTETE.CA_Num)"></GridColumn>
-					<GridColumn AllowSorting="false" AllowFiltering="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Affaire" Field="@nameof(API_V_CAISSEENTETE.CA_Intitule)"></GridColumn>
-
-					<GridColumn AllowSorting="false" AllowFiltering="false" Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CAISSEENTETE.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-					<GridColumn Width="35px" AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="VL" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
-						<Template>
-							@{
-								var dt = (context as API_V_CAISSEENTETE);
-							}
-							@if (dt.Valide)
-							{
-								<RadzenIcon Icon="lock" style="font-weight: 400; color: limegreen;" />
-							}
-							else
-							{
-								<RadzenIcon Icon="lock_clock" style="font-weight: 400;" />
-							}
-						</Template>
-					</GridColumn>
-				</GridColumns>
-				<SfSpinner @bind-Visible="@loading">
-				</SfSpinner>
-			</SfGrid>
-		</div>
-
-	</div>
-</RadzenContent>
 
 
 
 @code
 {
-	[CascadingParameter]
-	public SessionDT session { get; set; } = new SessionDT();
-	DB db = new DB();
 
-	[Parameter] public int type { get; set; }
-	[Parameter] public bool IsList { get; set; } = true;
-	[Parameter] public int Projet { get; set; } = 0;
-	[Parameter] public int Materiel { get; set; } = 0;
-	[Parameter] public int Personnel { get; set; } = 0;
-	[Parameter] public int Tiers { get; set; } = 0;
-	[Parameter] public string Title { get; set; } = "";
-	string grid_height = "80vh";
-	//Components
-	private SfGrid<API_V_CAISSEENTETE> DefaultGrid;
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    //Components
+    private SfGrid<API_T_NoteFraisEntete> DefaultGrid;
+    bool IsLoaded = false;
+    //End components
 
-	//End components
-
-	private IEnumerable<API_V_CAISSEENTETE> items;
-	List<API_V_CAISSEENTETE> rows = new List<API_V_CAISSEENTETE>();
-	string activekey = "0";
-	bool loading = false;
-	List<API_T_Caisse> caisses = new List<API_T_Caisse>();
-	int caisse = 0;
-	DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
-	DateTime? date2;
-	IList<API_V_CAISSEENTETE> selecteditems;
-	private SfDropDownList<int, API_T_Caisse> CaisseDrop;
-	private RenderFragment Caisses =>
-	@<SfDropDownList @ref=@CaisseDrop TValue="int" TItem="API_T_Caisse" Placeholder="CAISSE" DataSource=@(caisses) Width="250" @bind-Value=@caisse>
-		<DropDownListFieldSettings Text="C_Nom" Value="id"> </DropDownListFieldSettings>
-		<DropDownListEvents TValue="int" TItem="API_T_Caisse" ValueChange="@(args => (UpdateGrid()))"> </DropDownListEvents>
-	</SfDropDownList>
-		;
-	private RenderFragment Date1 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date1" Width="120px" Placeholder="Date Début" TValue="DateTime?">
-		<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
-	</SfDatePicker>;
-	private RenderFragment Date2 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date2" Width="120px" Placeholder="Date Fin" TValue="DateTime?">
-		<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
-	</SfDatePicker>
-	;
-	protected override async Task OnInitializedAsync()
-	{
-		if (!IsList)
-		{
-			grid_height = "70vh";
-		}
-		        db = session.db;
+    private ICollection<API_T_NoteFraisEntete> items;
+    private List<API_V_NoteFraisEntete> v_items = new List<API_V_NoteFraisEntete>();
+    bool loading = false;
+    DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
+    DateTime? date2;
+    public List<API_T_Personnel> personnels = new List<API_T_Personnel>();
+    public List<API_T_Materiel> materiels = new List<API_T_Materiel>();
+    public List<F_COMPTEA> affaires = new List<F_COMPTEA>();
+    public List<F_COLLABORATEUR> collaborateurs = new List<F_COLLABORATEUR>();
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        db = session.db;
         GC.Collect();
-		var cs = db.API_T_Caisse_User.Where(a => a.User == sc.User.Id).Select(a => a.Caisse);
-		if (cs.Count() != 0)
-		{
-			caisses = db.API_T_Caisse.Where(a => cs.Contains(a.id)).ToList();
-			if (caisses.Count() != 0)
-			{
-				caisse = caisses.First().id;
-			}
-		}
-		await UpdateGrid();
-	}
-	private async Task UpdateGrid()
-	{
-		loading = true;
-		await Task.Delay(1);
-		items = session.db.API_V_CAISSEENTETE.Where(a => a.Type == type && a.Caisse == caisse && a.Date >= (date1 ?? new DateTime(1900, 1, 1)) && a.Date <= (date2 ?? new DateTime(2070, 12, 31))).OrderBy(a => a.Date).ToList();
-		loading = false;
-		await Task.Delay(1);
-	}
+        await LoadData();
+        IsLoaded = true;
+    }
+    private async Task LoadData()
+    {
+        items = session.db.API_T_NoteFraisEntete.AsNoTracking().OrderByDescending(a => a.Date).ToList();
+        foreach(var item in items)
+        {
+            
+        }
+    }
+    public class API_V_NoteFraisEntete : API_T_NoteFraisEntete
+    {
+        public string Personnel_Libelle { get; set; }
+        public string Materiel_Libelle { get; set; }
+        public string CA_Intitule { get; set; }
+        public string CT_Intitule { get; set; }
+    }
 
-	private async Task OnActionBegin(ActionEventArgs<API_V_CAISSEENTETE> args)
-	{
-		if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
-	|| args.RequestType == Syncfusion.Blazor.Grids.Action.Print
-	|| args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
-		{
-			args.Cancel = true;
-		}
+    protected async Task Edit(RecordDoubleClickEventArgs<API_T_NoteFraisEntete> args)
+    {
+        await DialogService.OpenAsync<NoteFraisFiche>(args.RowData.Numero,
+    new Dictionary<string, object>() { { "id", args.RowData.id } },
+    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
+        await LoadData();
+    }
+    private async Task Add()
+    {
+        await DialogService.OpenAsync<NoteFraisFiche>($"Ajouter un élément",
+        new Dictionary<string, object>() { { "id", 0 } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
+        await LoadData();
+    }
+    private async Task OnActionBegin(ActionEventArgs<API_T_NoteFraisEntete> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
 
-		if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
-		{
-			await Add();
-		}
-		if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
-		{
-			db.Database.ExecuteSqlRaw("DELETE FROM API_T_CaisseLigne WHERE Entete = {0}", args.Data.id);
-			db.Database.ExecuteSqlRaw("DELETE FROM API_T_CaisseEntete WHERE id = {0}", args.Data.id);
-			db.SaveChanges();
-			await UpdateGrid();
-		}
-	}
-	private string getTiers()
-	{
-		string rs = "Client";
-		if (type == 1)
-		{
-			rs = "Fournisseur";
-		}
-		return rs;
-	}
-	protected async Task Edit(RecordDoubleClickEventArgs<API_V_CAISSEENTETE> args)
-	{
-		await DialogService.OpenAsync<NoteFraisFiche>(args.RowData.Numero,
-	new Dictionary<string, object>() { { "caisse", caisse }, { "id", args.RowData.id }, { "type", type } },
-	new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "600px", Height = "700px" });
-		await UpdateGrid();
-	}
-	private async Task Add()
-	{
-		await DialogService.OpenAsync<NoteFraisFiche>(Title,
-	new Dictionary<string, object>() { { "caisse", caisse }, { "id", 0 }, { "type", type } },
-	new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "600px", Height = "700px" });
-		await UpdateGrid();
-	}
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await Add();
+        }
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_MATERIEL WHERE id = {0}", args.Data.id);
+            db.SaveChanges();
+            await LoadData();
+        }
+
+    }
+
+
+
 
 }

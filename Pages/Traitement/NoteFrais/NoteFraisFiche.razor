@@ -1,339 +1,340 @@
-﻿
-<SfToolbar CssClass="btns">
-	<ToolbarItems>
-		@if (sc.IsInRole("Admin", "Direction"))
-		{
-			<ToolbarItem Align="ItemAlign.Right">
-				<Template>
-					<SfButton IconCss="e-icons e-circle-check" Disabled=@(row.Valide) OnClick="Validate">Valider</SfButton>
-				</Template>
-			</ToolbarItem>
-		}
-		<ToolbarItem Align="ItemAlign.Right">
-			<Template>
-				<SfButton Disabled=@(row.Valide) IconCss="e-icons e-print" OnClick="Print">Imprimer</SfButton>
-			</Template>
-		</ToolbarItem>
-		<ToolbarItem Align="ItemAlign.Right">
-			<Template>
-				<SfButton Disabled=@(row.Valide) OnClick="@(args => Submit(true))" IconCss="e-icons e-save" IsPrimary="true">Enregistrer</SfButton>
-			</Template>
-		</ToolbarItem>
-	</ToolbarItems>
+﻿<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-print">Imprimer</SfButton>
+            </Template>
+        </ToolbarItem>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit(true))">Enregistrer</SfButton>
+            </Template>
+        </ToolbarItem>
+    </ToolbarItems>
 </SfToolbar>
-<div>
-	<GridRow>
-		<GridCol Xs="24" Md="24">
-			<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="row">
-				<SfTab CssClass="e-fill">
-					<TabEvents Selecting="@(args => fn.DisableTabSelect(args))" /><TabItems>
-						<TabItem>
-							<ChildContent>
-								<TabHeader Text="Identification"></TabHeader>
-							</ChildContent>
-							<ContentTemplate>
-								<GridRow>
-									<GridCol Xs="24" Md="24">
-										<Card>
-											@if (IsMV && (id == 0))
-											{
-												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Sense">
-													<SfDropDownList Readonly="(row.Valide)" TValue="int" TItem="Items" DataSource="@(fn.CaisseMV())" @bind-Value="@row.Type">
-														<DropDownListEvents TValue=" int" TItem="Items" ValueChange="@(AccordionClickArgs => SenseChanged())" />
-														<DropDownListFieldSettings Text="Name" Value="Id" />
-													</SfDropDownList>
-												</FormItem>
-											}
 
-											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Caisse">
-												<SfDropDownList TValue="int" TItem="API_T_Caisse" DataSource="@(db.API_T_Caisse)" @bind-Value="@row.Caisse" Readonly>
-													<DropDownListEvents TValue="int" TItem="API_T_Caisse" />
-													<DropDownListFieldSettings Text="C_Nom" Value="id" />
-												</SfDropDownList>
-											</FormItem>
-											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro">
-												<SfTextBox @bind-Value="@(row.Numero)" Readonly />
-											</FormItem>
-											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Date">
-												<SfDatePicker Readonly="(row.Valide)" TValue="DateTime?" @bind-Value="@row.Date" />
-											</FormItem>
-											@if (row.Type == 0)
-											{
-												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Client">
-													<SfDropDownList Readonly="(row.Valide)" Query="@fn.LocalDataQuery" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="string" TItem="F_COMPTET" 
-													DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 0 && a.CT_Sommeil == 0))" @bind-Value="@row.CT_Num">
-														<DropDownListEvents TValue="string" TItem="F_COMPTET" />
-														<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
-													</SfDropDownList>
-												</FormItem>
-											}
-											else
-											{
-												<FormItem LabelAlign="AntLabelAlignType.Left" Label="Fournisseur">
-													<SfDropDownList Readonly="(row.Valide)" Query="@fn.LocalDataQuery" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="string" TItem="F_COMPTET"
-																	DataSource="@(db.F_COMPTET.Where(a => a.CT_Type == 1 && a.CT_Sommeil == 0))" @bind-Value="@row.CT_Num">
-														<DropDownListEvents TValue="string" TItem="F_COMPTET" />
-														<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
-													</SfDropDownList>
-												</FormItem>
-											}
-											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Affaire">
-												<SfDropDownList Readonly="(row.Valide)" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="string" TItem="F_COMPTEA" DataSource="@(affaires)" @bind-Value="@row.CA_Num">
-													<DropDownListEvents TValue="string" TItem="F_COMPTEA" />
-													<DropDownListFieldSettings Text="CA_Intitule" Value="CA_Num" />
-												</SfDropDownList>
-											</FormItem>
-											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Représentant">
-												<SfDropDownList Readonly="(row.Valide)" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="int" TItem="F_COLLABORATEUR" @bind-Value="@row.Representant" DataSource="collab">
-													<DropDownListEvents TValue="int" TItem="F_COLLABORATEUR" />
-													<DropDownListFieldSettings Text="CO_Nom" Value="CO_No" />
-												</SfDropDownList>
-											</FormItem>
-											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Bénéficiaire">
-												<div class="ls-parent">
-													<div class="ls-child-left">
-														<SfDropDownList Readonly="(row.Valide)" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="int" TItem="API_T_Personnel" DataSource="@(db.API_T_Personnel.AsNoTracking().Where(a => 1 == 1).OrderBy(a => a.Nom))" @bind-Value="@row.Personnel">
-															<DropDownListEvents TValue="int" TItem="API_T_Personnel" />
-															<DropDownListFieldSettings Text="Nom" Value="id" />
-														</SfDropDownList>
-													</div>
-													<div class="ls-child-right">
-														<RadzenButton Icon="reorder" Click="@(args => BeneficiairesListe())" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-													</div>
-												</div>
+@if (@row == null)
+{
+    <div class="spin-center">
+        <Spin size="large" />
+    </div>
+}
+else
+{
+    <div>
+        <GridRow>
+            <GridCol Xs="24" Md="24">
+                <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="8" Context="FormContext">
+                    <GridRow>
+                        <GridCol Xs="24" Md="9">
+                            <Card>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
+                                    <SfDatePicker TValue="DateTime ?" @bind-Value="@row.Date" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro" LabelColSpan="8">
+                                    <SfTextBox @bind-Value="@row.Numero" />
+                                </FormItem>
+                            </Card>
+                        </GridCol>
 
-											</FormItem>
-											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Affectation">
-												<div class="ls-parent">
-													<div class="ls-child-left">
-														<SfDropDownList Readonly="(row.Valide)" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering TValue="int" TItem="API_T_Affectation" DataSource="@(db.API_T_Affectation.AsNoTracking().Where(a => 1 == 1).OrderBy(a => a.Intitule))" @bind-Value="@row.Affectation">
-															<DropDownListEvents TValue="int" TItem="API_T_Affectation" />
-															<DropDownListFieldSettings Text="Intitule" Value="id" />
-														</SfDropDownList>
-													</div>
-													<div class="ls-child-right">
-														<RadzenButton Icon="reorder" Click="@(args => AffectationsListe())" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
-													</div>
-												</div>
+                        <GridCol Xs="24" Md="15">
 
-											</FormItem>
-										</Card>
-									</GridCol>
-									<GridCol Xs="24" Md="24">
-										<Card>
-											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant">
-												<SfNumericTextBox Readonly="(row.Valide)" @bind-Value="@row.Montant" ShowSpinButton="false" Format="N2" Decimals="2" />
-											</FormItem>
-											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant en lettres">
-												<SfTextBox Value="@(helpers.getMontant(row.Montant) + " DHS")" Readonly />
-											</FormItem>
-										</Card>
-									</GridCol>
-									<GridCol Xs="24" Md="24">
-										<Card>
-											<FormItem Class="multiline" LabelAlign="AntLabelAlignType.Left" Label="Libelle" LabelColSpan="6">
-												<SfTextBox Readonly="(row.Valide)" @bind-Value="@row.Libelle" />
-											</FormItem>
-											<FormItem LabelAlign="AntLabelAlignType.Left" Label="Référence" LabelColSpan="6">
-												<SfTextBox Readonly="(row.Valide)" @bind-Value="@row.Reference" />
-											</FormItem>
-											<FormItem Class="multiline" LabelAlign="AntLabelAlignType.Left" Label="Remarque" LabelColSpan="6">
-												<SfTextBox Readonly="(row.Valide)" @bind-Value="@row.Remarque" />
-											</FormItem>
+                            <Card>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="4">
+                                    <SfNumericTextBox Readonly @bind-Value="@row.Montant" ShowSpinButton="false" Decimals="2" Format="N2" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Libelle" LabelColSpan="4">
+                                    <SfTextBox @bind-Value="@row.Libelle" />
+                                </FormItem>
+                            </Card>
+                        </GridCol>
 
-										</Card>
-									</GridCol>
-								</GridRow>
-							</ContentTemplate>
-						</TabItem>
-						<TabItem>
-							<ChildContent>
-								<TabHeader Text="Fichiers"></TabHeader>
-							</ChildContent>
-							<ContentTemplate>
-								<Card>
-									<FilesManager height="50vh" table="Caisse" id="@id" societe="@session.Societe.id.ToString()"></FilesManager>
-								</Card>
-							</ContentTemplate>
-						</TabItem>
-					</TabItems>
-				</SfTab>
-			</Form>
+                        <GridCol Xs="24" Md="24">
+                            <Card>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Affaire" LabelColSpan="4">
+                                    <SfDropDownList Query="fn.LocalDataQuery" AllowFiltering TValue="string" TItem="F_COMPTEA"
+                                                    DataSource="@affaires" @bind-Value="@row.CA_Num">
+                                        <DropDownListEvents TValue="string" TItem="F_COMPTEA" />
+                                        <DropDownListFieldSettings Text="CA_Intitule" Value="CA_Num" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Collaborateur" LabelColSpan="4">
+                                    <SfDropDownList Query="fn.LocalDataQuery" AllowFiltering TValue="int" TItem="F_COLLABORATEUR"
+                                                    DataSource="@collaborateurs" @bind-Value="@row.Representant">
+                                        <DropDownListEvents TValue="int" TItem="F_COLLABORATEUR" />
+                                        <DropDownListFieldSettings Text="CO_Nom" Value="CO_No" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Personnel" LabelColSpan="4">
+                                    <SfDropDownList Query="fn.LocalDataQuery" AllowFiltering TValue="int" TItem="API_T_Personnel"
+                                                    DataSource="@personnels" @bind-Value="@row.Personnel">
+                                        <DropDownListEvents TValue="int" TItem="API_T_Personnel" />
+                                        <DropDownListFieldSettings Text="Nom" Value="id" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Matériel" LabelColSpan="4">
+                                    <SfDropDownList Query="fn.LocalDataQuery" AllowFiltering TValue="int" TItem="API_T_Materiel"
+                                                    DataSource="@materiels" @bind-Value="@row.Materiel">
+                                        <DropDownListEvents TValue="int" TItem="API_T_Materiel" />
+                                        <DropDownListFieldSettings Text="Intitule" Value="id" />
+                                    </SfDropDownList>
+                                </FormItem>
+                            </Card>
+                        </GridCol>
 
+                        <Divider></Divider>
 
-		</GridCol>
+                        <GridCol Xs="24" Md="24">
+                            <div style="height: 37vh;">
+                                <SfGrid Height="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@lignes">
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                    <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+                                    </GridEditSettings>
+                                    <GridEvents OnActionBegin="OnActionBegin" OnActionComplete="OnActionComplete" TValue="API_T_NoteFraisLigne"></GridEvents>
+                                    <GridTemplates>
+                                        <EmptyRecordTemplate>
+                                            <Empty></Empty>
+                                        </EmptyRecordTemplate>
+                                    </GridTemplates>
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="Montant" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var SumValue = (context as AggregateTemplateContext);
+                                                            <div>
+                                                                @SumValue.Sum
+                                                            </div>
+                                                        }
+                                                    </FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridColumns>
+                                        <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisLigne.Affectation)" HeaderText="Affectation" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left">
+                                            <Template>
+                                                @{
+                                                    var data = (context as API_T_NoteFraisLigne);
+                                                    var info = db.API_T_Information.Where(a => a.id == data.Affectation).SingleOrDefault();
+                                                    if (info != null)
+                                                    {
+                                                        <div>@info.Valeur</div>
+                                                    }
+                                                }
+                                            </Template>
+                                            <EditTemplate>
+                                                @{
+                                                    var data = (context as API_T_NoteFraisLigne);
+                                                    <div class="ls-parent">
+                                                        <div class="ls-child-left">
+                                                            <SfDropDownList AllowFiltering TValue="int" TItem="API_T_Information"
+                                                                            DataSource="@db.API_T_Information.Where(a => a.Tab == 12).OrderBy(a => a.Valeur).ToList()"
+                                                                            @bind-Value="@data.Affectation">
+                                                                <DropDownListEvents TValue="int" TItem="API_T_NoteFraisLigne" />
+                                                                <DropDownListFieldSettings Text="Valeur" Value="id" />
+                                                            </SfDropDownList>
+                                                        </div>
+                                                        <div class="ls-child-right">
+                                                            <RadzenButton Icon="reorder" Click="@(args => Informations(12))" ButtonStyle="ButtonStyle.Primary" Size="Radzen.ButtonSize.ExtraSmall" Class="rz-border-radius-10 rz-shadow-4" />
+                                                        </div>
+                                                    </div>
+                                                }
 
-	</GridRow>
-</div>
+                                            </EditTemplate>
+                                        </GridColumn>
+                                        <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisLigne.id)" HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                        <GridColumn Width="400" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisLigne.Libelle)" HeaderText="Description"></GridColumn>
+                                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisLigne.Qte)" HeaderText="Qté" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisLigne.PU)" HeaderText="PU" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                                        <GridColumn Width="100" AllowAdding="false" AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisLigne.Montant)" HeaderText="Montant" EditType="EditType.NumericEdit" EditorSettings="parameters" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
 
-
-
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </GridCol>
+                    </GridRow>
+                </Form>
+            </GridCol>
+        </GridRow>
+    </div>
+}
 
 @code {
-	[CascadingParameter]
-	public SessionDT session { get; set; }
-	DB db = new DB();
-	EditForm form = new EditForm();
-	[Parameter]
-	public int id { get; set; } = 0;
-	[Parameter]
-	public int caisse { get; set; } = 0;
-	[Parameter]
-	public int type { get; set; }
-	[Parameter]
-	public string operation { get; set; }
-	private API_T_CaisseEntete row { get; set; }
-	List<API_T_CaisseLigne> lignes = new List<API_T_CaisseLigne>();
-	Helpers helpers = new Helpers();
-	[Parameter] public bool detail { get; set; } = false;
-	NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2", ShowSpinButton = false } };
-	[Parameter] public bool IsList { get; set; } = true;
-	[Parameter] public int Projet { get; set; } = 0;
-	[Parameter] public int Materiel { get; set; } = 0;
-	[Parameter] public int Personnel { get; set; } = 0;
-	[Parameter] public int Tiers { get; set; } = 0;
-	[Parameter] public bool IsMV { get; set; } = false;
-	string tiers_intitule = "";
-	private List<F_COLLABORATEUR> collab = new List<F_COLLABORATEUR>();
-	private List<F_COMPTET> tiers = new List<F_COMPTET>();
-	private List<F_COMPTEA> affaires = new List<F_COMPTEA>();
-	protected override async Task OnInitializedAsync()
-	{
-		db = session.db;
+    [Parameter] public int id { get; set; } = 0;
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+
+    private API_T_NoteFraisEntete row { get; set; }
+    private List<API_T_NoteFraisLigne> lignes = new List<API_T_NoteFraisLigne>();
+    private List<API_T_Personnel> personnels = new List<API_T_Personnel>();
+    private List<API_T_Materiel> materiels = new List<API_T_Materiel>();
+    private List<F_COMPTEA> affaires = new List<F_COMPTEA>();
+    private List<F_COLLABORATEUR> collaborateurs = new List<F_COLLABORATEUR>();
+    DB db = new DB();
+    NumericEditCellParams parameters = new NumericEditCellParams()
+    {
+        Params = new NumericTextBoxModel<object>()
+        {
+            Decimals = 2,
+            Format = "N2"
+        }
+    };
+    protected async Task Informations(int Tab)
+    {
+        await DialogService.OpenAsync<InformationsListe>(fn.GetInformation().Where(a => a.Id == Tab).SingleOrDefault().Name,
+      new Dictionary<string, object>() { { "Tab", Tab } },
+      new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "90%" });
+    }
+    protected override void OnInitialized()
+    {
+        db = session.db;
         GC.Collect();
-		collab = db.F_COLLABORATEUR.OrderBy(a => a.CO_Prenom).Select(a => new F_COLLABORATEUR { CO_No = a.CO_No, CO_Nom = a.CO_Prenom + " " + a.CO_Nom }).ToList();
-		tiers = db.F_COMPTET.Where(a => a.CT_Type == type).OrderBy(a => a.CT_Intitule).Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule }).ToList();
-		affaires = db.F_COMPTEA.OrderBy(a => a.CA_Num).Select(a => new F_COMPTEA { CA_Num = a.CA_Num, CA_Intitule = a.CA_Num + " - " + a.CA_Intitule }).ToList();
-		if (id == 0)
-		{
-			row = new API_T_CaisseEntete();
-			row.Date = DateTime.Today;
-			row.Type = type;
-			row.Sense = type;
-			row.Libelle = null;
-			await GetPiece();
-			if (Materiel != 0)
-			{
-				row.Materiel = Materiel;
-			}
-			if (Projet != 0)
-			{
-				row.Projet = Projet;
-			}
-			if (Personnel != 0)
-			{
-				row.Personnel = Personnel;
-			}
-			row.Caisse = caisse;
-		}
-		else
-		{
-			row = db.API_T_CaisseEntete.Where(a => a.id == id).SingleOrDefault();
-			lignes = db.API_T_CaisseLigne.Where(a => a.Entete == id).OrderBy(a => a.id).ToList();
-		}
-		tiers_intitule = getTiers();
+        personnels = db.API_T_Personnel.AsNoTracking().Select(a => new API_T_Personnel { Nom = a.Prenom + " " + a.Nom, id = a.id }).OrderBy(a => a.Nom).ToList();
+        materiels = db.API_T_Materiel.AsNoTracking().Select(a => new API_T_Materiel { Intitule = a.Intitule + " " + a.Immatricule, id = a.id }).OrderBy(a => a.Intitule).ToList();
+        affaires = db.F_COMPTEA.AsNoTracking().Select(a => new F_COMPTEA { CA_Num = a.CA_Num, CA_Intitule = a.CA_Num + " - " + a.CA_Intitule }).OrderBy(a => a.CA_Intitule).ToList();
+        collaborateurs = db.F_COLLABORATEUR.AsNoTracking().Select(a => new F_COLLABORATEUR { CO_No = a.CO_No, CO_Nom = a.CO_Prenom + " " + a.CO_Nom }).OrderBy(a => a.CO_Nom).ToList();
+        if (id != 0)
+        {
+            // Load existing record
+            row = db.API_T_NoteFraisEntete.Where(a => a.id == id).SingleOrDefault();
+            lignes = db.API_T_NoteFraisLigne.Where(a => a.Entete == id).OrderBy(a => a.id).ToList();
+        }
+        else
+        {
+            // Create new record
+            row = new API_T_NoteFraisEntete();
+            row.Date = DateTime.Today;
+            row.Creation = DateTime.Now;
+            row.Modification = DateTime.Now;
+            row.Valide = false;
 
-	}
-	private async Task GetPiece()
-	{
-		var cs = db.API_T_Caisse.Where(a => a.id == caisse).SingleOrDefault();
-		string piece = fn.PieceCaisse(row.Type) + (cs?.C_Racine ?? "") + "00001";
-		var dt = db.API_T_CaisseEntete.Where(a => a.Numero.StartsWith(fn.PieceCaisse(row.Type) + (cs.C_Racine ?? ""))).ToList();
-		if (dt.Count != 0)
-		{
-			piece = fn.getNextCode(dt.Max(a => a.Numero));
-		}
-		row.Numero = piece;
-	}
-	private async Task Submit(bool close)
-	{
-		try
-		{
-			row.MontantLettre = helpers.getMontant(row.Montant) + " DHS";
-			if (id == 0)
-			{
-				db.API_T_CaisseEntete.Add(row);
-			}
-			db.SaveChanges();
-			id = row.id;
-			if (close)
-			{
-				DialogService.Close();
-			}
+            // Generate new Numero
+            string lastNum = db.API_T_NoteFraisEntete
+                .Where(a => a.Numero != null && a.Numero.StartsWith("NF"))
+                .OrderByDescending(a => a.Numero)
+                .Select(a => a.Numero)
+                .FirstOrDefault();
 
-		}
-		catch (Exception ex)
-		{
-			Message.Error(ex.ToString());
-		}
-	}
-	private string getTiers()
-	{
-		string rs = "Client";
-		if (type == 1)
-		{
-			rs = "Fournisseur";
-		}
-		return rs;
-	}
-	private async Task SenseChanged()
-	{
-		tiers = db.F_COMPTET.Where(a => a.CT_Type == row.Sense).OrderBy(a => a.CT_Intitule).Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule }).ToList();
-		await GetPiece();
-	}
-	private void OnFileOpen(FileOpenEventArgs<FileManagerDirectoryContent> args)
-	{
-		if (args.FileDetails.Name.ToUpper().EndsWith(".PDF"))
-		{
-			DialogService.OpenAsync<PdfViewer>(args.FileDetails.Name,
-				new Dictionary<string, object>() { { "DocumentPath", helpers.getPath(session.Societe.id.ToString(), "Projet", this.id.ToString()) + "/" + args.FileDetails.Name } },
-				new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
-		}
-		if (args.FileDetails.Name.ToUpper().EndsWith(".DOC") || args.FileDetails.Name.ToUpper().EndsWith(".DOCX") || args.FileDetails.Name.ToUpper().EndsWith(".TXT"))
-		{
-			DialogService.OpenAsync<WordViewer>(args.FileDetails.Name,
-				new Dictionary<string, object>() { { "DocumentPath", helpers.getPath(session.Societe.id.ToString(), "Projet", this.id.ToString()) + "/" + args.FileDetails.Name } },
-				new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
-		}
+            if (!string.IsNullOrEmpty(lastNum))
+            {
+                // Extract numeric part and increment
+                string numericPart = lastNum.Substring(2);
+                if (int.TryParse(numericPart, out int num))
+                {
+                    row.Numero = $"NF{(num + 1).ToString("D7")}";
+                }
+                else
+                {
+                    row.Numero = "NF0000001";
+                }
+            }
+            else
+            {
+                row.Numero = "NF0000001";
+            }
+        }
+    }
 
-	}
-	private async Task Print()
-	{
-		await Submit(false);
-		List<JSReportParameter> parameters = new List<JSReportParameter>();
+    private void Submit(bool close)
+    {
+        try
+        {
+            if (id == 0)
+            {
+                row.Creation = DateTime.Now;
+                row.CreationUser = sc.User.Id ?? "System";
+                db.API_T_NoteFraisEntete.Add(row);
+            }
+            else
+            {
+                row.Modification = DateTime.Now;
+                row.ModificationUser = sc.User.Id ?? "System";
+                db.API_T_NoteFraisEntete.Update(row);
+            }
 
-		parameters.Add(new JSReportParameter { Name = "id", Values = new List<string>() { this.id.ToString() } });
-		await DialogService.OpenAsync<ReportViewer>(row.Numero,
-		new Dictionary<string, object>() { { "ReportName", "reports\\caisses\\isc\\FicheStandard" }, { "parameters", parameters } },
-		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });
-	}
-	private async Task BeneficiairesListe()
-	{
-		await DialogService.OpenAsync<BusinessWeb.Pages.Traitement.ISC_Caisse.Structure.Beneficiaires>($"Bénéficiaires",
-		new Dictionary<string, object>(),
-		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
-	}
-	private async Task CaissesListe()
-	{
-		await DialogService.OpenAsync<BusinessWeb.Pages.Traitement.ISC_Caisse.Structure.Caisses>($"Caisses",
-		new Dictionary<string, object>(),
-		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
-	}
-	private async Task AffectationsListe()
-	{
-		await DialogService.OpenAsync<BusinessWeb.Pages.Traitement.ISC_Caisse.Structure.Affectations>($"Affectations",
-		new Dictionary<string, object>(),
-		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "700px", Height = "90%" });
-	}
-	private async Task Validate()
-	{
-		bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment valider cet élément?", "Validation");
-		if (isConfirm)
-		{
-			await Submit(false);
-			row.Valide = true;
-			row.ValideDate = DateTime.Now;
-			db.SaveChanges();
-		}
-	}
+            db.SaveChanges();
+            id = row.id;
+
+            if (close)
+            {
+                // Close dialog or navigate back
+                DialogService.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            Message.Error(ex.Message);
+        }
+    }
+
+    private async Task UpdateTotal()
+    {
+        row.Montant = lignes.Sum(a => a.Montant);
+        db.SaveChanges();
+        row = db.API_T_NoteFraisEntete.Where(a => a.id == id).SingleOrDefault();
+        lignes = db.API_T_NoteFraisLigne.Where(a => a.Entete == id).OrderBy(a => a.id).ToList();
+        await InvokeAsync(StateHasChanged);
+    }
+    public async Task OnActionBegin(ActionEventArgs<API_T_NoteFraisLigne> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+            await UpdateTotal();
+        }
+    }
+    public async Task OnActionComplete(ActionEventArgs<API_T_NoteFraisLigne> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+            // Calculate Montant
+            args.Data.Montant = args.Data.Qte * args.Data.PU;
+            if (args.Data.Libelle == null)
+            {
+                var inf = db.API_T_Information.Where(a => a.id == args.Data.Affectation).SingleOrDefault();
+                if (inf != null)
+                {
+                    args.Data.Libelle = "N.F N°: " + row.Numero + " " + inf.Valeur;
+                }
+            }
+
+            if (args.Action == "Add")
+            {
+                if (id == 0)
+                {
+                    Submit(false);
+                }
+
+                args.Data.Entete = this.id;
+                args.Data.Creation = DateTime.Now;
+                args.Data.CreationUser = sc.User.Id ?? "System";
+                db.API_T_NoteFraisLigne.Add(args.Data);
+                db.SaveChanges();
+                await UpdateTotal();
+            }
+            else
+            {
+                args.Data.Modification = DateTime.Now;
+                args.Data.ModificationUser = sc.User.Id ?? "System";
+
+                var local = db.Set<API_T_NoteFraisLigne>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                if (local != null)
+                {
+                    db.Entry(local).State = EntityState.Detached;
+                }
+                db.Entry(args.Data).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+           
+        }
+
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            db.API_T_NoteFraisLigne.Remove(args.Data);
+            db.SaveChanges();
+            await UpdateTotal();
+        }
+
+
+    }
 }
