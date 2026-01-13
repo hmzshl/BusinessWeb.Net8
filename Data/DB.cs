@@ -9,11 +9,11 @@ namespace BusinessWeb.Data;
 
 public partial class DB : DbContext
 {
-    public DB()
-    {
+    public DB() 
+    { 
 
-	}   
-	public DB(DbContextOptions<DB> options)
+    }
+    public DB(DbContextOptions<DB> options)
         : base(options)
     {
     }
@@ -884,12 +884,9 @@ public partial class DB : DbContext
             entity.Property(e => e.Designation)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.MaxPax).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceArticle_MaxPax");
-            entity.Property(e => e.MinPax).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceArticle_MinPax");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceArticle_Type");
         });
 
         modelBuilder.Entity<API_T_AgenceBooking>(entity =>
@@ -898,61 +895,40 @@ public partial class DB : DbContext
 
             entity.Property(e => e.ArrivalDateEnd).HasColumnType("smalldatetime");
             entity.Property(e => e.ArrivalDateStart).HasColumnType("smalldatetime");
-            entity.Property(e => e.Client).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBooking_Client");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
-            entity.Property(e => e.Devise).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBooking_Devise");
-            entity.Property(e => e.Fournisseur).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBooking_Fournisseur");
             entity.Property(e => e.Libelle).HasColumnType("text");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.NbrPax)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBooking_NbrPax")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.NbrPaxAdult)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBooking_NbrPaxAdult")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.NbrPaxChild)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBooking_NbrPaxChild")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.NbrPaxInfant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBooking_NbrPaxInfant")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.PU)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBooking_PU")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.PUDevise)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBooking_PUDevise")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.NbrPax).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.NbrPaxAdult).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.NbrPaxChild).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.NbrPaxInfant).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PUDevise).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Piece)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Prestation).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBooking_Prestation");
             entity.Property(e => e.Reference)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.SellingDateEnd).HasColumnType("smalldatetime");
             entity.Property(e => e.SellingDateStart).HasColumnType("smalldatetime");
-            entity.Property(e => e.Taux)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBooking_Taux")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Taux).HasColumnType("decimal(24, 6)");
         });
 
         modelBuilder.Entity<API_T_AgenceBookingDetail>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_AgenceBookingDetail_id");
 
-            entity.Property(e => e.Article).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingDetail_Article");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Devise).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingDetail_Devise");
-            entity.Property(e => e.Entete).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingDetail_Entete");
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -962,26 +938,11 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.NbrAdult).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingDetail_NbrAdult");
-            entity.Property(e => e.NbrChild).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingDetail_NbrChild");
-            entity.Property(e => e.NbrInfant).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingDetail_NbrInfant");
-            entity.Property(e => e.NbrPax).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingDetail_NbrPax");
-            entity.Property(e => e.NbtNuit).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingDetail_NbtNuit");
-            entity.Property(e => e.PUDevise_CL)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingDetail_PUDevise_CL")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.PUDevise_FR)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingDetail_PUDevise_FR")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.PU_CL)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingDetail_PU_CL")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.PU_FR)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingDetail_PU_FR")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Taux)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingDetail_Taux")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PUDevise_CL).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PUDevise_FR).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU_CL).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU_FR).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Taux).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.EnteteNavigation).WithMany(p => p.API_T_AgenceBookingDetail)
                 .HasForeignKey(d => d.Entete)
@@ -999,14 +960,10 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Entete).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingOffre_Entete");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Offre).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingOffre_Offre");
-            entity.Property(e => e.Remise)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingOffre_Remise")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Remise).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.SellingDateEnd).HasColumnType("smalldatetime");
             entity.Property(e => e.SellingDateStart).HasColumnType("smalldatetime");
 
@@ -1033,7 +990,6 @@ public partial class DB : DbContext
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Entete).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceBookingPax_Entete");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
@@ -1061,18 +1017,12 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_AgenceContrat_id");
 
-            entity.Property(e => e.AdultStart)
-                .HasDefaultValue(6)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_AdultStart");
+            entity.Property(e => e.AdultStart).HasDefaultValue(6, "defo_API_T_AgenceContrat_AdultStart");
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.ChildEnd)
-                .HasDefaultValue(5)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_ChildEnd");
-            entity.Property(e => e.ChildStart)
-                .HasDefaultValue(2)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_ChildStart");
+            entity.Property(e => e.ChildEnd).HasDefaultValue(5, "defo_API_T_AgenceContrat_ChildEnd");
+            entity.Property(e => e.ChildStart).HasDefaultValue(2, "defo_API_T_AgenceContrat_ChildStart");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -1080,13 +1030,8 @@ public partial class DB : DbContext
             entity.Property(e => e.Date).HasColumnType("datetime");
             entity.Property(e => e.DateDebut).HasColumnType("datetime");
             entity.Property(e => e.DateFin).HasColumnType("datetime");
-            entity.Property(e => e.Devise).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_Devise");
             entity.Property(e => e.Fichier).HasColumnType("text");
-            entity.Property(e => e.InfantEnd)
-                .HasDefaultValue(1)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_InfantEnd");
-            entity.Property(e => e.InfantStart).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_InfantStart");
-            entity.Property(e => e.KidAgeEnd).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_KidAgeEnd");
+            entity.Property(e => e.InfantEnd).HasDefaultValue(1, "defo_API_T_AgenceContrat_InfantEnd");
             entity.Property(e => e.Libelle).HasColumnType("text");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
@@ -1097,29 +1042,16 @@ public partial class DB : DbContext
             entity.Property(e => e.Reference)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Regime).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_Regime");
-            entity.Property(e => e.RemiseChild)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_RemiseChild")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.RemiseInfant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_RemiseInfant")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Statut).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_Statut");
-            entity.Property(e => e.Taux)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_Taux")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Tax)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_Tax")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Tiers).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_Tiers");
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContrat_Type");
+            entity.Property(e => e.RemiseChild).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.RemiseInfant).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Taux).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Tax).HasColumnType("decimal(24, 6)");
         });
 
         modelBuilder.Entity<API_T_AgenceContratDate>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_AgenceContratDate_id");
 
-            entity.Property(e => e.Contrat).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratDate_Contrat");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -1140,11 +1072,9 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_AgenceContratDetail_id");
 
-            entity.Property(e => e.Article).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratDetail_Article");
             entity.Property(e => e.CL_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Contrat).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratDetail_Contrat");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -1152,20 +1082,12 @@ public partial class DB : DbContext
             entity.Property(e => e.FR_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Ligne).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratDetail_Ligne");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.PU)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratDetail_PU")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.PUDevise)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratDetail_PUDevise")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Periode).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratDetail_Periode");
-            entity.Property(e => e.Taux)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratDetail_Taux")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PUDevise).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Taux).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.LigneNavigation).WithMany(p => p.API_T_AgenceContratDetail)
                 .HasForeignKey(d => d.Ligne)
@@ -1182,32 +1104,21 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_AgenceContratLigne_id");
 
-            entity.Property(e => e.Article).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratLigne_Article");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Devise).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratLigne_Devise");
-            entity.Property(e => e.Entete).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratLigne_Entete");
-            entity.Property(e => e.IsJourneeReserved).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratLigne_IsJourneeReserved");
             entity.Property(e => e.Libelle).HasColumnType("text");
             entity.Property(e => e.LibelleFA).HasColumnType("text");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.PU)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratLigne_PU")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.PUDevise)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratLigne_PUDevise")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PUDevise).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Reference)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Taux)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratLigne_Taux")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Unite).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceContratLigne_Unite");
+            entity.Property(e => e.Taux).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.ArticleNavigation).WithMany(p => p.API_T_AgenceContratLigne)
                 .HasForeignKey(d => d.Article)
@@ -1230,26 +1141,17 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Cumulative)
-                .HasDefaultValue(true)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceOffre_Cumulative");
-            entity.Property(e => e.Entete).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceOffre_Entete");
+            entity.Property(e => e.Cumulative).HasDefaultValue(true, "defo_API_T_AgenceOffre_Cumulative");
             entity.Property(e => e.Intitule)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Offre).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceOffre_Offre");
-            entity.Property(e => e.PU)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceOffre_PU")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Remise)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceOffre_Remise")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Remise).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.SellingDateEnd).HasColumnType("smalldatetime");
             entity.Property(e => e.SellingDateStart).HasColumnType("smalldatetime");
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AgenceOffre_Type");
 
             entity.HasOne(d => d.EnteteNavigation).WithMany(p => p.API_T_AgenceOffre)
                 .HasForeignKey(d => d.Entete)
@@ -1285,7 +1187,6 @@ public partial class DB : DbContext
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.NouvelleDateFin).HasColumnType("smalldatetime");
             entity.Property(e => e.Prolongement).HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Assurance_Type");
         });
 
         modelBuilder.Entity<API_T_Attachement>(entity =>
@@ -1304,18 +1205,10 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Attachement_Montant")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.MontantCumul)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Attachement_MontantCumul")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.MontantMarche)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Attachement_MontantMarche")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.MontantReste)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Attachement_MontantReste")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.MontantCumul).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.MontantMarche).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.MontantReste).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantTTC)
                 .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
@@ -1325,14 +1218,8 @@ public partial class DB : DbContext
             entity.Property(e => e.Piece)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Attachement_Projet");
-            entity.Property(e => e.Responsable).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Attachement_Responsable");
-            entity.Property(e => e.Statut)
-                .HasDefaultValue(0)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Attachement_Statut");
-            entity.Property(e => e.TauxRabais)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Attachement_TauxRabais")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Statut).HasDefaultValue(0, "defo_API_T_Attachement_Statut");
+            entity.Property(e => e.TauxRabais).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_Attachement)
                 .HasForeignKey(d => d.Projet)
@@ -1346,7 +1233,6 @@ public partial class DB : DbContext
             entity.Property(e => e.AR_Ref)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Attachement).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttachementDetail_Attachement");
             entity.Property(e => e.Consistance)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -1358,7 +1244,6 @@ public partial class DB : DbContext
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Ligne).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttachementDetail_Ligne");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
@@ -1405,7 +1290,6 @@ public partial class DB : DbContext
             entity.Property(e => e.Article)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Attachement).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttachementHorsBD_Attachement");
             entity.Property(e => e.Consistance)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -1420,15 +1304,9 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttachementHorsBD_Montant")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.PU)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttachementHorsBD_PU")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Qte)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttachementHorsBD_Qte")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Unite)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -1446,49 +1324,34 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Imprimable).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Attribute_Imprimable");
             entity.Property(e => e.Intitule)
                 .IsRequired()
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Model).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Attribute_Model");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.ParentID).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Attribute_ParentID");
-            entity.Property(e => e.TableIndex).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Attribute_TableIndex");
             entity.Property(e => e.TableName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Attribute_Type");
-            entity.Property(e => e.Visible).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Attribute_Visible");
         });
 
         modelBuilder.Entity<API_T_AttributeDetail>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Attribute_id");
 
-            entity.Property(e => e.BoolValue).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttributeDetail_BoolValue");
-            entity.Property(e => e.ChildID).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttributeDetail_ChildID");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateValue).HasColumnType("smalldatetime");
-            entity.Property(e => e.DecimalValue)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttributeDetail_DecimalValue")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.IntValue).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttributeDetail_IntValue");
-            entity.Property(e => e.ModelValue).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttributeDetail_ModelValue");
+            entity.Property(e => e.DecimalValue).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.ParentID).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttributeDetail_ParentID");
-            entity.Property(e => e.TableIndex).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttributeDetail_TableIndex");
             entity.Property(e => e.TableName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.TableValue).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttributeDetail_TableValue");
 
             entity.HasOne(d => d.Parent).WithMany(p => p.API_T_AttributeDetail)
                 .HasForeignKey(d => d.ParentID)
@@ -1507,7 +1370,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.ParentID).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AttributeTable_ParentID");
             entity.Property(e => e.TextValue).IsRequired();
 
             entity.HasOne(d => d.Parent).WithMany(p => p.API_T_AttributeTable)
@@ -2221,9 +2083,7 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.SelectedAPP)
-                .HasDefaultValue(0)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Authorize_SelectedAPP");
+            entity.Property(e => e.SelectedAPP).HasDefaultValue(0, "defo_API_T_Authorize_SelectedAPP");
             entity.Property(e => e.Url).HasMaxLength(100);
             entity.Property(e => e.UserID).HasMaxLength(450);
         });
@@ -2235,7 +2095,6 @@ public partial class DB : DbContext
             entity.Property(e => e.AR_Ref)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Avancement).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AvancementDetail_Avancement");
             entity.Property(e => e.Consistance)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2244,9 +2103,7 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateExecution).HasColumnType("smalldatetime");
-            entity.Property(e => e.Journee).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AvancementDetail_Journee");
             entity.Property(e => e.Libelle).HasColumnType("text");
-            entity.Property(e => e.Ligne).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AvancementDetail_Ligne");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
@@ -2258,7 +2115,6 @@ public partial class DB : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AvancementDetail_Projet");
             entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.QteCumul).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.QteMarche).HasColumnType("decimal(24, 6)");
@@ -2289,7 +2145,6 @@ public partial class DB : DbContext
             entity.Property(e => e.Article)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Avancement).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AvancementHorsBD_Avancement");
             entity.Property(e => e.Consistance)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2298,23 +2153,15 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateExecution).HasColumnType("smalldatetime");
-            entity.Property(e => e.Journee).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AvancementHorsBD_Journee");
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AvancementHorsBD_Montant")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.PU)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AvancementHorsBD_PU")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AvancementHorsBD_Projet");
-            entity.Property(e => e.Qte)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_AvancementHorsBD_Qte")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Unite)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2334,9 +2181,7 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Bordereau_id");
 
-            entity.Property(e => e.CoutTotale)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Bordereau_CoutTotale")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.CoutTotale).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -2345,32 +2190,20 @@ public partial class DB : DbContext
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Marge)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Bordereau_Marge")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.MargeP)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Bordereau_MargeP")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Marge).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.MargeP).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Bordereau_Montant")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.MontantMarche)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Bordereau_MontantMarche")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.MontantMarche).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantTTC)
                 .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Piece)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Bordereau_Projet");
-            entity.Property(e => e.Rabais)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Bordereau_Rabais")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Responsable).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Bordereau_Responsable");
+            entity.Property(e => e.Rabais).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_Bordereau)
                 .HasForeignKey(d => d.Projet)
@@ -2384,7 +2217,6 @@ public partial class DB : DbContext
             entity.Property(e => e.AR_Ref)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Bordereau).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_BordereauDetail_Bordereau");
             entity.Property(e => e.Consistance)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2411,7 +2243,6 @@ public partial class DB : DbContext
             entity.Property(e => e.NumeroPrix)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Ordre).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_BordereauDetail_Ordre");
             entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PUMarche).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PUTTC)
@@ -2436,17 +2267,14 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Caisse_id");
 
-            entity.Property(e => e.Agence).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Caisse_Agence");
             entity.Property(e => e.CG_Num)
                 .HasMaxLength(40)
                 .IsUnicode(false);
             entity.Property(e => e.C_DateCreation)
-                .HasDefaultValueSql("(sysdatetime())")
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Caisse_C_DateCreation")
+                .HasDefaultValueSql("(sysdatetime())", "defo_API_T_Caisse_C_DateCreation")
                 .HasColumnType("datetime");
             entity.Property(e => e.C_DateInitial)
-                .HasDefaultValueSql("(sysdatetime())")
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Caisse_C_DateInitial")
+                .HasDefaultValueSql("(sysdatetime())", "defo_API_T_Caisse_C_DateInitial")
                 .HasColumnType("datetime");
             entity.Property(e => e.C_Nom)
                 .IsRequired()
@@ -2458,12 +2286,8 @@ public partial class DB : DbContext
             entity.Property(e => e.C_Remarque)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.C_Solde)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Caisse_C_Solde")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.C_SoldeInitial)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Caisse_C_SoldeInitial")
-                .HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.C_Solde).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.C_SoldeInitial).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -2480,45 +2304,34 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CaisseEntete_id");
 
-            entity.Property(e => e.Affectation).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CaisseEntete_Affectation");
             entity.Property(e => e.CA_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Caisse).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CaisseEntete_Caisse");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.Libelle).HasColumnType("text");
-            entity.Property(e => e.Materiel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CaisseEntete_Materiel");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CaisseEntete_Montant")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantLettre)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Numero)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Personnel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CaisseEntete_Personnel");
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CaisseEntete_Projet");
             entity.Property(e => e.Reference)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Remarque)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Representant).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CaisseEntete_Representant");
-            entity.Property(e => e.Sense).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CaisseEntete_Sense");
-            entity.Property(e => e.Site).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CaisseEntete_Site");
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CaisseEntete_Type");
             entity.Property(e => e.ValideDate).HasColumnType("smalldatetime");
 
             entity.HasOne(d => d.CaisseNavigation).WithMany(p => p.API_T_CaisseEntete)
@@ -2535,22 +2348,15 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Entete).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CaisseLigne_Entete");
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CaisseLigne_Montant")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.PU)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CaisseLigne_PU")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Qte)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CaisseLigne_Qte")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.EnteteNavigation).WithMany(p => p.API_T_CaisseLigne)
                 .HasForeignKey(d => d.Entete)
@@ -2562,7 +2368,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Caisse_User_id");
 
-            entity.Property(e => e.Caisse).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Caisse_User_Caisse");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -2585,7 +2390,6 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateDebut).HasColumnType("smalldatetime");
             entity.Property(e => e.DateFin).HasColumnType("smalldatetime");
-            entity.Property(e => e.Materiel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CarteDisque_Materiel");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
@@ -2613,10 +2417,7 @@ public partial class DB : DbContext
             entity.Property(e => e.DateDepotClient).HasColumnType("smalldatetime");
             entity.Property(e => e.DateRetourBanque).HasColumnType("smalldatetime");
             entity.Property(e => e.DateRetraitBanque).HasColumnType("smalldatetime");
-            entity.Property(e => e.EB_No).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Caution_EB_No");
-            entity.Property(e => e.Etape)
-                .HasDefaultValue(0)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Caution_Etape");
+            entity.Property(e => e.Etape).HasDefaultValue(0, "defo_API_T_Caution_Etape");
             entity.Property(e => e.Fichier).HasColumnType("text");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
@@ -2624,7 +2425,6 @@ public partial class DB : DbContext
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantEstime).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantMarche).HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Caution_Projet");
             entity.Property(e => e.Reference)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2640,7 +2440,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CentreCharge_id");
 
-            entity.Property(e => e.Cible).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CentreCharge_Cible");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -2651,18 +2450,13 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CentreCharge_Montant")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.Periode).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CentreCharge_Periode");
+            entity.Property(e => e.Montant).HasColumnType("decimal(27, 6)");
         });
 
         modelBuilder.Entity<API_T_CentreChargeDetail>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CentreChargeDetail_id");
 
-            entity.Property(e => e.Charge).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CentreChargeDetail_Charge");
-            entity.Property(e => e.Cible).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CentreChargeDetail_Cible");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -2670,10 +2464,7 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CentreChargeDetail_Montant")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.ValueID).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CentreChargeDetail_ValueID");
+            entity.Property(e => e.Montant).HasColumnType("decimal(27, 6)");
         });
 
         modelBuilder.Entity<API_T_CertifAutoclaves>(entity =>
@@ -2686,56 +2477,43 @@ public partial class DB : DbContext
             entity.Property(e => e.Code)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Creation)
-                .HasDefaultValueSql("(getdate())")
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifAutoclaves_Creation");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())", "defo_API_T_CertifAutoclaves_Creation");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Dialogue).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifAutoclaves_Dialogue");
             entity.Property(e => e.EntreeSondes)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.EntreeSondesJuge).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifAutoclaves_EntreeSondesJuge");
             entity.Property(e => e.Essai)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.EssaiJuge).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifAutoclaves_EssaiJuge");
             entity.Property(e => e.Homogeneite)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.HomogeneiteJuge).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifAutoclaves_HomogeneiteJuge");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Pression)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.PressionJuge).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifAutoclaves_PressionJuge");
             entity.Property(e => e.Stabilite)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.StabiliteJuge).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifAutoclaves_StabiliteJuge");
             entity.Property(e => e.TemperatureSterilisation)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.TemperatureSterilisationJuge).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifAutoclaves_TemperatureSterilisationJuge");
             entity.Property(e => e.TempsEquilibrage)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.TempsEquilibrageJuge).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifAutoclaves_TempsEquilibrageJuge");
             entity.Property(e => e.TempsSterilisation)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.TempsSterilisationJuge).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifAutoclaves_TempsSterilisationJuge");
             entity.Property(e => e.Tolerance)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.ToleranceJuge).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifAutoclaves_ToleranceJuge");
             entity.Property(e => e.ValeurSterilisatrice)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.ValeurSterilisatriceJuge).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifAutoclaves_ValeurSterilisatriceJuge");
 
             entity.HasOne(d => d.DialogueNavigation).WithMany(p => p.API_T_CertifAutoclaves)
                 .HasForeignKey(d => d.Dialogue)
@@ -2748,13 +2526,11 @@ public partial class DB : DbContext
             entity.HasKey(e => e.id).HasName("PK__API_T_Ce__3213E83FBBA965AD");
 
             entity.Property(e => e.CreatedDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifDecharge_CreatedDate")
+                .HasDefaultValueSql("(getdate())", "defo_API_T_CertifDecharge_CreatedDate")
                 .HasColumnType("smalldatetime");
             entity.Property(e => e.DateFiche).HasColumnType("smalldatetime");
             entity.Property(e => e.ModifiedDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifDecharge_ModifiedDate")
+                .HasDefaultValueSql("(getdate())", "defo_API_T_CertifDecharge_ModifiedDate")
                 .HasColumnType("smalldatetime");
             entity.Property(e => e.NumeroDossier)
                 .HasMaxLength(50)
@@ -2787,7 +2563,6 @@ public partial class DB : DbContext
             entity.Property(e => e.Identification)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.Instrument).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifDechargeLigne_Instrument");
         });
 
         modelBuilder.Entity<API_T_CertifDocument>(entity =>
@@ -2799,7 +2574,6 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
-            entity.Property(e => e.Dossier).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifDocument_Dossier");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
@@ -2812,7 +2586,6 @@ public partial class DB : DbContext
             entity.Property(e => e.Responsable)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifDocument_Type");
 
             entity.HasOne(d => d.DossierNavigation).WithMany(p => p.API_T_CertifDocument)
                 .HasForeignKey(d => d.Dossier)
@@ -2824,11 +2597,9 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CertifEntete_id");
 
-            entity.Property(e => e.Beneficiaire).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifEntete_Beneficiaire");
             entity.Property(e => e.CA_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.CO_No).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifEntete_CO_No");
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2845,13 +2616,10 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.IsFacture).HasDefaultValue(false);
             entity.Property(e => e.Libelle).HasColumnType("text");
-            entity.Property(e => e.Materiel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifEntete_Materiel");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifEntete_Montant")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.NumeroDossier)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2861,10 +2629,8 @@ public partial class DB : DbContext
             entity.Property(e => e.Piece)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifEntete_Projet");
             entity.Property(e => e.Remarque).HasColumnType("text");
             entity.Property(e => e.Souche).HasDefaultValue((short)0);
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifEntete_Type");
         });
 
         modelBuilder.Entity<API_T_CertifGrilleDialogue>(entity =>
@@ -2883,7 +2649,6 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.CapaciteDisponibiliteRessourcesNecessaires).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogue_CapaciteDisponibiliteRessourcesNecessaires");
             entity.Property(e => e.Commentaire)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -2894,7 +2659,6 @@ public partial class DB : DbContext
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.DateSouhaiteePrestation).HasColumnType("smalldatetime");
             entity.Property(e => e.DateTransmissionDocuments).HasColumnType("smalldatetime");
-            entity.Property(e => e.DemandePar).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogue_DemandePar");
             entity.Property(e => e.DemandeParAutre)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2922,7 +2686,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.NaturePrestation).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogue_NaturePrestation");
             entity.Property(e => e.NaturePrestationAutre)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -2930,44 +2693,32 @@ public partial class DB : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.OperationsAttendues).HasColumnType("text");
-            entity.Property(e => e.PMQ).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogue_PMQ");
             entity.Property(e => e.PMQChar)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.PeriodiciteEtalonnageEtiquettes).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogue_PeriodiciteEtalonnageEtiquettes");
             entity.Property(e => e.PeriodiciteEtalonnageEtiquettesPeriode)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.PeriodiciteEtalonnageRapports).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogue_PeriodiciteEtalonnageRapports");
             entity.Property(e => e.PeriodiciteEtalonnageRapportsPeriode)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.PointsEtalonnage).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogue_PointsEtalonnage");
             entity.Property(e => e.PointsEtalonnageAutre)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.PreuvesRaccord).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogue_PreuvesRaccord");
             entity.Property(e => e.PreuvesRaccordChar)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.PriseChargeTransport).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogue_PriseChargeTransport");
-            entity.Property(e => e.ProcedureTraitementReclamation).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogue_ProcedureTraitementReclamation");
             entity.Property(e => e.ProcedureTraitementReclamationChar)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.RaisonSocial)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.RelanceEtalonnageAnnuel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogue_RelanceEtalonnageAnnuel");
             entity.Property(e => e.Telephone)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e._AuditAuLaboratoire)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogue_ AuditAuLaboratoire")
-                .HasColumnName(" AuditAuLaboratoire");
-            entity.Property(e => e._ListePersonnelQualifie)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogue_ ListePersonnelQualifie")
-                .HasColumnName(" ListePersonnelQualifie");
+            entity.Property(e => e._AuditAuLaboratoire).HasColumnName(" AuditAuLaboratoire");
+            entity.Property(e => e._ListePersonnelQualifie).HasColumnName(" ListePersonnelQualifie");
         });
 
         modelBuilder.Entity<API_T_CertifGrilleDialogueExigence>(entity =>
@@ -2988,16 +2739,12 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Dialogue).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogueExigence_Dialogue");
             entity.Property(e => e.ErreurMaximalTolereUtilisateur)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Incertitude).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogueExigence_Incertitude");
-            entity.Property(e => e.JugementConformite).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogueExigence_JugementConformite");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Normative).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogueExigence_Normative");
             entity.Property(e => e.PointsEtalonnage)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -3020,7 +2767,6 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
-            entity.Property(e => e.Dialogue).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifGrilleDialogueModif_Dialogue");
             entity.Property(e => e.Libelle).HasColumnType("text");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
@@ -3066,7 +2812,6 @@ public partial class DB : DbContext
             entity.Property(e => e.AR_Ref)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Affectation).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifLigne_Affectation");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -3089,14 +2834,11 @@ public partial class DB : DbContext
             entity.Property(e => e.DL_Taxe)
                 .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Entete).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifLigne_Entete");
             entity.Property(e => e.Libelle).HasColumnType("text");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifLigne_Montant")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.QL_Qte)
                 .HasDefaultValue(0m)
                 .HasColumnType("decimal(24, 6)");
@@ -3117,18 +2859,12 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CertifOrdreMission_id");
 
-            entity.Property(e => e.CO_No).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifOrdreMission_CO_No");
-            entity.Property(e => e.CO_No1).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifOrdreMission_CO_No1");
-            entity.Property(e => e.CO_No2).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifOrdreMission_CO_No2");
-            entity.Property(e => e.CO_No3).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifOrdreMission_CO_No3");
-            entity.Property(e => e.CO_No4).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifOrdreMission_CO_No4");
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(30)
                 .IsUnicode(false);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.DateDepart).HasColumnType("smalldatetime");
             entity.Property(e => e.DateRetour).HasColumnType("smalldatetime");
-            entity.Property(e => e.Jours).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifOrdreMission_Jours");
             entity.Property(e => e.Lieu)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -3150,12 +2886,9 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CertifOrdreMissionLigne_id");
 
-            entity.Property(e => e.Instrument).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifOrdreMissionLigne_Instrument");
             entity.Property(e => e.Libelle)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.Ordre).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifOrdreMissionLigne_Ordre");
-            entity.Property(e => e.Statut).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifOrdreMissionLigne_Statut");
 
             entity.HasOne(d => d.InstrumentNavigation).WithMany(p => p.API_T_CertifOrdreMissionLigne)
                 .HasForeignKey(d => d.Instrument)
@@ -3175,7 +2908,6 @@ public partial class DB : DbContext
             entity.Property(e => e.Adresse)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.CO_No).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifOuvertureDossier_CO_No");
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(30)
                 .IsUnicode(false);
@@ -3226,8 +2958,7 @@ public partial class DB : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.DateCreation)
-                .HasDefaultValueSql("(getdate())")
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifPointage_DateCreation")
+                .HasDefaultValueSql("(getdate())", "defo_API_T_CertifPointage_DateCreation")
                 .HasColumnType("smalldatetime");
             entity.Property(e => e.DateDebutEtalonnage).HasColumnType("smalldatetime");
             entity.Property(e => e.DateDebutSaisie).HasColumnType("smalldatetime");
@@ -3235,8 +2966,7 @@ public partial class DB : DbContext
             entity.Property(e => e.DateFinSaisie).HasColumnType("smalldatetime");
             entity.Property(e => e.DateLivraison).HasColumnType("smalldatetime");
             entity.Property(e => e.DateModification)
-                .HasDefaultValueSql("(getdate())")
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifPointage_DateModification")
+                .HasDefaultValueSql("(getdate())", "defo_API_T_CertifPointage_DateModification")
                 .HasColumnType("smalldatetime");
             entity.Property(e => e.DateReceptionDossier).HasColumnType("smalldatetime");
             entity.Property(e => e.Intermediaire)
@@ -3287,7 +3017,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_CertifRapportMission_id");
 
-            entity.Property(e => e.CO_No).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifRapportMission_CO_No");
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(30)
                 .IsUnicode(false);
@@ -3333,14 +3062,12 @@ public partial class DB : DbContext
             entity.Property(e => e.Identifiant)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Instrument).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifRapportMissionLigne_Instrument");
             entity.Property(e => e.NumeroCertificat)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.NumeroSerie)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Rapport).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifRapportMissionLigne_Rapport");
             entity.Property(e => e.Type)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -3367,8 +3094,7 @@ public partial class DB : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.CreatedDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifReception_CreatedDate")
+                .HasDefaultValueSql("(getdate())", "defo_API_T_CertifReception_CreatedDate")
                 .HasColumnType("smalldatetime");
             entity.Property(e => e.DateEntreeLabo).HasColumnType("smalldatetime");
             entity.Property(e => e.DateReception).HasColumnType("date");
@@ -3377,8 +3103,7 @@ public partial class DB : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.ModifiedDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifReception_ModifiedDate")
+                .HasDefaultValueSql("(getdate())", "defo_API_T_CertifReception_ModifiedDate")
                 .HasColumnType("smalldatetime");
             entity.Property(e => e.NaturePrestation)
                 .HasMaxLength(100)
@@ -3414,7 +3139,6 @@ public partial class DB : DbContext
             entity.Property(e => e.Identification)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.Instrument).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_CertifReceptionLigne_Instrument");
             entity.Property(e => e.Observations)
                 .HasMaxLength(500)
                 .IsUnicode(false);
@@ -3497,18 +3221,10 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Config_id");
 
-            entity.Property(e => e.BL_BalanceClient)
-                .HasDefaultValue(true)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Config_BL_BalanceClient");
-            entity.Property(e => e.BL_BalanceFournisseur)
-                .HasDefaultValue(true)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Config_BL_BalanceFournisseur");
-            entity.Property(e => e.BL_Marge)
-                .HasDefaultValue(true)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Config_BL_Marge");
-            entity.Property(e => e.BL_Releve)
-                .HasDefaultValue(true)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Config_BL_Releve");
+            entity.Property(e => e.BL_BalanceClient).HasDefaultValue(true, "defo_API_T_Config_BL_BalanceClient");
+            entity.Property(e => e.BL_BalanceFournisseur).HasDefaultValue(true, "defo_API_T_Config_BL_BalanceFournisseur");
+            entity.Property(e => e.BL_Marge).HasDefaultValue(true, "defo_API_T_Config_BL_Marge");
+            entity.Property(e => e.BL_Releve).HasDefaultValue(true, "defo_API_T_Config_BL_Releve");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -3528,18 +3244,10 @@ public partial class DB : DbContext
             entity.Property(e => e.EmailSmtpServer)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.FA_BalanceClient)
-                .HasDefaultValue(true)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Config_FA_BalanceClient");
-            entity.Property(e => e.FA_BalanceFournisseur)
-                .HasDefaultValue(true)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Config_FA_BalanceFournisseur");
-            entity.Property(e => e.FA_Marge)
-                .HasDefaultValue(true)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Config_FA_Marge");
-            entity.Property(e => e.FA_Releve)
-                .HasDefaultValue(true)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Config_FA_Releve");
+            entity.Property(e => e.FA_BalanceClient).HasDefaultValue(true, "defo_API_T_Config_FA_BalanceClient");
+            entity.Property(e => e.FA_BalanceFournisseur).HasDefaultValue(true, "defo_API_T_Config_FA_BalanceFournisseur");
+            entity.Property(e => e.FA_Marge).HasDefaultValue(true, "defo_API_T_Config_FA_Marge");
+            entity.Property(e => e.FA_Releve).HasDefaultValue(true, "defo_API_T_Config_FA_Releve");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
@@ -3553,7 +3261,6 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Depot).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Depot_User_Depot");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
@@ -3569,7 +3276,6 @@ public partial class DB : DbContext
             entity.Property(e => e.CAPI_T_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.CA_Num).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentEntete_CA_Num");
             entity.Property(e => e.CG_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -3577,28 +3283,18 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.DE_No).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentEntete_DE_No");
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
-            entity.Property(e => e.Domaine).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentEntete_Domaine");
             entity.Property(e => e.JO_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Materiel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentEntete_Materiel");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.MontantHT)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentEntete_MontantHT")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.MontantTTC)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentEntete_MontantTTC")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.Personnel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentEntete_Personnel");
-            entity.Property(e => e.Sense).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentEntete_Sense");
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentEntete_Type");
+            entity.Property(e => e.MontantHT).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.MontantTTC).HasColumnType("decimal(27, 6)");
         });
 
         modelBuilder.Entity<API_T_DocumentLigne>(entity =>
@@ -3621,49 +3317,20 @@ public partial class DB : DbContext
             entity.Property(e => e.DL_Design)
                 .HasMaxLength(150)
                 .IsUnicode(false);
-            entity.Property(e => e.DL_MargePourcentage)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_MargePourcentage")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DL_MargeTotal)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_MargeTotal")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DL_MargeU)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_MargeU")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DL_MontantHT)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_MontantHT")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DL_MontantHTBC)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_MontantHTBC")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DL_MontantTTC)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_MontantTTC")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DL_MontantTTCBC)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_MontantTTCBC")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DL_PUBC)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_PUBC")
-                .HasColumnType("decimal(18, 0)");
-            entity.Property(e => e.DL_PrixBC)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_PrixBC")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DL_PrixRevient)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_PrixRevient")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DL_PrixUnitaire)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_PrixUnitaire")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DL_Qte)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_Qte")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DL_QteBC)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_QteBC")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DL_QteDE)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_QteDE")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.DL_Taxe1).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DL_Taxe1");
+            entity.Property(e => e.DL_MargePourcentage).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.DL_MargeTotal).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.DL_MargeU).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.DL_MontantHT).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.DL_MontantHTBC).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.DL_MontantTTC).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.DL_MontantTTCBC).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.DL_PUBC).HasColumnType("decimal(18, 0)");
+            entity.Property(e => e.DL_PrixBC).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.DL_PrixRevient).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.DL_PrixUnitaire).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.DL_Qte).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.DL_QteBC).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.DL_QteDE).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.DO_Date).HasColumnType("smalldatetime");
             entity.Property(e => e.DO_Piece)
                 .HasMaxLength(100)
@@ -3671,23 +3338,14 @@ public partial class DB : DbContext
             entity.Property(e => e.DO_Ref)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.DO_Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_DO_Type");
             entity.Property(e => e.EU_Enumere)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-            entity.Property(e => e.Entete).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_Entete");
-            entity.Property(e => e.MargeLibre)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_MargeLibre")
-                .HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.MargeLibre).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Ordre).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_Ordre");
-            entity.Property(e => e.ProjeAPI_T_ID).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_ProjeAPI_T_ID");
-            entity.Property(e => e.Superficie)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_Superficie")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.Version).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DocumentLigne_Version");
+            entity.Property(e => e.Superficie).HasColumnType("decimal(27, 6)");
 
             entity.HasOne(d => d.EnteteNavigation).WithMany(p => p.API_T_DocumentLigne)
                 .HasForeignKey(d => d.Entete)
@@ -3710,7 +3368,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.PaiementP).HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_DroitConstate_Projet");
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_DroitConstate)
                 .HasForeignKey(d => d.Projet)
@@ -3800,11 +3457,9 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_FraisEntete_id");
 
-            entity.Property(e => e.Beneficiaire).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_FraisEntete_Beneficiaire");
             entity.Property(e => e.CA_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.CO_No).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_FraisEntete_CO_No");
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -3814,37 +3469,28 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.Libelle).HasColumnType("text");
-            entity.Property(e => e.Materiel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_FraisEntete_Materiel");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_FraisEntete_Montant")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Piece)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_FraisEntete_Projet");
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_FraisEntete_Type");
         });
 
         modelBuilder.Entity<API_T_FraisLigne>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_FraisLigne_id");
 
-            entity.Property(e => e.Affectation).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_FraisLigne_Affectation");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Entete).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_FraisLigne_Entete");
             entity.Property(e => e.Libelle).HasColumnType("text");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_FraisLigne_Montant")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.EnteteNavigation).WithMany(p => p.API_T_FraisLigne)
                 .HasForeignKey(d => d.Entete)
@@ -3893,8 +3539,6 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.DO_Domaine).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_HistoriquePiece_DO_Domaine");
-            entity.Property(e => e.DO_Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_HistoriquePiece_DO_Type");
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
@@ -3920,7 +3564,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.TableID).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_ImportLog_TableID");
             entity.Property(e => e.TableName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -3937,7 +3580,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Tab).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Information_Tab");
             entity.Property(e => e.Valeur)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -3950,16 +3592,13 @@ public partial class DB : DbContext
             entity.Property(e => e.BDG)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Carburant).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Materiel_Carburant");
             entity.Property(e => e.CarteGriseDebut).HasColumnType("smalldatetime");
             entity.Property(e => e.CarteGriseFin).HasColumnType("smalldatetime");
             entity.Property(e => e.Chassis)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Conducteur).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Materiel_Conducteur");
             entity.Property(e => e.Consommation)
-                .HasDefaultValue(0m)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Materiel_Consommation")
+                .HasDefaultValue(0m, "defo_API_T_Materiel_Consommation")
                 .HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
@@ -4010,12 +3649,9 @@ public partial class DB : DbContext
             entity.Property(e => e.RC)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Site).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Materiel_Site");
             entity.Property(e => e.TIERCE)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Materiel_Type");
-            entity.Property(e => e.TypeAchat).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Materiel_TypeAchat");
             entity.Property(e => e.TypeMoteur)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -4028,27 +3664,13 @@ public partial class DB : DbContext
             entity.Property(e => e.VOL)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.ValeurAchat)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Materiel_ValeurAchat")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.ValeurGlage)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Materiel_ValeurGlage")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.ValeurLeasing)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Materiel_ValeurLeasing")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.ValeurLocation)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Materiel_ValeurLocation")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.ValeurNeuf)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Materiel_ValeurNeuf")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.ValeurPTA)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Materiel_ValeurPTA")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.ValeurVenale)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Materiel_ValeurVenale")
-                .HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.ValeurAchat).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.ValeurGlage).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.ValeurLeasing).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.ValeurLocation).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.ValeurNeuf).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.ValeurPTA).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.ValeurVenale).HasColumnType("decimal(27, 6)");
         });
 
         modelBuilder.Entity<API_T_MaterielEntretien>(entity =>
@@ -4058,7 +3680,6 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Conducteur).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_MaterielEntretien_Conducteur");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -4073,29 +3694,19 @@ public partial class DB : DbContext
             entity.Property(e => e.Fournisseur)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Kilometrage)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_MaterielEntretien_Kilometrage")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.KilometrageSuivant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_MaterielEntretien_KilometrageSuivant")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Kilometrage).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.KilometrageSuivant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Libelle).HasColumnType("text");
-            entity.Property(e => e.Materiel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_MaterielEntretien_Materiel");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_MaterielEntretien_Montant")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.NumeroQuittance)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Piece)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_MaterielEntretien_Projet");
-            entity.Property(e => e.Responsable).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_MaterielEntretien_Responsable");
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_MaterielEntretien_Type");
         });
 
         modelBuilder.Entity<API_T_MaterielEntretienDetail>(entity =>
@@ -4106,22 +3717,15 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Entretien).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_MaterielEntretienDetail_Entretien");
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_MaterielEntretienDetail_Montant")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.PU)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_MaterielEntretienDetail_PU")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Qte)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_MaterielEntretienDetail_Qte")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Unite)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -4145,7 +3749,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Nantissement_Projet");
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_Nantissement)
                 .HasForeignKey(d => d.Projet)
@@ -4157,48 +3760,34 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_NoteFraisEntete_id");
 
-            entity.Property(e => e.Affectation).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Affectation");
             entity.Property(e => e.CA_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Creation)
-                .HasDefaultValueSql("(getdate())")
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Creation");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())", "defo_API_T_NoteFraisEntete_Creation");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
             entity.Property(e => e.Libelle).HasColumnType("text");
-            entity.Property(e => e.Materiel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Materiel");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Montant")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.MontantLettre)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.NoteFrais).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_NoteFrais");
             entity.Property(e => e.Numero)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Personnel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Personnel");
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Projet");
             entity.Property(e => e.Reference)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Remarque)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Representant).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Representant");
-            entity.Property(e => e.Sense).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Sense");
-            entity.Property(e => e.Site).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Site");
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Type");
-            entity.Property(e => e.Valide).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisEntete_Valide");
             entity.Property(e => e.ValideDate).HasColumnType("smalldatetime");
         });
 
@@ -4206,29 +3795,19 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_NoteFraisLigne_id");
 
-            entity.Property(e => e.Affectation).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisLigne_Affectation");
-            entity.Property(e => e.Creation)
-                .HasDefaultValueSql("(getdate())")
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisLigne_Creation");
+            entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())", "defo_API_T_NoteFraisLigne_Creation");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Entete).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisLigne_Entete");
             entity.Property(e => e.Libelle)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisLigne_Montant")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.PU)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisLigne_PU")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Qte)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_NoteFraisLigne_Qte")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.EnteteNavigation).WithMany(p => p.API_T_NoteFraisLigne)
                 .HasForeignKey(d => d.Entete)
@@ -4260,7 +3839,6 @@ public partial class DB : DbContext
             entity.Property(e => e.Reference)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.Statut).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabrication_Statut");
 
             entity.HasOne(d => d.CT_NumNavigation).WithMany(p => p.API_T_OrdreFabrication)
                 .HasPrincipalKey(p => p.CT_Num)
@@ -4281,16 +3859,11 @@ public partial class DB : DbContext
             entity.Property(e => e.AR_Ref)
                 .HasMaxLength(19)
                 .IsUnicode(false);
-            entity.Property(e => e.FraisU)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabricationDetail_FraisU")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Ligne).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabricationDetail_Ligne");
+            entity.Property(e => e.FraisU).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.NumDA)
                 .HasMaxLength(30)
                 .IsUnicode(false);
-            entity.Property(e => e.Qte)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabricationDetail_Qte")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.QtePreparation).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.QteStock).HasColumnType("decimal(24, 6)");
 
@@ -4313,13 +3886,8 @@ public partial class DB : DbContext
             entity.Property(e => e.AR_Ref)
                 .HasMaxLength(19)
                 .IsUnicode(false);
-            entity.Property(e => e.FraisU)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabricationLigne_FraisU")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Ordre).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrderFabricationLigne_Ordre");
-            entity.Property(e => e.Qte)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrderFabricationLigne_Qte")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.FraisU).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Qte).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.AR_RefNavigation).WithMany(p => p.API_T_OrdreFabricationLigne)
                 .HasPrincipalKey(p => p.AR_Ref)
@@ -4336,8 +3904,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_OrdreFabricationOperation_id");
 
-            entity.Property(e => e.Ligne).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabricationOperation_Ligne");
-
             entity.HasOne(d => d.LigneNavigation).WithMany(p => p.API_T_OrdreFabricationOperation)
                 .HasForeignKey(d => d.Ligne)
                 .HasConstraintName("fk_api_t_ordrefabricationoperation");
@@ -4347,15 +3913,9 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_OrdreFabricationPointage_id");
 
-            entity.Property(e => e.AutresFrais)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabricationPointage_AutresFrais")
-                .HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.AutresFrais).HasColumnType("decimal(24, 6)");
             entity.Property(e => e.Date).HasColumnType("smalldatetime");
-            entity.Property(e => e.FraisJournalier)
-                .HasAnnotation("Relational:DefaultConstraintName", "DF__API_T_Ord__Frais__5C2696C7")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Ordre).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabricationPointage_Ordre");
-            entity.Property(e => e.Presonnel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_OrdreFabricationPointage_Presonnel");
+            entity.Property(e => e.FraisJournalier).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.OrdreNavigation).WithMany(p => p.API_T_OrdreFabricationPointage)
                 .HasForeignKey(d => d.Ordre)
@@ -4371,16 +3931,13 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Personnel_id");
 
-            entity.Property(e => e.AMO)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_AMO")
-                .HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.AMO).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.Activite)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Adresse)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.Agence).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_Agence");
             entity.Property(e => e.Anc).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.Banque)
                 .HasMaxLength(100)
@@ -4394,12 +3951,8 @@ public partial class DB : DbContext
             entity.Property(e => e.CIN)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.CMR)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_CMR")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.CNSS)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_CNSS")
-                .HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.CMR).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.CNSS).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.CleID)
                 .HasMaxLength(2)
                 .IsUnicode(false);
@@ -4417,7 +3970,6 @@ public partial class DB : DbContext
             entity.Property(e => e.DateEmbouche).HasColumnType("smalldatetime");
             entity.Property(e => e.DateNaissance).HasColumnType("smalldatetime");
             entity.Property(e => e.DateSortie).HasColumnType("smalldatetime");
-            entity.Property(e => e.Departement).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_Departement");
             entity.Property(e => e.Diplome)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -4425,16 +3977,13 @@ public partial class DB : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.ExpirationCIN).HasColumnType("smalldatetime");
-            entity.Property(e => e.Fonction).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_Fonction");
             entity.Property(e => e.FonctionIntitule)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.GuichetID)
                 .HasMaxLength(3)
                 .IsUnicode(false);
-            entity.Property(e => e.IR)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_IR")
-                .HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.IR).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.LieuNaissance)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -4451,7 +4000,6 @@ public partial class DB : DbContext
             entity.Property(e => e.NumCNSS)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Paiement).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_Paiement");
             entity.Property(e => e.PermisDateDebut).HasColumnType("smalldatetime");
             entity.Property(e => e.PermisDateFin).HasColumnType("smalldatetime");
             entity.Property(e => e.PermisNum)
@@ -4463,7 +4011,6 @@ public partial class DB : DbContext
             entity.Property(e => e.Prenom)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_Projet");
             entity.Property(e => e.RIB)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -4471,20 +4018,10 @@ public partial class DB : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.SalaireBase).HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.SalaireBaseHoraire)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_SalaireBaseHoraire")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.SalaireBaseJournalier)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_SalaireBaseJournalier")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.SalaireBaseMensuel)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_SalaireBaseMensuel")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.SalaireNet)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_SalaireNet")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.SalaireType).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_SalaireType");
-            entity.Property(e => e.Site).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Personnel_Site");
+            entity.Property(e => e.SalaireBaseHoraire).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.SalaireBaseJournalier).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.SalaireBaseMensuel).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.SalaireNet).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.TauxAnc).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.TauxRepos).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.Telephone)
@@ -4512,7 +4049,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.ParentID).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PersonnelEquipe_ParentID");
         });
 
         modelBuilder.Entity<API_T_PersonnelMateriel>(entity =>
@@ -4525,23 +4061,17 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DateDebut).HasColumnType("smalldatetime");
             entity.Property(e => e.DateFin).HasColumnType("smalldatetime");
-            entity.Property(e => e.MaterielID).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PersonnelMateriel_MaterielID");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.ParentID).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PersonnelMateriel_ParentID");
         });
 
         modelBuilder.Entity<API_T_Pointage>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Pointage_id");
 
-            entity.Property(e => e.Annee)
-                .HasDefaultValue(0)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Pointage_Annee");
-            entity.Property(e => e.Cloture)
-                .HasDefaultValue(false)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Pointage_Cloture");
+            entity.Property(e => e.Annee).HasDefaultValue(0, "defo_API_T_Pointage_Annee");
+            entity.Property(e => e.Cloture).HasDefaultValue(false, "defo_API_T_Pointage_Cloture");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -4552,20 +4082,14 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Mois)
-                .HasDefaultValue(0)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Pointage_Mois");
-            entity.Property(e => e.Type)
-                .HasDefaultValue(0)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Pointage_Type");
+            entity.Property(e => e.Mois).HasDefaultValue(0, "defo_API_T_Pointage_Mois");
+            entity.Property(e => e.Type).HasDefaultValue(0, "defo_API_T_Pointage_Type");
         });
 
         modelBuilder.Entity<API_T_PointageAnnee>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_PointageAnnee_id");
 
-            entity.Property(e => e.Annee).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageAnnee_Annee");
-            entity.Property(e => e.Cloture).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageAnnee_Cloture");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -4583,24 +4107,12 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Journee).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageDetail_Journee");
-            entity.Property(e => e.Materiel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageDetail_Materiel");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Montant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageDetail_Montant")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.NbrHeure)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageDetail_NbrHeure")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.PU)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageDetail_PU")
-                .HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Personnel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageDetail_Personnel");
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageDetail_Projet");
-            entity.Property(e => e.Responsable).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageDetail_Responsable");
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageDetail_Type");
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.NbrHeure).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.PU).HasColumnType("decimal(24, 6)");
 
             entity.HasOne(d => d.JourneeNavigation).WithMany(p => p.API_T_PointageDetail)
                 .HasForeignKey(d => d.Journee)
@@ -4617,8 +4129,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_PointageJournee_id");
 
-            entity.Property(e => e.AnneeID).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageJournee_AnneeID");
-            entity.Property(e => e.Cloture).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageJournee_Cloture");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -4627,7 +4137,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.MoisID).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageJournee_MoisID");
 
             entity.HasOne(d => d.Annee).WithMany(p => p.API_T_PointageJournee)
                 .HasForeignKey(d => d.AnneeID)
@@ -4655,7 +4164,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.NbrHeure).HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.Pointage).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageLigne_Pointage");
 
             entity.HasOne(d => d.PointageNavigation).WithMany(p => p.API_T_PointageLigne)
                 .HasForeignKey(d => d.Pointage)
@@ -4667,8 +4175,6 @@ public partial class DB : DbContext
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_PointageMois_id");
 
-            entity.Property(e => e.AnneeID).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageMois_AnneeID");
-            entity.Property(e => e.Cloture).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageMois_Cloture");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -4682,7 +4188,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Mois).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageMois_Mois");
 
             entity.HasOne(d => d.Annee).WithMany(p => p.API_T_PointageMois)
                 .HasForeignKey(d => d.AnneeID)
@@ -4704,14 +4209,9 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
             entity.Property(e => e.CreationUser).HasMaxLength(255);
-            entity.Property(e => e.Journee).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageProjet_Journee");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageProjet_Projet");
-            entity.Property(e => e.Responsable).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageProjet_Responsable");
-            entity.Property(e => e.Site).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageProjet_Site");
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_PointageProjet_Type");
 
             entity.HasOne(d => d.JourneeNavigation).WithMany(p => p.API_T_PointageProjet)
                 .HasForeignKey(d => d.Journee)
@@ -4734,9 +4234,7 @@ public partial class DB : DbContext
             entity.Property(e => e.CT_Num)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.CoutMarchePrevisionnel)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Projet_CoutMarchePrevisionnel")
-                .HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.CoutMarchePrevisionnel).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.Creation).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.CreationHost).HasMaxLength(255);
             entity.Property(e => e.CreationIP).HasMaxLength(45);
@@ -4755,9 +4253,7 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.MontantAppelOffreEstime).HasColumnType("decimal(24, 6)");
-            entity.Property(e => e.MontantRetenueGarantie)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Projet_MontantRetenueGarantie")
-                .HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.MontantRetenueGarantie).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.NumeroAppelOffre)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -4770,31 +4266,15 @@ public partial class DB : DbContext
             entity.Property(e => e.PeriodeExecutionResume)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.PhaseMarche).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Projet_PhaseMarche");
-            entity.Property(e => e.Resultat)
-                .HasDefaultValue(false)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Projet_Resultat");
-            entity.Property(e => e.ResultatMarche).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Projet_ResultatMarche");
+            entity.Property(e => e.Resultat).HasDefaultValue(false, "defo_API_T_Projet_Resultat");
             entity.Property(e => e.ResultatMarchePV).HasColumnType("text");
-            entity.Property(e => e.Site).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Projet_Site");
-            entity.Property(e => e.SituationMarche).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Projet_SituationMarche");
-            entity.Property(e => e.TauxRetenueGarantie)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Projet_TauxRetenueGarantie")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.TauxRetenueGarantieDecompte)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Projet_TauxRetenueGarantieDecompte")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.TotalMarcheHT)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Projet_TotalMarcheHT")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.TotalMarcheTTC)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Projet_TotalMarcheTTC")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.TypeMarche).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Projet_TypeMarche");
+            entity.Property(e => e.TauxRetenueGarantie).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.TauxRetenueGarantieDecompte).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.TotalMarcheHT).HasColumnType("decimal(27, 6)");
+            entity.Property(e => e.TotalMarcheTTC).HasColumnType("decimal(27, 6)");
             entity.Property(e => e.Utilisateur)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            entity.Property(e => e.Ville).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Projet_Ville");
         });
 
         modelBuilder.Entity<API_T_ProjetAvenant>(entity =>
@@ -4811,10 +4291,7 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.MontantAvenant)
-                .HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_ProjetAvenant_MontantAvenant")
-                .HasColumnType("decimal(27, 6)");
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_ProjetAvenant_Projet");
+            entity.Property(e => e.MontantAvenant).HasColumnType("decimal(27, 6)");
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_ProjetAvenant)
                 .HasForeignKey(d => d.Projet)
@@ -4836,7 +4313,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Motif).HasColumnType("text");
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_ProjetDate_Projet");
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_ProjetDate)
                 .HasForeignKey(d => d.Projet)
@@ -4857,7 +4333,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_ProjetPlanningDecompte_Projet");
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_ProjetPlanningDecompte)
                 .HasForeignKey(d => d.Projet)
@@ -4878,7 +4353,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
             entity.Property(e => e.Nature).HasColumnType("text");
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_ProjetReception_Projet");
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_ProjetReception)
                 .HasForeignKey(d => d.Projet)
@@ -4905,11 +4379,9 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Realisation).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Remarque_Realisation");
             entity.Property(e => e.Remarque)
                 .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.Type).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Remarque_Type");
             entity.Property(e => e.Utilisateur)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -4926,7 +4398,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Projet).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_RevisionPrix_Projet");
 
             entity.HasOne(d => d.ProjetNavigation).WithMany(p => p.API_T_RevisionPrix)
                 .HasForeignKey(d => d.Projet)
@@ -4952,7 +4423,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Responsable).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Site_Responsable");
             entity.Property(e => e.Ville)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -4969,7 +4439,6 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
-            entity.Property(e => e.Site).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_Site_User_Site");
             entity.Property(e => e.User)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -4985,7 +4454,6 @@ public partial class DB : DbContext
             entity.Property(e => e.CreationUser).HasMaxLength(255);
             entity.Property(e => e.DatePaiement).HasColumnType("smalldatetime");
             entity.Property(e => e.DateValidite).HasColumnType("smalldatetime");
-            entity.Property(e => e.Materiel).HasAnnotation("Relational:DefaultConstraintName", "defo_API_T_TaxeTonnage_Materiel");
             entity.Property(e => e.ModificationHost).HasMaxLength(255);
             entity.Property(e => e.ModificationIP).HasMaxLength(45);
             entity.Property(e => e.ModificationUser).HasMaxLength(255);

@@ -6,7 +6,7 @@
 		<RadzenContent Container="main">
 			<div class="grid-90">
 				<div style="zoom: @session.zoomLevel; height: 100%;">
-					<SfGrid Height="100%" AllowResizing AllowSorting AllowSelection ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid"
+					<SfGrid Height="100%" AllowResizing AllowSorting AllowSelection ShowColumnChooser="true" AllowFiltering ID="Grid" @ref="DefaultGrid"
 							AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items"
 							Toolbar="@(new List<object>() { "Search" })">
 						<GridPageSettings PageSize="100"></GridPageSettings>
@@ -42,6 +42,13 @@
 									
 								</GridColumns>
 							</GridColumn>
+							<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Ecart">
+								<GridColumns>
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_API_T_AREdit_Hist.EcartQte)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Format="N2" HeaderText="Qté" />
+									<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_API_T_AREdit_Hist.EcartPU)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Format="N2" HeaderText="PU" />
+                                    <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(V_API_T_AREdit_Hist.EcartStatut)" HeaderText="Diff" />
+								</GridColumns>
+							</GridColumn>
 						</GridColumns>
 						<SfSpinner @bind-Visible="@loading">
 						</SfSpinner>
@@ -67,8 +74,9 @@ else
 	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
 	DB db = new DB();
 	//Components
-	private SfGrid<API_T_AREdit_Hist> DefaultGrid;
-	private List<API_T_AREdit_Hist> items = new List<API_T_AREdit_Hist>();
+	private SfGrid<V_API_T_AREdit_Hist> DefaultGrid;
+	private List<V_API_T_AREdit_Hist> items = new List<V_API_T_AREdit_Hist>();
+	private List<V_API_T_AREdit_Hist> v_items = new List<V_API_T_AREdit_Hist>();
 	bool loading = false;
 	bool IsLoaded = false;
 	protected override async Task OnInitializedAsync()
@@ -82,8 +90,69 @@ else
 	}
 	private async Task LoadData()
 	{
-		items = session.db.API_T_AREdit_Hist
-		.OrderByDescending(a => a.DateOP).ToList();
+		var sourceItems = session.db.API_T_AREdit_Hist
+			.OrderByDescending(a => a.DateOP).ToList();
+
+		var newItems = new List<V_API_T_AREdit_Hist>();
+
+		foreach (var item in sourceItems)
+		{
+			V_API_T_AREdit_Hist v_item = new V_API_T_AREdit_Hist();
+			Decimal oldPU = item.OldPU ?? 0;
+			Decimal newPU = item.NewPU ?? 0;
+			Decimal oldQte = item.OldQte ?? 0;
+			Decimal newQte = item.NewQte ?? 0;
+			v_item.EcartPU = newPU - oldPU;
+			v_item.EcartQte = newQte - oldQte;
+
+			// Copy properties
+			v_item.DateOP = item.DateOP;
+			v_item.OldAR_Ref = item.OldAR_Ref;
+			v_item.OldCT_Intitule = item.OldCT_Intitule;
+			v_item.OldCT_Num = item.OldCT_Num;
+			v_item.OldDesign = item.OldDesign;
+			v_item.OldHT = item.OldHT;
+			v_item.OldPiece = item.OldPiece;
+			v_item.OldPU = item.OldPU;
+			v_item.OldQte = item.OldQte;
+			v_item.OldDate = item.OldDate;
+			v_item.NewAR_Ref = item.NewAR_Ref;
+			v_item.NewDesign = item.NewDesign;
+			v_item.NewHT = item.NewHT;
+			v_item.NewPU = item.NewPU;
+			v_item.NewQte = item.NewQte;
+			v_item.EcartPU = item.NewPU - item.OldPU;
+			v_item.EcartQte = item.NewQte - item.OldQte;
+
+			if (v_item.EcartPU == 0 && v_item.EcartQte == 0)
+			{
+				v_item.EcartStatut = "Aucun";
+			}
+			else
+			{
+				List<string> changes = new List<string>();
+				if (v_item.EcartPU != 0)
+				{
+					changes.Add("PU");
+				}
+				if (v_item.EcartQte != 0)
+				{
+					changes.Add("Qté");
+				}
+				v_item.EcartStatut = "" + string.Join(" et ", changes);
+			}
+
+			newItems.Add(v_item);
+		}
+
+		items = newItems;
 	}
+	public class V_API_T_AREdit_Hist : API_T_AREdit_Hist
+	{
+		public Decimal? EcartPU { get; set; }
+		public Decimal? EcartQte { get; set; }
+		public string EcartStatut { get; set;  }
+
+    }
 
 }

@@ -2538,3 +2538,15 @@ audio, canvas, embed, iframe, img, object, svg, video {
 .rz-form-field-content, .rz-timespanpicker > .rz-inputtext, .rz-colorpicker, .rz-lookup-search input, .rz-numeric, .rz-datepicker > .rz-inputtext, .rz-multiselect, .rz-dropdown, .mask, .rz-textarea, .rz-textbox {
     border-radius: 20px;
 }
+.e-grid.sf-grid :is(.e-groupdroparea,.e-groupdroparea .e-groupsort,.e-groupdroparea .e-ungroupbutton,.e-headercontent th.e-headercell:not(.e-menu-item):not(.e-editedbatchcell),.e-headercontent td.e-rowcell:not(.e-menu-item):not(.e-editedbatchcell),.e-content td.e-rowcell:not(.e-menu-item):not(.e-editedbatchcell),.e-content td.e-groupcaption:not(.e-menu-item):not(.e-editedbatchcell),.e-content td.e-recordplusexpand:not(.e-menu-item):not(.e-editedbatchcell),.e-content td.e-recordpluscollapse:not(.e-menu-item):not(.e-editedbatchcell),.e-content td.e-detailrowcollapse:not(.e-menu-item):not(.e-editedbatchcell),.e-content td.e-detailrowexpand:not(.e-menu-item):not(.e-editedbatchcell),.e-content th.e-detailcell:not(.e-menu-item):not(.e-editedbatchcell)):is(:focus,:focus-visible) {
+    box-shadow: unset;
+}
+.e-grid .e-headercell .e-headercell-container {
+    display: unset !important;
+}
+.rz-panel-menu .rz-navigation-item-text {
+    flex: auto;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: small;
+}
