@@ -1,10 +1,14 @@
 ﻿<SfToolbar CssClass="btns">
 	<ToolbarItems>
-		<ToolbarItem Align="ItemAlign.Right">
-			<Template>
-				<SfButton IconCss="e-icons e-print">Imprimer</SfButton>
-			</Template>
-		</ToolbarItem>
+		@if(type == 0)
+		{
+			<ToolbarItem Align="ItemAlign.Right">
+				<Template>
+					<SfButton OnClick="Print" IconCss="e-icons e-print">Imprimer</SfButton>
+				</Template>
+			</ToolbarItem>
+		}
+
 		<ToolbarItem Align="ItemAlign.Right">
 			<Template>
 				<SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit(true))">Enregistrer</SfButton>
@@ -335,6 +339,16 @@ else
 		{
 			Message.Error(ex.Message);
 		}
+	}
+	private async Task Print()
+	{
+        Submit(false);
+		List<JSReportParameter> parameters = new List<JSReportParameter>();
+
+		parameters.Add(new JSReportParameter { Name = "id", Values = new List<string>() { this.id.ToString() } });
+		await DialogService.OpenAsync<ReportViewer>(row.Piece,
+		new Dictionary<string, object>() { { "ReportName", "reports\\entretien\\FicheGasoil" }, { "parameters", parameters } },
+		new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "900px", Height = "95%" });
 	}
 	private void UpdateTotal()
 	{

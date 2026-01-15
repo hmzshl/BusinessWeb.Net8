@@ -743,6 +743,8 @@ namespace BusinessWeb.Services
 			if (docLigne.DO_Domaine > 1)
 			{
 				docLigne.DL_DateBL = docLigne.DO_Date;
+				docLigne.DL_CMUP = docLigne.DL_PrixUnitaire;
+				docLigne.DL_PrixRU = docLigne.DL_PrixUnitaire;
 			}
 
 		}

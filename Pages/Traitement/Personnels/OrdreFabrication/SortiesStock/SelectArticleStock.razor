@@ -95,10 +95,18 @@
             lignes.Add(ligne);
         }
 
-        await sg.Document.CreateDocLignes(lignes,doc,3);
+        var rs = await sg.Document.CreateDocLignes(lignes,doc,3);
         foreach(var item in lignes)
         {
             sg.Document.UpdateStock(item.RefArticle,1);
+        }
+        string q1 = @"UPDATE F_DOCLIGNE SET Machine = {0}, [P.Fabrication] = {1}, NumClient = {2},
+                    IntituleClient = {3}, Affaire = {4} WHERE cbMarq = {5}";
+
+
+        foreach(var item in rs)
+        {
+            db.Database.ExecuteSqlRaw(q1, doc.DO_Ref, DO_Ref, doc.DO_Tiers, "", doc.CA_Num, item.cbMarq);
         }
         DialogService.Close();
     }
