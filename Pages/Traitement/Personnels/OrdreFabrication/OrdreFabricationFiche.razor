@@ -447,7 +447,8 @@
                                              DateLivraison = row.DateLivraison ?? DateTime.Today,
                                              Entete1 = sc.User.Name,
                                              Lignes = Lignes,
-                                             Affaire = row.CA_Num
+                                             Affaire = row.CA_Num,
+                                             Statut = 2
 
                                          }
                                      ).Result;

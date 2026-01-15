@@ -18,6 +18,7 @@ namespace BusinessWeb.Models.PersoAPI
 			public string Tiers { get; set; }
 			public string Affaire { get; set; }
 			public int? Depot { get; set; }
+			public short? Statut { get; set; }
 			public short? Souche { get; set; }
 			public DocumentTypeDO TypeDO { get; set; }
 			public DocumentType documentType

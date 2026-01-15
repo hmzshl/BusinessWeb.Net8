@@ -1,0 +1,15 @@
+﻿@page "/ot-internes"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction")]
+
+
+
+<Documents domaine="4" title="DOCUMENTS INTERNES" />
+
+@code {
+    bool IsLoaded = false;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        IsLoaded = true;
+    }
+}

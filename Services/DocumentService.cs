@@ -196,7 +196,8 @@ namespace BusinessWeb.Services
 				DO_Coord02 = document.Entete2 ?? string.Empty,
 				DO_Coord03 = document.Entete3 ?? string.Empty,
 				DO_Coord04 = document.Entete4 ?? string.Empty,
-				CA_Num = document.Affaire
+				CA_Num = document.Affaire,
+				DO_Statut = document.Statut
 
 
 			};
@@ -242,7 +243,7 @@ namespace BusinessWeb.Services
 			// Set nullable fields with defaults only if null
 			docEntete.CO_No = docEntete.CO_No ?? 0;
 			docEntete.DE_No = docEntete.DE_No ?? 1;
-			docEntete.DO_Statut = docEntete.DO_Statut ?? 0;
+			docEntete.DO_Statut = docEntete.DO_Statut ?? 2;
 			docEntete.N_CatCompta = docEntete.N_CatCompta ?? 1;
 			docEntete.DO_Tarif = docEntete.DO_Tarif ?? 1;
 			docEntete.DO_Domaine = docEntete.DO_Domaine ?? 0;

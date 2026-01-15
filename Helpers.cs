@@ -367,6 +367,7 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 9, Title = "Outils", Description = "Documents achats", Url = "ot-achats", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 9, Title = "Outils", Description = "Documents ventes", Url = "ot-ventes", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 9, Title = "Outils", Description = "Documents stocks", Url = "ot-stocks", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 9, Title = "Outils", Description = "Documents internes", Url = "ot-internes", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 9, Title = "Outils", Description = "Réglements clients", Url = "ot-reglements-clients", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 9, Title = "Outils", Description = "Réglements fournisseurs", Url = "ot-reglements-fournisseurs", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 9, Title = "Outils", Description = "Ecritures comptables", Url = "ot-ecritures", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
@@ -430,7 +431,7 @@ namespace BusinessWeb
 		}
 		public string getTiers(int type)
 		{
-			if (type == 0)
+			if (type == 0 || type == 4)
 			{
 				return "Client";
 			}
