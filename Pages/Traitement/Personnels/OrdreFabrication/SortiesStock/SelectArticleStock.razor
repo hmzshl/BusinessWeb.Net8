@@ -104,10 +104,10 @@
                     IntituleClient = {3}, Affaire = {4} WHERE cbMarq = {5}";
 
 
-        foreach(var item in rs)
+       /* foreach(var item in rs)
         {
             db.Database.ExecuteSqlRaw(q1, doc.DO_Ref, DO_Ref, doc.DO_Tiers, "", doc.CA_Num, item.cbMarq);
-        }
+        }*/
         DialogService.Close();
     }
     private async Task Quitter()
