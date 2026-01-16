@@ -11,8 +11,8 @@
                         <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
                             <Template>
                                 <div style="margin-left: 5px; margin-right: 10px;" id="debut">
-                                    <SfDatePicker ShowClearButton Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1" ShowTodayButton>
-                                        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
+                                    <SfDatePicker ShowClearButton Placeholder="Date Début" Width="140px" TValue="DateTime ?" @bind-Value="date1" ShowTodayButton>
+                                        <DatePickerEvents TValue="DateTime ?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
                                     </SfDatePicker>
                                 </div>
 
@@ -22,8 +22,8 @@
                         <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
                             <Template>
                                 <div style="margin-left: 5px; margin-right: 10px;" id="fin">
-                                    <SfDatePicker ShowClearButton Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2" ShowTodayButton>
-                                        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
+                                    <SfDatePicker ShowClearButton Placeholder="Date Fin" Width="140px" TValue="DateTime ?" @bind-Value="date2" ShowTodayButton>
+                                        <DatePickerEvents TValue="DateTime ?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
                                     </SfDatePicker>
                                 </div>
 
@@ -443,7 +443,7 @@ else
                             {
                                 var log_lignes = new List<API_T_Audit_F_DOCLIGNE>();
                                 var log_entetes = new List<API_T_Audit_F_DOCENTETE>();
-                                foreach(API_V_DOCENTETE item in dt)
+                                foreach (API_V_DOCENTETE item in dt)
                                 {
                                     var entete = db.F_DOCENTETE.First(a => a.cbMarq == item.cbMarq);
 
@@ -458,7 +458,7 @@ else
                                         log_ligne.Timestamp = DateTime.Now;
                                         log_ligne.Suser_Name = sc.User.Name;
                                         log_ligne.Sage_Name = sc.User.Name;
-                                        if(lg.DL_MvtStock == 1)
+                                        if (lg.DL_MvtStock == 1)
                                         {
                                             log_ligne.DL_Qte = -lg.DL_Qte;
                                         }
@@ -466,6 +466,7 @@ else
                                         log_lignes.Add(log_ligne);
                                         db.Database.ExecuteSqlRaw("DELETE FROM F_DOCLIGNEEMPL WHERE DL_No = {0}", lg.DL_No);
                                         db.Database.ExecuteSqlRaw("DELETE FROM F_DOCLIGNE WHERE cbMarq = {0}", lg.cbMarq);
+                                        sg.Document.UpdateStock(lg.AR_Ref, lg.DE_No ?? 0);
 
                                     }
 
@@ -487,7 +488,7 @@ else
                                 await db.BulkCopyAsync(log_entetes);
                                 await UpdateGrid();
 
-                                
+
 
                                 _ = _notice.Success(new()
                                 {
@@ -595,99 +596,99 @@ else
         }
 
     }
-        private async Task ShowNotification(NotificationMessage message)
+    private async Task ShowNotification(NotificationMessage message)
+    {
+        NotificationService.Notify(message);
+    }
+    private async Task SubmitDate()
+    {
+        dg_date = false;
+        await Task.Delay(1);
+
+        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+        fn.DisableTriggers(db, "F_DOCENTETE", "UPD");
+        fn.DisableTriggers(db, "F_DOCLIGNE", "UPD");
+        foreach (API_V_DOCENTETE item in dt)
         {
-            NotificationService.Notify(message);
+
+
+            db.Database.ExecuteSqlRaw("UPDATE F_DOCENTETE SET DO_Date = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", date, item.DO_Piece, item.DO_Type);
+            db.Database.ExecuteSqlRaw("UPDATE F_DOCLIGNE SET DO_Date = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", date, item.DO_Piece, item.DO_Type);
+
+
         }
-        private async Task SubmitDate()
+        fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
+        fn.EnableTriggers(db, "F_DOCLIGNE", "UPD");
+        await UpdateGrid();
+        await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+    }
+    private async Task SubmitSouche()
+    {
+        dg_souche = false;
+        await Task.Delay(1);
+        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+        fn.DisableTriggers(db, "F_DOCENTETE", "UPD");
+        foreach (API_V_DOCENTETE item in dt)
         {
-            dg_date = false;
-            await Task.Delay(1);
-
-            var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
-            fn.DisableTriggers(db, "F_DOCENTETE", "UPD");
-            fn.DisableTriggers(db, "F_DOCLIGNE", "UPD");
-            foreach (API_V_DOCENTETE item in dt)
-            {
 
 
-                db.Database.ExecuteSqlRaw("UPDATE F_DOCENTETE SET DO_Date = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", date, item.DO_Piece, item.DO_Type);
-                db.Database.ExecuteSqlRaw("UPDATE F_DOCLIGNE SET DO_Date = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", date, item.DO_Piece, item.DO_Type);
+            db.Database.ExecuteSqlRaw("UPDATE F_DOCENTETE SET DO_Souche = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", souche - 1, item.DO_Piece, item.DO_Type);
 
 
-            }
-            fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
-            fn.EnableTriggers(db, "F_DOCLIGNE", "UPD");
-            await UpdateGrid();
-            await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
         }
-        private async Task SubmitSouche()
+        fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
+
+        await UpdateGrid();
+        await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+    }
+    private async Task SubmitInterne()
+    {
+        dg_interne = false;
+        await Task.Delay(1);
+        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+        fn.DisableTriggers(db, "F_DOCENTETE", "UPD");
+        fn.DisableTriggers(db, "F_DOCLIGNE", "UPD");
+        fn.DisableTriggers(db, "F_DOCREGL", "UPD");
+        foreach (API_V_DOCENTETE item in dt)
         {
-            dg_souche = false;
-            await Task.Delay(1);
-            var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
-            fn.DisableTriggers(db, "F_DOCENTETE", "UPD");
-            foreach (API_V_DOCENTETE item in dt)
-            {
 
 
-                db.Database.ExecuteSqlRaw("UPDATE F_DOCENTETE SET DO_Souche = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", souche - 1, item.DO_Piece, item.DO_Type);
+            db.Database.ExecuteSqlRaw("UPDATE F_DOCENTETE SET DO_Domaine = 4, DO_Type = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", 39 + interne, item.DO_Piece, item.DO_Type);
+            db.Database.ExecuteSqlRaw("UPDATE F_DOCLIGNE SET DO_Domaine = 4, DO_Type = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", 39 + interne, item.DO_Piece, item.DO_Type);
+            db.Database.ExecuteSqlRaw("UPDATE F_DOCREGL SET DO_Domaine = 4, DO_Type = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", 39 + interne, item.DO_Piece, item.DO_Type);
 
 
-            }
-            fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
-
-            await UpdateGrid();
-            await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
         }
-        private async Task SubmitInterne()
+        fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
+        fn.EnableTriggers(db, "F_DOCLIGNE", "UPD");
+        fn.EnableTriggers(db, "F_DOCREGL", "UPD");
+        await UpdateGrid();
+        await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+    }
+    private async Task SubmitTiers()
+    {
+        dg_tiers = false;
+        await Task.Delay(1);
+
+        var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
+        fn.DisableTriggers(db, "F_DOCENTETE", "UPD");
+        fn.DisableTriggers(db, "F_DOCLIGNE", "UPD");
+        foreach (API_V_DOCENTETE item in dt)
         {
-            dg_interne = false;
-            await Task.Delay(1);
-            var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
-            fn.DisableTriggers(db, "F_DOCENTETE", "UPD");
-            fn.DisableTriggers(db, "F_DOCLIGNE", "UPD");
-            fn.DisableTriggers(db, "F_DOCREGL", "UPD");
-            foreach (API_V_DOCENTETE item in dt)
-            {
-
-
-                db.Database.ExecuteSqlRaw("UPDATE F_DOCENTETE SET DO_Domaine = 4, DO_Type = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", 39 + interne, item.DO_Piece, item.DO_Type);
-                db.Database.ExecuteSqlRaw("UPDATE F_DOCLIGNE SET DO_Domaine = 4, DO_Type = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", 39 + interne, item.DO_Piece, item.DO_Type);
-                db.Database.ExecuteSqlRaw("UPDATE F_DOCREGL SET DO_Domaine = 4, DO_Type = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", 39 + interne, item.DO_Piece, item.DO_Type);
-
-
-            }
-            fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
-            fn.EnableTriggers(db, "F_DOCLIGNE", "UPD");
-            fn.EnableTriggers(db, "F_DOCREGL", "UPD");
-            await UpdateGrid();
-            await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+            db.Database.ExecuteSqlRaw("UPDATE F_DOCENTETE SET CT_NumOld = DO_Tiers,DO_Tiers = {0}, CT_NumPayeur = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", tiers, item.DO_Piece, item.DO_Type);
+            db.Database.ExecuteSqlRaw("UPDATE F_DOCLIGNE SET CT_Num = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", tiers, item.DO_Piece, item.DO_Type);
         }
-        private async Task SubmitTiers()
-        {
-            dg_tiers = false;
-            await Task.Delay(1);
-
-            var dt = DefaultGrid.GetSelectedRecordsAsync().Result;
-            fn.DisableTriggers(db, "F_DOCENTETE", "UPD");
-            fn.DisableTriggers(db, "F_DOCLIGNE", "UPD");
-            foreach (API_V_DOCENTETE item in dt)
-            {
-                db.Database.ExecuteSqlRaw("UPDATE F_DOCENTETE SET CT_NumOld = DO_Tiers,DO_Tiers = {0}, CT_NumPayeur = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", tiers, item.DO_Piece, item.DO_Type);
-                db.Database.ExecuteSqlRaw("UPDATE F_DOCLIGNE SET CT_Num = {0} WHERE DO_Piece = {1} AND DO_Type = {2}", tiers, item.DO_Piece, item.DO_Type);
-            }
-            fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
-            fn.EnableTriggers(db, "F_DOCLIGNE", "UPD");
-            await UpdateGrid();
-            await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
-        }
-        protected async Task ShowPiece(string DO_Piece, short? DO_Type)
-        {
-            await DialogService.OpenAsync<DetailsPiece>
-        (DO_Piece,
-        new Dictionary<string, object>
-            () { { "DO_Piece", DO_Piece }, { "DO_Type", DO_Type } },
-            new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "90%" });
-            }
-            }
+        fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
+        fn.EnableTriggers(db, "F_DOCLIGNE", "UPD");
+        await UpdateGrid();
+        await ShowNotification(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Opération réussie", Detail = "Opération réussie!", Duration = 2000 });
+    }
+    protected async Task ShowPiece(string DO_Piece, short? DO_Type)
+    {
+        await DialogService.OpenAsync<DetailsPiece>
+    (DO_Piece,
+    new Dictionary<string, object>
+        () { { "DO_Piece", DO_Piece }, { "DO_Type", DO_Type } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "90%", Height = "90%" });
+    }
+}
