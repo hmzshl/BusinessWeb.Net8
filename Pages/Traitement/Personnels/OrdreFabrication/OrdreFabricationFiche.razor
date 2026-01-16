@@ -472,6 +472,34 @@
                                 ln2.NumDA = dc.DocumentNumber;
                                 db.SaveChanges();
                             }
+                            fn.DisableTriggers(db,"F_DOCLIGNE","UPD");
+                            fn.DisableTriggers(db, "F_DOCENTETE", "UPD");
+
+
+                            string q1 = @"UPDATE b SET b.Machine = ar.AR_Design, b.Affaire = a.CA_Num,
+                                b.[P.Fabrication] = od.Numero, b.NumClient = od.CT_Num, b.IntituleClient = ct.CT_Intitule, b.Affectation = ar.AR_Ref
+                                FROM F_DOCENTETE a
+                                INNER JOIN F_DOCLIGNE b ON a.DO_Piece = b.DO_Piece AND a.DO_Type = b.DO_Type
+                                INNER JOIN API_T_OrdreFabrication od ON a.DO_Ref = od.Numero
+                                INNER JOIN API_T_OrdreFabricationLigne ln ON od.id = ln.Ordre
+                                INNER JOIN F_ARTICLE ar ON ln.AR_Ref = ar.AR_Ref
+                                INNER JOIN F_COMPTET ct ON od.CT_Num = ct.CT_Num
+                                WHERE a.DO_Piece = {0}
+
+                                UPDATE a SET a.Machine = ar.AR_Design, a.Affaire = a.CA_Num,
+                                a.[P.Fabrication] = od.Numero, a.NumClient = od.CT_Num, a.IntituleClient = ct.CT_Intitule, a.Affectation = ar.AR_Ref, a.DO_Statut = 2
+                                FROM F_DOCENTETE a
+                                INNER JOIN F_DOCLIGNE b ON a.DO_Piece = b.DO_Piece AND a.DO_Type = b.DO_Type
+                                INNER JOIN API_T_OrdreFabrication od ON a.DO_Ref = od.Numero
+                                INNER JOIN API_T_OrdreFabricationLigne ln ON od.id = ln.Ordre
+                                INNER JOIN F_ARTICLE ar ON ln.AR_Ref = ar.AR_Ref
+                                INNER JOIN F_COMPTET ct ON od.CT_Num = ct.CT_Num
+                                WHERE a.DO_Piece = {0}";
+
+                            db.Database.ExecuteSqlRaw(q1, dc.DocumentNumber);
+
+                            fn.EnableTriggers(db, "F_DOCLIGNE", "UPD");
+                            fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
 
                         }
 
