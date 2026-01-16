@@ -1,4 +1,5 @@
-﻿@if (IsLoaded)
+﻿@using LinqToDB.EntityFrameworkCore
+@if (IsLoaded)
 {
     <Card_1 Title="@title">
         <RadzenContent Container="main">
@@ -396,7 +397,7 @@ else
                         var lignes = new List<F_DOCLIGNE>();
                         foreach (API_V_DOCENTETE item in dt)
                         {
-                            lignes.AddRange(db.F_DOCLIGNE.Where(a => a.DO_Piece == item.DO_Piece
+                            lignes.AddRange(db.F_DOCLIGNE.AsNoTracking().Where(a => a.DO_Piece == item.DO_Piece
                                 && a.DO_Type == item.DO_Type
                             && a.CT_Num == CT_Num
                             ).ToList());
@@ -440,6 +441,54 @@ else
                             }
                             else
                             {
+                                var log_lignes = new List<API_T_Audit_F_DOCLIGNE>();
+                                var log_entetes = new List<API_T_Audit_F_DOCENTETE>();
+                                foreach(API_V_DOCENTETE item in dt)
+                                {
+                                    var entete = db.F_DOCENTETE.First(a => a.cbMarq == item.cbMarq);
+
+
+                                    var old_lignes = db.F_DOCLIGNE.Where(a => a.DO_Piece == item.DO_Piece && a.DO_Type == item.DO_Type).ToList();
+                                    foreach (var lg in old_lignes)
+                                    {
+                                        var log_ligne = new API_T_Audit_F_DOCLIGNE();
+                                        fn.CopyData(lg, log_ligne);
+                                        log_ligne.DO_Ref = dc.DocumentNumber;
+                                        log_ligne.Operation = "Transformation";
+                                        log_ligne.Timestamp = DateTime.Now;
+                                        log_ligne.Suser_Name = sc.User.Name;
+                                        log_ligne.Sage_Name = sc.User.Name;
+                                        if(lg.DL_MvtStock == 1)
+                                        {
+                                            log_ligne.DL_Qte = -lg.DL_Qte;
+                                        }
+
+                                        log_lignes.Add(log_ligne);
+                                        db.Database.ExecuteSqlRaw("DELETE FROM F_DOCLIGNEEMPL WHERE DL_No = {0}", lg.DL_No);
+                                        db.Database.ExecuteSqlRaw("DELETE FROM F_DOCLIGNE WHERE cbMarq = {0}", lg.cbMarq);
+
+                                    }
+
+                                    var log_entete = new API_T_Audit_F_DOCENTETE();
+                                    fn.CopyData(item, log_entete);
+                                    log_entete.DO_Ref = dc.DocumentNumber;
+                                    log_entete.Operation = "Transformation";
+                                    log_entete.Timestamp = DateTime.Now;
+                                    log_entete.Suser_Name = sc.User.Name;
+                                    log_entete.Sage_Name = sc.User.Name;
+                                    log_entetes.Add(log_entete);
+                                    db.Database.ExecuteSqlRaw("DELETE FROM F_DOCENTETE WHERE cbMarq = {0}", item.cbMarq);
+
+
+                                }
+
+                                using var _db = db.CreateLinqToDBConnection();
+                                await db.BulkCopyAsync(log_lignes);
+                                await db.BulkCopyAsync(log_entetes);
+                                await UpdateGrid();
+
+                                
+
                                 _ = _notice.Success(new()
                                 {
                                     Message = "Succès",

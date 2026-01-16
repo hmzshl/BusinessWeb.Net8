@@ -44,7 +44,7 @@
                              <Template>
                                  <RadzenLabel Text="DOMAINE" Component="domaine" />
                                  <div style="padding-left: 10px; margin-right: 0px;" id="domaine">
-                                     <SfDropDownList ShowClearButton Width="110px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@domaines" TValue="string" TItem="string" @bind-Value="@selected_domaine">
+                                     <SfDropDownList ShowClearButton Width="130px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@domaines" TValue="string" TItem="string" @bind-Value="@selected_domaine">
                                          <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateTypes())" />
                                      </SfDropDownList>
                                  </div>
@@ -54,7 +54,7 @@
                              <Template>
                                  <RadzenLabel Text="TYPE" Component="type" />
                                  <div style="padding-left: 10px; margin-right: 0px;" id="type">
-                                     <SfDropDownList ShowClearButton Width="140px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@types" TValue="string" TItem="string" @bind-Value="@selected_type">
+                                     <SfDropDownList ShowClearButton Width="150px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@types" TValue="string" TItem="string" @bind-Value="@selected_type">
                                          <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
                                      </SfDropDownList>
                                  </div>
@@ -131,6 +131,7 @@
                                 <GridColumn Width="140" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.Suser_Name)" HeaderText="Session"></GridColumn>
                                 <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DomaineIntitule)" HeaderText="Domaine"></GridColumn>
                                 <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.TypeIntitule)" HeaderText="Type"></GridColumn>
+                                <GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Ref)" HeaderText="Réf"></GridColumn>
                                 <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DO_Date)" HeaderText="Date" />
                                 <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.DO_Piece)" HeaderText="Pièce" />
                                 <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCLIGNE.CT_Num)" HeaderText="Numéro" />

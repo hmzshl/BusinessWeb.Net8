@@ -3,211 +3,217 @@
 
 @if (IsLoaded)
 {
-	<Card_1 Title="ENTETES DOCUMENTS">
-		<RadzenContent Container="main">
-			<div class="grid-90">
-				<SfToolbar>
-					<ToolbarItems>
-						<ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1,1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
-						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
-						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
-							<Template>
-								<div style="margin-left: 5px; margin-right: 10px;" id="debut">
-									<SfDatePicker Placeholder="Date Début" Width="140px" TValue="DateTime?" @bind-Value="date1" ShowClearButton ShowTodayButton>
-										<DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
-									</SfDatePicker>
-								</div>
+    <Card_1 Title="ENTETES DOCUMENTS">
+        <RadzenContent Container="main">
+            <div class="grid-90">
+                <SfToolbar>
+                    <ToolbarItems>
+                        <ToolbarItem OnClick=@(args => (DefaultGrid.OpenColumnChooserAsync(1, 1))) TooltipText="Colonnes selectionnées" Text="Colonnes selectionnées" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-more-vertical-2"></ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+                        <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                            <Template>
+                                <div style="margin-left: 5px; margin-right: 10px;" id="debut">
+                                    <SfDatePicker Placeholder="Date Début" Width="140px" TValue="DateTime ?" @bind-Value="date1" ShowClearButton ShowTodayButton>
+                                        <DatePickerEvents TValue="DateTime ?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
+                                    </SfDatePicker>
+                                </div>
 
-							</Template>
-						</ToolbarItem>
-						<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
-							<Template>
-								<div style="margin-left: 5px; margin-right: 10px;" id="fin">
-									<SfDatePicker Placeholder="Date Fin" Width="140px" TValue="DateTime?" @bind-Value="date2" ShowClearButton ShowTodayButton>
-										<DatePickerEvents TValue="DateTime?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
-									</SfDatePicker>
-								</div>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                            <Template>
+                                <div style="margin-left: 5px; margin-right: 10px;" id="fin">
+                                    <SfDatePicker Placeholder="Date Fin" Width="140px" TValue="DateTime ?" @bind-Value="date2" ShowClearButton ShowTodayButton>
+                                        <DatePickerEvents TValue="DateTime ?" ValueChange="@(args => UpdateGrid())"> </DatePickerEvents>
+                                    </SfDatePicker>
+                                </div>
 
-							</Template>
-						</ToolbarItem>
-						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-							<Template>
-								<RadzenLabel Text="OPERATION" Component="operation" />
-								<div style="padding-left: 10px; margin-right: 0px;" id="operation">
-									<SfDropDownList ShowClearButton Width="130px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@operations" TValue="string" TItem="string" @bind-Value="@selected_operation">
-										<DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
-									</SfDropDownList>
-								</div>
-							</Template>
-						</ToolbarItem>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <RadzenLabel Text="OPERATION" Component="operation" />
+                                <div style="padding-left: 10px; margin-right: 0px;" id="operation">
+                                    <SfDropDownList ShowClearButton Width="130px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@operations" TValue="string" TItem="string" @bind-Value="@selected_operation">
+                                        <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
+                                    </SfDropDownList>
+                                </div>
+                            </Template>
+                        </ToolbarItem>
+                        @if (IsInterne == false)
+                        {
+                            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                <Template>
+                                    <RadzenLabel Text="DOMAINE" Component="domaine" />
+                                    <div style="padding-left: 10px; margin-right: 0px;" id="domaine">
+                                        <SfDropDownList ShowClearButton Width="130px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@domaines" TValue="string" TItem="string" @bind-Value="@selected_domaine">
+                                            <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateTypes())" />
+                                        </SfDropDownList>
+                                    </div>
+                                </Template>
+                            </ToolbarItem>
+                            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                <Template>
+                                    <RadzenLabel Text="TYPE" Component="type" />
+                                    <div style="padding-left: 10px; margin-right: 0px;" id="type">
+                                        <SfDropDownList ShowClearButton Width="150px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@types" TValue="string" TItem="string" @bind-Value="@selected_type">
+                                            <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
+                                        </SfDropDownList>
+                                    </div>
+                                </Template>
+                            </ToolbarItem>
 
-						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-							<Template>
-								<RadzenLabel Text="DOMAINE" Component="domaine" />
-								<div style="padding-left: 10px; margin-right: 0px;" id="domaine">
-									<SfDropDownList ShowClearButton Width="110px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@domaines" TValue="string" TItem="string" @bind-Value="@selected_domaine">
-										<DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateTypes())" />
-									</SfDropDownList>
-								</div>
-							</Template>
-						</ToolbarItem>
-						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-							<Template>
-								<RadzenLabel Text="TYPE" Component="type" />
-								<div style="padding-left: 10px; margin-right: 0px;" id="type">
-									<SfDropDownList ShowClearButton Width="140px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@types" TValue="string" TItem="string" @bind-Value="@selected_type">
-										<DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
-									</SfDropDownList>
-								</div>
-							</Template>
-						</ToolbarItem>
+                            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                <Template>
+                                    <RadzenLabel Text="USER" Component="user" />
+                                    <div style="padding-left: 10px;" id="user">
+                                        <SfDropDownList ShowClearButton Width="150px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@users" TValue="string" TItem="string" @bind-Value="@selected_user">
+                                            <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
+                                        </SfDropDownList>
+                                    </div>
+                                </Template>
+                            </ToolbarItem>
+                        }
 
-						<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-							<Template>
-								<RadzenLabel Text="USER" Component="user" />
-								<div style="padding-left: 10px;" id="user">
-									<SfDropDownList ShowClearButton Width="150px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@users" TValue="string" TItem="string" @bind-Value="@selected_user">
-										<DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())" />
-									</SfDropDownList>
-								</div>
-							</Template>
-						</ToolbarItem>
 
-						<ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
-							<Template>
-								<SfTextBox Width="180px" Placeholder="RECHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
-							</Template>
-						</ToolbarItem>
-						<ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
-						<ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.ExportToExcelAsync()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
-						<ToolbarItem OnClick=@(args => (UpdateGrid())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
-					</ToolbarItems>
-				</SfToolbar>
-				<div class="grid-84" style="zoom: @session.zoomLevel;">
-					@if (loading)
-					{
-						<div class="center-screen">
-							<Loading_1 />
-						</div>
-					}
-					else
-					{
-						<SfGrid Height="100%" AllowReordering AllowFiltering AllowSorting AllowResizing AllowSelection ShowColumnChooser="true" ID="TR_EnteteGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
-							<GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-							<GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-							<GridPageSettings PageSize="100"></GridPageSettings>
-							<GridTemplates>
-								<EmptyRecordTemplate>
-									<Empty></Empty>
-								</EmptyRecordTemplate>
-							</GridTemplates>
-							<GridColumns>
-								<GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.Timestamp)" HeaderText="Heure" Index="0"></GridColumn>
-								<GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Field="@nameof(API_V_AUDIT_F_DOCENTETE.Operation)" HeaderText="Operation">
-									<Template>
-										@{
-											var dt = (context as API_V_AUDIT_F_DOCENTETE);
-											if (dt.Operation == "Insertion")
-											{
-												<div style="text-align: left;">
-													<span class="statustxt e-activecolor">@dt.Operation</span>
-												</div>
-											}
-											else if (dt.Operation == "Suppression")
-											{
-												<div style="text-align: left;">
-													<span class="statustxt e-inactivecolor">@dt.Operation</span>
-												</div>
-											}
-											else
-											{
-												<div style="text-align: left;">
-													<span class="statustxt e-infocolor">@dt.Operation</span>
-												</div>
-											}
-										}
-									</Template>
-								</GridColumn>
-								<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.Sage_Name)" HeaderText="User"></GridColumn>
-								<GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.Host_Name)" HeaderText="Host"></GridColumn>
-								<GridColumn Width="140" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.Suser_Name)" HeaderText="Session"></GridColumn>
-								<GridColumn Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Sta">
-									<Template>
-										@{
-											var dt = (context as API_V_AUDIT_F_DOCENTETE);
-											if (dt.DO_Statut == 2)
-											{
-												<RadzenIcon Icon="check_circle" IconStyle="IconStyle.Success" />
-											}
-											else if (dt.DO_Statut == 1)
-											{
-												<RadzenIcon Icon="watch_later" />
-											}
-											else
-											{
-												<RadzenIcon Icon="edit_note" IconStyle="IconStyle.Primary" />
-											}
-										}
-									</Template>
-								</GridColumn>
-								<GridColumn Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Imp">
-									<Template>
-										@{
-											var dt = (context as API_V_AUDIT_F_DOCENTETE);
-											if (dt.DO_Imprim == 1)
-											{
-												<RadzenIcon Icon="print" IconStyle="IconStyle.Secondary" />
-											}
-										}
-									</Template>
-								</GridColumn>
-								<GridColumn Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Val">
-									<Template>
-										@{
-											var dt = (context as API_V_AUDIT_F_DOCENTETE);
-											if (dt.DO_Valide == 1)
-											{
-												<RadzenIcon Icon="lock" IconStyle="IconStyle.Success" />
-											}
-											else
-											{
-												<RadzenIcon Icon="lock_open" IconStyle="IconStyle.Primary" />
-											}
-										}
-									</Template>
-								</GridColumn>
-								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DomaineIntitule)" HeaderText="Domaine"></GridColumn>
-								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.TypeIntitule)" HeaderText="Type"></GridColumn>
-								<GridColumn Width="70" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
-								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Piece)" HeaderText="Pièce"></GridColumn>
-								<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DE_Intitule)" HeaderText="Dépot"></GridColumn>
-								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Tiers)" HeaderText="N° Tiers"></GridColumn>
-								<GridColumn Width="180" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.CT_Intitule)" HeaderText="Intitulé Tiers"></GridColumn>
-								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.CA_Num)" HeaderText="Affaire"></GridColumn>
-								<GridColumn Width="150" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.CA_Intitule)" HeaderText="Intitulé Affaire"></GridColumn>
-								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_TotalHT)" HeaderText="Total HT" Format="N2"></GridColumn>
-								<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.CO_Nom)" HeaderText="Collaborateur"></GridColumn>
-								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.CG_Num)" Visible="false" HeaderText="Compte"></GridColumn>
-								<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Coord01)" Visible="false" HeaderText="Entete 1"></GridColumn>
-								<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Coord02)" Visible="false" HeaderText="Entete 2"></GridColumn>
-								<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Coord03)" Visible="false" HeaderText="Entete 3"></GridColumn>
-								<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Coord04)" Visible="false" HeaderText="Entete 4"></GridColumn>
+                        <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                            <Template>
+                                <SfTextBox Width="180px" Placeholder="RECHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+                        <ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.ExportToExcelAsync()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+                        <ToolbarItem OnClick=@(args => (UpdateGrid())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+                <div class="grid-84" style="zoom: @session.zoomLevel;">
+                    @if (loading)
+                    {
+                        <div class="center-screen">
+                            <Loading_1 />
+                        </div>
+                    }
+                    else
+                    {
+                        <SfGrid Height="100%" AllowReordering AllowFiltering AllowSorting AllowResizing AllowSelection ShowColumnChooser="true" ID="TR_EnteteGrid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items" AllowPaging>
+                            <GridEditSettings Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                            <GridPageSettings PageSize="100"></GridPageSettings>
+                            <GridTemplates>
+                                <EmptyRecordTemplate>
+                                    <Empty></Empty>
+                                </EmptyRecordTemplate>
+                            </GridTemplates>
+                            <GridColumns>
+                                <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.Timestamp)" HeaderText="Heure" Index="0"></GridColumn>
+                                <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Field="@nameof(API_V_AUDIT_F_DOCENTETE.Operation)" HeaderText="Operation">
+                                    <Template>
+                                        @{
+                                            var dt = (context as API_V_AUDIT_F_DOCENTETE);
+                                            if (dt.Operation == "Insertion")
+                                            {
+                                                <div style="text-align: left;">
+                                                    <span class="statustxt e-activecolor">@dt.Operation</span>
+                                                </div>
+                                            }
+                                            else if (dt.Operation == "Suppression")
+                                            {
+                                                <div style="text-align: left;">
+                                                    <span class="statustxt e-inactivecolor">@dt.Operation</span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div style="text-align: left;">
+                                                    <span class="statustxt e-infocolor">@dt.Operation</span>
+                                                </div>
+                                            }
+                                        }
+                                    </Template>
+                                </GridColumn>
+                                <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.Sage_Name)" HeaderText="User"></GridColumn>
+                                <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.Host_Name)" HeaderText="Host"></GridColumn>
+                                <GridColumn Width="140" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.Suser_Name)" HeaderText="Session"></GridColumn>
+                                <GridColumn Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Sta">
+                                    <Template>
+                                        @{
+                                            var dt = (context as API_V_AUDIT_F_DOCENTETE);
+                                            if (dt.DO_Statut == 2)
+                                            {
+                                                <RadzenIcon Icon="check_circle" IconStyle="IconStyle.Success" />
+                                            }
+                                            else if (dt.DO_Statut == 1)
+                                            {
+                                                <RadzenIcon Icon="watch_later" />
+                                            }
+                                            else
+                                            {
+                                                <RadzenIcon Icon="edit_note" IconStyle="IconStyle.Primary" />
+                                            }
+                                        }
+                                    </Template>
+                                </GridColumn>
+                                <GridColumn Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Imp">
+                                    <Template>
+                                        @{
+                                            var dt = (context as API_V_AUDIT_F_DOCENTETE);
+                                            if (dt.DO_Imprim == 1)
+                                            {
+                                                <RadzenIcon Icon="print" IconStyle="IconStyle.Secondary" />
+                                            }
+                                        }
+                                    </Template>
+                                </GridColumn>
+                                <GridColumn Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Val">
+                                    <Template>
+                                        @{
+                                            var dt = (context as API_V_AUDIT_F_DOCENTETE);
+                                            if (dt.DO_Valide == 1)
+                                            {
+                                                <RadzenIcon Icon="lock" IconStyle="IconStyle.Success" />
+                                            }
+                                            else
+                                            {
+                                                <RadzenIcon Icon="lock_open" IconStyle="IconStyle.Primary" />
+                                            }
+                                        }
+                                    </Template>
+                                </GridColumn>
 
-							</GridColumns>
-						</SfGrid>
-					}
+                                <GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Ref)" HeaderText="Réf"></GridColumn>
 
-				</div>
+                                <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DomaineIntitule)" HeaderText="Domaine"></GridColumn>
+                                <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.TypeIntitule)" HeaderText="Type"></GridColumn>
+                                <GridColumn Width="70" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
+                                <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Piece)" HeaderText="Pièce"></GridColumn>
+                                <GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DE_Intitule)" HeaderText="Dépot"></GridColumn>
+                                <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Tiers)" HeaderText="N° Tiers"></GridColumn>
+                                <GridColumn Width="180" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.CT_Intitule)" HeaderText="Intitulé Tiers"></GridColumn>
+                                <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.CA_Num)" HeaderText="Affaire"></GridColumn>
+                                <GridColumn Width="150" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.CA_Intitule)" HeaderText="Intitulé Affaire"></GridColumn>
+                                <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_TotalHT)" HeaderText="Total HT" Format="N2"></GridColumn>
+                                <GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.CO_Nom)" HeaderText="Collaborateur"></GridColumn>
+                                <GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.CG_Num)" Visible="false" HeaderText="Compte"></GridColumn>
+                                <GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Coord01)" Visible="false" HeaderText="Entete 1"></GridColumn>
+                                <GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Coord02)" Visible="false" HeaderText="Entete 2"></GridColumn>
+                                <GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Coord03)" Visible="false" HeaderText="Entete 3"></GridColumn>
+                                <GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_AUDIT_F_DOCENTETE.DO_Coord04)" Visible="false" HeaderText="Entete 4"></GridColumn>
 
-			</div>
-		</RadzenContent>
-	</Card_1>
+                            </GridColumns>
+                        </SfGrid>
+                    }
+
+                </div>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
 }
 else
 {
-	<div class="center-screen">
-		<Loading_1 />
-	</div>
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
 }
 
 
@@ -217,64 +223,88 @@ else
 @code
 {
 
-	[CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
-	DB db = new DB();
-	//Components
-	private SfGrid<API_V_AUDIT_F_DOCENTETE> DefaultGrid;
-	bool IsLoaded = false;
-	DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
-	DateTime? date2;
-	private List<API_V_AUDIT_F_DOCENTETE> items = new List<API_V_AUDIT_F_DOCENTETE>();
-	bool loading = false;
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    [Parameter] public bool IsInterne { get; set; } = false;
+    DB db = new DB();
+    //Components
+    private SfGrid<API_V_AUDIT_F_DOCENTETE> DefaultGrid;
+    bool IsLoaded = false;
+    DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
+    DateTime? date2;
+    private List<API_V_AUDIT_F_DOCENTETE> items = new List<API_V_AUDIT_F_DOCENTETE>();
+    bool loading = false;
 
-	List<string> domaines = new List<string>();
-	List<string> types = new List<string>();
-	List<string> users = new List<string>();
-	List<string> operations = new List<string>();
+    List<string> domaines = new List<string>();
+    List<string> types = new List<string>();
+    List<string> users = new List<string>();
+    List<string> operations = new List<string>();
 
-	string selected_domaine;
-	string selected_user;
-	string selected_type;
-	string selected_operation;
+    string selected_domaine;
+    string selected_user;
+    string selected_type;
+    string selected_operation;
 
 
-	protected override async Task OnInitializedAsync()
-	{
-		await Task.Delay(1);
-		        db = session.db;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        db = session.db;
         GC.Collect();
+        if (IsInterne)
+        {
 
-		domaines = db.API_V_AUDIT_F_DOCENTETE.Select(a => a.DomaineIntitule).Distinct().ToList();
-		users = db.API_V_AUDIT_F_DOCENTETE.Select(a => a.Sage_Name).Distinct().ToList();
-		operations = db.API_V_AUDIT_F_DOCENTETE.Select(a => a.Operation).Distinct().ToList();
+        }
+        else
+        {
+            domaines = db.API_V_AUDIT_F_DOCENTETE.Select(a => a.DomaineIntitule).Distinct().ToList();
+            users = db.API_V_AUDIT_F_DOCENTETE.Select(a => a.Sage_Name).Distinct().ToList();
+            operations = db.API_V_AUDIT_F_DOCENTETE.Select(a => a.Operation).Distinct().ToList();
+        }
 
-		await UpdateGrid();
-		IsLoaded = true;
 
-	}
-	private async Task UpdateTypes()
-	{
-		types = db.API_V_AUDIT_F_DOCENTETE.Where(a => a.DomaineIntitule == selected_domaine).Select(a => a.TypeIntitule).Distinct().ToList();
-		await UpdateGrid();
-	}
-	private async Task UpdateGrid()
-	{
-		loading = true;
-		await Task.Delay(100);
-		items = db.API_V_AUDIT_F_DOCENTETE
-		.Where(a => (
-			(date1 != null && a.Timestamp >= date1) || date1 == null)
-			&& ((date2 != null && a.Timestamp <= date2) || date2 == null)
-						&& (selected_user == null || (a.Sage_Name == selected_user))
-						&& (selected_domaine == null || (a.DomaineIntitule == selected_domaine))
-						&& (selected_type == null || (a.TypeIntitule == selected_type))
-						&& (selected_operation == null || (a.Operation == selected_operation))
-				)
-				.OrderByDescending(a => a.Timestamp)
-				.ToList();
-		loading = false;
-		await Task.Delay(100);
-	}
+        await UpdateGrid();
+        IsLoaded = true;
+
+    }
+    private async Task UpdateTypes()
+    {
+        types = db.API_V_AUDIT_F_DOCENTETE.Where(a => a.DomaineIntitule == selected_domaine).Select(a => a.TypeIntitule).Distinct().ToList();
+        await UpdateGrid();
+    }
+    private async Task UpdateGrid()
+    {
+        loading = true;
+        await Task.Delay(100);
+        @if (IsInterne)
+        {
+            items = db.API_V_AUDIT_F_DOCENTETE
+            .Where(a => (
+                (date1 != null && a.Timestamp >= date1) || date1 == null)
+                && ((date2 != null && a.Timestamp <= date2) || date2 == null)
+                            && (a.Operation == "Transformation")
+                            && a.DO_Domaine == 4
+                    )
+                    .OrderByDescending(a => a.Timestamp)
+                    .ToList();
+        }
+        else
+        {
+            items = db.API_V_AUDIT_F_DOCENTETE
+                .Where(a => (
+                    (date1 != null && a.Timestamp >= date1) || date1 == null)
+                    && ((date2 != null && a.Timestamp <= date2) || date2 == null)
+                                && (selected_user == null || (a.Sage_Name == selected_user))
+                                && (selected_domaine == null || (a.DomaineIntitule == selected_domaine))
+                                && (selected_type == null || (a.TypeIntitule == selected_type))
+                                && (selected_operation == null || (a.Operation == selected_operation))
+                        )
+                        .OrderByDescending(a => a.Timestamp)
+                        .ToList();
+        }
+
+        loading = false;
+        await Task.Delay(100);
+    }
 
 
 }

@@ -34,7 +34,7 @@
                          <Template>
                              <RadzenLabel Text="OPERATION" Component="operation" />
                              <div style="padding-left: 10px; margin-right: 0px;" id="operation">
-                                  <SfDropDownList ShowClearButton Width="130px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@operations" TValue="string" TItem="string" @bind-Value="@selected_operation">
+                                  <SfDropDownList ShowClearButton Width="140px" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains" AllowFiltering DataSource="@operations" TValue="string" TItem="string" @bind-Value="@selected_operation">
                                        <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => UpdateGrid())"/>
                                      </SfDropDownList>
                                  </div>
