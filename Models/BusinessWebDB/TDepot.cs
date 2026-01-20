@@ -12,6 +12,7 @@ namespace BusinessWeb.Models.BusinessWebDB
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
+        [MaxLength(100)]
         public string UserName { get; set; }
 
         public int Societe { get; set; }

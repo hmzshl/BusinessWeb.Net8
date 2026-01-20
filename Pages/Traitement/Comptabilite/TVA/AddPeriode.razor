@@ -1,0 +1,118 @@
+﻿<SfToolbar CssClass="btns">
+    <ToolbarItems>
+        <ToolbarItem Align="ItemAlign.Right">
+            <Template>
+                <SfButton Variant="Variant.Outlined" IconCss="e-icons e-save" IsPrimary="true" OnClick="OnSave">Enregistrer</SfButton>
+            </Template>
+        </ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+
+<Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="8" Context="FormContext">
+    <Card>
+        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Début" LabelColSpan="8">
+            <SfDatePicker Readonly="@(!IsNew)" TValue="DateTime ?" @bind-Value="@row.DateDebut">
+                <DatePickerEvents TValue="DateTime ?" ValueChange="ValueChangeHandler"></DatePickerEvents>
+            </SfDatePicker>
+        </FormItem>
+        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Fin" LabelColSpan="8">
+            <SfDatePicker TValue="DateTime ?" @bind-Value="@row.DateFin" Readonly />
+        </FormItem>
+        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Intitulé" LabelColSpan="8">
+            <SfTextBox @bind-Value="@row.Intitule" Readonly />
+        </FormItem>
+    </Card>
+</Form>
+
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    DB db = new DB();
+    private API_T_Declaration row = new API_T_Declaration();
+    private API_T_Declaration prev = new API_T_Declaration();
+    bool IsNew = true;
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        var dt = db.API_T_Declaration.Where(a => a.SocieteId == (session.Societe.id));
+        if (dt.Any())
+        {
+            IsNew = false;
+            prev = dt.OrderByDescending(a => a.DateDebut).First();
+            row.DateDebut = prev.DateFin?.AddDays(1);
+            if (session.Societe.Periode == 0)
+            {
+                row.DateFin = row.DateDebut?.AddMonths(1).AddDays(-1);
+            }
+            if (session.Societe.Periode == 1)
+            {
+                row.DateFin = row.DateDebut?.AddMonths(3).AddDays(-1);
+            }
+            GenerateIntitule();
+        }
+    }
+
+    public void ValueChangeHandler(ChangedEventArgs<DateTime?> args)
+    {
+        if(session.Societe.Periode == 0)
+        {
+            row.DateFin = row.DateDebut?.AddMonths(1).AddDays(-1);
+        }
+        if (session.Societe.Periode == 1)
+        {
+            row.DateFin = row.DateDebut?.AddMonths(3).AddDays(-1);
+        }
+        GenerateIntitule();
+    }
+    private void GenerateIntitule()
+    {
+        if (!row.DateDebut.HasValue || !row.DateFin.HasValue)
+            return;
+
+        var startDate = row.DateDebut.Value;
+        var endDate = row.DateFin.Value;
+
+        string periodName;
+
+        if (session.Societe.Periode == 0) // Monthly
+        {
+            // Get French month name
+            var culture = new System.Globalization.CultureInfo("fr-FR");
+            string monthName = culture.DateTimeFormat.GetMonthName(startDate.Month);
+            periodName = $"{char.ToUpper(monthName[0])}{monthName.Substring(1)} {startDate.Year}";
+        }
+        else // Quarterly
+        {
+            int quarter = (startDate.Month - 1) / 3 + 1;
+            periodName = $"Trimestre {quarter} {startDate.Year}";
+        }
+
+        row.Intitule = $"{periodName}";
+    }
+    private async Task OnSave()
+    {
+        try
+        {
+            
+            // Set basic properties
+            row.SocieteId = session.Societe.id;
+            row.DateSoumission = DateTime.Now;
+            row.Statut = "Brouillon";
+
+            // Add to database
+            db.API_T_Declaration.Add(row);
+            await db.SaveChangesAsync();
+            DialogService.Close();
+        }
+        catch (Exception ex)
+        {
+            // Handle error (show error message)
+            Console.WriteLine($"Error saving declaration: {ex.Message}");
+        }
+    }
+
+    private void OnCancel()
+    {
+        DialogService.Close();
+    }
+}

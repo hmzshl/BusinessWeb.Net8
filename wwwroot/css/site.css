@@ -2237,10 +2237,6 @@ th {
     padding-top: 10px;
 }
 
-.rz-button.rz-primary.rz-shade-default {
-    background-color: rgba(13, 110, 253);
-}
-
 input {
     padding-left: 5px !important;
 }
@@ -2250,8 +2246,8 @@ input {
 }
 
 .rz-label {
-    margin: 10px !important;
-    font-weight: 700 !important;
+    margin: 11px !important;
+    font-weight: 500 !important;
     font-family: 'Ubuntu' !important;
 }
 
@@ -2278,10 +2274,6 @@ input {
 
 .e-filemanager .e-address .e-search-wrap .e-input-group.e-control-wrapper:not(.e-success), .e-filemanager .e-fe-search {
     background: white !important;
-}
-
-.rz-button-sm .rzi {
-    color: rgba(13, 110, 253);
 }
 
 .e-grid.e-wrap .e-columnheader .e-headercelldiv {
@@ -2545,6 +2537,12 @@ audio, canvas, embed, iframe, img, object, svg, video {
     display: unset !important;
 }
 .rz-panel-menu .rz-navigation-item-text {
+    flex: auto;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: small;
+}
+.rz-navigation-item-wrapper .rz-panel-menu .rz-navigation-item-text {
     flex: auto;
     text-transform: uppercase;
     font-weight: 300;

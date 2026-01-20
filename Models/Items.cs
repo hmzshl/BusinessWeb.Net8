@@ -8,5 +8,15 @@
         public short? ShortId { get; set; }
         public string Icon { get; set; }
         public string Description { get; set; }
-    }
+		public string TextID { get; set; }
+		public Items(int id, string name)
+		{
+			Id = id;
+			Name = name;
+		}
+		public Items()
+		{
+
+		}
+	}
 }

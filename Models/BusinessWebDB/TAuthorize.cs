@@ -16,12 +16,16 @@ namespace BusinessWeb.Models.BusinessWebDB
 
         public int SelectedAPP { get; set; }
 
+        [MaxLength(450)]
         public string UserID { get; set; }
 
+        [MaxLength(100)]
         public string Title { get; set; }
 
+        [MaxLength(100)]
         public string Url { get; set; }
 
+        [MaxLength(100)]
         public string Description { get; set; }
 
         public bool Visible { get; set; }

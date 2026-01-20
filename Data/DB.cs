@@ -9,11 +9,11 @@ namespace BusinessWeb.Data;
 
 public partial class DB : DbContext
 {
-    public DB() 
-    { 
+    public DB()
+    {
 
-    }
-    public DB(DbContextOptions<DB> options)
+	}
+	public DB(DbContextOptions<DB> options)
         : base(options)
     {
     }
@@ -94,6 +94,8 @@ public partial class DB : DbContext
 
     public virtual DbSet<API_T_CarteDisque> API_T_CarteDisque { get; set; }
 
+    public virtual DbSet<API_T_CategorieAchat> API_T_CategorieAchat { get; set; }
+
     public virtual DbSet<API_T_Caution> API_T_Caution { get; set; }
 
     public virtual DbSet<API_T_CentreCharge> API_T_CentreCharge { get; set; }
@@ -140,6 +142,8 @@ public partial class DB : DbContext
 
     public virtual DbSet<API_T_Config> API_T_Config { get; set; }
 
+    public virtual DbSet<API_T_Declaration> API_T_Declaration { get; set; }
+
     public virtual DbSet<API_T_Depot_User> API_T_Depot_User { get; set; }
 
     public virtual DbSet<API_T_DocumentEntete> API_T_DocumentEntete { get; set; }
@@ -158,17 +162,27 @@ public partial class DB : DbContext
 
     public virtual DbSet<API_T_FC_RepasComposeDetail> API_T_FC_RepasComposeDetail { get; set; }
 
+    public virtual DbSet<API_T_Facture> API_T_Facture { get; set; }
+
+    public virtual DbSet<API_T_FactureTaux> API_T_FactureTaux { get; set; }
+
+    public virtual DbSet<API_T_FichierJoint> API_T_FichierJoint { get; set; }
+
     public virtual DbSet<API_T_FraisEntete> API_T_FraisEntete { get; set; }
 
     public virtual DbSet<API_T_FraisLigne> API_T_FraisLigne { get; set; }
 
     public virtual DbSet<API_T_HistoriqueConnexion> API_T_HistoriqueConnexion { get; set; }
 
+    public virtual DbSet<API_T_HistoriqueModification> API_T_HistoriqueModification { get; set; }
+
     public virtual DbSet<API_T_HistoriquePiece> API_T_HistoriquePiece { get; set; }
 
     public virtual DbSet<API_T_ImportLog> API_T_ImportLog { get; set; }
 
     public virtual DbSet<API_T_Information> API_T_Information { get; set; }
+
+    public virtual DbSet<API_T_License> API_T_License { get; set; }
 
     public virtual DbSet<API_T_Materiel> API_T_Materiel { get; set; }
 
@@ -191,6 +205,8 @@ public partial class DB : DbContext
     public virtual DbSet<API_T_OrdreFabricationOperation> API_T_OrdreFabricationOperation { get; set; }
 
     public virtual DbSet<API_T_OrdreFabricationPointage> API_T_OrdreFabricationPointage { get; set; }
+
+    public virtual DbSet<API_T_Paiement> API_T_Paiement { get; set; }
 
     public virtual DbSet<API_T_Personnel> API_T_Personnel { get; set; }
 
@@ -230,7 +246,11 @@ public partial class DB : DbContext
 
     public virtual DbSet<API_T_Site_User> API_T_Site_User { get; set; }
 
+    public virtual DbSet<API_T_Taxe> API_T_Taxe { get; set; }
+
     public virtual DbSet<API_T_TaxeTonnage> API_T_TaxeTonnage { get; set; }
+
+    public virtual DbSet<API_T_Tiers> API_T_Tiers { get; set; }
 
     public virtual DbSet<API_T_Ville> API_T_Ville { get; set; }
 
@@ -305,6 +325,8 @@ public partial class DB : DbContext
     public virtual DbSet<API_V_MATERIEL> API_V_MATERIEL { get; set; }
 
     public virtual DbSet<API_V_MATERIELENTRETIEN> API_V_MATERIELENTRETIEN { get; set; }
+
+    public virtual DbSet<API_V_NOTEFRAISENTETE> API_V_NOTEFRAISENTETE { get; set; }
 
     public virtual DbSet<API_V_ORDREFABRICATION> API_V_ORDREFABRICATION { get; set; }
 
@@ -2401,6 +2423,13 @@ public partial class DB : DbContext
                 .HasConstraintName("fk_api_t_cartedisque");
         });
 
+        modelBuilder.Entity<API_T_CategorieAchat>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__API_T_Categ__3214EC077DF26EDF");
+
+            entity.Property(e => e.Nom).HasMaxLength(255);
+        });
+
         modelBuilder.Entity<API_T_Caution>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Caution_id");
@@ -3253,6 +3282,21 @@ public partial class DB : DbContext
             entity.Property(e => e.ModificationUser).HasMaxLength(255);
         });
 
+        modelBuilder.Entity<API_T_Declaration>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__API_T_Decla__3214EC0733269517");
+
+            entity.Property(e => e.DateDebut).HasColumnType("datetime");
+            entity.Property(e => e.DateFin).HasColumnType("datetime");
+            entity.Property(e => e.DateSoumission).HasColumnType("datetime");
+            entity.Property(e => e.Intitule).HasMaxLength(255);
+            entity.Property(e => e.Periode).HasColumnType("datetime");
+            entity.Property(e => e.Statut).HasMaxLength(50);
+            entity.Property(e => e.TVACollectee).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TVADeductible).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.TVANette).HasColumnType("decimal(18, 2)");
+        });
+
         modelBuilder.Entity<API_T_Depot_User>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_Depot_User_id");
@@ -3453,6 +3497,77 @@ public partial class DB : DbContext
                 .HasConstraintName("fk_api_t_fc_repascomposedetail");
         });
 
+        modelBuilder.Entity<API_T_Facture>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__API_T_Factu__3214EC076117F25A");
+
+            entity.Property(e => e.ClientFournisseur).HasMaxLength(255);
+            entity.Property(e => e.DateFacture).HasColumnType("datetime");
+            entity.Property(e => e.DateReglement).HasColumnType("datetime");
+            entity.Property(e => e.EC_Lettrage)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.ICE).HasMaxLength(50);
+            entity.Property(e => e.ModeReglement).HasMaxLength(50);
+            entity.Property(e => e.MontantHT).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.MontantTTC).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.MontantTVA).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Nature).HasMaxLength(100);
+            entity.Property(e => e.Numero).HasMaxLength(100);
+            entity.Property(e => e.SourceFacture).HasMaxLength(100);
+            entity.Property(e => e.Src)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.Taxe).HasColumnType("decimal(24, 6)");
+
+            entity.HasOne(d => d.CategorieAchat).WithMany(p => p.API_T_Facture)
+                .HasForeignKey(d => d.CategorieAchatId)
+                .HasConstraintName("FK_API_T_Facture_API_T_CategorieAchat");
+
+            entity.HasOne(d => d.Declaration).WithMany(p => p.API_T_Facture)
+                .HasForeignKey(d => d.DeclarationId)
+                .HasConstraintName("FK_API_T_Facture_API_T_Declaration");
+
+            entity.HasOne(d => d.ReglNavigation).WithMany(p => p.API_T_Facture)
+                .HasForeignKey(d => d.Regl)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_API_T_Facture_API_T_paiement");
+        });
+
+        modelBuilder.Entity<API_T_FactureTaux>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_FactureTaux_id");
+
+            entity.Property(e => e.CG_Num)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.EC_Lettrage)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.HT).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.TTC).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.TVA).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.Taux).HasColumnType("decimal(24, 6)");
+
+            entity.HasOne(d => d.FactureNavigation).WithMany(p => p.API_T_FactureTaux)
+                .HasForeignKey(d => d.Facture)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_API_T_Facturetaux_API_T_Facture");
+        });
+
+        modelBuilder.Entity<API_T_FichierJoint>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__API_T_Fichi__3214EC0770DEED1E");
+
+            entity.Property(e => e.DateAjout).HasColumnType("datetime");
+            entity.Property(e => e.NomFichier).HasMaxLength(255);
+            entity.Property(e => e.URL).HasMaxLength(500);
+
+            entity.HasOne(d => d.Facture).WithMany(p => p.API_T_FichierJoint)
+                .HasForeignKey(d => d.FactureId)
+                .HasConstraintName("FK_API_T_FichierJoint_API_T_Facture");
+        });
+
         modelBuilder.Entity<API_T_FraisEntete>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_FraisEntete_id");
@@ -3530,6 +3645,14 @@ public partial class DB : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<API_T_HistoriqueModification>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__API_T_Histo__3214EC07E6E4896A");
+
+            entity.Property(e => e.DateModification).HasColumnType("datetime");
+            entity.Property(e => e.TableAffectee).HasMaxLength(100);
+        });
+
         modelBuilder.Entity<API_T_HistoriquePiece>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_HistoriquePiece_id");
@@ -3583,6 +3706,16 @@ public partial class DB : DbContext
             entity.Property(e => e.Valeur)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<API_T_License>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__API_T_Licen__3214EC07D4A73B44");
+
+            entity.Property(e => e.DateDebut).HasColumnType("datetime");
+            entity.Property(e => e.DateFin).HasColumnType("datetime");
+            entity.Property(e => e.Statut).HasMaxLength(50);
+            entity.Property(e => e.TypeLicense).HasMaxLength(100);
         });
 
         modelBuilder.Entity<API_T_Materiel>(entity =>
@@ -3925,6 +4058,64 @@ public partial class DB : DbContext
                 .HasForeignKey(d => d.Presonnel)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_api_t_ordrefabricationpointage_3");
+        });
+
+        modelBuilder.Entity<API_T_Paiement>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_Paiement_id");
+
+            entity.Property(e => e.CG_Num)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Intitule)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.Date).HasColumnType("datetime");
+            entity.Property(e => e.EC_Date).HasColumnType("datetime");
+            entity.Property(e => e.EC_DateRappro).HasColumnType("datetime");
+            entity.Property(e => e.EC_Intitule)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.EC_Lettrage)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+            entity.Property(e => e.EC_Montant).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.EC_Piece)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.EC_RefPiece)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.JM_Date).HasColumnType("datetime");
+            entity.Property(e => e.JO_Num)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.ModePaiementChar)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.MoisRappro)
+                .HasMaxLength(40)
+                .IsUnicode(false);
+            entity.Property(e => e.RG_Date).HasColumnType("datetime");
+            entity.Property(e => e.RG_Echeance).HasColumnType("datetime");
+            entity.Property(e => e.RG_Libelle)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.RG_Piece)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.RG_Reference)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Src)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.SrcRappro)
+                .HasMaxLength(30)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<API_T_Personnel>(entity =>
@@ -4444,6 +4635,19 @@ public partial class DB : DbContext
                 .IsUnicode(false);
         });
 
+        modelBuilder.Entity<API_T_Taxe>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_Taxe_id");
+
+            entity.Property(e => e.CG_Num)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.Intitule)
+                .HasMaxLength(69)
+                .IsUnicode(false);
+            entity.Property(e => e.TA_Taux).HasColumnType("decimal(24, 6)");
+        });
+
         modelBuilder.Entity<API_T_TaxeTonnage>(entity =>
         {
             entity.HasKey(e => e.id).HasName("Pk_API_T_TaxeTonnage_id");
@@ -4462,6 +4666,27 @@ public partial class DB : DbContext
                 .HasForeignKey(d => d.Materiel)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_api_t_taxetonnage");
+        });
+
+        modelBuilder.Entity<API_T_Tiers>(entity =>
+        {
+            entity.HasKey(e => e.id).HasName("Pk_API_T_Tiers_id");
+
+            entity.Property(e => e.CT_Intitule)
+                .HasMaxLength(150)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.ICE)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.IdF)
+                .HasMaxLength(30)
+                .IsUnicode(false);
+            entity.Property(e => e.NatureService)
+                .HasMaxLength(255)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<API_T_Ville>(entity =>
@@ -7065,6 +7290,57 @@ public partial class DB : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Qte).HasColumnType("decimal(38, 6)");
+        });
+
+        modelBuilder.Entity<API_V_NOTEFRAISENTETE>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("API_V_NOTEFRAISENTETE");
+
+            entity.Property(e => e.CA_Intitule)
+                .HasMaxLength(35)
+                .IsUnicode(false);
+            entity.Property(e => e.CA_Num)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.CO_Nom)
+                .HasMaxLength(35)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Intitule)
+                .HasMaxLength(69)
+                .IsUnicode(false);
+            entity.Property(e => e.CT_Num)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.CreationHost).HasMaxLength(255);
+            entity.Property(e => e.CreationIP).HasMaxLength(45);
+            entity.Property(e => e.CreationUser).HasMaxLength(255);
+            entity.Property(e => e.Date).HasColumnType("smalldatetime");
+            entity.Property(e => e.Intitule)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Libelle).HasColumnType("text");
+            entity.Property(e => e.ModificationHost).HasMaxLength(255);
+            entity.Property(e => e.ModificationIP).HasMaxLength(45);
+            entity.Property(e => e.ModificationUser).HasMaxLength(255);
+            entity.Property(e => e.Montant).HasColumnType("decimal(24, 6)");
+            entity.Property(e => e.MontantLettre)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Nom)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Numero)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Reference)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.Remarque)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.ValideDate).HasColumnType("smalldatetime");
         });
 
         modelBuilder.Entity<API_V_ORDREFABRICATION>(entity =>

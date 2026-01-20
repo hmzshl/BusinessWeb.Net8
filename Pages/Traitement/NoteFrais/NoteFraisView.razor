@@ -44,7 +44,7 @@
                     <SfGrid Height="100%" AllowResizing AllowSelection AllowMultiSorting ShowColumnChooser="true"
                             ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items">
                         <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-                        <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_T_NoteFraisEntete"></GridEvents>
+                        <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_NOTEFRAISENTETE"></GridEvents>
                         <GridPageSettings PageSize="100"></GridPageSettings>
                         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                         <GridTemplates>
@@ -52,27 +52,50 @@
                                 <Empty></Empty>
                             </EmptyRecordTemplate>
                         </GridTemplates>
+                        <GridAggregates>
+                            <GridAggregate>
+                                <GridAggregateColumns>
+                                    <GridAggregateColumn Field="@nameof(API_V_NOTEFRAISENTETE.Montant)" Type="AggregateType.Sum" Format="N2">
+                                        <FooterTemplate>
+                                            @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div>
+                                                    @SumValue.Sum
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+                                    </GridAggregateColumn>
+                                    <GridAggregateColumn Field="@nameof(API_V_NOTEFRAISENTETE.Numero)" Type="AggregateType.Count" Format="N0">
+                                        <FooterTemplate>
+                                            @{
+                                                var SumValue = (context as AggregateTemplateContext);
+                                                <div>
+                                                    @SumValue.Count
+                                                </div>
+                                            }
+                                        </FooterTemplate>
+                                    </GridAggregateColumn>
+                                </GridAggregateColumns>
+                            </GridAggregate>
+                        </GridAggregates>
                         <GridColumns>
-                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Numero)" HeaderText="Numéro"></GridColumn>
-                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
-                            <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Libelle)" HeaderText="Libellé"></GridColumn>
-                            <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.CT_Num)" HeaderText="CT Num"></GridColumn>
-                            <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.CA_Num)" HeaderText="CA Num"></GridColumn>
-                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Personnel)" HeaderText="Personnel"></GridColumn>
-                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Materiel)" HeaderText="Matériel"></GridColumn>
-                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Montant)" HeaderText="Montant"></GridColumn>
-                            <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.MontantLettre)" HeaderText="Montant en Lettres"></GridColumn>
-                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Type)" HeaderText="Type"></GridColumn>
-                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Site)" HeaderText="Site"></GridColumn>
-                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Projet)" HeaderText="Projet"></GridColumn>
-                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Affectation)" HeaderText="Affectation"></GridColumn>
-                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Representant)" HeaderText="Représentant"></GridColumn>
-                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Reference)" HeaderText="Référence"></GridColumn>
-                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Remarque)" HeaderText="Remarque"></GridColumn>
-                            <GridColumn Visible="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Valide)" HeaderText="Validé"></GridColumn>
-                            <GridColumn Visible="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.ValideDate)" HeaderText="Date Validation" Format="dd/MM/yy"></GridColumn>
-                            <GridColumn Visible="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Creation)" HeaderText="Création" Format="dd/MM/yy HH:mm"></GridColumn>
-                            <GridColumn Visible="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_NoteFraisEntete.Modification)" HeaderText="Modification" Format="dd/MM/yy HH:mm"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.Numero)" HeaderText="Numéro"></GridColumn>
+                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.Date)" HeaderText="Date" Format="dd/MM/yy"></GridColumn>
+
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.CT_Num)" HeaderText="Tiers"></GridColumn>
+                            <GridColumn Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.CT_Intitule)" HeaderText="Intitule Tiers"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.CA_Num)" HeaderText="Affaire"></GridColumn>
+                            <GridColumn Width="180" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.CA_Intitule)" HeaderText="Intitule Affaire"></GridColumn>
+                            <GridColumn Width="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.Nom)" HeaderText="Personnel"></GridColumn>
+                            <GridColumn Width="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.Intitule)" HeaderText="Matériel"></GridColumn>
+
+                            <GridColumn Width="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.CO_Nom)" HeaderText="Représentant"></GridColumn>
+                            <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.Libelle)" HeaderText="Libellé"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                            <GridColumn Visible="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.Valide)" HeaderText="Validé"></GridColumn>
+                            <GridColumn Visible="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.ValideDate)" HeaderText="Date Validation" Format="dd/MM/yy"></GridColumn>
+                            <GridColumn Visible="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.Creation)" HeaderText="Création" Format="dd/MM/yy HH:mm"></GridColumn>
+                            <GridColumn Visible="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_NOTEFRAISENTETE.Modification)" HeaderText="Modification" Format="dd/MM/yy HH:mm"></GridColumn>
                         </GridColumns>
                         <SfSpinner @bind-Visible="@loading">
                         </SfSpinner>
@@ -99,12 +122,11 @@ else
     [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
     DB db = new DB();
     //Components
-    private SfGrid<API_T_NoteFraisEntete> DefaultGrid;
+    private SfGrid<API_V_NOTEFRAISENTETE> DefaultGrid;
     bool IsLoaded = false;
     //End components
 
-    private ICollection<API_T_NoteFraisEntete> items;
-    private List<API_V_NoteFraisEntete> v_items = new List<API_V_NoteFraisEntete>();
+    private ICollection<API_V_NOTEFRAISENTETE> items;
     bool loading = false;
     DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
     DateTime? date2;
@@ -122,21 +144,14 @@ else
     }
     private async Task LoadData()
     {
-        items = session.db.API_T_NoteFraisEntete.AsNoTracking().OrderByDescending(a => a.Date).ToList();
+        items = session.db.API_V_NOTEFRAISENTETE.AsNoTracking().OrderByDescending(a => a.Date).ToList();
         foreach(var item in items)
         {
             
         }
     }
-    public class API_V_NoteFraisEntete : API_T_NoteFraisEntete
-    {
-        public string Personnel_Libelle { get; set; }
-        public string Materiel_Libelle { get; set; }
-        public string CA_Intitule { get; set; }
-        public string CT_Intitule { get; set; }
-    }
 
-    protected async Task Edit(RecordDoubleClickEventArgs<API_T_NoteFraisEntete> args)
+    protected async Task Edit(RecordDoubleClickEventArgs<API_V_NOTEFRAISENTETE> args)
     {
         await DialogService.OpenAsync<NoteFraisFiche>(args.RowData.Numero,
     new Dictionary<string, object>() { { "id", args.RowData.id } },
@@ -150,7 +165,7 @@ else
         new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
         await LoadData();
     }
-    private async Task OnActionBegin(ActionEventArgs<API_T_NoteFraisEntete> args)
+    private async Task OnActionBegin(ActionEventArgs<API_V_NOTEFRAISENTETE> args)
     {
         if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
     || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
@@ -165,7 +180,8 @@ else
         }
         if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
         {
-            db.Database.ExecuteSqlRaw("DELETE FROM API_T_MATERIEL WHERE id = {0}", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_NoteFraisLigne WHERE Entete = {0}", args.Data.id);
+            db.Database.ExecuteSqlRaw("DELETE FROM API_T_NoteFraisEntete WHERE id = {0}", args.Data.id);
             db.SaveChanges();
             await LoadData();
         }

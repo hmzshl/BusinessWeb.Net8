@@ -17,6 +17,7 @@ namespace BusinessWeb.Models.BusinessWebDB
 
         public string ConcurrencyStamp { get; set; }
 
+        [MaxLength(256)]
         public string Email { get; set; }
 
         public bool EmailConfirmed { get; set; }
@@ -25,8 +26,10 @@ namespace BusinessWeb.Models.BusinessWebDB
 
         public DateTimeOffset? LockoutEnd { get; set; }
 
+        [MaxLength(256)]
         public string NormalizedEmail { get; set; }
 
+        [MaxLength(256)]
         public string NormalizedUserName { get; set; }
 
         public string PasswordHash { get; set; }
@@ -39,12 +42,14 @@ namespace BusinessWeb.Models.BusinessWebDB
 
         public bool TwoFactorEnabled { get; set; }
 
+        [MaxLength(256)]
         public string UserName { get; set; }
 
         public int? SelectedSociete { get; set; }
 
         public int? SelectedAPP { get; set; }
 
+        [MaxLength(100)]
         public string Intitule { get; set; }
 
         public ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }

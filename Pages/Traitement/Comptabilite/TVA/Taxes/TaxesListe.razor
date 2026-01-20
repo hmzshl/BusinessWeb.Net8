@@ -1,0 +1,184 @@
+﻿@page "/taxes"
+@attribute [Authorize]
+@if (!IsLoaded)
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+else
+{
+    <Card_1 Title="Liste des Taxes">
+
+        <div>
+            <Tabs DefaultActiveKey="1" Size="TabSize.Small" @bind-ActiveKey="@index">
+                <TabPane Key="1" Tab="Achats">
+                    <SfToolbar>
+                        <ToolbarItems>
+
+                            <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+                            <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                                <Template>
+                                    <SfTextBox Width="300px" Placeholder="RECHERCHE" ValueChanged="@(args => achatsGrid.SearchAsync(args))"></SfTextBox>
+                                </Template>
+                            </ToolbarItem>
+                        </ToolbarItems>
+                    </SfToolbar>
+                    <div style="height: 73vh;">
+                        <SfGrid Height="100%" DataSource="@achats" EnableVirtualization AllowFiltering AllowSorting @ref="@achatsGrid">
+                            <GridPageSettings PageSize="100"></GridPageSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                            <GridEditSettings AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+                            </GridEditSettings>
+                            <GridEvents OnActionBegin="OnActionBegin" TValue="API_T_Taxe"></GridEvents>
+                            <GridTemplates Context="GridContext">
+                                <EmptyRecordTemplate>
+                                    <Empty></Empty>
+                                </EmptyRecordTemplate>
+                            </GridTemplates>
+                            <GridColumns>
+                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Taxe.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                <GridColumn AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Taxe.Intitule)" HeaderText="Intitulé"></GridColumn>
+                                <GridColumn Width="130" AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Taxe.CG_Num)" HeaderText="N° Compte"></GridColumn>
+                                <GridColumn Width="130" EditorSettings="parameters" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Taxe.TA_Taux)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderText="Taux">
+                                    <Template>
+                                        @{
+                                            var data = (context as API_T_Taxe);
+                                            <b style="text-align: right;">
+                                                @((data.TA_Taux / 100).ToString("P"))
+                                            </b>
+                                        }
+                                    </Template>
+                                </GridColumn>
+                            </GridColumns>
+                        </SfGrid>
+                    </div>
+                </TabPane>
+                <TabPane Key="0" Tab="Ventes">
+                    <SfToolbar>
+                        <ToolbarItems>
+
+                            <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+                            <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                                <Template>
+                                    <SfTextBox Width="300px" Placeholder="RECHERCHE" ValueChanged="@(args => ventesGrid.SearchAsync(args))"></SfTextBox>
+                                </Template>
+                            </ToolbarItem>
+                        </ToolbarItems>
+                    </SfToolbar>
+                    <div style="height: 75vh;">
+                        <SfGrid Height="100%" DataSource="@ventes" EnableVirtualization AllowFiltering AllowSorting @ref="@ventesGrid">
+                            <GridPageSettings PageSize="100"></GridPageSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                            <GridEditSettings AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+                            </GridEditSettings>
+                            <GridEvents OnActionBegin="OnActionBegin" TValue="API_T_Taxe"></GridEvents>
+                            <GridTemplates Context="GridContext">
+                                <EmptyRecordTemplate>
+                                    <Empty></Empty>
+                                </EmptyRecordTemplate>
+                            </GridTemplates>
+                            <GridColumns>
+                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Taxe.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                <GridColumn AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Taxe.Intitule)" HeaderText="Intitulé"></GridColumn>
+                                <GridColumn Width="130" AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Taxe.CG_Num)" HeaderText="N° Compte"></GridColumn>
+                                <GridColumn Width="130" EditorSettings="parameters" EditType="EditType.NumericEdit" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Taxe.TA_Taux)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderText="Taux">
+                                    <Template>
+                                        @{
+                                            var data = (context as API_T_Taxe);
+                                            <b style="text-align: right;">
+                                                @((data.TA_Taux / 100).ToString("P"))
+                                            </b>
+                                        }
+                                    </Template>
+                                </GridColumn>
+                            </GridColumns>
+                        </SfGrid>
+                    </div>
+                </TabPane>
+
+            </Tabs>
+
+        </div>
+    </Card_1>
+}
+
+
+@code
+{
+
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    DB db = new DB();
+    private SfGrid<API_T_Taxe> ventesGrid;
+    private SfGrid<API_T_Taxe> achatsGrid;
+    private IEnumerable<API_T_Taxe> items;
+    private List<API_T_Taxe> ventes = new List<API_T_Taxe>();
+    private List<API_T_Taxe> achats = new List<API_T_Taxe>();
+    private IEnumerable<API_T_Taxe> ex_items;
+    bool loading = true;
+    bool IsLoaded = false;
+    string index = "1";
+    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "### ### ##0.00;-### ### ##0.00;#", ShowClearButton = false } };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        db = session.db;
+        ex_items = db.API_T_Taxe.AsNoTracking().Where(a => a.Societe == session.Societe.id).ToList();
+        await InitTiers();
+        await LoadData();
+        IsLoaded = true;
+    }
+    private async Task LoadData()
+    {
+        items = db.API_T_Taxe.Where(a => a.Societe == session.Societe.id).OrderBy(a => a.TA_Taux).ToList();
+        ventes = items.Where(a => a.TA_Sens == 0).ToList();
+        achats = items.Where(a => a.TA_Sens == 1).ToList();
+    }
+    private void OnActionBegin(ActionEventArgs<API_T_Taxe> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+
+            if (args.Action != "Add")
+            {
+                var local = db.Set<API_T_Taxe>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                if (local != null)
+                {
+                    db.Entry(local).State = EntityState.Detached;
+                }
+                db.Entry(args.Data).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+    }
+    private async Task InitTiers()
+    {
+        var dt = db.F_ECRITUREC.Where(a => a.CG_Num.StartsWith("4455") || a.CG_Num.StartsWith("3455")).Select(a => a.CG_Num).Distinct();
+        foreach (var item in dt)
+        {
+            var ex = ex_items.Where(a => a.CG_Num == item);
+            if (!ex.Any())
+            {
+                var tx = db.F_COMPTEG.Where(a => a.CG_Num == item).SingleOrDefault();
+                var ln = new API_T_Taxe();
+                ln.CG_Num = item;
+                ln.Intitule = tx.CG_Intitule;
+                if (item.StartsWith("4455"))
+                {
+                    ln.TA_Sens = 0;
+                }
+                else
+                {
+                    ln.TA_Sens = 1;
+                }
+                ln.Societe = session.Societe.id;
+                db.Add(ln);
+            }
+        }
+        db.SaveChanges();
+    }
+
+
+}

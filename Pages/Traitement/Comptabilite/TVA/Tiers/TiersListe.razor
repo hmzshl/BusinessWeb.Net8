@@ -1,0 +1,164 @@
+﻿@page "/tiers"
+@attribute [Authorize]
+@if (!IsLoaded)
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+else
+{
+    <Card_1 Title="Liste des Tiers">
+
+        <div>
+            <Tabs DefaultActiveKey="1" Size="TabSize.Small" @bind-ActiveKey="@index">
+                <TabPane Key="1" Tab="Fournisseurs">
+                    <SfToolbar>
+                        <ToolbarItems>
+
+                            <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+                            <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                                <Template>
+                                    <SfTextBox Width="300px" Placeholder="RECHERCHE" ValueChanged="@(args => FournisseursGrid.SearchAsync(args))"></SfTextBox>
+                                </Template>
+                            </ToolbarItem>
+                        </ToolbarItems>
+                    </SfToolbar>
+                    <div style="height: 73vh;">
+                        <SfGrid Height="100%" DataSource="@fournisseurs" EnableVirtualization AllowFiltering AllowSorting @ref="@FournisseursGrid">
+                            <GridPageSettings PageSize="100"></GridPageSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                            <GridEditSettings AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+                            </GridEditSettings>
+                            <GridEvents OnActionBegin="OnActionBegin" TValue="API_T_Tiers"></GridEvents>
+                            <GridTemplates Context="GridContext">
+                                <EmptyRecordTemplate>
+                                    <Empty></Empty>
+                                </EmptyRecordTemplate>
+                            </GridTemplates>
+                            <GridColumns>
+                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Tiers.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                <GridColumn AllowEditing="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Tiers.CT_Num)" HeaderText="Numéro"></GridColumn>
+                                <GridColumn AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Tiers.CT_Intitule)" HeaderText="Intitulé"></GridColumn>
+
+                                <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Tiers.ICE)" HeaderText="ICE"></GridColumn>
+                                <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Tiers.IdF)" HeaderText="I.F"></GridColumn>
+                                <GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Tiers.NatureService)" HeaderText="Nature Service"></GridColumn>
+                            </GridColumns>
+                        </SfGrid>
+                    </div>
+                </TabPane>
+                <TabPane Key="0" Tab="Clients">
+                    <SfToolbar>
+                        <ToolbarItems>
+
+                            <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
+                            <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                                <Template>
+                                    <SfTextBox Width="300px" Placeholder="RECHERCHE" ValueChanged="@(args => ClientsGrid.SearchAsync(args))"></SfTextBox>
+                                </Template>
+                            </ToolbarItem>
+                        </ToolbarItems>
+                    </SfToolbar>
+                    <div style="height: 75vh;">
+                        <SfGrid Height="100%" DataSource="@clients" EnableVirtualization AllowFiltering AllowSorting @ref="@ClientsGrid">
+                            <GridPageSettings PageSize="100"></GridPageSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                            <GridEditSettings AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+                            </GridEditSettings>
+                            <GridEvents OnActionBegin="OnActionBegin" TValue="API_T_Tiers"></GridEvents>
+                            <GridTemplates Context="GridContext">
+                                <EmptyRecordTemplate>
+                                    <Empty></Empty>
+                                </EmptyRecordTemplate>
+                            </GridTemplates>
+                            <GridColumns>
+                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_Tiers.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                                <GridColumn AllowEditing="false" Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Tiers.CT_Num)" HeaderText="Numéro"></GridColumn>
+                                <GridColumn AllowEditing="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Tiers.CT_Intitule)" HeaderText="Intitulé"></GridColumn>
+
+                                <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Tiers.ICE)" HeaderText="ICE"></GridColumn>
+                                <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Tiers.IdF)" HeaderText="I.F"></GridColumn>
+                                <GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Tiers.NatureService)" HeaderText="Nature Service"></GridColumn>
+                            </GridColumns>
+                        </SfGrid>
+                    </div>
+                </TabPane>
+
+            </Tabs>
+
+        </div>
+    </Card_1>
+}
+
+
+@code
+{
+
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    DB db = new DB();
+    private SfGrid<API_T_Tiers> ClientsGrid;
+    private SfGrid<API_T_Tiers> FournisseursGrid;
+    private IEnumerable<API_T_Tiers> items;
+    private List<API_T_Tiers> clients = new List<API_T_Tiers>();
+    private List<API_T_Tiers> fournisseurs = new List<API_T_Tiers>();
+    private IEnumerable<API_T_Tiers> ex_items;
+    bool loading = true;
+    bool IsLoaded = false;
+    string index = "1";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        db = session.db;
+        ex_items = db.API_T_Tiers.AsNoTracking().Where(a => a.Societe == session.Societe.id).ToList();
+        await InitTiers();
+        await LoadData();
+        IsLoaded = true;
+    }
+    private async Task LoadData()
+    {
+        items = db.API_T_Tiers.Where(a => a.Societe == session.Societe.id).OrderBy(a => a.CT_Intitule).ToList();
+        clients = items.Where(a => a.CT_Type == 0).ToList();
+        fournisseurs = items.Where(a => a.CT_Type == 1).ToList();
+    }
+    private void OnActionBegin(ActionEventArgs<API_T_Tiers> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+
+            if (args.Action != "Add")
+            {
+                var local = db.Set<API_T_Tiers>().Local.FirstOrDefault(a => a.id == args.Data.id);
+                if (local != null)
+                {
+                    db.Entry(local).State = EntityState.Detached;
+                }
+                db.Entry(args.Data).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+        }
+    }
+    private async Task InitTiers()
+    {
+        var dt = db.F_COMPTET.Where(a => a.CT_Type <= 1);
+        foreach (var item in dt)
+        {
+            var ex = ex_items.Where(a => a.CT_Num == item.CT_Num);
+            if (!ex.Any())
+            {
+                var ln = new API_T_Tiers();
+                ln.CT_Num = item.CT_Num;
+                ln.CT_Intitule = item.CT_Intitule;
+                ln.CT_Type = item.CT_Type ?? 0;
+                ln.Societe = session.Societe.id;
+                db.Add(ln);
+            }
+        }
+        db.SaveChanges();
+    }
+
+
+}

@@ -1,0 +1,519 @@
+﻿<div style="padding: 0px 10px;">
+    <Tabs DefaultActiveKey="1" Size="TabSize.Small" @bind-ActiveKey="@index">
+        <TabPane Key="1" Tab="Décaissements">
+            <SfToolbar>
+                <ToolbarItems>
+                    <ToolbarItem Type="ItemType.Input" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left">
+                        <Template>
+                            <RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="4px">
+                                <RadzenLabel Text="Afficher tout"></RadzenLabel>
+                                <SfSwitch ValueChange="@(args => LoadDecaissements())" @bind-Checked="show_all" TChecked="bool"></SfSwitch>
+                            </RadzenStack>
+
+                        </Template>
+                    </ToolbarItem>
+                    <ToolbarItem TooltipText="Ajouter" Text="Ajouter" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right">
+                        <Template>
+                            <RadzenButton Variant="Variant.Outlined" ButtonType="Radzen.ButtonType.Submit" Size="Radzen.ButtonSize.Small" Icon="add" Click="AddFromSage" Text="Ajouter" />
+                        </Template>
+                    </ToolbarItem>
+                </ToolbarItems>
+            </SfToolbar>
+            <div style="padding: 10px;">
+                <RadzenTabs TabPosition="Radzen.TabPosition.Top" RenderMode="TabRenderMode.Client">
+                    <Tabs>
+                        @foreach (var item in decaiss_jo)
+                        {
+                            <RadzenTabsItem Text="@item" Style="padding: 0px 10px;">
+                                <AntDesign.Spin Spinning=Refreshing Size="AntDesign.SpinSize.Large">
+                                    <div style="height: 75vh;">
+                                        <SfGrid @ref="DecGrid" AllowPaging EnablePersistence="true" Height="100%" GridLines="GridLine.Horizontal"
+                                                AllowFiltering AllowResizing AllowSorting AllowReordering
+                                                AllowSelection AllowMultiSorting ShowColumnChooser="true"
+                                                AllowPdfExport="true" AllowExcelExport="true" DataSource="@decaiss_items.Where(a => a.JO_Num == item)">
+
+                                            <GridPageSettings PageSize="100"></GridPageSettings>
+                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                            <GridEditSettings ShowDeleteConfirmDialog="true" AllowDeleting />
+                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                            <GridEvents TValue="API_T_Paiement"></GridEvents>
+                                            <GridTemplates>
+                                                <EmptyRecordTemplate>
+                                                    <AntDesign.Empty></AntDesign.Empty>
+                                                </EmptyRecordTemplate>
+                                            </GridTemplates>
+                                            <GridAggregates>
+                                                <GridAggregate>
+                                                    <GridAggregateColumns>
+                                                        <GridAggregateColumn Field="@nameof(API_T_Paiement.EC_Montant)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                                            <FooterTemplate>
+                                                                @{
+                                                                    var value = (context as AggregateTemplateContext);
+                                                                    <div>
+                                                                        @value.Sum
+                                                                    </div>
+                                                                }
+                                                            </FooterTemplate>
+                                                            <GroupCaptionTemplate>
+                                                                @{
+                                                                    var value = (context as AggregateTemplateContext);
+                                                                    <div>
+                                                                        @value.Sum
+                                                                    </div>
+                                                                }
+                                                            </GroupCaptionTemplate>
+                                                        </GridAggregateColumn>
+                                                        <GridAggregateColumn Field="@nameof(API_T_Paiement.EC_DateRappro)" Type="AggregateType.Count" Format="#">
+                                                            <FooterTemplate>
+                                                                @{
+                                                                    var value = (context as AggregateTemplateContext);
+                                                                    <div>
+                                                                        @value.Count
+                                                                    </div>
+                                                                }
+                                                            </FooterTemplate>
+                                                            <GroupCaptionTemplate>
+                                                                @{
+                                                                    var value = (context as AggregateTemplateContext);
+                                                                    <div>
+                                                                        @value.Count
+                                                                    </div>
+                                                                }
+                                                            </GroupCaptionTemplate>
+                                                        </GridAggregateColumn>
+                                                    </GridAggregateColumns>
+                                                </GridAggregate>
+                                            </GridAggregates>
+                                            <GridColumns>
+                                                <GridColumn Format="dd/MM/yy" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.EC_DateRappro)" HeaderText="Rappro" />
+                                                <GridColumn Format="dd/MM/yy" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.RG_Date)" HeaderText="Date" />
+                                                <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.CT_Intitule)" HeaderText="Tiers" />
+                                                <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.EC_Intitule)" HeaderText="Libellé" />
+                                                <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.ModePaiementChar)" HeaderText="M.Paiement" />
+                                                <GridColumn Width="50" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.EC_Lettrage)" HeaderText="Let" />
+                                                <GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.EC_Montant)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                <GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.Src)" HeaderText="Source" />
+                                                <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Factures">
+                                                    <Template>
+                                                        @{
+                                                            var data = (context as API_T_Paiement);
+                                                            <RadzenStack Orientation="Radzen.Orientation.Vertical" Gap="0px">
+                                                                @foreach (var item in data.API_T_Facture)
+                                                                {
+                                                                    <RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="5px">
+                                                                        <div>
+                                                                            @item.DateFacture.ToString("dd/MM/yy")
+                                                                        </div>
+                                                                        <div>
+                                                                            <RadzenButton Click="@(args => FactureDetail(item))" Size="Radzen.ButtonSize.ExtraSmall" Variant="Variant.Text"
+                                                                                          Text="@item.Numero" ButtonStyle="ButtonStyle.Secondary" />
+
+                                                                        </div>
+                                                                        <b style="text-align: right; margin-left: auto;">
+                                                                            @item.MontantTTC?.ToString("N2")
+                                                                        </b>
+                                                                    </RadzenStack>
+                                                                    <Divider Style="border-color: #a18888;margin: 1px 0 !important;"></Divider>
+
+                                                                }
+                                                            </RadzenStack>
+                                                        }
+                                                    </Template>
+                                                </GridColumn>
+                                                <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Total">
+                                                    <Template>
+                                                        @{
+                                                            var data = (context as API_T_Paiement);
+                                                            <RadzenStack Orientation="Radzen.Orientation.Vertical" Gap="0px">
+                                                                <div style="text-align: right;">
+                                                                    @data.API_T_Facture.Sum(a => a.MontantTTC)?.ToString("N2")
+                                                                </div>
+                                                            </RadzenStack>
+
+                                                        }
+                                                    </Template>
+                                                </GridColumn>
+                                                <GridColumn Width="30" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="FA">
+                                                    <Template>
+                                                        @{
+                                                            var data = (context as API_T_Paiement);
+                                                            if (data.Ignored)
+                                                            {
+                                                                <div style="text-align: center;">
+                                                                    <RadzenIcon class="filled-icon" Icon="swap_horizontal_circle" IconColor="@Colors.Warning" />
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                if (data.EC_Montant == data.API_T_Facture.Sum(a => a.MontantTTC))
+                                                                {
+                                                                    <div style="text-align: center;">
+                                                                        <RadzenIcon class="filled-icon" Icon="check_circle" IconColor="@Colors.Success" />
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div style="text-align: center;">
+                                                                        <RadzenIcon class="filled-icon" Icon="info" IconColor="@Colors.Danger" />
+                                                                    </div>
+                                                                }
+                                                            }
+
+                                                        }
+                                                    </Template>
+                                                </GridColumn>
+                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="50" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                                    <Template>
+                                                        @{
+                                                            var data = (context as API_T_Paiement);
+                                                        }
+                                                        <RadzenStack Gap="2px" Orientation="Radzen.Orientation.Horizontal" JustifyContent="JustifyContent.Center" AlignItems="AlignItems.Center">
+                                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="Radzen.ButtonSize.Small" Click="@(args => DeletePaiement(data.id))"
+                                                                          Variant="Variant.Text" @onclick:stopPropagation="true" />
+                                                            <RadzenButton Click="@(args => Ignore(data.id))" ButtonStyle="ButtonStyle.Info" Icon="swap_horizontal_circle" Size="Radzen.ButtonSize.Small"
+                                                                          Variant="Variant.Text" @onclick:stopPropagation="true" />
+                                                        </RadzenStack>
+                                                    </Template>
+                                                </GridColumn>
+                                            </GridColumns>
+                                        </SfGrid>
+                                    </div>
+                                </AntDesign.Spin>
+
+                            </RadzenTabsItem>
+                        }
+                    </Tabs>
+                </RadzenTabs>
+            </div>
+        </TabPane>
+        <TabPane Key="2" Tab="Encaissements">
+            <SfToolbar>
+                <ToolbarItems>
+                    <ToolbarItem Type="ItemType.Input" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left">
+                        <Template>
+                            <RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="4px">
+                                <RadzenLabel Text="Afficher tout"></RadzenLabel>
+                                <SfSwitch ValueChange="@(args => LoadEncaissements())" @bind-Checked="show_all" TChecked="bool"></SfSwitch>
+                            </RadzenStack>
+
+                        </Template>
+                    </ToolbarItem>
+                    <ToolbarItem TooltipText="Ajouter" Text="Ajouter" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right">
+                        <Template>
+                            <RadzenButton Variant="Variant.Outlined" ButtonType="Radzen.ButtonType.Submit" Size="Radzen.ButtonSize.Small" Icon="add" Click="AddFromSage" Text="Ajouter" />
+                        </Template>
+                    </ToolbarItem>
+                </ToolbarItems>
+            </SfToolbar>
+            <div style="padding: 10px;">
+                <RadzenTabs TabPosition="Radzen.TabPosition.Top" RenderMode="TabRenderMode.Client">
+                    <Tabs>
+                        @foreach (var item in encaiss_jo)
+                        {
+                            <RadzenTabsItem Text="@item" Style="padding: 0px 10px;">
+                                <AntDesign.Spin Spinning=Refreshing Size="AntDesign.SpinSize.Large">
+                                    <div style="height: 75vh;">
+                                        <SfGrid @ref="EncGrid" AllowPaging EnablePersistence="true" Height="100%"
+                                                AllowFiltering AllowResizing AllowSorting AllowReordering
+                                                AllowSelection AllowMultiSorting ShowColumnChooser="true"
+                                                AllowPdfExport="true" AllowExcelExport="true" DataSource="@encaiss_items.Where(a => a.JO_Num == item)">
+
+
+                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                                            <GridEditSettings ShowDeleteConfirmDialog="true" AllowDeleting />
+                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                            <GridPageSettings PageSize="100"></GridPageSettings>
+                                            <GridEvents TValue="API_T_Paiement"></GridEvents>
+                                            <GridTemplates>
+                                                <EmptyRecordTemplate>
+                                                    <AntDesign.Empty></AntDesign.Empty>
+                                                </EmptyRecordTemplate>
+                                            </GridTemplates>
+                                            <GridAggregates>
+                                                <GridAggregate>
+                                                    <GridAggregateColumns>
+                                                        <GridAggregateColumn Field="@nameof(API_T_Paiement.EC_Montant)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                                            <FooterTemplate>
+                                                                @{
+                                                                    var value = (context as AggregateTemplateContext);
+                                                                    <div>
+                                                                        @value.Sum
+                                                                    </div>
+                                                                }
+                                                            </FooterTemplate>
+                                                            <GroupCaptionTemplate>
+                                                                @{
+                                                                    var value = (context as AggregateTemplateContext);
+                                                                    <div>
+                                                                        @value.Sum
+                                                                    </div>
+                                                                }
+                                                            </GroupCaptionTemplate>
+                                                        </GridAggregateColumn>
+                                                        <GridAggregateColumn Field="@nameof(API_T_Paiement.EC_DateRappro)" Type="AggregateType.Count" Format="#">
+                                                            <FooterTemplate>
+                                                                @{
+                                                                    var value = (context as AggregateTemplateContext);
+                                                                    <div>
+                                                                        @value.Count
+                                                                    </div>
+                                                                }
+                                                            </FooterTemplate>
+                                                            <GroupCaptionTemplate>
+                                                                @{
+                                                                    var value = (context as AggregateTemplateContext);
+                                                                    <div>
+                                                                        @value.Count
+                                                                    </div>
+                                                                }
+                                                            </GroupCaptionTemplate>
+                                                        </GridAggregateColumn>
+                                                    </GridAggregateColumns>
+                                                </GridAggregate>
+                                            </GridAggregates>
+                                            <GridColumns>
+                                                <GridColumn Format="dd/MM/yy" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.EC_DateRappro)" HeaderText="Rappro" />
+                                                <GridColumn Format="dd/MM/yy" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.RG_Date)" HeaderText="Date" />
+                                                <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.CT_Intitule)" HeaderText="Tiers" />
+                                                <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.EC_Intitule)" HeaderText="Libellé" />
+                                                <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.ModePaiementChar)" HeaderText="M.Paiement" />
+                                                <GridColumn Width="50" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.EC_Lettrage)" HeaderText="Let" />
+                                                <GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.EC_Montant)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                                <GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Paiement.Src)" HeaderText="Source" />
+                                                <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Factures">
+                                                    <Template>
+                                                        @{
+                                                            var data = (context as API_T_Paiement);
+                                                            <RadzenStack Orientation="Radzen.Orientation.Vertical" Gap="0px">
+                                                                @foreach (var item in data.API_T_Facture)
+                                                                {
+                                                                    <RadzenStack Orientation="Radzen.Orientation.Horizontal" Gap="5px">
+                                                                        <div>
+                                                                            @item.DateFacture.ToString("dd/MM/yy")
+                                                                        </div>
+                                                                        <div>
+                                                                            <RadzenButton Click="@(args => FactureDetail(item))" Size="Radzen.ButtonSize.ExtraSmall" Variant="Variant.Text"
+                                                                                          Text="@item.Numero" ButtonStyle="ButtonStyle.Secondary" />
+
+                                                                        </div>
+                                                                        <b style="text-align: right; margin-left: auto;">
+                                                                            @item.MontantTTC?.ToString("N2")
+                                                                        </b>
+                                                                    </RadzenStack>
+                                                                    <Divider Style="border-color: #a18888;margin: 1px 0 !important;"></Divider>
+
+                                                                }
+                                                            </RadzenStack>
+                                                        }
+                                                    </Template>
+                                                </GridColumn>
+                                                <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Total">
+                                                    <Template>
+                                                        @{
+                                                            var data = (context as API_T_Paiement);
+                                                            <RadzenStack Orientation="Radzen.Orientation.Vertical" Gap="0px">
+                                                                <div style="text-align: right;">
+                                                                    @data.API_T_Facture.Sum(a => a.MontantTTC)?.ToString("N2")
+                                                                </div>
+                                                            </RadzenStack>
+
+                                                        }
+                                                    </Template>
+                                                </GridColumn>
+                                                <GridColumn Width="30" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="FA">
+                                                    <Template>
+                                                        @{
+                                                            var data = (context as API_T_Paiement);
+                                                            if (data.Ignored)
+                                                            {
+                                                                <div style="text-align: center;">
+                                                                    <RadzenIcon class="filled-icon" Icon="swap_horizontal_circle" IconColor="@Colors.Warning" />
+                                                                </div>
+                                                            }
+                                                            else
+                                                            {
+                                                                if (data.EC_Montant == data.API_T_Facture.Sum(a => a.MontantTTC))
+                                                                {
+                                                                    <div style="text-align: center;">
+                                                                        <RadzenIcon class="filled-icon" Icon="check_circle" IconColor="@Colors.Success" />
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div style="text-align: center;">
+                                                                        <RadzenIcon class="filled-icon" Icon="info" IconColor="@Colors.Danger" />
+                                                                    </div>
+                                                                }
+                                                            }
+
+                                                        }
+                                                    </Template>
+                                                </GridColumn>
+                                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="50" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                                    <Template>
+                                                        @{
+                                                            var data = (context as API_T_Paiement);
+                                                        }
+                                                        <RadzenStack Gap="2px" Orientation="Radzen.Orientation.Horizontal" JustifyContent="JustifyContent.Center" AlignItems="AlignItems.Center">
+                                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="Radzen.ButtonSize.Small" Click="@(args => DeletePaiement(data.id))"
+                                                                          Variant="Variant.Text" @onclick:stopPropagation="true" />
+                                                            <RadzenButton Click="@(args => Ignore(data.id))" ButtonStyle="ButtonStyle.Info" Icon="swap_horizontal_circle" Size="Radzen.ButtonSize.Small"
+                                                                          Variant="Variant.Text" @onclick:stopPropagation="true" />
+                                                        </RadzenStack>
+                                                    </Template>
+                                                </GridColumn>
+                                            </GridColumns>
+
+                                        </SfGrid>
+                                    </div>
+                                </AntDesign.Spin>
+
+                            </RadzenTabsItem>
+                        }
+                    </Tabs>
+                </RadzenTabs>
+            </div>
+        </TabPane>
+        <TabPane Key="4" Tab="Tableau de déductions">
+            <TableauDed Tiers="Fournisseur" decaiss_items="@decaiss_items" />
+        </TabPane>
+        <TabPane Key="5" Tab="TVA Facturée">
+            <TableauDed Tiers="Client" decaiss_items="@encaiss_items" />
+        </TabPane>
+        <TabPane Disabled Key="6" Tab="TVA Due">
+
+        </TabPane>
+    </Tabs>
+</div>
+
+
+
+
+
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    DB db = new DB();
+    [Parameter] public int id { get; set; }
+    [Parameter] public int Societe { get; set; }
+    API_T_Declaration row = new API_T_Declaration();
+    bool Refreshing = false;
+    List<API_T_Paiement> encaiss_items = new List<API_T_Paiement>();
+    List<API_T_Paiement> decaiss_items = new List<API_T_Paiement>();
+    List<string> encaiss_jo = new List<string>();
+    List<string> decaiss_jo = new List<string>();
+    string index = "1";
+    bool show_all = false;
+    SfGrid<API_T_Paiement> DecGrid;
+    SfGrid<API_T_Paiement> EncGrid;
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        if (id == 0)
+        {
+            row = new API_T_Declaration();
+            row.SocieteId = Societe;
+            row.DateSoumission = DateTime.Now;
+        }
+        else
+        {
+            row = db.API_T_Declaration.Where(a => a.Id == id).SingleOrDefault();
+            await LoadDecaissements();
+            await LoadEncaissements();
+        }
+
+    }
+    private async Task DeletePaiement(int id)
+    {
+        var ln = db.API_T_Paiement.Where(a => a.id == id).Include(a => a.API_T_Facture).SingleOrDefault();
+        db.API_T_Facture.RemoveRange(ln.API_T_Facture);
+        db.API_T_Paiement.Remove(ln);
+        db.SaveChanges();
+        if(index == "1")
+        {
+            await LoadDecaissements();
+        }
+        if(index == "2")
+        {
+            await LoadEncaissements();
+        }
+    }
+    private async Task LoadDecaissements()
+    {
+        Refreshing = true;
+        await Task.Delay(1);
+        decaiss_items = db.API_T_Paiement
+        .Where(a => a.RG_Type == 1 && a.Declaration == id && (show_all || (!show_all && a.Ignored == false)))
+        .Include(a => a.API_T_Facture)
+        .ThenInclude(a => a.API_T_FactureTaux)
+        .OrderBy(a => a.EC_DateRappro).ToList();
+
+        decaiss_jo = decaiss_items.OrderBy(a => a.JO_Num).Select(a => a.JO_Num).Distinct().ToList();
+        Refreshing = false;
+        await Task.Delay(1);
+
+    }
+    private async Task Ignore(int id)
+    {
+        var ln = db.API_T_Paiement.Where(a => a.id == id).Include(a => a.API_T_Facture).SingleOrDefault();
+        ln.Ignored = (!ln.Ignored);
+        foreach(var item in ln.API_T_Facture)
+        {
+            item.Ignored = (!item.Ignored);
+        }
+        db.SaveChanges();
+        if(index == "1")
+        {
+            await LoadDecaissements();
+        }
+        if(index == "2")
+        {
+            await LoadEncaissements();
+        }
+
+    }
+    private async Task LoadEncaissements()
+    {
+        Refreshing = true;
+        await Task.Delay(1);
+        encaiss_items = db.API_T_Paiement
+        .Where(a => a.RG_Type == 0 && a.Declaration == id && (show_all || (!show_all && a.Ignored == false)))
+        .Include(a => a.API_T_Facture)
+        .ThenInclude(a => a.API_T_FactureTaux)
+        .OrderBy(a => a.EC_DateRappro).ToList();
+        encaiss_jo = encaiss_items.OrderBy(a => a.JO_Num).Select(a => a.JO_Num).Distinct().ToList();
+        Refreshing = false;
+        await Task.Delay(1);
+    }
+    private async Task Submit(bool close)
+    {
+        row.DateSoumission = row.DateSoumission ?? DateTime.Now;
+        row.Intitule = row.DateDebut?.ToString("dd/MM/yy") + " - " + row.DateFin?.ToString("dd/MM/yy");
+        if (id == 0)
+        {
+            db.Add(row);
+        }
+        db.SaveChanges();
+        if (close)
+        {
+            DialogService.Close();
+        }
+
+
+    }
+    private async Task AddFromSage()
+    {
+        int RG_Type = index == "1" ? 1 : 0;
+        await DialogService.OpenAsync<AddFromSage>("",
+        new Dictionary<string, object>() { { "declaration", this.id }, { "RG_Type", RG_Type } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "95%", Height = "95%" });
+        await LoadDecaissements();
+        await LoadEncaissements();
+    }
+    private async Task FactureDetail(API_T_Facture args)
+    {
+        await DialogService.OpenAsync<FactureFiche>(args.Numero,
+        new Dictionary<string, object>() { { "id", args.Id } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "500px", Height = "700px" });
+    }
+}

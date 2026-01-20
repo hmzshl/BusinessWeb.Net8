@@ -1,0 +1,220 @@
+﻿<SfToolbar>
+    <ToolbarItems>
+        <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+            <Template>
+                <SfTextBox Width="300px" Placeholder="RECHERCHE" ValueChanged="@(args => DecGrid.SearchAsync(args))"></SfTextBox>
+            </Template>
+        </ToolbarItem>
+        <ToolbarItem OnClick=@(args => (DecGrid.ExportToPdfAsync())) TooltipText="Export PDF" Text="Export PDF" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-pdf"></ToolbarItem>
+        <ToolbarItem OnClick=@(args => (DecGrid.ExportToExcelAsync(fn.ExportToExcelAsync()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
+    </ToolbarItems>
+</SfToolbar>
+<GridRow>
+    <GridCol Xs="24" Md="20">
+        <div style="height: 79vh;">
+            <SfGrid @ref="DecGrid" EnableVirtualization EnablePersistence="true" Height="100%" GridLines="GridLine.Horizontal"
+                    AllowFiltering AllowResizing AllowSorting AllowReordering
+                    AllowSelection AllowMultiSorting ShowColumnChooser="true"
+                    AllowPdfExport="true" AllowExcelExport="true" DataSource="@items">
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                <GridEditSettings ShowDeleteConfirmDialog="true" AllowDeleting />
+                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                <GridPageSettings PageSize="100"></GridPageSettings>
+                <GridEvents TValue="API_T_Facture"></GridEvents>
+                <GridTemplates>
+                    <EmptyRecordTemplate>
+                        <AntDesign.Empty></AntDesign.Empty>
+                    </EmptyRecordTemplate>
+                </GridTemplates>
+                <GridAggregates>
+                    <GridAggregate>
+                        <GridAggregateColumns>
+                            <GridAggregateColumn Field="@nameof(API_T_Facture.MontantTVA)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                <FooterTemplate>
+                                    @{
+                                        var value = (context as AggregateTemplateContext);
+                                        <div>
+                                            @value.Sum
+                                        </div>
+                                    }
+                                </FooterTemplate>
+                                <GroupCaptionTemplate>
+                                    @{
+                                        var value = (context as AggregateTemplateContext);
+                                        <div>
+                                            @value.Sum
+                                        </div>
+                                    }
+                                </GroupCaptionTemplate>
+                            </GridAggregateColumn>
+                            <GridAggregateColumn Field="@nameof(API_T_Facture.MontantHT)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                <FooterTemplate>
+                                    @{
+                                        var value = (context as AggregateTemplateContext);
+                                        <div>
+                                            @value.Sum
+                                        </div>
+                                    }
+                                </FooterTemplate>
+                                <GroupCaptionTemplate>
+                                    @{
+                                        var value = (context as AggregateTemplateContext);
+                                        <div>
+                                            @value.Sum
+                                        </div>
+                                    }
+                                </GroupCaptionTemplate>
+                            </GridAggregateColumn>
+                            <GridAggregateColumn Field="@nameof(API_T_Facture.MontantTTC)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                <FooterTemplate>
+                                    @{
+                                        var value = (context as AggregateTemplateContext);
+                                        <div>
+                                            @value.Sum
+                                        </div>
+                                    }
+                                </FooterTemplate>
+                                <GroupCaptionTemplate>
+                                    @{
+                                        var value = (context as AggregateTemplateContext);
+                                        <div>
+                                            @value.Sum
+                                        </div>
+                                    }
+                                </GroupCaptionTemplate>
+                            </GridAggregateColumn>
+                            <GridAggregateColumn Field="@nameof(API_T_Facture.Ordre)" Type="AggregateType.Count" Format="0">
+                                <FooterTemplate>
+                                    @{
+                                        var value = (context as AggregateTemplateContext);
+                                        <div style="text-align: right;">
+                                            @value.Count
+                                        </div>
+                                    }
+                                </FooterTemplate>
+                                <GroupCaptionTemplate>
+                                    @{
+                                        var value = (context as AggregateTemplateContext);
+                                        <div style="text-align: right;">
+                                            @value.Count
+                                        </div>
+                                    }
+                                </GroupCaptionTemplate>
+                            </GridAggregateColumn>
+                        </GridAggregateColumns>
+                    </GridAggregate>
+                </GridAggregates>
+                <GridColumns>
+                    <GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Facture.Ordre)" HeaderText="Ordre" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                    <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Facture.Numero)" HeaderText="Num.Facture" />
+                    <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Facture.Nature)" HeaderText="Designation" />
+                    <GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Facture.Taxe)" HeaderText="Taux" Format="0" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                        <Template>
+                            @{
+                                var data = (context as API_T_Facture);
+                                <b>@data.Taxe.ToString("0") %</b>
+                            }
+                        </Template>
+                    </GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Facture.MontantHT)" HeaderText="HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Facture.MontantTVA)" HeaderText="TVA" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Facture.MontantTTC)" HeaderText="TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                    <GridColumn Width="250" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Facture.ClientFournisseur)" HeaderText="@Tiers" />
+                    <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Facture.ICE)" HeaderText="ICE" />
+                    <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Facture.ModeReglement)" HeaderText="M.Paiement" />
+
+
+                    <GridColumn Format="dd/MM/yy" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Facture.DateReglement)" HeaderText="Date.Regl" />
+                    <GridColumn Format="dd/MM/yy" Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Facture.DateFacture)" HeaderText="Date.Fact" />
+
+                    <GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_T_Facture.Src)" HeaderText="Source" />
+                </GridColumns>
+            </SfGrid>
+        </div>
+    </GridCol>
+    <GridCol Xs="24" Md="4">
+        <MudBlazor.MudDataGrid Items="@recap" T="API_T_Facture" Striped>
+            <Columns>
+                <MudBlazor.PropertyColumn Format="0" Property="x => x.Taxe" Title="Taux" />
+                <MudBlazor.PropertyColumn AggregateDefinition="_Aggregation" CellStyle="text-align: right !important;" Format="### ### ##0.00" Property="x => x.MontantTVA" Title="Montant" />
+            </Columns>
+        </MudBlazor.MudDataGrid>
+    </GridCol>
+</GridRow>
+
+
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    DB db = new DB();
+    [Parameter] public List<API_T_Paiement> decaiss_items { get; set; }
+    [Parameter] public string Tiers { get; set; }
+    IEnumerable<API_T_Facture> data;
+    List<API_T_Facture> items = new List<API_T_Facture>();
+    List<API_T_Facture> recap = new List<API_T_Facture>();
+    SfGrid<API_T_Facture> DecGrid;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await UpdateGrid();
+    }
+    private async Task UpdateGrid()
+    {
+        items.Clear();
+        int ordre = 1;
+        foreach (API_T_Paiement rg in decaiss_items)
+        {
+            foreach (API_T_Facture fa in rg.API_T_Facture)
+            {
+                foreach (API_T_FactureTaux tx in fa.API_T_FactureTaux)
+                {
+                    var ln = new API_T_Facture();
+                    ln.Taxe = tx.Taux;
+
+                    // Déterminer le signe en fonction de fa.MontantTTC
+                    bool isNegative = fa.MontantTTC < 0;
+
+                    // Calculer le montant HT absolu
+                    decimal montantHTCalcul = 0;
+                    if (Math.Abs(tx.TVA) > 0 && tx.Taux > 0)
+                    {
+                        montantHTCalcul = Math.Abs(tx.TVA) / tx.Taux * 100;
+                    }
+
+                    // Appliquer le signe approprié au HT
+                    ln.MontantHT = isNegative ? -montantHTCalcul : montantHTCalcul;
+
+                    // Appliquer le signe approprié à la TVA
+                    ln.MontantTVA = isNegative ? -Math.Abs(tx.TVA) : Math.Abs(tx.TVA);
+
+                    // Calculer le montant TTC = HT + TVA (le signe sera cohérent)
+                    ln.MontantTTC = ln.MontantHT + ln.MontantTVA;
+
+                    ln.DateFacture = fa.DateFacture;
+                    ln.DateReglement = rg.EC_DateRappro;
+                    ln.ICE = fa.ICE;
+                    ln.ClientFournisseur = fa.ClientFournisseur;
+                    ln.ModeReglement = rg.ModePaiementChar;
+                    ln.Nature = fa.Nature;
+                    ln.SourceFacture = fa.Src;
+                    ln.Src = fa.Src;
+                    ln.Numero = fa.Numero;
+                    ln.Ordre = ordre;
+
+                    items.Add(ln);
+
+                    ordre = ordre + 1;
+                }
+            }
+        }
+        recap = items.GroupBy(a => new { a.Taxe }).Select(a => new API_T_Facture { Taxe = a.Key.Taxe, MontantTVA = a.Sum(a => a.MontantTVA) }).ToList();
+    }
+    MudBlazor.AggregateDefinition<API_T_Facture> _Aggregation = new MudBlazor.AggregateDefinition<API_T_Facture>
+    {
+        Type = MudBlazor.AggregateType.Sum,
+        NumberFormat = "### ### ##0.00"
+    };
+}

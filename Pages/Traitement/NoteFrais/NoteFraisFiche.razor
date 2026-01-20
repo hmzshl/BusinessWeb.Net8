@@ -2,7 +2,7 @@
     <ToolbarItems>
         <ToolbarItem Align="ItemAlign.Right">
             <Template>
-                <SfButton IconCss="e-icons e-print">Imprimer</SfButton>
+                <SfButton Disabled IconCss="e-icons e-print">Imprimer</SfButton>
             </Template>
         </ToolbarItem>
         <ToolbarItem Align="ItemAlign.Right">
@@ -28,10 +28,10 @@ else
                     <GridRow>
                         <GridCol Xs="24" Md="9">
                             <Card>
-                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="8">
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="11">
                                     <SfDatePicker TValue="DateTime ?" @bind-Value="@row.Date" />
                                 </FormItem>
-                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro" LabelColSpan="8">
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro" LabelColSpan="11">
                                     <SfTextBox @bind-Value="@row.Numero" />
                                 </FormItem>
                             </Card>
@@ -41,7 +41,7 @@ else
 
                             <Card>
                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant" LabelColSpan="4">
-                                    <SfNumericTextBox Readonly @bind-Value="@row.Montant" ShowSpinButton="false" Decimals="2" Format="N2" />
+                                    <SfNumericTextBox Readonly Value="row.Montant" ShowSpinButton="false" Decimals="2" Format="N2" />
                                 </FormItem>
                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Libelle" LabelColSpan="4">
                                     <SfTextBox @bind-Value="@row.Libelle" />
@@ -56,6 +56,13 @@ else
                                                     DataSource="@affaires" @bind-Value="@row.CA_Num">
                                         <DropDownListEvents TValue="string" TItem="F_COMPTEA" />
                                         <DropDownListFieldSettings Text="CA_Intitule" Value="CA_Num" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Tiers" LabelColSpan="4">
+                                    <SfDropDownList Query="fn.LocalDataQuery" AllowFiltering TValue="string" TItem="F_COMPTET"
+                                                    DataSource="@tiers" @bind-Value="@row.CT_Num">
+                                        <DropDownListEvents TValue="string" TItem="F_COMPTET" />
+                                        <DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
                                     </SfDropDownList>
                                 </FormItem>
                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Collaborateur" LabelColSpan="4">
@@ -90,7 +97,7 @@ else
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                                     <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
                                     </GridEditSettings>
-                                    <GridEvents OnActionBegin="OnActionBegin" OnActionComplete="OnActionComplete" TValue="API_T_NoteFraisLigne"></GridEvents>
+                                    <GridEvents OnActionComplete="OnActionEnd" OnActionBegin="UpdateListe" TValue="API_T_NoteFraisLigne"></GridEvents>
                                     <GridTemplates>
                                         <EmptyRecordTemplate>
                                             <Empty></Empty>
@@ -170,6 +177,7 @@ else
     private List<API_T_Personnel> personnels = new List<API_T_Personnel>();
     private List<API_T_Materiel> materiels = new List<API_T_Materiel>();
     private List<F_COMPTEA> affaires = new List<F_COMPTEA>();
+    private List<F_COMPTET> tiers = new List<F_COMPTET>();
     private List<F_COLLABORATEUR> collaborateurs = new List<F_COLLABORATEUR>();
     DB db = new DB();
     NumericEditCellParams parameters = new NumericEditCellParams()
@@ -193,6 +201,7 @@ else
         personnels = db.API_T_Personnel.AsNoTracking().Select(a => new API_T_Personnel { Nom = a.Prenom + " " + a.Nom, id = a.id }).OrderBy(a => a.Nom).ToList();
         materiels = db.API_T_Materiel.AsNoTracking().Select(a => new API_T_Materiel { Intitule = a.Intitule + " " + a.Immatricule, id = a.id }).OrderBy(a => a.Intitule).ToList();
         affaires = db.F_COMPTEA.AsNoTracking().Select(a => new F_COMPTEA { CA_Num = a.CA_Num, CA_Intitule = a.CA_Num + " - " + a.CA_Intitule }).OrderBy(a => a.CA_Intitule).ToList();
+        tiers = db.F_COMPTET.AsNoTracking().Select(a => new F_COMPTET { CT_Num = a.CT_Num, CT_Intitule = a.CT_Num + " - " + a.CT_Intitule }).OrderBy(a => a.CT_Intitule).ToList();
         collaborateurs = db.F_COLLABORATEUR.AsNoTracking().Select(a => new F_COLLABORATEUR { CO_No = a.CO_No, CO_Nom = a.CO_Prenom + " " + a.CO_Nom }).OrderBy(a => a.CO_Nom).ToList();
         if (id != 0)
         {
@@ -268,22 +277,22 @@ else
         }
     }
 
-    private async Task UpdateTotal()
+    private void UpdateTotal()
     {
-        row.Montant = lignes.Sum(a => a.Montant);
-        db.SaveChanges();
-        row = db.API_T_NoteFraisEntete.Where(a => a.id == id).SingleOrDefault();
-        lignes = db.API_T_NoteFraisLigne.Where(a => a.Entete == id).OrderBy(a => a.id).ToList();
-        await InvokeAsync(StateHasChanged);
+        if (id != 0)
+        {
+            row.Montant = lignes.Sum(a => a.Montant);
+            db.SaveChanges();
+        }
     }
-    public async Task OnActionBegin(ActionEventArgs<API_T_NoteFraisLigne> args)
+    public async Task OnActionEnd(ActionEventArgs<API_T_NoteFraisLigne> args)
     {
         if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
         {
-            await UpdateTotal();
+            UpdateTotal();
         }
     }
-    public async Task OnActionComplete(ActionEventArgs<API_T_NoteFraisLigne> args)
+    public void UpdateListe(ActionEventArgs<API_T_NoteFraisLigne> args)
     {
         if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
         {
@@ -307,22 +316,19 @@ else
 
                 args.Data.Entete = this.id;
                 args.Data.Creation = DateTime.Now;
-                args.Data.CreationUser = sc.User.Id ?? "System";
                 db.API_T_NoteFraisLigne.Add(args.Data);
+                row.Montant = lignes.Sum(a => a.Montant);
                 db.SaveChanges();
-                await UpdateTotal();
             }
             else
             {
-                args.Data.Modification = DateTime.Now;
-                args.Data.ModificationUser = sc.User.Id ?? "System";
-
                 var local = db.Set<API_T_NoteFraisLigne>().Local.FirstOrDefault(a => a.id == args.Data.id);
                 if (local != null)
                 {
                     db.Entry(local).State = EntityState.Detached;
                 }
                 db.Entry(args.Data).State = EntityState.Modified;
+                row.Montant = lignes.Sum(a => a.Montant);
                 db.SaveChanges();
             }
            
@@ -330,10 +336,17 @@ else
 
         if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
         {
-            db.API_T_NoteFraisLigne.Remove(args.Data);
+            row.Montant = lignes.Sum(a => a.Montant)-args.Data.Montant;
+            var local = db.Set<API_T_NoteFraisLigne>().Local.FirstOrDefault(a => a.id == args.Data.id);
+            if (local != null)
+            {
+                db.Entry(local).State = EntityState.Detached;
+            }
+            db.Entry(args.Data).State = EntityState.Deleted;
+            
             db.SaveChanges();
-            await UpdateTotal();
         }
+        UpdateTotal();
 
 
     }

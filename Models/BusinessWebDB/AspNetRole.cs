@@ -14,8 +14,10 @@ namespace BusinessWeb.Models.BusinessWebDB
 
         public string ConcurrencyStamp { get; set; }
 
+        [MaxLength(256)]
         public string Name { get; set; }
 
+        [MaxLength(256)]
         public string NormalizedName { get; set; }
 
         public ICollection<AspNetRoleClaim> AspNetRoleClaims { get; set; }

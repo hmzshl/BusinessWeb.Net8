@@ -14,6 +14,7 @@ using Syncfusion.Blazor.Navigations;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace BusinessWeb
@@ -30,15 +31,15 @@ namespace BusinessWeb
 
 			return rs;
 		}
-        public string StripHtml(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input))
-                return string.Empty;
+		public string StripHtml(string input)
+		{
+			if (string.IsNullOrWhiteSpace(input))
+				return string.Empty;
 
-            return Regex.Replace(input, "<.*?>", string.Empty).Trim();
-        }
+			return Regex.Replace(input, "<.*?>", string.Empty).Trim();
+		}
 
-        public bool PieceExist(int DO_Type, DB db, string DO_Piece)
+		public bool PieceExist(int DO_Type, DB db, string DO_Piece)
 		{
 			bool rs = false;
 			var dt1 = db.F_DOCLIGNE.Where(a => a.DO_Type == 0 && a.DO_Piece == DO_Piece).Select(a => a.DO_Piece);
@@ -105,38 +106,38 @@ namespace BusinessWeb
 		}
 		public bool CheckDB(DB dB)
 		{
-			if(dB.Database.CanConnect())
+			if (dB.Database.CanConnect())
 			{
 				return true;
 			}
 			else
 			{
 				return false;
-            }
-        }
-        public bool CheckSteDB(TSociete ste)
-        {
+			}
+		}
+		public bool CheckSteDB(TSociete ste)
+		{
 			bool rs = false;
-            try
-            {
-                // Test the connection
-                using (var db = getDbCheck(ste))
-                {
-                    // Try to execute a simple query to test the connection
-                    var testQuery = db.P_DOSSIER.Take(1).Any();
+			try
+			{
+				// Test the connection
+				using (var db = getDbCheck(ste))
+				{
+					// Try to execute a simple query to test the connection
+					var testQuery = db.P_DOSSIER.Take(1).Any();
 
-                    // If we reach here, connection is working
-                    rs = true;
-                }
-            }
-            catch (Exception)
-            {
-                // If any exception occurs, connection is not working
-                rs = false;
-            }
+					// If we reach here, connection is working
+					rs = true;
+				}
+			}
+			catch (Exception)
+			{
+				// If any exception occurs, connection is not working
+				rs = false;
+			}
 			return rs;
-        }
-        public string GetFrenchMonth(string monthCode)
+		}
+		public string GetFrenchMonth(string monthCode)
 		{
 			var monthMap = new Dictionary<string, string>
 		{
@@ -321,11 +322,11 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Comparatif Par Année", Url = "et-vente-annuel", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Comparatif Par Mois", Url = "et-vente-mensuel", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Echéances Clients", Url = "et-echeances-clients", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
-            //Div
-            list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Prévisionnel", Url = "et-ca-prev", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
+			//Div
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Prévisionnel", Url = "et-ca-prev", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
 
-            // Achats
-            list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Liste des fournisseurs", Url = "fournisseurs", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
+			// Achats
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Liste des fournisseurs", Url = "fournisseurs", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Relevé documents achats", Url = "releve-achats", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Balance agée", Url = "et-balanceagee-fournisseur", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Réglements fournisseurs", Url = "reglements-fournisseurs", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
@@ -426,9 +427,14 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Notes de frais", Url = "nf-list", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Personnels", Url = "nf-per", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Materiels", Url = "nf-mat", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Affaires", Url = "nf-aff", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			/*list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Affaires", Url = "nf-aff", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });*/
 			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Clients", Url = "nf-cls", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Fournisseurs", Url = "nf-frs", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+
+			// COMPTABILITE
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "Gestion TVA", Description = "Périodes", Url = "tva-periodes", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "Gestion TVA", Description = "Tiers", Url = "tiers", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "Gestion TVA", Description = "Taxes", Url = "taxes", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 
 			return list;
 		}
@@ -595,31 +601,31 @@ namespace BusinessWeb
 			}
 			return "Server=" + (ste.Serveur ?? "") + ";Connection Timeout=360;Persist Security Info=False;TrustServerCertificate=True;User ID=" + (ste.Web ?? "sa") + ";Password=" + (ste.Passe ?? "") + ";Initial Catalog=" + (ste.Base1 ?? "") + ";MultipleActiveResultSets=False;";
 		}
-        public string getConnectionStringCheck(TSociete ste)
-        {
-            if (ste == null)
-            {
-                ste = new TSociete();
-            }
-            return "Server=" + (ste.Serveur ?? "") + ";Connection Timeout=10;Persist Security Info=False;TrustServerCertificate=True;User ID=" + (ste.Web ?? "sa") + ";Password=" + (ste.Passe ?? "") + ";Initial Catalog=" + (ste.Base1 ?? "") + ";MultipleActiveResultSets=False;";
-        }
-        public DB getDbCheck(TSociete ste)
-        {
-            var optionBuilder = new DbContextOptionsBuilder<DB>();
-            optionBuilder.UseSqlServer(getConnectionString(ste), o =>
-            {
-                o.UseCompatibilityLevel(100);
-                o.CommandTimeout(10); // Timeout in seconds (default is 30)
-                                        // Add this line to handle triggers with OUTPUT clause:
-                o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
-                 .UseRelationalNulls();
-            });
+		public string getConnectionStringCheck(TSociete ste)
+		{
+			if (ste == null)
+			{
+				ste = new TSociete();
+			}
+			return "Server=" + (ste.Serveur ?? "") + ";Connection Timeout=10;Persist Security Info=False;TrustServerCertificate=True;User ID=" + (ste.Web ?? "sa") + ";Password=" + (ste.Passe ?? "") + ";Initial Catalog=" + (ste.Base1 ?? "") + ";MultipleActiveResultSets=False;";
+		}
+		public DB getDbCheck(TSociete ste)
+		{
+			var optionBuilder = new DbContextOptionsBuilder<DB>();
+			optionBuilder.UseSqlServer(getConnectionString(ste), o =>
+			{
+				o.UseCompatibilityLevel(100);
+				o.CommandTimeout(10); // Timeout in seconds (default is 30)
+									  // Add this line to handle triggers with OUTPUT clause:
+				o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
+				 .UseRelationalNulls();
+			});
 
-            optionBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
-            DB db = new DB(optionBuilder.Options);
-            return db;
-        }
-        public string getDevise(DB db)
+			optionBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+			DB db = new DB(optionBuilder.Options);
+			return db;
+		}
+		public string getDevise(DB db)
 		{
 			string rs = "MAD";
 			if (db.P_DEVISE.Count() != 0)
@@ -642,7 +648,7 @@ namespace BusinessWeb
 			optionBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
 
 			DB db = new DB(optionBuilder.Options);
-            db.Database.Migrate();
+			db.Database.Migrate();
 			db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "ChefChantier", "VARCHAR(100)"));
 			db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "Demandeur", "VARCHAR(100)"));
 
@@ -1851,34 +1857,34 @@ namespace BusinessWeb
 
 			return list;
 		}
-        public List<Items> getApps()
-        {
-            List<Items> list = new List<Items>();
+		public List<Items> getApps()
+		{
+			List<Items> list = new List<Items>();
 
-            list.Add(new Items { Id = 1, Name = "Achats", Icon = "shopping_cart", Description = "Gestion des achats, fournisseurs et commandes d'approvisionnement" });
-            list.Add(new Items { Id = 2, Name = "Ventes", Icon = "monetization_on", Description = "Gestion commerciale, clients, devis et facturation" });
-            list.Add(new Items { Id = 3, Name = "Stock", Icon = "inventory", Description = "Gestion des stocks, inventaire et mouvements d'articles" });
-            list.Add(new Items { Id = 4, Name = "Projets", Icon = "home_repair_service", Description = "Suivi des projets, chantiers et gestion des marchés" });
-            list.Add(new Items { Id = 5, Name = "Matériels", Icon = "local_shipping", Description = "Gestion du parc matériel, entretien et maintenance" });
-            list.Add(new Items { Id = 6, Name = "Personnels", Icon = "group", Description = "Gestion des ressources humaines et pointage du personnel" });
-            list.Add(new Items { Id = 7, Name = "Caisse", Icon = "local_atm", Description = "Gestion de caisse et opérations de trésorerie" });
-            list.Add(new Items { Id = 8, Name = "Comptabilité", Icon = "analytics", Description = "Comptabilité générale, analytique et états financiers" });
-            list.Add(new Items { Id = 9, Name = "Outils", Icon = "construction", Description = "Outils et utilitaires pour la gestion d'entreprise" });
-            list.Add(new Items { Id = 10, Name = "Agence Voyage", Icon = "flight", Description = "Réservations voyages et services touristiques" });
-            list.Add(new Items { Id = 11, Name = "Tableau de bord", Icon = "analytics", Description = "Tableaux de bord et indicateurs de performance" });
-            list.Add(new Items { Id = 12, Name = "Caisse", Icon = "local_atm", Description = "Caisse institutionnelle et gestion des fonds" });
-            list.Add(new Items { Id = 13, Name = "Banque", Icon = "account_balance", Description = "Opérations bancaires et gestion des comptes" });
-            list.Add(new Items { Id = 14, Name = "Etats", Icon = "moving", Description = "États financiers, rapports et analyses d'activité" });
-            list.Add(new Items { Id = 15, Name = "Certification", Icon = "description", Description = "Certification qualité et processus métier" });
-            list.Add(new Items { Id = 16, Name = "Transfert Données", Icon = "sync_alt", Description = "Synchronisation et transfert des données systèmes" });
-            list.Add(new Items { Id = 18, Name = "Utilisateurs", Icon = "people", Description = "Gestion des utilisateurs, profils et autorisations" });
-            list.Add(new Items { Id = 19, Name = "Traçabilité", Icon = "update", Description = "Traçabilité et historique des opérations système" });
-            list.Add(new Items { Id = 20, Name = "Food Cost", Icon = "bakery_dining", Description = "Calcul et analyse des coûts alimentaires et restauration" });
+			list.Add(new Items { Id = 1, Name = "Achats", Icon = "shopping_cart", Description = "Gestion des achats, fournisseurs et commandes d'approvisionnement" });
+			list.Add(new Items { Id = 2, Name = "Ventes", Icon = "monetization_on", Description = "Gestion commerciale, clients, devis et facturation" });
+			list.Add(new Items { Id = 3, Name = "Stock", Icon = "inventory", Description = "Gestion des stocks, inventaire et mouvements d'articles" });
+			list.Add(new Items { Id = 4, Name = "Projets", Icon = "home_repair_service", Description = "Suivi des projets, chantiers et gestion des marchés" });
+			list.Add(new Items { Id = 5, Name = "Matériels", Icon = "local_shipping", Description = "Gestion du parc matériel, entretien et maintenance" });
+			list.Add(new Items { Id = 6, Name = "Personnels", Icon = "group", Description = "Gestion des ressources humaines et pointage du personnel" });
+			list.Add(new Items { Id = 7, Name = "Caisse", Icon = "local_atm", Description = "Gestion de caisse et opérations de trésorerie" });
+			list.Add(new Items { Id = 8, Name = "Comptabilité", Icon = "analytics", Description = "Comptabilité générale, analytique et états financiers" });
+			list.Add(new Items { Id = 9, Name = "Outils", Icon = "construction", Description = "Outils et utilitaires pour la gestion d'entreprise" });
+			list.Add(new Items { Id = 10, Name = "Agence Voyage", Icon = "flight", Description = "Réservations voyages et services touristiques" });
+			list.Add(new Items { Id = 11, Name = "Tableau de bord", Icon = "analytics", Description = "Tableaux de bord et indicateurs de performance" });
+			list.Add(new Items { Id = 12, Name = "Caisse", Icon = "local_atm", Description = "Caisse institutionnelle et gestion des fonds" });
+			list.Add(new Items { Id = 13, Name = "Banque", Icon = "account_balance", Description = "Opérations bancaires et gestion des comptes" });
+			list.Add(new Items { Id = 14, Name = "Etats", Icon = "moving", Description = "États financiers, rapports et analyses d'activité" });
+			list.Add(new Items { Id = 15, Name = "Certification", Icon = "description", Description = "Certification qualité et processus métier" });
+			list.Add(new Items { Id = 16, Name = "Transfert Données", Icon = "sync_alt", Description = "Synchronisation et transfert des données systèmes" });
+			list.Add(new Items { Id = 18, Name = "Utilisateurs", Icon = "people", Description = "Gestion des utilisateurs, profils et autorisations" });
+			list.Add(new Items { Id = 19, Name = "Traçabilité", Icon = "update", Description = "Traçabilité et historique des opérations système" });
+			list.Add(new Items { Id = 20, Name = "Food Cost", Icon = "bakery_dining", Description = "Calcul et analyse des coûts alimentaires et restauration" });
 			list.Add(new Items { Id = 21, Name = "Notes de frais", Icon = "money", Description = "Gestion et suivi des dépenses professionnelles et remboursements" });
 
 			return list;
-        }
-        public List<Items> ModeSoumission()
+		}
+		public List<Items> ModeSoumission()
 		{
 			List<Items> list = new List<Items>();
 
@@ -2098,6 +2104,95 @@ namespace BusinessWeb
 				byte[] decryptedBytes = decryptor.TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length);
 
 				return Encoding.UTF8.GetString(decryptedBytes);
+			}
+		}
+		public string GetPaymentModeEnhanced(string libelle)
+		{
+			if (string.IsNullOrWhiteSpace(libelle))
+				return "Inconnu";
+
+			string normalizedLibelle = libelle.ToUpperInvariant().Trim();
+
+			// Patterns with regex for more flexible matching
+			var paymentPatterns = new[]
+			{
+		new { Pattern = @"\b(CHQ|CHEQUE|CHE|CH|CK|CHECK|CHEQ|BORDEROU|REMISE|BORD)\b", Mode = "Chèque" },
+		new { Pattern = @"\b(EFFET|EFF|EF|LCN|LETTRE|CREDIT|LCR|BILAN|DOCUMENTAIRE)\b", Mode = "Effet" },
+		new { Pattern = @"\b(VIREMENT|VIR|VIRT|V|VRT|TRANSFERT|TRANSF|TF)\b", Mode = "Virement" },
+		new { Pattern = @"\b(PRELEVEMENT|PRELV|PRLV|PLVT|PRELEV|DEBIT|PREAUT|TIP)\b", Mode = "Prélèvement" },
+		new { Pattern = @"\b(CARTE|CB|VISA|MASTERCARD|AMEX|AMERICAN EXPRESS|CARTE BLEUE)\b", Mode = "Carte" },
+		new { Pattern = @"\b(ESPECE|ESP|CASH|LIQUIDE|LIQ|ARGENT|COMPTANT)\b", Mode = "Espèces" },
+		new { Pattern = @"\b(COMMISSION|COMM|FRAIS|COTISATION|COTIS|ABONNEMENT|FORFAIT|PENALITE|PENAL|MAJORATION)\b", Mode = "Frais Bancaires" },
+		new { Pattern = @"\b(AGIOS|AGIO|INTERET|INTERETS)\b", Mode = "Agios" },
+		new { Pattern = @"\b(TRAITE|TR)\b", Mode = "Traite" },
+		new { Pattern = @"\b(TIP|TITRE|TITRE INTERBANCAIRE)\b", Mode = "TIP" },
+		new { Pattern = @"\b(MANDAT)\b", Mode = "Mandat" },
+		new { Pattern = @"\b(COMPENSATION|COMP|ECHANGE|CLEARING)\b", Mode = "Compensation" },
+		new { Pattern = @"\b(DOMICILIATION|DOMI|DOM)\b", Mode = "Domiciliation" },
+		new { Pattern = @"\b(AVANCE|AV|ACOMPTE|ACPT)\b", Mode = "Avance" },
+		new { Pattern = @"\b(CREDIT|PRET|EMPRUNT|ECHEANCE|REMBOURSEMENT|MENSUALITE)\b", Mode = "Crédit" },
+		new { Pattern = @"\b(REGLEMENT|REGLE|PAIEMENT|FACTURE|FACT)\b", Mode = "Règlement" },
+		new { Pattern = @"\b(OPERATION|OPE|MOUVEMENT|MVT)\b", Mode = "Opération Bancaire" }
+	};
+
+			foreach (var pattern in paymentPatterns)
+			{
+				if (Regex.IsMatch(normalizedLibelle, pattern.Pattern, RegexOptions.IgnoreCase))
+				{
+					return pattern.Mode;
+				}
+			}
+
+			return "Inconnu";
+		}
+		public List<Items> PeriodType = new List<Items>
+		{
+			new Items(0, "Mensuel"),
+			new Items(1, "Trimestriel")
+		};
+		public List<Items> RegimeType = new List<Items>
+		{
+			new Items(0, "Encaissement"),
+			new Items(1, "Débit")
+		};
+		public List<Items> SourceRapprochement = new List<Items>
+		{
+			new Items(0, "Comptabilité"),
+			new Items(1, "Gestion commercial")
+		};
+		public List<Items> SourceDetailsFacture = new List<Items>
+		{
+			new Items(0, "Comptabilité"),
+			new Items(1, "Gestion commercial")
+		};
+		public List<Items> Sense = new List<Items>
+		{
+			new Items(0, "Débit"),
+			new Items(1, "Crédit")
+		};
+		public List<Items> SourceFA = new List<Items>
+		{
+			new Items(0, "N° Facture"),
+			new Items(1, "Réference"),
+			new Items(2, "N° Pièce"),
+			new Items(3, "Libelle")
+		};
+		public string ListToString(List<Items> list)
+		{
+			if (list == null) return null;
+			return JsonSerializer.Serialize(list);
+		}
+
+		public List<Items> StringToList(string jsonString)
+		{
+			if (string.IsNullOrEmpty(jsonString)) return null;
+			try
+			{
+				return JsonSerializer.Deserialize<List<Items>>(jsonString);
+			}
+			catch (JsonException)
+			{
+				return null;
 			}
 		}
 		public static string NextString(string input)

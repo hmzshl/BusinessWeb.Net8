@@ -12,12 +12,15 @@ namespace BusinessWeb.Models.BusinessWebDB
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
+        [MaxLength(450)]
         public string UserID { get; set; }
 
         public int Societe { get; set; }
 
+        [MaxLength(450)]
         public string RoleID { get; set; }
 
+        [MaxLength(250)]
         public string Url { get; set; }
 
         public bool Visible { get; set; }

@@ -1,0 +1,90 @@
+﻿
+
+    @code {
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    DB db = new DB();
+    [Parameter] public int cbMarq { get; set; }
+    [Parameter] public API_T_Paiement row { get; set; }
+    IEnumerable<API_T_Facture> items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await LoadData();
+    }
+    private async Task LoadData()
+    {
+        items = db.API_T_Facture
+                        .Where(a => a.Regl == row.id);
+        if(!items.Any())
+        {
+            await GetFactures();
+        }
+    }
+    private async Task GetFactures()
+    {
+        var rg = db.F_ECRITUREC.Where(a => a.cbMarq == cbMarq).FirstOrDefault();
+        F_ECRITUREC con = new F_ECRITUREC();
+
+        var cons_let = db.F_ECRITUREC.Where(a =>
+            a.CG_Num == rg.CG_Num 
+            && a.CT_Num == rg.CT_Num
+            && a.EC_Lettrage == rg.EC_Lettrage 
+            && a.JM_Date.Year == rg.JM_Date.Year 
+            && a.cbMarq != rg.cbMarq
+            && a.EC_Piece != rg.EC_Piece
+            && a.EC_Lettre == 1
+            && a.JO_Num != rg.JO_Num
+        );
+
+        foreach (var fact in cons_let)
+        {
+            var fa = new API_T_Facture();
+            fa.DateFacture = fact.JM_Date.AddDays((fact.EC_Jour-1)??0);
+            if ((fact.EC_RefPiece ?? "") != "")
+            {
+                fa.Numero = fact.EC_RefPiece;
+            }
+            else
+            {
+                fa.Numero = "VIDE";
+            }
+            
+            if(row.RG_Type == 1)
+            {
+                if (fact.EC_Sens == 0)
+                {
+                    fa.MontantTTC = -fact.EC_Montant;
+                }
+                else
+                {
+                    fa.MontantTTC = fact.EC_Montant;
+                }
+            }
+            else
+            {
+                if (fact.EC_Sens == 1)
+                {
+                    fa.MontantTTC = -fact.EC_Montant;
+                }
+                else
+                {
+                    fa.MontantTTC = fact.EC_Montant;
+                }
+            }
+
+            fa.Regl = row.id;
+            fa.Src = "SAGE";
+            fa.DateReglement = row.RG_Date;
+            fa.ModeReglement = row.ModePaiementChar;
+            fa.ClientFournisseur = row.CT_Intitule;
+            db.API_T_Facture.Add(fa);
+        }
+
+        db.SaveChanges();
+        items = db.API_T_Facture
+                .Where(a => a.Regl == row.id);
+
+    }
+}

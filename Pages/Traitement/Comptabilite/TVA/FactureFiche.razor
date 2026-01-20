@@ -1,0 +1,133 @@
+﻿@if (!IsLoaded)
+{
+    <div class="center-screen-sm">
+        <Loading_1 />
+    </div>
+}
+else
+{
+    <SfToolbar CssClass="btns">
+        <ToolbarItems>
+            <ToolbarItem Align="ItemAlign.Right">
+                <Template>
+                    <SfButton Variant="Variant.Outlined" IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit(true))">Enregistrer</SfButton>
+                </Template>
+            </ToolbarItem>
+        </ToolbarItems>
+    </SfToolbar>
+    <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="12">
+        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date Facture" LabelColSpan="12">
+            <SfDatePicker TValue="DateTime" @bind-Value="@row.DateFacture" />
+        </FormItem>
+        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro Facture" LabelColSpan="12">
+            <SfTextBox @bind-Value="@row.Numero" />
+        </FormItem>
+        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Nature Service" LabelColSpan="12">
+            <SfTextBox @bind-Value="@row.Nature" />
+        </FormItem>
+        <FormItem LabelAlign="AntLabelAlignType.Left" Label="Montant TTC" LabelColSpan="12">
+            <SfTextBox Readonly Value="@(row.MontantTTC?.ToString("N2"))" />
+        </FormItem>
+    </Form>
+    <h1>Taxes</h1>
+    <div style="height: 40vh; padding: 10px;">
+        <SfGrid AllowFiltering="false" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(row.API_T_FactureTaux)" Height="100%">
+            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+            <GridEvents OnActionComplete="OnActionComplete" TValue="API_T_FactureTaux"></GridEvents>
+            <GridTemplates>
+                <EmptyRecordTemplate>
+                    <Empty></Empty>
+                </EmptyRecordTemplate>
+            </GridTemplates>
+            <GridColumns>
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_FactureTaux.id) HeaderText="#" IsPrimaryKey="true" Visible="false" IsIdentity="true"></GridColumn>
+                <GridColumn AllowSorting="false" AllowFiltering="false" Width="100" Field=@nameof(API_T_FactureTaux.CG_Num) HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="N° Compte" />
+                <GridColumn AllowSorting="false" AllowFiltering="false" EditorSettings="parameters" EditType="EditType.NumericEdit" Width="60" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Field=@nameof(API_T_FactureTaux.Taux) HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Taxe">
+                    <Template>
+                        @{
+                            var data = (context as API_T_FactureTaux);
+                            <b style="text-align: right;">
+                                @((data.Taux / 100).ToString("P"))
+                            </b>
+                        }
+                    </Template>
+                </GridColumn>
+                <GridColumn AllowSorting="false" AllowFiltering="false" EditorSettings="parameters" EditType="EditType.NumericEdit" Width="90" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Format="### ### ##0.00;-### ### ##0.00;#" Field=@nameof(API_T_FactureTaux.TVA) HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="TVA" />
+            </GridColumns>
+        </SfGrid>
+    </div>
+}
+
+
+
+
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    DB db = new DB();
+    [Parameter] public int id { get; set; }
+    [Parameter] public int declaration { get; set; }
+    [Parameter] public int Societe { get; set; }
+    API_T_Facture row = new API_T_Facture();
+    bool IsLoaded = false;
+    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "### ### ##0.00;-### ### ##0.00;#", ShowClearButton = false } };
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(10);
+        db = session.db;
+        if (id == 0)
+        {
+            row = new API_T_Facture();
+            row.SourceFacture = "SAISI";
+            row.DeclarationId = declaration;
+            row.Nature = "";
+        }
+        else
+        {
+            row = db.API_T_Facture.Where(a => a.Id == id).Include(a => a.API_T_FactureTaux).SingleOrDefault();
+        }
+        IsLoaded = true;
+    }
+    private async Task OnActionComplete(ActionEventArgs<API_T_FactureTaux> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+
+            if (args.Action == "Add")
+            {
+                API_T_FactureTaux item = args.Data;
+                item.Facture = row.Id;
+                db.Add(item);
+                db.SaveChanges();
+                StateHasChanged();
+            }
+        }
+
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            db.Remove(args.Data);
+            db.SaveChanges();
+            StateHasChanged();
+        }
+    }
+    private async Task Submit(bool close)
+    {
+        try
+        {
+            if (id == 0)
+            {
+                db.Add(row);
+            }
+            db.SaveChanges();
+            if (close)
+            {
+                DialogService.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            await DialogService.Alert(ex.ToString());
+        }
+    }
+}

@@ -175,6 +175,111 @@
                     </GridRow>
                 </ContentTemplate>
             </TabItem>
+            <TabItem>
+                <ChildContent>
+                    <TabHeader Text="Déclarations"></TabHeader>
+                </ChildContent>
+                <ContentTemplate>
+                    <GridRow>
+                        <GridCol Xs="24" Md="24">
+                            <Card>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Période" LabelColSpan="6">
+                                    <SfDropDownList TValue="int?" TItem="Items" DataSource="@fn.PeriodType" @bind-Value="@row.Periode">
+                                        <DropDownListEvents TValue="int?" TItem="Items" />
+                                        <DropDownListFieldSettings Text="Name" Value="Id" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Régime" LabelColSpan="6">
+                                    <SfDropDownList TValue="int?" TItem="Items" DataSource="@fn.RegimeType" @bind-Value="@row.Regime">
+                                        <DropDownListEvents TValue="int?" TItem="Items" />
+                                        <DropDownListFieldSettings Text="Name" Value="Id" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="NumFA Achat" LabelColSpan="6">
+                                    <SfDropDownList TValue="int?" TItem="Items" DataSource="@fn.SourceFA" @bind-Value="@row.NumFA_Achat">
+                                        <DropDownListEvents TValue="int?" TItem="Items" />
+                                        <DropDownListFieldSettings Text="Name" Value="Id" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="NumFA Vente" LabelColSpan="6">
+                                    <SfDropDownList TValue="int?" TItem="Items" DataSource="@fn.SourceFA" @bind-Value="@row.NumFA_Vente">
+                                        <DropDownListEvents TValue="int?" TItem="Items" />
+                                        <DropDownListFieldSettings Text="Name" Value="Id" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="SourceDetailsFacture" LabelColSpan="6">
+                                    <SfDropDownList TValue="int?" TItem="Items" DataSource="@fn.SourceDetailsFacture" @bind-Value="@row.SourceDetailsFacture">
+                                        <DropDownListEvents TValue="int?" TItem="Items" />
+                                        <DropDownListFieldSettings Text="Name" Value="Id" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Rapprochement" LabelColSpan="6">
+                                    <SfSwitch @bind-Checked="row.Rapprochement" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Rapprochement trésorerie" LabelColSpan="6">
+                                    <SfSwitch Disabled="@(!(row.Rapprochement ?? false))" @bind-Checked="row.RapprochementSur" />
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="SourceRapprochement" LabelColSpan="6">
+                                    <SfDropDownList TValue="int?" TItem="Items" DataSource="@fn.SourceRapprochement" @bind-Value="@row.SourceRapprochement">
+                                        <DropDownListEvents TValue="int?" TItem="Items" />
+                                        <DropDownListFieldSettings Text="Name" Value="Id" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Banques" LabelColSpan="6">
+                                    <SfMultiSelect TValue="string[]" TItem="Items" AllowFiltering="true" Mode="@VisualMode.CheckBox" @bind-Value="banques"
+                                                   DataSource="@Journaux" ShowSelectAll EnableSelectionOrder ShowDropDownIcon
+                                                   FilterBarPlaceholder="Journaux" PopupHeight="350px">
+                                        <MultiSelectFieldSettings Text="Name" Value="TextID"></MultiSelectFieldSettings>
+                                    </SfMultiSelect>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Journaux Caisses" LabelColSpan="6">
+                                    <SfMultiSelect TValue="string[]" TItem="Items" AllowFiltering="true" Mode="@VisualMode.CheckBox" @bind-Value="caisses"
+                                                   DataSource="@Journaux" ShowSelectAll EnableSelectionOrder ShowDropDownIcon FilterBarPlaceholder="Caisses" PopupHeight="350px">
+                                        <MultiSelectFieldSettings Text="Name" Value="TextID"></MultiSelectFieldSettings>
+                                    </SfMultiSelect>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Journaux Achat" LabelColSpan="6">
+                                    <SfMultiSelect TValue="string[]" TItem="Items" AllowFiltering="true" Mode="@VisualMode.CheckBox" @bind-Value="achats"
+                                                   DataSource="@Journaux" ShowSelectAll EnableSelectionOrder ShowDropDownIcon FilterBarPlaceholder="Achats" PopupHeight="350px">
+                                        <MultiSelectFieldSettings Text="Name" Value="TextID"></MultiSelectFieldSettings>
+                                    </SfMultiSelect>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Journaux Vente" LabelColSpan="6">
+                                    <SfMultiSelect TValue="string[]" TItem="Items" AllowFiltering="true" Mode="@VisualMode.CheckBox" @bind-Value="ventes"
+                                                   DataSource="@Journaux" ShowSelectAll EnableSelectionOrder ShowDropDownIcon FilterBarPlaceholder="Ventes" PopupHeight="350px">
+                                        <MultiSelectFieldSettings Text="Name" Value="TextID"></MultiSelectFieldSettings>
+                                    </SfMultiSelect>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Compte Inclus (ACH)" LabelColSpan="6">
+                                    <SfMultiSelect Query="@fn.LocalDataQuery" TValue="string[]" TItem="Items" AllowFiltering="true" Mode="@VisualMode.CheckBox" @bind-Value="comptes"
+                                                   DataSource="@Comptes" ShowSelectAll EnableSelectionOrder ShowDropDownIcon FilterBarPlaceholder="Compte Inclus (ACH)" PopupHeight="350px">
+                                        <MultiSelectFieldSettings Text="Name" Value="TextID"></MultiSelectFieldSettings>
+                                    </SfMultiSelect>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Compte Inclus (VEN)" LabelColSpan="6">
+                                    <SfMultiSelect Query="@fn.LocalDataQuery" TValue="string[]" TItem="Items" AllowFiltering="true" Mode="@VisualMode.CheckBox" @bind-Value="comptes_ve"
+                                                   DataSource="@Comptes" ShowSelectAll EnableSelectionOrder ShowDropDownIcon FilterBarPlaceholder="Compte Inclus (VEN)" PopupHeight="350px">
+                                        <MultiSelectFieldSettings Text="Name" Value="TextID"></MultiSelectFieldSettings>
+                                    </SfMultiSelect>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Sense Encaissements" LabelColSpan="6">
+                                    <SfDropDownList TValue="int?" TItem="Items" DataSource="@fn.Sense" @bind-Value="@row.SensEncaissement">
+                                        <DropDownListEvents TValue="int?" TItem="Items" />
+                                        <DropDownListFieldSettings Text="Name" Value="Id" />
+                                    </SfDropDownList>
+                                </FormItem>
+                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Sense Décaissement" LabelColSpan="6">
+                                    <SfDropDownList TValue="int?" TItem="Items" DataSource="@fn.Sense" @bind-Value="@row.SensDecaissement">
+                                        <DropDownListEvents TValue="int?" TItem="Items" />
+                                        <DropDownListFieldSettings Text="Name" Value="Id" />
+                                    </SfDropDownList>
+                                </FormItem>
+
+                            </Card>
+                        </GridCol>
+                    </GridRow>
+                </ContentTemplate>
+            </TabItem>
 
         </TabItems>
     </SfTab>
@@ -198,6 +303,22 @@
     protected bool errorVisible;
     private ICollection<TSocieteUser> items;
     bool connected = false;
+
+    List<Items> Journaux = new List<Items>();
+    List<Items> Comptes = new List<Items>();
+    string[] banques = [];
+    List<Items> dtBanques = new List<Items>();
+    string[] achats = [];
+    List<Items> dtAchats = new List<Items>();
+    string[] ventes = [];
+    List<Items> dtVentes = new List<Items>();
+    string[] caisses = [];
+    List<Items> dtCaisses = new List<Items>();
+    string[] comptes = [];
+    List<Items> dtComptes = new List<Items>();
+    string[] comptes_ve = [];
+    List<Items> dtComptes_ve = new List<Items>();
+
     protected override async Task OnInitializedAsync()
     {
 
@@ -209,8 +330,6 @@
             if (fn.CheckSteDB(row))
             {
                 db = fn.getDb(row);
-                await CreateDoc();
-
                 try
                 {
                     var dt = db.API_T_Config;
@@ -225,6 +344,28 @@
                         db.SaveChanges();
                         config = item;
                     }
+
+                    foreach (var item in db.F_JOURNAUX)
+                    {
+                        Journaux.Add(new Items { Id = item.cbMarq, Name = item.JO_Num + " - " + item.JO_Intitule, TextID = item.JO_Num });
+                    }
+                    foreach (var item in db.F_COMPTEG)
+                    {
+                        Comptes.Add(new Items { Id = item.cbMarq, Name = item.CG_Num + " - " + item.CG_Intitule, TextID = item.CG_Num });
+                    }
+                    dtBanques = fn.StringToList(row.JO_Banques);
+                    banques = dtBanques.Select(a => a.TextID).ToArray();
+                    dtAchats = fn.StringToList(row.JO_Achats);
+                    achats = dtAchats.Select(a => a.TextID).ToArray();
+                    dtVentes = fn.StringToList(row.JO_Ventes);
+                    ventes = dtVentes.Select(a => a.TextID).ToArray();
+                    dtCaisses = fn.StringToList(row.JO_Caisses);
+                    caisses = dtCaisses.Select(a => a.TextID).ToArray();
+                    dtComptes = fn.StringToList(row.CG_Inclures);
+                    comptes = dtComptes.Select(a => a.TextID).ToArray();
+                    dtComptes_ve = fn.StringToList(row.CG_Inclures_VE);
+                    comptes_ve = dtComptes_ve.Select(a => a.TextID).ToArray();
+
                 }
                 catch (Exception ex)
                 {
@@ -235,22 +376,89 @@
         }
     }
 
-    private async Task CreateDoc()
-    {
-        var sg = new SageService(db);
-        var doc = new DocumentEntete();
-        doc.Date = DateTime.Today;
-        doc.Depot = 1;
-        doc.Tiers = "CISEL";
-        doc.TypeDO = DocumentTypeDO.DevisClient;
-
-        //var rs = await sg.Document.CreateDocument(doc);
-
-    }
-
     protected async Task Submit()
     {
+        if (dtBanques != null)
+        {
+            dtBanques.Clear();
+        }
+        else
+        {
+            dtBanques = new List<Items>();
+        }
+        foreach (string item in banques)
+        {
+            dtBanques.Add(new Items { TextID = item });
+        }
+        row.JO_Banques = fn.ListToString(dtBanques);
+        if (dtAchats != null)
+        {
+            dtAchats.Clear();
+        }
+        else
+        {
+            dtAchats = new List<Items>();
+        }
+        foreach (string item in achats)
+        {
+            dtAchats.Add(new Items { TextID = item });
+        }
+        row.JO_Achats = fn.ListToString(dtAchats);
+        if (dtVentes != null)
+        {
+            dtVentes.Clear();
+        }
+        else
+        {
+            dtVentes = new List<Items>();
+        }
+        foreach (string item in ventes)
+        {
+            dtVentes.Add(new Items { TextID = item });
+        }
+        row.JO_Ventes = fn.ListToString(dtVentes);
+        if (dtCaisses != null)
+        {
+            dtCaisses.Clear();
+        }
+        else
+        {
+            dtCaisses = new List<Items>();
+        }
+        foreach (string item in caisses)
+        {
+            dtCaisses.Add(new Items { TextID = item });
+        }
+        row.JO_Caisses = fn.ListToString(dtCaisses);
 
+        if (dtComptes != null)
+        {
+            dtComptes.Clear();
+        }
+        else
+        {
+            dtComptes = new List<Items>();
+        }
+        foreach (string item in comptes)
+        {
+            dtComptes.Add(new Items { TextID = item });
+        }
+        row.CG_Inclures = fn.ListToString(dtComptes);
+
+
+        if (dtComptes_ve != null)
+        {
+            dtComptes_ve.Clear();
+        }
+        else
+        {
+            dtComptes_ve = new List<Items>();
+        }
+        foreach (string item in comptes_ve)
+        {
+            dtComptes_ve.Add(new Items { TextID = item });
+        }
+        row.CG_Inclures_VE = fn.ListToString(dtComptes_ve);
         if (id == 0)
         {
             try
@@ -294,6 +502,7 @@
                         {
                             await DeleteHistoriqueTriggers();
                         }
+
                     }
                     catch (Exception ex)
                     {
@@ -335,6 +544,7 @@
                     {
                         await DeleteHistoriqueTriggers();
                     }
+
                 }
 
             }
@@ -463,9 +673,9 @@
         await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_UPD_F_DOCENTETE]  ON [dbo].[F_DOCENTETE]  FOR UPDATE  AS  BEGIN    INSERT INTO API_T_Audit_F_DOCENTETE    (        [Operation]        ,[timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[DO_Piece]        ,[DO_Date]        ,[DO_Ref]        ,[DO_Tiers]        ,[CO_No]        ,[DO_Period]        ,[DO_Devise]        ,[DO_Cours]        ,[DE_No]        ,[LI_No]        ,[CT_NumPayeur]        ,[DO_Expedit]        ,[DO_NbFacture]        ,[DO_BLFact]        ,[DO_TxEscompte]        ,[DO_Reliquat]        ,[DO_Imprim]        ,[CA_Num]        ,[DO_Coord01]        ,[DO_Coord02]        ,[DO_Coord03]        ,[DO_Coord04]        ,[DO_Souche]        ,[DO_DateLivr]        ,[DO_Condition]        ,[DO_Tarif]        ,[DO_Colisage]        ,[DO_TypeColis]        ,[DO_Transaction]        ,[DO_Langue]        ,[DO_Ecart]        ,[DO_Regime]        ,[N_CatCompta]        ,[DO_Ventile]        ,[AB_No]        ,[DO_DebutAbo]        ,[DO_FinAbo]        ,[DO_DebutPeriod]        ,[DO_FinPeriod]        ,[CG_Num]        ,[DO_Statut]        ,[DO_Heure]        ,[CA_No]        ,[CO_NoCaissier]        ,[DO_Transfere]        ,[DO_Cloture]        ,[DO_NoWeb]        ,[DO_Attente]        ,[DO_Provenance]        ,[CA_NumIFRS]        ,[MR_No]        ,[DO_TypeFrais]        ,[DO_ValFrais]        ,[DO_TypeLigneFrais]        ,[DO_TypeFranco]        ,[DO_ValFranco]        ,[DO_TypeLigneFranco]        ,[DO_Taxe1]        ,[DO_TypeTaux1]        ,[DO_TypeTaxe1]        ,[DO_Taxe2]        ,[DO_TypeTaux2]        ,[DO_TypeTaxe2]        ,[DO_Taxe3]        ,[DO_TypeTaux3]        ,[DO_TypeTaxe3]        ,[DO_MajCpta]        ,[DO_Motif]        ,[CT_NumCentrale]        ,[DO_Contact]        ,[DO_FactureElec]        ,[DO_TypeTransac]        ,[DO_DateLivrRealisee]        ,[DO_DateExpedition]        ,[DO_FactureFrs]        ,[DO_PieceOrig]        ,[DO_GUID]        ,[DO_EStatut]        ,[DO_DemandeRegul]        ,[ET_No]        ,[DO_Valide]        ,[DO_Coffre]        ,[DO_CodeTaxe1]        ,[DO_CodeTaxe2]        ,[DO_CodeTaxe3]        ,[DO_TotalHT]        ,[DO_StatutBAP]    )      SELECT          'Modification'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[DO_Piece]        ,[DO_Date]        ,[DO_Ref]        ,[DO_Tiers]        ,[CO_No]        ,[DO_Period]        ,[DO_Devise]        ,[DO_Cours]        ,[DE_No]        ,[LI_No]        ,[CT_NumPayeur]        ,[DO_Expedit]        ,[DO_NbFacture]        ,[DO_BLFact]        ,[DO_TxEscompte]        ,[DO_Reliquat]        ,[DO_Imprim]        ,[CA_Num]        ,[DO_Coord01]        ,[DO_Coord02]        ,[DO_Coord03]        ,[DO_Coord04]        ,[DO_Souche]        ,[DO_DateLivr]        ,[DO_Condition]        ,[DO_Tarif]        ,[DO_Colisage]        ,[DO_TypeColis]        ,[DO_Transaction]        ,[DO_Langue]        ,[DO_Ecart]        ,[DO_Regime]        ,[N_CatCompta]        ,[DO_Ventile]        ,[AB_No]        ,[DO_DebutAbo]        ,[DO_FinAbo]        ,[DO_DebutPeriod]        ,[DO_FinPeriod]        ,[CG_Num]        ,[DO_Statut]        ,[DO_Heure]        ,[CA_No]        ,[CO_NoCaissier]        ,[DO_Transfere]        ,[DO_Cloture]        ,[DO_NoWeb]        ,[DO_Attente]        ,[DO_Provenance]        ,[CA_NumIFRS]        ,[MR_No]        ,[DO_TypeFrais]        ,[DO_ValFrais]        ,[DO_TypeLigneFrais]        ,[DO_TypeFranco]        ,[DO_ValFranco]        ,[DO_TypeLigneFranco]        ,[DO_Taxe1]        ,[DO_TypeTaux1]        ,[DO_TypeTaxe1]        ,[DO_Taxe2]        ,[DO_TypeTaux2]        ,[DO_TypeTaxe2]        ,[DO_Taxe3]        ,[DO_TypeTaux3]        ,[DO_TypeTaxe3]        ,[DO_MajCpta]        ,[DO_Motif]        ,[CT_NumCentrale]        ,[DO_Contact]        ,[DO_FactureElec]        ,[DO_TypeTransac]        ,[DO_DateLivrRealisee]        ,[DO_DateExpedition]        ,[DO_FactureFrs]        ,[DO_PieceOrig]        ,[DO_GUID]        ,[DO_EStatut]        ,[DO_DemandeRegul]        ,[ET_No]        ,[DO_Valide]        ,[DO_Coffre]        ,[DO_CodeTaxe1]        ,[DO_CodeTaxe2]        ,[DO_CodeTaxe3]        ,[DO_TotalHT]        ,[DO_StatutBAP] FROM INSERTED    END");
 
         //F_DOCLIGNE
-        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_DEL_F_DOCLIGNE]  ON [dbo].[F_DOCLIGNE]  AFTER DELETE  AS  BEGIN    INSERT INTO API_T_Audit_F_DOCLIGNE    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[DT_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation]    )      SELECT            'Suppression'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[DT_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation] FROM DELETED    END");
-        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_INS_F_DOCLIGNE]  ON [dbo].[F_DOCLIGNE]  AFTER INSERT  AS  BEGIN    INSERT INTO API_T_Audit_F_DOCLIGNE    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[DT_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation]    )      SELECT            'Insertion'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[DT_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation] FROM INSERTED    END");
-        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_UPD_F_DOCLIGNE]  ON [dbo].[F_DOCLIGNE]  AFTER UPDATE  AS  BEGIN    INSERT INTO API_T_Audit_F_DOCLIGNE    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[DT_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation]    )      SELECT  TOP 1          'Modification'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[DT_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation] FROM INSERTED a ORDER BY a.cbMarq END");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_DEL_F_DOCLIGNE]  ON [dbo].[F_DOCLIGNE]  AFTER DELETE  AS  BEGIN    INSERT INTO API_T_Audit_F_DOCLIGNE    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[API_T_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation]    )      SELECT            'Suppression'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[API_T_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation] FROM DELETED    END");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_INS_F_DOCLIGNE]  ON [dbo].[F_DOCLIGNE]  AFTER INSERT  AS  BEGIN    INSERT INTO API_T_Audit_F_DOCLIGNE    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[API_T_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation]    )      SELECT            'Insertion'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[API_T_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation] FROM INSERTED    END");
+        await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_UPD_F_DOCLIGNE]  ON [dbo].[F_DOCLIGNE]  AFTER UPDATE  AS  BEGIN    INSERT INTO API_T_Audit_F_DOCLIGNE    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[API_T_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation]    )      SELECT  TOP 1          'Modification'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[DO_Domaine]        ,[DO_Type]        ,[CT_Num]        ,[DO_Piece]        ,[DL_PieceBC]        ,[DL_PieceBL]        ,[DO_Date]        ,[DL_DateBC]        ,[DL_DateBL]        ,[DL_Ligne]        ,[DO_Ref]        ,[DL_TNomencl]        ,[DL_TRemPied]        ,[DL_TRemExep]        ,[AR_Ref]        ,[DL_Design]        ,[DL_Qte]        ,[DL_QteBC]        ,[DL_QteBL]        ,[DL_PoidsNet]        ,[DL_PoidsBrut]        ,[DL_Remise01REM_Valeur]        ,[DL_Remise01REM_Type]        ,[DL_Remise02REM_Valeur]        ,[DL_Remise02REM_Type]        ,[DL_Remise03REM_Valeur]        ,[DL_Remise03REM_Type]        ,[DL_PrixUnitaire]        ,[DL_PUBC]        ,[DL_Taxe1]        ,[DL_TypeTaux1]        ,[DL_TypeTaxe1]        ,[DL_Taxe2]        ,[DL_TypeTaux2]        ,[DL_TypeTaxe2]        ,[CO_No]        ,[AG_No1]        ,[AG_No2]        ,[DL_PrixRU]        ,[DL_CMUP]        ,[DL_MvtStock]        ,[API_T_No]        ,[AF_RefFourniss]        ,[EU_Enumere]        ,[EU_Qte]        ,[DL_TTC]        ,[DE_No]        ,[DL_NoRef]        ,[DL_TypePL]        ,[DL_PUDevise]        ,[DL_PUTTC]        ,[DL_No]        ,[DO_DateLivr]        ,[CA_Num]        ,[DL_Taxe3]        ,[DL_TypeTaux3]        ,[DL_TypeTaxe3]        ,[DL_Frais]        ,[DL_Valorise]        ,[AR_RefCompose]        ,[DL_NonLivre]        ,[AC_RefClient]        ,[DL_MontantHT]        ,[DL_MontantTTC]        ,[DL_FactPoids]        ,[DL_Escompte]        ,[DL_PiecePL]        ,[DL_DatePL]        ,[DL_QtePL]        ,[DL_NoColis]        ,[DL_NoLink]        ,[RP_Code]        ,[DL_QteRessource]        ,[DL_DateAvancement]        ,[PF_Num]        ,[DL_CodeTaxe1]        ,[DL_CodeTaxe2]        ,[DL_CodeTaxe3]        ,[DL_PieceOFProd]        ,[DL_PieceDE]        ,[DL_DateDE]        ,[DL_QteDE]        ,[DL_Operation] FROM INSERTED a ORDER BY a.cbMarq END");
 
         //F_ECRITUREC
         await db.Database.ExecuteSqlRawAsync("CREATE TRIGGER [dbo].[TG_Audit_DEL_F_ECRITUREC]  ON [dbo].[F_ECRITUREC]  AFTER DELETE  AS  BEGIN    INSERT INTO API_T_Audit_F_ECRITUREC    (    [Operation]        ,[Timestamp]        ,[Suser_Name]        ,[Host_Name]        ,[Sage_Name]        ,[cbMarq]        ,[JO_Num]        ,[EC_No]        ,[EC_NoLink]        ,[JM_Date]        ,[EC_Jour]        ,[EC_Date]        ,[EC_Piece]        ,[EC_RefPiece]        ,[EC_TresoPiece]        ,[CG_Num]        ,[CG_NumCont]        ,[CT_Num]        ,[EC_Intitule]        ,[N_Reglement]        ,[EC_Echeance]        ,[EC_Parite]        ,[EC_Quantite]        ,[N_Devise]        ,[EC_Sens]        ,[EC_Montant]        ,[EC_Lettre]        ,[EC_Lettrage]        ,[EC_Point]        ,[EC_Pointage]        ,[EC_Impression]        ,[EC_Cloture]        ,[EC_CType]        ,[EC_Rappel]        ,[CT_NumCont]        ,[EC_LettreQ]        ,[EC_LettrageQ]        ,[EC_ANType]        ,[EC_RType]        ,[EC_Devise]        ,[EC_Remise]        ,[EC_ExportExpert]        ,[TA_Code]        ,[EC_Norme]        ,[TA_Provenance]        ,[EC_PenalType]        ,[EC_DatePenal]        ,[EC_DateRelance]        ,[EC_DateRappro]        ,[EC_Reference]        ,[EC_StatusRegle]        ,[EC_MontantRegle]        ,[EC_DateRegle]        ,[EC_RIB]        ,[EC_DateOp]        ,[EC_NoCloture]        ,[EC_ExportRappro]        ,[EC_FactureGUID]        ,[EC_DateCloture]    )      SELECT            'Suppression'        ,GETDATE()        ,Suser_Name()        ,Host_Name()        ,(SELECT cbUserName FROM cbUserSession Where cbSession = @@SPID)        ,[cbMarq]        ,[JO_Num]        ,[EC_No]        ,[EC_NoLink]        ,[JM_Date]        ,[EC_Jour]        ,[EC_Date]        ,[EC_Piece]        ,[EC_RefPiece]        ,[EC_TresoPiece]        ,[CG_Num]        ,[CG_NumCont]        ,[CT_Num]        ,[EC_Intitule]        ,[N_Reglement]        ,[EC_Echeance]        ,[EC_Parite]        ,[EC_Quantite]        ,[N_Devise]        ,[EC_Sens]        ,[EC_Montant]        ,[EC_Lettre]        ,[EC_Lettrage]        ,[EC_Point]        ,[EC_Pointage]        ,[EC_Impression]        ,[EC_Cloture]        ,[EC_CType]        ,[EC_Rappel]        ,[CT_NumCont]        ,[EC_LettreQ]        ,[EC_LettrageQ]        ,[EC_ANType]        ,[EC_RType]        ,[EC_Devise]        ,[EC_Remise]        ,[EC_ExportExpert]        ,[TA_Code]        ,[EC_Norme]        ,[TA_Provenance]        ,[EC_PenalType]        ,[EC_DatePenal]        ,[EC_DateRelance]        ,[EC_DateRappro]        ,[EC_Reference]        ,[EC_StatusRegle]        ,[EC_MontantRegle]        ,[EC_DateRegle]        ,[EC_RIB]        ,[EC_DateOp]        ,[EC_NoCloture]        ,[EC_ExportRappro]        ,[EC_FactureGUID]        ,[EC_DateCloture] FROM DELETED    END");

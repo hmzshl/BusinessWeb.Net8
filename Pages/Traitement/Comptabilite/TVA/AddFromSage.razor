@@ -1,0 +1,577 @@
+﻿@attribute [Authorize]
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@inject DialogService DialogService
+@inject ContextMenuService ContextMenuService
+@inject TooltipService TooltipService
+
+@if (IsLoaded)
+{
+    <AntDesign.Spin Spinning=Refreshing Size="AntDesign.SpinSize.Large">
+        <RadzenStack Orientation="Radzen.Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem" Style="margin-top: 0px !important;">
+            <RadzenButton ButtonStyle="ButtonStyle.Light" Variant="Variant.Outlined" Size="Radzen.ButtonSize.Small" Icon="file_save" Text="Exporter en EXCEL" Disabled />
+            <RadzenButton ButtonType="Radzen.ButtonType.Submit" Variant="Variant.Outlined" Size="Radzen.ButtonSize.Small" Icon="save" Click="Submit" Text="Ajouter les éléments selectionnés" />
+            <RadzenButton ButtonStyle="ButtonStyle.Light" Variant="Variant.Outlined" Size="Radzen.ButtonSize.Small" Icon="cancel" Text="Annuler" Click="@(args => DialogService.Close())" />
+        </RadzenStack>
+        <AntDesign.Divider></AntDesign.Divider>
+        <div style="height: 80vh; padding: 8px;" class="no-border">
+            <SfGrid ID="Grid" @ref=MainGrid Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowFiltering>
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" />
+                <GridAggregates>
+                    <GridAggregate>
+                        <GridAggregateColumns>
+                            <GridAggregateColumn Field="@nameof(F_ECRITUREC.EC_Montant)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                <FooterTemplate>
+                                    @{
+                                        var value = (context as AggregateTemplateContext);
+                                        <div>
+                                            @value.Sum
+                                        </div>
+                                    }
+                                </FooterTemplate>
+                                <GroupCaptionTemplate>
+                                    @{
+                                        var value = (context as AggregateTemplateContext);
+                                        <div>
+                                            @value.Sum
+                                        </div>
+                                    }
+                                </GroupCaptionTemplate>
+                            </GridAggregateColumn>
+                        </GridAggregateColumns>
+                    </GridAggregate>
+                </GridAggregates>
+                <GridEvents TValue="F_ECRITUREC"></GridEvents>
+                <GridColumns>
+                    <GridColumn Type="ColumnType.CheckBox" Width="30" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"></GridColumn>
+                    <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_ECRITUREC.EC_DateRappro)" HeaderText="Rappro" />
+                    <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_ECRITUREC.JM_Date)" HeaderText="Date" />
+                    <GridColumn Width="390" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_ECRITUREC.EC_Intitule)" HeaderText="Libellé" />
+                    <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_ECRITUREC.JO_Num)" HeaderText="N° Jou" />
+                    <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_ECRITUREC.CG_Num)" HeaderText="N° Compte" />
+                    <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_ECRITUREC.CT_Num)" HeaderText="N° Tiers" />
+                    <GridColumn Width="190" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Tiers">
+                        <Template>
+                            @((context as F_ECRITUREC).CT_NumNavigation != null ? (context as F_ECRITUREC).CT_NumNavigation.CT_Intitule : "")
+                        </Template>
+                    </GridColumn>
+                    <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_ECRITUREC.EC_Piece)" HeaderText="Pièce" />
+                    <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_ECRITUREC.EC_Reference)" HeaderText="Référence" />
+                    <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_ECRITUREC.EC_Lettrage)" HeaderText="Lettre" />
+                    <GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_ECRITUREC.EC_Montant)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+
+                </GridColumns>
+            </SfGrid>
+        </div>
+    </AntDesign.Spin>
+
+}
+else
+{
+    <div class="center-screen">
+        <AntDesign.Spin size="AntDesign.SpinSize.Large" />
+    </div>
+
+}
+
+
+
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+    DB db = new DB();
+    List<F_ECRITUREC> items = new List<F_ECRITUREC>();
+    IList<F_ECRITUREC> Selected;
+    API_T_Declaration row = new API_T_Declaration();
+    [Parameter] public int declaration { get; set; }
+    [Parameter] public int RG_Type { get; set; }
+    bool IsLoaded = false;
+    bool Refreshing = false;
+    SfGrid<F_ECRITUREC> MainGrid;
+    bool allowRowSelectOnRowClick = true;
+    bool non_lettre = true;
+    [Parameter] public string index { get; set; }
+    List<API_T_Taxe> taxes = new List<API_T_Taxe>();
+    string[] caisses = [];
+    List<Items> dtCaisses = new List<Items>();
+    string[] comptes = [];
+    List<Items> dtComptes = new List<Items>();
+    string[] comptes_ve = [];
+    List<Items> dtComptes_ve = new List<Items>();
+    List<API_T_Tiers> tiers = new List<API_T_Tiers>();
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(100);
+        db = session.db;
+        row = db.API_T_Declaration.Where(a => a.Id == declaration).SingleOrDefault();
+        dtCaisses = fn.StringToList(session.Societe.JO_Caisses);
+        caisses = dtCaisses.Select(a => a.TextID).ToArray();
+        dtComptes = fn.StringToList(session.Societe.CG_Inclures);
+        comptes = dtComptes.Select(a => a.TextID).ToArray();
+        dtComptes_ve = fn.StringToList(session.Societe.CG_Inclures_VE);
+        comptes_ve = dtComptes_ve.Select(a => a.TextID).ToArray();
+        taxes = db.API_T_Taxe.Where(a => a.Societe == session.Societe.id).ToList();
+        tiers = db.API_T_Tiers.Where(a => a.Societe == session.Societe.id).ToList();
+        await UpdateGrid();
+        IsLoaded = true;
+    }
+    private async Task UpdateGrid()
+    {
+
+        try
+        {
+            var bq = fn.StringToList(session.Societe.JO_Banques);
+            var cs = fn.StringToList(session.Societe.JO_Caisses);
+            var old = new List<int?>();
+            foreach (var item in db.API_T_Paiement.AsNoTracking().Select(a => a.cbMarq).Distinct())
+            {
+                old.Add(item);
+            }
+
+            if (RG_Type == 0)
+            {
+                if (session.Societe.Rapprochement ?? false)
+                {
+                    if (cs.Any())
+                    {
+                        items = db.F_ECRITUREC
+                        .Where(a => a.EC_DateRappro >= row.DateDebut
+                        && a.EC_DateRappro <= row.DateFin
+                        && a.EC_Sens == session.Societe.SensEncaissement
+                        && bq.Select(a => a.TextID).Contains(a.JO_Num)
+                        && (!old.Contains(a.cbMarq))
+                         )
+                        .Include(a => a.CT_NumNavigation)
+                        .Include(a => a.CG_NumNavigation)
+                        .ToList();
+                    }
+
+                }
+                else
+                {
+                    if (bq.Any())
+                    {
+                        items = db.F_ECRITUREC
+                        .Where(a => a.JM_Date >= row.DateDebut
+                        && a.JM_Date <= row.DateFin
+                        && a.EC_Sens == session.Societe.SensEncaissement
+                        && bq.Select(a => a.TextID).Contains(a.JO_Num)
+                        && (!old.Contains(a.cbMarq))
+                         )
+                        .Include(a => a.CT_NumNavigation)
+                        .Include(a => a.CG_NumNavigation)
+                        .ToList();
+                    }
+                }
+                if (cs.Any())
+                {
+                    items.AddRange(db.F_ECRITUREC
+                        .Where(a => a.JM_Date >= row.DateDebut
+                    && a.JM_Date <= row.DateFin
+                    && a.EC_Sens == session.Societe.SensEncaissement
+                    && cs.Select(a => a.TextID).Contains(a.JO_Num)
+                    && a.CT_Num != null
+                    && (!old.Contains(a.cbMarq))
+                     )
+                    .Include(a => a.CT_NumNavigation)
+                    .Include(a => a.CG_NumNavigation)
+                    .ToList());
+                }
+            }
+            else
+            {
+                if (session.Societe.Rapprochement ?? false)
+                {
+                    if (cs.Any())
+                    {
+                        items = db.F_ECRITUREC
+                        .Where(a => a.EC_DateRappro >= row.DateDebut
+                        && a.EC_DateRappro <= row.DateFin
+                        && a.EC_Sens == session.Societe.SensDecaissement
+                        && bq.Select(a => a.TextID).Contains(a.JO_Num)
+                        && (!old.Contains(a.cbMarq))
+                         )
+                        .Include(a => a.CT_NumNavigation)
+                        .Include(a => a.CG_NumNavigation)
+                        .ToList();
+                    }
+
+                }
+                else
+                {
+                    if (bq.Any())
+                    {
+                        items = db.F_ECRITUREC
+                        .Where(a => a.JM_Date >= row.DateDebut
+                        && a.JM_Date <= row.DateFin
+                        && a.EC_Sens == session.Societe.SensDecaissement
+                        && bq.Select(a => a.TextID).Contains(a.JO_Num)
+                        && (!old.Contains(a.cbMarq))
+                         )
+                        .Include(a => a.CT_NumNavigation)
+                        .Include(a => a.CG_NumNavigation)
+                        .ToList();
+                    }
+                }
+                if (cs.Any())
+                {
+                    items.AddRange(db.F_ECRITUREC
+                        .Where(a => a.JM_Date >= row.DateDebut
+                    && a.JM_Date <= row.DateFin
+                    && a.EC_Sens == session.Societe.SensDecaissement
+                    && cs.Select(a => a.TextID).Contains(a.JO_Num)
+                    && a.CT_Num != null
+                    && (!old.Contains(a.cbMarq))
+                     )
+                    .Include(a => a.CT_NumNavigation)
+                    .Include(a => a.CG_NumNavigation)
+                    .ToList());
+                }
+            }
+
+
+
+
+
+        }
+        catch (Exception ex)
+        {
+            await DialogService.Alert(ex.ToString());
+        }
+    }
+    private async Task Submit()
+    {
+
+        Refreshing = true;
+        await Task.Delay(1);
+        var dt = MainGrid.GetSelectedRecordsAsync().Result;
+        foreach (F_ECRITUREC item in dt)
+        {
+            var ln = new API_T_Paiement();
+            ln.EC_Montant = item.EC_Montant;
+            ln.RG_Reference = item.EC_Reference;
+            if (item.EC_DateRappro?.Year > 2000)
+            {
+                ln.EC_DateRappro = item.EC_DateRappro;
+                ln.RG_Date = item.JM_Date.AddDays((item.EC_Jour - 1) ?? 0);
+            }
+            else
+            {
+                ln.EC_DateRappro = item.JM_Date.AddDays((item.EC_Jour - 1) ?? 0);
+                ln.RG_Date = item.JM_Date.AddDays((item.EC_Jour - 1) ?? 0);
+            }
+
+            ln.EC_Intitule = item.EC_Intitule;
+            ln.EC_Lettrage = item.EC_Lettrage;
+            ln.RG_Type = RG_Type;
+            ln.cbMarq = item.cbMarq;
+            ln.Declaration = row.Id;
+            ln.RG_Reference = item.EC_Reference;
+            ln.Date = item.JM_Date;
+            ln.JO_Num = item.JO_Num;
+            ln.CG_Num = item.CG_Num;
+            ln.EC_Piece = item.EC_Piece;
+            ln.JM_Date = item.JM_Date;
+            ln.Societe = row.SocieteId;
+            ln.EC_Sens = item.EC_Sens;
+            ln.Src = "SAGE";
+            if (session.Societe.RapprochementSur ?? false)
+            {
+                F_ECRITUREC con = new F_ECRITUREC();
+                var cons = db.F_ECRITUREC
+                    .Where(a => a.EC_Piece == item.EC_Piece
+                    && a.JM_Date == item.JM_Date
+                    && a.EC_Montant == item.EC_Montant
+                    && a.cbMarq != item.cbMarq
+                    && a.JO_Num == item.JO_Num
+
+                    ).ToList();
+
+                if (cons.Any())
+                {
+                    con = cons.First();
+                }
+
+                ln.CT_Num = con.CT_Num;
+                ln.CT_Intitule = con.CT_NumNavigation != null ? con.CT_NumNavigation.CT_Intitule : "";
+            }
+            else
+            {
+                ln.CT_Num = item.CT_Num;
+                ln.CT_Intitule = item.CT_NumNavigation != null ? item.CT_NumNavigation.CT_Intitule : "";
+            }
+
+            ln.Annee = (ln.EC_DateRappro?.Year) ?? 0;
+            var culture = new System.Globalization.CultureInfo("fr-FR");
+            string monthName = culture.DateTimeFormat.GetMonthName((ln.EC_DateRappro?.Month) ?? 1);
+            ln.MoisRappro = $"{char.ToUpper(monthName[0])}{monthName.Substring(1)}";
+            ln.ModePaiementChar = fn.GetPaymentModeEnhanced(item.EC_Intitule);
+            if (RG_Type == 0)
+            {
+                if (dtComptes_ve.Any())
+                {
+                    ln.Ignored = !(comptes_ve.Contains(ln.CG_Num));
+                }
+            }
+            else
+            {
+                if (dtComptes.Any())
+                {
+                    ln.Ignored = !(comptes.Contains(ln.CG_Num));
+                }
+            }
+
+            if (dtCaisses.Any())
+            {
+                if (caisses.Contains(ln.JO_Num))
+                {
+                    ln.ModePaiementChar = "Espèces";
+                }
+            }
+
+            db.Add(ln);
+            db.SaveChanges();
+
+            if (session.Societe.RapprochementSur ?? false)
+            {
+                F_ECRITUREC con = new F_ECRITUREC();
+                var cons = db.F_ECRITUREC
+                    .Where(a => a.EC_Piece == item.EC_Piece
+                    && a.JM_Date == item.JM_Date
+                    && a.EC_Montant == item.EC_Montant
+                    && a.cbMarq != item.cbMarq
+                    && a.JO_Num == item.JO_Num
+
+                    ).ToList();
+
+                if (cons.Any())
+                {
+                    con = cons.First();
+                }
+                await GetFactures(con, ln);
+            }
+            else
+            {
+                await GetFactures(item, ln);
+            }
+
+
+
+
+
+        }
+        try
+        {
+            db.SaveChanges();
+            DialogService.Close();
+        }
+        catch (Exception ex)
+        {
+            Refreshing = false;
+            await Task.Delay(1);
+            await DialogService.Alert(ex.ToString());
+        }
+
+
+    }
+
+    private async Task GetFactures(F_ECRITUREC rg, API_T_Paiement row)
+    {
+        F_ECRITUREC con = new F_ECRITUREC();
+
+        var cons_let = db.F_ECRITUREC.Where(a =>
+            a.CG_Num == rg.CG_Num
+            && a.CT_Num == rg.CT_Num
+            && a.EC_Lettrage == rg.EC_Lettrage
+            && a.JM_Date.Year == rg.JM_Date.Year
+            && a.cbMarq != rg.cbMarq
+            && a.EC_Piece != rg.EC_Piece
+            && a.EC_Lettre == 1
+            && a.JO_Num != rg.JO_Num
+        );
+
+        foreach (var fact in cons_let)
+        {
+            var fa = new API_T_Facture();
+            fa.Ignored = row.Ignored;
+            fa.DateFacture = fact.JM_Date.AddDays((fact.EC_Jour - 1) ?? 0);
+            if (RG_Type == 1)
+            {
+                if (session.Societe.NumFA_Achat == 1)
+                {
+                    if ((fact.EC_Reference ?? "") != "")
+                    {
+                        fa.Numero = fact.EC_Reference;
+                    }
+                    else
+                    {
+                        fa.Numero = "VIDE";
+                    }
+                }
+                else if (session.Societe.NumFA_Achat == 2)
+                {
+                    if ((fact.EC_Piece ?? "") != "")
+                    {
+                        fa.Numero = fact.EC_Piece;
+                    }
+                    else
+                    {
+                        fa.Numero = "VIDE";
+                    }
+                }
+                else if (session.Societe.NumFA_Achat == 3)
+                {
+                    if ((fact.EC_Intitule ?? "") != "")
+                    {
+                        fa.Numero = fact.EC_Intitule;
+                    }
+                    else
+                    {
+                        fa.Numero = "VIDE";
+                    }
+                }
+                else
+                {
+                    if ((fact.EC_RefPiece ?? "") != "")
+                    {
+                        fa.Numero = fact.EC_RefPiece;
+                    }
+                    else
+                    {
+                        fa.Numero = "VIDE";
+                    }
+                }
+            }
+            else
+            {
+                if (session.Societe.NumFA_Vente == 1)
+                {
+                    if ((fact.EC_Reference ?? "") != "")
+                    {
+                        fa.Numero = fact.EC_Reference;
+                    }
+                    else
+                    {
+                        fa.Numero = "VIDE";
+                    }
+                }
+                else if (session.Societe.NumFA_Vente == 2)
+                {
+                    if ((fact.EC_Piece ?? "") != "")
+                    {
+                        fa.Numero = fact.EC_Piece;
+                    }
+                    else
+                    {
+                        fa.Numero = "VIDE";
+                    }
+                }
+                else if (session.Societe.NumFA_Vente == 3)
+                {
+                    if ((fact.EC_Intitule ?? "") != "")
+                    {
+                        fa.Numero = fact.EC_Intitule;
+                    }
+                    else
+                    {
+                        fa.Numero = "VIDE";
+                    }
+                }
+                else
+                {
+                    if ((fact.EC_RefPiece ?? "") != "")
+                    {
+                        fa.Numero = fact.EC_RefPiece;
+                    }
+                    else
+                    {
+                        fa.Numero = "VIDE";
+                    }
+                }
+            }
+
+
+
+            if (row.RG_Type == 1)
+            {
+                if (fact.EC_Sens == 0)
+                {
+                    fa.MontantTTC = -fact.EC_Montant;
+                }
+                else
+                {
+                    fa.MontantTTC = fact.EC_Montant;
+                }
+            }
+            else
+            {
+                if (fact.EC_Sens == 1)
+                {
+                    fa.MontantTTC = -fact.EC_Montant;
+                }
+                else
+                {
+                    fa.MontantTTC = fact.EC_Montant;
+                }
+            }
+
+            fa.Regl = row.id;
+            fa.Src = "SAGE";
+            fa.DateReglement = row.RG_Date;
+            fa.ModeReglement = row.ModePaiementChar;
+            fa.ClientFournisseur = row.CT_Intitule;
+            fa.ICE = tiers.Where(a => a.CT_Num == row.CT_Num).SingleOrDefault()?.ICE;
+            fa.cbMarq = fact.cbMarq;
+            fa.EC_Lettrage = fact.EC_Lettrage;
+            fa.EC_Lettre = fact.EC_Lettre ?? 0;
+            db.API_T_Facture.Add(fa);
+            db.SaveChanges();
+            await GetTaux(fact, fa);
+        }
+
+
+    }
+    private async Task GetTaux(F_ECRITUREC fa, API_T_Facture row)
+    {
+        var cons_let = db.F_ECRITUREC.Where(a =>
+    a.JM_Date.Year == fa.JM_Date.Year
+        && a.JM_Date == fa.JM_Date
+    && a.cbMarq != fa.cbMarq
+    && a.EC_Piece == fa.EC_Piece
+    && a.JO_Num == fa.JO_Num
+    && (a.CG_Num.StartsWith("3455") || a.CG_Num.StartsWith("4455"))
+        ).ToList();
+        if (cons_let.Any())
+        {
+            foreach (var tx in cons_let)
+            {
+                var ln = new API_T_FactureTaux();
+                if (fa.EC_Montant < 0)
+                {
+                    ln.TVA = -(tx.EC_Montant ?? 0);
+                }
+                else
+                {
+                    ln.TVA = (tx.EC_Montant ?? 0);
+                }
+                ln.CG_Num = tx.CG_Num;
+                ln.Facture = row.Id;
+                var txs = taxes.Where(a => a.CG_Num == tx.CG_Num);
+                if (txs.Any())
+                {
+                    ln.Taux = txs.First().TA_Taux;
+                }
+                ln.cbMarq = tx.cbMarq;
+                ln.EC_Lettre = tx.EC_Lettre ?? 0;
+                ln.EC_Lettrage = tx.EC_Lettrage;
+                db.Add(ln);
+            }
+        }
+        else
+        {
+            row.IsEXO = true;
+        }
+
+    }
+}
