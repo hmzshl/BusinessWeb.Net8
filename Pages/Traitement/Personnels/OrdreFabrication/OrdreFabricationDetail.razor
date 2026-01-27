@@ -1,112 +1,122 @@
-﻿<div style="height: @Height;">
-    <SfGrid Height="100%" Width="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)" AllowFiltering AllowSorting>
-        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
-        <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(AllowEditing && (!StockCreated))" AllowDeleting="@(AllowEditing && (!StockCreated))"
-                          AllowEditing="@(AllowEditing)"
-                          Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
-        </GridEditSettings>
-        <GridEvents OnActionBegin="EditGrid" TValue="API_T_OrdreFabricationDetail"></GridEvents>
-        <GridTemplates>
-            <EmptyRecordTemplate>
-                <Empty></Empty>
-            </EmptyRecordTemplate>
-        </GridTemplates>
-        <GridColumns>
-            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationDetail.id) HeaderText="#" IsPrimaryKey="true"
-                        Visible="false" IsIdentity="true"></GridColumn>
-            <GridColumn AllowEditing=@(!StockCreated) Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationLigne.AR_Ref) HeaderText="Réference">
-                <EditTemplate>
-                    @{
-                        if (!StockCreated)
-                        {
-                            <SfDropDownList FloatLabelType="FloatLabelType.Never"
-                                            AllowFiltering TValue="string" TItem="F_ARTICLE"
-                                            FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
-                                            Query="@fn.LocalDataQuery"
-                                            DataSource="@(articles)" @bind-Value="@((context as API_T_OrdreFabricationDetail).AR_Ref)">
-                                <DropDownListEvents TValue="string" TItem="F_ARTICLE" />
-                                <DropDownListFieldSettings Text="AR_Ref" Value="AR_Ref" />
-                            </SfDropDownList>
-                        }
-                        else
-                        {
-                            <div>
-                                @((context as API_T_OrdreFabricationDetail)?.AR_Ref)
-                            </div>
-                        }
-                    }
+﻿<AntDesign.Spin Size="large" Spinning=Refreshing Style="margin-top: 50px;">
+    @if (sc.IsInRole("Admin", "Chef Chantier"))
+    {
+        <div style="margin-bottom: 5px;">
+            <SfButton OnClick=@CreateCommande>Préparation de commande rapide</SfButton>
+        </div>
 
-                </EditTemplate>
-            </GridColumn>
-            <GridColumn AllowEditing=@(!StockCreated) MinWidth="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationDetail.AR_Ref) HeaderText="Article">
-                <EditTemplate>
-                    @{
-                        if (!StockCreated)
-                        {
-                            <SfDropDownList FloatLabelType="FloatLabelType.Never"
-                                            AllowFiltering TValue="string" TItem="F_ARTICLE"
-                                            FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
-                                            Query="@fn.LocalDataQuery"
-                                            DataSource="@(articles)" @bind-Value="@((context as API_T_OrdreFabricationDetail).AR_Ref)">
-                                <DropDownListEvents TValue="string" TItem="F_ARTICLE" />
-                                <DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
-                            </SfDropDownList>
+    }
+    <div style="height: @Height;">
+        <SfGrid @ref=DefaultGrid Height="100%" Width="100%" Toolbar="@(new List<string>() { "Add", "Delete" })" DataSource="@(items)" AllowFiltering AllowSorting>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+            <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="@(AllowEditing && (!StockCreated))" AllowDeleting="@(AllowEditing && (!StockCreated))"
+                              AllowEditing="@(AllowEditing)"
+                              Mode="Syncfusion.Blazor.Grids.EditMode.Normal">
+            </GridEditSettings>
+            <GridEvents OnActionBegin="EditGrid" TValue="API_T_OrdreFabricationDetail"></GridEvents>
+            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple" Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
+            <GridTemplates>
+                <EmptyRecordTemplate>
+                    <Empty></Empty>
+                </EmptyRecordTemplate>
+            </GridTemplates>
+            <GridColumns>
+                <GridColumn Type="ColumnType.CheckBox" Width="50" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Visible="@(sc.IsInRole("Admin", "Chef Chantier"))"></GridColumn>
+                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationDetail.id) HeaderText="#" IsPrimaryKey="true"
+                            Visible="false" IsIdentity="true"></GridColumn>
+                <GridColumn AllowEditing=@(!StockCreated) Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationLigne.AR_Ref) HeaderText="Réference">
+                    <EditTemplate>
+                        @{
+                            if (!StockCreated)
+                            {
+                                <SfDropDownList FloatLabelType="FloatLabelType.Never"
+                                                AllowFiltering TValue="string" TItem="F_ARTICLE"
+                                                FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+                                                Query="@fn.LocalDataQuery"
+                                                DataSource="@(articles)" @bind-Value="@((context as API_T_OrdreFabricationDetail).AR_Ref)">
+                                    <DropDownListEvents TValue="string" TItem="F_ARTICLE" />
+                                    <DropDownListFieldSettings Text="AR_Ref" Value="AR_Ref" />
+                                </SfDropDownList>
+                            }
+                            else
+                            {
+                                <div>
+                                    @((context as API_T_OrdreFabricationDetail)?.AR_Ref)
+                                </div>
+                            }
                         }
-                        else
-                        {
-                            <div>
-                                @((context as API_T_OrdreFabricationDetail)?.AR_RefNavigation?.AR_Design)
-                            </div>
-                        }
-                    }
 
-                </EditTemplate>
-                <Template>
-                    <div>
-                        @((context as API_T_OrdreFabricationDetail)?.AR_RefNavigation?.AR_Design)
-                    </div>
-                </Template>
-            </GridColumn>
-            <GridColumn AllowEditing=@(!StockCreated) HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.Qte) HeaderText="Qté.Unité"
-                        Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-            <GridColumn AllowEditing=@(!StockCreated) HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.Qte) HeaderText="Qté.Totale"
-                        Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-                <Template>
-                    <div style="text-align: right;">
-                        @((qte * (context as API_T_OrdreFabricationDetail).Qte).ToString("### ### ##0.0;-### ### ##0.0;#"))
-                    </div>
-                </Template>
-                <EditTemplate>
-                    @{
-                        <SfNumericTextBox Value="@(qte * (context as API_T_OrdreFabricationDetail).Qte)" 
-                        Enabled="false" ShowClearButton="false" ShowSpinButton="false"
-                                          Format="### ### ##0.0;-### ### ##0.0;#" Decimals="2" />
-                    }
-                </EditTemplate>
-            </GridColumn>
-            <GridColumn AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.QteStock) HeaderText="Stock"
-                        Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-            </GridColumn>
-            <GridColumn AllowEditing="@(StockCreated)" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="110" Field=@nameof(API_T_OrdreFabricationDetail.QtePreparation) HeaderText="A.commander"
-                        Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-                <Template>
-                    @{
-                        <div style="text-align: right;">
-                            @(((context as API_T_OrdreFabricationDetail).QtePreparation).ToString("### ### ##0.0;-### ### ##0.0;#"))
+                    </EditTemplate>
+                </GridColumn>
+                <GridColumn AllowEditing=@(!StockCreated) MinWidth="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationDetail.AR_Ref) HeaderText="Article">
+                    <EditTemplate>
+                        @{
+                            if (!StockCreated)
+                            {
+                                <SfDropDownList FloatLabelType="FloatLabelType.Never"
+                                                AllowFiltering TValue="string" TItem="F_ARTICLE"
+                                                FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+                                                Query="@fn.LocalDataQuery"
+                                                DataSource="@(articles)" @bind-Value="@((context as API_T_OrdreFabricationDetail).AR_Ref)">
+                                    <DropDownListEvents TValue="string" TItem="F_ARTICLE" />
+                                    <DropDownListFieldSettings Text="AR_Design" Value="AR_Ref" />
+                                </SfDropDownList>
+                            }
+                            else
+                            {
+                                <div>
+                                    @((context as API_T_OrdreFabricationDetail)?.AR_RefNavigation?.AR_Design)
+                                </div>
+                            }
+                        }
+
+                    </EditTemplate>
+                    <Template>
+                        <div>
+                            @((context as API_T_OrdreFabricationDetail)?.AR_RefNavigation?.AR_Design)
                         </div>
-                    }
-                </Template>
-                <EditTemplate>
-                    @{
-                        var dt = (context as API_T_OrdreFabricationDetail);
-                        <SfNumericTextBox @bind-Value="@dt.QtePreparation" Enabled="@((!dt.PreparationCreated) && StockCreated)" ShowClearButton="false" ShowSpinButton="false"
-                                          Format="### ### ##0.0;-### ### ##0.0;#" Decimals="2" />
-                    }
-                </EditTemplate>
-            </GridColumn>
-            <GridColumn AllowEditing="false" AllowAdding="false" Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationDetail.NumDA) HeaderText="NumDA"></GridColumn>
+                    </Template>
+                </GridColumn>
+                <GridColumn AllowEditing=@(!StockCreated) HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.Qte) HeaderText="Qté.Unité"
+                            Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                <GridColumn AllowEditing=@(!StockCreated) HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.Qte) HeaderText="Qté.Totale"
+                            Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                    <Template>
+                        <div style="text-align: right;">
+                            @((qte * (context as API_T_OrdreFabricationDetail).Qte).ToString("### ### ##0.0;-### ### ##0.0;#"))
+                        </div>
+                    </Template>
+                    <EditTemplate>
+                        @{
+                            <SfNumericTextBox Value="@(qte * (context as API_T_OrdreFabricationDetail).Qte)"
+                                              Enabled="false" ShowClearButton="false" ShowSpinButton="false"
+                                              Format="### ### ##0.0;-### ### ##0.0;#" Decimals="2" />
+                        }
+                    </EditTemplate>
+                </GridColumn>
+                <GridColumn AllowEditing="false" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.QteStock) HeaderText="Stock"
+                            Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                </GridColumn>
+                <GridColumn AllowEditing="@(StockCreated)" AllowAdding="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="110" Field=@nameof(API_T_OrdreFabricationDetail.QtePreparation) HeaderText="A.commander"
+                            Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                    <Template>
+                        @{
+                            <div style="text-align: right;">
+                                @(((context as API_T_OrdreFabricationDetail).QtePreparation).ToString("### ### ##0.0;-### ### ##0.0;#"))
+                            </div>
+                        }
+                    </Template>
+                    <EditTemplate>
+                        @{
+                            var dt = (context as API_T_OrdreFabricationDetail);
+                            <SfNumericTextBox @bind-Value="@dt.QtePreparation" Enabled="@((!dt.PreparationCreated))" ShowClearButton="false" ShowSpinButton="false"
+                                              Format="### ### ##0.0;-### ### ##0.0;#" Decimals="2" />
+                        }
+                    </EditTemplate>
+                </GridColumn>
+                <GridColumn AllowEditing="false" AllowAdding="false" Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field=@nameof(API_T_OrdreFabricationDetail.NumDA) HeaderText="NumDA"></GridColumn>
 
-            @*
+                @*
 				<GridColumn AllowSorting="false" AllowFiltering="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="70" Field=@nameof(API_T_OrdreFabricationDetail.Qte) HeaderText="Total"
 						Format="### ### ##0.0;-### ### ##0.0;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
 				<Template>
@@ -183,25 +193,27 @@
 
 
 
-            <GridColumn Visible="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.FraisU) HeaderText="Frais.Unité"
-                        Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-            <GridColumn Visible="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.FraisU) HeaderText="Frais.Total"
-                        Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-                <Template>
-                    <div style="text-align: right;">
-                        @((qte * (context as API_T_OrdreFabricationDetail).FraisU * (context as API_T_OrdreFabricationDetail).Qte).ToString("### ### ##0.0;-### ### ##0.0;#"))
-                    </div>
-                </Template>
-                <EditTemplate>
-                    <div style="text-align: right;">
-                        @((qte * (context as API_T_OrdreFabricationDetail).FraisU * (context as API_T_OrdreFabricationDetail).Qte).ToString("### ### ##0.0;-### ### ##0.0;#"))
-                    </div>
-                </EditTemplate>
-            </GridColumn>
-            <GridColumn Width="20"></GridColumn>
-        </GridColumns>
-    </SfGrid>
-</div>
+                <GridColumn Visible="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.FraisU) HeaderText="Frais.Unité"
+                            Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+                <GridColumn Visible="false" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="100" Field=@nameof(API_T_OrdreFabricationDetail.FraisU) HeaderText="Frais.Total"
+                            Format="### ### ##0.0;-### ### ##0.0;#" EditType="EditType.NumericEdit" EditorSettings="@(fn.cellParams())" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                    <Template>
+                        <div style="text-align: right;">
+                            @((qte * (context as API_T_OrdreFabricationDetail).FraisU * (context as API_T_OrdreFabricationDetail).Qte).ToString("### ### ##0.0;-### ### ##0.0;#"))
+                        </div>
+                    </Template>
+                    <EditTemplate>
+                        <div style="text-align: right;">
+                            @((qte * (context as API_T_OrdreFabricationDetail).FraisU * (context as API_T_OrdreFabricationDetail).Qte).ToString("### ### ##0.0;-### ### ##0.0;#"))
+                        </div>
+                    </EditTemplate>
+                </GridColumn>
+                <GridColumn Width="20"></GridColumn>
+            </GridColumns>
+        </SfGrid>
+    </div>
+</AntDesign.Spin>
+
 
 
 @code {
@@ -216,6 +228,8 @@
     public string Height { get; set; } = "83vh";
     [Parameter]
     public bool AllowEditing { get; set; } = true;
+    [Parameter]
+    public API_T_OrdreFabrication row_entete { get; set; }
     private List<API_T_OrdreFabricationDetail> items = new List<API_T_OrdreFabricationDetail>();
     bool loading = false;
     bool IsLoaded = false;
@@ -224,6 +238,7 @@
     [Parameter]
     public bool StockCreated { get; set; } = false;
     API_T_OrdreFabricationLigne row = new API_T_OrdreFabricationLigne();
+    bool Refreshing = false;
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(1);
@@ -350,4 +365,144 @@
         }
 
     }
+    private async Task CreateCommande()
+    {
+
+        try
+        {
+            bool isConfirm = await SyncDialog.ConfirmAsync("Voulez vous vraiment créer une préparation de commande?");
+
+            if (isConfirm)
+            {
+                Refreshing = true;
+                StateHasChanged();
+
+                await Task.Delay(100);
+                await Task.Run(() =>
+                {
+                    db.SaveChanges();
+                    List<int> ligneIds = new List<int>();
+                    SageService sg = new SageService(fn.getDb(session.Societe));
+                    var details = DefaultGrid.GetSelectedRecordsAsync().Result;
+                    details = details.Where(a => a.PreparationCreated == false && a.QtePreparation > 0).ToList();
+                    var lignes = db.API_T_OrdreFabricationLigne.Include(a => a.API_T_OrdreFabricationDetail).Where(a => details.Select(b => b.Ligne).Contains(a.id)).ToList();
+                    if (lignes.Any())
+                    {
+                        var Lignes = new List<DocumentLigne>();
+                        foreach (API_T_OrdreFabricationLigne ln in lignes.Where(a => a.API_T_OrdreFabricationDetail.Where(b => b.PreparationCreated == false && b.QtePreparation > 0).Any()))
+                        {
+                            var ligne3 = new DocumentLigne();
+                            ligne3.Designation = "---------------------------------------------------------------------";
+                            Lignes.Add(ligne3);
+                            var dt = db.API_T_OrdreFabricationDetail
+                            .Include(a => a.AR_RefNavigation)
+                            .AsNoTracking().Where(b => b.Ligne == ln.id && b.PreparationCreated == false && b.QtePreparation > 0 && details.Select(a => a.id).Contains(b.id)).ToList();
+                            var dt2 = db.API_T_OrdreFabricationDetail
+                            .Include(a => a.AR_RefNavigation)
+                            .Where(b => b.Ligne == ln.id && b.PreparationCreated == false && b.QtePreparation > 0 && details.Select(a => a.id).Contains(b.id)).ToList();
+                            foreach (API_T_OrdreFabricationDetail ln2 in dt)
+                            {
+
+                                var ligne2 = new DocumentLigne();
+                                ligne2.RefArticle = ln2.AR_Ref;
+                                ligne2.Designation = ln2.AR_RefNavigation?.AR_Design;
+                                ligne2.Qte = ln2.QtePreparation;
+
+                                ligne3.Designation = "---------------------------------------------------------------------";
+                                Lignes.Add(ligne2);
+
+                                ligneIds.Add(ln2.id);
+                            }
+
+
+                        }
+
+                        var dc = sg.Document.CreateDocument(
+                                         new DocumentEntete
+                                         {
+                                             Tiers = "368",
+                                             Date = DateTime.Today,
+                                             TypeDO = DocumentTypeDO.PreparationCommandeFournisseur,
+                                             Souche = 0,
+                                             Reference = row_entete.Numero,
+                                             DateLivraison = row_entete.DateLivraison ?? DateTime.Today,
+                                             Entete1 = sc.User.Name,
+                                             Lignes = Lignes,
+                                             Affaire = row_entete.CA_Num,
+                                             Statut = 2
+
+                                         }
+                                     ).Result;
+                        if (!dc.Success)
+                        {
+                            _ = _notice.Error(new()
+                            {
+                                Message = "Erreur",
+                                Description = dc.Message,
+                                Duration = 10,
+                                Placement = NotificationPlacement.BottomRight
+                            });
+                        }
+                        else
+                        {
+                            row_entete.PreparationCreated = true;
+                            var dt2 = db.API_T_OrdreFabricationDetail.Where(a => ligneIds.Contains(a.id)).ToList();
+                            foreach (API_T_OrdreFabricationDetail ln2 in dt2)
+                            {
+                                ln2.PreparationCreated = true;
+                                ln2.NumDA = dc.DocumentNumber;
+                                db.SaveChanges();
+                            }
+                            fn.DisableTriggers(db, "F_DOCLIGNE", "UPD");
+                            fn.DisableTriggers(db, "F_DOCENTETE", "UPD");
+
+
+                            string q1 = @"UPDATE b SET b.Machine = ar.AR_Design, b.Affaire = a.CA_Num,
+                                b.[P.Fabrication] = od.Numero, b.NumClient = od.CT_Num, b.IntituleClient = ct.CT_Intitule, b.Affectation = ar.AR_Ref
+                                FROM F_DOCENTETE a
+                                INNER JOIN F_DOCLIGNE b ON a.DO_Piece = b.DO_Piece AND a.DO_Type = b.DO_Type
+                                INNER JOIN API_T_OrdreFabrication od ON a.DO_Ref = od.Numero
+                                INNER JOIN API_T_OrdreFabricationLigne ln ON od.id = ln.Ordre
+                                INNER JOIN F_ARTICLE ar ON ln.AR_Ref = ar.AR_Ref
+                                INNER JOIN F_COMPTET ct ON od.CT_Num = ct.CT_Num
+                                WHERE a.DO_Piece = {0}
+
+                                UPDATE a SET a.Machine = ar.AR_Design, a.Affaire = a.CA_Num,
+                                a.[P.Fabrication] = od.Numero, a.NumClient = od.CT_Num, a.IntituleClient = ct.CT_Intitule, a.Affectation = ar.AR_Ref, a.DO_Statut = 2
+                                FROM F_DOCENTETE a
+                                INNER JOIN F_DOCLIGNE b ON a.DO_Piece = b.DO_Piece AND a.DO_Type = b.DO_Type
+                                INNER JOIN API_T_OrdreFabrication od ON a.DO_Ref = od.Numero
+                                INNER JOIN API_T_OrdreFabricationLigne ln ON od.id = ln.Ordre
+                                INNER JOIN F_ARTICLE ar ON ln.AR_Ref = ar.AR_Ref
+                                INNER JOIN F_COMPTET ct ON od.CT_Num = ct.CT_Num
+                                WHERE a.DO_Piece = {0}";
+
+                            db.Database.ExecuteSqlRaw(q1, dc.DocumentNumber);
+
+                            fn.EnableTriggers(db, "F_DOCLIGNE", "UPD");
+                            fn.EnableTriggers(db, "F_DOCENTETE", "UPD");
+
+                        }
+
+
+                    }
+
+
+                });
+
+                await UpdateGrid();
+            }
+        }
+        catch (Exception ex)
+        {
+            await DialogService.Alert(ex.ToString());
+        }
+        finally
+        {
+            Refreshing = false;
+            StateHasChanged();
+        }
+
+    }
+
 }

@@ -106,7 +106,7 @@
                         </EmptyRecordTemplate>
                         <DetailTemplate>
                             <div style="padding:10px;">
-                                <OrdreFabricationDetail StockCreated=@StockCreated AllowEditing=@(!(Grid?.IsEdit ?? false))
+                                <OrdreFabricationDetail row_entete="row" StockCreated=@StockCreated AllowEditing=@(!(Grid?.IsEdit ?? false))
                                                         qte="@((context as API_T_OrdreFabricationLigne).Qte)"
                                                         Height="46vh" ligne="@((context as API_T_OrdreFabricationLigne).id)" />
                             </div>
@@ -271,7 +271,7 @@
     {
         var ln = db.API_T_OrdreFabricationLigne.Include(a => a.AR_RefNavigation).Where(a => a.id == ligne).SingleOrDefault();
         await DialogService.OpenAsync<OrdreFabricationDetail>(ln.AR_RefNavigation?.AR_Design,
-        new Dictionary<string, object>() { { "ligne", ligne }, { "qte", qte }, { "StockCreated", StockCreated } },
+        new Dictionary<string, object>() { { "ligne", ligne }, { "qte", qte }, { "row_entete", row }, { "StockCreated", StockCreated } },
         new Radzen.DialogOptions() { Width = "95%", Height = "95%", CloseDialogOnEsc = false, Style = "max-width: 1500px;" });
     }
     private async Task TransfertMagasin()
