@@ -46,6 +46,11 @@
     <PackageReference Include="BoldReports.Data.WebData" Version="12.1.16" />
     <PackageReference Include="BoldReports.Net.Core" Version="12.1.16" />
     <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="Google.GenAI" Version="0.13.1" />
+    <PackageReference Include="Tesseract" Version="5.2.0" />
+<!-- Optional for better PDF handling -->
+<PackageReference Include="PdfPig" Version="0.1.8" />
+<PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
     <PackageReference Include="iTextSharp" Version="5.5.13.4" />
     <PackageReference Include="linq2db.EntityFrameworkCore" Version="10.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.0.1" />

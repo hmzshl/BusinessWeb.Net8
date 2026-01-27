@@ -395,7 +395,7 @@ else
         await Task.Delay(1);
         db = session.db;
         GC.Collect();
-        data = db.API_V_MARGE;
+        
         if (periode == "journalier")
         {
             if (IsDateDetail)
@@ -413,7 +413,7 @@ else
 
         else if (periode == "mensuel")
         {
-            list_mois = data.Select(a => a.MoisAnnee).Distinct().OrderByDescending(a => a).ToList();
+            list_mois = db.API_V_MARGE.Select(a => a.MoisAnnee).Distinct().OrderByDescending(a => a).ToList();
             if (list_mois.Count() != 0)
             {
                 mois = list_mois.First();
@@ -421,7 +421,7 @@ else
         }
         else if (periode == "annuel")
         {
-            list_annee = data.Select(a => a.Annee).Distinct().OrderByDescending(a => a).ToList();
+            list_annee = db.API_V_MARGE.Select(a => a.Annee).Distinct().OrderByDescending(a => a).ToList();
             if (list_annee.Count() != 0)
             {
                 annee = list_annee.First();
@@ -432,6 +432,7 @@ else
         await LoadData();
         IsLoaded = true;
     }
+
     private async Task LoadData()
     {
 
@@ -439,21 +440,25 @@ else
         await Task.Delay(1);
         if (periode == "journalier")
         {
+            data = db.API_V_MARGE.Where(a => a.DO_Date == date1).ToList();
             dt = data.Where(a => a.DO_Date == date1).ToList();
             rg = db.API_V_CREGLEMENT.Where(a => a.RG_Date == date1 && a.RG_Type == 0).ToList();
         }
         else if (periode == "mensuel")
         {
+            data = db.API_V_MARGE.Where(a => a.MoisAnnee == mois).ToList();
             dt = data.Where(a => a.MoisAnnee == mois).ToList();
             rg = db.API_V_CREGLEMENT.Where(a => a.MoisAnnee == mois && a.RG_Type == 0).ToList();
         }
         else if (periode == "annuel")
         {
+            data = db.API_V_MARGE.Where(a => a.Annee == annee).ToList();
             dt = data.Where(a => a.Annee == annee).ToList();
             rg = db.API_V_CREGLEMENT.Where(a => a.Annee == annee && a.RG_Type == 0).ToList();
         }
         else
         {
+            data = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).ToList();
             dt = data.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).ToList();
             rg = db.API_V_CREGLEMENT.Where(a => ((date1 != null && a.RG_Date >= date1) || date1 == null) && ((date2 != null && a.RG_Date <= date2) || date2 == null) && a.RG_Type == 0).ToList();
         }

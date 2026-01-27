@@ -1,0 +1,634 @@
+﻿@page "/ocr-invoice"
+@using System.Text.Json.Serialization
+@using Tesseract
+@using System.Text.RegularExpressions
+@inject IJSRuntime JSRuntime
+
+<h3>OCR Facture Processing</h3>
+<Divider />
+
+<InputFile OnChange="ProcessInlinePdf" accept=".pdf,.jpg,.jpeg,.png,.tiff,.bmp" />
+
+<div>
+    <RadzenRow>
+        <RadzenColumn Size="6" SizeMD="4" OffsetMD="2">
+            <RadzenCard>
+                <iframe id="pdfViewer" style="width:100%; height:600px;" />
+            </RadzenCard>
+        </RadzenColumn>
+
+        <RadzenColumn Size="6" SizeMD="4">
+            <RadzenCard>
+                <Form Model="@fa" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="FormContext">
+                    <GridRow>
+                        <GridCol Xs="24" Md="24">
+                            <RadzenRow>
+                                <RadzenColumn Size="12" SizeMD="12">
+                                    <RadzenStack Gap="0.5rem">
+                                        <FormItem Label="N° Facture" LabelColSpan="8">
+                                            <SfTextBox @bind-Value="@fa.header.invoice_number" />
+                                        </FormItem>
+                                        <FormItem Label="Date" LabelColSpan="8">
+                                            <SfTextBox @bind-Value="@fa.header.date" />
+                                        </FormItem>
+                                        <Divider />
+                                        <FormItem Label="Fournisseur" LabelColSpan="8">
+                                            <SfTextBox @bind-Value="@fa.contact_details.sender.name" />
+                                        </FormItem>
+                                        <FormItem Label="ICE" LabelColSpan="8">
+                                            <SfTextBox @bind-Value="@fa.contact_details.sender.ICE" />
+                                        </FormItem>
+                                        <FormItem Label="Adresse" LabelColSpan="8">
+                                            <SfTextBox @bind-Value="@fa.contact_details.sender.address" />
+                                        </FormItem>
+                                        <FormItem Label="Ville" LabelColSpan="8">
+                                            <SfTextBox @bind-Value="@fa.contact_details.sender.city" />
+                                        </FormItem>
+                                        <Divider />
+                                        <FormItem Label="Client" LabelColSpan="8">
+                                            <SfTextBox @bind-Value="@fa.contact_details.recipient.company" />
+                                        </FormItem>
+                                        <FormItem Label="ICE" LabelColSpan="8">
+                                            <SfTextBox @bind-Value="@fa.contact_details.recipient.ICE" />
+                                        </FormItem>
+                                        <FormItem Label="Adresse" LabelColSpan="8">
+                                            <SfTextBox @bind-Value="@fa.contact_details.recipient.address" />
+                                        </FormItem>
+                                        <FormItem Label="Ville" LabelColSpan="8">
+                                            <SfTextBox @bind-Value="@fa.contact_details.recipient.city" />
+                                        </FormItem>
+                                        <Divider />
+                                        <FormItem Label="Montant HT" LabelColSpan="8">
+                                            <SfTextBox @bind-Value="@fa.totals.total_ht" />
+                                        </FormItem>
+                                        <FormItem Label="Montant TVA" LabelColSpan="8">
+                                            <SfTextBox @bind-Value="@fa.totals.total_tva" />
+                                        </FormItem>
+                                        <FormItem Label="Montant TTC" LabelColSpan="8">
+                                            <SfTextBox @bind-Value="@fa.totals.total_ttc" />
+                                        </FormItem>
+                                    </RadzenStack>
+                                </RadzenColumn>
+                            </RadzenRow>
+                        </GridCol>
+                    </GridRow>
+                </Form>
+            </RadzenCard>
+            <Divider />
+            <RadzenCard>
+                <div style="height: 35vh;">
+                    <SfGrid AllowFiltering AllowSorting Height="200px" AllowResizing AllowSelection
+                            ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" DataSource="@items">
+                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                        <GridEvents TValue="TableItem"></GridEvents>
+
+                        <GridColumns>
+                            <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(TableItem.reference)" HeaderText="Réf. Article"></GridColumn>
+                            <GridColumn MinWidth="150" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(TableItem.designation)" HeaderText="Désignation"></GridColumn>
+                            <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(TableItem.quantite)" HeaderText="Quantité" Format="### ### ##0.00;-### ### ##0.00;#"></GridColumn>
+                            <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(TableItem.prix_unitaire)" HeaderText="PU" Format="### ### ##0.00;-### ### ##0.00;#"></GridColumn>
+                            <GridColumn Width="100" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(TableItem.total)" HeaderText="Montant HT" Format="### ### ##0.00;-### ### ##0.00;#"></GridColumn>
+                        </GridColumns>
+                    </SfGrid>
+                </div>
+            </RadzenCard>
+        </RadzenColumn>
+    </RadzenRow>
+</div>
+
+@if (IsLoading)
+{
+    <RadzenCard>
+        <RadzenProgressBar ShowValue="false" Mode="ProgressBarMode.Indeterminate" />
+        <p><em>Processing OCR...</em></p>
+    </RadzenCard>
+}
+else if (!string.IsNullOrWhiteSpace(Text))
+{
+    <RadzenCard>
+        <h4>Extracted Text:</h4>
+        <pre style="max-height: 300px; overflow: auto; font-size: 0.8rem;">@Text</pre>
+    </RadzenCard>
+}
+
+@code {
+    [Parameter]
+    public string Type { get; set; } = "FA";
+    private SfGrid<TableItem> DefaultGrid;
+    private List<TableItem> items = new List<TableItem>();
+
+    private string Text;
+    private bool IsLoading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2);
+        items = new List<TableItem>();
+    }
+
+    public FormModel row = new FormModel();
+    public Facture fa = new Facture();
+
+    private async Task LoadPdf(byte[] buffer)
+    {
+        var base64Pdf = Convert.ToBase64String(buffer);
+        var pdfUrl = $"data:application/pdf;base64,{base64Pdf}";
+        await JSRuntime.InvokeVoidAsync("blazorSetIframeSrc", "pdfViewer", pdfUrl);
+    }
+
+    public async Task ProcessInlinePdf(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            IsLoading = true;
+            Text = null;
+            StateHasChanged();
+
+            var file = e.File;
+            var fileExtension = Path.GetExtension(file.Name).ToLower();
+
+            using var stream = file.OpenReadStream();
+            using var ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+            var fileBytes = ms.ToArray();
+
+            // Display PDF/Image in iframe
+            var mimeType = file.ContentType;
+            var base64Data = Convert.ToBase64String(fileBytes);
+            await JSRuntime.InvokeVoidAsync("blazorSetIframeSrc", "pdfViewer", $"data:{mimeType};base64,{base64Data}");
+
+            // Extract text based on file type
+            if (fileExtension == ".pdf")
+            {
+                Text = await ExtractTextFromPdf(fileBytes);
+            }
+            else
+            {
+                Text = await ExtractTextFromImage(fileBytes);
+            }
+
+            // Parse extracted text into Facture object
+            ParseInvoiceFromText(Text);
+
+            if (fa.table_items.Any())
+            {
+                items = fa.table_items;
+                if (DefaultGrid != null)
+                {
+                    await DefaultGrid.Refresh();
+                }
+            }
+
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Text = $"Error: {ex.Message}";
+            Console.WriteLine($"OCR Error: {ex}");
+        }
+        finally
+        {
+            IsLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task<string> ExtractTextFromImage(byte[] imageBytes)
+    {
+        try
+        {
+            // Create tessdata directory if it doesn't exist
+            var tessDataPath = Path.Combine(Directory.GetCurrentDirectory(), "tessdata");
+
+            if (!Directory.Exists(tessDataPath))
+            {
+                Directory.CreateDirectory(tessDataPath);
+            }
+
+            using var engine = new TesseractEngine(tessDataPath, "fra+eng", EngineMode.Default);
+
+            // Convert byte array to Pix
+            using var img = Pix.LoadFromMemory(imageBytes);
+            using var page = engine.Process(img);
+
+            return page.GetText();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Image OCR failed: {ex.Message}", ex);
+        }
+    }
+
+    private async Task<string> ExtractTextFromPdf(byte[] pdfBytes)
+    {
+        try
+        {
+            // Method 1: Try direct PDF text extraction with PdfPig
+            // Install: <PackageReference Include="PdfPig" Version="0.1.8" />
+            // Uncomment if you install PdfPig
+
+            /*
+            using var pdfStream = new MemoryStream(pdfBytes);
+            using var pdfDocument = UglyToad.PdfPig.PdfDocument.Open(pdfStream);
+            var textBuilder = new StringBuilder();
+
+            foreach (var page in pdfDocument.GetPages())
+            {
+                textBuilder.AppendLine(page.Text);
+            }
+
+            return textBuilder.ToString();
+            */
+
+            // Method 2: Convert PDF to images and then OCR (requires additional library)
+            // For now, we'll handle as image if possible
+            return await ExtractTextFromImage(pdfBytes);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"PDF extraction failed: {ex.Message}", ex);
+        }
+    }
+
+    private void ParseInvoiceFromText(string extractedText)
+    {
+        try
+        {
+            // Reset facture object
+            fa = new Facture();
+            fa.document_type = "Facture";
+
+            if (string.IsNullOrWhiteSpace(extractedText))
+                return;
+
+            // Extract invoice number
+            var invoicePatterns = new[]
+            {
+                @"Facture\s*[Nn]°?\s*[:#]?\s*([A-Za-z0-9\-/]+)",
+                @"Invoice\s*[Nn]o\.?\s*[:#]?\s*([A-Za-z0-9\-/]+)",
+                @"N°\s*(?:Facture|FACTURE)\s*:\s*([A-Za-z0-9\-/]+)",
+                @"Réf\.?\s*[:#]?\s*([A-Za-z0-9\-/]+)"
+            };
+
+            foreach (var pattern in invoicePatterns)
+            {
+                var match = Regex.Match(extractedText, pattern);
+                if (match.Success && match.Groups.Count > 1)
+                {
+                    fa.header.invoice_number = match.Groups[1].Value.Trim();
+                    break;
+                }
+            }
+
+            // Extract date
+            var datePatterns = new[]
+            {
+                @"Date\s*[:.]?\s*(\d{1,2}[/\-]\d{1,2}[/\-]\d{2,4})",
+                @"Date de facturation\s*[:.]?\s*(\d{1,2}[/\-]\d{1,2}[/\-]\d{2,4})",
+                @"Fait à.*le\s*(\d{1,2}[/\-]\d{1,2}[/\-]\d{2,4})",
+                @"Le\s*(\d{1,2}[/\-]\d{1,2}[/\-]\d{2,4})"
+            };
+
+            foreach (var pattern in datePatterns)
+            {
+                var match = Regex.Match(extractedText, pattern);
+                if (match.Success && match.Groups.Count > 1)
+                {
+                    fa.header.date = match.Groups[1].Value.Trim();
+                    break;
+                }
+            }
+
+            // Extract sender (fournisseur) information
+            ExtractSenderInfo(extractedText);
+
+            // Extract recipient (client) information
+            ExtractRecipientInfo(extractedText);
+
+            // Extract table items
+            ExtractTableItems(extractedText);
+
+            // Extract totals
+            ExtractTotals(extractedText);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Parsing error: {ex.Message}");
+        }
+    }
+
+    private void ExtractSenderInfo(string text)
+    {
+        // Look for sender/fournisseur patterns
+        var senderPatterns = new[]
+        {
+            @"Fournisseur\s*[:.]\s*(.+?)(?=\n|Client|Adresse|Tél|ICE)",
+            @"Vendeur\s*[:.]\s*(.+?)(?=\n|Client|Adresse|Tél|ICE)",
+            @"Société\s*[:.]\s*(.+?)(?=\n|Client|Adresse|Tél|ICE)",
+            @"Nom\s*[:.]\s*(.+?)(?=\n|Client|Adresse|Tél|ICE)"
+        };
+
+        foreach (var pattern in senderPatterns)
+        {
+            var match = Regex.Match(text, pattern, RegexOptions.IgnoreCase);
+            if (match.Success && match.Groups.Count > 1)
+            {
+                fa.contact_details.sender.name = match.Groups[1].Value.Trim();
+                break;
+            }
+        }
+
+        // Extract ICE (Moroccan tax ID)
+        var icePattern = @"ICE\s*[:.]\s*([0-9]{15})";
+        var iceMatch = Regex.Match(text, icePattern);
+        if (iceMatch.Success)
+        {
+            fa.contact_details.sender.ICE = iceMatch.Groups[1].Value;
+        }
+
+        // Extract address
+        var addressPatterns = new[]
+        {
+            @"Adresse\s*[:.]\s*(.+?)(?=\n|Tél|Téléphone|Fax|Email)",
+            @"Siège social\s*[:.]\s*(.+?)(?=\n|Tél|Téléphone|Fax|Email)"
+        };
+
+        foreach (var pattern in addressPatterns)
+        {
+            var match = Regex.Match(text, pattern, RegexOptions.IgnoreCase);
+            if (match.Success && match.Groups.Count > 1)
+            {
+                fa.contact_details.sender.address = match.Groups[1].Value.Trim();
+                break;
+            }
+        }
+    }
+
+    private void ExtractRecipientInfo(string text)
+    {
+        // Look for recipient/client patterns
+        var recipientPatterns = new[]
+        {
+            @"Client\s*[:.]\s*(.+?)(?=\n|Adresse|Tél|ICE|N°)",
+            @"Destinataire\s*[:.]\s*(.+?)(?=\n|Adresse|Tél|ICE|N°)",
+            @"A l'attention de\s*[:.]\s*(.+?)(?=\n|Adresse|Tél|ICE|N°)"
+        };
+
+        foreach (var pattern in recipientPatterns)
+        {
+            var match = Regex.Match(text, pattern, RegexOptions.IgnoreCase);
+            if (match.Success && match.Groups.Count > 1)
+            {
+                fa.contact_details.recipient.company = match.Groups[1].Value.Trim();
+                break;
+            }
+        }
+
+        // Extract recipient ICE
+        var icePattern = @"ICE\s*\(Client\)\s*[:.]\s*([0-9]{15})";
+        var iceMatch = Regex.Match(text, icePattern);
+        if (iceMatch.Success)
+        {
+            fa.contact_details.recipient.ICE = iceMatch.Groups[1].Value;
+        }
+    }
+
+    private void ExtractTableItems(string text)
+    {
+        var items = new List<TableItem>();
+
+        // Look for table patterns - adjust based on your invoice format
+        var lines = text.Split('\n');
+        bool inTableSection = false;
+
+        foreach (var line in lines)
+        {
+            var trimmedLine = line.Trim();
+
+            // Start of table section (adjust patterns as needed)
+            if (Regex.IsMatch(trimmedLine, @"(Désignation|Description|Article|Référence).*(Quantité|Qte).*(Prix|PU|Prix unitaire).*(Total|Montant)", RegexOptions.IgnoreCase))
+            {
+                inTableSection = true;
+                continue;
+            }
+
+            // End of table section
+            if (inTableSection && Regex.IsMatch(trimmedLine, @"(Total|Sous-total|Montant total|TVA|HT)", RegexOptions.IgnoreCase))
+            {
+                inTableSection = false;
+                continue;
+            }
+
+            if (inTableSection && !string.IsNullOrWhiteSpace(trimmedLine))
+            {
+                // Parse table line - this is a simple example, adjust based on your format
+                var parts = trimmedLine.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (parts.Length >= 4) // At least: reference, designation, quantity, price
+                {
+                    var item = new TableItem
+                    {
+                        reference = parts.Length > 0 ? parts[0] : "",
+                        designation = parts.Length > 1 ? parts[1] : "",
+                        quantite = parts.Length > 2 ? parts[2] : "",
+                        prix_unitaire = parts.Length > 3 ? parts[3] : "",
+                        total = parts.Length > 4 ? parts[4] : ""
+                    };
+
+                    items.Add(item);
+                }
+            }
+        }
+
+        fa.table_items = items;
+    }
+
+    private void ExtractTotals(string text)
+    {
+        // Extract Total HT
+        var totalHtPatterns = new[]
+        {
+            @"Total HT\s*[:.]\s*([0-9,.\s]+)",
+            @"Montant HT\s*[:.]\s*([0-9,.\s]+)",
+            @"Sous-total\s*[:.]\s*([0-9,.\s]+)"
+        };
+
+        foreach (var pattern in totalHtPatterns)
+        {
+            var match = Regex.Match(text, pattern);
+            if (match.Success && match.Groups.Count > 1)
+            {
+                fa.totals.total_ht = match.Groups[1].Value.Trim();
+                break;
+            }
+        }
+
+        // Extract Total TVA
+        var totalTvaPattern = @"TVA\s*[:.]\s*([0-9,.\s]+)";
+        var tvaMatch = Regex.Match(text, totalTvaPattern);
+        if (tvaMatch.Success)
+        {
+            fa.totals.total_tva = tvaMatch.Groups[1].Value.Trim();
+        }
+
+        // Extract Total TTC
+        var totalTtcPatterns = new[]
+        {
+            @"Total TTC\s*[:.]\s*([0-9,.\s]+)",
+            @"Montant TTC\s*[:.]\s*([0-9,.\s]+)",
+            @"NET À PAYER\s*[:.]\s*([0-9,.\s]+)"
+        };
+
+        foreach (var pattern in totalTtcPatterns)
+        {
+            var match = Regex.Match(text, pattern);
+            if (match.Success && match.Groups.Count > 1)
+            {
+                fa.totals.total_ttc = match.Groups[1].Value.Trim();
+                break;
+            }
+        }
+    }
+
+    // Model classes
+    public class FormModel
+    {
+        public string Search { get; set; }
+    }
+
+    public class Facture
+    {
+        [JsonPropertyName("document_type")]
+        public string document_type { get; set; } = "Facture";
+
+        [JsonPropertyName("header")]
+        public Header header { get; set; } = new Header();
+
+        [JsonPropertyName("contact_details")]
+        public ContactDetails contact_details { get; set; } = new ContactDetails();
+
+        [JsonPropertyName("table_items")]
+        public List<TableItem> table_items { get; set; } = new List<TableItem>() { new TableItem() };
+
+        [JsonPropertyName("totals")]
+        public Totals totals { get; set; } = new Totals();
+    }
+
+    public class Header
+    {
+        [JsonPropertyName("title")]
+        public string title { get; set; } = "FACTURE";
+
+        [JsonPropertyName("invoice_number")]
+        public string invoice_number { get; set; } = "";
+
+        [JsonPropertyName("date")]
+        public string date { get; set; } = "";
+    }
+
+    public class ContactDetails
+    {
+        [JsonPropertyName("sender")]
+        public Sender sender { get; set; } = new Sender();
+
+        [JsonPropertyName("recipient")]
+        public Recipient recipient { get; set; } = new Recipient();
+    }
+
+    public class Sender
+    {
+        [JsonPropertyName("name")]
+        public string name { get; set; } = "";
+
+        [JsonPropertyName("phone")]
+        public string phone { get; set; } = "";
+
+        [JsonPropertyName("email")]
+        public string email { get; set; } = "";
+
+        [JsonPropertyName("website")]
+        public string website { get; set; } = "";
+
+        [JsonPropertyName("address")]
+        public string address { get; set; } = "";
+
+        [JsonPropertyName("city")]
+        public string city { get; set; } = "";
+
+        [JsonPropertyName("ICE")]
+        public string ICE { get; set; } = "";
+
+        [JsonPropertyName("IF")]
+        public string IF { get; set; } = "";
+
+        [JsonPropertyName("RC")]
+        public string RC { get; set; } = "";
+    }
+
+    public class Recipient
+    {
+        [JsonPropertyName("label")]
+        public string label { get; set; } = "";
+
+        [JsonPropertyName("company")]
+        public string company { get; set; } = "";
+
+        [JsonPropertyName("phone")]
+        public string phone { get; set; } = "";
+
+        [JsonPropertyName("address")]
+        public string address { get; set; } = "";
+
+        [JsonPropertyName("city")]
+        public string city { get; set; } = "";
+
+        [JsonPropertyName("ICE")]
+        public string ICE { get; set; } = "";
+    }
+
+    public class TableItem
+    {
+        [JsonPropertyName("reference")]
+        public string reference { get; set; } = "";
+
+        [JsonPropertyName("designation")]
+        public string designation { get; set; } = "";
+
+        [JsonPropertyName("prix_unitaire")]
+        public string prix_unitaire { get; set; } = "";
+
+        [JsonPropertyName("unite")]
+        public string unite { get; set; } = "";
+
+        [JsonPropertyName("quantite")]
+        public string quantite { get; set; } = "";
+
+        [JsonPropertyName("taxe")]
+        public string taxe { get; set; } = "";
+
+        [JsonPropertyName("remise")]
+        public string remise { get; set; } = "";
+
+        [JsonPropertyName("total")]
+        public string total { get; set; } = "";
+    }
+
+    public class Totals
+    {
+        [JsonPropertyName("total_ht")]
+        public string total_ht { get; set; } = "";
+
+        [JsonPropertyName("total_tva")]
+        public string total_tva { get; set; } = "";
+
+        [JsonPropertyName("total_ttc")]
+        public string total_ttc { get; set; } = "";
+    }
+}
+
+<script>
+    // iframe
+    window.blazorSetIframeSrc = (id, url) => {
+        document.getElementById(id).src = url;
+    };
+</script>

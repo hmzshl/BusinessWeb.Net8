@@ -371,7 +371,6 @@ else
     {
         db = session.db;
         GC.Collect();
-        data = db.API_V_MARGE;
         await Task.Delay(1);
         await LoadData();
         IsLoaded = true;
@@ -380,7 +379,7 @@ else
     {
         IsLoaded = false;
         await Task.Delay(300);
-        items_details = data.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null))
+        items_details = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null))
         .GroupBy(a => new { a.CO_Nom, a.AR_Design })
                             .Select(a => new API_V_MARGE
                             {

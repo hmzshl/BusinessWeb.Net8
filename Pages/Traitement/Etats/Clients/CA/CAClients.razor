@@ -213,7 +213,6 @@ else
                 db = session.db;
 
         GC.Collect();
-        data = db.API_V_MARGE;
         await Task.Delay(1);
         await LoadData();
         IsLoaded = true;
@@ -222,7 +221,7 @@ else
     {
         IsLoaded = false;
         await Task.Delay(300);
-        items = data.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).GroupBy(a => new { a.CT_Intitule, a.CT_Num })
+        items = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).GroupBy(a => new { a.CT_Intitule, a.CT_Num })
                     .Select(a => new API_V_MARGE
                         {
                             CT_Num = a.Key.CT_Num,

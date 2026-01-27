@@ -432,9 +432,12 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Fournisseurs", Url = "nf-frs", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 
 			// COMPTABILITE
-			list.Add(new AuthItems { SelectedAPP = 8, Title = "Gestion TVA", Description = "Périodes", Url = "tva-periodes", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 8, Title = "Gestion TVA", Description = "Tiers", Url = "tiers", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 8, Title = "Gestion TVA", Description = "Taxes", Url = "taxes", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "Gestion TVA", Description = "Périodes", Url = "tva-periodes", TitleIcon = "finance", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "Gestion TVA", Description = "Tiers", Url = "tiers", TitleIcon = "finance", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "Gestion TVA", Description = "Taxes", Url = "taxes", TitleIcon = "finance", SousGroupe = "", HasSousGroupe = false });
+
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "OCR", Description = "Factures Achat", Url = "ocr-fa", TitleIcon = "barcode_scanner", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "OCR", Description = "Relevés bancaires", Url = "ocr-bq", TitleIcon = "barcode_scanner", SousGroupe = "", HasSousGroupe = false });
 
 			return list;
 		}

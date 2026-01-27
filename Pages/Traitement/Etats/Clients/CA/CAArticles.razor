@@ -211,7 +211,6 @@ else
     protected override async Task OnInitializedAsync()
     {
                 db = session.db;
-                data = db.API_V_MARGE;
         GC.Collect();
         await Task.Delay(1);
         await LoadData();
@@ -221,7 +220,7 @@ else
     {
         IsLoaded = false;
         await Task.Delay(300);
-        items = data.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).GroupBy(a => new { a.AR_Design, a.AR_Ref })
+        items = db.API_V_MARGE.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) && ((date2 != null && a.DO_Date <= date2) || date2 == null)).GroupBy(a => new { a.AR_Design, a.AR_Ref })
    .Select(a => new API_V_MARGE
    {
        AR_Ref = a.Key.AR_Ref,
