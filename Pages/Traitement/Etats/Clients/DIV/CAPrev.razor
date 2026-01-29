@@ -43,190 +43,152 @@
 							<ToolbarItem OnClick=@(args => (LoadData())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
 						</ToolbarItems>
 					</SfToolbar>
-
 					<GridRow>
-						<GridCol Xs="24" Md="12">
-							<GridRow>
-								<!-- Statistics Cards -->
-								<GridCol Xs="12" Md="6">
-									<StatCard3 Color="StatColor.Green" Value="@((items?.Sum(a => a.CA_Devis) ?? 0).ToString("N2"))" Title="CA Devis" />
-								</GridCol>
-								<GridCol Xs="12" Md="6">
-									<StatCard3 Color="StatColor.Blue" Value="@((items?.Sum(a => a.CA_Commandes) ?? 0).ToString("N2"))" Title="CA Commandes" />
-								</GridCol>
-								<GridCol Xs="12" Md="6">
-									<StatCard3 Color="StatColor.Purple" Value="@((items?.Sum(a => a.CA_Factures) ?? 0).ToString("N2"))" Title="CA Factures" />
-								</GridCol>
-								<GridCol Xs="12" Md="6">
-									<StatCard3 Color="StatColor.Amber" Value="@((items?.Sum(a => a.CA_Total) ?? 0).ToString("N2"))" Title="CA Total" />
-								</GridCol>
 
-								<!-- Main Grid - CA by Client -->
-								<GridCol Xs="24" Md="24" Style="margin: 5px;">
-									<h2 style="font-weight: 600; font-size: 15px; margin: 5px;">CHIFFRE D'AFFAIRE PAR CLIENT</h2>
-									<div class="no-border grid-67" style="zoom: @session.zoomLevel;">
-										<SfGrid AllowTextWrap Height="100%" DataSource="@items" AllowSorting>
-											<GridAggregates>
-												<GridAggregate>
-													<GridAggregateColumns>
-														<GridAggregateColumn Field="@nameof(DocumentSummary.CA_Devis)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
-															<FooterTemplate>
-																@{
-																	var SumValue = (context as AggregateTemplateContext);
-																	<div>@SumValue.Sum</div>
-																}
-															</FooterTemplate>
-														</GridAggregateColumn>
-														<GridAggregateColumn Field="@nameof(DocumentSummary.CA_Commandes)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
-															<FooterTemplate>
-																@{
-																	var SumValue = (context as AggregateTemplateContext);
-																	<div>@SumValue.Sum</div>
-																}
-															</FooterTemplate>
-														</GridAggregateColumn>
-														<GridAggregateColumn Field="@nameof(DocumentSummary.CA_Factures)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
-															<FooterTemplate>
-																@{
-																	var SumValue = (context as AggregateTemplateContext);
-																	<div>@SumValue.Sum</div>
-																}
-															</FooterTemplate>
-														</GridAggregateColumn>
-														<GridAggregateColumn Field="@nameof(DocumentSummary.CA_Total)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
-															<FooterTemplate>
-																@{
-																	var SumValue = (context as AggregateTemplateContext);
-																	<div>@SumValue.Sum</div>
-																}
-															</FooterTemplate>
-														</GridAggregateColumn>
-													</GridAggregateColumns>
-												</GridAggregate>
-											</GridAggregates>
-											<GridPageSettings PageSize="100" />
-											<GridEvents OnRecordDoubleClick="ShowDetail" TValue="DocumentSummary"></GridEvents>
-											<GridColumns>
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Field="@nameof(DocumentSummary.CT_Num)" HeaderText="Code" Visible=@(!session.IsMobile)>
-													<Template>
-														@{
-															var item = (context as DocumentSummary);
-															<RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 4px !important; padding-right: 4px !important;"
-																		  Click="@(args => ShowClient(item))" Shade="Shade.Darker" Variant="Variant.Text"
-																		  Text="@item.CT_Num" ButtonStyle="ButtonStyle.Secondary" />
-														}
-													</Template>
-												</GridColumn>
-												<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CT_Intitule)" HeaderText="Client" />
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Devis)" HeaderText="CA Devis" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Commandes)" HeaderText="CA Commandes" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Factures)" HeaderText="CA Factures" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Total)" HeaderText="CA Total" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-													<Template>
-														@{
-															var dt = (context as DocumentSummary);
-															<div style="text-align: right;">
-																<span class="statustxt e-activecolor">@dt.CA_Total.ToString("### ### ##0.00;-### ### ##0.00;#")</span>
-															</div>
-														}
-													</Template>
-												</GridColumn>
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.TauxRealisation)" HeaderText="% Réalisation" Format="P2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-													<Template>
-														@{
-															var dt = (context as DocumentSummary);
-															if (dt.TauxRealisation > 0.7m)
-															{
-																<div style="text-align: right;">
-																	<span class="statustxt e-activecolor">@dt.TauxRealisation.ToString("P2")<RadzenIcon Icon="arrow_upward" /></span>
-																</div>
-															}
-															else if (dt.TauxRealisation > 0.3m)
-															{
-																<div style="text-align: right;">
-																	<span class="statustxt e-infocolor">@dt.TauxRealisation.ToString("P2")</span>
-																</div>
-															}
-															else
-															{
-																<div style="text-align: right;">
-																	<span class="statustxt e-inactivecolor">@dt.TauxRealisation.ToString("P2")<RadzenIcon Icon="arrow_downward" /></span>
-																</div>
-															}
-														}
-													</Template>
-												</GridColumn>
-											</GridColumns>
-										</SfGrid>
-									</div>
-								</GridCol>
-							</GridRow>
+						<GridCol Xs="24" Md="3">
+							<StatCard3 Color="StatColor.Green" Value="@((items?.Sum(a => a.CA_Devis) ?? 0).ToString("N2"))" Title="CA Devis" />
 						</GridCol>
-						<GridCol Xs="24" Md="12">
-							<GridRow>
-								<GridCol Xs="24" Md="24" Style="margin: 5px;">
-									<h2 style="font-weight: 600; font-size: 15px; margin: 5px;">DEVIS EN COURS</h2>
-									<div style="height: 35vh;">
-										<SfGrid AllowTextWrap Height="100%" DataSource="@devis" AllowSorting>
-											<GridAggregates>
-												<GridAggregate>
-													<GridAggregateColumns>
-														<GridAggregateColumn Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
-															<FooterTemplate>
-																@{
-																	var SumValue = (context as AggregateTemplateContext);
-																	<div>@SumValue.Sum</div>
-																}
-															</FooterTemplate>
-														</GridAggregateColumn>
-													</GridAggregateColumns>
-												</GridAggregate>
-											</GridAggregates>
-											<GridPageSettings PageSize="100" />
-											<GridEvents TValue="API_V_DOCENTETE"></GridEvents>
-											<GridColumns>
-												<GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Date)" Format="dd/MM/yy" HeaderText="Date" />
-												<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Piece)" HeaderText="Pièce" />
-												<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CT_Intitule)" HeaderText="Client" />
-												<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Ref)" HeaderText="Ref" />
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" HeaderText="TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-											</GridColumns>
-										</SfGrid>
-									</div>
-								</GridCol>
-								<GridCol Xs="24" Md="24" Style="margin: 5px;">
-									<h2 style="font-weight: 600; font-size: 15px; margin: 5px;">COMMANDES EN COURS</h2>
-									<div style="height: 35vh;">
-										<SfGrid AllowTextWrap Height="100%" DataSource="@commandes" AllowSorting>
-											<GridAggregates>
-												<GridAggregate>
-													<GridAggregateColumns>
-														<GridAggregateColumn Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
-															<FooterTemplate>
-																@{
-																	var SumValue = (context as AggregateTemplateContext);
-																	<div>@SumValue.Sum</div>
-																}
-															</FooterTemplate>
-														</GridAggregateColumn>
-													</GridAggregateColumns>
-												</GridAggregate>
-											</GridAggregates>
-											<GridPageSettings PageSize="100" />
-											<GridEvents TValue="API_V_DOCENTETE"></GridEvents>
-											<GridColumns>
-												<GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Date)" Format="dd/MM/yy" HeaderText="Date" />
-												<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Piece)" HeaderText="Pièce" />
-												<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CT_Intitule)" HeaderText="Client" />
-												<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Ref)" HeaderText="Ref" />
-												<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" HeaderText="TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-											</GridColumns>
-										</SfGrid>
-									</div>
-								</GridCol>
-							</GridRow>
+						<GridCol Xs="24" Md="3">
+							<StatCard3 Color="StatColor.Blue" Value="@((items?.Sum(a => a.CA_Commandes) ?? 0).ToString("N2"))" Title="CA Commandes" />
+						</GridCol>
+						<GridCol Xs="24" Md="3">
+							<StatCard3 Color="StatColor.Purple" Value="@((items?.Sum(a => a.CA_Factures) ?? 0).ToString("N2"))" Title="CA Factures" />
+						</GridCol>
+						<GridCol Xs="24" Md="3">
+							<StatCard3 Color="StatColor.Amber" Value="@((items?.Sum(a => a.CA_Total) ?? 0).ToString("N2"))" Title="CA Total" />
 						</GridCol>
 
+						<GridCol Xs="12" Md="12">
+
+						</GridCol>
+						<GridCol Xs="24" Md="12" Style="padding: 5px;">
+							<h2 style="font-weight: 600; font-size: 15px; margin: 5px;">CHIFFRE D'AFFAIRE PAR CLIENT</h2>
+							<div class="no-border grid-67" style="zoom: @session.zoomLevel;">
+								<SfGrid AllowTextWrap Height="100%" DataSource="@items" AllowSorting>
+									<GridAggregates>
+										<GridAggregate>
+											<GridAggregateColumns>
+												<GridAggregateColumn Field="@nameof(DocumentSummary.CA_Devis)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+													<FooterTemplate>
+														@{
+															var SumValue = (context as AggregateTemplateContext);
+															<div>@SumValue.Sum</div>
+														}
+													</FooterTemplate>
+												</GridAggregateColumn>
+												<GridAggregateColumn Field="@nameof(DocumentSummary.CA_Commandes)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+													<FooterTemplate>
+														@{
+															var SumValue = (context as AggregateTemplateContext);
+															<div>@SumValue.Sum</div>
+														}
+													</FooterTemplate>
+												</GridAggregateColumn>
+												<GridAggregateColumn Field="@nameof(DocumentSummary.CA_Factures)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+													<FooterTemplate>
+														@{
+															var SumValue = (context as AggregateTemplateContext);
+															<div>@SumValue.Sum</div>
+														}
+													</FooterTemplate>
+												</GridAggregateColumn>
+												<GridAggregateColumn Field="@nameof(DocumentSummary.CA_Total)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+													<FooterTemplate>
+														@{
+															var SumValue = (context as AggregateTemplateContext);
+															<div>@SumValue.Sum</div>
+														}
+													</FooterTemplate>
+												</GridAggregateColumn>
+											</GridAggregateColumns>
+										</GridAggregate>
+									</GridAggregates>
+									<GridPageSettings PageSize="100" />
+									<GridEvents OnRecordDoubleClick="ShowDetail" TValue="DocumentSummary"></GridEvents>
+									<GridColumns>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Field="@nameof(DocumentSummary.CT_Num)" HeaderText="Code" Visible=@(!session.IsMobile)>
+											<Template>
+												@{
+													var item = (context as DocumentSummary);
+													<RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 4px !important; padding-right: 4px !important;"
+																  Click="@(args => ShowClient(item))" Shade="Shade.Darker" Variant="Variant.Text"
+																  Text="@item.CT_Num" ButtonStyle="ButtonStyle.Secondary" />
+												}
+											</Template>
+										</GridColumn>
+										<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CT_Intitule)" HeaderText="Client" />
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Devis)" HeaderText="CA Devis" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Commandes)" HeaderText="CA Commandes" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Factures)" HeaderText="CA Factures" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Total)" HeaderText="CA Total" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+											<Template>
+												@{
+													var dt = (context as DocumentSummary);
+													<div style="text-align: right;">
+														<span class="statustxt e-activecolor">@dt.CA_Total.ToString("### ### ##0.00;-### ### ##0.00;#")</span>
+													</div>
+												}
+											</Template>
+										</GridColumn>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.TauxRealisation)" HeaderText="% Réalisation" Format="P2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+											<Template>
+												@{
+													var dt = (context as DocumentSummary);
+													if (dt.TauxRealisation > 0.7m)
+													{
+														<div style="text-align: right;">
+															<span class="statustxt e-activecolor">@dt.TauxRealisation.ToString("P2")<RadzenIcon Icon="arrow_upward" /></span>
+														</div>
+													}
+													else if (dt.TauxRealisation > 0.3m)
+													{
+														<div style="text-align: right;">
+															<span class="statustxt e-infocolor">@dt.TauxRealisation.ToString("P2")</span>
+														</div>
+													}
+													else
+													{
+														<div style="text-align: right;">
+															<span class="statustxt e-inactivecolor">@dt.TauxRealisation.ToString("P2")<RadzenIcon Icon="arrow_downward" /></span>
+														</div>
+													}
+												}
+											</Template>
+										</GridColumn>
+									</GridColumns>
+								</SfGrid>
+							</div>
+						</GridCol>
+						<GridCol Xs="24" Md="12" Style="padding: 5px;">
+							<h2 style="font-weight: 600; font-size: 15px; margin: 5px;">COMMANDES EN COURS</h2>
+							<div class="no-border grid-67" style="zoom: @session.zoomLevel;">
+								<SfGrid AllowTextWrap Height="100%" DataSource="@commandes" AllowSorting>
+									<GridAggregates>
+										<GridAggregate>
+											<GridAggregateColumns>
+												<GridAggregateColumn Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+													<FooterTemplate>
+														@{
+															var SumValue = (context as AggregateTemplateContext);
+															<div>@SumValue.Sum</div>
+														}
+													</FooterTemplate>
+												</GridAggregateColumn>
+											</GridAggregateColumns>
+										</GridAggregate>
+									</GridAggregates>
+									<GridPageSettings PageSize="100" />
+									<GridEvents TValue="API_V_DOCENTETE"></GridEvents>
+									<GridColumns>
+										<GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Date)" Format="dd/MM/yy" HeaderText="Date" />
+										<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Piece)" HeaderText="Pièce" />
+										<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CT_Intitule)" HeaderText="Client" />
+										<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Ref)" HeaderText="Ref" />
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" HeaderText="TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+									</GridColumns>
+								</SfGrid>
+							</div>
+						</GridCol>
 
 					</GridRow>
 				</Spin>
@@ -288,14 +250,38 @@ else
 
 		try
 		{
-			// Get all documents filtered by date range
+			// Get all documents filtered by date range using DO_Date for general filtering
 			all_documents = db.API_V_DOCENTETE
 				.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) &&
-									((date2 != null && a.DO_Date <= date2) || date2 == null))
+							((date2 != null && a.DO_Date <= date2) || date2 == null))
+				.ToList();
+
+			// Get devis and commandes filtered by DO_DateLivr
+			var devisFiltered = db.API_V_DOCENTETE
+				.Where(a => a.DO_Type == 0 &&
+						   ((date1 != null && a.DO_DateLivr >= date1) || date1 == null) &&
+						   ((date2 != null && a.DO_DateLivr <= date2) || date2 == null))
+				.ToList();
+
+			var commandesFiltered = db.API_V_DOCENTETE
+				.Where(a => a.DO_Type == 1 &&
+						   ((date1 != null && a.DO_DateLivr >= date1) || date1 == null) &&
+						   ((date2 != null && a.DO_DateLivr <= date2) || date2 == null))
+				.ToList();
+
+			// Combine filtered devis and commandes with other document types
+			var otherDocuments = all_documents
+				.Where(a => a.DO_Type != 0 && a.DO_Type != 1)
+				.ToList();
+
+			// Create combined list for grouping
+			var combinedDocuments = devisFiltered
+				.Concat(commandesFiltered)
+				.Concat(otherDocuments)
 				.ToList();
 
 			// Group by client and calculate totals by document type
-			var groupedData = all_documents
+			var groupedData = combinedDocuments
 				.Where(a => !string.IsNullOrEmpty(a.CT_Intitule))
 				.GroupBy(a => new { a.CT_Intitule, a.DO_Tiers })
 				.Select(g => new DocumentSummary
@@ -316,13 +302,15 @@ else
 			chart_items = items.Take(10).ToList();
 			pie_chart_items = items.Take(8).ToList();
 
-			// Detailed documents for the bottom grid
-			detailed_documents = all_documents
+			// Detailed documents for the bottom grid - maintain DO_DateLivr filtering for devis and commandes
+			detailed_documents = combinedDocuments
 				.OrderByDescending(x => x.DO_Date)
 				.ThenByDescending(x => x.DL_MontantTTC)
 				.ToList();
-			devis = all_documents.Where(a => a.DO_Type == 0).OrderByDescending(a => a.DO_Date).ToList();
-			commandes = all_documents.Where(a => a.DO_Type == 1).OrderByDescending(a => a.DO_Date).ToList();
+
+			// Assign filtered collections
+			devis = devisFiltered.OrderByDescending(a => a.DO_DateLivr ?? a.DO_Date).ToList();
+			commandes = commandesFiltered.OrderByDescending(a => a.DO_DateLivr ?? a.DO_Date).ToList();
 		}
 		catch (Exception ex)
 		{

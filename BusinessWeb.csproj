@@ -129,11 +129,6 @@
     
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="LogicNP.CryptoLicensing">
-      <HintPath>..\..\..\..\Documents\LogicNP.CryptoLicensing.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Update="Resources\SfResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -153,5 +148,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pages\Traitement\Comptabilite\TVA\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="LogicNP.CryptoLicensing">
+      <HintPath>C:\Users\Administrator\Documents\LogicNP.CryptoLicensing.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
