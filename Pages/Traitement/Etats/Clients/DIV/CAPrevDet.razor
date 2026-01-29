@@ -1,0 +1,494 @@
+﻿@page "/et-ca-prev-detailed"
+@attribute [Authorize]
+
+@if (IsLoaded)
+{
+    <Card_1 Title="ANALYSE PREVISIONNELLE DETAILLÉE" IsDetail="false">
+        <RadzenContent Container="main">
+            <div class="grid-container small-grid" style="width: 100%;">
+
+                <Spin Size="large" Spinning=loading Style="margin-top: 50px;">
+                    <SfToolbar CssClass="btns">
+                        <ToolbarItems>
+                            @if (!session.IsMobile)
+                            {
+                                <ToolbarItem Align="ItemAlign.Left">
+                                    <Template>
+                                        <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                            <div style="text-transform: uppercase;">EXERCICE EN COURS: @DateTime.Today.Year.ToString()</div>
+                                        </SfMessage>
+                                    </Template>
+                                </ToolbarItem>
+                            }
+
+                            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                <Template>
+                                    <div style="margin-left: 15px;">
+                                        <SfDatePicker TValue="DateTime ?" @bind-Value="DateDebut" Placeholder="Date Début" Width="140px" />
+                                    </div>
+                                </Template>
+                            </ToolbarItem>
+
+                            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                <Template>
+                                    <div style="margin-left: 15px;">
+                                        <SfDatePicker TValue="DateTime ?" @bind-Value="DateFin" Placeholder="Date Fin" Width="140px" />
+                                    </div>
+                                </Template>
+                            </ToolbarItem>
+
+                            <ToolbarItem OnClick="@(args => LoadData())" TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
+                        </ToolbarItems>
+                    </SfToolbar>
+
+                    <GridRow>
+                        <!-- Indicateurs de performance -->
+                        <GridCol Xs="24" Style="padding: 5px;">
+                            <h2 style="font-weight: 600; font-size: 15px; margin: 5px;">INDICATEURS DE PERFORMANCE</h2>
+                            <GridRow>
+                                <GridCol Xs="24" Md="4">
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Panier Moyen Commandes</div>
+                                        <div class="kpi-value">@(PanierMoyenCommandes.ToString("N0")) €</div>
+                                        <div class="kpi-subtitle">Valeur moyenne</div>
+                                    </div>
+                                </GridCol>
+                                <GridCol Xs="24" Md="4">
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Panier Moyen Factures</div>
+                                        <div class="kpi-value">@(PanierMoyenFactures.ToString("N0")) €</div>
+                                        <div class="kpi-subtitle">Valeur moyenne</div>
+                                    </div>
+                                </GridCol>
+                                <GridCol Xs="24" Md="4">
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Commandes en Attente</div>
+                                        <div class="kpi-value">@(CommandesEnAttente.ToString("N0")) €</div>
+                                        <div class="kpi-subtitle">Non facturées</div>
+                                    </div>
+                                </GridCol>
+                                <GridCol Xs="24" Md="4">
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Clients Actifs</div>
+                                        <div class="kpi-value">@(NbClientsActifs)</div>
+                                        <div class="kpi-subtitle">Avec commandes</div>
+                                    </div>
+                                </GridCol>
+                                <GridCol Xs="24" Md="4">
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Meilleur Mois</div>
+                                        <div class="kpi-value">@MeilleurMois</div>
+                                        <div class="kpi-subtitle">Pour les commandes</div>
+                                    </div>
+                                </GridCol>
+                                <GridCol Xs="24" Md="4">
+                                    <div class="kpi-card">
+                                        <div class="kpi-title">Dernière Facture</div>
+                                        <div class="kpi-value">@(DerniereFacture?.ToString("dd/MM/yy") ?? "N/A")</div>
+                                        <div class="kpi-subtitle">Date</div>
+                                    </div>
+                                </GridCol>
+                            </GridRow>
+                        </GridCol>
+                        <!-- Graphique comparatif Commandes vs Factures -->
+                        <GridCol Xs="24" Md="24" Style="padding: 5px;">
+                            <h2 style="font-weight: 600; font-size: 15px; margin: 5px;">COMPARATIF COMMANDES vs FACTURES</h2>
+                            <div class="no-border" style="height: 350px; zoom: @session.zoomLevel;">
+                                <SfChart Title="Comparatif Mensuel">
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" />
+                                    <ChartPrimaryYAxis>
+                                        <ChartAxisTitle Text="Montant" />
+                                    </ChartPrimaryYAxis>
+                                    <ChartSeriesCollection>
+                                        <ChartSeries DataSource="@MonthlyComparison" XName="Mois" YName="Commandes" Name="Commandes"
+                                                     Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
+                                            <ChartMarker Visible="true" />
+                                        </ChartSeries>
+                                        <ChartSeries DataSource="@MonthlyComparison" XName="Mois" YName="Factures" Name="Factures"
+                                                     Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
+                                            <ChartMarker Visible="true" />
+                                        </ChartSeries>
+                                    </ChartSeriesCollection>
+                                    <ChartLegendSettings Visible="true" />
+                                    <ChartTooltipSettings Enable="true" />
+                                </SfChart>
+                            </div>
+                        </GridCol>
+                    </GridRow>
+                </Spin>
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+
+    DB db = new DB();
+
+    // Paramètres de filtrage
+    private DateTime? DateDebut = new DateTime(DateTime.Today.Year, 1, 1);
+    private DateTime? DateFin = new DateTime(DateTime.Today.Year, 12, 31);
+    private string SelectedYear => DateTime.Today.Year.ToString();
+
+    // Classes de données
+    public class MonthlySummaryItem
+    {
+        public string Mois { get; set; }
+        public int MoisNum { get; set; }
+        public decimal Commandes { get; set; }
+        public decimal Factures { get; set; }
+        public decimal TauxRealisation => Commandes > 0 ? Factures / Commandes : 0;
+        public decimal EvolutionCommandes { get; set; }
+    }
+
+    public class ClientSummary
+    {
+        public string CT_Num { get; set; }
+        public string CT_Intitule { get; set; }
+        public decimal Commandes { get; set; }
+        public decimal Factures { get; set; }
+        public decimal TauxRealisation => Commandes > 0 ? Factures / Commandes : 0;
+    }
+
+    public class MonthlyChartItem
+    {
+        public string Mois { get; set; }
+        public decimal Montant { get; set; }
+    }
+
+    public class ComparisonItem
+    {
+        public string Mois { get; set; }
+        public decimal Commandes { get; set; }
+        public decimal Factures { get; set; }
+    }
+
+    // Collections de données
+    private List<MonthlySummaryItem> MonthlySummary = new List<MonthlySummaryItem>();
+    private List<ClientSummary> TopClients = new List<ClientSummary>();
+    private List<MonthlyChartItem> MonthlyCommandes = new List<MonthlyChartItem>();
+    private List<MonthlyChartItem> MonthlyFactures = new List<MonthlyChartItem>();
+    private List<ComparisonItem> MonthlyComparison = new List<ComparisonItem>();
+
+    // Métriques
+    private decimal CommandesTotal = 0;
+    private decimal FacturesTotal = 0;
+    private decimal TauxRealisation = 0;
+    private decimal MoyenneMensuelle = 0;
+    private decimal PanierMoyenCommandes = 0;
+    private decimal PanierMoyenFactures = 0;
+    private decimal CommandesEnAttente = 0;
+    private int NbClientsActifs = 0;
+    private string MeilleurMois = "";
+    private DateTime? DerniereFacture = null;
+
+    bool IsLoaded = false;
+    bool loading = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        loading = true;
+        StateHasChanged();
+        await Task.Delay(300);
+
+        try
+        {
+            // Separate queries for different document types with different date filters
+
+            // Get commandes (type 1) filtered by DO_DateLivr
+            var commandes = db.API_V_DOCENTETE
+                .Where(d => d.DO_Type == 1 &&
+                           (!DateDebut.HasValue || d.DO_DateLivr >= DateDebut) &&
+                           (!DateFin.HasValue || d.DO_DateLivr <= DateFin))
+                .ToList();
+
+            // Get factures (types 6 and 7) filtered by DO_Date
+            var factures = db.API_V_DOCENTETE
+                .Where(d => (d.DO_Type == 6 || d.DO_Type == 7) &&
+                           (!DateDebut.HasValue || d.DO_Date >= DateDebut) &&
+                           (!DateFin.HasValue || d.DO_Date <= DateFin))
+                .ToList();
+
+            // Combine all documents for methods that need the full set
+            var allDocuments = commandes.Concat(factures).ToList();
+
+            // 1. Calculer les totaux
+            CommandesTotal = commandes.Sum(d => d.DL_MontantTTC);
+            FacturesTotal = factures.Sum(d => d.DL_MontantTTC);
+            TauxRealisation = CommandesTotal > 0 ? FacturesTotal / CommandesTotal : 0;
+
+            // 2. Générer les données mensuelles
+            GenerateMonthlyData(allDocuments);
+
+            // 3. Générer les données par client
+            GenerateClientData(allDocuments);
+
+            // 4. Calculer les indicateurs
+            CalculateKPIs(allDocuments);
+
+            // 5. Préparer les données pour les graphiques
+            PrepareChartData();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur lors du chargement des données: {ex.Message}");
+        }
+        finally
+        {
+            loading = false;
+            StateHasChanged();
+        }
+    }
+
+    private void GenerateMonthlyData(List<API_V_DOCENTETE> documents)
+    {
+        MonthlySummary.Clear();
+
+        var monthNames = new[] { "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+                            "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" };
+
+        // Récupérer les données groupées par mois
+        var monthGroups = documents
+            .Where(d => d.DO_Date.HasValue)
+            .GroupBy(d => d.DO_Date.Value.Month)
+            .Select(g => new
+            {
+                Mois = g.Key,
+                Commandes = g.Where(d => d.DO_Type == 1).Sum(d => d.DL_MontantTTC),
+                Factures = g.Where(d => d.DO_Type == 6 || d.DO_Type == 7).Sum(d => d.DL_MontantTTC)
+            })
+            .OrderBy(g => g.Mois)
+            .ToList();
+
+        // Récupérer l'année de la date de début pour la comparaison
+        var currentYear = DateDebut.HasValue ? DateDebut.Value.Year : DateTime.Today.Year;
+        var previousYear = currentYear - 1;
+
+        // Récupérer les données de l'année précédente
+        var previousYearDocuments = db.API_V_DOCENTETE
+            .Where(d => d.DO_Date.HasValue &&
+                       d.DO_Date.Value.Year == previousYear)
+            .ToList();
+
+        decimal previousCommandes = 0;
+
+        // Générer les données pour tous les mois (1 à 12)
+        for (int mois = 1; mois <= 12; mois++)
+        {
+            var currentMonthData = monthGroups.FirstOrDefault(g => g.Mois == mois);
+
+            decimal commandes = 0;
+            decimal factures = 0;
+
+            if (currentMonthData != null)
+            {
+                commandes = currentMonthData.Commandes;
+                factures = currentMonthData.Factures;
+            }
+
+            // Calculer l'évolution vs le mois précédent (dans la même année)
+            var evolution = previousCommandes > 0 ? (commandes - previousCommandes) / previousCommandes : 0;
+            previousCommandes = commandes;
+
+            MonthlySummary.Add(new MonthlySummaryItem
+            {
+                Mois = monthNames[mois - 1],
+                MoisNum = mois,
+                Commandes = commandes,
+                Factures = factures,
+                EvolutionCommandes = evolution
+            });
+        }
+
+        // Calculer la moyenne mensuelle
+        MoyenneMensuelle = MonthlySummary.Count > 0 ? MonthlySummary.Average(m => m.Commandes) : 0;
+    }
+
+    private void GenerateClientData(List<API_V_DOCENTETE> documents)
+    {
+        // Grouper par client pour les commandes
+        var clientGroups = documents
+            .Where(d => d.DO_Type == 1 && !string.IsNullOrEmpty(d.CT_Intitule))
+            .GroupBy(d => new { d.DO_Tiers, d.CT_Intitule })
+            .Select(g => new ClientSummary
+            {
+                CT_Num = g.Key.DO_Tiers,
+                CT_Intitule = g.Key.CT_Intitule,
+                Commandes = g.Sum(d => d.DL_MontantHT)
+            })
+            .OrderByDescending(c => c.Commandes)
+            .Take(10)
+            .ToList();
+
+        // Ajouter les factures pour chaque client
+        foreach (var client in clientGroups)
+        {
+            client.Factures = documents
+                .Where(d => (d.DO_Type == 6 || d.DO_Type == 7) &&
+                           d.DO_Tiers == client.CT_Num)
+                .Sum(d => d.DL_MontantTTC);
+        }
+
+        TopClients = clientGroups;
+        NbClientsActifs = clientGroups.Count;
+    }
+
+    private void CalculateKPIs(List<API_V_DOCENTETE> documents)
+    {
+        // Récupérer les commandes et factures
+        var commandes = documents.Where(d => d.DO_Type == 1).ToList();
+        var factures = documents.Where(d => d.DO_Type == 6 || d.DO_Type == 7).ToList();
+
+        // Calculer les totaux
+        var totalCommandes = commandes.Sum(d => d.DL_MontantTTC);
+        var totalFactures = factures.Sum(d => d.DL_MontantTTC);
+
+        // Panier moyen des commandes
+        var nbCommandes = commandes.Count;
+        PanierMoyenCommandes = nbCommandes > 0 ? totalCommandes / nbCommandes : 0;
+
+        // Panier moyen des factures
+        var nbFactures = factures.Count;
+        PanierMoyenFactures = nbFactures > 0 ? totalFactures / nbFactures : 0;
+
+        // Commandes en attente (simplifié)
+        CommandesEnAttente =  0;
+
+        // Meilleur mois
+        var bestMonth = MonthlySummary.OrderByDescending(m => m.Commandes).FirstOrDefault();
+        MeilleurMois = bestMonth != null && bestMonth.Commandes > 0 ? bestMonth.Mois : "N/A";
+
+        // Dernière facture
+        DerniereFacture = factures
+            .OrderByDescending(d => d.DO_Date)
+            .FirstOrDefault()?.DO_Date;
+
+        // Nombre de clients uniques avec commandes
+        NbClientsActifs = documents
+            .Where(d => d.DO_Type == 1 && !string.IsNullOrEmpty(d.CT_Intitule))
+            .Select(d => d.DO_Tiers)
+            .Distinct()
+            .Count();
+    }
+
+    private void PrepareChartData()
+    {
+        // Utiliser les noms de mois courts pour les graphiques
+        var shortMonthNames = new[] { "Jan", "Fév", "Mar", "Avr", "Mai", "Jun",
+                                 "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc" };
+
+        // Données pour les graphiques de commandes
+        MonthlyCommandes = MonthlySummary
+            .Select(m => new MonthlyChartItem
+            {
+                Mois = shortMonthNames[m.MoisNum - 1],
+                Montant = m.Commandes
+            })
+            .ToList();
+
+        // Données pour les graphiques de factures
+        MonthlyFactures = MonthlySummary
+            .Select(m => new MonthlyChartItem
+            {
+                Mois = shortMonthNames[m.MoisNum - 1],
+                Montant = m.Factures
+            })
+            .ToList();
+
+        // Données pour le graphique comparatif
+        MonthlyComparison = MonthlySummary
+            .Select(m => new ComparisonItem
+            {
+                Mois = shortMonthNames[m.MoisNum - 1],
+                Commandes = m.Commandes,
+                Factures = m.Factures
+            })
+            .ToList();
+    }
+
+    private async Task ShowClientDetail(string ctNum)
+    {
+        if (!string.IsNullOrEmpty(ctNum) && ctNum != "N/A")
+        {
+            var client = db.F_COMPTET.FirstOrDefault(a => a.CT_Num == ctNum);
+            if (client != null)
+            {
+                await DialogService.OpenAsync<BusinessWeb.Pages.Structure.Tiers.TiersFiche>(
+                    "Détail Client",
+                    new Dictionary<string, object>() { { "cbMarq", client.cbMarq } },
+                    new Radzen.DialogOptions()
+                    {
+                        CloseDialogOnEsc = true,
+                        Width = "98%",
+                        Height = "95%"
+                    });
+            }
+        }
+    }
+
+
+}
+<style>
+    .kpi-card {
+        background: white;
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        text-align: center;
+        margin: 5px;
+        height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .kpi-title {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+    .kpi-value {
+        font-size: 24px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin: 10px 0;
+    }
+
+    .kpi-subtitle {
+        font-size: 11px;
+        color: #888;
+    }
+
+    .statustxt.e-activecolor {
+        color: #28a745;
+        font-weight: 600;
+    }
+
+    .statustxt.e-inactivecolor {
+        color: #dc3545;
+        font-weight: 600;
+    }
+
+    .statustxt.e-infocolor {
+        color: #17a2b8;
+        font-weight: 600;
+    }
+</style>
