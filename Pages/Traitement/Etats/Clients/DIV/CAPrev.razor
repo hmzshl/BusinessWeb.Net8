@@ -3,330 +3,375 @@
 
 @if (IsLoaded)
 {
-	<Card_1 Title="SITUATION CHIFFRE D'AFFAIRE PREVISIONNEL" IsDetail="false">
-		<RadzenContent Container="main">
-			<div class="grid-container small-grid" style="width: 100%;">
+    <Card_1 Title="SITUATION CHIFFRE D'AFFAIRE PREVISIONNEL" IsDetail="false">
+        <RadzenContent Container="main">
+            <div class="grid-container small-grid" style="width: 100%;">
 
-				<Spin Size="large" Spinning=loading Style="margin-top: 50px;">
-					<SfToolbar CssClass="btns">
-						<ToolbarItems>
-							@if (!session.IsMobile)
-							{
-								<ToolbarItem Align="ItemAlign.Left">
-									<Template>
-										<SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
-											<div style="text-transform: uppercase;">EXERCICE EN COURS: @DateTime.Today.Year.ToString()</div>
-										</SfMessage>
-									</Template>
-								</ToolbarItem>
-							}
+                <Spin Size="large" Spinning=loading Style="margin-top: 50px;">
+                    <SfToolbar CssClass="btns">
+                        <ToolbarItems>
+                            @if (!session.IsMobile)
+                            {
+                                <ToolbarItem Align="ItemAlign.Left">
+                                    <Template>
+                                        <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                            <div style="text-transform: uppercase;">EXERCICE EN COURS: @DateTime.Today.Year.ToString()</div>
+                                        </SfMessage>
+                                    </Template>
+                                </ToolbarItem>
+                            }
 
-							<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-								<Template>
-									<div style="margin-left: 15px;" id="debut">
-										<SfDatePicker Placeholder="Date Début" Width="140px" TValue="DateTime ?" @bind-Value="date1" ShowClearButton ShowTodayButton>
-											<DatePickerEvents TValue="DateTime ?"></DatePickerEvents>
-										</SfDatePicker>
-									</div>
-								</Template>
-							</ToolbarItem>
+                            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                <Template>
+                                    <div style="margin-left: 15px;" id="debut">
+                                        <SfDatePicker Placeholder="Date Début" Width="140px" TValue="DateTime" @bind-Value="date1" ShowTodayButton>
+                                            <DatePickerEvents TValue="DateTime ?"></DatePickerEvents>
+                                        </SfDatePicker>
+                                    </div>
+                                </Template>
+                            </ToolbarItem>
 
-							<ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-								<Template>
-									<div style="margin-left: 15px;" id="fin">
-										<SfDatePicker Placeholder="Date Fin" Width="140px" TValue="DateTime ?" @bind-Value="date2" ShowClearButton ShowTodayButton>
-											<DatePickerEvents TValue="DateTime ?"></DatePickerEvents>
-										</SfDatePicker>
-									</div>
-								</Template>
-							</ToolbarItem>
-							<ToolbarItem OnClick=@(args => (LoadData())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
-						</ToolbarItems>
-					</SfToolbar>
-					<GridRow>
+                            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                <Template>
+                                    <div style="margin-left: 15px;" id="fin">
+                                        <SfDatePicker Placeholder="Date Fin" Width="140px" TValue="DateTime" @bind-Value="date2" ShowTodayButton>
+                                            <DatePickerEvents TValue="DateTime ?"></DatePickerEvents>
+                                        </SfDatePicker>
+                                    </div>
+                                </Template>
+                            </ToolbarItem>
+                            <ToolbarItem OnClick=@(args => (LoadData())) TooltipText="Actualiser" Text="Actualiser" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh"></ToolbarItem>
+                        </ToolbarItems>
+                    </SfToolbar>
+                    <GridRow>
 
-						<GridCol Xs="24" Md="3">
-							<StatCard3 Color="StatColor.Green" Value="@((items?.Sum(a => a.CA_Devis) ?? 0).ToString("N2"))" Title="CA Devis" />
-						</GridCol>
-						<GridCol Xs="24" Md="3">
-							<StatCard3 Color="StatColor.Blue" Value="@((items?.Sum(a => a.CA_Commandes) ?? 0).ToString("N2"))" Title="CA Commandes" />
-						</GridCol>
-						<GridCol Xs="24" Md="3">
-							<StatCard3 Color="StatColor.Purple" Value="@((items?.Sum(a => a.CA_Factures) ?? 0).ToString("N2"))" Title="CA Factures" />
-						</GridCol>
-						<GridCol Xs="24" Md="3">
-							<StatCard3 Color="StatColor.Amber" Value="@((items?.Sum(a => a.CA_Total) ?? 0).ToString("N2"))" Title="CA Total" />
-						</GridCol>
+                        <GridCol Xs="24" Md="3">
+                            <StatCard3 Color="StatColor.Green" Value="@((items?.Sum(a => a.CA_Devis) ?? 0).ToString("N2"))" Title="CA Devis" />
+                        </GridCol>
+                        <GridCol Xs="24" Md="3">
+                            <StatCard3 Color="StatColor.Blue" Value="@((items?.Sum(a => a.CA_Commandes) ?? 0).ToString("N2"))" Title="CA Commandes" />
+                        </GridCol>
+                        <GridCol Xs="24" Md="3">
+                            <StatCard3 Color="StatColor.Purple" Value="@((items?.Sum(a => a.CA_Factures) ?? 0).ToString("N2"))" Title="CA Factures" />
+                        </GridCol>
+                        <GridCol Xs="24" Md="3">
+                            <StatCard3 Color="StatColor.Amber" Value="@((items?.Sum(a => a.CA_Total) ?? 0).ToString("N2"))" Title="CA Total" />
+                        </GridCol>
+                        @{
+                            // Calculate number of months between date1 and date2
+                            var nombreMois = 0;
+                            nombreMois = ((date2.Year - date1.Year) * 12) + date2.Month - date1.Month + 1;
+                            <!-- New Statistics -->
+                            <GridCol Xs="24" Md="3">
+                                @{
 
-						<GridCol Xs="12" Md="12">
+                                    <StatCard3 Color="StatColor.Green" Value="@nombreMois.ToString()" Title="Nombre de mois" />
+                                }
+                            </GridCol>
 
-						</GridCol>
-						<GridCol Xs="24" Md="12" Style="padding: 5px;">
-							<h2 style="font-weight: 600; font-size: 15px; margin: 5px;">CHIFFRE D'AFFAIRE PAR CLIENT</h2>
-							<div class="no-border grid-67" style="zoom: @session.zoomLevel;">
-								<SfGrid AllowTextWrap Height="100%" DataSource="@items" AllowSorting>
-									<GridAggregates>
-										<GridAggregate>
-											<GridAggregateColumns>
-												<GridAggregateColumn Field="@nameof(DocumentSummary.CA_Devis)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
-													<FooterTemplate>
-														@{
-															var SumValue = (context as AggregateTemplateContext);
-															<div>@SumValue.Sum</div>
-														}
-													</FooterTemplate>
-												</GridAggregateColumn>
-												<GridAggregateColumn Field="@nameof(DocumentSummary.CA_Commandes)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
-													<FooterTemplate>
-														@{
-															var SumValue = (context as AggregateTemplateContext);
-															<div>@SumValue.Sum</div>
-														}
-													</FooterTemplate>
-												</GridAggregateColumn>
-												<GridAggregateColumn Field="@nameof(DocumentSummary.CA_Factures)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
-													<FooterTemplate>
-														@{
-															var SumValue = (context as AggregateTemplateContext);
-															<div>@SumValue.Sum</div>
-														}
-													</FooterTemplate>
-												</GridAggregateColumn>
-												<GridAggregateColumn Field="@nameof(DocumentSummary.CA_Total)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
-													<FooterTemplate>
-														@{
-															var SumValue = (context as AggregateTemplateContext);
-															<div>@SumValue.Sum</div>
-														}
-													</FooterTemplate>
-												</GridAggregateColumn>
-											</GridAggregateColumns>
-										</GridAggregate>
-									</GridAggregates>
-									<GridPageSettings PageSize="100" />
-									<GridEvents OnRecordDoubleClick="ShowDetail" TValue="DocumentSummary"></GridEvents>
-									<GridColumns>
-										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Field="@nameof(DocumentSummary.CT_Num)" HeaderText="Code" Visible=@(!session.IsMobile)>
-											<Template>
-												@{
-													var item = (context as DocumentSummary);
-													<RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 4px !important; padding-right: 4px !important;"
-																  Click="@(args => ShowClient(item))" Shade="Shade.Darker" Variant="Variant.Text"
-																  Text="@item.CT_Num" ButtonStyle="ButtonStyle.Secondary" />
-												}
-											</Template>
-										</GridColumn>
-										<GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CT_Intitule)" HeaderText="Client" />
-										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Devis)" HeaderText="CA Devis" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Commandes)" HeaderText="CA Commandes" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Factures)" HeaderText="CA Factures" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Total)" HeaderText="CA Total" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-											<Template>
-												@{
-													var dt = (context as DocumentSummary);
-													<div style="text-align: right;">
-														<span class="statustxt e-activecolor">@dt.CA_Total.ToString("### ### ##0.00;-### ### ##0.00;#")</span>
-													</div>
-												}
-											</Template>
-										</GridColumn>
-										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.TauxRealisation)" HeaderText="% Réalisation" Format="P2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-											<Template>
-												@{
-													var dt = (context as DocumentSummary);
-													if (dt.TauxRealisation > 0.7m)
-													{
-														<div style="text-align: right;">
-															<span class="statustxt e-activecolor">@dt.TauxRealisation.ToString("P2")<RadzenIcon Icon="arrow_upward" /></span>
-														</div>
-													}
-													else if (dt.TauxRealisation > 0.3m)
-													{
-														<div style="text-align: right;">
-															<span class="statustxt e-infocolor">@dt.TauxRealisation.ToString("P2")</span>
-														</div>
-													}
-													else
-													{
-														<div style="text-align: right;">
-															<span class="statustxt e-inactivecolor">@dt.TauxRealisation.ToString("P2")<RadzenIcon Icon="arrow_downward" /></span>
-														</div>
-													}
-												}
-											</Template>
-										</GridColumn>
-									</GridColumns>
-								</SfGrid>
-							</div>
-						</GridCol>
-						<GridCol Xs="24" Md="12" Style="padding: 5px;">
-							<h2 style="font-weight: 600; font-size: 15px; margin: 5px;">COMMANDES EN COURS</h2>
-							<div class="no-border grid-67" style="zoom: @session.zoomLevel;">
-								<SfGrid AllowTextWrap Height="100%" DataSource="@commandes" AllowSorting>
-									<GridAggregates>
-										<GridAggregate>
-											<GridAggregateColumns>
-												<GridAggregateColumn Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
-													<FooterTemplate>
-														@{
-															var SumValue = (context as AggregateTemplateContext);
-															<div>@SumValue.Sum</div>
-														}
-													</FooterTemplate>
-												</GridAggregateColumn>
-											</GridAggregateColumns>
-										</GridAggregate>
-									</GridAggregates>
-									<GridPageSettings PageSize="100" />
-									<GridEvents TValue="API_V_DOCENTETE"></GridEvents>
-									<GridColumns>
-										<GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Date)" Format="dd/MM/yy" HeaderText="Date" />
-										<GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Piece)" HeaderText="Pièce" />
-										<GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CT_Intitule)" HeaderText="Client" />
-										<GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Ref)" HeaderText="Ref" />
-										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" HeaderText="TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-									</GridColumns>
-								</SfGrid>
-							</div>
-						</GridCol>
+                            <GridCol Xs="24" Md="3">
+                                @{
+                                    var moyenCommandes = 0m;
+                                    var totalCommandes = items?.Sum(a => a.CA_Commandes) ?? 0;
+                                    if (nombreMois > 0)
+                                    {
+                                        moyenCommandes = totalCommandes / nombreMois;
+                                    }
+                                    <StatCard3 Color="StatColor.Blue" Value="@moyenCommandes.ToString("N2")" Title="Moy. Commandes" />
+                                }
+                            </GridCol>
 
-					</GridRow>
-				</Spin>
-			</div>
-		</RadzenContent>
-	</Card_1>
+                            <GridCol Xs="24" Md="3">
+                                @{
+                                    var moyenFactures = 0m;
+                                    var totalFactures = items?.Sum(a => a.CA_Factures) ?? 0;
+                                    if (nombreMois > 0)
+                                    {
+                                        moyenFactures = totalFactures / nombreMois;
+                                    }
+                                    <StatCard3 Color="StatColor.Purple" Value="@moyenFactures.ToString("N2")" Title="Moy. Factures" />
+                                }
+                            </GridCol>
+
+                            <GridCol Xs="24" Md="3">
+                                @{
+                                    var moyenTotal = 0m;
+                                    var totalCA = items?.Sum(a => a.CA_Total) ?? 0;
+                                    if (nombreMois > 0)
+                                    {
+                                        moyenTotal = totalCA / nombreMois;
+                                    }
+                                    <StatCard3 Color="StatColor.Amber" Value="@moyenTotal.ToString("N2")" Title="Moy. Total" />
+                                }
+                            </GridCol>
+                        }
+
+                        <GridCol Xs="24" Md="12" Style="padding: 5px;">
+                            <h2 style="font-weight: 600; font-size: 15px; margin: 5px;">CHIFFRE D'AFFAIRE PAR CLIENT</h2>
+                            <div class="no-border grid-67" style="zoom: @session.zoomLevel;">
+                                <SfGrid AllowTextWrap Height="100%" DataSource="@items" AllowSorting>
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(DocumentSummary.CA_Devis)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var SumValue = (context as AggregateTemplateContext);
+                                                            <div>@SumValue.Sum</div>
+                                                        }
+                                                    </FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(DocumentSummary.CA_Commandes)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var SumValue = (context as AggregateTemplateContext);
+                                                            <div>@SumValue.Sum</div>
+                                                        }
+                                                    </FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(DocumentSummary.CA_Factures)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var SumValue = (context as AggregateTemplateContext);
+                                                            <div>@SumValue.Sum</div>
+                                                        }
+                                                    </FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(DocumentSummary.CA_Total)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var SumValue = (context as AggregateTemplateContext);
+                                                            <div>@SumValue.Sum</div>
+                                                        }
+                                                    </FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridPageSettings PageSize="100" />
+                                    <GridEvents OnRecordDoubleClick="ShowDetail" TValue="DocumentSummary"></GridEvents>
+                                    <GridColumns>
+                                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Field="@nameof(DocumentSummary.CT_Num)" HeaderText="Code" Visible=@(!session.IsMobile)>
+                                            <Template>
+                                                @{
+                                                    var item = (context as DocumentSummary);
+                                                    <RadzenButton Style="padding: 0px; font-size: 11px; font-weight: 700; padding-left: 4px !important; padding-right: 4px !important;"
+                                                                  Click="@(args => ShowClient(item))" Shade="Shade.Darker" Variant="Variant.Text"
+                                                                  Text="@item.CT_Num" ButtonStyle="ButtonStyle.Secondary" />
+                                                }
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CT_Intitule)" HeaderText="Client" />
+                                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Devis)" HeaderText="CA Devis" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Commandes)" HeaderText="CA Commandes" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Factures)" HeaderText="CA Factures" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.CA_Total)" HeaderText="CA Total" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                            <Template>
+                                                @{
+                                                    var dt = (context as DocumentSummary);
+                                                    <div style="text-align: right;">
+                                                        <span class="statustxt e-activecolor">@dt.CA_Total.ToString("### ### ##0.00;-### ### ##0.00;#")</span>
+                                                    </div>
+                                                }
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(DocumentSummary.TauxRealisation)" HeaderText="% Réalisation" Format="P2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
+                                            <Template>
+                                                @{
+                                                    var dt = (context as DocumentSummary);
+                                                    if (dt.TauxRealisation > 0.7m)
+                                                    {
+                                                        <div style="text-align: right;">
+                                                            <span class="statustxt e-activecolor">@dt.TauxRealisation.ToString("P2")<RadzenIcon Icon="arrow_upward" /></span>
+                                                        </div>
+                                                    }
+                                                    else if (dt.TauxRealisation > 0.3m)
+                                                    {
+                                                        <div style="text-align: right;">
+                                                            <span class="statustxt e-infocolor">@dt.TauxRealisation.ToString("P2")</span>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div style="text-align: right;">
+                                                            <span class="statustxt e-inactivecolor">@dt.TauxRealisation.ToString("P2")<RadzenIcon Icon="arrow_downward" /></span>
+                                                        </div>
+                                                    }
+                                                }
+                                            </Template>
+                                        </GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </GridCol>
+                        <GridCol Xs="24" Md="12" Style="padding: 5px;">
+                            <h2 style="font-weight: 600; font-size: 15px; margin: 5px;">COMMANDES EN COURS</h2>
+                            <div class="no-border grid-67" style="zoom: @session.zoomLevel;">
+                                <SfGrid AllowTextWrap Height="100%" DataSource="@commandes" AllowSorting>
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var SumValue = (context as AggregateTemplateContext);
+                                                            <div>@SumValue.Sum</div>
+                                                        }
+                                                    </FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridPageSettings PageSize="100" />
+                                    <GridEvents TValue="API_V_DOCENTETE"></GridEvents>
+                                    <GridColumns>
+                                        <GridColumn Width="60" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Date)" Format="dd/MM/yy" HeaderText="Date" />
+                                        <GridColumn Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Piece)" HeaderText="Pièce" />
+                                        <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.CT_Intitule)" HeaderText="Client" />
+                                        <GridColumn Width="90" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DO_Ref)" HeaderText="Ref" />
+                                        <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_DOCENTETE.DL_MontantTTC)" HeaderText="TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </GridCol>
+
+                    </GridRow>
+                </Spin>
+            </div>
+        </RadzenContent>
+    </Card_1>
 }
 else
 {
-	<div class="center-screen">
-		<Loading_1 />
-	</div>
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
 }
 
 @code {
-	[CascadingParameter]
-	public SessionDT session { get; set; } = new SessionDT();
-	DB db = new DB();
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
 
-	private List<DocumentSummary> items = new List<DocumentSummary>();
-	private List<DocumentSummary> chart_items = new List<DocumentSummary>();
-	private List<DocumentSummary> pie_chart_items = new List<DocumentSummary>();
-	private List<API_V_DOCENTETE> detailed_documents = new List<API_V_DOCENTETE>();
-	private List<API_V_DOCENTETE> all_documents = new List<API_V_DOCENTETE>();
-	private List<API_V_DOCENTETE> devis = new List<API_V_DOCENTETE>();
-	private List<API_V_DOCENTETE> commandes = new List<API_V_DOCENTETE>();
+    private List<DocumentSummary> items = new List<DocumentSummary>();
+    private List<DocumentSummary> chart_items = new List<DocumentSummary>();
+    private List<DocumentSummary> pie_chart_items = new List<DocumentSummary>();
+    private List<API_V_DOCENTETE> detailed_documents = new List<API_V_DOCENTETE>();
+    private List<API_V_DOCENTETE> all_documents = new List<API_V_DOCENTETE>();
+    private List<API_V_DOCENTETE> devis = new List<API_V_DOCENTETE>();
+    private List<API_V_DOCENTETE> commandes = new List<API_V_DOCENTETE>();
 
-	DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
-	DateTime? date2 = new DateTime(DateTime.Today.Year, 12, 31);
+    DateTime date1 = new DateTime(DateTime.Today.Year, 1, 1);
+    DateTime date2 = new DateTime(DateTime.Today.Year, 12, 31);
 
-	bool IsLoaded = false;
-	bool loading = false;
+    bool IsLoaded = false;
+    bool loading = false;
 
-	// Class to hold the summary data grouped by client
-	public class DocumentSummary
-	{
-		public string CT_Num { get; set; } = string.Empty;
-		public string CT_Intitule { get; set; } = string.Empty;
-		public decimal CA_Devis { get; set; }
-		public decimal CA_Commandes { get; set; }
-		public decimal CA_Factures { get; set; }
-		public decimal CA_Total => CA_Devis + CA_Commandes + CA_Factures;
-		public decimal TauxRealisation => CA_Total > 0 ? CA_Factures / CA_Total : 0;
-	}
+    // Class to hold the summary data grouped by client
+    public class DocumentSummary
+    {
+        public string CT_Num { get; set; } = string.Empty;
+        public string CT_Intitule { get; set; } = string.Empty;
+        public decimal CA_Devis { get; set; }
+        public decimal CA_Commandes { get; set; }
+        public decimal CA_Factures { get; set; }
+        public decimal CA_Total => CA_Devis + CA_Commandes + CA_Factures;
+        public decimal TauxRealisation => CA_Total > 0 ? CA_Factures / CA_Total : 0;
+    }
 
-	protected override async Task OnInitializedAsync()
-	{
-		db = session.db;
-		GC.Collect();
-		await Task.Delay(1);
-		await LoadData();
-		IsLoaded = true;
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
 
-	private async Task LoadData()
-	{
-		loading = true;
-		await Task.Delay(300);
+    private async Task LoadData()
+    {
+        loading = true;
+        await Task.Delay(300);
 
-		try
-		{
-			// Get all documents filtered by date range using DO_Date for general filtering
-			all_documents = db.API_V_DOCENTETE
-				.Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) &&
-							((date2 != null && a.DO_Date <= date2) || date2 == null))
-				.ToList();
+        try
+        {
+            // Get all documents filtered by date range using DO_Date for general filtering
+            all_documents = db.API_V_DOCENTETE
+                .Where(a => ((date1 != null && a.DO_Date >= date1) || date1 == null) &&
+                            ((date2 != null && a.DO_Date <= date2) || date2 == null))
+                .ToList();
 
-			// Get devis and commandes filtered by DO_DateLivr
-			var devisFiltered = db.API_V_DOCENTETE
-				.Where(a => a.DO_Type == 0 &&
-						   ((date1 != null && a.DO_DateLivr >= date1) || date1 == null) &&
-						   ((date2 != null && a.DO_DateLivr <= date2) || date2 == null))
-				.ToList();
+            // Get devis and commandes filtered by DO_DateLivr
+            var devisFiltered = db.API_V_DOCENTETE
+                .Where(a => a.DO_Type == 0 &&
+                           ((date1 != null && a.DO_DateLivr >= date1) || date1 == null) &&
+                           ((date2 != null && a.DO_DateLivr <= date2) || date2 == null))
+                .ToList();
 
-			var commandesFiltered = db.API_V_DOCENTETE
-				.Where(a => a.DO_Type == 1 &&
-						   ((date1 != null && a.DO_DateLivr >= date1) || date1 == null) &&
-						   ((date2 != null && a.DO_DateLivr <= date2) || date2 == null))
-				.ToList();
+            var commandesFiltered = db.API_V_DOCENTETE
+                .Where(a => a.DO_Type == 1 &&
+                           ((date1 != null && a.DO_DateLivr >= date1) || date1 == null) &&
+                           ((date2 != null && a.DO_DateLivr <= date2) || date2 == null))
+                .ToList();
 
-			// Combine filtered devis and commandes with other document types
-			var otherDocuments = all_documents
-				.Where(a => a.DO_Type != 0 && a.DO_Type != 1)
-				.ToList();
+            // Combine filtered devis and commandes with other document types
+            var otherDocuments = all_documents
+                .Where(a => a.DO_Type != 0 && a.DO_Type != 1)
+                .ToList();
 
-			// Create combined list for grouping
-			var combinedDocuments = devisFiltered
-				.Concat(commandesFiltered)
-				.Concat(otherDocuments)
-				.ToList();
+            // Create combined list for grouping
+            var combinedDocuments = devisFiltered
+                .Concat(commandesFiltered)
+                .Concat(otherDocuments)
+                .ToList();
 
-			// Group by client and calculate totals by document type
-			var groupedData = combinedDocuments
-				.Where(a => !string.IsNullOrEmpty(a.CT_Intitule))
-				.GroupBy(a => new { a.CT_Intitule, a.DO_Tiers })
-				.Select(g => new DocumentSummary
-				{
-					CT_Num = g.Key.DO_Tiers ?? "N/A",
-					CT_Intitule = g.Key.CT_Intitule ?? "Client Inconnu",
-					CA_Devis = g.Where(x => x.DO_Type == 0 && x.DO_Statut == 2).Sum(x => x.DL_MontantTTC), // Devis
-					CA_Commandes = g.Where(x => x.DO_Type == 1).Sum(x => x.DL_MontantTTC), // Bon de commande
-					CA_Factures = g.Where(x => x.DO_Type == 7 || x.DO_Type == 6).Sum(x => x.DL_MontantTTC) // Facture
-				})
-				.Where(x => x.CA_Total > 0) // Only show clients with some activity
-				.OrderByDescending(x => x.CA_Total)
-				.ToList();
+            // Group by client and calculate totals by document type
+            var groupedData = combinedDocuments
+                .Where(a => !string.IsNullOrEmpty(a.CT_Intitule))
+                .GroupBy(a => new { a.CT_Intitule, a.DO_Tiers })
+                .Select(g => new DocumentSummary
+                {
+                    CT_Num = g.Key.DO_Tiers ?? "N/A",
+                    CT_Intitule = g.Key.CT_Intitule ?? "Client Inconnu",
+                    CA_Devis = g.Where(x => x.DO_Type == 0 && x.DO_Statut == 2).Sum(x => x.DL_MontantTTC), // Devis
+                    CA_Commandes = g.Where(x => x.DO_Type == 1).Sum(x => x.DL_MontantTTC), // Bon de commande
+                    CA_Factures = g.Where(x => x.DO_Type == 7 || x.DO_Type == 6).Sum(x => x.DL_MontantTTC) // Facture
+                })
+                .Where(x => x.CA_Total > 0) // Only show clients with some activity
+                .OrderByDescending(x => x.CA_Total)
+                .ToList();
 
-			items = groupedData;
+            items = groupedData;
 
-			// Prepare data for charts (top 10 clients for better visualization)
-			chart_items = items.Take(10).ToList();
-			pie_chart_items = items.Take(8).ToList();
+            // Prepare data for charts (top 10 clients for better visualization)
+            chart_items = items.Take(10).ToList();
+            pie_chart_items = items.Take(8).ToList();
 
-			// Detailed documents for the bottom grid - maintain DO_DateLivr filtering for devis and commandes
-			detailed_documents = combinedDocuments
-				.OrderByDescending(x => x.DO_Date)
-				.ThenByDescending(x => x.DL_MontantTTC)
-				.ToList();
+            // Detailed documents for the bottom grid - maintain DO_DateLivr filtering for devis and commandes
+            detailed_documents = combinedDocuments
+                .OrderByDescending(x => x.DO_Date)
+                .ThenByDescending(x => x.DL_MontantTTC)
+                .ToList();
 
-			// Assign filtered collections
-			devis = devisFiltered.OrderByDescending(a => a.DO_DateLivr ?? a.DO_Date).ToList();
-			commandes = commandesFiltered.OrderByDescending(a => a.DO_DateLivr ?? a.DO_Date).ToList();
-		}
-		catch (Exception ex)
-		{
-			// Handle any errors
-			Console.WriteLine($"Error loading data: {ex.Message}");
-		}
-		finally
-		{
-			loading = false;
-			await Task.Delay(300);
-		}
-	}
+            // Assign filtered collections
+            devis = devisFiltered.OrderByDescending(a => a.DO_DateLivr ?? a.DO_Date).ToList();
+            commandes = commandesFiltered.OrderByDescending(a => a.DO_DateLivr ?? a.DO_Date).ToList();
+        }
+        catch (Exception ex)
+        {
+            // Handle any errors
+            Console.WriteLine($"Error loading data: {ex.Message}");
+        }
+        finally
+        {
+            loading = false;
+            await Task.Delay(300);
+        }
+    }
 
-	protected async Task ShowDetail(RecordDoubleClickEventArgs<DocumentSummary> args)
-	{
-		/*await DialogService.OpenAsync<DetailsDocuments>(args.RowData.CT_Intitule,
+    protected async Task ShowDetail(RecordDoubleClickEventArgs<DocumentSummary> args)
+    {
+        /*await DialogService.OpenAsync<DetailsDocuments>(args.RowData.CT_Intitule,
             new Dictionary<string, object>() {
                 { "Date1", date1 },
                 { "Date2", date2 },
@@ -335,19 +380,19 @@ else
                 { "ClassHeight", "grid-84" }
             },
             new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });*/
-	}
+    }
 
-	private async Task ShowClient(DocumentSummary item)
-	{
-		if (!string.IsNullOrEmpty(item.CT_Num) && item.CT_Num != "N/A")
-		{
-			var client = db.F_COMPTET.Where(a => a.CT_Num == item.CT_Num).FirstOrDefault();
-			if (client != null)
-			{
-				await DialogService.OpenAsync<BusinessWeb.Pages.Structure.Tiers.TiersFiche>(item.CT_Intitule,
-					new Dictionary<string, object>() { { "cbMarq", client.cbMarq } },
-					new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
-			}
-		}
-	}
+    private async Task ShowClient(DocumentSummary item)
+    {
+        if (!string.IsNullOrEmpty(item.CT_Num) && item.CT_Num != "N/A")
+        {
+            var client = db.F_COMPTET.Where(a => a.CT_Num == item.CT_Num).FirstOrDefault();
+            if (client != null)
+            {
+                await DialogService.OpenAsync<BusinessWeb.Pages.Structure.Tiers.TiersFiche>(item.CT_Intitule,
+                    new Dictionary<string, object>() { { "cbMarq", client.cbMarq } },
+                    new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "98%", Height = "95%" });
+            }
+        }
+    }
 }

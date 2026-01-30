@@ -324,7 +324,7 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Echéances Clients", Url = "et-echeances-clients", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
 			//Div
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Prévisionnel", Url = "et-ca-prev", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Prévisionnel Détaillé", Url = "et-ca-prev-detailed", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
+			//list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Prévisionnel Détaillé", Url = "et-ca-prev-detailed", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
 
 			// Achats
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Liste des fournisseurs", Url = "fournisseurs", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
