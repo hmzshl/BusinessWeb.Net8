@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+
+    <!-- Local Bootstrap -->
+    <link href="css/bootstrap/bootstrap.min.css?v=1.0.90" rel="stylesheet" />
+
+    <!-- Local Fonts and Icons -->
+    <link href="offline-resources/css/local-fonts.css?v=1.0.90" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" />
+
+    <!-- Local CodeMirror -->
+    <link href="offline-resources/css/codemirror.min.css?v=1.0.90" rel="stylesheet" />
+    <link href="offline-resources/css/show-hint.min.css?v=1.0.90" rel="stylesheet" />
+
+    <!-- Local Bold Reports -->
+    <link href="offline-resources/css/bold.reports.all.min.css?v=1.0.90" rel="stylesheet" />
+
+    <!-- Local UI Framework CSS -->
+    <link href="css/BoldReports/bold.theme.min.css?v=1.0.90" rel="stylesheet" />
+    <link href="css/BoldReports/bold.widget.core.bootstrap.min.css?v=1.0.90" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <link href="_content/AntDesign/css/ant-design-blazor.aliyun.css?v=1.0.90" rel="stylesheet" />
+    <link href="_content/Radzen.Blazor/css/humanistic.css?v=1.0.90" rel="stylesheet" />
+    <link href="_content/Syncfusion.Blazor.Themes/tailwind.css?v=1.0.90" rel="stylesheet" />
+
+    <!-- Local Application CSS -->
+    <link href="css/site.css?v=1.0.90" rel="stylesheet" />
+    <link href="css/stat.css?v=1.0.90" rel="stylesheet" />
+    <link href="css/ui.css?v=1.0.90" rel="stylesheet" />
+    <link href="css/mobile.css?v=1.0.90" rel="stylesheet" />
+    <link href="css/grid.css?v=1.0.90" rel="stylesheet" />
+
+    <!-- Local Tailwind CSS -->
+    <link href="offline-resources/css/tailwind.min.css?v=1.0.90" rel="stylesheet">
+
+    <!-- Local Scripts -->
+    <script src="js/site.js?v=1.0.90"></script>
+    <script src="js/boldreports-interop.js?v=1.0.90"></script>
+
+    <!-- Offline Helper Script -->
+    <script src="offline-resources/js/offline-helpers.js?v=1.0.90"></script>
+
+    <HeadOutlet @rendermode="@RenderMode.InteractiveServer" />
+</head>
+<body>
+    <Routes @rendermode="@RenderMode.InteractiveServer" />
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <!-- Blazor Framework -->
+    <script src="_framework/blazor.web.js?v=1.0.90"></script>
+
+    <!-- Syncfusion Scripts -->
+    <script src="_content/Syncfusion.Blazor.Core/scripts/syncfusion-blazor.min.js?v=1.0.90" type="text/javascript"></script>
+    <script src="_content/Syncfusion.Blazor.PdfViewer/scripts/syncfusion-blazor-pdfviewer.min.js?v=1.0.90" type="text/javascript"></script>
+
+    <!-- UI Framework Scripts -->
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=1.0.90"></script>
+    <script src="_content/AntDesign/js/ant-design-blazor.js?v=1.0.90"></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js?v=1.0.90"></script>
+
+    <!-- Local Bold Reports Scripts -->
+    <script src="offline-resources/js/ej2-base.min.js?v=1.0.90"></script>
+    <script src="offline-resources/js/ej2-data.min.js?v=1.0.90"></script>
+    <script src="offline-resources/js/ej2-pdf-export.min.js?v=1.0.90"></script>
+    <script src="offline-resources/js/ej2-svg-base.min.js?v=1.0.90"></script>
+    <script src="offline-resources/js/ej2-lineargauge.min.js?v=1.0.90"></script>
+    <script src="offline-resources/js/ej2-circulargauge.min.js?v=1.0.90"></script>
+    <script src="offline-resources/js/jquery-1.10.2.min.js?v=1.0.90" type="text/javascript"></script>
+    <script src="offline-resources/js/codemirror.min.js?v=1.0.90" type="text/javascript"></script>
+    <script src="offline-resources/js/show-hint.min.js?v=1.0.90" type="text/javascript"></script>
+    <script src="offline-resources/js/sql-hint.min.js?v=1.0.90" type="text/javascript"></script>
+    <script src="offline-resources/js/sql-mode.min.js?v=1.0.90" type="text/javascript"></script>
+    <script src="offline-resources/js/vb-mode.min.js?v=1.0.90" type="text/javascript"></script>
+    <script src="offline-resources/js/bold.reports.common.min.js?v=1.0.90"></script>
+    <script src="offline-resources/js/bold.reports.widgets.min.js?v=1.0.90"></script>
+    <script src="offline-resources/js/bold.report-designer-widgets.min.js?v=1.0.90"></script>
+    <script src="offline-resources/js/ej.chart.min.js?v=1.0.90"></script>
+    <script src="offline-resources/js/ej.map.min.js?v=1.0.90"></script>
+    <script src="offline-resources/js/bold.report-viewer.min.js?v=1.0.90"></script>
+    <script src="offline-resources/js/bold.report-designer.min.js?v=1.0.90"></script>
+
+    <!-- Local Tailwind JS -->
+    <script src="offline-resources/js/tailwind.js?v=1.0.90"></script>
+</body>
+</html>
