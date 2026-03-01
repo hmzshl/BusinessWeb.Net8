@@ -229,6 +229,7 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Ordres de fabrications", Url = "ordres-fabrication", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Préparation des demandes achats", Url = "fabrication-demandes-achats", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Documents de sorties", Url = "fabrication-sorties", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Nomenclatures", Url = "fabrication-nomenclatures", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Pointage par personnel", Url = "depots", TitleIcon = "analytics", SousGroupe = "Rapports Pointage", HasSousGroupe = true });
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Pointage par projet", Url = "", TitleIcon = "analytics", SousGroupe = "Rapports Pointage", HasSousGroupe = true });

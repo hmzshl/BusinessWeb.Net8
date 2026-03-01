@@ -29,7 +29,7 @@
                                         <GridCol Xs="24" Md="7">
                                             <Card>
                                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Date" LabelColSpan="7">
-                                                    <SfDatePicker Readonly="@(lignes.Count() != 0)" TValue="DateTime ?" @bind-Value="@row.DO_Date" />
+                                                    <SfDatePicker TValue="DateTime ?" @bind-Value="@row.DO_Date" />
                                                 </FormItem>
                                                 <FormItem LabelAlign="AntLabelAlignType.Left" Label="Numéro" LabelColSpan="7">
                                                     <SfTextBox @bind-Value="@row.DO_Piece" Readonly />

@@ -8,10 +8,11 @@
         <RadzenContent Container="main">
             <div class="grid-90">
                 <div style="zoom: @session.zoomLevel; height: 100%;">
-                    <SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
+                    <SfGrid Height="100%" AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" 
+                    AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
                             Toolbar="@(new List<object>() { "ColumnChooser", "Search", "ExcelExport", "Add", "Delete" })">
                         <GridEditSettings ShowDeleteConfirmDialog="true" AllowAdding="true" AllowDeleting="true" AllowEditing="false" Mode="Syncfusion.Blazor.Grids.EditMode.Dialog" />
-                        <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_DOCENTETE"></GridEvents>
+                        <GridEvents OnToolbarClick="ToolbarClickHandler" OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_DOCENTETE"></GridEvents>
                         <GridPageSettings PageSize="100"></GridPageSettings>
                         <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
                         <GridTemplates>
@@ -108,7 +109,13 @@ else
         new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1024px", Height = "95%" });
         await UpdateGrid();
     }
-
+    public async Task ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+    {
+        if (args.Item.Id == "Grid_excelexport")
+        {
+            await DefaultGrid.ExportToExcelAsync();
+        }
+    }
     private async Task OnActionBegin(ActionEventArgs<API_V_DOCENTETE> args)
     {
         if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add

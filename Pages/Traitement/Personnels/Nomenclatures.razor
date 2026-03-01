@@ -1,0 +1,177 @@
+﻿@page "/fabrication-nomenclatures"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction, Responsable RH,Responsable Materiel, Assistant Chantier")]
+@if (IsLoaded)
+{
+    <RadzenContent Container="main">
+        <Card_1 Title="LISTE DES NOMENCLATURES">
+            <RadzenContent Container="main">
+                <div class="grid-90">
+                    <SfToolbar CssClass="btns">
+                        <ToolbarItems>
+                            <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                                <Template>
+                                    <SfTextBox Width="180px" Placeholder="RECHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+                                </Template>
+                            </ToolbarItem>
+                            <ToolbarItem TooltipText="Ajouter" Text="Ajouter" OnClick=@(args => (DefaultGrid.AddRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-circle-add"></ToolbarItem>
+                        </ToolbarItems>
+                    </SfToolbar>
+                    <SfGrid Height="100%" RowRenderingMode="RowDirection.Horizontal" AllowFiltering AllowResizing AllowSorting AllowReordering 
+                    AllowSelection AllowMultiSorting ShowColumnChooser="true" ID="Grid" @ref="DefaultGrid" AllowPdfExport="true" AllowExcelExport="true" AllowPaging DataSource="@items">
+                        <GridEditSettings AllowAdding="true" />
+                        <GridEvents OnActionBegin="OnActionBegin" OnRecordDoubleClick="Edit" TValue="API_V_ARTICLE"></GridEvents>
+                        <GridPageSettings PageSize="100"></GridPageSettings>
+                        <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
+                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.CheckBox"></GridFilterSettings>
+                        <GridTemplates>
+                            <EmptyRecordTemplate>
+                                <Empty></Empty>
+                            </EmptyRecordTemplate>
+                        </GridTemplates>
+                        <GridColumns>
+                            <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="cbMarq" HeaderText="#" Visible="false" IsPrimaryKey="true"></GridColumn>
+                            <GridColumn Width="160" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_Ref" HeaderText="Reference"></GridColumn>
+                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_Design" HeaderText="Designation"></GridColumn>
+                            <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="U_Intitule" HeaderText="Unite"></GridColumn>
+                            <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="FA_CodeFamille" HeaderText="Code Famille"></GridColumn>
+                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="FA_Intitule" HeaderText="Famille" Width="210"></GridColumn>
+                            <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="40" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                <Template>
+                                    <RadzenButton Click=@(args => Dupliquer((context as API_V_ARTICLE))) ButtonStyle="ButtonStyle.Info" Icon="file_copy" Size="Radzen.ButtonSize.Small"
+                                                  Variant="Variant.Text" @onclick:stopPropagation="true" />
+                                </Template>
+                            </GridColumn>
+                        </GridColumns>
+                    </SfGrid>
+                </div>
+
+            </RadzenContent>
+        </Card_1>
+    </RadzenContent>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+
+
+
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    //Parameters
+    [Parameter] public IEnumerable<API_V_ARTICLE> data { get; set; }
+
+    //End Parameters
+
+
+    //Components
+    private SfGrid<API_V_ARTICLE> DefaultGrid;
+    private SfDropDownList<string, F_FAMILLE> FamilleDrop;
+
+    private RenderFragment Familles =>
+    @<SfDropDownList @ref=@FamilleDrop TValue="string" TItem="F_FAMILLE" Placeholder="Famille" DataSource=@familles Width="200" ShowClearButton ValueChanged="@(args => UpdateGrid())">
+    <DropDownListFieldSettings Text="FAIntitule" Value="FACodeFamille"> </DropDownListFieldSettings>
+    <DropDownListEvents TValue="string" TItem="F_FAMILLE"> </DropDownListEvents>
+</SfDropDownList>
+    ;
+
+    //End components
+
+    short? vlstock = 0;
+    private IEnumerable<API_V_ARTICLE> items;
+    string vlfamille = "";
+    ICollection<F_FAMILLE> familles;
+    List<API_V_ARTICLE> rows = new List<API_V_ARTICLE>();
+    string activekey = "0";
+    bool loading = true;
+    bool IsLoaded = false;
+    IList<API_V_ARTICLE> selecteditems;
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(1);
+        db = session.db;
+        GC.Collect();
+        await Task.Run(LoadData);
+        IsLoaded = true;
+    }
+    private async Task LoadData()
+    {
+        familles = session.db.F_FAMILLE.ToList();
+        await UpdateGrid();
+    }
+    private async Task OnActionBegin(ActionEventArgs<API_V_ARTICLE> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Print
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Delete
+    || args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await Add();
+        }
+
+    }
+
+    private async Task UpdateGrid()
+    {
+        loading = true;
+        await Task.Delay(1);
+        items = session.db.API_V_ARTICLE.Where(a => a.AR_Nomencl == 1).OrderBy(a => a.AR_Design).ToList();
+        if (vlfamille != "")
+        {
+            items = await Task.FromResult(items.Where(a => a.FA_CodeFamille == vlfamille).ToList());
+        }
+        if (vlstock == 1)
+        {
+            items = await Task.FromResult(items.Where(a => a.EtatStock == "En stock").ToList());
+        }
+        else if (vlstock == 2)
+        {
+            items = await Task.FromResult(items.Where(a => a.EtatStock == "Stock épuisé").ToList());
+        }
+        loading = false;
+        await Task.Delay(1);
+    }
+
+    protected async Task Edit(RecordDoubleClickEventArgs<API_V_ARTICLE> args)
+    {
+
+        await DialogService.OpenAsync<NomenclaturesFiche>(args.RowData.AR_Design,
+        new Dictionary<string, object>() { { "cbMarq", args.RowData.cbMarq } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "90%" });
+
+        await UpdateGrid();
+        await DefaultGrid.SelectRowAsync(await DefaultGrid.GetRowIndexByPrimaryKeyAsync(args.RowData.cbMarq));
+    }
+
+    private async Task Add()
+    {
+        await DialogService.OpenAsync<NomenclaturesFiche>($"Ajouter un élément",
+        new Dictionary<string, object>() { { "cbMarq", 0 } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "90%" });
+
+        await UpdateGrid();
+
+    }
+    private async Task Dupliquer(API_V_ARTICLE args)
+    {
+        
+        await DialogService.OpenAsync<NomenclaturesFiche>($"Dupliquer un élément",
+        new Dictionary<string, object>() { { "row_dup", args } },
+        new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "90%" });
+
+        await UpdateGrid();
+    }
+}

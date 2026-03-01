@@ -1,0 +1,248 @@
+﻿@using BusinessWeb.Pages.Traitement.Personnels.OrdreFabrication.SortiesStock
+@using LinqToDB.EntityFrameworkCore
+@if (IsLoaded)
+{
+    <SfToolbar CssClass="btns">
+        <ToolbarItems>
+            <ToolbarItem Align="ItemAlign.Right">
+                <Template>
+                    <SfButton IconCss="e-icons e-save" IsPrimary="true" OnClick="@(args => Submit(true))">Enregistrer</SfButton>
+                </Template>
+            </ToolbarItem>
+        </ToolbarItems>
+    </SfToolbar>
+    <div>
+        <GridRow>
+            <GridCol Xs="24" Md="24">
+                <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="FormContext">
+                    <SfTab CssClass="e-fill">
+                        <TabEvents Selecting="@(args => fn.DisableTabSelect(args))" /><TabItems>
+                            <TabItem>
+                                <ChildContent>
+                                    <TabHeader Text="Entéte"></TabHeader>
+                                </ChildContent>
+                                <ContentTemplate>
+                                    <GridRow>
+                                        <GridCol Xs="24" Md="7">
+                                            <FormItem Required LabelAlign="AntLabelAlignType.Left" Label="Réference" LabelColSpan="9">
+                                                <SfTextBox @bind-Value="@row.AR_Ref" />
+                                            </FormItem>
+                                        </GridCol>
+                                        <GridCol Xs="24" Md="17">
+                                            <FormItem Required LabelAlign="AntLabelAlignType.Left" Label="Désignation" LabelColSpan="3">
+                                                <SfTextBox @bind-Value="@row.AR_Design"/>
+                                            </FormItem>
+                                        </GridCol>
+                                    </GridRow>
+                                </ContentTemplate>
+                            </TabItem>
+                        </TabItems>
+                    </SfTab>
+                </Form>
+
+            </GridCol>
+
+
+            <GridCol Xs="24" Md="24">
+                <Card>
+                    <div style="height: 60vh;">
+                        <SfGrid Height="100%" @ref=@MainGrid Toolbar="@(new List<string>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection 
+                            AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
+                            <GridEvents OnActionBegin="OnActionBegin" TValue="F_NOMENCLAT"></GridEvents>
+                            <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
+                            <GridEditSettings AllowAdding="@(row_dup == null)" AllowDeleting="@(row_dup == null)" ShowDeleteConfirmDialog>
+                                <HeaderTemplate>
+
+                                </HeaderTemplate>
+                            </GridEditSettings>
+                            <GridTemplates>
+                                <EmptyRecordTemplate>
+                                    <Empty></Empty>
+                                </EmptyRecordTemplate>
+                            </GridTemplates>
+                            <GridColumns>
+                                <GridColumn AllowEditing="false" Width="10" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_NOMENCLAT.cbMarq)" HeaderText="#" Visible="false" IsPrimaryKey="true" />
+                                <GridColumn AllowEditing="false" Width="140" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_NOMENCLAT.NO_RefDet)" HeaderText="Référence" />
+                                <GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Désignation">
+                                    <Template>
+                                        @{
+                                            var data = context as F_NOMENCLAT;
+                                            <div>@data.NO_RefDetNavigation?.AR_Design</div>
+                                        }
+                                    </Template>
+                                </GridColumn>
+                                <GridColumn Width="100" EditType="EditType.NumericEdit" EditorSettings="@(parameters)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(F_NOMENCLAT.NO_Qte)" HeaderText="Qté" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                            </GridColumns>
+
+
+                        </SfGrid>
+                    </div>
+
+                </Card>
+
+            </GridCol>
+        </GridRow>
+    </div>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+
+
+
+@code {
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    [Parameter] public int cbMarq { get; set; }
+    [Parameter] public API_V_ARTICLE row_dup { get; set; }
+    DB db = new DB();
+    public F_ARTICLE row = new F_ARTICLE();
+    NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
+    SfGrid<F_NOMENCLAT> MainGrid;
+    List<F_NOMENCLAT> lignes = new List<F_NOMENCLAT>();
+    bool loading = true;
+    bool IsLoaded = false;
+
+
+    string CT_Num;
+    private async Task UpdateLignes()
+    {
+        lignes = db.F_NOMENCLAT.Where(a => a.AR_Ref == row.AR_Ref).Include(a => a.NO_RefDetNavigation).OrderBy(a => a.cbMarq).ToList();
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(100);
+        db = session.db;
+        GC.Collect();
+        if(row_dup != null)
+        {
+            fn.CopyData(row_dup,row);
+            row.cbMarq = 0;
+            row.AR_Ref = null;
+            row.AR_Design = null;
+            lignes = db.F_NOMENCLAT.Where(a => a.AR_Ref == row_dup.AR_Ref).Include(a => a.NO_RefDetNavigation).OrderBy(a => a.cbMarq).ToList();
+        }
+        else
+        {
+            if (cbMarq == 0)
+            {
+
+            }
+            else
+            {
+
+                row = db.F_ARTICLE.Where(a => a.cbMarq == cbMarq).SingleOrDefault();
+                await UpdateLignes();
+
+            }
+        }
+
+        IsLoaded = true;
+    }
+
+
+    protected async Task Delete()
+    {
+
+    }
+    private async Task Submit(bool close)
+    {
+        try
+        {
+            if (cbMarq == 0)
+            {
+                var sg = new SageService(db);
+                row.AR_Nomencl = 1;
+                if (db.F_FAMILLE.Where(a => a.FA_CodeFamille == "MACHINEV").Any())
+                {
+                    row.FA_CodeFamille = "MACHINEV";
+                }
+                if (db.P_UNITE.Where(a => a.U_Intitule.ToUpper().StartsWith("U")).Any())
+                {
+                    row.AR_UniteVen = db.P_UNITE.Where(a => a.U_Intitule.ToUpper().StartsWith("U")).First().cbIndice;
+                }
+                var res = await sg.Article.AddArticle(row);
+                if (res.Succeeded)
+                {
+                    this.cbMarq = res.Data.cbMarq;
+                    if (row_dup != null)
+                    {
+                        List<F_NOMENCLAT> f_s = new List<F_NOMENCLAT>();
+                        foreach (var item in lignes)
+                        {
+                            var newitem = new F_NOMENCLAT();
+                            fn.CopyData(item, newitem);
+                            newitem.AR_Ref = row.AR_Ref;
+                            newitem.cbCreateur = "BWB";
+                            f_s.Add(newitem);
+                        }
+                        using var _db = db.CreateLinqToDBConnection();
+                        await db.BulkCopyAsync(f_s);
+                    }
+                }
+                else
+                {
+                    close = false;
+                    foreach (var item in res.Errors)
+                    {
+                        NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = item.Code, Detail = item.Message, Duration = 8000 });
+                    }
+                }
+
+
+            }
+            else
+            {
+
+            }
+
+
+            if (close)
+            {
+                DialogService.Close();
+            }
+        }
+        catch (Exception ex)
+        {
+            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = ex.Message, Detail = ex.ToString(), Duration = 20000 });
+        }
+    }
+    private async Task OnActionBegin(ActionEventArgs<F_NOMENCLAT> args)
+    {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            args.Cancel = true;
+        }
+
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
+        {
+            await Add();
+        }
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Delete)
+        {
+            db.F_NOMENCLAT.Remove(args.Data);
+            await db.SaveChangesAsync();
+        }
+
+    }
+    private async Task Add()
+    {
+        if (cbMarq == 0)
+        {
+            await Submit(false);
+        }
+        if(cbMarq != 0)
+        {
+            await DialogService.OpenAsync<SelectArticleStock>("",
+            new Dictionary<string, object>() { { "Article", row } },
+            new Radzen.DialogOptions() { Width = "900px", Height = "85%" });
+
+            await UpdateLignes();
+        }
+
+    }
+}

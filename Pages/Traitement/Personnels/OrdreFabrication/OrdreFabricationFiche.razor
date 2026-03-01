@@ -4,10 +4,11 @@
         <ToolbarItems>
             <ToolbarItem Visible=@(sc.IsInRole("Admin", "Magasinier") && StockCreated) Disabled=@(row.id == 0) Align="ItemAlign.Right">
                 <Template>
-                    <SfButton OnClick=@CreateCommande IconCss="e-icons e-send">Créer une préparation de commande</SfButton>
+                    <SfButton OnClick=@CreateCommande IconCss="e-icons e-export">Créer une préparation de commande</SfButton>
                 </Template>
             </ToolbarItem>
-            <ToolbarItem Visible=@(sc.IsInRole("Admin", "Chef Chantier") && !StockCreated) Disabled=@(row.id == 0 || row.StockCreated) Align="ItemAlign.Right">
+            <ToolbarItem Visible=@(sc.IsInRole("Admin", "Chef Chantier") && row.API_T_OrdreFabricationLigne.Select(a => a.API_T_OrdreFabricationDetail.Where(b => b.PreparationCreated == false)).Any()) 
+                         Disabled=@(row.id == 0 || (!row.API_T_OrdreFabricationLigne.Select(a => a.API_T_OrdreFabricationDetail.Where(b => b.PreparationCreated == false)).Any())) Align="ItemAlign.Right">
                 <Template>
                     <SfButton OnClick=@TransfertMagasin IconCss="e-icons e-send">Transferer vers magasinier</SfButton>
                 </Template>
@@ -204,6 +205,7 @@
     IEnumerable<F_COMPTET> clients;
     [Parameter]
     public bool StockCreated { get; set; } = false;
+    string q1 = "SELECT a.* FROM API_T_OrdreFabricationDetail a WHERE a.PreparationCreated = 0 AND a.Ligne IN (SELECT a.id FROM API_T_OrdreFabricationLigne a WHERE a.Ordre = {0})";
     protected override async Task OnInitializedAsync()
     {
         try
@@ -221,6 +223,8 @@
             else
             {
                 row = db.API_T_OrdreFabrication
+                .Include(a => a.API_T_OrdreFabricationLigne)
+                .ThenInclude(a => a.API_T_OrdreFabricationDetail)
                 .Where(a => a.id == id)
                 .SingleOrDefault();
 

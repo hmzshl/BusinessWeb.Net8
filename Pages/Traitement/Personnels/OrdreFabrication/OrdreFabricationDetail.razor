@@ -1,5 +1,5 @@
 ﻿<AntDesign.Spin Size="large" Spinning=Refreshing Style="margin-top: 50px;">
-    @if (sc.IsInRole("Admin", "Chef Chantier"))
+    @if (sc.IsInRole("Admin", "Chef Chantier", "Magasinier"))
     {
         <div style="margin-bottom: 5px;">
             <SfButton OnClick=@CreateCommande>Préparation de commande rapide</SfButton>

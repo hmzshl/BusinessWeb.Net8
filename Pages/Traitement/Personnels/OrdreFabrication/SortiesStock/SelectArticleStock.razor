@@ -1,6 +1,6 @@
 ﻿<AntDesign.Spin Size="large" Spinning=Refreshing Style="margin-top: 50px;">
     <div class="dg-parent">
-        <div style="height: 75vh">
+        <div style="height: 73vh">
             <SfGrid Height="100%" AllowTextWrap EnableVirtualization AllowFiltering AllowResizing AllowSorting AllowReordering AllowSelection AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" AllowPaging="true" DataSource="@items"
                     Toolbar="@(new List<object>() { "ColumnChooser", "Search" })">
 
@@ -59,6 +59,7 @@
     bool loading = true;
     [Parameter] public string DO_Piece { get; set; }
     [Parameter] public string DO_Ref { get; set; }
+    [Parameter] public F_ARTICLE Article { get; set; }
     bool Refreshing = false;
     protected override async Task OnInitializedAsync()
     {
@@ -75,7 +76,8 @@
         foreach (var item in items)
         {
             item.AR_QteOperatoire = 0;
-        };
+        }
+        ;
         loading = false;
         await Task.Delay(1);
     }
@@ -95,19 +97,53 @@
             lignes.Add(ligne);
         }
 
-        var rs = await sg.Document.CreateDocLignes(lignes,doc,3);
-        foreach(var item in lignes)
+        if (Article != null)
         {
-            sg.Document.UpdateStock(item.RefArticle,1);
+            int? ordre = 1;
+            if (db.F_NOMENCLAT.Where(a => a.AR_Ref == Article.AR_Ref).Any())
+            {
+                ordre = (db.F_NOMENCLAT.Where(a => a.AR_Ref == Article.AR_Ref).Count());
+                ordre = ordre + 1;
+            }
+            foreach (var item in lignes)
+            {
+                if(!db.F_NOMENCLAT.Where(a => a.AR_Ref == Article.AR_Ref && a.NO_RefDet == item.RefArticle).Any())
+                {
+                    var nom = new F_NOMENCLAT();
+                    nom.AR_Ref = Article.AR_Ref;
+                    nom.NO_RefDet = item.RefArticle;
+                    nom.NO_Qte = item.Qte;
+                    nom.AG_No1 = 0;
+                    nom.AG_No2 = 0;
+                    nom.NO_Type = 1;
+                    nom.NO_Repartition = 0;
+                    nom.NO_Operation = "";
+                    nom.NO_Commentaire = "";
+                    nom.AG_No1Comp = 0;
+                    nom.AG_No2Comp = 0;
+                    nom.NO_SousTraitance = 0;
+                    nom.cbProt = 0;
+                    nom.cbCreateur = "BWB";
+                    nom.NO_Ordre = (short?)ordre;
+                    db.F_NOMENCLAT.Add(nom);
+
+                    ordre = ordre + (short)1;
+                }
+            }
+            await db.SaveChangesAsync();
         }
-        string q1 = @"UPDATE F_DOCLIGNE SET Machine = {0}, [P.Fabrication] = {1}, NumClient = {2},
-                    IntituleClient = {3}, Affaire = {4} WHERE cbMarq = {5}";
-
-
-       /* foreach(var item in rs)
+        else
         {
-            db.Database.ExecuteSqlRaw(q1, doc.DO_Ref, DO_Ref, doc.DO_Tiers, "", doc.CA_Num, item.cbMarq);
-        }*/
+            var rs = await sg.Document.CreateDocLignes(lignes, doc, 3);
+            foreach (var item in lignes)
+            {
+                sg.Document.UpdateStock(item.RefArticle, 1);
+            }
+            string q1 = @"UPDATE F_DOCLIGNE SET Machine = {0}, [P.Fabrication] = {1}, NumClient = {2},
+                    IntituleClient = {3}, Affaire = {4} WHERE cbMarq = {5}";
+        }
+
+
         DialogService.Close();
     }
     private async Task Quitter()
