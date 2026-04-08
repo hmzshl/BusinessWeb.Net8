@@ -498,61 +498,66 @@ namespace BusinessWeb.Services
 		public void UpdateStock(string AR_Ref, int DE_No)
 		{
 
-			// Calculate stock: Entree (1) adds to stock, Sortie (3) subtracts from stock
-			var stock = _context.F_DOCLIGNE
-				.Where(a => a.AR_Ref == AR_Ref && a.DE_No == DE_No)
-				.Sum(a => a.DL_MvtStock == 1 ? a.DL_Qte :
-						  a.DL_MvtStock == 3 ? -a.DL_Qte : 0);
-			// Calculate total value and total quantity for entries only
-			var entries = _context.F_DOCLIGNE
-				.Where(a => a.AR_Ref == AR_Ref && a.DE_No == DE_No && a.DL_MvtStock == 1)
-				.GroupBy(a => 1)
-				.Select(g => new
-				{
-					TotalQte = g.Sum(x => x.DL_Qte),
-					TotalMontant = g.Sum(x => x.DL_MontantHT)
-				})
-				.FirstOrDefault();
+			if (AR_Ref != null)
+			{
+				// Calculate stock: Entree (1) adds to stock, Sortie (3) subtracts from stock
+				var stock = _context.F_DOCLIGNE
+					.Where(a => a.AR_Ref == AR_Ref && a.DE_No == DE_No)
+					.Sum(a => a.DL_MvtStock == 1 ? a.DL_Qte :
+							  a.DL_MvtStock == 3 ? -a.DL_Qte : 0);
+				// Calculate total value and total quantity for entries only
+				var entries = _context.F_DOCLIGNE
+					.Where(a => a.AR_Ref == AR_Ref && a.DE_No == DE_No && a.DL_MvtStock == 1)
+					.GroupBy(a => 1)
+					.Select(g => new
+					{
+						TotalQte = g.Sum(x => x.DL_Qte),
+						TotalMontant = g.Sum(x => x.DL_MontantHT)
+					})
+					.FirstOrDefault();
 
-			decimal? cmup = 0;
-			if (entries != null && entries.TotalQte > 0)
-			{
-				cmup = entries.TotalMontant / entries.TotalQte;
-			}
-			var articleDepot = _context.F_ARTSTOCK.Where(a => a.AR_Ref == AR_Ref && a.DE_No == DE_No).FirstOrDefault();
-			if (articleDepot != null)
-			{
-				articleDepot.AS_QteSto = stock ?? 0;
-				articleDepot.AS_MontSto = cmup * stock;
-				_context.SaveChanges();
-			}
-			else
-			{
-				var newArticleDepot = new F_ARTSTOCK
+				decimal? cmup = 0;
+				if (entries != null && entries.TotalQte > 0)
 				{
-					AR_Ref = AR_Ref,
-					DE_No = DE_No,
-					AS_QteSto = stock ?? 0,
-					AS_MontSto = cmup * stock,
-					AS_QteAControler = 0,
-					AS_QteCom = 0,
-					AS_QteComCM = 0,
-					AS_QtePrepa = 0,
-					AS_QteRes = 0,
-					AS_QteResCM = 0,
-					AS_QteMaxi = 0,
-					AS_QteMini = 0,
-					AS_Mouvemente = 0,
-					AS_Principal = 0,
-					DP_NoControle = null,
-					cbCreateur = "BWB",
-					cbProt = 0,
-					cbReplication = 0,
-					cbFlag = 0
-				};
-				_context.F_ARTSTOCK.Add(newArticleDepot);
-				_context.SaveChanges();
+					cmup = entries.TotalMontant / entries.TotalQte;
+				}
+				var articleDepot = _context.F_ARTSTOCK.Where(a => a.AR_Ref == AR_Ref && a.DE_No == DE_No).FirstOrDefault();
+				if (articleDepot != null)
+				{
+					articleDepot.AS_QteSto = stock ?? 0;
+					articleDepot.AS_MontSto = cmup * stock;
+					_context.SaveChanges();
+				}
+				else
+				{
+					var newArticleDepot = new F_ARTSTOCK
+					{
+						AR_Ref = AR_Ref,
+						DE_No = DE_No,
+						AS_QteSto = stock ?? 0,
+						AS_MontSto = cmup * stock,
+						AS_QteAControler = 0,
+						AS_QteCom = 0,
+						AS_QteComCM = 0,
+						AS_QtePrepa = 0,
+						AS_QteRes = 0,
+						AS_QteResCM = 0,
+						AS_QteMaxi = 0,
+						AS_QteMini = 0,
+						AS_Mouvemente = 0,
+						AS_Principal = 0,
+						DP_NoControle = null,
+						cbCreateur = "BWB",
+						cbProt = 0,
+						cbReplication = 0,
+						cbFlag = 0
+					};
+					_context.F_ARTSTOCK.Add(newArticleDepot);
+					_context.SaveChanges();
+				}
 			}
+
+
 		}
 		public DefaultsAR GetDefaultsAR(F_DOCENTETE entete, string AR_Ref)
 		{
@@ -630,7 +635,7 @@ namespace BusinessWeb.Services
 			if (cmup != null)
 			{
 				rs.CMUP = cmup.AS_MontSto / (cmup.AS_QteSto == 0 ? 1 : cmup.AS_QteSto);
-				if(entete.DO_Domaine > 1)
+				if (entete.DO_Domaine > 1)
 				{
 					rs.PU = rs.CMUP;
 				}
