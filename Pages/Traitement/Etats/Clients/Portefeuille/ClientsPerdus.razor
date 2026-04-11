@@ -3,7 +3,7 @@
 @implements IDisposable
 @if (IsLoaded)
 {
-    <Card_1 Title="CLIENTS PERDUS — ANNÉE @annee vs @(annee - 1)">
+    <Card_1 Title="@("CLIENTS PERDUS — ANNÉE " + annee + " vs " + (annee - 1))">
         <RadzenContent>
             <div class="grid-container no-border">
                 <SfToolbar CssClass="btns">
@@ -12,7 +12,7 @@
                             <Template>
                                 <SfMessage Severity="MessageSeverity.Warning" Variant="MessageVariant.Outlined">
                                     <div style="text-transform: uppercase;">
-                                        @items.Count client(s) perdu(s) &nbsp;|&nbsp; CA Perdu : @items.Sum(x => x.CAN1).ToString("N2") @session.devise
+                                        @items.Count client(s) perdu(s) &nbsp;|&nbsp; CA Perdu : @(items.Sum(x => x.CAN1).ToString("N2")) @session.devise
                                     </div>
                                 </SfMessage>
                             </Template>
@@ -49,7 +49,7 @@
                                     <GridColumns>
                                         <GridColumn Width="120" HeaderText="N° Client" Field="@nameof(ClientEvolutionItem.CT_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
                                         <GridColumn Width="280" HeaderText="Client" Field="@nameof(ClientEvolutionItem.CT_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
-                                        <GridColumn Width="140" HeaderText="CA HT (@(annee - 1))" Field="@nameof(ClientEvolutionItem.CAN1)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                        <GridColumn Width="140" HeaderText="@("CA HT " + (annee - 1))" Field="@nameof(ClientEvolutionItem.CAN1)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
                                             <Template>
                                                 @{ var dt = (context as ClientEvolutionItem); }
                                                 <div style="text-align:right;">

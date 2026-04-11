@@ -3,7 +3,7 @@
 @implements IDisposable
 @if (IsLoaded)
 {
-    <Card_1 Title="CLIENTS EN DÉCROISSANCE — ANNÉE @annee vs @(annee - 1)">
+    <Card_1 Title="@("CLIENTS EN DÉCROISSANCE — ANNÉE " + annee + " vs " + (annee - 1))">
         <RadzenContent>
             <div class="grid-container no-border">
                 <SfToolbar CssClass="btns">
@@ -12,7 +12,7 @@
                             <Template>
                                 <SfMessage Severity="MessageSeverity.Error" Variant="MessageVariant.Outlined">
                                     <div style="text-transform: uppercase;">
-                                        @items.Count client(s) en décroissance &nbsp;|&nbsp; CA Perdu : @items.Sum(x => x.Evolution).ToString("N2") @session.devise
+                                        @items.Count client(s) en décroissance &nbsp;|&nbsp; CA Perdu : @(items.Sum(x => x.Evolution).ToString("N2")) @session.devise
                                     </div>
                                 </SfMessage>
                             </Template>
@@ -53,8 +53,8 @@
                                     <GridColumns>
                                         <GridColumn Width="120" HeaderText="N° Client" Field="@nameof(ClientEvolutionItem.CT_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
                                         <GridColumn Width="250" HeaderText="Client" Field="@nameof(ClientEvolutionItem.CT_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
-                                        <GridColumn Width="130" HeaderText="CA HT @(annee - 1)" Field="@nameof(ClientEvolutionItem.CAN1)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
-                                        <GridColumn Width="130" HeaderText="CA HT @annee" Field="@nameof(ClientEvolutionItem.CAN)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="@("CA HT " + (annee - 1))" Field="@nameof(ClientEvolutionItem.CAN1)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="@("CA HT " + annee)" Field="@nameof(ClientEvolutionItem.CAN)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
                                         <GridColumn Width="130" HeaderText="Évolution" Field="@nameof(ClientEvolutionItem.Evolution)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
                                             <Template>
                                                 @{ var dt = (context as ClientEvolutionItem); }
