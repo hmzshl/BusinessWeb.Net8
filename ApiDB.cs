@@ -2,6 +2,8 @@
 using BusinessWeb;
 using BusinessWeb.Models.DB;
 using BusinessWeb.Models.Odoo;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
@@ -13,75 +15,80 @@ using F_FAMILLE = BusinessWeb.Models.Odoo.F_FAMILLE;
 
 public class ApiDB
 {
-	private readonly string _url = "https://noveldata.ma";
-	private readonly string _db = "OdooDB";
+	// Single shared HttpClient — avoids socket exhaustion from per-request instantiation.
+	private static readonly HttpClient _httpClient = new HttpClient();
+
+	private readonly string _url;
+	private readonly string _db;
 	private readonly string _username;
 	private readonly string _password;
+	private readonly ILogger<ApiDB> _logger;
 	private int _uid;
 
-	private ApiDB(string username, string password, int uid)
+	private ApiDB(string url, string db, string username, string password, int uid, ILogger<ApiDB> logger)
 	{
+		_url      = url;
+		_db       = db;
 		_username = username;
 		_password = password;
-		_uid = uid;
+		_uid      = uid;
+		_logger   = logger;
 	}
 
+	/// <param name="configuration">App configuration — reads Odoo:Url and Odoo:Database keys.</param>
+	public static async Task<ApiDB> CreateAsync(string username, string password,
+		IConfiguration configuration, ILogger<ApiDB> logger)
+	{
+		var url = configuration["Odoo:Url"] ?? "https://noveldata.ma";
+		var db  = configuration["Odoo:Database"] ?? "OdooDB";
+		var apiDb = new ApiDB(url, db, username, password, -1, logger);
+		var uid   = await apiDb.AuthenticateAsync();
+		return new ApiDB(url, db, username, password, uid, logger);
+	}
+
+	/// <summary>Backwards-compatible overload — uses hardcoded defaults when no config is available.</summary>
 	public static async Task<ApiDB> CreateAsync(string username, string password)
 	{
-		var apiDb = new ApiDB(username, password, -1); // Initialize with a placeholder UID
-		var uid = await apiDb.AuthenticateAsync();
-		return new ApiDB(username, password, uid);
+		var logger = LoggerFactory.Create(b => b.AddConsole()).CreateLogger<ApiDB>();
+		var apiDb  = new ApiDB("https://noveldata.ma", "OdooDB", username, password, -1, logger);
+		var uid    = await apiDb.AuthenticateAsync();
+		return new ApiDB("https://noveldata.ma", "OdooDB", username, password, uid, logger);
 	}
 
 	// Authenticate user and get UID
 	public async Task<int> AuthenticateAsync()
 	{
 		var client = new RestClient($"{_url}/jsonrpc");
-		var request = new RestRequest();
-		request.Method = Method.Post;
+		var request = new RestRequest { Method = Method.Post };
 		request.AddHeader("Content-Type", "application/json");
-
-		var body = new
+		request.AddJsonBody(new
 		{
 			jsonrpc = "2.0",
 			method = "call",
-			@params = new
-			{
-				service = "common",
-				method = "login",
-				args = new object[] { _db, _username, _password }
-			},
+			@params = new { service = "common", method = "login", args = new object[] { _db, _username, _password } },
 			id = 1
-		};
+		});
 
-		request.AddJsonBody(body);
+		var response = await client.ExecuteAsync(request);
+		_logger?.LogDebug("Odoo authenticate response: {Status}", response.StatusCode);
 
-		// Use the asynchronous PostAsync method
-		var response = await client.PostAsync(request);
-
-		// Log the raw response for debugging
-		Console.WriteLine("Raw Response from Authenticate:");
-		Console.WriteLine(response.Content); // Log the response content
-
-		if (response.IsSuccessful)
+		if (response.IsSuccessful && !string.IsNullOrEmpty(response.Content))
 		{
 			try
 			{
-				// Attempt to parse the response if it's a successful call
-				var jsonResponse = JObject.Parse(response.Content);
-				return jsonResponse["result"].Value<int>();
+				return JObject.Parse(response.Content)["result"].Value<int>();
 			}
 			catch (JsonReaderException ex)
 			{
-				Console.WriteLine($"JSON Parsing Error: {ex.Message}");
+				_logger?.LogWarning(ex, "Odoo authenticate: JSON parse error");
 			}
 		}
 		else
 		{
-			Console.WriteLine($"API Call Failed: {response.StatusCode} - {response.Content}");
+			_logger?.LogError("Odoo authenticate failed: {Status} {Content}", response.StatusCode, response.Content);
 		}
 
-		return -1; // Return -1 in case of error
+		return -1;
 	}
 
 	private byte[] TryDecodeBase64(string base64String)
@@ -105,48 +112,37 @@ public class ApiDB
 	// Generic method to execute a search_read
 	public async Task<JArray> ExecuteSearchReadAsync(string model, string[] fields, object[] domain)
 	{
-		using (var client = new HttpClient()) // Use HttpClient for asynchronous HTTP calls
+		var request = new HttpRequestMessage(HttpMethod.Post, $"{_url}/jsonrpc")
 		{
-			var request = new HttpRequestMessage(HttpMethod.Post, $"{_url}/jsonrpc")
-			{
-				Content = new StringContent(
-					JsonConvert.SerializeObject(new
-					{
-						jsonrpc = "2.0",
-						method = "call",
-						@params = new
-						{
-							service = "object",
-							method = "execute_kw",
-							args = new object[] { _db, _uid, _password, model, "search_read", domain, new { fields = fields } }
-						}
-					}),
-					Encoding.UTF8, "application/json")
-			};
-
-			try
-			{
-				HttpResponseMessage response = await client.SendAsync(request);
-				response.EnsureSuccessStatusCode();
-
-				string content = await response.Content.ReadAsStringAsync();
-				Console.WriteLine("Raw Response:");
-				Console.WriteLine(content); // Debugging raw response
-
-				if (!string.IsNullOrEmpty(content))
+			Content = new StringContent(
+				JsonConvert.SerializeObject(new
 				{
-					var jsonResponse = JObject.Parse(content);
-					return jsonResponse["result"]?.Value<JArray>() ?? new JArray(); // Safely handle null
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine($"Error: {ex.Message}");
-			}
+					jsonrpc = "2.0",
+					method = "call",
+					@params = new
+					{
+						service = "object",
+						method = "execute_kw",
+						args = new object[] { _db, _uid, _password, model, "search_read", domain, new { fields } }
+					}
+				}),
+				Encoding.UTF8, "application/json")
+		};
 
-			Console.WriteLine("API call failed");
-			return new JArray(); // Return an empty JArray in case of failure
+		try
+		{
+			var response = await _httpClient.SendAsync(request);
+			response.EnsureSuccessStatusCode();
+			var content = await response.Content.ReadAsStringAsync();
+			if (!string.IsNullOrEmpty(content))
+				return JObject.Parse(content)["result"]?.Value<JArray>() ?? new JArray();
 		}
+		catch (Exception ex)
+		{
+			_logger?.LogError(ex, "Odoo search_read failed for model {Model}", model);
+		}
+
+		return new JArray();
 	}
 
 	public async Task<List<F_ARTICLE>> GetArticlesAsync(object[] domain)
@@ -181,39 +177,64 @@ public class ApiDB
 	public async Task<List<F_FAMILLE>> GetFamillesAsync(object[] domain)
 	{
 		string[] fields = { "id", "name", "image_256", "website_description" };
-
 		JArray categoriesJson = await ExecuteSearchReadAsync("product.public.category", fields, domain);
+		var helpers = new Helpers();
 
-		List<F_FAMILLE> categories = new List<F_FAMILLE>();
-		Helpers fn = new Helpers();
-		foreach (var categoryJson in categoriesJson)
+		var categories = categoriesJson.Select(j => new F_FAMILLE
 		{
-			F_FAMILLE category = new F_FAMILLE
-			{
+			Id              = j.Value<int>("id"),
+			Name            = j.Value<string>("name"),
+			Description     = helpers.StripHtml(j.Value<string>("website_description")),
+			ParentId        = j["parent_id"]?.Type == JTokenType.Array ? j["parent_id"][0].Value<int>() : 0,
+			ChildIds        = j["child_id"]?.ToObject<List<int>>() ?? new List<int>(),
+			Sequence        = j.Value<int>("sequence"),
+			WebsitePublished = j.Value<bool>("website_published"),
+			image_256       = TryDecodeBase64(j.Value<string>("image_256"))
+		})
+		.Where(a => a.image_256 != null)
+		.OrderBy(a => a.Name)
+		.ToList();
 
-
-				Id = categoryJson.Value<int>("id"),
-				Name = categoryJson.Value<string>("name"),
-				Description = fn.StripHtml(categoryJson.Value<string>("website_description")), // Extract plain text
-				ParentId = categoryJson["parent_id"] != null && categoryJson["parent_id"].Type == JTokenType.Array
-				? categoryJson["parent_id"][0].Value<int>()
-				: 0,
-				ChildIds = categoryJson["child_id"]?.ToObject<List<int>>() ?? new List<int>(),
-				Sequence = categoryJson.Value<int>("sequence"),
-				WebsitePublished = categoryJson.Value<bool>("website_published"),
-				image_256 = TryDecodeBase64(categoryJson.Value<string>("image_256")) // Handle image
-			};
-			categories.Add(category);
-		}
-
-		return categories.Where(a => a.image_256 != null).OrderBy(async => async.Name).ToList();
+		return categories;
 	}
-	public bool SetArticleAsFavorite(int articleId, bool isFavorite)
+	public async Task<bool> SetArticleAsFavoriteAsync(int articleId, bool isFavorite)
 	{
 		var client = new RestClient($"{_url}/jsonrpc");
-		var request = new RestRequest();
-		request.Method = Method.Post;
+		var request = new RestRequest { Method = Method.Post };
 		request.AddHeader("Content-Type", "application/json");
+		request.AddJsonBody(new
+		{
+			jsonrpc = "2.0",
+			method = "call",
+			@params = new
+			{
+				service = "object",
+				method = "execute_kw",
+				args = new object[] { _db, _uid, _password, "product.product", "write",
+					new object[] { new int[] { articleId }, new { is_favorite = isFavorite } } }
+			}
+		});
+
+		var response = await client.ExecuteAsync(request);
+
+		if (response.IsSuccessful && !string.IsNullOrEmpty(response.Content))
+		{
+			try { return JObject.Parse(response.Content)["result"]?.Value<bool>() ?? false; }
+			catch (Exception ex) { _logger?.LogWarning(ex, "SetArticleAsFavorite: JSON parse error"); }
+		}
+		else
+		{
+			_logger?.LogError("SetArticleAsFavorite failed: {Status} {Content}", response.StatusCode, response.Content);
+		}
+
+		return false;
+	}
+
+	public async Task<int> CreateEcommerceOrderAsync(List<(int productId, float quantity)> orderLines, string websiteName)
+	{
+		var orderLinesData = orderLines
+			.Select(l => new object[] { 0, 0, new { product_id = l.productId, product_uom_qty = l.quantity } })
+			.ToList<object>();
 
 		var body = new
 		{
@@ -223,113 +244,29 @@ public class ApiDB
 			{
 				service = "object",
 				method = "execute_kw",
-				args = new object[]
-				{
-				_db,
-				_uid,
-				_password,
-				"product.product", // Model name
-                "write", // Odoo method to update records
-                new object[] { new int[] { articleId }, new { is_favorite = isFavorite } } // Data to update
-				}
+				args = new object[] { _db, _uid, _password, "sale.order", "create",
+					new { partner_id = 44, order_line = orderLinesData } }
 			}
 		};
 
-		request.AddJsonBody(body);
-
-		var response = client.Execute(request);
-
-		if (response.IsSuccessful && !string.IsNullOrEmpty(response.Content))
-		{
-			try
-			{
-				var jsonResponse = JObject.Parse(response.Content);
-				return jsonResponse["result"]?.Value<bool>() ?? false;
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine($"Error parsing JSON response: {ex.Message}");
-			}
-		}
-		else
-		{
-			Console.WriteLine($"API call failed: {response.StatusCode} - {response.Content}");
-		}
-
-		return false; // Return false in case of failure
-	}
-
-	public int CreateEcommerceOrder(List<(int productId, float quantity)> orderLines, string websiteName)
-	{
 		var client = new RestClient($"{_url}/jsonrpc");
-		var request = new RestRequest();
-		request.Method = Method.Post;
+		var request = new RestRequest { Method = Method.Post };
 		request.AddHeader("Content-Type", "application/json");
-
-		// Prepare the order lines in the format Odoo expects
-		var orderLinesData = new List<object>();
-		foreach (var (productId, quantity) in orderLines)
-		{
-			// Each order line requires product_id and quantity
-			var line = new object[]
-			{
-			0, 0, // Command to create a new line
-            new
-			{
-				product_id = productId,
-				product_uom_qty = quantity
-			}
-			};
-			orderLinesData.Add(line);
-		}
-
-		// Request payload
-		var body = new
-		{
-			jsonrpc = "2.0",
-			method = "call",
-			@params = new
-			{
-				service = "object",
-				method = "execute_kw",
-				args = new object[]
-				{
-				_db, _uid, _password, "sale.order", "create", new
-				{
-					partner_id = 44,
-					order_line = orderLinesData
-				}
-				}
-			}
-		};
-
 		request.AddJsonBody(body);
-		var response = client.Execute(request);
 
-		Console.WriteLine("Request Body:");
-		Console.WriteLine(JsonConvert.SerializeObject(body, Formatting.Indented));
-
-		Console.WriteLine("Response Content:");
-		Console.WriteLine(response.Content);
+		var response = await client.ExecuteAsync(request);
 
 		if (response.IsSuccessful && !string.IsNullOrEmpty(response.Content))
 		{
-			try
-			{
-				var jsonResponse = JObject.Parse(response.Content);
-				return jsonResponse["result"]?.Value<int>() ?? 0; // Return the order ID
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine($"Error parsing JSON response: {ex.Message}");
-			}
+			try { return JObject.Parse(response.Content)["result"]?.Value<int>() ?? 0; }
+			catch (Exception ex) { _logger?.LogWarning(ex, "CreateEcommerceOrder: JSON parse error"); }
 		}
 		else
 		{
-			Console.WriteLine($"API call failed: {response.StatusCode} - {response.Content}");
+			_logger?.LogError("CreateEcommerceOrder failed: {Status} {Content}", response.StatusCode, response.Content);
 		}
 
-		return 0; // Return 0 to indicate failure
+		return 0;
 	}
 	public async Task<List<PartnerAddress>> GetPartnerAddressesAsync(object[] domain)
 	{
@@ -546,26 +483,14 @@ public class ApiDB
         request.AddJsonBody(body);
         var response = await client.ExecuteAsync(request);
 
-        Console.WriteLine("Create Partner Request:");
-        Console.WriteLine(JsonConvert.SerializeObject(body, Formatting.Indented));
-        Console.WriteLine("Response:");
-        Console.WriteLine(response.Content);
-
         if (response.IsSuccessful && !string.IsNullOrEmpty(response.Content))
         {
-            try
-            {
-                var jsonResponse = JObject.Parse(response.Content);
-                return jsonResponse["result"]?.Value<int>() ?? 0;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error parsing JSON response: {ex.Message}");
-            }
+            try { return JObject.Parse(response.Content)["result"]?.Value<int>() ?? 0; }
+            catch (Exception ex) { _logger?.LogWarning(ex, "CreatePartner: JSON parse error"); }
         }
         else
         {
-            Console.WriteLine($"API call failed: {response.StatusCode} - {response.Content}");
+            _logger?.LogError("CreatePartner failed: {Status} {Content}", response.StatusCode, response.Content);
         }
 
         return 0;

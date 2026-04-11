@@ -70,68 +70,40 @@ namespace BusinessWeb
 
 		public bool PieceExist(int DO_Type, DB db, string DO_Piece)
 		{
-			bool rs = false;
-			var dt1 = db.F_DOCLIGNE.Where(a => a.DO_Type == 0 && a.DO_Piece == DO_Piece).Select(a => a.DO_Piece);
-			var dt2 = db.F_DOCLIGNE.Where(a => a.DO_Type != 0 && a.DL_PieceDE == DO_Piece).Select(a => a.DL_PieceDE);
-			var dt3 = db.F_DOCENTETE.Where(a => a.DO_Type == 0 && a.DO_Piece == DO_Piece).Select(a => a.DO_Piece);
-			var dt = dt1.Concat(dt2).Concat(dt3);
-
-			if (dt.Any())
-			{
-				if (dt.Contains(DO_Piece))
-				{
-					rs = true;
-				}
-			}
-
-			return rs;
+			// One DB round-trip: check existence across both tables.
+			return db.F_DOCLIGNE.Any(a => (a.DO_Type == 0 && a.DO_Piece == DO_Piece)
+									   || (a.DO_Type != 0 && a.DL_PieceDE == DO_Piece))
+				|| db.F_DOCENTETE.Any(a => a.DO_Type == 0 && a.DO_Piece == DO_Piece);
 		}
+
 		public string getPiece(int DO_Type, DB db)
 		{
-			string rs = "DE00001";
-			if (DO_Type == 0)
+			if (DO_Type != 0) return "DE00001";
+
+			// Build the union query server-side — single DB round-trip to get all piece numbers.
+			var allPieces = db.F_DOCLIGNE
+				.Where(a => a.DO_Type == 0)
+				.Select(a => a.DO_Piece)
+				.Union(db.F_DOCLIGNE.Where(a => a.DO_Type != 0).Select(a => a.DL_PieceDE))
+				.Union(db.F_DOCENTETE.Where(a => a.DO_Type == 0).Select(a => a.DO_Piece));
+
+			var cur = db.F_DOCCURRENTPIECE
+				.FirstOrDefault(a => a.DC_Souche == 0 && a.DC_Domaine == 0 && a.DC_IdCol == 0);
+
+			if (cur != null)
 			{
-				var dt1 = db.F_DOCLIGNE.Where(a => a.DO_Type == 0).Select(a => a.DO_Piece);
-				var dt2 = db.F_DOCLIGNE.Where(a => a.DO_Type != 0).Select(a => a.DL_PieceDE);
-				var dt3 = db.F_DOCENTETE.Where(a => a.DO_Type == 0).Select(a => a.DO_Piece);
-				var dt = dt1.Concat(dt2).Concat(dt3);
-				var cur = db.F_DOCCURRENTPIECE.Where(a => a.DC_Souche == 0 && a.DC_Domaine == 0 && a.DC_IdCol == 0).SingleOrDefault();
-				if (cur != null)
-				{
-					if (!dt.Any())
-					{
-						rs = cur.DC_Piece;
-					}
-					else
-					{
-						if (dt.Contains(cur.DC_Piece))
-						{
-							rs = this.getNextCode(dt.Max());
-						}
-						else
-						{
-							rs = cur.DC_Piece;
-						}
-					}
-					//cur.DC_Piece = this.getNextCode(rs);
-					//db.SaveChanges();
-				}
-				else
-				{
-					if (dt.Any())
-					{
-						rs = this.getNextCode(dt.Max());
-					}
-					else
-					{
-						rs = "DE00001";
-					}
-				}
+				// Materialise only once after building the full union.
+				bool curPieceUsed = allPieces.Contains(cur.DC_Piece);
+				if (!curPieceUsed) return cur.DC_Piece;
 
-
+				string maxPiece = allPieces.Max();
+				return maxPiece != null ? getNextCode(maxPiece) : cur.DC_Piece;
 			}
-
-			return rs;
+			else
+			{
+				string maxPiece = allPieces.Max();
+				return maxPiece != null ? getNextCode(maxPiece) : "DE00001";
+			}
 		}
 		public bool CheckDB(DB dB)
 		{
@@ -603,21 +575,22 @@ namespace BusinessWeb
 			}
 
 		}
+		private static readonly HashSet<string> _copyDataExcluded =
+			new(StringComparer.OrdinalIgnoreCase) { "cbModification", "cbCreation", "cbMarq", "id", "DL_No" };
+
 		public void CopyData(Object parent, Object child)
 		{
-			var parentProperties = parent.GetType().GetProperties();
-			var childProperties = child.GetType().GetProperties();
-			foreach (var parentProperty in parentProperties)
+			var childMap = child.GetType().GetProperties()
+				.Where(p => !p.Name.ToUpper().Contains("NAVIGATION"))
+				.ToDictionary(p => p.Name);
 
+			foreach (var parentProp in parent.GetType().GetProperties())
 			{
-				foreach (var childProperty in childProperties)
-				{
-					if (parentProperty.Name == childProperty.Name && parentProperty.PropertyType == childProperty.PropertyType && parentProperty.Name != "cbModification" && parentProperty.Name != "cbCreation" && parentProperty.Name != "cbMarq" && parentProperty.Name != "id" && parentProperty.Name != "DL_No" && (!parentProperty.Name.ToUpper().Contains("NAVIGATION")))
-					{
-						childProperty.SetValue(child, parentProperty.GetValue(parent));
-						break;
-					}
-				}
+				if (_copyDataExcluded.Contains(parentProp.Name)) continue;
+				if (parentProp.Name.ToUpper().Contains("NAVIGATION")) continue;
+				if (!childMap.TryGetValue(parentProp.Name, out var childProp)) continue;
+				if (parentProp.PropertyType != childProp.PropertyType) continue;
+				childProp.SetValue(child, parentProp.GetValue(parent));
 			}
 		}
 		public string getPath(string societe, string table, string id)
@@ -661,11 +634,7 @@ namespace BusinessWeb
 		}
 		public string getDevise(DB db)
 		{
-			string rs = "MAD";
-			if (db.P_DEVISE.Count() != 0)
-				rs = db.P_DEVISE.First().D_Monnaie;
-
-			return rs;
+			return db.P_DEVISE.Select(d => d.D_Monnaie).FirstOrDefault() ?? "MAD";
 		}
 		public DB getDb(TSociete ste)
 		{
@@ -722,71 +691,44 @@ namespace BusinessWeb
 		public string getArticleRef(string FA_CodeFamille, SessionDT session)
 		{
 			string rs = "";
-			var par = session.db.P_GENAUTO.First();
-			F_ARTICLE ar = new F_ARTICLE();
+			var par = session.db.P_GENAUTO.FirstOrDefault();
+			if (par == null) return rs;
 
 			if (par.GE_ArtNumerot == 0)
 			{
-				ar = session.db.F_ARTICLE.OrderByDescending(a => a.cbMarq).First();
-				rs = getNextCode(ar.AR_Ref);
+				var ar = session.db.F_ARTICLE.OrderByDescending(a => a.cbMarq).FirstOrDefault();
+				if (ar != null)
+					rs = getNextCode(ar.AR_Ref);
 			}
-
-			if (par.GE_ArtNumerot == 1)
+			else if (par.GE_ArtNumerot == 1)
 			{
-				if (par.GE_ArtLen == 0)
-				{
-					par.GE_ArtLen = 15;
-				}
+				if (par.GE_ArtLen == 0) par.GE_ArtLen = 15;
 
 				if (par.GE_ArtTypeRacine == 0)
 				{
-					var dt = session.db.F_ARTICLE.Where(a => a.AR_Ref.Length == par.GE_ArtLen && a.AR_Ref.StartsWith(par.GE_ArtRacine));
-					if (dt.Count() != 0)
-					{
-						ar = dt.OrderByDescending(a => a.cbMarq).First();
-						rs = getNextCode(ar.AR_Ref);
-					}
-					else
-					{
-						string end = "";
-						for (int i = 0; i < par.GE_ArtLen - par.GE_ArtRacine.Length; i++)
-						{
-							end = end + "0";
-						}
-						rs = getNextCode(par.GE_ArtRacine + end);
-					}
+					var dt = session.db.F_ARTICLE
+						.Where(a => a.AR_Ref.Length == par.GE_ArtLen && a.AR_Ref.StartsWith(par.GE_ArtRacine));
+
+					var last = dt.OrderByDescending(a => a.cbMarq).FirstOrDefault();
+					rs = last != null
+						? getNextCode(last.AR_Ref)
+						: getNextCode(par.GE_ArtRacine + new string('0', par.GE_ArtLen - par.GE_ArtRacine.Length));
 				}
-				else
+				else if (FA_CodeFamille != null)
 				{
-					if (FA_CodeFamille != null)
+					var fa = session.db.F_FAMILLE.FirstOrDefault(a => a.FA_CodeFamille == FA_CodeFamille);
+					if (fa != null)
 					{
-						F_FAMILLE fa = session.db.F_FAMILLE.Where(a => a.FA_CodeFamille == FA_CodeFamille).SingleOrDefault();
-						if (fa != null)
-						{
-							var dt = session.db.F_ARTICLE.Where(a => a.AR_Ref.Length == par.GE_ArtLen && a.AR_Ref.StartsWith(fa.FA_RacineRef));
-							if (dt.Count() != 0)
-							{
-								ar = dt.OrderByDescending(a => a.cbMarq).First();
-								rs = getNextCode(ar.AR_Ref);
-							}
-							else
-							{
-								string end = "";
-								for (int i = 0; i < par.GE_ArtLen - fa.FA_RacineRef.Length; i++)
-								{
-									end = end + "0";
-								}
-								rs = getNextCode(fa.FA_RacineRef + end);
-							}
-						}
+						var dt = session.db.F_ARTICLE
+							.Where(a => a.AR_Ref.Length == par.GE_ArtLen && a.AR_Ref.StartsWith(fa.FA_RacineRef));
 
+						var last = dt.OrderByDescending(a => a.cbMarq).FirstOrDefault();
+						rs = last != null
+							? getNextCode(last.AR_Ref)
+							: getNextCode(fa.FA_RacineRef + new string('0', par.GE_ArtLen - fa.FA_RacineRef.Length));
 					}
 				}
-
-
 			}
-
-
 
 			return rs;
 		}

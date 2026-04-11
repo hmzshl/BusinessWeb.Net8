@@ -34,7 +34,7 @@ namespace BusinessWeb.Services
 			try
 			{
 				// 1. Create the document entête
-				document.Numero = GetCurrentPieceNumber(document);
+				document.Numero = await GetCurrentPieceNumberAsync(document);
 				var fDocEntete = await CreateDocEntete(document);
 
 				// 2. Update result
@@ -77,45 +77,37 @@ namespace BusinessWeb.Services
 
 			return result;
 		}
-		public string GetCurrentPieceNumber(DocumentEntete document)
+		public async Task<string> GetCurrentPieceNumberAsync(DocumentEntete document)
 		{
-			string pieceNumber = string.Empty;
-			var dt = _context.F_DOCCURRENTPIECE.Where(a => a.DC_Souche == document.Souche && a.DC_IdCol == (int)document.documentType.DC_Id &&
-			a.DC_Domaine == (short?)(document.documentType.Domaine));
-			if (dt.Any())
-			{
-				pieceNumber = dt.First().DC_Piece;
-			}
-			else
-			{
-				pieceNumber = "00001";
-			}
-			var allPieces = GetAllPieces(document);
-			if (allPieces.Any() && allPieces.Contains(pieceNumber))
-			{
+			var currentPiece = await _context.F_DOCCURRENTPIECE
+				.Where(a => a.DC_Souche == document.Souche
+					&& a.DC_IdCol == (int)document.documentType.DC_Id
+					&& a.DC_Domaine == (short?)(document.documentType.Domaine))
+				.Select(a => a.DC_Piece)
+				.FirstOrDefaultAsync();
+
+			string pieceNumber = currentPiece ?? "00001";
+
+			var allPieces = await GetAllPiecesAsync(document);
+			if (allPieces.Count > 0 && allPieces.Contains(pieceNumber))
 				pieceNumber = IncrementPieceNumber(allPieces.Max());
-			}
 
 			return pieceNumber;
 		}
-		public List<string> GetAllPieces(DocumentEntete document)
+
+		public async Task<List<string>> GetAllPiecesAsync(DocumentEntete document)
 		{
-			var pieceNumbers = new List<string>();
-			var dt1 = _context.F_DOCENTETE
+			// Single trip: union piece numbers from header and lines tables.
+			var fromHeader = _context.F_DOCENTETE
+				.Where(a => a.DO_Type == (short?)document.TypeDO && a.DO_Domaine == (short?)(document.documentType.Domaine))
+				.Select(a => a.DO_Piece);
+
+			var fromLines = _context.F_DOCLIGNE
 				.Where(a => a.DO_Type == (short?)document.TypeDO && a.DO_Domaine == (short?)(document.documentType.Domaine))
 				.Select(a => a.DO_Piece)
-				.ToList();
+				.Distinct();
 
-			var dt2 = _context.F_DOCLIGNE
-			.Where(a => a.DO_Type == (short?)document.TypeDO && a.DO_Domaine == (short?)(document.documentType.Domaine))
-			.Select(a => a.DO_Piece)
-			.Distinct()
-			.ToList();
-
-			pieceNumbers.AddRange(dt1);
-			pieceNumbers.AddRange(dt2);
-
-			return pieceNumbers;
+			return await fromHeader.Union(fromLines).ToListAsync();
 		}
 		private async Task UpdateCurrentPieceNumberInTable(DocumentEntete document)
 		{
@@ -128,7 +120,7 @@ namespace BusinessWeb.Services
 			if (currentPiece != null)
 			{
 				currentPiece.DC_Piece = IncrementPieceNumber(document.Numero);
-				_context.SaveChanges();
+				await _context.SaveChangesAsync();
 			}
 			else
 			{
@@ -488,7 +480,7 @@ namespace BusinessWeb.Services
 			entete.DO_TotalHTNet = entete.DO_TotalHT;
 			entete.DO_TotalTTC = lignes.Sum(l => l.DL_MontantTTC) ?? 0;
 			entete.DO_NetAPayer = entete.DO_TotalTTC;
-			_context.SaveChanges();
+			await _context.SaveChangesAsync();
 		}
 		public void UpdateLigneTotals(F_DOCLIGNE ligne)
 		{
@@ -526,7 +518,7 @@ namespace BusinessWeb.Services
 				{
 					articleDepot.AS_QteSto = stock ?? 0;
 					articleDepot.AS_MontSto = cmup * stock;
-					_context.SaveChanges();
+					await _context.SaveChangesAsync();
 				}
 				else
 				{
@@ -553,7 +545,7 @@ namespace BusinessWeb.Services
 						cbFlag = 0
 					};
 					_context.F_ARTSTOCK.Add(newArticleDepot);
-					_context.SaveChanges();
+					await _context.SaveChangesAsync();
 				}
 			}
 
