@@ -40,44 +40,44 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_ACHAT
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_ACHAT>>> GetAPI_V_ACHAT()
+        public async Task<ActionResult<IEnumerable<API_V_ACHAT>>> GetAPI_V_ACHAT([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_ACHAT.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_ACHAT.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 		[HttpGet("AR_Ref/{AR_Ref}")]
 		public async Task<ActionResult<IEnumerable<API_V_ACHAT>>> GetAPI_V_ACHATByAR_Ref(string AR_Ref)
 		{
-			setDB(); return await _db.API_V_ACHAT.Where(a => a.AR_Ref == AR_Ref).ToListAsync();
+			setDB(); return await _db.API_V_ACHAT.AsNoTracking().Where(a => a.AR_Ref == AR_Ref).ToListAsync();
 		}
         [HttpGet("CA_Num/{CA_Num}")]
         public async Task<ActionResult<IEnumerable<API_V_ACHAT>>> GetAPI_V_ACHATByCA_Num(string CA_Num)
         {
-            setDB(); return await _db.API_V_ACHAT.Where(a => a.CA_Num == CA_Num).ToListAsync();
+            setDB(); return await _db.API_V_ACHAT.AsNoTracking().Where(a => a.CA_Num == CA_Num).ToListAsync();
         }
         [HttpGet("DE_Intitule/{DE_Intitule}")]
         public async Task<ActionResult<IEnumerable<API_V_ACHAT>>> GetAPI_V_ACHATByDE_Intitule(string DE_Intitule)
         {
-            setDB(); return await _db.API_V_ACHAT.Where(a => a.DE_Intitule == DE_Intitule).ToListAsync();
+            setDB(); return await _db.API_V_ACHAT.AsNoTracking().Where(a => a.DE_Intitule == DE_Intitule).ToListAsync();
         }
         [HttpGet("MoisAnnee/{MoisAnnee}")]
 		public async Task<ActionResult<IEnumerable<API_V_ACHAT>>> GetAPI_V_ACHATByMoisAnnee(string MoisAnnee)
 		{
-			setDB(); return await _db.API_V_ACHAT.Where(a => a.MoisAnnee == MoisAnnee).ToListAsync();
+			setDB(); return await _db.API_V_ACHAT.AsNoTracking().Where(a => a.MoisAnnee == MoisAnnee).ToListAsync();
 		}
 		[HttpGet("CT_Num/{CT_Num}")]
 		public async Task<ActionResult<IEnumerable<API_V_ACHAT>>> GetAPI_V_ACHATByCT_Num(string CT_Num)
 		{
-			setDB(); return await _db.API_V_ACHAT.Where(a => a.CT_Num == CT_Num).ToListAsync();
+			setDB(); return await _db.API_V_ACHAT.AsNoTracking().Where(a => a.CT_Num == CT_Num).ToListAsync();
 		}
 		[HttpGet("CO_No/{CO_No}")]
 		public async Task<ActionResult<IEnumerable<API_V_ACHAT>>> GetAPI_V_ACHATByCO_No(int CO_No)
 		{
-			setDB(); return await _db.API_V_ACHAT.Where(a => a.CO_No == CO_No).ToListAsync();
+			setDB(); return await _db.API_V_ACHAT.AsNoTracking().Where(a => a.CO_No == CO_No).ToListAsync();
 		}
 		[HttpGet("DO_Date/{DateDebut}/{DateFin}")]
 		public async Task<ActionResult<IEnumerable<API_V_ACHAT>>> GetAPI_V_ACHATByDO_Date(DateTime DateDebut, DateTime DateFin)
 		{
-			setDB(); return await _db.API_V_ACHAT.Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
+			setDB(); return await _db.API_V_ACHAT.AsNoTracking().Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
 		}
 
 

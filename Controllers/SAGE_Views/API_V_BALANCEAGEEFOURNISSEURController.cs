@@ -40,15 +40,15 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_BALANCEAGEEFOURNISSEUR
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_BALANCEAGEEFOURNISSEUR>>> GetAPI_V_BALANCEAGEEFOURNISSEUR()
+        public async Task<ActionResult<IEnumerable<API_V_BALANCEAGEEFOURNISSEUR>>> GetAPI_V_BALANCEAGEEFOURNISSEUR([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_BALANCEAGEEFOURNISSEUR.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_BALANCEAGEEFOURNISSEUR.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
 		[HttpGet("CT_Num/{CT_Num}")]
 		public async Task<ActionResult<API_V_BALANCEAGEEFOURNISSEUR>> GetAPI_V_BALANCEAGEEFOURNISSEURByAR_Ref(string CT_Num)
 		{
-			setDB(); var item = _db.API_V_BALANCEAGEEFOURNISSEUR.Where(a => a.CT_Num == CT_Num).SingleOrDefault();
+			setDB(); var item = _db.API_V_BALANCEAGEEFOURNISSEUR.AsNoTracking().Where(a => a.CT_Num == CT_Num).SingleOrDefault();
 
 			if (item == null)
 			{

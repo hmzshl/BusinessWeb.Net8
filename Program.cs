@@ -96,7 +96,7 @@ builder.Services.AddControllers().AddOData(o =>
 	usersType.AddProperty(typeof(ApplicationUser).GetProperty(nameof(ApplicationUser.Password)));
 	usersType.AddProperty(typeof(ApplicationUser).GetProperty(nameof(ApplicationUser.ConfirmPassword)));
 	oDataBuilder.EntitySet<ApplicationRole>("ApplicationRoles");
-	o.AddRouteComponents("odata/Identity", oDataBuilder.GetEdmModel()).Count().Filter().OrderBy().Expand().Select().SetMaxTop(null).TimeZone = TimeZoneInfo.Utc;
+	o.AddRouteComponents("odata/Identity", oDataBuilder.GetEdmModel()).Count().Filter().OrderBy().Expand().Select().SetMaxTop(1000).TimeZone = TimeZoneInfo.Utc;
 });
 // Add data protection services
 builder.Services.AddDataProtection()
@@ -104,15 +104,6 @@ builder.Services.AddDataProtection()
 		.SetApplicationName("BusinessWeb");
 
 
-builder.Services.AddCors(opts => opts.AddDefaultPolicy(bld =>
-{
-	bld
-		.AllowAnyOrigin()
-		.AllowAnyMethod()
-		.AllowAnyHeader()
-		.WithExposedHeaders("*")
-	;
-}));
 builder.Services.AddCors(options =>
 {
 	options.AddPolicy("NewPolicy", builder =>
@@ -121,13 +112,8 @@ builder.Services.AddCors(options =>
 		.AllowAnyHeader());
 });
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddMvc(e => e.EnableEndpointRouting = false);
 builder.Services.AddScoped<AuthenticationStateProvider, BusinessWeb.ApplicationAuthenticationStateProvider>();
-builder.Services.AddDbContext<BusinessWeb.Data.BusinessWebDBContext>(options =>
-{
-	options.UseSqlServer(builder.Configuration.GetConnectionString("BusinessWebDBConnection"));
-});
 
 ReportConfig.DefaultSettings = new ReportSettings().RegisterExtensions(new List<string> { "BoldReports.Data.WebData", "BoldReports.Data.Csv" });
 builder.Services.Configure<GzipCompressionProviderOptions>(options =>
@@ -139,7 +125,6 @@ builder.Services.AddResponseCompression(options =>
 	options.Providers.Add<GzipCompressionProvider>();
 	options.EnableForHttps = true; // Optional: Enable compression for HTTPS
 });
-builder.Services.AddMvc(e => e.EnableEndpointRouting = false);
 builder.Services.AddRazorComponents()
 	.AddInteractiveServerComponents();
 var app = builder.Build();
@@ -159,7 +144,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseHttpsRedirection();
 app.UseHeaderPropagation();
 app.UseAuthentication();
 app.UseRouting();
@@ -171,7 +155,6 @@ app.UseEndpoints(endpoints =>
 {
 	endpoints.MapControllers();
 });
-app.UseCors();
 await app.Services.CreateScope().ServiceProvider.GetRequiredService<ApplicationIdentityDbContext>().Database.MigrateAsync();
 app.MapControllers();
 app.MapRazorComponents<App>()

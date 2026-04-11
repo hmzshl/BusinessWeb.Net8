@@ -40,14 +40,14 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_ARTCOMPTA
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_ARTCOMPTA>>> GetAPI_V_ARTCOMPTA()
+        public async Task<ActionResult<IEnumerable<API_V_ARTCOMPTA>>> GetAPI_V_ARTCOMPTA([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_ARTCOMPTA.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_ARTCOMPTA.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 		[HttpGet("AR_Ref/{AR_Ref}")]
 		public async Task<ActionResult<IEnumerable<API_V_ARTCOMPTA>>> GetAPI_V_ARTCOMPTAByCA_Num(string AR_Ref)
 		{
-			setDB(); return await _db.API_V_ARTCOMPTA.Where(a => a.AR_Ref == AR_Ref).ToListAsync();
+			setDB(); return await _db.API_V_ARTCOMPTA.AsNoTracking().Where(a => a.AR_Ref == AR_Ref).ToListAsync();
 		}
 
 	}

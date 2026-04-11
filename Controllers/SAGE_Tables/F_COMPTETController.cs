@@ -42,14 +42,14 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_COMPTET
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_COMPTET>>> GetF_COMPTET()
+        public async Task<ActionResult<IEnumerable<F_COMPTET>>> GetF_COMPTET([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_COMPTET.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_COMPTET.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 		[HttpGet("CT_Type/{CT_Type}")]
 		public async Task<ActionResult<IEnumerable<F_COMPTET>>> GetF_COMPTETByCT_Type(int CT_Type)
 		{
-			setDB(); return await _db.F_COMPTET.Where(a => a.CT_Type == CT_Type).ToListAsync();
+			setDB(); return await _db.F_COMPTET.AsNoTracking().Where(a => a.CT_Type == CT_Type).ToListAsync();
 		}
 		// GET: api/F_COMPTET/5
 		[HttpGet("{id}")]
@@ -67,7 +67,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		[HttpGet("CT_Num/{CT_Num}")]
 		public async Task<ActionResult<F_COMPTET>> GetF_COMPTETByAR_Ref(string CT_Num)
 		{
-			setDB(); var item = _db.F_COMPTET.Where(a => a.CT_Num == CT_Num).SingleOrDefault();
+			setDB(); var item = _db.F_COMPTET.AsNoTracking().Where(a => a.CT_Num == CT_Num).SingleOrDefault();
 
 			if (item == null)
 			{

@@ -42,45 +42,45 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_ECRITUREC
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_ECRITUREC>>> GetF_ECRITUREC()
+        public async Task<ActionResult<IEnumerable<F_ECRITUREC>>> GetF_ECRITUREC([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_ECRITUREC.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_ECRITUREC.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
 		[HttpGet("CT_Num/{CT_Num}")]
 		public async Task<ActionResult<IEnumerable<F_ECRITUREC>>> GetF_ECRITURECByDO_Type(string CT_Num)
 		{
-			setDB(); return await _db.F_ECRITUREC.Where(a => a.CT_Num == CT_Num).ToListAsync();
+			setDB(); return await _db.F_ECRITUREC.AsNoTracking().Where(a => a.CT_Num == CT_Num).ToListAsync();
 		}
 		[HttpGet("JO_Num/{JO_Num}")]
 		public async Task<ActionResult<IEnumerable<F_ECRITUREC>>> GetF_ECRITURECByJO_Num(string JO_Num)
 		{
-			setDB(); return await _db.F_ECRITUREC.Where(a => a.JO_Num == JO_Num).ToListAsync();
+			setDB(); return await _db.F_ECRITUREC.AsNoTracking().Where(a => a.JO_Num == JO_Num).ToListAsync();
 		}
 		[HttpGet("CG_Num/{CG_Num}")]
 		public async Task<ActionResult<IEnumerable<F_ECRITUREC>>> GetF_ECRITURECByCG_Num(string CG_Num)
 		{
-			setDB(); return await _db.F_ECRITUREC.Where(a => a.CG_Num == CG_Num).ToListAsync();
+			setDB(); return await _db.F_ECRITUREC.AsNoTracking().Where(a => a.CG_Num == CG_Num).ToListAsync();
 		}
 		[HttpGet("EC_RefPiece/{EC_RefPiece}")]
 		public async Task<ActionResult<IEnumerable<F_ECRITUREC>>> GetF_ECRITURECByEC_RefPiece(string EC_RefPiece)
 		{
-			setDB(); return await _db.F_ECRITUREC.Where(a => a.EC_RefPiece == EC_RefPiece).ToListAsync();
+			setDB(); return await _db.F_ECRITUREC.AsNoTracking().Where(a => a.EC_RefPiece == EC_RefPiece).ToListAsync();
 		}
 		[HttpGet("EC_Piece/{EC_Piece}")]
 		public async Task<ActionResult<IEnumerable<F_ECRITUREC>>> GetF_ECRITURECByEC_Piece(string EC_Piece)
 		{
-			setDB(); return await _db.F_ECRITUREC.Where(a => a.EC_Piece == EC_Piece).ToListAsync();
+			setDB(); return await _db.F_ECRITUREC.AsNoTracking().Where(a => a.EC_Piece == EC_Piece).ToListAsync();
 		}
 		[HttpGet("EC_Date/{DateDebut}/{DateFin}")]
 		public async Task<ActionResult<IEnumerable<F_ECRITUREC>>> GetF_ECRITURECByEC_Date(DateTime DateDebut, DateTime DateFin)
 		{
-			setDB(); return await _db.F_ECRITUREC.Where(a => a.JM_Date >= DateDebut && a.JM_Date <= DateFin).ToListAsync();
+			setDB(); return await _db.F_ECRITUREC.AsNoTracking().Where(a => a.JM_Date >= DateDebut && a.JM_Date <= DateFin).ToListAsync();
 		}
 		[HttpGet("EC_Montant/{MontantDebut}/{MontantFin}")]
 		public async Task<ActionResult<IEnumerable<F_ECRITUREC>>> GetF_ECRITURECByEC_Montant(Decimal MontantDebut, Decimal MontantFin)
 		{
-			setDB(); return await _db.F_ECRITUREC.Where(a => a.EC_Montant >= MontantDebut && a.EC_Montant <= MontantFin).ToListAsync();
+			setDB(); return await _db.F_ECRITUREC.AsNoTracking().Where(a => a.EC_Montant >= MontantDebut && a.EC_Montant <= MontantFin).ToListAsync();
 		}
 
 

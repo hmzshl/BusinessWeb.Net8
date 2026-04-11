@@ -41,10 +41,10 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_LT_MARGE
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_LT_MARGE>>> GetAPI_LT_MARGE()
+        public async Task<ActionResult<IEnumerable<API_LT_MARGE>>> GetAPI_LT_MARGE([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
 			setDB();
-			List<API_V_MARGE> dt = await _db.API_V_MARGE.ToListAsync();
+			List<API_V_MARGE> dt = await _db.API_V_MARGE.AsNoTracking().ToListAsync();
 
 			try
 			{
@@ -68,7 +68,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_MARGE>>> GetAPI_LT_MARGEByCA_Num(string CA_Num)
 		{
 			setDB();
-			List<API_V_MARGE> dt = await _db.API_V_MARGE.Where(a => a.CA_Num == CA_Num).ToListAsync();
+			List<API_V_MARGE> dt = await _db.API_V_MARGE.AsNoTracking().Where(a => a.CA_Num == CA_Num).ToListAsync();
 
 			try
 			{
@@ -92,7 +92,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_MARGE>>> GetAPI_LT_MARGEByCT_Num(string CT_Num)
 		{
 			setDB();
-			List<API_V_MARGE> dt = await _db.API_V_MARGE.Where(a => a.CT_Num == CT_Num).ToListAsync();
+			List<API_V_MARGE> dt = await _db.API_V_MARGE.AsNoTracking().Where(a => a.CT_Num == CT_Num).ToListAsync();
 
 			try
 			{
@@ -117,7 +117,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_MARGE>>> GetAPI_LT_MARGEByCO_No(int CO_No)
 		{
 			setDB();
-			List<API_V_MARGE> dt = await _db.API_V_MARGE.Where(a => a.CO_No == CO_No).ToListAsync();
+			List<API_V_MARGE> dt = await _db.API_V_MARGE.AsNoTracking().Where(a => a.CO_No == CO_No).ToListAsync();
 
 			try
 			{
@@ -141,7 +141,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
         public async Task<ActionResult<IEnumerable<API_LT_MARGE>>> GetAPI_LT_MARGEByAR_Ref(string AR_Ref)
         {
 			setDB();
-			List<API_V_MARGE> dt = await _db.API_V_MARGE.Where(a => a.AR_Ref == AR_Ref).ToListAsync();
+			List<API_V_MARGE> dt = await _db.API_V_MARGE.AsNoTracking().Where(a => a.AR_Ref == AR_Ref).ToListAsync();
 
 			try
 			{
@@ -165,7 +165,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_MARGE>>> GetAPI_LT_MARGEByDO_Date(DateTime DateDebut, DateTime DateFin)
 		{
 			setDB();
-			List<API_V_MARGE> dt = await _db.API_V_MARGE.ToListAsync();
+			List<API_V_MARGE> dt = await _db.API_V_MARGE.AsNoTracking().ToListAsync();
 
 			try
 			{

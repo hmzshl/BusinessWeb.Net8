@@ -40,20 +40,20 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_COMPTET
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_COMPTET>>> GetAPI_V_COMPTET()
+        public async Task<ActionResult<IEnumerable<API_V_COMPTET>>> GetAPI_V_COMPTET([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_COMPTET.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_COMPTET.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 		[HttpGet("CT_Type/{CT_Type}")]
 		public async Task<ActionResult<IEnumerable<API_V_COMPTET>>> GetAPI_V_COMPTETByCT_Type(int CT_Type)
 		{
-			setDB(); return await _db.API_V_COMPTET.Where(a => a.CT_Type == CT_Type).ToListAsync();
+			setDB(); return await _db.API_V_COMPTET.AsNoTracking().Where(a => a.CT_Type == CT_Type).ToListAsync();
 		}
 		// GET: api/API_V_COMPTET/5
 		[HttpGet("{id}")]
         public async Task<ActionResult<API_V_COMPTET>> GetAPI_V_COMPTET(int id)
         {
-            setDB(); var item = _db.API_V_COMPTET.Where(a => a.cbMarq == id).SingleOrDefault();
+            setDB(); var item = _db.API_V_COMPTET.AsNoTracking().Where(a => a.cbMarq == id).SingleOrDefault();
 
             if (item == null)
             {
@@ -65,7 +65,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		[HttpGet("CT_Num/{CT_Num}")]
 		public async Task<ActionResult<API_V_COMPTET>> GetAPI_V_COMPTETByAR_Ref(string CT_Num)
 		{
-			setDB(); var item = _db.API_V_COMPTET.Where(a => a.CT_Num == CT_Num).SingleOrDefault();
+			setDB(); var item = _db.API_V_COMPTET.AsNoTracking().Where(a => a.CT_Num == CT_Num).SingleOrDefault();
 
 			if (item == null)
 			{
@@ -77,7 +77,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
         [HttpGet("CO_No/{CO_No}")]
         public async Task<ActionResult<IEnumerable<API_V_COMPTET>>> GetAPI_V_COMPTETByCO_No(int CO_No)
         {
-            setDB(); return await _db.API_V_COMPTET.Where(a => a.CO_No == CO_No).ToListAsync();
+            setDB(); return await _db.API_V_COMPTET.AsNoTracking().Where(a => a.CO_No == CO_No).ToListAsync();
         }
 
 

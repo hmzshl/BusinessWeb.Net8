@@ -40,16 +40,16 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_AFFAIRE
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_AFFAIRE>>> GetAPI_V_AFFAIRE()
+        public async Task<ActionResult<IEnumerable<API_V_AFFAIRE>>> GetAPI_V_AFFAIRE([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_AFFAIRE.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_AFFAIRE.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/API_V_AFFAIRE/5
         [HttpGet("{id}")]
         public async Task<ActionResult<API_V_AFFAIRE>> GetAPI_V_AFFAIRE(int id)
         {
-            setDB(); var item = _db.API_V_AFFAIRE.Where(a => a.cbMarq == id).SingleOrDefault();
+            setDB(); var item = _db.API_V_AFFAIRE.AsNoTracking().Where(a => a.cbMarq == id).SingleOrDefault();
 
             if (item == null)
             {
@@ -62,7 +62,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		[HttpGet("CA_Num/{CA_Num}")]
 		public async Task<ActionResult<API_V_AFFAIRE>> GetAPI_V_AFFAIREByCA_Num(string CA_Num)
 		{
-			setDB(); var item = _db.API_V_AFFAIRE.Where(a => a.CA_Num == CA_Num).SingleOrDefault();
+			setDB(); var item = _db.API_V_AFFAIRE.AsNoTracking().Where(a => a.CA_Num == CA_Num).SingleOrDefault();
 
 			if (item == null)
 			{

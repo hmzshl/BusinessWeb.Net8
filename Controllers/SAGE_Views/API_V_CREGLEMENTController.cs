@@ -41,35 +41,35 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_CREGLEMENT
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_CREGLEMENT>>> GetAPI_V_CREGLEMENT()
+        public async Task<ActionResult<IEnumerable<API_V_CREGLEMENT>>> GetAPI_V_CREGLEMENT([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_CREGLEMENT.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_CREGLEMENT.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
 		[HttpGet("JO_Num/{JO_Num}")]
 		public async Task<ActionResult<IEnumerable<API_V_CREGLEMENT>>> GetAPI_V_CREGLEMENTByJO_Num(string JO_Num)
 		{
-			setDB(); return await _db.API_V_CREGLEMENT.Where(a => a.JO_Num == JO_Num).ToListAsync();
+			setDB(); return await _db.API_V_CREGLEMENT.AsNoTracking().Where(a => a.JO_Num == JO_Num).ToListAsync();
 		}
         [HttpGet("RG_Type/{RG_Type}")]
         public async Task<ActionResult<IEnumerable<API_V_CREGLEMENT>>> GetAPI_V_CREGLEMENTByRG_Type(int RG_Type)
         {
-            setDB(); return await _db.API_V_CREGLEMENT.Where(a => a.RG_Type == RG_Type).ToListAsync();
+            setDB(); return await _db.API_V_CREGLEMENT.AsNoTracking().Where(a => a.RG_Type == RG_Type).ToListAsync();
         }
         [HttpGet("CT_Num/{CT_Num}")]
 		public async Task<ActionResult<IEnumerable<API_V_CREGLEMENT>>> GetAPI_V_CREGLEMENTByCT_Num(string CT_Num)
 		{
-			setDB(); return await _db.API_V_CREGLEMENT.Where(a => a.CT_Num == CT_Num).ToListAsync();
+			setDB(); return await _db.API_V_CREGLEMENT.AsNoTracking().Where(a => a.CT_Num == CT_Num).ToListAsync();
 		}
 		[HttpGet("RG_Date/{DateDebut}/{DateFin}")]
 		public async Task<ActionResult<IEnumerable<API_V_CREGLEMENT>>> GetAPI_V_CREGLEMENTByDO_Date(DateTime DateDebut, DateTime DateFin)
 		{
-			setDB(); return await _db.API_V_CREGLEMENT.Where(a => a.RG_Date >= DateDebut && a.RG_Date <= DateFin).ToListAsync();
+			setDB(); return await _db.API_V_CREGLEMENT.AsNoTracking().Where(a => a.RG_Date >= DateDebut && a.RG_Date <= DateFin).ToListAsync();
 		}
 		[HttpGet("RG_No/{RG_No}")]
 		public async Task<ActionResult<API_V_CREGLEMENT>> GetAPI_V_CREGLEMENTByRG_No(int RG_No)
 		{
-			setDB(); var item = _db.API_V_CREGLEMENT.Where(a => a.RG_No == RG_No).SingleOrDefault();
+			setDB(); var item = _db.API_V_CREGLEMENT.AsNoTracking().Where(a => a.RG_No == RG_No).SingleOrDefault();
 
 			if (item == null)
 			{

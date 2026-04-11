@@ -42,9 +42,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/P_DOSSIER
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<P_DOSSIER>>> GetP_DOSSIER()
+        public async Task<ActionResult<IEnumerable<P_DOSSIER>>> GetP_DOSSIER([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.P_DOSSIER.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.P_DOSSIER.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/P_DOSSIER/5

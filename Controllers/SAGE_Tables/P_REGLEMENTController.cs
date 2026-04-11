@@ -42,9 +42,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/P_REGLEMENT
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<P_REGLEMENT>>> GetP_REGLEMENT()
+        public async Task<ActionResult<IEnumerable<P_REGLEMENT>>> GetP_REGLEMENT([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.P_REGLEMENT.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.P_REGLEMENT.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/P_REGLEMENT/5

@@ -42,56 +42,56 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_DOCLIGNE
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_DOCLIGNE>>> GetF_DOCLIGNE()
+        public async Task<ActionResult<IEnumerable<F_DOCLIGNE>>> GetF_DOCLIGNE([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_DOCLIGNE.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_DOCLIGNE.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
 
 		[HttpGet("DO_Piece/{DO_Piece}/{DO_Type}")]
 		public async Task<ActionResult<IEnumerable<F_DOCLIGNE>>> GetF_DOCLIGNEByDO_Piece(string DO_Piece, int DO_Type)
 		{
-			setDB(); return await _db.F_DOCLIGNE.Where(a => a.DO_Type == DO_Type && a.DO_Piece == DO_Piece).ToListAsync();
+			setDB(); return await _db.F_DOCLIGNE.AsNoTracking().Where(a => a.DO_Type == DO_Type && a.DO_Piece == DO_Piece).ToListAsync();
 		}
 		[HttpGet("DO_Type/{DO_Type}")]
 		public async Task<ActionResult<IEnumerable<F_DOCLIGNE>>> GetF_DOCLIGNEByDO_Type(int DO_Type)
 		{
-			setDB(); return await _db.F_DOCLIGNE.Where(a => a.DO_Type == DO_Type).ToListAsync();
+			setDB(); return await _db.F_DOCLIGNE.AsNoTracking().Where(a => a.DO_Type == DO_Type).ToListAsync();
 		}
 		[HttpGet("DO_Domaine/{DO_Domaine}")]
 		public async Task<ActionResult<IEnumerable<F_DOCLIGNE>>> GetF_DOCLIGNEByDO_Domaine(int DO_Domaine)
 		{
-			setDB(); return await _db.F_DOCLIGNE.Where(a => a.DO_Domaine == DO_Domaine).ToListAsync();
+			setDB(); return await _db.F_DOCLIGNE.AsNoTracking().Where(a => a.DO_Domaine == DO_Domaine).ToListAsync();
 		}
 		[HttpGet("CA_Num/{CA_Num}")]
 		public async Task<ActionResult<IEnumerable<F_DOCLIGNE>>> GetF_DOCLIGNEByCA_Num(string CA_Num)
 		{
-			setDB(); return await _db.F_DOCLIGNE.Where(a => a.CA_Num == CA_Num).ToListAsync();
+			setDB(); return await _db.F_DOCLIGNE.AsNoTracking().Where(a => a.CA_Num == CA_Num).ToListAsync();
 		}
 		[HttpGet("CT_Num/{CT_Num}")]
 		public async Task<ActionResult<IEnumerable<F_DOCLIGNE>>> GetF_DOCLIGNEByCT_Num(string CT_Num)
 		{
-			setDB(); return await _db.F_DOCLIGNE.Where(a => a.CT_Num == CT_Num).ToListAsync();
+			setDB(); return await _db.F_DOCLIGNE.AsNoTracking().Where(a => a.CT_Num == CT_Num).ToListAsync();
 		}
 		[HttpGet("DE_No/{DE_No}")]
 		public async Task<ActionResult<IEnumerable<F_DOCLIGNE>>> GetF_DOCLIGNEByDE_No(int DE_No)
 		{
-			setDB(); return await _db.F_DOCLIGNE.Where(a => a.DE_No == DE_No).ToListAsync();
+			setDB(); return await _db.F_DOCLIGNE.AsNoTracking().Where(a => a.DE_No == DE_No).ToListAsync();
 		}
 		[HttpGet("CO_No/{CO_No}")]
 		public async Task<ActionResult<IEnumerable<F_DOCLIGNE>>> GetF_DOCLIGNEByCO_No(int CO_No)
 		{
-			setDB(); return await _db.F_DOCLIGNE.Where(a => a.CO_No == CO_No).ToListAsync();
+			setDB(); return await _db.F_DOCLIGNE.AsNoTracking().Where(a => a.CO_No == CO_No).ToListAsync();
 		}
         [HttpGet("AR_Ref/{AR_Ref}")]
         public async Task<ActionResult<IEnumerable<F_DOCLIGNE>>> GetF_DOCLIGNEByAR_Ref(string AR_Ref)
         {
-            setDB(); return await _db.F_DOCLIGNE.Where(a => a.AR_Ref == AR_Ref).ToListAsync();
+            setDB(); return await _db.F_DOCLIGNE.AsNoTracking().Where(a => a.AR_Ref == AR_Ref).ToListAsync();
         }
         [HttpGet("DO_Date/{DateDebut}/{DateFin}")]
 		public async Task<ActionResult<IEnumerable<F_DOCLIGNE>>> GetF_DOCLIGNEByDO_Date(DateTime DateDebut, DateTime DateFin)
 		{
-			setDB(); return await _db.F_DOCLIGNE.Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
+			setDB(); return await _db.F_DOCLIGNE.AsNoTracking().Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
 		}
 
 

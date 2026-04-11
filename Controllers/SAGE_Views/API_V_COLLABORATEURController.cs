@@ -40,16 +40,16 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_COLLABORATEUR
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_COLLABORATEUR>>> GetAPI_V_COLLABORATEUR()
+        public async Task<ActionResult<IEnumerable<API_V_COLLABORATEUR>>> GetAPI_V_COLLABORATEUR([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_COLLABORATEUR.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_COLLABORATEUR.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/API_V_COLLABORATEUR/5
         [HttpGet("{id}")]
         public async Task<ActionResult<API_V_COLLABORATEUR>> GetAPI_V_COLLABORATEUR(int id)
         {
-            setDB(); var item = _db.API_V_COLLABORATEUR.Where(a => a.cbMarq == id).SingleOrDefault();
+            setDB(); var item = _db.API_V_COLLABORATEUR.AsNoTracking().Where(a => a.cbMarq == id).SingleOrDefault();
 
             if (item == null)
             {

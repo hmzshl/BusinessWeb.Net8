@@ -42,9 +42,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/P_UNITE
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<P_UNITE>>> GetP_UNITE()
+        public async Task<ActionResult<IEnumerable<P_UNITE>>> GetP_UNITE([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.P_UNITE.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.P_UNITE.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/P_UNITE/5

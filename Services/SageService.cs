@@ -6,17 +6,12 @@ namespace BusinessWeb.Services
 	{
 		private readonly DB _context;
 
-		// Individual services as private fields
 		public SageJournauxService Journaux;
 		public SageComptegService CompteG;
-		public SageComptetService CompteT;
+		public ISageComptetService CompteT;
 		public SageEcritureService Ecriture;
 		public DocumentService Document;
-		public SageArticleService Article;
-
-		// Other services can be added as you create them
-		// private readonly SageArticlesService _articlesService;
-		// private readonly SageClientsService _clientsService;
+		public ISageArticleService Article;
 
 		public SageService(DB context)
 		{
@@ -27,7 +22,6 @@ namespace BusinessWeb.Services
 			Ecriture = new SageEcritureService(context);
 			Document = new DocumentService(context);
 			Article = new SageArticleService(context);
-
 		}
 	}
 }

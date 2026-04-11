@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace BusinessWeb.Services
 {
-	public class SageArticleService
+	public class SageArticleService : ISageArticleService
 	{
 		private readonly DB _context;
 

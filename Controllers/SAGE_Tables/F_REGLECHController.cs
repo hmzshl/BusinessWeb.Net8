@@ -42,9 +42,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_REGLECH
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_REGLECH>>> GetF_REGLECH()
+        public async Task<ActionResult<IEnumerable<F_REGLECH>>> GetF_REGLECH([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_REGLECH.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_REGLECH.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/F_REGLECH/5

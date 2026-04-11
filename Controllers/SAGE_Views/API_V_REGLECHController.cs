@@ -41,20 +41,20 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_REGLECH
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_REGLECH>>> GetAPI_V_REGLECH()
+        public async Task<ActionResult<IEnumerable<API_V_REGLECH>>> GetAPI_V_REGLECH([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_REGLECH.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_REGLECH.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
 		[HttpGet("DO_Piece/{DO_Piece}")]
 		public async Task<ActionResult<IEnumerable<API_V_REGLECH>>> GetAPI_V_REGLECHByDO_Piece(string DO_Piece)
 		{
-			setDB(); return await _db.API_V_REGLECH.Where(a => a.DO_Piece == DO_Piece).ToListAsync();
+			setDB(); return await _db.API_V_REGLECH.AsNoTracking().Where(a => a.DO_Piece == DO_Piece).ToListAsync();
 		}
         [HttpGet("RG_No/{RG_No}")]
         public async Task<ActionResult<IEnumerable<API_V_REGLECH>>> GetAPI_V_REGLECHByRG_No(int RG_No)
         {
-            setDB(); return await _db.API_V_REGLECH.Where(a => a.RG_No == RG_No).ToListAsync();
+            setDB(); return await _db.API_V_REGLECH.AsNoTracking().Where(a => a.RG_No == RG_No).ToListAsync();
         }
 
 

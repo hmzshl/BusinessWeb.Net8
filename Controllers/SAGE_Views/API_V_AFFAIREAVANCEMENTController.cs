@@ -40,9 +40,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_AFFAIREAVANCEMENT
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_AFFAIREAVANCEMENT>>> GetAPI_V_AFFAIREAVANCEMENT()
+        public async Task<ActionResult<IEnumerable<API_V_AFFAIREAVANCEMENT>>> GetAPI_V_AFFAIREAVANCEMENT([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_AFFAIREAVANCEMENT.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_AFFAIREAVANCEMENT.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
 

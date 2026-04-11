@@ -42,9 +42,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_ARTICLE
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_ARTICLE>>> GetF_ARTICLE()
+        public async Task<ActionResult<IEnumerable<F_ARTICLE>>> GetF_ARTICLE([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_ARTICLE.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_ARTICLE.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/F_ARTICLE/5
@@ -63,7 +63,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		[HttpGet("AR_Ref/{AR_Ref}")]
 		public async Task<ActionResult<F_ARTICLE>> GetF_ARTICLEByAR_Ref(string AR_Ref)
 		{
-			setDB(); var item = _db.F_ARTICLE.Where(a => a.AR_Ref == AR_Ref).SingleOrDefault();
+			setDB(); var item = _db.F_ARTICLE.AsNoTracking().Where(a => a.AR_Ref == AR_Ref).SingleOrDefault();
 
 			if (item == null)
 			{
@@ -84,7 +84,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 
             setDB(); 
             /*
-            var ln = _db.F_ARTICLE.Where(a => a.cbMarq == id).SingleOrDefault(); 
+            var ln = _db.F_ARTICLE.AsNoTracking().Where(a => a.cbMarq == id).SingleOrDefault(); 
             if(ln == null)
             {
                 ln = item;

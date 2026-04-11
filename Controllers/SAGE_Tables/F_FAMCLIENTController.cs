@@ -42,19 +42,19 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_FAMCLIENT
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_FAMCLIENT>>> GetF_FAMCLIENT()
+        public async Task<ActionResult<IEnumerable<F_FAMCLIENT>>> GetF_FAMCLIENT([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_FAMCLIENT.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_FAMCLIENT.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 		[HttpGet("CT_Num/{CT_Num}")]
 		public async Task<ActionResult<IEnumerable<F_FAMCLIENT>>> GetF_FAMCLIENTByCT_Num(string CT_Num)
 		{
-			setDB(); return await _db.F_FAMCLIENT.Where(a => a.CT_Num == CT_Num).ToListAsync();
+			setDB(); return await _db.F_FAMCLIENT.AsNoTracking().Where(a => a.CT_Num == CT_Num).ToListAsync();
 		}
 		[HttpGet("FA_CodeFamille/{FA_CodeFamille}")]
 		public async Task<ActionResult<IEnumerable<F_FAMCLIENT>>> GetF_FAMCLIENTByFA_CodeFamille(string FA_CodeFamille)
 		{
-			setDB(); return await _db.F_FAMCLIENT.Where(a => a.FA_CodeFamille == FA_CodeFamille).ToListAsync();
+			setDB(); return await _db.F_FAMCLIENT.AsNoTracking().Where(a => a.FA_CodeFamille == FA_CodeFamille).ToListAsync();
 		}
 		// GET: api/F_FAMCLIENT/5
 		[HttpGet("{id}")]

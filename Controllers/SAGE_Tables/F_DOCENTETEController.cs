@@ -42,16 +42,16 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_DOCENTETE
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_DOCENTETE>>> GetF_DOCENTETE()
+        public async Task<ActionResult<IEnumerable<F_DOCENTETE>>> GetF_DOCENTETE([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_DOCENTETE.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_DOCENTETE.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
 
 		[HttpGet("DO_Piece/{DO_Piece}/{DO_Type}")]
 		public async Task<ActionResult<F_DOCENTETE>> GetF_DOCENTETEByDO_Piece(string DO_Piece, int DO_Type)
 		{
-			setDB(); var item = _db.F_DOCENTETE.Where(a => a.DO_Type == DO_Type && a.DO_Piece == DO_Piece).SingleOrDefault();
+			setDB(); var item = _db.F_DOCENTETE.AsNoTracking().Where(a => a.DO_Type == DO_Type && a.DO_Piece == DO_Piece).SingleOrDefault();
 
 			if (item == null)
 			{
@@ -63,37 +63,37 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		[HttpGet("DO_Type/{DO_Type}")]
 		public async Task<ActionResult<IEnumerable<F_DOCENTETE>>> GetF_DOCENTETEByDO_Type(int DO_Type)
 		{
-			setDB(); return await _db.F_DOCENTETE.Where(a => a.DO_Type == DO_Type).ToListAsync();
+			setDB(); return await _db.F_DOCENTETE.AsNoTracking().Where(a => a.DO_Type == DO_Type).ToListAsync();
 		}
 		[HttpGet("DO_Domaine/{DO_Domaine}")]
 		public async Task<ActionResult<IEnumerable<F_DOCENTETE>>> GetF_DOCENTETEByDO_Domaine(int DO_Domaine)
 		{
-			setDB(); return await _db.F_DOCENTETE.Where(a => a.DO_Domaine == DO_Domaine).ToListAsync();
+			setDB(); return await _db.F_DOCENTETE.AsNoTracking().Where(a => a.DO_Domaine == DO_Domaine).ToListAsync();
 		}
 		[HttpGet("CA_Num/{CA_Num}")]
 		public async Task<ActionResult<IEnumerable<F_DOCENTETE>>> GetF_DOCENTETEByCA_Num(string CA_Num)
 		{
-			setDB(); return await _db.F_DOCENTETE.Where(a => a.CA_Num == CA_Num).ToListAsync();
+			setDB(); return await _db.F_DOCENTETE.AsNoTracking().Where(a => a.CA_Num == CA_Num).ToListAsync();
 		}
 		[HttpGet("CT_Num/{CT_Num}")]
 		public async Task<ActionResult<IEnumerable<F_DOCENTETE>>> GetF_DOCENTETEByCT_Num(string CT_Num)
 		{
-			setDB(); return await _db.F_DOCENTETE.Where(a => a.DO_Tiers == CT_Num).ToListAsync();
+			setDB(); return await _db.F_DOCENTETE.AsNoTracking().Where(a => a.DO_Tiers == CT_Num).ToListAsync();
 		}
 		[HttpGet("DE_No/{DE_No}")]
 		public async Task<ActionResult<IEnumerable<F_DOCENTETE>>> GetF_DOCENTETEByDE_No(int DE_No)
 		{
-			setDB(); return await _db.F_DOCENTETE.Where(a => a.DE_No == DE_No).ToListAsync();
+			setDB(); return await _db.F_DOCENTETE.AsNoTracking().Where(a => a.DE_No == DE_No).ToListAsync();
 		}
 		[HttpGet("CO_No/{CO_No}")]
 		public async Task<ActionResult<IEnumerable<F_DOCENTETE>>> GetF_DOCENTETEByCO_No(int CO_No)
 		{
-			setDB(); return await _db.F_DOCENTETE.Where(a => a.CO_No == CO_No).ToListAsync();
+			setDB(); return await _db.F_DOCENTETE.AsNoTracking().Where(a => a.CO_No == CO_No).ToListAsync();
 		}
 		[HttpGet("DO_Date/{DateDebut}/{DateFin}")]
 		public async Task<ActionResult<IEnumerable<F_DOCENTETE>>> GetF_DOCENTETEByDO_Date(DateTime DateDebut, DateTime DateFin)
 		{
-			setDB(); return await _db.F_DOCENTETE.Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
+			setDB(); return await _db.F_DOCENTETE.AsNoTracking().Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
 		}
 
 

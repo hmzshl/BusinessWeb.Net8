@@ -42,10 +42,10 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
 		// GET: api/API_LT_ACHAT
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<API_LT_ACHAT>>> GetAPI_LT_ACHAT()
+		public async Task<ActionResult<IEnumerable<API_LT_ACHAT>>> GetAPI_LT_ACHAT([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
 			setDB();
-			List<API_V_ACHAT> dt = await _db.API_V_ACHAT.ToListAsync();
+			List<API_V_ACHAT> dt = await _db.API_V_ACHAT.AsNoTracking().ToListAsync();
 
 			try
 			{
@@ -69,7 +69,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_ACHAT>>> GetAPI_LT_ACHATByCA_Num(string CA_Num)
 		{
 			setDB();
-			List<API_V_ACHAT> dt = await _db.API_V_ACHAT.Where(a => a.CA_Num == CA_Num).ToListAsync();
+			List<API_V_ACHAT> dt = await _db.API_V_ACHAT.AsNoTracking().Where(a => a.CA_Num == CA_Num).ToListAsync();
 
 			try
 			{
@@ -93,7 +93,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_ACHAT>>> GetAPI_LT_ACHATByCT_Num(string CT_Num)
 		{
 			setDB();
-			List<API_V_ACHAT> dt = await _db.API_V_ACHAT.Where(a => a.CT_Num == CT_Num).ToListAsync();
+			List<API_V_ACHAT> dt = await _db.API_V_ACHAT.AsNoTracking().Where(a => a.CT_Num == CT_Num).ToListAsync();
 
 			try
 			{
@@ -118,7 +118,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_ACHAT>>> GetAPI_LT_ACHATByCO_No(int CO_No)
 		{
 			setDB();
-			List<API_V_ACHAT> dt = await _db.API_V_ACHAT.Where(a => a.CO_No == CO_No).ToListAsync();
+			List<API_V_ACHAT> dt = await _db.API_V_ACHAT.AsNoTracking().Where(a => a.CO_No == CO_No).ToListAsync();
 
 			try
 			{
@@ -142,7 +142,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
         public async Task<ActionResult<IEnumerable<API_LT_ACHAT>>> GetAPI_LT_ACHATByAR_Ref(string AR_Ref)
         {
 			setDB();
-			List<API_V_ACHAT> dt = await _db.API_V_ACHAT.Where(a => a.AR_Ref == AR_Ref).ToListAsync();
+			List<API_V_ACHAT> dt = await _db.API_V_ACHAT.AsNoTracking().Where(a => a.AR_Ref == AR_Ref).ToListAsync();
 
 			try
 			{
@@ -166,7 +166,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_ACHAT>>> GetAPI_LT_ACHATByDO_Date(DateTime DateDebut, DateTime DateFin)
 		{
 			setDB();
-			List<API_V_ACHAT> dt = await _db.API_V_ACHAT.Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
+			List<API_V_ACHAT> dt = await _db.API_V_ACHAT.AsNoTracking().Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
 
 			try
 			{

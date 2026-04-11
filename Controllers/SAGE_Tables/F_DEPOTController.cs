@@ -42,9 +42,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_DEPOT
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_DEPOT>>> GetF_DEPOT()
+        public async Task<ActionResult<IEnumerable<F_DEPOT>>> GetF_DEPOT([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_DEPOT.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_DEPOT.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/F_DEPOT/5

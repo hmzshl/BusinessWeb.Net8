@@ -40,19 +40,19 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_ARTFOURNISS
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_ARTFOURNISS>>> GetAPI_V_ARTFOURNISS()
+        public async Task<ActionResult<IEnumerable<API_V_ARTFOURNISS>>> GetAPI_V_ARTFOURNISS([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_ARTFOURNISS.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_ARTFOURNISS.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 		[HttpGet("AR_Ref/{AR_Ref}")]
 		public async Task<ActionResult<IEnumerable<API_V_ARTFOURNISS>>> GetAPI_V_ARTFOURNISSByAR_Ref(string AR_Ref)
 		{
-			setDB(); return await _db.API_V_ARTFOURNISS.Where(a => a.AR_Ref == AR_Ref).ToListAsync();
+			setDB(); return await _db.API_V_ARTFOURNISS.AsNoTracking().Where(a => a.AR_Ref == AR_Ref).ToListAsync();
 		}
         [HttpGet("CT_Num/{CT_Num}")]
         public async Task<ActionResult<IEnumerable<API_V_ARTFOURNISS>>> GetAPI_V_ARTFOURNISSByCT_Num(string CT_Num)
         {
-            setDB(); return await _db.API_V_ARTFOURNISS.Where(a => a.CT_Num == CT_Num).ToListAsync();
+            setDB(); return await _db.API_V_ARTFOURNISS.AsNoTracking().Where(a => a.CT_Num == CT_Num).ToListAsync();
         }
 
     }

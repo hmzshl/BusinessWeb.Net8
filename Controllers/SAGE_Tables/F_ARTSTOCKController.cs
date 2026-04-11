@@ -42,9 +42,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_ARTSTOCK
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_ARTSTOCK>>> GetF_ARTSTOCK()
+        public async Task<ActionResult<IEnumerable<F_ARTSTOCK>>> GetF_ARTSTOCK([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_ARTSTOCK.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_ARTSTOCK.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/F_ARTSTOCK/5
@@ -63,12 +63,12 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		[HttpGet("AR_Ref/{AR_Ref}")]
 		public async Task<ActionResult<IEnumerable<F_ARTSTOCK>>> GetF_ARTSTOCKByAR_Ref(string AR_Ref)
 		{
-			setDB(); return await _db.F_ARTSTOCK.Where(a => a.AR_Ref == AR_Ref).ToListAsync();
+			setDB(); return await _db.F_ARTSTOCK.AsNoTracking().Where(a => a.AR_Ref == AR_Ref).ToListAsync();
 		}
 		[HttpGet("DE_No/{DE_No}")]
 		public async Task<ActionResult<IEnumerable<F_ARTSTOCK>>> GetF_ARTSTOCKByDE_No(int DE_No)
 		{
-			setDB(); return await _db.F_ARTSTOCK.Where(a => a.DE_No == DE_No).ToListAsync();
+			setDB(); return await _db.F_ARTSTOCK.AsNoTracking().Where(a => a.DE_No == DE_No).ToListAsync();
 		}
 		// PUT: api/F_ARTSTOCK/5
 		[HttpPut("{id}")]

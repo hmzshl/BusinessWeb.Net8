@@ -42,9 +42,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_COMPTEG
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_COMPTEG>>> GetF_COMPTEG()
+        public async Task<ActionResult<IEnumerable<F_COMPTEG>>> GetF_COMPTEG([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_COMPTEG.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_COMPTEG.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/F_COMPTEG/5
@@ -63,7 +63,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		[HttpGet("CG_Num/{CG_Num}")]
 		public async Task<ActionResult<F_COMPTEG>> GetF_COMPTEGByCG_Num(string CG_Num)
 		{
-			setDB(); var item = _db.F_COMPTEG.Where(a => a.CG_Num == CG_Num).SingleOrDefault();
+			setDB(); var item = _db.F_COMPTEG.AsNoTracking().Where(a => a.CG_Num == CG_Num).SingleOrDefault();
 
 			if (item == null)
 			{
