@@ -217,7 +217,7 @@ else
             var sg = new SageService(db);
             row.DO_Date = DateTime.Today;
             row.DE_No = 1;
-            row.DO_Piece = sg.Document.GetCurrentPieceNumber(doc);
+            row.DO_Piece = await sg.Document.GetCurrentPieceNumberAsync(doc);
 
         }
     }

@@ -2,6 +2,7 @@
 using BusinessWeb.Models.BusinessWebDB;
 using LogicNP.CryptoLicensing;
 using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Net.NetworkInformation;
 

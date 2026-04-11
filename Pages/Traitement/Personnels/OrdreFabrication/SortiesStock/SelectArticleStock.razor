@@ -137,7 +137,7 @@
             var rs = await sg.Document.CreateDocLignes(lignes, doc, 3);
             foreach (var item in lignes)
             {
-                sg.Document.UpdateStock(item.RefArticle, 1);
+                await sg.Document.UpdateStock(item.RefArticle, 1);
             }
             string q1 = @"UPDATE F_DOCLIGNE SET Machine = {0}, [P.Fabrication] = {1}, NumClient = {2},
                     IntituleClient = {3}, Affaire = {4} WHERE cbMarq = {5}";
