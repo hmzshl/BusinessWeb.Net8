@@ -1,0 +1,291 @@
+@page "/et-rfm-clients"
+@attribute [Authorize]
+@implements IDisposable
+@if (IsLoaded)
+{
+    <Card_1 Title="SEGMENTATION RFM — CLIENTS">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform:uppercase;">
+                                        @items.Count clients analysés — fenêtre 3 ans (lookback @(DateTime.Today.Year - 2)–@DateTime.Today.Year)
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Separator" />
+                        <ToolbarItem Align="ItemAlign.Right">
+                            <Template>
+                                <SfButton OnClick="LoadData" CssClass="e-flat">↻ Actualiser</SfButton>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                {{!-- Segment summary cards --}}
+                <GridRow Style="margin-bottom:12px;">
+                    @foreach (var seg in segmentStats)
+                    {
+                        <GridCol Xs="12" Md="6">
+                            <Card Style="@("border-left: 4px solid " + seg.Color + "; margin-bottom:0;")">
+                                <div style="padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+                                    <div>
+                                        <div style="font-weight:700; font-size:15px; color:@seg.Color;">@seg.Segment</div>
+                                        <div style="font-size:12px; color:#8c8c8c;">@seg.Count clients</div>
+                                        <div style="font-size:12px; font-weight:600;">@(seg.CA.ToString("N0")) @session.devise</div>
+                                    </div>
+                                    <div style="font-size:28px; font-weight:700; color:@seg.Color; opacity:0.6;">@seg.Count</div>
+                                </div>
+                            </Card>
+                        </GridCol>
+                    }
+                </GridRow>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="16">
+                        <Card>
+                            <div class="grid-80" style="zoom: @session.zoomLevel;">
+                                <SfGrid EnableVirtualization Height="100%" DataSource="@items"
+                                        Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })"
+                                        AllowSorting AllowResizing>
+                                    <GridPageSettings PageSize="100" />
+                                    <GridColumns>
+                                        <GridColumn Width="110" HeaderText="N° Client"   Field="@nameof(RFMClientItem.CT_Num)"       HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="220" HeaderText="Client"      Field="@nameof(RFMClientItem.CT_Intitule)"  HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="120" HeaderText="Dernier Achat" Field="@nameof(RFMClientItem.DernierAchat)" Format="dd/MM/yyyy" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="90"  HeaderText="Récence (j)" Field="@nameof(RFMClientItem.Recence)"     TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"  HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="90"  HeaderText="Fréquence"   Field="@nameof(RFMClientItem.Frequence)"   TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"  HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="CA HT"       Field="@nameof(RFMClientItem.Montant)"     Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="80"  HeaderText="Score RFM"   Field="@nameof(RFMClientItem.ScoreRFM)"    TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as RFMClientItem); }
+                                                <div style="text-align:center; font-weight:700; font-family:monospace; font-size:14px;">
+                                                    <span style="color:#1890ff;">@dt.ScoreR</span><span style="color:#52c41a;">@dt.ScoreF</span><span style="color:#faad14;">@dt.ScoreM</span>
+                                                </div>
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="140" HeaderText="Segment" Field="@nameof(RFMClientItem.Segment)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as RFMClientItem); }
+                                                <span style="background:@dt.SegmentColor; color:#fff; padding:2px 8px; border-radius:12px; font-size:12px; font-weight:600; white-space:nowrap;">
+                                                    @dt.Segment
+                                                </span>
+                                            </Template>
+                                        </GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+
+                    <GridCol Xs="24" Md="8">
+                        <Card>
+                            <div style="zoom: @session.zoomLevel;">
+                                <SfChart Title="Distribution par Segment" Width="100%"
+                                         Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="380px">
+                                    <ChartArea><ChartAreaBorder Width="0" /></ChartArea>
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"
+                                                       LabelIntersectAction="LabelIntersectAction.Rotate45">
+                                        <ChartAxisMajorGridLines Width="0" />
+                                        <ChartAxisMajorTickLines Width="0" />
+                                    </ChartPrimaryXAxis>
+                                    <ChartPrimaryYAxis LabelFormat="N0" EdgeLabelPlacement="EdgeLabelPlacement.Shift" Visible="false">
+                                        <ChartAxisMajorTickLines Width="0" />
+                                        <ChartAxisLineStyle Width="0" />
+                                    </ChartPrimaryYAxis>
+                                    <ChartTooltipSettings Enable="true" />
+                                    <ChartSeriesCollection>
+                                        <ChartSeries DataSource="@segmentStats" XName="Segment" YName="Count"
+                                                     Name="Clients" Width="2" ColumnSpacing="0.2"
+                                                     Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
+                                            <ChartMarker>
+                                                <ChartDataLabel Visible="true" Position="Syncfusion.Blazor.Charts.LabelPosition.Top">
+                                                    <ChartDataLabelFont FontWeight="700" Size="11" />
+                                                </ChartDataLabel>
+                                            </ChartMarker>
+                                        </ChartSeries>
+                                    </ChartSeriesCollection>
+                                </SfChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    private List<RFMClientItem> items = new();
+
+    private class SegmentStat
+    {
+        public string Segment { get; set; }
+        public int Count      { get; set; }
+        public decimal CA     { get; set; }
+        public string Color   { get; set; }
+    }
+    private List<SegmentStat> segmentStats = new();
+    bool IsLoaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        var cutoff = new DateTime(DateTime.Today.Year - 2, 1, 1);
+        var today  = DateTime.Today;
+
+        // Fetch raw data to memory for client-side RFM computation
+        var raw = db.API_V_MARGE
+            .Where(a => a.DO_Date.HasValue && a.DO_Date >= cutoff)
+            .Select(a => new { a.CT_Num, a.CT_Intitule, a.DO_Date, a.DO_Piece, a.DL_MontantHT })
+            .ToList();
+
+        // Group by client
+        var grouped = raw
+            .GroupBy(a => new { a.CT_Num, a.CT_Intitule })
+            .Select(g => new
+            {
+                g.Key.CT_Num,
+                g.Key.CT_Intitule,
+                DernierAchat = g.Max(x => x.DO_Date),
+                Frequence    = g.Select(x => x.DO_Piece).Distinct().Count(),
+                Montant      = g.Sum(x => x.DL_MontantHT) ?? 0
+            })
+            .ToList();
+
+        if (!grouped.Any()) { IsLoaded = true; return; }
+
+        // Compute recency in days (lower = better)
+        var withRecence = grouped
+            .Select(x => new
+            {
+                x.CT_Num,
+                x.CT_Intitule,
+                x.DernierAchat,
+                Recence   = x.DernierAchat.HasValue ? (today - x.DernierAchat.Value).Days : 9999,
+                x.Frequence,
+                x.Montant
+            })
+            .ToList();
+
+        int n = withRecence.Count;
+
+        // Build rank maps for quintile scoring
+        var rankR = withRecence.OrderBy(x => x.Recence)
+            .Select((x, i) => new { x.CT_Num, Rank = i }).ToDictionary(x => x.CT_Num, x => x.Rank);
+        var rankF = withRecence.OrderByDescending(x => x.Frequence)
+            .Select((x, i) => new { x.CT_Num, Rank = i }).ToDictionary(x => x.CT_Num, x => x.Rank);
+        var rankM = withRecence.OrderByDescending(x => x.Montant)
+            .Select((x, i) => new { x.CT_Num, Rank = i }).ToDictionary(x => x.CT_Num, x => x.Rank);
+
+        items = withRecence.Select(x =>
+        {
+            int sr = Quintile(rankR[x.CT_Num], n);
+            int sf = Quintile(rankF[x.CT_Num], n);
+            int sm = Quintile(rankM[x.CT_Num], n);
+            var seg = GetSegment(sr, sf, sm);
+            return new RFMClientItem
+            {
+                CT_Num       = x.CT_Num,
+                CT_Intitule  = x.CT_Intitule,
+                DernierAchat = x.DernierAchat,
+                Recence      = x.Recence,
+                Frequence    = x.Frequence,
+                Montant      = x.Montant,
+                ScoreR       = sr,
+                ScoreF       = sf,
+                ScoreM       = sm,
+                Segment      = seg.Name,
+                SegmentColor = seg.Color
+            };
+        })
+        .OrderByDescending(x => x.ScoreR + x.ScoreF + x.ScoreM)
+        .ToList();
+
+        // Build segment summary in a defined order
+        var segOrder = new[] { "Champions", "Fidèles", "Gros Comptes", "Prometteurs", "Nouveaux", "À Réactiver", "Occasionnels", "Perdus" };
+        var grouped2 = items.GroupBy(x => x.Segment).ToDictionary(g => g.Key);
+        segmentStats = segOrder
+            .Where(s => grouped2.ContainsKey(s))
+            .Select(s => new SegmentStat
+            {
+                Segment = s,
+                Count   = grouped2[s].Count(),
+                CA      = grouped2[s].Sum(x => x.Montant),
+                Color   = GetSegmentColor(s)
+            }).ToList();
+
+        // Add any unexpected segments
+        foreach (var g in items.GroupBy(x => x.Segment).Where(g => !segOrder.Contains(g.Key)))
+            segmentStats.Add(new SegmentStat { Segment = g.Key, Count = g.Count(), CA = g.Sum(x => x.Montant), Color = "#8c8c8c" });
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    // Score 5 = best (rank 0 in sorted list), score 1 = worst
+    private static int Quintile(int rank, int total)
+    {
+        if (total <= 0) return 1;
+        double pct = (double)rank / total;
+        if (pct < 0.20) return 5;
+        if (pct < 0.40) return 4;
+        if (pct < 0.60) return 3;
+        if (pct < 0.80) return 2;
+        return 1;
+    }
+
+    private static (string Name, string Color) GetSegment(int r, int f, int m)
+    {
+        if (r >= 4 && f >= 4 && m >= 4) return ("Champions",    "#52c41a");
+        if (m == 5 && r >= 3)            return ("Gros Comptes", "#faad14");
+        if (r >= 3 && f >= 4)            return ("Fidèles",      "#1890ff");
+        if (r == 5 && f <= 2)            return ("Nouveaux",     "#13c2c2");
+        if (r <= 2 && f >= 3)            return ("À Réactiver",  "#fa8c16");
+        if (r >= 3 && f >= 2 && m >= 3)  return ("Prometteurs",  "#722ed1");
+        if (r == 1)                      return ("Perdus",        "#ff4d4f");
+        return ("Occasionnels", "#8c8c8c");
+    }
+
+    private static string GetSegmentColor(string segment) => segment switch
+    {
+        "Champions"    => "#52c41a",
+        "Fidèles"      => "#1890ff",
+        "Gros Comptes" => "#faad14",
+        "Prometteurs"  => "#722ed1",
+        "Nouveaux"     => "#13c2c2",
+        "À Réactiver"  => "#fa8c16",
+        "Perdus"       => "#ff4d4f",
+        _              => "#8c8c8c"
+    };
+
+    public void Dispose()
+    {
+        items?.Clear();
+        segmentStats?.Clear();
+        items = null;
+        segmentStats = null;
+    }
+}

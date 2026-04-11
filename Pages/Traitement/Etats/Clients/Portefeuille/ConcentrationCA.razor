@@ -1,0 +1,189 @@
+@page "/et-concentration-ca"
+@attribute [Authorize]
+@implements IDisposable
+@if (IsLoaded)
+{
+    <Card_1 Title="@PageTitle">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="@(paretoCount <= 10 ? MessageSeverity.Error : MessageSeverity.Info)" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform:uppercase; font-weight:600;">
+                                        ⚠ @paretoCount client(s) représentent 80% du CA — sur @items.Count au total
+                                        &nbsp;|&nbsp; Concentration : @(((decimal)paretoCount / (items.Count > 0 ? items.Count : 1) * 100).ToString("N1"))%
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfNumericTextBox Width="120px" TValue="int" @bind-Value="annee"
+                                                  Min="2000" Max="2100" Format="####" Placeholder="Année N">
+                                    <NumericTextBoxEvents TValue="int" ValueChange="@(args => LoadData())" />
+                                </SfNumericTextBox>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="15">
+                        <Card>
+                            <div class="grid-80" style="zoom: @session.zoomLevel;">
+                                <SfGrid EnableVirtualization Height="100%" DataSource="@items"
+                                        Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })"
+                                        AllowSorting AllowResizing
+                                        QueryCellInfo="HighlightPareto">
+                                    <GridPageSettings PageSize="100" />
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(ParetoClientItem.CA)" Type="AggregateType.Sum" Format="### ### ###">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div>@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridColumns>
+                                        <GridColumn Width="60"  HeaderText="#"          Field="@nameof(ParetoClientItem.Rang)"          TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="110" HeaderText="N° Client"  Field="@nameof(ParetoClientItem.CT_Num)"         HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="240" HeaderText="Client"     Field="@nameof(ParetoClientItem.CT_Intitule)"    HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="CA HT"      Field="@nameof(ParetoClientItem.CA)"             Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="80"  HeaderText="CA %"       Field="@nameof(ParetoClientItem.CAPercent)"      Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="110" HeaderText="Cumulé %"   Field="@nameof(ParetoClientItem.CumulPercent)"   TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as ParetoClientItem); }
+                                                <div style="text-align:right; font-weight:600; color:@(dt.IsIn80 ? "#52c41a" : "#8c8c8c");">
+                                                    @(dt.CumulPercent.ToString("N1"))%
+                                                    @if (dt.IsIn80) { <RadzenIcon Icon="star" Style="font-size:14px; vertical-align:middle;" /> }
+                                                </div>
+                                            </Template>
+                                        </GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+
+                    <GridCol Xs="24" Md="9">
+                        <Card>
+                            <div style="zoom: @session.zoomLevel;">
+                                <SfChart Title="Courbe de Pareto — CA Cumulé (%)" Width="100%"
+                                         Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="380px">
+                                    <ChartArea><ChartAreaBorder Width="0" /></ChartArea>
+                                    <ChartPrimaryXAxis Title="Rang client" ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Hide">
+                                        <ChartAxisMajorGridLines Width="0" />
+                                        <ChartAxisMajorTickLines Width="0" />
+                                    </ChartPrimaryXAxis>
+                                    <ChartPrimaryYAxis Minimum="0" Maximum="100" Interval="20" LabelFormat="N0"
+                                                       Title="CA Cumulé (%)">
+                                        <ChartAxisMajorTickLines Width="0" />
+                                    </ChartPrimaryYAxis>
+                                    <ChartTooltipSettings Enable="true" Format="${point.x} → ${point.y}%" />
+                                    <ChartSeriesCollection>
+                                        <ChartSeries DataSource="@paretoChart" XName="RangStr" YName="CumulPercent"
+                                                     Name="CA Cumulé %" Width="2"
+                                                     Type="Syncfusion.Blazor.Charts.ChartSeriesType.SplineArea"
+                                                     Opacity="0.3">
+                                            <ChartMarker Visible="false" />
+                                        </ChartSeries>
+                                    </ChartSeriesCollection>
+                                    <ChartAnnotations>
+                                        <ChartAnnotation X="@paretoChart.FirstOrDefault(x => x.CumulPercent >= 80)?.RangStr"
+                                                         Y="80" CoordinateUnits="Syncfusion.Blazor.Charts.Units.Point">
+                                            <ContentTemplate>
+                                                <div style="background:#ff4d4f; color:#fff; padding:2px 6px; border-radius:4px; font-size:11px; font-weight:700;">80%</div>
+                                            </ContentTemplate>
+                                        </ChartAnnotation>
+                                    </ChartAnnotations>
+                                </SfChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    private List<ParetoClientItem> items      = new();
+    private List<ParetoClientItem> paretoChart = new();
+    int annee      = DateTime.Today.Year;
+    int paretoCount = 0;
+    bool IsLoaded  = false;
+
+    private string PageTitle => "CONCENTRATION CA — PARETO 80/20 — " + annee;
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        var raw = db.API_V_MARGE
+            .Where(a => a.DO_Date.HasValue && a.DO_Date.Value.Year == annee)
+            .GroupBy(a => new { a.CT_Num, a.CT_Intitule })
+            .Select(g => new { g.Key.CT_Num, g.Key.CT_Intitule, CA = g.Sum(x => x.DL_MontantHT) ?? 0 })
+            .OrderByDescending(x => x.CA)
+            .ToList();
+
+        decimal totalCA = raw.Sum(x => x.CA);
+        decimal cumul   = 0;
+
+        items = raw.Select((x, i) =>
+        {
+            cumul += x.CA;
+            return new ParetoClientItem
+            {
+                Rang         = i + 1,
+                RangStr      = (i + 1).ToString(),
+                CT_Num       = x.CT_Num,
+                CT_Intitule  = x.CT_Intitule,
+                CA           = x.CA,
+                CAPercent    = totalCA > 0 ? Math.Round(x.CA / totalCA * 100, 2) : 0,
+                CumulCA      = cumul,
+                CumulPercent = totalCA > 0 ? Math.Round(cumul / totalCA * 100, 2) : 0
+            };
+        }).ToList();
+
+        paretoCount  = items.Count(x => x.IsIn80);
+        // Chart: limit to top 60 points for readability
+        paretoChart  = items.Take(60).ToList();
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    public void HighlightPareto(Syncfusion.Blazor.Grids.QueryCellInfoEventArgs<ParetoClientItem> args)
+    {
+        if (args.Data?.IsIn80 == true)
+            args.Cell.AddClass(new[] { "td-pos" });
+    }
+
+    public void Dispose()
+    {
+        items?.Clear();
+        paretoChart?.Clear();
+        items = null;
+        paretoChart = null;
+    }
+}

@@ -1,0 +1,183 @@
+@page "/et-clients-inactifs"
+@attribute [Authorize]
+@implements IDisposable
+@if (IsLoaded)
+{
+    <Card_1 Title="@PageTitle">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Warning" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform:uppercase;">
+                                        @items.Count client(s) inactif(s) — absent(s) en @annee et @(annee - 1)
+                                        &nbsp;|&nbsp; CA historique perdu : @(items.Sum(x => x.CAHistorique).ToString("N0")) @session.devise
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfNumericTextBox Width="120px" TValue="int" @bind-Value="annee"
+                                                  Min="2000" Max="2100" Format="####" Placeholder="Année N">
+                                    <NumericTextBoxEvents TValue="int" ValueChange="@(args => LoadData())" />
+                                </SfNumericTextBox>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="16">
+                        <Card>
+                            <div class="grid-80" style="zoom: @session.zoomLevel;">
+                                <SfGrid EnableVirtualization Height="100%" DataSource="@items"
+                                        Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })"
+                                        AllowSorting AllowResizing>
+                                    <GridPageSettings PageSize="100" />
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(ClientInactifItem.CAHistorique)" Type="AggregateType.Sum" Format="### ### ###">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div>@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridColumns>
+                                        <GridColumn Width="120" HeaderText="N° Client"   Field="@nameof(ClientInactifItem.CT_Num)"        HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="240" HeaderText="Client"      Field="@nameof(ClientInactifItem.CT_Intitule)"   HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="Dernier Achat" Field="@nameof(ClientInactifItem.DernierAchat)" Format="dd/MM/yyyy" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="110" HeaderText="Dernière Année" Field="@nameof(ClientInactifItem.DernierAchatAnnee)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="Jours Inactif" Field="@nameof(ClientInactifItem.JoursSansAchat)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as ClientInactifItem); }
+                                                <div style="text-align:right;">
+                                                    <span style="color:@(dt.JoursSansAchat > 730 ? "#ff4d4f" : "#faad14"); font-weight:600;">
+                                                        @dt.JoursSansAchat j
+                                                    </span>
+                                                </div>
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="140" HeaderText="CA Historique" Field="@nameof(ClientInactifItem.CAHistorique)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+
+                    <GridCol Xs="24" Md="8">
+                        <Card>
+                            <div class="grid-80" style="zoom: @session.zoomLevel;">
+                                <SfChart Title="Top 20 — CA Historique" Width="90%"
+                                         Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <ChartArea><ChartAreaBorder Width="0" /></ChartArea>
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
+                                        <ChartAxisMajorGridLines Width="0" />
+                                        <ChartAxisMajorTickLines Width="0" />
+                                    </ChartPrimaryXAxis>
+                                    <ChartPrimaryYAxis LabelFormat="N0" EdgeLabelPlacement="EdgeLabelPlacement.Shift" Visible="false">
+                                        <ChartAxisMajorTickLines Width="0" />
+                                        <ChartAxisLineStyle Width="0" />
+                                    </ChartPrimaryYAxis>
+                                    <ChartTooltipSettings Enable="true" />
+                                    <ChartSeriesCollection>
+                                        <ChartSeries DataSource="@chart_items" XName="CT_Intitule" YName="CAHistorique"
+                                                     Name="CA Historique" Width="2" ColumnSpacing="0.1"
+                                                     Type="Syncfusion.Blazor.Charts.ChartSeriesType.Bar">
+                                            <ChartMarker>
+                                                <ChartDataLabel Visible="true" Position="Syncfusion.Blazor.Charts.LabelPosition.Outer" Alignment="Syncfusion.Blazor.Charts.Alignment.Near">
+                                                    <ChartDataLabelFont FontWeight="700" Size="11" />
+                                                </ChartDataLabel>
+                                            </ChartMarker>
+                                        </ChartSeries>
+                                    </ChartSeriesCollection>
+                                </SfChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    private List<ClientInactifItem> items       = new();
+    private List<ClientInactifItem> chart_items = new();
+    int annee = DateTime.Today.Year;
+    bool IsLoaded = false;
+
+    private string PageTitle => "CLIENTS INACTIFS — ABSENTS " + annee + " ET " + (annee - 1);
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        // Clients active in N or N-1 (not considered inactive)
+        var actifsRecents = db.API_V_MARGE
+            .Where(a => a.DO_Date.HasValue && a.DO_Date.Value.Year >= (annee - 1))
+            .Select(a => a.CT_Num)
+            .Distinct()
+            .ToHashSet();
+
+        // All clients ever with last purchase date + total historical CA
+        var allTime = db.API_V_MARGE
+            .GroupBy(a => new { a.CT_Num, a.CT_Intitule })
+            .Select(g => new
+            {
+                g.Key.CT_Num,
+                g.Key.CT_Intitule,
+                DernierAchat  = g.Max(x => x.DO_Date),
+                CAHistorique  = g.Sum(x => x.DL_MontantHT) ?? 0
+            })
+            .ToList();
+
+        var today = DateTime.Today;
+
+        items = allTime
+            .Where(x => !actifsRecents.Contains(x.CT_Num) && x.DernierAchat.HasValue)
+            .Select(x => new ClientInactifItem
+            {
+                CT_Num        = x.CT_Num,
+                CT_Intitule   = x.CT_Intitule,
+                DernierAchat  = x.DernierAchat,
+                JoursSansAchat = (today - x.DernierAchat!.Value).Days,
+                CAHistorique  = x.CAHistorique
+            })
+            .OrderByDescending(x => x.CAHistorique)
+            .ToList();
+
+        chart_items = items.Take(20).OrderBy(x => x.CAHistorique).ToList();
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    public void Dispose()
+    {
+        items?.Clear();
+        chart_items?.Clear();
+        items = null;
+        chart_items = null;
+    }
+}
