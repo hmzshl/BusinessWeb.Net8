@@ -40,29 +40,29 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_RELEVE
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_RELEVE>>> GetAPI_V_RELEVE()
+        public async Task<ActionResult<IEnumerable<API_V_RELEVE>>> GetAPI_V_RELEVE([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_RELEVE.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_RELEVE.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 		[HttpGet("TypeIntitule/{TypeIntitule}")]
 		public async Task<ActionResult<IEnumerable<API_V_RELEVE>>> GetAPI_V_RELEVEByTypeIntitule(string TypeIntitule)
 		{
-			setDB(); return await _db.API_V_RELEVE.Where(a => a.TypeIntitule == TypeIntitule).ToListAsync();
+			setDB(); return await _db.API_V_RELEVE.AsNoTracking().Where(a => a.TypeIntitule == TypeIntitule).ToListAsync();
 		}
 		[HttpGet("CT_Num/{CT_Num}")]
 		public async Task<ActionResult<IEnumerable<API_V_RELEVE>>> GetAPI_V_RELEVEByCT_Num(string CT_Num)
 		{
-			setDB(); return await _db.API_V_RELEVE.Where(a => a.CT_Num == CT_Num).ToListAsync();
+			setDB(); return await _db.API_V_RELEVE.AsNoTracking().Where(a => a.CT_Num == CT_Num).ToListAsync();
 		}
 		[HttpGet("CO_No/{CO_No}")]
 		public async Task<ActionResult<IEnumerable<API_V_RELEVE>>> GetAPI_V_RELEVEByCO_No(int CO_No)
 		{
-			setDB(); return await _db.API_V_RELEVE.Where(a => a.CO_No == CO_No).ToListAsync();
+			setDB(); return await _db.API_V_RELEVE.AsNoTracking().Where(a => a.CO_No == CO_No).ToListAsync();
 		}
 		[HttpGet("DO_Date/{DateDebut}/{DateFin}")]
 		public async Task<ActionResult<IEnumerable<API_V_RELEVE>>> GetAPI_V_RELEVEByDO_Date(DateTime DateDebut, DateTime DateFin)
 		{
-			setDB(); return await _db.API_V_RELEVE.Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
+			setDB(); return await _db.API_V_RELEVE.AsNoTracking().Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
 		}
 
 

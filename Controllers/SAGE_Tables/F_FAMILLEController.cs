@@ -42,9 +42,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_FAMILLE
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_FAMILLE>>> GetF_FAMILLE()
+        public async Task<ActionResult<IEnumerable<F_FAMILLE>>> GetF_FAMILLE([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_FAMILLE.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_FAMILLE.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/F_FAMILLE/5

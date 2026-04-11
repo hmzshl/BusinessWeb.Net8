@@ -40,10 +40,10 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 			}
 		}
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_LT_COMPTET>>> GetAPI_LT_COMPTET()
+        public async Task<ActionResult<IEnumerable<API_LT_COMPTET>>> GetAPI_LT_COMPTET([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
 			setDB();
-			List<API_V_COMPTET> dt = await _db.API_V_COMPTET.ToListAsync();
+			List<API_V_COMPTET> dt = await _db.API_V_COMPTET.AsNoTracking().ToListAsync();
 
 			try
 			{
@@ -67,7 +67,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_COMPTET>>> GetAPI_LT_COMPTETByCT_Type(int CT_Type)
 		{
 			setDB();
-			List<API_V_COMPTET> dt = await _db.API_V_COMPTET.Where(a => a.CT_Type == CT_Type).ToListAsync();
+			List<API_V_COMPTET> dt = await _db.API_V_COMPTET.AsNoTracking().Where(a => a.CT_Type == CT_Type).ToListAsync();
 
 			try
 			{

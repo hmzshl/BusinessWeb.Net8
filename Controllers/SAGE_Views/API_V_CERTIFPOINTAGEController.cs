@@ -40,15 +40,15 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_CERTIFPOINTAGE
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_CERTIFPOINTAGE>>> GetAPI_V_CERTIFPOINTAGE()
+        public async Task<ActionResult<IEnumerable<API_V_CERTIFPOINTAGE>>> GetAPI_V_CERTIFPOINTAGE([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_CERTIFPOINTAGE.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_CERTIFPOINTAGE.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
 		[HttpGet("Date/{DateDebut}/{DateFin}")]
 		public async Task<ActionResult<IEnumerable<API_V_CERTIFPOINTAGE>>> GetAPI_V_CERTIFPOINTAGEByDate(DateTime DateDebut, DateTime DateFin)
 		{
-			setDB(); return await _db.API_V_CERTIFPOINTAGE.Where(a => a.Date >= DateDebut && a.Date <= DateFin).ToListAsync();
+			setDB(); return await _db.API_V_CERTIFPOINTAGE.AsNoTracking().Where(a => a.Date >= DateDebut && a.Date <= DateFin).ToListAsync();
         }
 
 

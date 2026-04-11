@@ -40,14 +40,14 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_REGLEMENTT
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_REGLEMENTT>>> GetAPI_V_REGLEMENTT()
+        public async Task<ActionResult<IEnumerable<API_V_REGLEMENTT>>> GetAPI_V_REGLEMENTT([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_REGLEMENTT.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_REGLEMENTT.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 		[HttpGet("CT_Num/{CT_Num}")]
 		public async Task<ActionResult<IEnumerable<API_V_REGLEMENTT>>> GetAPI_V_REGLEMENTTByCT_Num(string CT_Num)
 		{
-			setDB(); return await _db.API_V_REGLEMENTT.Where(a => a.CT_Num == CT_Num).ToListAsync();
+			setDB(); return await _db.API_V_REGLEMENTT.AsNoTracking().Where(a => a.CT_Num == CT_Num).ToListAsync();
 		}
 
 	}

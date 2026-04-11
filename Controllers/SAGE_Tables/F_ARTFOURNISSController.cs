@@ -42,9 +42,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_ARTFOURNISS
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_ARTFOURNISS>>> GetF_ARTFOURNISS()
+        public async Task<ActionResult<IEnumerable<F_ARTFOURNISS>>> GetF_ARTFOURNISS([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_ARTFOURNISS.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_ARTFOURNISS.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/F_ARTFOURNISS/5
@@ -63,12 +63,12 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		[HttpGet("AR_Ref/{AR_Ref}")]
 		public async Task<ActionResult<IEnumerable<F_ARTFOURNISS>>> GetF_ARTFOURNISSByAR_Ref(string AR_Ref)
 		{
-			setDB(); return await _db.F_ARTFOURNISS.Where(a => a.AR_Ref == AR_Ref).ToListAsync();
+			setDB(); return await _db.F_ARTFOURNISS.AsNoTracking().Where(a => a.AR_Ref == AR_Ref).ToListAsync();
 		}
 		[HttpGet("CT_Num/{CT_Num}")]
 		public async Task<ActionResult<IEnumerable<F_ARTFOURNISS>>> GetF_ARTFOURNISSByCT_Num(string CT_Num)
 		{
-			setDB(); return await _db.F_ARTFOURNISS.Where(a => a.CT_Num == CT_Num).ToListAsync();
+			setDB(); return await _db.F_ARTFOURNISS.AsNoTracking().Where(a => a.CT_Num == CT_Num).ToListAsync();
 		}
 		// PUT: api/F_ARTFOURNISS/5
 		[HttpPut("{id}")]

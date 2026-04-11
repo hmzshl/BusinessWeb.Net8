@@ -47,24 +47,24 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_CREGLEMENT>>> GetF_CREGLEMENT()
+        public async Task<ActionResult<IEnumerable<F_CREGLEMENT>>> GetF_CREGLEMENT([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_CREGLEMENT.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_CREGLEMENT.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 		[HttpGet("JO_Num/{JO_Num}")]
 		public async Task<ActionResult<IEnumerable<F_CREGLEMENT>>> GetF_CREGLEMENTByJO_Num(string JO_Num)
 		{
-			setDB(); return await _db.F_CREGLEMENT.Where(a => a.JO_Num == JO_Num).ToListAsync();
+			setDB(); return await _db.F_CREGLEMENT.AsNoTracking().Where(a => a.JO_Num == JO_Num).ToListAsync();
 		}
 		[HttpGet("CT_Num/{CT_Num}")]
 		public async Task<ActionResult<IEnumerable<F_CREGLEMENT>>> GetF_CREGLEMENTByCT_Num(string CT_Num)
 		{
-			setDB(); return await _db.F_CREGLEMENT.Where(a => a.CT_NumPayeur == CT_Num).ToListAsync();
+			setDB(); return await _db.F_CREGLEMENT.AsNoTracking().Where(a => a.CT_NumPayeur == CT_Num).ToListAsync();
 		}
 		[HttpGet("RG_Date/{DateDebut}/{DateFin}")]
 		public async Task<ActionResult<IEnumerable<F_CREGLEMENT>>> GetF_CREGLEMENTByDO_Date(DateTime DateDebut, DateTime DateFin)
 		{
-			setDB(); return await _db.F_CREGLEMENT.Where(a => a.RG_Date >= DateDebut && a.RG_Date <= DateFin).ToListAsync();
+			setDB(); return await _db.F_CREGLEMENT.AsNoTracking().Where(a => a.RG_Date >= DateDebut && a.RG_Date <= DateFin).ToListAsync();
 		}
 
 

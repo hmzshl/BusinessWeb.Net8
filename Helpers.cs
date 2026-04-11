@@ -21,6 +21,35 @@ namespace BusinessWeb
 {
 	public class Helpers
 	{
+		// Track which Sage databases have already been initialised (migrate + custom columns).
+		// Uses connection string as key so each unique DB is only initialised once per process lifetime.
+		private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, bool> _initializedDbs
+			= new System.Collections.Concurrent.ConcurrentDictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
+
+		// Cache TSociete lookups to avoid hitting BusinessWebDBContext on every API request.
+		// Entries expire after 10 minutes so config changes are reflected without a restart.
+		private static readonly System.Collections.Concurrent.ConcurrentDictionary<int, (Models.BusinessWebDB.TSociete ste, DateTime expiry)> _societeCache
+			= new System.Collections.Concurrent.ConcurrentDictionary<int, (Models.BusinessWebDB.TSociete, DateTime)>();
+
+		/// <summary>
+		/// Resolves a TSociete by id using the in-memory cache (10-minute TTL).
+		/// </summary>
+		public Models.BusinessWebDB.TSociete GetCachedSociete(int societeId, Data.BusinessWebDBContext sdb)
+		{
+			if (_societeCache.TryGetValue(societeId, out var cached) && cached.expiry > DateTime.UtcNow)
+				return cached.ste;
+
+			var ste = sdb.TSocietes.FirstOrDefault(a => a.id == societeId);
+			if (ste != null)
+				_societeCache[societeId] = (ste, DateTime.UtcNow.AddMinutes(10));
+
+			return ste;
+		}
+
+		/// <summary>Invalidates the cached entry for a societe (call after TSociete is updated).</summary>
+		public static void InvalidateSocieteCache(int societeId)
+			=> _societeCache.TryRemove(societeId, out _);
+
 		public Syncfusion.Blazor.Data.Query LocalDataQuery = new Syncfusion.Blazor.Data.Query().Take(10);
 		public NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "### ### ##0.00;-### ### ##0.00;#" } };
 		public ExcelExportProperties ExportToExcelAsync()
@@ -640,12 +669,12 @@ namespace BusinessWeb
 		}
 		public DB getDb(TSociete ste)
 		{
+			var connStr = getConnectionString(ste);
 			var optionBuilder = new DbContextOptionsBuilder<DB>();
-			optionBuilder.UseSqlServer(getConnectionString(ste), o =>
+			optionBuilder.UseSqlServer(connStr, o =>
 			{
 				o.UseCompatibilityLevel(100);
-				o.CommandTimeout(3600); // Timeout in seconds (default is 30)
-										// Add this line to handle triggers with OUTPUT clause:
+				o.CommandTimeout(3600);
 				o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
 				 .UseRelationalNulls();
 			});
@@ -653,9 +682,14 @@ namespace BusinessWeb
 			optionBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
 
 			DB db = new DB(optionBuilder.Options);
-			db.Database.Migrate();
-			db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "ChefChantier", "VARCHAR(100)"));
-			db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "Demandeur", "VARCHAR(100)"));
+
+			// Run migrations and custom-column setup only once per unique database connection.
+			if (_initializedDbs.TryAdd(connStr, true))
+			{
+				db.Database.Migrate();
+				db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "ChefChantier", "VARCHAR(100)"));
+				db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "Demandeur", "VARCHAR(100)"));
+			}
 
 			return db;
 		}

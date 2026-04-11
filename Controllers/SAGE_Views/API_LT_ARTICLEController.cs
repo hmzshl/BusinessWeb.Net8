@@ -40,10 +40,10 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 			}
 		}
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_LT_ARTICLE>>> GetAPI_LT_ARTICLE()
+        public async Task<ActionResult<IEnumerable<API_LT_ARTICLE>>> GetAPI_LT_ARTICLE([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
 			setDB();
-			List<API_V_ARTICLE> dt = await _db.API_V_ARTICLE.ToListAsync();
+			List<API_V_ARTICLE> dt = await _db.API_V_ARTICLE.AsNoTracking().ToListAsync();
 
 			try
 			{

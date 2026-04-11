@@ -42,9 +42,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_JOURNAUX
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_JOURNAUX>>> GetF_JOURNAUX()
+        public async Task<ActionResult<IEnumerable<F_JOURNAUX>>> GetF_JOURNAUX([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_JOURNAUX.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_JOURNAUX.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/F_JOURNAUX/5
@@ -63,7 +63,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		[HttpGet("JO_Num/{JO_Num}")]
 		public async Task<ActionResult<F_JOURNAUX>> GetF_JOURNAUXByJO_Num(string JO_Num)
 		{
-			setDB(); var item = _db.F_JOURNAUX.Where(a => a.JO_Num == JO_Num).SingleOrDefault();
+			setDB(); var item = _db.F_JOURNAUX.AsNoTracking().Where(a => a.JO_Num == JO_Num).SingleOrDefault();
 
 			if (item == null)
 			{

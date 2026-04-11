@@ -41,10 +41,10 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_LT_DOCENTETE
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_LT_DOCENTETE>>> GetAPI_LT_DOCENTETE()
+        public async Task<ActionResult<IEnumerable<API_LT_DOCENTETE>>> GetAPI_LT_DOCENTETE([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
 			setDB();
-			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.ToListAsync();
+			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.AsNoTracking().ToListAsync();
 
 			try
 			{
@@ -68,7 +68,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_DOCENTETE>>> GetAPI_LT_DOCENTETEByDO_Piece(string DO_Piece, int DO_Type)
 		{
 			setDB();
-			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.Where(a => a.DO_Type == DO_Type && a.DO_Piece == DO_Piece).ToListAsync();
+			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.AsNoTracking().Where(a => a.DO_Type == DO_Type && a.DO_Piece == DO_Piece).ToListAsync();
 
 			try
 			{
@@ -91,7 +91,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_DOCENTETE>>> GetAPI_LT_DOCENTETEByDO_Type(int DO_Type)
 		{
 			setDB();
-			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.Where(a => a.DO_Type == DO_Type).ToListAsync();
+			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.AsNoTracking().Where(a => a.DO_Type == DO_Type).ToListAsync();
 
 			try
 			{
@@ -115,7 +115,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_DOCENTETE>>> GetAPI_LT_DOCENTETEByDO_Domaine(int DO_Domaine)
 		{
 			setDB();
-			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.Where(a => a.DO_Domaine == DO_Domaine).ToListAsync();
+			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.AsNoTracking().Where(a => a.DO_Domaine == DO_Domaine).ToListAsync();
 
 			try
 			{
@@ -139,7 +139,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_DOCENTETE>>> GetAPI_LT_DOCENTETEByCA_Num(string CA_Num)
 		{
 			setDB();
-			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.Where(a => a.CA_Num == CA_Num).ToListAsync();
+			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.AsNoTracking().Where(a => a.CA_Num == CA_Num).ToListAsync();
 
 			try
 			{
@@ -163,7 +163,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_DOCENTETE>>> GetAPI_LT_DOCENTETEByCT_Num(string CT_Num)
 		{
 			setDB();
-			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.Where(a => a.DO_Tiers == CT_Num).ToListAsync();
+			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.AsNoTracking().Where(a => a.DO_Tiers == CT_Num).ToListAsync();
 
 			try
 			{
@@ -187,7 +187,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_DOCENTETE>>> GetAPI_LT_DOCENTETEByDE_No(int DE_No)
 		{
 			setDB();
-			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.Where(a => a.DE_No == DE_No).ToListAsync();
+			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.AsNoTracking().Where(a => a.DE_No == DE_No).ToListAsync();
 
 			try
 			{
@@ -211,7 +211,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_DOCENTETE>>> GetAPI_LT_DOCENTETEByCO_No(int CO_No)
 		{
 			setDB();
-			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.Where(a => a.CO_No == CO_No).ToListAsync();
+			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.AsNoTracking().Where(a => a.CO_No == CO_No).ToListAsync();
 
 			try
 			{
@@ -235,7 +235,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		public async Task<ActionResult<IEnumerable<API_LT_DOCENTETE>>> GetAPI_LT_DOCENTETEByDO_Date(DateTime DateDebut, DateTime DateFin)
 		{
 			setDB();
-			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
+			List<API_V_DOCENTETE> dt = await _db.API_V_DOCENTETE.AsNoTracking().Where(a => a.DO_Date >= DateDebut && a.DO_Date <= DateFin).ToListAsync();
 
 			try
 			{

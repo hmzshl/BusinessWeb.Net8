@@ -42,9 +42,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_COMPTEA
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_COMPTEA>>> GetF_COMPTEA()
+        public async Task<ActionResult<IEnumerable<F_COMPTEA>>> GetF_COMPTEA([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_COMPTEA.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_COMPTEA.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/F_COMPTEA/5
@@ -63,7 +63,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		[HttpGet("CA_Num/{CA_Num}")]
 		public async Task<ActionResult<F_COMPTEA>> GetF_COMPTEAByCA_Num(string CA_Num)
 		{
-			setDB(); var item = _db.F_COMPTEA.Where(a => a.CA_Num == CA_Num).SingleOrDefault();
+			setDB(); var item = _db.F_COMPTEA.AsNoTracking().Where(a => a.CA_Num == CA_Num).SingleOrDefault();
 
 			if (item == null)
 			{

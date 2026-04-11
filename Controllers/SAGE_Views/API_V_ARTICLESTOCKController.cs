@@ -40,21 +40,21 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_ARTICLESTOCK
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_ARTICLESTOCK>>> GetAPI_V_ARTICLESTOCK()
+        public async Task<ActionResult<IEnumerable<API_V_ARTICLESTOCK>>> GetAPI_V_ARTICLESTOCK([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_ARTICLESTOCK.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_ARTICLESTOCK.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
 
 		[HttpGet("AR_Ref/{AR_Ref}")]
 		public async Task<ActionResult<IEnumerable<API_V_ARTICLESTOCK>>> GetAPI_V_ARTICLESTOCKByAR_Ref(string AR_Ref)
 		{
-			setDB(); return await _db.API_V_ARTICLESTOCK.Where(a => a.AR_Ref == AR_Ref).ToListAsync();
+			setDB(); return await _db.API_V_ARTICLESTOCK.AsNoTracking().Where(a => a.AR_Ref == AR_Ref).ToListAsync();
 		}
 		[HttpGet("DE_No/{DE_No}")]
 		public async Task<ActionResult<IEnumerable<API_V_ARTICLESTOCK>>> GetAPI_V_ARTICLESTOCKByDE_No(int DE_No)
 		{
-			setDB(); return await _db.API_V_ARTICLESTOCK.Where(a => a.DE_No == DE_No).ToListAsync();
+			setDB(); return await _db.API_V_ARTICLESTOCK.AsNoTracking().Where(a => a.DE_No == DE_No).ToListAsync();
 		}
 
 

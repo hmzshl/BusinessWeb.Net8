@@ -41,16 +41,16 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/API_V_ARTICLE
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<API_V_ARTICLE>>> GetAPI_V_ARTICLE()
+        public async Task<ActionResult<IEnumerable<API_V_ARTICLE>>> GetAPI_V_ARTICLE([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.API_V_ARTICLE.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.API_V_ARTICLE.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/API_V_ARTICLE/5
         [HttpGet("{id}")]
         public async Task<ActionResult<API_V_ARTICLE>> GetAPI_V_ARTICLE(int id)
         {
-            setDB(); var item = _db.API_V_ARTICLE.Where(a => a.cbMarq == id).SingleOrDefault();
+            setDB(); var item = _db.API_V_ARTICLE.AsNoTracking().Where(a => a.cbMarq == id).SingleOrDefault();
 
             if (item == null)
             {
@@ -62,7 +62,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		[HttpGet("AR_Ref/{AR_Ref}")]
 		public async Task<ActionResult<API_V_ARTICLE>> GetAPI_V_ARTICLEByAR_Ref(string AR_Ref)
 		{
-			setDB(); var item = _db.API_V_ARTICLE.Where(a => a.AR_Ref == AR_Ref).SingleOrDefault();
+			setDB(); var item = _db.API_V_ARTICLE.AsNoTracking().Where(a => a.AR_Ref == AR_Ref).SingleOrDefault();
 
 			if (item == null)
 			{
@@ -76,7 +76,7 @@ namespace BusinessWeb.Controllers.SAGE_Tables
         {
             var refs = JsonSerializer.Deserialize<List<string>>(AR_Refs);
             setDB();  
-            return _db.API_V_ARTICLE.Where(a => (refs.Contains(a.AR_Ref))).ToList();
+            return await _db.API_V_ARTICLE.AsNoTracking().Where(a => (refs.Contains(a.AR_Ref))).ToListAsync();
         }
 
 

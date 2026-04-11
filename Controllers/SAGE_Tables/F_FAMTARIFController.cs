@@ -42,14 +42,14 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_FAMTARIF
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_FAMTARIF>>> GetF_FAMTARIF()
+        public async Task<ActionResult<IEnumerable<F_FAMTARIF>>> GetF_FAMTARIF([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_FAMTARIF.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_FAMTARIF.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 		[HttpGet("FA_CodeFamille/{FA_CodeFamille}")]
 		public async Task<ActionResult<IEnumerable<F_FAMTARIF>>> GetF_FAMTARIFByFA_CodeFamille(string FA_CodeFamille)
 		{
-			setDB(); return await _db.F_FAMTARIF.Where(a => a.FA_CodeFamille == FA_CodeFamille).ToListAsync();
+			setDB(); return await _db.F_FAMTARIF.AsNoTracking().Where(a => a.FA_CodeFamille == FA_CodeFamille).ToListAsync();
 		}
 		// GET: api/F_FAMTARIF/5
 		[HttpGet("{id}")]

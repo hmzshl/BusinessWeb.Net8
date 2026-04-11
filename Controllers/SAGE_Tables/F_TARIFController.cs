@@ -42,9 +42,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_TARIF
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_TARIF>>> GetF_TARIF()
+        public async Task<ActionResult<IEnumerable<F_TARIF>>> GetF_TARIF([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_TARIF.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_TARIF.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/F_TARIF/5

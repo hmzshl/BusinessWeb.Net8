@@ -42,19 +42,19 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_FAMFOURNISS
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_FAMFOURNISS>>> GetF_FAMFOURNISS()
+        public async Task<ActionResult<IEnumerable<F_FAMFOURNISS>>> GetF_FAMFOURNISS([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_FAMFOURNISS.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_FAMFOURNISS.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 		[HttpGet("CT_Num/{CT_Num}")]
 		public async Task<ActionResult<IEnumerable<F_FAMFOURNISS>>> GetF_FAMFOURNISSByCT_Num(string CT_Num)
 		{
-			setDB(); return await _db.F_FAMFOURNISS.Where(a => a.CT_Num == CT_Num).ToListAsync();
+			setDB(); return await _db.F_FAMFOURNISS.AsNoTracking().Where(a => a.CT_Num == CT_Num).ToListAsync();
 		}
 		[HttpGet("FA_CodeFamille/{FA_CodeFamille}")]
 		public async Task<ActionResult<IEnumerable<F_FAMFOURNISS>>> GetF_FAMFOURNISSByFA_CodeFamille(string FA_CodeFamille)
 		{
-			setDB(); return await _db.F_FAMFOURNISS.Where(a => a.FA_CodeFamille == FA_CodeFamille).ToListAsync();
+			setDB(); return await _db.F_FAMFOURNISS.AsNoTracking().Where(a => a.FA_CodeFamille == FA_CodeFamille).ToListAsync();
 		}
 		// GET: api/F_FAMFOURNISS/5
 		[HttpGet("{id}")]

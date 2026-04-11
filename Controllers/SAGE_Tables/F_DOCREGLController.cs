@@ -42,9 +42,9 @@ namespace BusinessWeb.Controllers.SAGE_Tables
 		}
         // GET: api/F_DOCREGL
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<F_DOCREGL>>> GetF_DOCREGL()
+        public async Task<ActionResult<IEnumerable<F_DOCREGL>>> GetF_DOCREGL([FromQuery] int page = 1, [FromQuery] int pageSize = 100)
         {
-            setDB(); return await _db.F_DOCREGL.ToListAsync();
+            int skip = (page - 1) * pageSize; pageSize = Math.Min(pageSize, 500); setDB(); return await _db.F_DOCREGL.AsNoTracking().Skip(skip).Take(pageSize).ToListAsync();
         }
 
         // GET: api/F_DOCREGL/5
