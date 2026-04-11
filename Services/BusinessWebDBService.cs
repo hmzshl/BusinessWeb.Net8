@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -33,7 +33,20 @@ namespace BusinessWeb
             this.navigationManager = navigationManager;
         }
 
-        public void Reset() => Context.ChangeTracker.Entries().Where(e => e.Entity != null).ToList().ForEach(e => e.State = EntityState.Detached);
+        public void Reset()
+        {
+            foreach (var entry in Context.ChangeTracker.Entries().Where(e => e.Entity != null))
+                entry.State = EntityState.Detached;
+        }
+
+        // Applies comma-separated Expand string as EF .Include() calls — shared by all Get* methods.
+        private static IQueryable<T> ApplyExpand<T>(IQueryable<T> items, string expand) where T : class
+        {
+            if (string.IsNullOrEmpty(expand)) return items;
+            foreach (var prop in expand.Split(','))
+                items = items.Include(prop.Trim());
+            return items;
+        }
 
         public void ApplyQuery<T>(ref IQueryable<T> items, Query query = null)
         {
@@ -89,14 +102,7 @@ namespace BusinessWeb
 
             if (query != null)
             {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
+                items = ApplyExpand(items, query.Expand);
 
                 ApplyQuery(ref items, query);
             }
@@ -146,7 +152,7 @@ namespace BusinessWeb
             try
             {
                 Context.AspNetRoleClaims.Add(aspnetroleclaim);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -191,7 +197,7 @@ namespace BusinessWeb
             entryToUpdate.CurrentValues.SetValues(aspnetroleclaim);
             entryToUpdate.State = EntityState.Modified;
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             OnAfterAspNetRoleClaimUpdated(aspnetroleclaim);
 
@@ -219,7 +225,7 @@ namespace BusinessWeb
 
             try
             {
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -251,14 +257,7 @@ namespace BusinessWeb
 
             if (query != null)
             {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
+                items = ApplyExpand(items, query.Expand);
 
                 ApplyQuery(ref items, query);
             }
@@ -307,7 +306,7 @@ namespace BusinessWeb
             try
             {
                 Context.AspNetRoles.Add(aspnetrole);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -352,7 +351,7 @@ namespace BusinessWeb
             entryToUpdate.CurrentValues.SetValues(aspnetrole);
             entryToUpdate.State = EntityState.Modified;
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             OnAfterAspNetRoleUpdated(aspnetrole);
 
@@ -382,7 +381,7 @@ namespace BusinessWeb
 
             try
             {
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -415,14 +414,7 @@ namespace BusinessWeb
 
             if (query != null)
             {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
+                items = ApplyExpand(items, query.Expand);
 
                 ApplyQuery(ref items, query);
             }
@@ -472,7 +464,7 @@ namespace BusinessWeb
             try
             {
                 Context.AspNetUserClaims.Add(aspnetuserclaim);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -517,7 +509,7 @@ namespace BusinessWeb
             entryToUpdate.CurrentValues.SetValues(aspnetuserclaim);
             entryToUpdate.State = EntityState.Modified;
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             OnAfterAspNetUserClaimUpdated(aspnetuserclaim);
 
@@ -545,7 +537,7 @@ namespace BusinessWeb
 
             try
             {
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -578,14 +570,7 @@ namespace BusinessWeb
 
             if (query != null)
             {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
+                items = ApplyExpand(items, query.Expand);
 
                 ApplyQuery(ref items, query);
             }
@@ -635,7 +620,7 @@ namespace BusinessWeb
             try
             {
                 Context.AspNetUserLogins.Add(aspnetuserlogin);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -680,7 +665,7 @@ namespace BusinessWeb
             entryToUpdate.CurrentValues.SetValues(aspnetuserlogin);
             entryToUpdate.State = EntityState.Modified;
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             OnAfterAspNetUserLoginUpdated(aspnetuserlogin);
 
@@ -708,7 +693,7 @@ namespace BusinessWeb
 
             try
             {
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -742,14 +727,7 @@ namespace BusinessWeb
 
             if (query != null)
             {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
+                items = ApplyExpand(items, query.Expand);
 
                 ApplyQuery(ref items, query);
             }
@@ -800,7 +778,7 @@ namespace BusinessWeb
             try
             {
                 Context.AspNetUserRoles.Add(aspnetuserrole);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -845,7 +823,7 @@ namespace BusinessWeb
             entryToUpdate.CurrentValues.SetValues(aspnetuserrole);
             entryToUpdate.State = EntityState.Modified;
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             OnAfterAspNetUserRoleUpdated(aspnetuserrole);
 
@@ -873,7 +851,7 @@ namespace BusinessWeb
 
             try
             {
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -905,14 +883,7 @@ namespace BusinessWeb
 
             if (query != null)
             {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
+                items = ApplyExpand(items, query.Expand);
 
                 ApplyQuery(ref items, query);
             }
@@ -961,7 +932,7 @@ namespace BusinessWeb
             try
             {
                 Context.AspNetUsers.Add(aspnetuser);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -1006,7 +977,7 @@ namespace BusinessWeb
             entryToUpdate.CurrentValues.SetValues(aspnetuser);
             entryToUpdate.State = EntityState.Modified;
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             OnAfterAspNetUserUpdated(aspnetuser);
 
@@ -1038,7 +1009,7 @@ namespace BusinessWeb
 
             try
             {
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -1071,14 +1042,7 @@ namespace BusinessWeb
 
             if (query != null)
             {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
+                items = ApplyExpand(items, query.Expand);
 
                 ApplyQuery(ref items, query);
             }
@@ -1128,7 +1092,7 @@ namespace BusinessWeb
             try
             {
                 Context.AspNetUserTokens.Add(aspnetusertoken);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -1173,7 +1137,7 @@ namespace BusinessWeb
             entryToUpdate.CurrentValues.SetValues(aspnetusertoken);
             entryToUpdate.State = EntityState.Modified;
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             OnAfterAspNetUserTokenUpdated(aspnetusertoken);
 
@@ -1201,7 +1165,7 @@ namespace BusinessWeb
 
             try
             {
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -1233,14 +1197,7 @@ namespace BusinessWeb
 
             if (query != null)
             {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
+                items = ApplyExpand(items, query.Expand);
 
                 ApplyQuery(ref items, query);
             }
@@ -1289,7 +1246,7 @@ namespace BusinessWeb
             try
             {
                 Context.TAuthorizes.Add(tauthorize);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -1334,7 +1291,7 @@ namespace BusinessWeb
             entryToUpdate.CurrentValues.SetValues(tauthorize);
             entryToUpdate.State = EntityState.Modified;
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             OnAfterTAuthorizeUpdated(tauthorize);
 
@@ -1362,7 +1319,7 @@ namespace BusinessWeb
 
             try
             {
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -1394,14 +1351,7 @@ namespace BusinessWeb
 
             if (query != null)
             {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
+                items = ApplyExpand(items, query.Expand);
 
                 ApplyQuery(ref items, query);
             }
@@ -1450,7 +1400,7 @@ namespace BusinessWeb
             try
             {
                 Context.TAuthorizeMobiles.Add(tauthorizemobile);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -1495,7 +1445,7 @@ namespace BusinessWeb
             entryToUpdate.CurrentValues.SetValues(tauthorizemobile);
             entryToUpdate.State = EntityState.Modified;
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             OnAfterTAuthorizeMobileUpdated(tauthorizemobile);
 
@@ -1523,7 +1473,7 @@ namespace BusinessWeb
 
             try
             {
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -1555,14 +1505,7 @@ namespace BusinessWeb
 
             if (query != null)
             {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
+                items = ApplyExpand(items, query.Expand);
 
                 ApplyQuery(ref items, query);
             }
@@ -1611,7 +1554,7 @@ namespace BusinessWeb
             try
             {
                 Context.TCollaborateurs.Add(tcollaborateur);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -1656,7 +1599,7 @@ namespace BusinessWeb
             entryToUpdate.CurrentValues.SetValues(tcollaborateur);
             entryToUpdate.State = EntityState.Modified;
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             OnAfterTCollaborateurUpdated(tcollaborateur);
 
@@ -1684,7 +1627,7 @@ namespace BusinessWeb
 
             try
             {
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -1716,14 +1659,7 @@ namespace BusinessWeb
 
             if (query != null)
             {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
+                items = ApplyExpand(items, query.Expand);
 
                 ApplyQuery(ref items, query);
             }
@@ -1772,7 +1708,7 @@ namespace BusinessWeb
             try
             {
                 Context.TLicenses.Add(tlicense);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -1817,7 +1753,7 @@ namespace BusinessWeb
             entryToUpdate.CurrentValues.SetValues(tlicense);
             entryToUpdate.State = EntityState.Modified;
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             OnAfterTLicenseUpdated(tlicense);
 
@@ -1845,7 +1781,7 @@ namespace BusinessWeb
 
             try
             {
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -1877,14 +1813,7 @@ namespace BusinessWeb
 
             if (query != null)
             {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
+                items = ApplyExpand(items, query.Expand);
 
                 ApplyQuery(ref items, query);
             }
@@ -1933,7 +1862,7 @@ namespace BusinessWeb
             try
             {
                 Context.TSocietes.Add(tsociete);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -1978,7 +1907,7 @@ namespace BusinessWeb
             entryToUpdate.CurrentValues.SetValues(tsociete);
             entryToUpdate.State = EntityState.Modified;
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             OnAfterTSocieteUpdated(tsociete);
 
@@ -2006,7 +1935,7 @@ namespace BusinessWeb
 
             try
             {
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -2038,14 +1967,7 @@ namespace BusinessWeb
 
             if (query != null)
             {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
+                items = ApplyExpand(items, query.Expand);
 
                 ApplyQuery(ref items, query);
             }
@@ -2094,7 +2016,7 @@ namespace BusinessWeb
             try
             {
                 Context.TSocieteUsers.Add(tsocieteuser);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -2139,7 +2061,7 @@ namespace BusinessWeb
             entryToUpdate.CurrentValues.SetValues(tsocieteuser);
             entryToUpdate.State = EntityState.Modified;
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             OnAfterTSocieteUserUpdated(tsocieteuser);
 
@@ -2167,7 +2089,7 @@ namespace BusinessWeb
 
             try
             {
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -2199,14 +2121,7 @@ namespace BusinessWeb
 
             if (query != null)
             {
-                if (!string.IsNullOrEmpty(query.Expand))
-                {
-                    var propertiesToExpand = query.Expand.Split(',');
-                    foreach(var p in propertiesToExpand)
-                    {
-                        items = items.Include(p.Trim());
-                    }
-                }
+                items = ApplyExpand(items, query.Expand);
 
                 ApplyQuery(ref items, query);
             }
@@ -2255,7 +2170,7 @@ namespace BusinessWeb
             try
             {
                 Context.TDepots.Add(tdepot);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
@@ -2300,7 +2215,7 @@ namespace BusinessWeb
             entryToUpdate.CurrentValues.SetValues(tdepot);
             entryToUpdate.State = EntityState.Modified;
 
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             OnAfterTDepotUpdated(tdepot);
 
@@ -2328,7 +2243,7 @@ namespace BusinessWeb
 
             try
             {
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
             }
             catch
             {
