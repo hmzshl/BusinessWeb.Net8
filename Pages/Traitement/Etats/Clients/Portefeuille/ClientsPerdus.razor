@@ -1,0 +1,161 @@
+@page "/et-clients-perdus"
+@attribute [Authorize]
+@implements IDisposable
+@if (IsLoaded)
+{
+    <Card_1 Title="CLIENTS PERDUS — ANNÉE @annee vs @(annee - 1)">
+        <RadzenContent>
+            <div class="grid-container no-border">
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Warning" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        @items.Count client(s) perdu(s) &nbsp;|&nbsp; CA Perdu : @items.Sum(x => x.CAN1).ToString("N2") @session.devise
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfNumericTextBox Width="120px" TValue="int" @bind-Value="annee" Min="2000" Max="2100" Format="####" Placeholder="Année N">
+                                    <NumericTextBoxEvents TValue="int" ValueChange="@(args => LoadData())" />
+                                </SfNumericTextBox>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="16">
+                        <Card>
+                            <div class="grid-80" style="zoom: @session.zoomLevel;">
+                                <SfGrid EnableVirtualization Height="100%" DataSource="@items"
+                                        Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })"
+                                        AllowSorting AllowResizing>
+                                    <GridPageSettings PageSize="100" />
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(ClientEvolutionItem.CAN1)" Type="AggregateType.Sum" Format="### ### ###">
+                                                    <FooterTemplate>
+                                                        @{ var s = (context as AggregateTemplateContext); <div>@s.Sum</div> }
+                                                    </FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridColumns>
+                                        <GridColumn Width="120" HeaderText="N° Client" Field="@nameof(ClientEvolutionItem.CT_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="280" HeaderText="Client" Field="@nameof(ClientEvolutionItem.CT_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="140" HeaderText="CA HT (@(annee - 1))" Field="@nameof(ClientEvolutionItem.CAN1)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as ClientEvolutionItem); }
+                                                <div style="text-align:right;">
+                                                    <span class="statustxt e-inactivecolor">@dt.CAN1.ToString("N2")</span>
+                                                </div>
+                                            </Template>
+                                        </GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+                    <GridCol Xs="24" Md="8">
+                        <Card>
+                            <div class="grid-80" style="zoom: @session.zoomLevel;">
+                                <SfChart Title="Top 20 — Clients Perdus" Width="90%" Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <ChartArea><ChartAreaBorder Width="0" /></ChartArea>
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
+                                        <ChartAxisMajorGridLines Width="0" />
+                                        <ChartAxisMajorTickLines Width="0" />
+                                    </ChartPrimaryXAxis>
+                                    <ChartPrimaryYAxis LabelFormat="N0" EdgeLabelPlacement="EdgeLabelPlacement.Shift" Visible="false">
+                                        <ChartAxisMajorTickLines Width="0" />
+                                        <ChartAxisLineStyle Width="0" />
+                                    </ChartPrimaryYAxis>
+                                    <ChartTooltipSettings Enable="true" />
+                                    <ChartSeriesCollection>
+                                        <ChartSeries DataSource="@chart_items" XName="CT_Intitule" YName="CAN1"
+                                                     Name="CA HT N-1" Width="2" ColumnSpacing="0.1"
+                                                     Type="Syncfusion.Blazor.Charts.ChartSeriesType.Bar">
+                                            <ChartMarker>
+                                                <ChartDataLabel Visible="true" Position="Syncfusion.Blazor.Charts.LabelPosition.Outer" Alignment="Syncfusion.Blazor.Charts.Alignment.Near">
+                                                    <ChartDataLabelFont FontWeight="700" Size="11" />
+                                                </ChartDataLabel>
+                                            </ChartMarker>
+                                        </ChartSeries>
+                                    </ChartSeriesCollection>
+                                </SfChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    private List<ClientEvolutionItem> items = new();
+    private List<ClientEvolutionItem> chart_items = new();
+    int annee = DateTime.Today.Year;
+    bool IsLoaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        var caN1 = db.API_V_MARGE
+            .Where(a => a.DO_Date.HasValue && a.DO_Date.Value.Year == (annee - 1))
+            .GroupBy(a => new { a.CT_Num, a.CT_Intitule })
+            .Select(g => new ClientEvolutionItem
+            {
+                CT_Num = g.Key.CT_Num,
+                CT_Intitule = g.Key.CT_Intitule,
+                CAN1 = g.Sum(x => x.DL_MontantHT) ?? 0
+            })
+            .ToList();
+
+        var setN = db.API_V_MARGE
+            .Where(a => a.DO_Date.HasValue && a.DO_Date.Value.Year == annee)
+            .Select(a => a.CT_Num)
+            .Distinct()
+            .ToHashSet();
+
+        items = caN1
+            .Where(x => !setN.Contains(x.CT_Num))
+            .OrderByDescending(x => x.CAN1)
+            .ToList();
+
+        chart_items = items.Take(20).OrderBy(x => x.CAN1).ToList();
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    public void Dispose()
+    {
+        items?.Clear();
+        chart_items?.Clear();
+        items = null;
+        chart_items = null;
+    }
+}
