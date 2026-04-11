@@ -1,4 +1,4 @@
-﻿using BusinessWeb.Data;
+using BusinessWeb.Data;
 using BusinessWeb.Models.DB;
 using BusinessWeb.Models.Enum;
 using BusinessWeb.Models.PersoAPI;
@@ -6,6 +6,7 @@ using BusinessWeb.Pages.Traitement.Outils.Tracabilite;
 using LinqToDB;
 using LinqToDB.Data;
 using LinqToDB.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -487,7 +488,7 @@ namespace BusinessWeb.Services
 			ligne.DL_MontantHT = ligne.DL_Qte * ligne.DL_PrixUnitaire;
 			ligne.DL_MontantTTC = ligne.DL_MontantHT + (((ligne.DL_Taxe1 ?? 0) / 100) * ligne.DL_MontantHT);
 		}
-		public void UpdateStock(string AR_Ref, int DE_No)
+		public async Task UpdateStock(string AR_Ref, int DE_No)
 		{
 
 			if (AR_Ref != null)

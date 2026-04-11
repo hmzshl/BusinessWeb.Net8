@@ -1,4 +1,4 @@
-﻿using AntDesign;
+using AntDesign;
 using BusinessWeb.Data;
 using BusinessWeb.Models;
 using BusinessWeb.Models.BusinessWebDB;
@@ -712,7 +712,7 @@ namespace BusinessWeb
 					var last = dt.OrderByDescending(a => a.cbMarq).FirstOrDefault();
 					rs = last != null
 						? getNextCode(last.AR_Ref)
-						: getNextCode(par.GE_ArtRacine + new string('0', par.GE_ArtLen - par.GE_ArtRacine.Length));
+						: getNextCode(par.GE_ArtRacine + new string('0', (par.GE_ArtLen ?? 15) - par.GE_ArtRacine.Length));
 				}
 				else if (FA_CodeFamille != null)
 				{
@@ -725,7 +725,7 @@ namespace BusinessWeb
 						var last = dt.OrderByDescending(a => a.cbMarq).FirstOrDefault();
 						rs = last != null
 							? getNextCode(last.AR_Ref)
-							: getNextCode(fa.FA_RacineRef + new string('0', par.GE_ArtLen - fa.FA_RacineRef.Length));
+							: getNextCode(fa.FA_RacineRef + new string('0', (par.GE_ArtLen ?? 15) - fa.FA_RacineRef.Length));
 					}
 				}
 			}

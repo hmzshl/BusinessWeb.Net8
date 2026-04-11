@@ -1,4 +1,4 @@
-﻿@using LinqToDB.EntityFrameworkCore
+@using LinqToDB.EntityFrameworkCore
 @if (IsLoaded)
 {
     <Card_1 Title="@title">
@@ -466,7 +466,7 @@ else
                                         log_lignes.Add(log_ligne);
                                         db.Database.ExecuteSqlRaw("DELETE FROM F_DOCLIGNEEMPL WHERE DL_No = {0}", lg.DL_No);
                                         db.Database.ExecuteSqlRaw("DELETE FROM F_DOCLIGNE WHERE cbMarq = {0}", lg.cbMarq);
-                                        sg.Document.UpdateStock(lg.AR_Ref, lg.DE_No ?? 0);
+                                        await sg.Document.UpdateStock(lg.AR_Ref, lg.DE_No ?? 0);
 
                                     }
 
