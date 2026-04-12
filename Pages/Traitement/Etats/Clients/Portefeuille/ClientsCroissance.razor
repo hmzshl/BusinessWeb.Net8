@@ -1,0 +1,195 @@
+@page "/et-clients-croissance"
+@attribute [Authorize]
+@implements IDisposable
+@if (IsLoaded)
+{
+    <Card_1 Title="@("CLIENTS EN CROISSANCE — ANNÉE " + annee + " vs " + (annee - 1))">
+        <RadzenContent>
+            <div class="grid-container no-border">
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Success" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        @items.Count client(s) en croissance &nbsp;|&nbsp; Gain Total : @(items.Sum(x => x.Evolution).ToString("N2"))
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfNumericTextBox Width="120px" TValue="int" @bind-Value="annee" Min="2000" Max="2100" Format="####" Placeholder="Année N">
+                                    <NumericTextBoxEvents TValue="int" ValueChange="@(args => LoadData())" />
+                                </SfNumericTextBox>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="16">
+                        <Card>
+                            <div class="grid-80" style="zoom: @session.zoomLevel;">
+                                <SfGrid EnableVirtualization Height="100%" DataSource="@items"
+                                        Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })"
+                                        AllowSorting AllowResizing>
+                                    <GridPageSettings PageSize="100" />
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(ClientEvolutionItem.CAN1)" Type="AggregateType.Sum" Format="### ### ###">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div>@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(ClientEvolutionItem.CAN)" Type="AggregateType.Sum" Format="### ### ###">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div>@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(ClientEvolutionItem.Evolution)" Type="AggregateType.Sum" Format="### ### ###">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div>@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridColumns>
+                                        <GridColumn Width="120" HeaderText="N° Client" Field="@nameof(ClientEvolutionItem.CT_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="250" HeaderText="Client" Field="@nameof(ClientEvolutionItem.CT_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="@("CA HT " + (annee - 1))" Field="@nameof(ClientEvolutionItem.CAN1)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="@("CA HT " + annee)" Field="@nameof(ClientEvolutionItem.CAN)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="Évolution" Field="@nameof(ClientEvolutionItem.Evolution)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as ClientEvolutionItem); }
+                                                <div style="text-align:right;">
+                                                    <span class="statustxt e-activecolor">+@dt.Evolution.ToString("N2") <RadzenIcon Icon="arrow_upward" /></span>
+                                                </div>
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="100" HeaderText="%" Field="@nameof(ClientEvolutionItem.EvolutionP)" Format="P2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as ClientEvolutionItem); }
+                                                <div style="text-align:right;">
+                                                    <span class="statustxt e-activecolor">@dt.EvolutionP.ToString("P2")</span>
+                                                </div>
+                                            </Template>
+                                        </GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+                    <GridCol Xs="24" Md="8">
+                        <Card>
+                            <div class="grid-80" style="zoom: @session.zoomLevel;">
+                                <SfChart Title="Top 20 — Croissance CA" Width="90%" Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <ChartArea><ChartAreaBorder Width="0" /></ChartArea>
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
+                                        <ChartAxisMajorGridLines Width="0" />
+                                        <ChartAxisMajorTickLines Width="0" />
+                                    </ChartPrimaryXAxis>
+                                    <ChartPrimaryYAxis LabelFormat="N0" EdgeLabelPlacement="EdgeLabelPlacement.Shift" Visible="false">
+                                        <ChartAxisMajorTickLines Width="0" />
+                                        <ChartAxisLineStyle Width="0" />
+                                    </ChartPrimaryYAxis>
+                                    <ChartTooltipSettings Enable="true" />
+                                    <ChartLegendSettings Visible="true" EnableHighlight="true" />
+                                    <ChartSeriesCollection>
+                                        <ChartSeries DataSource="@chart_items" XName="CT_Intitule" YName="CAN1"
+                                                     Name="CA N-1" Width="2" ColumnSpacing="0.1"
+                                                     Type="Syncfusion.Blazor.Charts.ChartSeriesType.Bar">
+                                            <ChartMarker>
+                                                <ChartDataLabel Visible="false" />
+                                            </ChartMarker>
+                                        </ChartSeries>
+                                        <ChartSeries DataSource="@chart_items" XName="CT_Intitule" YName="CAN"
+                                                     Name="CA N" Width="2" ColumnSpacing="0.1"
+                                                     Type="Syncfusion.Blazor.Charts.ChartSeriesType.Bar">
+                                            <ChartMarker>
+                                                <ChartDataLabel Visible="true" Position="Syncfusion.Blazor.Charts.LabelPosition.Outer" Alignment="Syncfusion.Blazor.Charts.Alignment.Near">
+                                                    <ChartDataLabelFont FontWeight="700" Size="11" />
+                                                </ChartDataLabel>
+                                            </ChartMarker>
+                                        </ChartSeries>
+                                    </ChartSeriesCollection>
+                                </SfChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    private List<ClientEvolutionItem> items = new();
+    private List<ClientEvolutionItem> chart_items = new();
+    int annee = DateTime.Today.Year;
+    bool IsLoaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        var caN = db.API_V_MARGE
+            .Where(a => a.DO_Date.HasValue && a.DO_Date.Value.Year == annee)
+            .GroupBy(a => new { a.CT_Num, a.CT_Intitule })
+            .Select(g => new { g.Key.CT_Num, g.Key.CT_Intitule, CA = g.Sum(x => x.DL_MontantHT) ?? 0 })
+            .ToList();
+
+        var caN1 = db.API_V_MARGE
+            .Where(a => a.DO_Date.HasValue && a.DO_Date.Value.Year == (annee - 1))
+            .GroupBy(a => new { a.CT_Num, a.CT_Intitule })
+            .Select(g => new { g.Key.CT_Num, g.Key.CT_Intitule, CA = g.Sum(x => x.DL_MontantHT) ?? 0 })
+            .ToList();
+
+        var mapN1 = caN1.ToDictionary(x => x.CT_Num);
+
+        items = caN
+            .Where(x => mapN1.ContainsKey(x.CT_Num))
+            .Select(x =>
+            {
+                var prevCA = mapN1[x.CT_Num].CA;
+                var evolution = x.CA - prevCA;
+                return new ClientEvolutionItem
+                {
+                    CT_Num = x.CT_Num,
+                    CT_Intitule = x.CT_Intitule,
+                    CAN = x.CA,
+                    CAN1 = prevCA,
+                    Evolution = evolution,
+                    EvolutionP = prevCA != 0 ? evolution / prevCA : 0
+                };
+            })
+            .Where(x => x.Evolution > 0)
+            .OrderByDescending(x => x.Evolution)
+            .ToList();
+
+        chart_items = items.Take(20).OrderBy(x => x.Evolution).ToList();
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    public void Dispose()
+    {
+        items?.Clear();
+        chart_items?.Clear();
+        items = null;
+        chart_items = null;
+    }
+}

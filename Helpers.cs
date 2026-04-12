@@ -321,6 +321,16 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Par Region", Url = "et-ca-region", TitleIcon = "analytics", SousGroupe = "Chiffre d'Affaire", HasSousGroupe = true });
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Par Affaire", Url = "et-ca-affaire", TitleIcon = "analytics", SousGroupe = "Chiffre d'Affaire", HasSousGroupe = true });
 
+			// Portefeuille Clients group
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Nouveaux Clients", Url = "et-clients-nouveaux", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Clients Perdus", Url = "et-clients-perdus", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Clients en Croissance", Url = "et-clients-croissance", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Clients en Décroissance", Url = "et-clients-decroissance", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Clients Inactifs", Url = "et-clients-inactifs", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Tableau de Rétention", Url = "et-retention-clients", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Concentration CA (Pareto)", Url = "et-concentration-ca", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Segmentation RFM", Url = "et-rfm-clients", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
+
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Comparatif Par Année", Url = "et-vente-annuel", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Comparatif Par Mois", Url = "et-vente-mensuel", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Echéances Clients", Url = "et-echeances-clients", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
