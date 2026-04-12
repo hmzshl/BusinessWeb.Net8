@@ -19,9 +19,10 @@
                         </ToolbarItem>
                         <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
                             <Template>
-                                <SfNumericTextBox Width="120px" TValue="int" @bind-Value="annee" Min="2000" Max="2100" Format="####" Placeholder="Année N">
-                                    <NumericTextBoxEvents TValue="int" ValueChange="@(args => LoadData())" />
-                                </SfNumericTextBox>
+                                <SfDropDownList TValue="int" TItem="int" Width="130px" @bind-Value="annee"
+                                                DataSource="@annees" Placeholder="Année N">
+                                    <DropDownListEvents TValue="int" TItem="int" ValueChange="@(args => LoadData())" />
+                                </SfDropDownList>
                             </Template>
                         </ToolbarItem>
                     </ToolbarItems>
@@ -130,6 +131,7 @@ else
     private List<ClientEvolutionItem> chart_items = new();
     int annee = DateTime.Today.Year;
     bool IsLoaded = false;
+    private List<int> annees = Enumerable.Range(0, 10).Select(i => DateTime.Today.Year - i).ToList();
 
     protected override async Task OnInitializedAsync()
     {

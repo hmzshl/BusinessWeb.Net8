@@ -20,123 +20,92 @@
                         </ToolbarItem>
                         <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
                             <Template>
-                                <SfNumericTextBox Width="120px" TValue="int" @bind-Value="annee"
-                                                  Min="2000" Max="2100" Format="####" Placeholder="Année N">
-                                    <NumericTextBoxEvents TValue="int" ValueChange="@(args => LoadData())" />
-                                </SfNumericTextBox>
+                                <SfDropDownList TValue="int" TItem="int" Width="130px" @bind-Value="annee"
+                                                DataSource="@annees" Placeholder="Année N">
+                                    <DropDownListEvents TValue="int" TItem="int" ValueChange="@(args => LoadData())" />
+                                </SfDropDownList>
                             </Template>
                         </ToolbarItem>
                     </ToolbarItems>
                 </SfToolbar>
-
-                <GridRow Style="margin-bottom:12px;">
+                <GridRow>
                     <GridCol Xs="12" Md="4">
-                        <Card Style="text-align:center; border-top: 4px solid #1890ff;">
-                            <div style="padding:16px 8px;">
-                                <div style="font-size:28px; font-weight:700; color:#1890ff;">@totalActifsN1</div>
-                                <div style="color:#8c8c8c; font-size:13px; text-transform:uppercase;">Clients actifs @(annee - 1)</div>
-                            </div>
-                        </Card>
+                        <StatCard3 Color="StatColor.Blue"
+                                   Value="@totalActifsN1.ToString()"
+                                   Title="@("Actifs " + (annee - 1))" 
+                                   />
                     </GridCol>
                     <GridCol Xs="12" Md="4">
-                        <Card Style="text-align:center; border-top: 4px solid #1890ff;">
-                            <div style="padding:16px 8px;">
-                                <div style="font-size:28px; font-weight:700; color:#1890ff;">@totalActifsN</div>
-                                <div style="color:#8c8c8c; font-size:13px; text-transform:uppercase;">Clients actifs @annee</div>
-                            </div>
-                        </Card>
+                        <StatCard3 Color="StatColor.Blue"
+                                   Value="@totalActifsN.ToString()"
+                                   Title="@("Actifs " + annee)" />
                     </GridCol>
                     <GridCol Xs="12" Md="4">
-                        <Card Style="text-align:center; border-top: 4px solid #52c41a;">
-                            <div style="padding:16px 8px;">
-                                <div style="font-size:28px; font-weight:700; color:#52c41a;">@nbRetenus</div>
-                                <div style="color:#8c8c8c; font-size:13px; text-transform:uppercase;">Clients retenus</div>
-                            </div>
-                        </Card>
+                        <StatCard3 Color="StatColor.Green"
+                                   Value="@nbRetenus.ToString()"
+                                   Title="Clients Retenus" />
                     </GridCol>
                     <GridCol Xs="12" Md="4">
-                        <Card Style="text-align:center; border-top: 4px solid #13c2c2;">
-                            <div style="padding:16px 8px;">
-                                <div style="font-size:28px; font-weight:700; color:#13c2c2;">@nbNouveaux</div>
-                                <div style="color:#8c8c8c; font-size:13px; text-transform:uppercase;">Nouveaux clients</div>
-                            </div>
-                        </Card>
+                        <StatCard3 Color="StatColor.Amber"
+                                   Value="@nbNouveaux.ToString()"
+                                   Title="Nouveaux Clients" />
                     </GridCol>
                     <GridCol Xs="12" Md="4">
-                        <Card Style="text-align:center; border-top: 4px solid #ff4d4f;">
-                            <div style="padding:16px 8px;">
-                                <div style="font-size:28px; font-weight:700; color:#ff4d4f;">@nbPerdus</div>
-                                <div style="color:#8c8c8c; font-size:13px; text-transform:uppercase;">Clients perdus</div>
-                            </div>
-                        </Card>
+                        <StatCard3 Color="StatColor.Red"
+                                   Value="@nbPerdus.ToString()"
+                                   Title="Clients Perdus" />
                     </GridCol>
                     <GridCol Xs="12" Md="4">
-                        <Card Style="text-align:center; border-top: 4px solid #722ed1;">
-                            <div style="padding:16px 8px;">
-                                <div style="font-size:28px; font-weight:700; color:@(tauxRetention >= 70 ? "#52c41a" : tauxRetention >= 50 ? "#faad14" : "#ff4d4f");">
-                                    @(tauxRetention.ToString("N1"))%
-                                </div>
-                                <div style="color:#8c8c8c; font-size:13px; text-transform:uppercase;">Taux de rétention</div>
-                            </div>
-                        </Card>
+                        <StatCard3 Color="@retentionColor"
+                                   Value="@(tauxRetention.ToString("N1") + "%")"
+                                   Title="Taux de Rétention" />
                     </GridCol>
                 </GridRow>
-
-                <GridRow Style="margin-bottom:12px;">
+                <GridRow>
                     <GridCol Xs="12" Md="6">
-                        <Card Style="border-top: 3px solid #52c41a;">
-                            <div style="padding:12px 16px; display:flex; justify-content:space-between; align-items:center;">
-                                <div>
-                                    <div style="font-size:12px; color:#8c8c8c; text-transform:uppercase;">CA Clients Retenus (@annee)</div>
-                                    <div style="font-size:20px; font-weight:700; color:#52c41a;">@(caRetenus.ToString("N0"))</div>
-                                </div>
-                                <RadzenIcon Icon="people" Style="font-size:32px; color:#52c41a; opacity:0.3;" />
-                            </div>
-                        </Card>
+                        <StatCard3 Color="StatColor.Green"
+                                   Value="@caRetenus.ToString("N0")"
+                                   Title="@("CA Retenus " + annee)"
+                                   ShowTrendText="true"
+                                   IsPositiveTrend="true"
+                                   TrendValue="@nbRetenus.ToString()"
+                                   TrendText="clients" />
                     </GridCol>
                     <GridCol Xs="12" Md="6">
-                        <Card Style="border-top: 3px solid #13c2c2;">
-                            <div style="padding:12px 16px; display:flex; justify-content:space-between; align-items:center;">
-                                <div>
-                                    <div style="font-size:12px; color:#8c8c8c; text-transform:uppercase;">CA Nouveaux Clients (@annee)</div>
-                                    <div style="font-size:20px; font-weight:700; color:#13c2c2;">@(caNouveaux.ToString("N0"))</div>
-                                </div>
-                                <RadzenIcon Icon="person_add" Style="font-size:32px; color:#13c2c2; opacity:0.3;" />
-                            </div>
-                        </Card>
+                        <StatCard3 Color="StatColor.Amber"
+                                   Value="@caNouveaux.ToString("N0")"
+                                   Title="@("CA Nouveaux " + annee)"
+                                   ShowTrendText="true"
+                                   IsPositiveTrend="true"
+                                   TrendValue="@nbNouveaux.ToString()"
+                                   TrendText="clients" />
                     </GridCol>
                     <GridCol Xs="12" Md="6">
-                        <Card Style="border-top: 3px solid #ff4d4f;">
-                            <div style="padding:12px 16px; display:flex; justify-content:space-between; align-items:center;">
-                                <div>
-                                    <div style="font-size:12px; color:#8c8c8c; text-transform:uppercase;">CA Perdu (@(annee-1) → absent @annee)</div>
-                                    <div style="font-size:20px; font-weight:700; color:#ff4d4f;">@(caPerdus.ToString("N0"))</div>
-                                </div>
-                                <RadzenIcon Icon="person_remove" Style="font-size:32px; color:#ff4d4f; opacity:0.3;" />
-                            </div>
-                        </Card>
+                        <StatCard3 Color="StatColor.Red"
+                                   Value="@caPerdus.ToString("N0")"
+                                   Title="@("CA Perdu (abs. " + annee + ")")"
+                                   ShowTrendText="true"
+                                   IsPositiveTrend="false"
+                                   TrendValue="@nbPerdus.ToString()"
+                                   TrendText="clients" />
                     </GridCol>
                     <GridCol Xs="12" Md="6">
-                        <Card>
-                            <div style="padding:12px 16px; display:flex; justify-content:space-between; align-items:center;">
-                                <div>
-                                    <div style="font-size:12px; color:#8c8c8c; text-transform:uppercase;">Balance CA nette (Nouveaux − Perdus)</div>
-                                    <div style="font-size:20px; font-weight:700; color:@(caNette >= 0 ? "#52c41a" : "#ff4d4f");">
-                                        @(caNette >= 0 ? "+" : "")@(caNette.ToString("N0"))
-                                    </div>
-                                </div>
-                                <RadzenIcon Icon="@(caNette >= 0 ? "trending_up" : "trending_down")"/>
-                            </div>
-                        </Card>
+                        <StatCard3 Color="@(caNette >= 0 ? StatColor.Green : StatColor.Red)"
+                                   Value="@((caNette >= 0 ? "+" : "") + caNette.ToString("N0"))"
+                                   Title="Balance CA Nette"
+                                   ShowTrendText="true"
+                                   IsPositiveTrend="@(caNette >= 0)"
+                                   TrendValue="@(tauxAcquisition.ToString("N1") + "%")"
+                                   TrendText="taux acquisition" />
                     </GridCol>
                 </GridRow>
 
                 <GridRow>
-                    <GridCol Xs="24" Md="14">
+                    <GridCol Xs="24">
                         <Card>
                             <div style="zoom: @session.zoomLevel;">
-                                <SfChart Title="Répartition CA par catégorie" Width="100%"
-                                         Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="320px">
+                                <SfChart Title="Répartition CA par catégorie clients" Width="100%"
+                                         Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="280px">
                                     <ChartArea><ChartAreaBorder Width="0" /></ChartArea>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
                                         <ChartAxisMajorGridLines Width="0" />
@@ -150,36 +119,15 @@
                                     <ChartSeriesCollection>
                                         <ChartSeries DataSource="@caChart" XName="Label" YName="Value"
                                                      Name="CA" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column"
-                                                     Width="2" ColumnSpacing="0.3">
+                                                     Width="2" ColumnSpacing="0.5">
                                             <ChartMarker>
                                                 <ChartDataLabel Visible="true" Position="Syncfusion.Blazor.Charts.LabelPosition.Top">
-                                                    <ChartDataLabelFont FontWeight="700" Size="11" />
+                                                    <ChartDataLabelFont FontWeight="700" Size="12" />
                                                 </ChartDataLabel>
                                             </ChartMarker>
                                         </ChartSeries>
                                     </ChartSeriesCollection>
                                 </SfChart>
-                            </div>
-                        </Card>
-                    </GridCol>
-                    <GridCol Xs="24" Md="10">
-                        <Card>
-                            <div style="padding:16px;">
-                                <div style="font-weight:600; margin-bottom:12px; font-size:14px; color:#595959;">TAUX CLÉS</div>
-                                @foreach (var kpi in tauxKpis)
-                                {
-                                    <div style="margin-bottom:10px;">
-                                        <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                                            <span style="font-size:13px;">@kpi.Label</span>
-                                            <span style="font-weight:700; color:@kpi.Color;">@(kpi.Value.ToString("N1"))%</span>
-                                        </div>
-                                        <SfProgressBar Type="Syncfusion.Blazor.ProgressBar.ProgressType.Linear" Value="@((double)kpi.Value)"
-                                                       Minimum="0" Maximum="100" Height="8px"
-                                                       TrackThickness="8" ProgressThickness="8"
-                                                       TrackColor="#f0f0f0" ProgressColor="@kpi.Color">
-                                        </SfProgressBar>
-                                    </div>
-                                }
                             </div>
                         </Card>
                     </GridCol>
@@ -200,19 +148,19 @@ else
     int annee = DateTime.Today.Year;
     bool IsLoaded = false;
 
+    private List<int> annees = Enumerable.Range(0, 10).Select(i => DateTime.Today.Year - i).ToList();
     private string PageTitle => "RÉTENTION CLIENTS — " + annee + " vs " + (annee - 1);
 
-    // KPI fields
     int totalActifsN1, totalActifsN, nbRetenus, nbNouveaux, nbPerdus;
     decimal caRetenus, caNouveaux, caPerdus, caNette;
     decimal tauxRetention, tauxChurn, tauxAcquisition;
 
-    // Chart data
-    private class ChartPoint { public string Label { get; set; } public decimal Value { get; set; } }
-    private class KpiBar    { public string Label { get; set; } public decimal Value { get; set; } public string Color { get; set; } }
+    private StatColor retentionColor => tauxRetention >= 70 ? StatColor.Green
+                                      : tauxRetention >= 50 ? StatColor.Amber
+                                      : StatColor.Red;
 
-    private List<ChartPoint> caChart   = new();
-    private List<KpiBar>     tauxKpis  = new();
+    private class ChartPoint { public string Label { get; set; } public decimal Value { get; set; } }
+    private List<ChartPoint> caChart = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -241,32 +189,25 @@ else
             .ToDictionary(x => x.CT_Num, x => x.CA);
 
         totalActifsN1 = dataN1.Count;
-        totalActifsN  = dataN.Count;
-        nbRetenus     = dataN1.Keys.Count(k => dataN.ContainsKey(k));
-        nbNouveaux    = dataN.Keys.Count(k =>  !dataN1.ContainsKey(k));
-        nbPerdus      = dataN1.Keys.Count(k => !dataN.ContainsKey(k));
+        totalActifsN = dataN.Count;
+        nbRetenus = dataN1.Keys.Count(k => dataN.ContainsKey(k));
+        nbNouveaux = dataN.Keys.Count(k => !dataN1.ContainsKey(k));
+        nbPerdus = dataN1.Keys.Count(k => !dataN.ContainsKey(k));
 
-        caRetenus  = dataN.Where(x =>  dataN1.ContainsKey(x.Key)).Sum(x => x.Value);
+        caRetenus = dataN.Where(x => dataN1.ContainsKey(x.Key)).Sum(x => x.Value);
         caNouveaux = dataN.Where(x => !dataN1.ContainsKey(x.Key)).Sum(x => x.Value);
-        caPerdus   = dataN1.Where(x => !dataN.ContainsKey(x.Key)).Sum(x => x.Value);
-        caNette    = caNouveaux - caPerdus;
+        caPerdus = dataN1.Where(x => !dataN.ContainsKey(x.Key)).Sum(x => x.Value);
+        caNette = caNouveaux - caPerdus;
 
-        tauxRetention   = totalActifsN1 > 0 ? Math.Round((decimal)nbRetenus  / totalActifsN1 * 100, 1) : 0;
-        tauxChurn       = totalActifsN1 > 0 ? Math.Round((decimal)nbPerdus   / totalActifsN1 * 100, 1) : 0;
-        tauxAcquisition = totalActifsN  > 0 ? Math.Round((decimal)nbNouveaux / totalActifsN  * 100, 1) : 0;
+        tauxRetention = totalActifsN1 > 0 ? Math.Round((decimal)nbRetenus / totalActifsN1 * 100, 1) : 0;
+        tauxChurn = totalActifsN1 > 0 ? Math.Round((decimal)nbPerdus / totalActifsN1 * 100, 1) : 0;
+        tauxAcquisition = totalActifsN > 0 ? Math.Round((decimal)nbNouveaux / totalActifsN * 100, 1) : 0;
 
         caChart = new List<ChartPoint>
         {
             new() { Label = "Retenus",  Value = caRetenus  },
             new() { Label = "Nouveaux", Value = caNouveaux },
             new() { Label = "Perdus",   Value = caPerdus   }
-        };
-
-        tauxKpis = new List<KpiBar>
-        {
-            new() { Label = "Taux de rétention",   Value = tauxRetention,   Color = tauxRetention >= 70 ? "#52c41a" : "#faad14" },
-            new() { Label = "Taux de churn",        Value = tauxChurn,       Color = tauxChurn    <= 20 ? "#52c41a" : "#ff4d4f" },
-            new() { Label = "Taux d'acquisition",   Value = tauxAcquisition, Color = "#13c2c2" }
         };
 
         IsLoaded = true;

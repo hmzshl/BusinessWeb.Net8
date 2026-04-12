@@ -213,16 +213,16 @@ namespace BusinessWeb
 			// MATERIELS - with subgroup for Entretien
 			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Liste des materiels", Url = "materiels", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Pointage journalier", Url = "pointage-materiel", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Consommation gasoil", Url = "entretien/0", TitleIcon = "dataset", SousGroupe = "Entretien", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Assurance", Url = "entretien/1", TitleIcon = "dataset", SousGroupe = "Entretien", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Vignette", Url = "entretien/2", TitleIcon = "dataset", SousGroupe = "Entretien", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Visite technique", Url = "entretien/3", TitleIcon = "dataset", SousGroupe = "Entretien", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Vidange", Url = "entretien/6", TitleIcon = "dataset", SousGroupe = "Entretien", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Entretien et réparation", Url = "entretien/7", TitleIcon = "dataset", SousGroupe = "Entretien", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Carnet de circulation", Url = "entretien/10", TitleIcon = "dataset", SousGroupe = "Entretien", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Carnet du disque", Url = "entretien/11", TitleIcon = "dataset", SousGroupe = "Entretien", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Taxe sur tonnage", Url = "entretien/12", TitleIcon = "dataset", SousGroupe = "Entretien", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Maintenance des extincteurs", Url = "entretien/13", TitleIcon = "dataset", SousGroupe = "Entretien", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Consommation gasoil", Url = "entretien/0", TitleIcon = "dataset", SousGroupe = "▶ Entretien", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Assurance", Url = "entretien/1", TitleIcon = "dataset", SousGroupe = "▶ Entretien", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Vignette", Url = "entretien/2", TitleIcon = "dataset", SousGroupe = "▶ Entretien", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Visite technique", Url = "entretien/3", TitleIcon = "dataset", SousGroupe = "▶ Entretien", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Vidange", Url = "entretien/6", TitleIcon = "dataset", SousGroupe = "▶ Entretien", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Entretien et réparation", Url = "entretien/7", TitleIcon = "dataset", SousGroupe = "▶ Entretien", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Carnet de circulation", Url = "entretien/10", TitleIcon = "dataset", SousGroupe = "▶ Entretien", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Carnet du disque", Url = "entretien/11", TitleIcon = "dataset", SousGroupe = "▶ Entretien", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Taxe sur tonnage", Url = "entretien/12", TitleIcon = "dataset", SousGroupe = "▶ Entretien", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Maintenance des extincteurs", Url = "entretien/13", TitleIcon = "dataset", SousGroupe = "▶ Entretien", HasSousGroupe = true });
 
 			// PERSONNELS
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Liste des personnels", Url = "personnels", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
@@ -232,9 +232,9 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Documents de sorties", Url = "fabrication-sorties", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Traitement", Description = "Nomenclatures", Url = "fabrication-nomenclatures", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 
-			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Pointage par personnel", Url = "depots", TitleIcon = "analytics", SousGroupe = "Rapports Pointage", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Pointage par projet", Url = "", TitleIcon = "analytics", SousGroupe = "Rapports Pointage", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Recap pointange par personnel", Url = "", TitleIcon = "analytics", SousGroupe = "Rapports Pointage", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Pointage par personnel", Url = "depots", TitleIcon = "analytics", SousGroupe = "▶ Rapports Pointage", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Pointage par projet", Url = "", TitleIcon = "analytics", SousGroupe = "▶ Rapports Pointage", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Recap pointange par personnel", Url = "", TitleIcon = "analytics", SousGroupe = "▶ Rapports Pointage", HasSousGroupe = true });
 
 			// CAISSE
 			list.Add(new AuthItems { SelectedAPP = 7, Title = "Structure", Description = "Caisse", Url = "caisses", TitleIcon = "account_balance", SousGroupe = "", HasSousGroupe = false });
@@ -300,81 +300,79 @@ namespace BusinessWeb
 
 			// ETATS - with subgroups for repetitive items
 			// Ventes - Single items
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Liste des clients", Url = "clients", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Relevé documents ventes", Url = "releve-ventes", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Balance agée", Url = "et-balanceagee-client", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Réglements clients", Url = "reglements-clients", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Clients", Url = "clients", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Relevé documents", Url = "releve-ventes", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Balance âgée", Url = "et-balanceagee-client", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Réglements", Url = "reglements-clients", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
 
 			// Tableaux de Bord group
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Tableau de bord Journalier", Url = "tb-commercial-journalier", TitleIcon = "analytics", SousGroupe = "Tableaux de Bord", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Tableau de bord Mensuel", Url = "tb-commercial-mensuel", TitleIcon = "analytics", SousGroupe = "Tableaux de Bord", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Tableau de bord Annuel", Url = "tb-commercial-annuel", TitleIcon = "analytics", SousGroupe = "Tableaux de Bord", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Tableau de bord Global", Url = "tb-commercial-global", TitleIcon = "analytics", SousGroupe = "Tableaux de Bord", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "TDB Journalier", Url = "tb-commercial-journalier", TitleIcon = "analytics", SousGroupe = "▶ Tableaux de Bord", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "TDB Mensuel", Url = "tb-commercial-mensuel", TitleIcon = "analytics", SousGroupe = "▶ Tableaux de Bord", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "TDB Annuel", Url = "tb-commercial-annuel", TitleIcon = "analytics", SousGroupe = "▶ Tableaux de Bord", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "TDB Global", Url = "tb-commercial-global", TitleIcon = "analytics", SousGroupe = "▶ Tableaux de Bord", HasSousGroupe = true });
 
 			// Chiffre d'affaire group
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Par Journée", Url = "et-ca-journee", TitleIcon = "analytics", SousGroupe = "Chiffre d'Affaire", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Par Mois", Url = "et-ca-mois", TitleIcon = "analytics", SousGroupe = "Chiffre d'Affaire", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Par Client", Url = "et-ca-client", TitleIcon = "analytics", SousGroupe = "Chiffre d'Affaire", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Par Article", Url = "et-ca-article", TitleIcon = "analytics", SousGroupe = "Chiffre d'Affaire", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Par Représentant", Url = "et-ca-representant", TitleIcon = "analytics", SousGroupe = "Chiffre d'Affaire", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Par Famille", Url = "et-ca-famille", TitleIcon = "analytics", SousGroupe = "Chiffre d'Affaire", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Par Region", Url = "et-ca-region", TitleIcon = "analytics", SousGroupe = "Chiffre d'Affaire", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Par Affaire", Url = "et-ca-affaire", TitleIcon = "analytics", SousGroupe = "Chiffre d'Affaire", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "CA / Journée", Url = "et-ca-journee", TitleIcon = "analytics", SousGroupe = "▶ Chiffre d'Affaire", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "CA / Mois", Url = "et-ca-mois", TitleIcon = "analytics", SousGroupe = "▶ Chiffre d'Affaire", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "CA / Client", Url = "et-ca-client", TitleIcon = "analytics", SousGroupe = "▶ Chiffre d'Affaire", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "CA / Article", Url = "et-ca-article", TitleIcon = "analytics", SousGroupe = "▶ Chiffre d'Affaire", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "CA / Représentant", Url = "et-ca-representant", TitleIcon = "analytics", SousGroupe = "▶ Chiffre d'Affaire", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "CA / Famille", Url = "et-ca-famille", TitleIcon = "analytics", SousGroupe = "▶ Chiffre d'Affaire", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "CA / Région", Url = "et-ca-region", TitleIcon = "analytics", SousGroupe = "▶ Chiffre d'Affaire", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "CA / Affaire", Url = "et-ca-affaire", TitleIcon = "analytics", SousGroupe = "▶ Chiffre d'Affaire", HasSousGroupe = true });
 
 			// Portefeuille Clients group
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Nouveaux Clients", Url = "et-clients-nouveaux", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Clients Perdus", Url = "et-clients-perdus", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Clients en Croissance", Url = "et-clients-croissance", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Clients en Décroissance", Url = "et-clients-decroissance", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Clients Inactifs", Url = "et-clients-inactifs", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Tableau de Rétention", Url = "et-retention-clients", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Concentration CA (Pareto)", Url = "et-concentration-ca", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Segmentation RFM", Url = "et-rfm-clients", TitleIcon = "analytics", SousGroupe = "Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Nouveaux clients", Url = "et-clients-nouveaux", TitleIcon = "analytics", SousGroupe = "▶ Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Clients perdus", Url = "et-clients-perdus", TitleIcon = "analytics", SousGroupe = "▶ Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "En croissance", Url = "et-clients-croissance", TitleIcon = "analytics", SousGroupe = "▶ Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "En décroissance", Url = "et-clients-decroissance", TitleIcon = "analytics", SousGroupe = "▶ Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Inactifs", Url = "et-clients-inactifs", TitleIcon = "analytics", SousGroupe = "▶ Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Rétention", Url = "et-retention-clients", TitleIcon = "analytics", SousGroupe = "▶ Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Concentration CA", Url = "et-concentration-ca", TitleIcon = "analytics", SousGroupe = "▶ Portefeuille Clients", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Segmentation RFM", Url = "et-rfm-clients", TitleIcon = "analytics", SousGroupe = "▶ Portefeuille Clients", HasSousGroupe = true });
 
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Comparatif Par Année", Url = "et-vente-annuel", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Comparatif Par Mois", Url = "et-vente-mensuel", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Echéances Clients", Url = "et-echeances-clients", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
+			// Articles group (sous Ventes)
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Articles", Url = "et-articles", TitleIcon = "analytics", SousGroupe = "▶ Articles", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Stock global", Url = "et-stock-global-article", TitleIcon = "analytics", SousGroupe = "▶ Articles", HasSousGroupe = true });
+
+			// Collaborateurs group (sous Ventes)
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Collaborateurs", Url = "et-collaborateurs", TitleIcon = "analytics", SousGroupe = "▶ Collaborateurs", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Charges", Url = "et-frais", TitleIcon = "analytics", SousGroupe = "▶ Collaborateurs", HasSousGroupe = true });
+
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Comparatif annuel", Url = "et-vente-annuel", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Comparatif mensuel", Url = "et-vente-mensuel", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Echéances", Url = "et-echeances-clients", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
 			//Div
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Prévisionnel", Url = "et-ca-prev", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
-			//list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "Chiffre d'affaire Prévisionnel Détaillé", Url = "et-ca-prev-detailed", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "CA Prévisionnel", Url = "et-ca-prev", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
+			//list.Add(new AuthItems { SelectedAPP = 14, Title = "Ventes", Description = "CA Prévisionnel détaillé", Url = "et-ca-prev-detailed", TitleIcon = "analytics", SousGroupe = "", HasSousGroupe = false });
 
 			// Achats
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Liste des fournisseurs", Url = "fournisseurs", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Relevé documents achats", Url = "releve-achats", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Balance agée", Url = "et-balanceagee-fournisseur", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Réglements fournisseurs", Url = "reglements-fournisseurs", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Fournisseurs", Url = "fournisseurs", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Relevé documents", Url = "releve-achats", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Balance âgée", Url = "et-balanceagee-fournisseur", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Réglements", Url = "reglements-fournisseurs", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
 
 			// Tableaux de bord Achats group
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Tableau de bord Journalier", Url = "tb-achat-journalier", TitleIcon = "local_grocery_store", SousGroupe = "Tableaux de Bord Achats", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Tableau de bord Mensuel", Url = "tb-achat-mensuel", TitleIcon = "local_grocery_store", SousGroupe = "Tableaux de Bord Achats", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Tableau de bord Annuel", Url = "tb-achat-annuel", TitleIcon = "local_grocery_store", SousGroupe = "Tableaux de Bord Achats", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Tableau de bord Global", Url = "tb-achat-global", TitleIcon = "local_grocery_store", SousGroupe = "Tableaux de Bord Achats", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "TDB Journalier", Url = "tb-achat-journalier", TitleIcon = "local_grocery_store", SousGroupe = "▶ Tableaux de Bord Achats", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "TDB Mensuel", Url = "tb-achat-mensuel", TitleIcon = "local_grocery_store", SousGroupe = "▶ Tableaux de Bord Achats", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "TDB Annuel", Url = "tb-achat-annuel", TitleIcon = "local_grocery_store", SousGroupe = "▶ Tableaux de Bord Achats", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "TDB Global", Url = "tb-achat-global", TitleIcon = "local_grocery_store", SousGroupe = "▶ Tableaux de Bord Achats", HasSousGroupe = true });
 
 			// Achats analysis group
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats Par Journée", Url = "et-achat-journee", TitleIcon = "local_grocery_store", SousGroupe = "Analyse Achats", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats Par Mois", Url = "et-achat-mois", TitleIcon = "local_grocery_store", SousGroupe = "Analyse Achats", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats Par Fournisseur", Url = "et-achat-client", TitleIcon = "local_grocery_store", SousGroupe = "Analyse Achats", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats Par Article", Url = "et-achat-article", TitleIcon = "local_grocery_store", SousGroupe = "Analyse Achats", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats Par Acheteur", Url = "et-achat-representant", TitleIcon = "local_grocery_store", SousGroupe = "Analyse Achats", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats Par Famille", Url = "et-achat-famille", TitleIcon = "local_grocery_store", SousGroupe = "Analyse Achats", HasSousGroupe = true });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats Par Affaire", Url = "et-achat-affaire", TitleIcon = "local_grocery_store", SousGroupe = "Analyse Achats", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats / Journée", Url = "et-achat-journee", TitleIcon = "local_grocery_store", SousGroupe = "▶ Analyse Achats", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats / Mois", Url = "et-achat-mois", TitleIcon = "local_grocery_store", SousGroupe = "▶ Analyse Achats", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats / Fournisseur", Url = "et-achat-client", TitleIcon = "local_grocery_store", SousGroupe = "▶ Analyse Achats", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats / Article", Url = "et-achat-article", TitleIcon = "local_grocery_store", SousGroupe = "▶ Analyse Achats", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats / Acheteur", Url = "et-achat-representant", TitleIcon = "local_grocery_store", SousGroupe = "▶ Analyse Achats", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats / Famille", Url = "et-achat-famille", TitleIcon = "local_grocery_store", SousGroupe = "▶ Analyse Achats", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Achats / Affaire", Url = "et-achat-affaire", TitleIcon = "local_grocery_store", SousGroupe = "▶ Analyse Achats", HasSousGroupe = true });
 
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Comparatif Par Année", Url = "et-achat-annuel", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Comparatif Par Mois", Url = "et-achat-mensuel", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Echéances Fournisseurs", Url = "et-echeances-fournisseurs", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
-
-			// Articles
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Articles", Description = "Liste des articles", Url = "et-articles", TitleIcon = "category", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Articles", Description = "Chiffre d'affaire Par Article", Url = "et-ca-article", TitleIcon = "category", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Articles", Description = "Stock global par date", Url = "et-stock-global-article", TitleIcon = "category", SousGroupe = "", HasSousGroupe = false });
-
-			// Collaborateurs
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Collaborateurs", Description = "Liste des collaborateurs", Url = "et-collaborateurs", TitleIcon = "supervisor_account", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Collaborateurs", Description = "Chiffre d'affaire Par Représentant", Url = "et-ca-representant", TitleIcon = "supervisor_account", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Collaborateurs", Description = "Charges collaborateurs", Url = "et-frais", TitleIcon = "supervisor_account", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Comparatif annuel", Url = "et-achat-annuel", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Comparatif mensuel", Url = "et-achat-mensuel", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Achats", Description = "Echéances", Url = "et-echeances-fournisseurs", TitleIcon = "local_grocery_store", SousGroupe = "", HasSousGroupe = false });
 
 			// Projets
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Projets", Description = "Liste des projets", Url = "et-affaires", TitleIcon = "work", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Projets", Description = "Projets", Url = "et-affaires", TitleIcon = "work", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Projets", Description = "Avancement travaux", Url = "", TitleIcon = "work", SousGroupe = "", HasSousGroupe = false });
 
 			// OUTILS
