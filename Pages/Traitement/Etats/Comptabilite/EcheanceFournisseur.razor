@@ -44,7 +44,7 @@
                     <GridCol Xs="12" Md="3">
                         <StatCard3 Color="StatColor.Red"
                                    Value="@items.Count(x => x.Priorite == "Urgent").ToString()"
-                                   Title="Urgents (> 30j retard)" />
+                                   Title="> 30j retard" />
                     </GridCol>
                     <GridCol Xs="12" Md="3">
                         <StatCard3 Color="StatColor.Amber"
@@ -54,7 +54,7 @@
                     <GridCol Xs="12" Md="3">
                         <StatCard3 Color="StatColor.Blue"
                                    Value="@items.Count(x => x.Priorite == "Proche").ToString()"
-                                   Title="Échéance proche (< 30j)" />
+                                   Title="< 30j" />
                     </GridCol>
                     <GridCol Xs="12" Md="3">
                         <StatCard3 Color="StatColor.Green"
@@ -74,7 +74,7 @@
                     <GridCol Xs="12" Md="3">
                         <StatCard3 Color="StatColor.Purple"
                                    Value="@(items.Sum(x => x.Penalite).ToString("N2"))"
-                                   Title="Total pénalités estimées" />
+                                   Title="Total pénalités" />
                     </GridCol>
                     <GridCol Xs="12" Md="3">
                         <StatCard3 Color="StatColor.Blue"
@@ -143,7 +143,7 @@
                                         <GridColumn Width="65"  HeaderText="Journal" Field="@nameof(EchFournItem.JO_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
                                         <GridColumn Width="180" HeaderText="Fournisseur" Field="@nameof(EchFournItem.CT_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
                                         <GridColumn Width="100" HeaderText="Compte" Field="@nameof(EchFournItem.CG_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
-                                        <GridColumn Width="300" HeaderText="Libellé" Field="@nameof(EchFournItem.EC_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="300" HeaderText="Libellé" Field="@nameof(EchFournItem.EC_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
                                         <GridColumn Width="100" HeaderText="Montant" Field="@nameof(EchFournItem.Montant)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
                                         <GridColumn Width="100" HeaderText="Pénalité est." Field="@nameof(EchFournItem.Penalite)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
                                             <Template>
