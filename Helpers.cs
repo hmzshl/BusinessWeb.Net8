@@ -464,6 +464,8 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 8, Title = "Écritures", Description = "Journal", Url = "cpt-journal", TitleIcon = "book", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 8, Title = "Écritures", Description = "Lettrage", Url = "cpt-lettrage", TitleIcon = "link", SousGroupe = "", HasSousGroupe = false });
 
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "Fournisseurs", Description = "Échéances à payer", Url = "cpt-echeances-fourn", TitleIcon = "schedule_send", SousGroupe = "", HasSousGroupe = false });
+
 			return list;
 		}
 		public string getTiers(int type)

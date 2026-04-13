@@ -23,10 +23,17 @@
                         </ToolbarItem>
                         <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
                             <Template>
-                                <SfDropDownList TValue="int" TItem="int" Width="130px" @bind-Value="annee"
-                                                DataSource="@annees" Placeholder="Année">
-                                    <DropDownListEvents TValue="int" TItem="int" ValueChange="@(args => LoadData())" />
-                                </SfDropDownList>
+                                <div style="display:flex; gap:8px; align-items:center;">
+                                    <SfDropDownList TValue="int" TItem="int" Width="130px" @bind-Value="annee"
+                                                    DataSource="@annees" Placeholder="Année">
+                                        <DropDownListEvents TValue="int" TItem="int" ValueChange="@(args => LoadData())" />
+                                    </SfDropDownList>
+                                    <SfDropDownList TValue="int" TItem="RgTypeOption" Width="160px" @bind-Value="typeFilter"
+                                                    DataSource="@typeOptions">
+                                        <DropDownListFieldSettings Value="Val" Text="Label" />
+                                        <DropDownListEvents TValue="int" TItem="RgTypeOption" ValueChange="@(args => ApplyFilter())" />
+                                    </SfDropDownList>
+                                </div>
                             </Template>
                         </ToolbarItem>
                     </ToolbarItems>
@@ -174,8 +181,16 @@ else
     private List<RgTiersItem>   topTiers    = new();
 
     int annee = DateTime.Today.Year;
+    int typeFilter = 0;
     bool IsLoaded = false;
     private List<int> annees = Enumerable.Range(0, 10).Select(i => DateTime.Today.Year - i).ToList();
+
+    private class RgTypeOption  { public int Val { get; set; } public string Label { get; set; } }
+    private List<RgTypeOption> typeOptions = new()
+    {
+        new RgTypeOption { Val = 0,  Label = "Clients" },
+        new RgTypeOption { Val = 1,  Label = "Fournisseurs" }
+    };
 
     private class RgModeItem   { public string Mode { get; set; } public decimal Montant { get; set; } }
     private class RgTypeItem   { public string TypeLabel { get; set; } public decimal Montant { get; set; } }
@@ -210,7 +225,22 @@ else
         clientItems = allItems.Where(r => r.RG_Type == 0).ToList();
         fournItems  = allItems.Where(r => r.RG_Type == 1).ToList();
 
-        parMode = allItems
+        ApplyFilter();
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    private void ApplyFilter()
+    {
+        var src = typeFilter switch
+        {
+            0  => clientItems,
+            1  => fournItems,
+            _  => allItems
+        };
+
+        parMode = src
             .Where(r => !string.IsNullOrEmpty(r.R_Intitule))
             .GroupBy(r => r.R_Intitule)
             .Select(g => new RgModeItem { Mode = g.Key, Montant = g.Sum(x => x.RG_Montant ?? 0) })
@@ -219,8 +249,8 @@ else
 
         parType = new List<RgTypeItem>
         {
-            new RgTypeItem { TypeLabel = "Clients",       Montant = clientItems.Sum(x => x.RG_Montant ?? 0) },
-            new RgTypeItem { TypeLabel = "Fournisseurs",  Montant = fournItems.Sum(x => x.RG_Montant ?? 0) }
+            new RgTypeItem { TypeLabel = "Clients",      Montant = (typeFilter == 1 ? 0 : clientItems.Sum(x => x.RG_Montant ?? 0)) },
+            new RgTypeItem { TypeLabel = "Fournisseurs", Montant = (typeFilter == 0 ? 0 : fournItems.Sum(x => x.RG_Montant ?? 0)) }
         };
 
         var moisLabels = new[] { "Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc" };
@@ -229,7 +259,8 @@ else
             .Select(m => new RgMensuelItem
             {
                 Mois    = moisLabels[m - 1],
-                Montant = clientItems.Where(r => r.RG_Date.HasValue && r.RG_Date.Value.Month == m)
+                Montant = typeFilter == 1 ? 0 :
+                          clientItems.Where(r => r.RG_Date.HasValue && r.RG_Date.Value.Month == m)
                                      .Sum(x => x.RG_Montant ?? 0)
             })
             .ToList();
@@ -238,12 +269,13 @@ else
             .Select(m => new RgMensuelItem
             {
                 Mois    = moisLabels[m - 1],
-                Montant = fournItems.Where(r => r.RG_Date.HasValue && r.RG_Date.Value.Month == m)
+                Montant = typeFilter == 0 ? 0 :
+                          fournItems.Where(r => r.RG_Date.HasValue && r.RG_Date.Value.Month == m)
                                     .Sum(x => x.RG_Montant ?? 0)
             })
             .ToList();
 
-        topTiers = allItems
+        topTiers = src
             .GroupBy(r => new { r.CT_Intitule, r.RG_Type })
             .Select(g => new RgTiersItem
             {
@@ -256,9 +288,6 @@ else
             .OrderByDescending(x => x.TotalMontant)
             .Take(30)
             .ToList();
-
-        IsLoaded = true;
-        await Task.Delay(300);
     }
 
     public void Dispose()

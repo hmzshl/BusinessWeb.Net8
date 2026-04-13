@@ -157,7 +157,7 @@ else
     private List<ImpayeTiersItem>  parTiers = new();
 
     int annee = DateTime.Today.Year;
-    string typeFilter = null;
+    string typeFilter = "Client";
     bool IsLoaded = false;
 
     private List<int> annees = Enumerable.Range(0, 10).Select(i => DateTime.Today.Year - i).ToList();
@@ -193,7 +193,7 @@ else
             .Take(10)
             .ToList();
 
-        typeFilter = null;
+        //typeFilter = null;
         ApplyFilter();
 
         IsLoaded = true;

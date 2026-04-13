@@ -161,7 +161,7 @@ else
     private List<TrimItem>         trimestreData = new();
 
     int annee     = DateTime.Today.Year;
-    int typeFilter = -1;
+    int typeFilter = 0;
     bool IsLoaded = false;
 
     private List<int> annees = Enumerable.Range(0, 10).Select(i => DateTime.Today.Year - i).ToList();
@@ -169,7 +169,6 @@ else
     private class RgTypeOption { public int Val { get; set; } public string Label { get; set; } }
     private List<RgTypeOption> typeOptions = new()
     {
-        new RgTypeOption { Val = -1, Label = "Tous" },
         new RgTypeOption { Val = 0,  Label = "Clients" },
         new RgTypeOption { Val = 1,  Label = "Fournisseurs" }
     };
