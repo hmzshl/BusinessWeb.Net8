@@ -1,0 +1,238 @@
+@page "/cpt-lettrage"
+@attribute [Authorize]
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="@("SUIVI DU LETTRAGE — " + annee)">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        @filteredItems.Count écriture(s) &nbsp;|&nbsp;
+                                        Non lettrés : @items.Count(x => x.EC_Lettre == 0) &nbsp;|&nbsp;
+                                        Partiels : @items.Count(x => x.EC_Lettre == 1) &nbsp;|&nbsp;
+                                        Lettrés : @items.Count(x => x.EC_Lettre == 2)
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <div style="display:flex; gap:8px; align-items:center;">
+                                    <SfDropDownList TValue="int" TItem="int" Width="130px" @bind-Value="annee"
+                                                    DataSource="@annees" Placeholder="Année">
+                                        <DropDownListEvents TValue="int" TItem="int" ValueChange="@(args => LoadData())" />
+                                    </SfDropDownList>
+                                    <SfDropDownList TValue="short?" TItem="LettreOption" Width="160px" @bind-Value="lettreFilter"
+                                                    DataSource="@lettreOptions" Placeholder="Tous"
+                                                    ShowClearButton="true">
+                                        <DropDownListFieldSettings Value="Val" Text="Label" />
+                                        <DropDownListEvents TValue="short?" TItem="LettreOption" ValueChange="@(args => ApplyFilter())" />
+                                    </SfDropDownList>
+                                </div>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <GridRow Style="margin-bottom:12px;">
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Blue"
+                                   Value="@items.Count.ToString()"
+                                   Title="Total écritures" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Red"
+                                   Value="@items.Count(x => x.EC_Lettre == 0).ToString()"
+                                   Title="Non lettrés" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Amber"
+                                   Value="@items.Count(x => x.EC_Lettre == 1).ToString()"
+                                   Title="Partiels" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Green"
+                                   Value="@items.Count(x => x.EC_Lettre == 2).ToString()"
+                                   Title="Lettrés" />
+                    </GridCol>
+                </GridRow>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="16">
+                        <Card>
+                            <div class="grid-67" style="zoom: @session.zoomLevel;">
+                                <SfGrid Height="100%" DataSource="@filteredItems"
+                                        Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })"
+                                        AllowSorting AllowResizing AllowGrouping>
+                                    <GridPageSettings PageSize="200" />
+                                    <GridGroupSettings Columns="@(new string[] { "LettreLabel" })" ShowDropArea="false"
+                                                       ShowToggleButton EnableLazyLoading DisablePageWiseAggregates>
+                                        <CaptionTemplate>
+                                            @{ var ag = (context as CaptionTemplateContext); }
+                                            <div style="font-weight:700;">@ag.Key</div>
+                                        </CaptionTemplate>
+                                    </GridGroupSettings>
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(CptEcritureItem.Debit)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div style="text-align:right; font-weight:600;">@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(CptEcritureItem.Credit)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div style="text-align:right; font-weight:600;">@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridColumns>
+                                        <GridColumn Width="120" HeaderText="Statut" Field="@nameof(CptEcritureItem.LettreLabel)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as CptEcritureItem); }
+                                                <span class="@(dt.EC_Lettre == 2 ? "statustxt e-activecolor" : dt.EC_Lettre == 1 ? "statustxt e-warningcolor" : "statustxt e-inactivecolor")">
+                                                    @dt.LettreLabel
+                                                </span>
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="90"  HeaderText="Date" Field="@nameof(CptEcritureItem.MV_Date)" Format="dd/MM/yyyy" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="100" HeaderText="Pièce" Field="@nameof(CptEcritureItem.EC_Piece)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="90"  HeaderText="Journal" Field="@nameof(CptEcritureItem.JO_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="180" HeaderText="Compte" Field="@nameof(CptEcritureItem.CompteLabel)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="160" HeaderText="Tiers" Field="@nameof(CptEcritureItem.CT_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="180" HeaderText="Libellé" Field="@nameof(CptEcritureItem.EC_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="120" HeaderText="Débit" Field="@nameof(CptEcritureItem.Debit)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="120" HeaderText="Crédit" Field="@nameof(CptEcritureItem.Credit)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="110" HeaderText="Code Lettrage" Field="@nameof(CptEcritureItem.EC_Lettrage)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+                    <GridCol Xs="24" Md="8">
+                        <Card>
+                            <div style="zoom: @session.zoomLevel; height: 380px;">
+                                <SfAccumulationChart Title="Répartition Lettrage" Width="100%"
+                                                     Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <AccumulationChartTooltipSettings Enable="true" />
+                                    <AccumulationChartLegendSettings Visible="true" />
+                                    <AccumulationChartSeriesCollection>
+                                        <AccumulationChartSeries DataSource="@lettreStats" XName="Label" YName="Count"
+                                                                 Name="Lettrage" InnerRadius="35%">
+                                            <AccumulationDataLabelSettings Visible="true" Name="Label"
+                                                                           Position="Syncfusion.Blazor.Charts.AccumulationLabelPosition.Outside">
+                                                <AccumulationChartDataLabelFont FontWeight="600" Size="11" />
+                                            </AccumulationDataLabelSettings>
+                                        </AccumulationChartSeries>
+                                    </AccumulationChartSeriesCollection>
+                                </SfAccumulationChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    private List<CptEcritureItem> items = new();
+    private List<CptEcritureItem> filteredItems = new();
+    private List<LettreStatItem> lettreStats = new();
+
+    int annee = DateTime.Today.Year;
+    short? lettreFilter = null;
+    bool IsLoaded = false;
+    private List<int> annees = Enumerable.Range(0, 10).Select(i => DateTime.Today.Year - i).ToList();
+
+    private class LettreOption { public short? Val { get; set; } public string Label { get; set; } }
+    private class LettreStatItem { public string Label { get; set; } public int Count { get; set; } }
+
+    private List<LettreOption> lettreOptions = new()
+    {
+        new LettreOption { Val = 0, Label = "Non lettré" },
+        new LettreOption { Val = 1, Label = "Partiel" },
+        new LettreOption { Val = 2, Label = "Lettré" }
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        items = db.API_V_ECRITUREC
+            .Where(e => e.MV_Date.HasValue && e.MV_Date.Value.Year == annee
+                     && e.EC_Lettre != null)
+            .OrderBy(e => e.EC_Lettre)
+            .ThenBy(e => e.CG_Num)
+            .ThenBy(e => e.MV_Date)
+            .Select(e => new CptEcritureItem
+            {
+                JO_Num      = e.JO_Num,
+                JO_Intitule = e.JO_Intitule,
+                MV_Date     = e.MV_Date,
+                EC_Piece    = e.EC_Piece,
+                CG_Num      = e.CG_Num,
+                CG_Intitule = e.CG_Intitule,
+                CT_Num      = e.CT_Num,
+                CT_Intitule = e.CT_Intitule,
+                EC_Intitule = e.EC_Intitule,
+                Debit       = e.Debit ?? 0m,
+                Credit      = e.Credit ?? 0m,
+                EC_Lettre   = e.EC_Lettre,
+                EC_Lettrage = e.EC_Lettrage
+            })
+            .ToList();
+
+        lettreStats = items
+            .GroupBy(x => x.LettreLabel)
+            .Select(g => new LettreStatItem { Label = g.Key, Count = g.Count() })
+            .OrderBy(x => x.Label)
+            .ToList();
+
+        lettreFilter = null;
+        ApplyFilter();
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    private void ApplyFilter()
+    {
+        filteredItems = lettreFilter == null
+            ? items
+            : items.Where(x => x.EC_Lettre == lettreFilter).ToList();
+    }
+
+    public void Dispose()
+    {
+        items?.Clear();
+        filteredItems?.Clear();
+        lettreStats?.Clear();
+        items = null;
+        filteredItems = null;
+        lettreStats = null;
+    }
+}

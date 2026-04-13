@@ -1,0 +1,198 @@
+@page "/cpt-balance"
+@attribute [Authorize]
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="@("BALANCE GÉNÉRALE — " + annee)">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        @items.Count compte(s) &nbsp;|&nbsp;
+                                        Équilibre : @(Math.Abs(items.Sum(x => x.Solde)).ToString("N2"))
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDropDownList TValue="int" TItem="int" Width="130px" @bind-Value="annee"
+                                                DataSource="@annees" Placeholder="Année">
+                                    <DropDownListEvents TValue="int" TItem="int" ValueChange="@(args => LoadData())" />
+                                </SfDropDownList>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <GridRow Style="margin-bottom:12px;">
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Blue"
+                                   Value="@items.Count.ToString()"
+                                   Title="Comptes" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Purple"
+                                   Value="@(classeParDebit.Count.ToString())"
+                                   Title="Classes actives" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Green"
+                                   Value="@(items.Sum(x => x.TotalDebit).ToString("N0"))"
+                                   Title="Total Débit" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Amber"
+                                   Value="@(items.Sum(x => x.TotalCredit).ToString("N0"))"
+                                   Title="Total Crédit" />
+                    </GridCol>
+                </GridRow>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="16">
+                        <Card>
+                            <div class="grid-67" style="zoom: @session.zoomLevel;">
+                                <SfGrid Height="100%" DataSource="@items"
+                                        Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })"
+                                        AllowSorting AllowResizing AllowGrouping>
+                                    <GridPageSettings PageSize="200" />
+                                    <GridGroupSettings Columns="@(new string[] { "ClasseLabel" })" ShowDropArea="false"
+                                                       ShowToggleButton EnableLazyLoading DisablePageWiseAggregates>
+                                        <CaptionTemplate>
+                                            @{ var ag = (context as CaptionTemplateContext); }
+                                            <div style="font-weight:700;">@ag.Key</div>
+                                        </CaptionTemplate>
+                                    </GridGroupSettings>
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(CptBalanceItem.TotalDebit)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div style="text-align:right; font-weight:600;">@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(CptBalanceItem.TotalCredit)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div style="text-align:right; font-weight:600;">@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridColumns>
+                                        <GridColumn Width="120" HeaderText="Compte" Field="@nameof(CptBalanceItem.CG_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="220" HeaderText="Intitulé" Field="@nameof(CptBalanceItem.CG_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="100" HeaderText="Classe" Field="@nameof(CptBalanceItem.ClasseLabel)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="140" HeaderText="Total Débit" Field="@nameof(CptBalanceItem.TotalDebit)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="140" HeaderText="Total Crédit" Field="@nameof(CptBalanceItem.TotalCredit)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="140" HeaderText="Solde" Field="@nameof(CptBalanceItem.Solde)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as CptBalanceItem); }
+                                                <div style="text-align:right;">
+                                                    <span class="@(dt.Solde >= 0 ? "statustxt e-activecolor" : "statustxt e-inactivecolor")">
+                                                        @dt.Solde.ToString("N2")
+                                                    </span>
+                                                </div>
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="100" HeaderText="Sens" Field="@nameof(CptBalanceItem.SoldeSens)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+                    <GridCol Xs="24" Md="8">
+                        <Card>
+                            <div style="zoom: @session.zoomLevel; height: 380px;">
+                                <SfAccumulationChart Title="Répartition par Classe" Width="100%"
+                                                     Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <AccumulationChartTooltipSettings Enable="true" />
+                                    <AccumulationChartLegendSettings Visible="true" />
+                                    <AccumulationChartSeriesCollection>
+                                        <AccumulationChartSeries DataSource="@classeParDebit" XName="Classe" YName="TotalDebit"
+                                                                 Name="Débit" InnerRadius="35%">
+                                            <AccumulationDataLabelSettings Visible="true" Name="Classe"
+                                                                           Position="Syncfusion.Blazor.Charts.AccumulationLabelPosition.Outside">
+                                                <AccumulationChartDataLabelFont FontWeight="600" Size="11" />
+                                            </AccumulationDataLabelSettings>
+                                        </AccumulationChartSeries>
+                                    </AccumulationChartSeriesCollection>
+                                </SfAccumulationChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    private List<CptBalanceItem> items = new();
+    private List<ClasseDebitItem> classeParDebit = new();
+
+    int annee = DateTime.Today.Year;
+    bool IsLoaded = false;
+    private List<int> annees = Enumerable.Range(0, 10).Select(i => DateTime.Today.Year - i).ToList();
+
+    private class ClasseDebitItem
+    {
+        public string Classe { get; set; }
+        public decimal TotalDebit { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        items = db.API_V_ECRITUREC
+            .Where(e => e.MV_Date.HasValue && e.MV_Date.Value.Year == annee)
+            .GroupBy(e => new { e.CG_Num, e.CG_Intitule })
+            .Select(g => new CptBalanceItem
+            {
+                CG_Num      = g.Key.CG_Num,
+                CG_Intitule = g.Key.CG_Intitule,
+                TotalDebit  = g.Sum(x => x.Debit) ?? 0m,
+                TotalCredit = g.Sum(x => x.Credit) ?? 0m
+            })
+            .OrderBy(x => x.CG_Num)
+            .ToList();
+
+        classeParDebit = items
+            .GroupBy(x => x.ClasseLabel)
+            .Select(g => new ClasseDebitItem { Classe = g.Key, TotalDebit = g.Sum(x => x.TotalDebit) })
+            .OrderBy(x => x.Classe)
+            .ToList();
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    public void Dispose()
+    {
+        items?.Clear();
+        classeParDebit?.Clear();
+        items = null;
+        classeParDebit = null;
+    }
+}

@@ -1,0 +1,222 @@
+@page "/et-rg-impayes"
+@attribute [Authorize]
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="@("IMPAYÉS — " + annee)">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Warning" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        @filteredItems.Count impayé(s) &nbsp;|&nbsp;
+                                        Montant total : @filteredItems.Sum(x => x.RG_Montant ?? 0).ToString("N2")
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <div style="display:flex; gap:8px; align-items:center;">
+                                    <SfDropDownList TValue="int" TItem="int" Width="130px" @bind-Value="annee"
+                                                    DataSource="@annees" Placeholder="Année">
+                                        <DropDownListEvents TValue="int" TItem="int" ValueChange="@(args => LoadData())" />
+                                    </SfDropDownList>
+                                    <SfDropDownList TValue="string" TItem="string" Width="160px" @bind-Value="typeFilter"
+                                                    DataSource="@typeOptions" Placeholder="Tous"
+                                                    ShowClearButton="true">
+                                        <DropDownListEvents TValue="string" TItem="string" ValueChange="@(args => ApplyFilter())" />
+                                    </SfDropDownList>
+                                </div>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <GridRow Style="margin-bottom:12px;">
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Red"
+                                   Value="@items.Count(x => x.RG_Type == 0).ToString()"
+                                   Title="Impayés Clients" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Amber"
+                                   Value="@items.Count(x => x.RG_Type == 1).ToString()"
+                                   Title="Impayés Fournisseurs" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Red"
+                                   Value="@(items.Where(x => x.RG_Type == 0).Sum(x => x.RG_Montant ?? 0).ToString("N0"))"
+                                   Title="Montant Clients" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Amber"
+                                   Value="@(items.Where(x => x.RG_Type == 1).Sum(x => x.RG_Montant ?? 0).ToString("N0"))"
+                                   Title="Montant Fournisseurs" />
+                    </GridCol>
+                </GridRow>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="16">
+                        <Card>
+                            <div class="grid-67" style="zoom: @session.zoomLevel;">
+                                <SfGrid EnableVirtualization Height="100%" DataSource="@filteredItems"
+                                        Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })"
+                                        AllowSorting AllowResizing AllowGrouping>
+                                    <GridPageSettings PageSize="200" />
+                                    <GridGroupSettings Columns="@(new string[] { "CT_Intitule" })" ShowDropArea="false"
+                                                       ShowToggleButton EnableLazyLoading DisablePageWiseAggregates>
+                                        <CaptionTemplate>
+                                            @{ var ag = (context as CaptionTemplateContext); }
+                                            <div style="font-weight:700;">@ag.Key</div>
+                                        </CaptionTemplate>
+                                    </GridGroupSettings>
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.RG_Montant)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>
+                                                        @{ var s = (context as AggregateTemplateContext); }
+                                                        <div style="text-align:right; font-weight:600;">@s.Sum</div>
+                                                    </FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridColumns>
+                                        <GridColumn Width="90"  HeaderText="Date" Field="@nameof(API_V_CREGLEMENT.RG_Date)" Format="dd/MM/yyyy" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="100" HeaderText="Pièce" Field="@nameof(API_V_CREGLEMENT.RG_Piece)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="200" HeaderText="Tiers" Field="@nameof(API_V_CREGLEMENT.CT_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="90"  HeaderText="Type" Field="@nameof(API_V_CREGLEMENT.CT_Type)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as API_V_CREGLEMENT); }
+                                                <span class="@(dt.RG_Type == 0 ? "statustxt e-activecolor" : "statustxt e-warningcolor")">
+                                                    @(dt.RG_Type == 0 ? "Client" : "Fourn.")
+                                                </span>
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="130" HeaderText="Mode" Field="@nameof(API_V_CREGLEMENT.R_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="Libellé" Field="@nameof(API_V_CREGLEMENT.RG_Libelle)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="Montant" Field="@nameof(API_V_CREGLEMENT.RG_Montant)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="90"  HeaderText="Éch." Field="@nameof(API_V_CREGLEMENT.Echeance)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as API_V_CREGLEMENT); }
+                                                <span class="@(dt.Echeance == "Echu" ? "statustxt e-inactivecolor" : "statustxt e-infocolor")">
+                                                    @dt.Echeance
+                                                </span>
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="80"  HeaderText="Ville" Field="@nameof(API_V_CREGLEMENT.CT_Ville)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+                    <GridCol Xs="24" Md="8">
+                        <Card>
+                            <div style="zoom: @session.zoomLevel; height: 380px;">
+                                <SfAccumulationChart Title="Impayés par Tiers (Top 10)" Width="100%"
+                                                     Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <AccumulationChartTooltipSettings Enable="true" />
+                                    <AccumulationChartLegendSettings Visible="true" />
+                                    <AccumulationChartSeriesCollection>
+                                        <AccumulationChartSeries DataSource="@parTiers" XName="Tiers" YName="Montant"
+                                                                 Name="Montant" InnerRadius="35%">
+                                            <AccumulationDataLabelSettings Visible="true" Name="Tiers"
+                                                                           Position="Syncfusion.Blazor.Charts.AccumulationLabelPosition.Outside">
+                                                <AccumulationChartDataLabelFont FontWeight="600" Size="10" />
+                                            </AccumulationDataLabelSettings>
+                                        </AccumulationChartSeries>
+                                    </AccumulationChartSeriesCollection>
+                                </SfAccumulationChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    private List<API_V_CREGLEMENT> items = new();
+    private List<API_V_CREGLEMENT> filteredItems = new();
+    private List<ImpayeTiersItem>  parTiers = new();
+
+    int annee = DateTime.Today.Year;
+    string typeFilter = null;
+    bool IsLoaded = false;
+
+    private List<int> annees = Enumerable.Range(0, 10).Select(i => DateTime.Today.Year - i).ToList();
+    private List<string> typeOptions = new() { "Client", "Fournisseur" };
+
+    private class ImpayeTiersItem { public string Tiers { get; set; } public decimal Montant { get; set; } }
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        items = db.API_V_CREGLEMENT
+            .Where(r => r.Impaye == true
+                     && r.RG_Date.HasValue
+                     && r.RG_Date.Value.Year == annee)
+            .OrderByDescending(r => r.RG_Date)
+            .ToList();
+
+        parTiers = items
+            .GroupBy(r => r.CT_Intitule)
+            .Select(g => new ImpayeTiersItem { Tiers = g.Key, Montant = g.Sum(x => x.RG_Montant ?? 0) })
+            .OrderByDescending(x => x.Montant)
+            .Take(10)
+            .ToList();
+
+        typeFilter = null;
+        ApplyFilter();
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    private void ApplyFilter()
+    {
+        if (string.IsNullOrEmpty(typeFilter))
+            filteredItems = items;
+        else if (typeFilter == "Client")
+            filteredItems = items.Where(x => x.RG_Type == 0).ToList();
+        else
+            filteredItems = items.Where(x => x.RG_Type == 1).ToList();
+    }
+
+    public void Dispose()
+    {
+        items?.Clear();
+        filteredItems?.Clear();
+        parTiers?.Clear();
+        items = null;
+        filteredItems = null;
+        parTiers = null;
+    }
+}

@@ -1,0 +1,247 @@
+@page "/et-rg-mensuel"
+@attribute [Authorize]
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="@("ANALYSE MENSUELLE RÉGLEMENTS — " + annee)">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        @allItems.Count règlement(s) &nbsp;|&nbsp;
+                                        Total : @allItems.Sum(x => x.RG_Montant ?? 0).ToString("N0")
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <div style="display:flex; gap:8px; align-items:center;">
+                                    <SfDropDownList TValue="int" TItem="int" Width="130px" @bind-Value="annee"
+                                                    DataSource="@annees" Placeholder="Année">
+                                        <DropDownListEvents TValue="int" TItem="int" ValueChange="@(args => LoadData())" />
+                                    </SfDropDownList>
+                                    <SfDropDownList TValue="int" TItem="RgTypeOption" Width="160px" @bind-Value="typeFilter"
+                                                    DataSource="@typeOptions">
+                                        <DropDownListFieldSettings Value="Val" Text="Label" />
+                                        <DropDownListEvents TValue="int" TItem="RgTypeOption" ValueChange="@(args => LoadData())" />
+                                    </SfDropDownList>
+                                </div>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <GridRow Style="margin-bottom:12px;">
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Blue"
+                                   Value="@(moisData.Sum(x => x.Montant).ToString("N0"))"
+                                   Title="Total annuel" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Green"
+                                   Value="@(moisData.Where(x => x.Montant > 0).Count() > 0 ? (moisData.Where(x => x.Montant > 0).Average(x => x.Montant)).ToString("N0") : "0")"
+                                   Title="Moyenne / mois" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Purple"
+                                   Value="@(moisData.OrderByDescending(x => x.Montant).FirstOrDefault()?.Mois ?? "-")"
+                                   Title="Meilleur mois" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Amber"
+                                   Value="@(moisData.Max(x => x.Montant).ToString("N0"))"
+                                   Title="Pic mensuel" />
+                    </GridCol>
+                </GridRow>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="24">
+                        <Card>
+                            <div style="zoom: @session.zoomLevel; height: 20vh;">
+                                <SfChart Title="Réglements par mois" Width="100%"
+                                         Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" />
+                                    <ChartPrimaryYAxis LabelFormat="N0" />
+                                    <ChartTooltipSettings Enable="true" />
+                                    <ChartLegendSettings Visible="true" />
+                                    <ChartSeriesCollection>
+                                        <ChartSeries DataSource="@moisData" XName="Mois" YName="Montant"
+                                                     Name="Montant" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
+                                            <ChartMarker>
+                                                <ChartDataLabel Visible="true" Position="Syncfusion.Blazor.Charts.LabelPosition.Top">
+                                                    <ChartDataLabelFont FontWeight="600" Size="10px" />
+                                                </ChartDataLabel>
+                                            </ChartMarker>
+                                        </ChartSeries>
+                                        <ChartSeries DataSource="@moisData" XName="Mois" YName="Montant"
+                                                     Name="Tendance" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line"
+                                                     Width="2">
+                                        </ChartSeries>
+                                    </ChartSeriesCollection>
+                                </SfChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="16">
+                        <Card>
+                            <div style="zoom: @session.zoomLevel; height: 40vh;">
+                                <SfGrid EnableVirtualization Height="100%" DataSource="@moisData"
+                                        Toolbar="@(new List<object>() { "ExcelExport" })"
+                                        AllowSorting AllowResizing>
+                                    <GridPageSettings PageSize="12" />
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(MoisMontantItem.Nb)" Type="AggregateType.Sum">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div style="text-align:right; font-weight:600;">@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(MoisMontantItem.Montant)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div style="text-align:right; font-weight:600;">@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridColumns>
+                                        <GridColumn HeaderText="Mois" Field="@nameof(MoisMontantItem.Mois)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="90" HeaderText="Nb" Field="@nameof(MoisMontantItem.Nb)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="150" HeaderText="Montant" Field="@nameof(MoisMontantItem.Montant)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="150" HeaderText="% du total" Field="@nameof(MoisMontantItem.PctLabel)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+                    <GridCol Xs="24" Md="8">
+                        <Card>
+                            <div style="zoom: @session.zoomLevel; height: 40vh;">
+                                <SfAccumulationChart Title="Répartition trimestrielle" Width="100%"
+                                                     Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <AccumulationChartTooltipSettings Enable="true" />
+                                    <AccumulationChartLegendSettings Visible="true" />
+                                    <AccumulationChartSeriesCollection>
+                                        <AccumulationChartSeries DataSource="@trimestreData" XName="Trim" YName="Montant"
+                                                                 Name="Montant" InnerRadius="35%">
+                                            <AccumulationDataLabelSettings Visible="true" Name="Trim"
+                                                                           Position="Syncfusion.Blazor.Charts.AccumulationLabelPosition.Outside">
+                                                <AccumulationChartDataLabelFont FontWeight="600" Size="11" />
+                                            </AccumulationDataLabelSettings>
+                                        </AccumulationChartSeries>
+                                    </AccumulationChartSeriesCollection>
+                                </SfAccumulationChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    private List<API_V_CREGLEMENT> allItems = new();
+    private List<MoisMontantItem>  moisData  = new();
+    private List<TrimItem>         trimestreData = new();
+
+    int annee     = DateTime.Today.Year;
+    int typeFilter = -1;
+    bool IsLoaded = false;
+
+    private List<int> annees = Enumerable.Range(0, 10).Select(i => DateTime.Today.Year - i).ToList();
+
+    private class RgTypeOption { public int Val { get; set; } public string Label { get; set; } }
+    private List<RgTypeOption> typeOptions = new()
+    {
+        new RgTypeOption { Val = -1, Label = "Tous" },
+        new RgTypeOption { Val = 0,  Label = "Clients" },
+        new RgTypeOption { Val = 1,  Label = "Fournisseurs" }
+    };
+
+    private class MoisMontantItem
+    {
+        public string  Mois     { get; set; }
+        public int     Nb       { get; set; }
+        public decimal Montant  { get; set; }
+        public string  PctLabel { get; set; }
+    }
+    private class TrimItem { public string Trim { get; set; } public decimal Montant { get; set; } }
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        var query = db.API_V_CREGLEMENT
+            .Where(r => r.RG_Date.HasValue && r.RG_Date.Value.Year == annee);
+
+        if (typeFilter >= 0)
+            query = query.Where(r => r.RG_Type == (short)typeFilter);
+
+        allItems = query.ToList();
+
+        var total = allItems.Sum(x => x.RG_Montant ?? 0);
+        var moisLabels = new[] { "Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc" };
+
+        moisData = Enumerable.Range(1, 12)
+            .Select(m =>
+            {
+                var mItems = allItems.Where(r => r.RG_Date.HasValue && r.RG_Date.Value.Month == m).ToList();
+                var montant = mItems.Sum(x => x.RG_Montant ?? 0);
+                return new MoisMontantItem
+                {
+                    Mois     = moisLabels[m - 1],
+                    Nb       = mItems.Count,
+                    Montant  = montant,
+                    PctLabel = total > 0 ? ((montant / total) * 100).ToString("N1") + "%" : "0%"
+                };
+            })
+            .ToList();
+
+        trimestreData = new List<TrimItem>
+        {
+            new TrimItem { Trim = "T1", Montant = moisData.Take(3).Sum(x => x.Montant) },
+            new TrimItem { Trim = "T2", Montant = moisData.Skip(3).Take(3).Sum(x => x.Montant) },
+            new TrimItem { Trim = "T3", Montant = moisData.Skip(6).Take(3).Sum(x => x.Montant) },
+            new TrimItem { Trim = "T4", Montant = moisData.Skip(9).Take(3).Sum(x => x.Montant) },
+        };
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    public void Dispose()
+    {
+        allItems?.Clear();
+        moisData?.Clear();
+        trimestreData?.Clear();
+        allItems = null;
+        moisData = null;
+        trimestreData = null;
+    }
+}

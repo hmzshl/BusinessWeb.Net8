@@ -1,0 +1,198 @@
+@page "/et-collab-portefeuille"
+@attribute [Authorize]
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="@("PORTEFEUILLE CLIENTS PAR COLLABORATEUR — " + annee)">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        @items.Count collaborateur(s) &nbsp;|&nbsp;
+                                        @(items.Sum(x => x.NbClients)) clients actifs &nbsp;|&nbsp;
+                                        CA moy./client : @(items.Sum(x => x.NbClients) > 0
+                                            ? (items.Sum(x => x.CA) / items.Sum(x => x.NbClients)).ToString("N0")
+                                            : "0")
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDropDownList TValue="int" TItem="int" Width="130px" @bind-Value="annee"
+                                                DataSource="@annees" Placeholder="Année">
+                                    <DropDownListEvents TValue="int" TItem="int" ValueChange="@(args => LoadData())" />
+                                </SfDropDownList>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <GridRow Style="margin-bottom:12px;">
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Blue"
+                                   Value="@items.Count.ToString()"
+                                   Title="Collaborateurs" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Purple"
+                                   Value="@(items.Sum(x => x.NbClients).ToString())"
+                                   Title="Clients actifs" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Green"
+                                   Value="@(items.Sum(x => x.CA).ToString("N0"))"
+                                   Title="@("CA HT " + annee)" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        @{ var margeTotal = items.Sum(x => x.Marge); var caTotal = items.Sum(x => x.CA); }
+                        <StatCard3 Color="@(margeTotal >= 0 ? StatColor.Green : StatColor.Red)"
+                                   Value="@(margeTotal.ToString("N0"))"
+                                   Title="Marge HT totale" />
+                    </GridCol>
+                </GridRow>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="15">
+                        <Card>
+                            <div class="grid-67" style="zoom: @session.zoomLevel;">
+                                <SfGrid EnableVirtualization Height="100%" DataSource="@items"
+                                        Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })"
+                                        AllowSorting AllowResizing>
+                                    <GridPageSettings PageSize="100" />
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(CollabPortefeuilleItem.NbClients)" Type="AggregateType.Sum" Format="### ###">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div>@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(CollabPortefeuilleItem.CA)" Type="AggregateType.Sum" Format="### ### ###">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div>@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(CollabPortefeuilleItem.Marge)" Type="AggregateType.Sum" Format="### ### ###">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div>@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridColumns>
+                                        <GridColumn Width="240" HeaderText="Collaborateur" Field="@nameof(CollabPortefeuilleItem.CO_Nom)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="100" HeaderText="Nb Clients" Field="@nameof(CollabPortefeuilleItem.NbClients)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="CA HT" Field="@nameof(CollabPortefeuilleItem.CA)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="CA Moy./Client" Field="@nameof(CollabPortefeuilleItem.CAMoyenParClient)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="Marge HT" Field="@nameof(CollabPortefeuilleItem.Marge)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as CollabPortefeuilleItem); }
+                                                <div style="text-align:right;">
+                                                    <span class="@(dt.Marge >= 0 ? "statustxt e-activecolor" : "statustxt e-inactivecolor")">
+                                                        @dt.Marge.ToString("N2")
+                                                    </span>
+                                                </div>
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="90" HeaderText="% Marge" Field="@nameof(CollabPortefeuilleItem.MargeP)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as CollabPortefeuilleItem); }
+                                                <div style="text-align:right;">
+                                                    <span class="@(dt.MargeP >= 0 ? "statustxt e-activecolor" : "statustxt e-inactivecolor")">
+                                                        @dt.MargeP.ToString("P1")
+                                                    </span>
+                                                </div>
+                                            </Template>
+                                        </GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+                    <GridCol Xs="24" Md="9">
+                        <Card>
+                            <div class="grid-67" style="zoom: @session.zoomLevel;">
+                                <SfAccumulationChart Title="Répartition CA par Collaborateur" Width="100%"
+                                                     Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <AccumulationChartTooltipSettings Enable="true" />
+                                    <AccumulationChartLegendSettings Visible="true" />
+                                    <AccumulationChartSeriesCollection>
+                                        <AccumulationChartSeries DataSource="@items" XName="CO_Nom" YName="CA"
+                                                                 Name="CA HT" InnerRadius="35%">
+                                            <AccumulationDataLabelSettings Visible="true" Name="CO_Nom"
+                                                                           Position="Syncfusion.Blazor.Charts.AccumulationLabelPosition.Outside">
+                                                <AccumulationChartDataLabelFont FontWeight="600" Size="11" />
+                                            </AccumulationDataLabelSettings>
+                                        </AccumulationChartSeries>
+                                    </AccumulationChartSeriesCollection>
+                                </SfAccumulationChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    private List<CollabPortefeuilleItem> items = new();
+    int annee = DateTime.Today.Year;
+    bool IsLoaded = false;
+    private List<int> annees = Enumerable.Range(0, 10).Select(i => DateTime.Today.Year - i).ToList();
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        items = db.API_V_MARGE
+            .Where(a => a.DO_Date.HasValue && a.DO_Date.Value.Year == annee)
+            .GroupBy(a => a.CO_Nom)
+            .Select(g => new
+            {
+                CO_Nom    = g.Key,
+                NbClients = g.Select(x => x.CT_Num).Distinct().Count(),
+                CA        = g.Sum(x => x.DL_MontantHT) ?? 0m,
+                Marge     = g.Sum(x => x.CMUPMarge)    ?? 0m
+            })
+            .ToList()
+            .Select(x => new CollabPortefeuilleItem
+            {
+                CO_Nom    = x.CO_Nom,
+                NbClients = x.NbClients,
+                CA        = x.CA,
+                Marge     = x.Marge,
+                MargeP    = x.CA != 0 ? x.Marge / x.CA : 0m
+            })
+            .OrderByDescending(x => x.CA)
+            .ToList();
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    public void Dispose()
+    {
+        items?.Clear();
+        items = null;
+    }
+}

@@ -1,0 +1,191 @@
+@page "/et-collab-tendance"
+@attribute [Authorize]
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="@("TENDANCE MENSUELLE COLLABORATEURS — " + annee)">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        @collabNames.Count collaborateur(s) &nbsp;|&nbsp; CA total : @(allMonthly.Sum(x => x.CA).ToString("N0"))
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDropDownList TValue="int" TItem="int" Width="130px" @bind-Value="annee"
+                                                DataSource="@annees" Placeholder="Année">
+                                    <DropDownListEvents TValue="int" TItem="int" ValueChange="@(args => LoadData())" />
+                                </SfDropDownList>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="14">
+                        <Card>
+                            <div style="zoom: @session.zoomLevel; height: 580px;">
+                                <SfChart Title="Évolution mensuelle CA HT" Width="100%"
+                                         Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <ChartArea><ChartAreaBorder Width="0" /></ChartArea>
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"
+                                                       Title="Mois">
+                                        <ChartAxisMajorGridLines Width="0" />
+                                        <ChartAxisMajorTickLines Width="0" />
+                                    </ChartPrimaryXAxis>
+                                    <ChartPrimaryYAxis LabelFormat="N0" EdgeLabelPlacement="EdgeLabelPlacement.Shift">
+                                        <ChartAxisMajorTickLines Width="0" />
+                                    </ChartPrimaryYAxis>
+                                    <ChartTooltipSettings Enable="true" />
+                                    <ChartLegendSettings Visible="true" EnableHighlight="true" />
+                                    <ChartSeriesCollection>
+                                        @foreach (var collab in collabNames)
+                                        {
+                                            var data = seriesData[collab];
+                                            <ChartSeries DataSource="@data" XName="MoisStr" YName="CA"
+                                                         Name="@collab" Width="2"
+                                                         Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                                                <ChartMarker Visible="true" Height="6" Width="6" />
+                                            </ChartSeries>
+                                        }
+                                    </ChartSeriesCollection>
+                                </SfChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                    <GridCol Xs="24" Md="10">
+                        <Card>
+                            <div style="zoom: @session.zoomLevel; height: 580px;">
+                                <SfAccumulationChart Title="Part CA par Collaborateur" Width="100%"
+                                                     Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <AccumulationChartTooltipSettings Enable="true" />
+                                    <AccumulationChartLegendSettings Visible="true" />
+                                    <AccumulationChartSeriesCollection>
+                                        <AccumulationChartSeries DataSource="@totalParCollab" XName="CO_Nom" YName="CA"
+                                                                 Name="CA HT" InnerRadius="35%">
+                                            <AccumulationDataLabelSettings Visible="true" Name="CO_Nom"
+                                                                           Position="Syncfusion.Blazor.Charts.AccumulationLabelPosition.Outside">
+                                                <AccumulationChartDataLabelFont FontWeight="600" Size="11" />
+                                            </AccumulationDataLabelSettings>
+                                        </AccumulationChartSeries>
+                                    </AccumulationChartSeriesCollection>
+                                </SfAccumulationChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    private List<CollabMensuelItem> allMonthly = new();
+    private List<CollabMensuelItem> totalParCollab = new();
+    private Dictionary<string, List<CollabMensuelItem>> seriesData = new();
+    private List<string> collabNames = new();
+
+    int annee = DateTime.Today.Year;
+    bool IsLoaded = false;
+    private List<int> annees = Enumerable.Range(0, 10).Select(i => DateTime.Today.Year - i).ToList();
+
+    private static readonly string[] MoisLabels = { "", "Jan", "Fév", "Mar", "Avr", "Mai", "Jun", "Jul", "Aoû", "Sep", "Oct", "Nov", "Déc" };
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        var raw = db.API_V_MARGE
+            .Where(a => a.DO_Date.HasValue && a.DO_Date.Value.Year == annee)
+            .GroupBy(a => new { a.CO_Nom, Mois = a.DO_Date.Value.Month })
+            .Select(g => new
+            {
+                g.Key.CO_Nom,
+                g.Key.Mois,
+                CA    = g.Sum(x => x.DL_MontantHT) ?? 0m,
+                Marge = g.Sum(x => x.CMUPMarge)    ?? 0m
+            })
+            .ToList();
+
+        allMonthly = raw.Select(x => new CollabMensuelItem
+        {
+            CO_Nom  = x.CO_Nom,
+            Mois    = x.Mois,
+            MoisStr = MoisLabels[x.Mois],
+            CA      = x.CA,
+            Marge   = x.Marge
+        })
+        .OrderBy(x => x.CO_Nom)
+        .ThenBy(x => x.Mois)
+        .ToList();
+
+        // Top 10 collabs by total CA for line chart (avoid cluttered legend)
+        var top10 = allMonthly
+            .GroupBy(x => x.CO_Nom)
+            .OrderByDescending(g => g.Sum(x => x.CA))
+            .Take(10)
+            .Select(g => g.Key)
+            .ToHashSet();
+
+        seriesData = allMonthly
+            .Where(x => top10.Contains(x.CO_Nom))
+            .GroupBy(x => x.CO_Nom ?? "")
+            .ToDictionary(g => g.Key, g =>
+            {
+                // Fill missing months with 0
+                var byMois = g.ToDictionary(x => x.Mois, x => x);
+                return Enumerable.Range(1, 12).Select(m => byMois.TryGetValue(m, out var v)
+                    ? v
+                    : new CollabMensuelItem { CO_Nom = g.Key, Mois = m, MoisStr = MoisLabels[m], CA = 0, Marge = 0 })
+                    .ToList();
+            });
+
+        collabNames = seriesData.Keys.OrderBy(x => x).ToList();
+
+        totalParCollab = allMonthly
+            .GroupBy(x => x.CO_Nom)
+            .Select(g => new CollabMensuelItem { CO_Nom = g.Key, CA = g.Sum(x => x.CA) })
+            .OrderByDescending(x => x.CA)
+            .ToList();
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    public void Dispose()
+    {
+        allMonthly?.Clear();
+        totalParCollab?.Clear();
+        seriesData?.Clear();
+        allMonthly = null;
+        totalParCollab = null;
+        seriesData = null;
+    }
+}

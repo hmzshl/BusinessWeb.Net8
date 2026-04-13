@@ -43,9 +43,9 @@
                 </GridRow>
 
                 <GridRow>
-                    <GridCol Xs="24" Md="16">
+                    <GridCol Xs="24" Md="18">
                         <Card>
-                            <div class="grid-50" style="zoom: @session.zoomLevel;">
+                            <div class="grid-40" style="zoom: @session.zoomLevel;">
                                 <SfGrid EnableVirtualization Height="100%" DataSource="@items"
                                         Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })"
                                         AllowSorting AllowResizing>
@@ -79,11 +79,11 @@
                         </Card>
                     </GridCol>
 
-                    <GridCol Xs="24" Md="8">
+                    <GridCol Xs="24" Md="6">
                         <Card>
                             <div style="zoom: @session.zoomLevel;">
                                 <SfChart Title="Distribution par Segment" Width="100%"
-                                         Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="380px">
+                                         Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="360px">
                                     <ChartArea><ChartAreaBorder Width="0" /></ChartArea>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"
                                                        LabelIntersectAction="LabelIntersectAction.Rotate45">

@@ -1,0 +1,240 @@
+@page "/et-collab-comparatif"
+@attribute [Authorize]
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="@("COMPARATIF COLLABORATEURS — " + annee + " vs " + (annee - 1))">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        @items.Count collaborateur(s) &nbsp;|&nbsp;
+                                        Évolution CA : @((items.Sum(x => x.Evolution) >= 0 ? "+" : "") + items.Sum(x => x.Evolution).ToString("N0"))
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDropDownList TValue="int" TItem="int" Width="130px" @bind-Value="annee"
+                                                DataSource="@annees" Placeholder="Année N">
+                                    <DropDownListEvents TValue="int" TItem="int" ValueChange="@(args => LoadData())" />
+                                </SfDropDownList>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <GridRow Style="margin-bottom:12px;">
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Blue"
+                                   Value="@items.Count.ToString()"
+                                   Title="Collaborateurs actifs" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Blue"
+                                   Value="@(items.Sum(x => x.CAN1).ToString("N0"))"
+                                   Title="@("CA HT " + (annee - 1))" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Green"
+                                   Value="@(items.Sum(x => x.CAN).ToString("N0"))"
+                                   Title="@("CA HT " + annee)" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        @{ var evoTotal = items.Sum(x => x.Evolution); }
+                        <StatCard3 Color="@(evoTotal >= 0 ? StatColor.Green : StatColor.Red)"
+                                   Value="@((evoTotal >= 0 ? "+" : "") + evoTotal.ToString("N0"))"
+                                   Title="Évolution CA nette" />
+                    </GridCol>
+                </GridRow>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="15">
+                        <Card>
+                            <div class="grid-67" style="zoom: @session.zoomLevel;">
+                                <SfGrid EnableVirtualization Height="100%" DataSource="@items"
+                                        Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })"
+                                        AllowSorting AllowResizing>
+                                    <GridPageSettings PageSize="100" />
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(CollabEvolutionItem.CAN1)" Type="AggregateType.Sum" Format="### ### ###">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div>@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(CollabEvolutionItem.CAN)" Type="AggregateType.Sum" Format="### ### ###">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div>@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(CollabEvolutionItem.MargeN)" Type="AggregateType.Sum" Format="### ### ###">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div>@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(CollabEvolutionItem.Evolution)" Type="AggregateType.Sum" Format="### ### ###">
+                                                    <FooterTemplate>@{ var s = (context as AggregateTemplateContext); <div>@s.Sum</div> }</FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridColumns>
+                                        <GridColumn Width="240" HeaderText="Collaborateur" Field="@nameof(CollabEvolutionItem.CO_Nom)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="@("CA HT " + (annee - 1))" Field="@nameof(CollabEvolutionItem.CAN1)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="@("CA HT " + annee)" Field="@nameof(CollabEvolutionItem.CAN)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="120" HeaderText="@("Marge " + annee)" Field="@nameof(CollabEvolutionItem.MargeN)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="120" HeaderText="Évolution" Field="@nameof(CollabEvolutionItem.Evolution)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as CollabEvolutionItem); }
+                                                <div style="text-align:right;">
+                                                    @if (dt.Evolution >= 0)
+                                                    {
+                                                        <span class="statustxt e-activecolor">+@dt.Evolution.ToString("N0") <RadzenIcon Icon="arrow_upward" /></span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="statustxt e-inactivecolor">@dt.Evolution.ToString("N0") <RadzenIcon Icon="arrow_downward" /></span>
+                                                    }
+                                                </div>
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="90" HeaderText="%" Field="@nameof(CollabEvolutionItem.EvolutionP)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as CollabEvolutionItem); }
+                                                <div style="text-align:right;">
+                                                    @if (dt.EvolutionP >= 0)
+                                                    {
+                                                        <span class="statustxt e-activecolor">+@dt.EvolutionP.ToString("P1")</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="statustxt e-inactivecolor">@dt.EvolutionP.ToString("P1")</span>
+                                                    }
+                                                </div>
+                                            </Template>
+                                        </GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+                    <GridCol Xs="24" Md="9">
+                        <Card>
+                            <div class="grid-67" style="zoom: @session.zoomLevel;">
+                                <SfChart Title="@("CA " + (annee-1) + " vs " + annee)" Width="100%"
+                                         Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <ChartArea><ChartAreaBorder Width="0" /></ChartArea>
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                                        <ChartAxisMajorGridLines Width="0" />
+                                        <ChartAxisMajorTickLines Width="0" />
+                                    </ChartPrimaryXAxis>
+                                    <ChartPrimaryYAxis LabelFormat="N0" EdgeLabelPlacement="EdgeLabelPlacement.Shift" Visible="false">
+                                        <ChartAxisMajorTickLines Width="0" />
+                                        <ChartAxisLineStyle Width="0" />
+                                    </ChartPrimaryYAxis>
+                                    <ChartTooltipSettings Enable="true" />
+                                    <ChartLegendSettings Visible="true" EnableHighlight="true" />
+                                    <ChartSeriesCollection>
+                                        <ChartSeries DataSource="@chartItems" XName="CO_Nom" YName="CAN1"
+                                                     Name="@((annee - 1).ToString())" Width="2" ColumnSpacing="0.1"
+                                                     Type="Syncfusion.Blazor.Charts.ChartSeriesType.Bar">
+                                            <ChartMarker><ChartDataLabel Visible="false" /></ChartMarker>
+                                        </ChartSeries>
+                                        <ChartSeries DataSource="@chartItems" XName="CO_Nom" YName="CAN"
+                                                     Name="@annee.ToString()" Width="2" ColumnSpacing="0.1"
+                                                     Type="Syncfusion.Blazor.Charts.ChartSeriesType.Bar">
+                                            <ChartMarker>
+                                                <ChartDataLabel Visible="true" Position="Syncfusion.Blazor.Charts.LabelPosition.Outer" Alignment="Syncfusion.Blazor.Charts.Alignment.Near">
+                                                    <ChartDataLabelFont FontWeight="700" Size="11" />
+                                                </ChartDataLabel>
+                                            </ChartMarker>
+                                        </ChartSeries>
+                                    </ChartSeriesCollection>
+                                </SfChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    private List<CollabEvolutionItem> items = new();
+    private List<CollabEvolutionItem> chartItems = new();
+    int annee = DateTime.Today.Year;
+    bool IsLoaded = false;
+    private List<int> annees = Enumerable.Range(0, 10).Select(i => DateTime.Today.Year - i).ToList();
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        var caN = db.API_V_MARGE
+            .Where(a => a.DO_Date.HasValue && a.DO_Date.Value.Year == annee)
+            .GroupBy(a => a.CO_Nom)
+            .Select(g => new { CO_Nom = g.Key, CA = g.Sum(x => x.DL_MontantHT) ?? 0m, Marge = g.Sum(x => x.CMUPMarge) ?? 0m })
+            .ToList();
+
+        var caN1 = db.API_V_MARGE
+            .Where(a => a.DO_Date.HasValue && a.DO_Date.Value.Year == (annee - 1))
+            .GroupBy(a => a.CO_Nom)
+            .Select(g => new { CO_Nom = g.Key, CA = g.Sum(x => x.DL_MontantHT) ?? 0m, Marge = g.Sum(x => x.CMUPMarge) ?? 0m })
+            .ToList();
+
+        var mapN1 = caN1.ToDictionary(x => x.CO_Nom ?? "");
+
+        items = caN.Select(x =>
+        {
+            var n1CA = mapN1.TryGetValue(x.CO_Nom ?? "", out var v) ? v.CA : 0m;
+            var n1Marge = mapN1.TryGetValue(x.CO_Nom ?? "", out var v2) ? v2.Marge : 0m;
+            var evo = x.CA - n1CA;
+            return new CollabEvolutionItem
+            {
+                CO_Nom = x.CO_Nom,
+                CAN = x.CA,
+                CAN1 = n1CA,
+                MargeN = x.Marge,
+                MargeN1 = n1Marge,
+                Evolution = evo,
+                EvolutionP = n1CA != 0 ? evo / n1CA : 0m
+            };
+        })
+        .OrderByDescending(x => x.CAN)
+        .ToList();
+
+        chartItems = items.Take(15).OrderBy(x => x.CAN).ToList();
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    public void Dispose()
+    {
+        items?.Clear();
+        chartItems?.Clear();
+        items = null;
+        chartItems = null;
+    }
+}

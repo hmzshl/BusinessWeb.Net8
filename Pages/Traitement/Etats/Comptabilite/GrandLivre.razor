@@ -1,0 +1,227 @@
+@page "/cpt-grand-livre"
+@attribute [Authorize]
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="@("GRAND LIVRE COMPTABLE — " + dateDebut.Year)">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        @items.Count écriture(s) &nbsp;|&nbsp;
+                                        @comptes.Count compte(s)
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <div style="display:flex; gap:8px; align-items:center;">
+                                    <SfDatePicker TValue="DateTime" Width="140px" @bind-Value="dateDebut"
+                                                  Format="dd/MM/yyyy" Placeholder="Début">
+                                        <DatePickerEvents TValue="DateTime" ValueChange="@(args => LoadData())" />
+                                    </SfDatePicker>
+                                    <SfDatePicker TValue="DateTime" Width="140px" @bind-Value="dateFin"
+                                                  Format="dd/MM/yyyy" Placeholder="Fin">
+                                        <DatePickerEvents TValue="DateTime" ValueChange="@(args => LoadData())" />
+                                    </SfDatePicker>
+                                    <SfTextBox OnChange="@(args => LoadData())" Placeholder="Compte (ex: 411)" Width="160px" @bind-Value="cgFilter"
+                                               CssClass="e-small">
+                                    </SfTextBox>
+                                </div>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <GridRow Style="margin-bottom:12px;">
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Blue"
+                                   Value="@items.Count.ToString()"
+                                   Title="Écritures" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Purple"
+                                   Value="@comptes.Count.ToString()"
+                                   Title="Comptes" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Green"
+                                   Value="@(items.Sum(x => x.Debit).ToString("N0"))"
+                                   Title="Total Débit" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Amber"
+                                   Value="@(items.Sum(x => x.Credit).ToString("N0"))"
+                                   Title="Total Crédit" />
+                    </GridCol>
+                </GridRow>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="24">
+                        <Card>
+                            <div class="grid-67" style="zoom: @session.zoomLevel;">
+                                <SfGrid Height="100%" DataSource="@items"
+                                        Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })"
+                                        AllowSorting AllowResizing AllowGrouping>
+                                    <GridPageSettings PageSize="200" />
+                                    <GridGroupSettings Columns="@(new string[] { "CompteLabel" })" ShowDropArea="false" 
+                                                    EnableLazyLoading ShowToggleButton>
+                                        <CaptionTemplate>
+                                            @{
+                                                var ag = (context as CaptionTemplateContext);
+                                            }
+                                            <div style="font-weight:700;">@ag.Key</div>
+                                        </CaptionTemplate>
+                                    </GridGroupSettings>
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(CptEcritureItem.Debit)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var value = (context as AggregateTemplateContext);
+                                                            <div>
+                                                                @value.Sum
+                                                            </div>
+                                                        }
+                                                    </FooterTemplate>
+                                                    <GroupCaptionTemplate>
+                                                        @{
+                                                            var value = (context as AggregateTemplateContext);
+                                                            <div>
+                                                                @value.Sum
+                                                            </div>
+                                                        }
+                                                    </GroupCaptionTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(CptEcritureItem.Credit)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var value = (context as AggregateTemplateContext);
+                                                            <div>
+                                                                @value.Sum
+                                                            </div>
+                                                        }
+                                                    </FooterTemplate>
+                                                    <GroupCaptionTemplate>
+                                                        @{
+                                                            var value = (context as AggregateTemplateContext);
+                                                            <div>
+                                                                @value.Sum
+                                                            </div>
+                                                        }
+                                                    </GroupCaptionTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridColumns>
+                                        <GridColumn Width="180" HeaderText="Compte" Field="@nameof(CptEcritureItem.CompteLabel)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="90" HeaderText="Date" Field="@nameof(CptEcritureItem.MV_Date)" Format="dd/MM/yyyy" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="100" HeaderText="Pièce" Field="@nameof(CptEcritureItem.EC_Piece)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="90" HeaderText="Journal" Field="@nameof(CptEcritureItem.JO_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="160" HeaderText="Tiers" Field="@nameof(CptEcritureItem.CT_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="200" HeaderText="Libellé" Field="@nameof(CptEcritureItem.EC_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="120" HeaderText="Débit" Field="@nameof(CptEcritureItem.Debit)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="120" HeaderText="Crédit" Field="@nameof(CptEcritureItem.Credit)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="110" HeaderText="Lettrage" Field="@nameof(CptEcritureItem.LettreLabel)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{
+                                                    var dt = (context as CptEcritureItem);
+                                                }
+                                                <span class="@(dt.EC_Lettre == 2 ? "statustxt e-activecolor" : dt.EC_Lettre == 1 ? "statustxt e-warningcolor" : "statustxt e-inactivecolor")">
+                                                    @dt.LettreLabel
+                                                </span>
+                                            </Template>
+                                        </GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    private List<CptEcritureItem> items = new();
+    private List<string> comptes = new();
+
+    DateTime dateDebut = new DateTime(DateTime.Today.Year, 1, 1);
+    DateTime dateFin = new DateTime(DateTime.Today.Year, 12, 31);
+    string cgFilter = "";
+
+    bool IsLoaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        var query = db.API_V_ECRITUREC
+            .Where(e => e.MV_Date.HasValue
+                     && e.MV_Date.Value >= dateDebut
+                     && e.MV_Date.Value <= dateFin);
+
+        if (!string.IsNullOrWhiteSpace(cgFilter))
+            query = query.Where(e => e.CG_Num.StartsWith(cgFilter));
+
+        items = query
+            .OrderBy(e => e.CG_Num)
+            .ThenBy(e => e.MV_Date)
+            .Select(e => new CptEcritureItem
+            {
+                JO_Num = e.JO_Num,
+                JO_Intitule = e.JO_Intitule,
+                MV_Date = e.MV_Date,
+                EC_Piece = e.EC_Piece,
+                CG_Num = e.CG_Num,
+                CG_Intitule = e.CG_Intitule,
+                CT_Num = e.CT_Num,
+                CT_Intitule = e.CT_Intitule,
+                EC_Intitule = e.EC_Intitule,
+                Debit = e.Debit ?? 0m,
+                Credit = e.Credit ?? 0m,
+                EC_Lettre = e.EC_Lettre,
+                EC_Lettrage = e.EC_Lettrage
+            })
+            .ToList();
+
+        comptes = items.Select(x => x.CG_Num).Distinct().OrderBy(x => x).ToList();
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    public void Dispose()
+    {
+        items?.Clear();
+        items = null;
+    }
+}
