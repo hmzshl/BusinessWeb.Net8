@@ -1,0 +1,425 @@
+@page "/cpt-delai-paiement"
+@attribute [Authorize]
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="@("DÉLAI DE PAIEMENT FOURNISSEURS — " + annee)">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        @filteredItems.Count facture(s) &nbsp;|&nbsp;
+                                        Montant : @filteredItems.Sum(x => x.Montant).ToString("N2") &nbsp;|&nbsp;
+                                        Retard moy. : @(filteredItems.Where(x => x.JoursRetard > 0).Any() ? filteredItems.Where(x => x.JoursRetard > 0).Average(x => x.JoursRetard).ToString("N0") + " j" : "—")
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <div style="display:flex; gap:8px; align-items:center;">
+                                    <SfDropDownList TValue="int" TItem="int" Width="120px" @bind-Value="annee"
+                                                    DataSource="@annees" Placeholder="Année">
+                                        <DropDownListEvents TValue="int" TItem="int" ValueChange="@(args => LoadData())" />
+                                    </SfDropDownList>
+                                    <SfDatePicker TValue="DateTime?" Width="130px" @bind-Value="datePaiDebut"
+                                                  Format="dd/MM/yyyy" Placeholder="Paie Début" ShowClearButton ShowTodayButton>
+                                        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => ApplyFilter())" />
+                                    </SfDatePicker>
+                                    <SfDatePicker TValue="DateTime?" Width="130px" @bind-Value="datePaiFin"
+                                                  Format="dd/MM/yyyy" Placeholder="Paie Fin" ShowClearButton ShowTodayButton>
+                                        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => ApplyFilter())" />
+                                    </SfDatePicker>
+                                    <SfDropDownList TValue="string" TItem="StatutOption" Width="180px" @bind-Value="statutFilter"
+                                                    DataSource="@statutOptions" ShowClearButton="true" Placeholder="Tous statuts">
+                                        <DropDownListFieldSettings Value="Val" Text="Label" />
+                                        <DropDownListEvents TValue="string" TItem="StatutOption" ValueChange="@(args => ApplyFilter())" />
+                                    </SfDropDownList>
+                                </div>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <GridRow Style="margin-bottom:12px;">
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Green"
+                                   Value="@items.Count(x => x.Statut == "Dans les délais").ToString()"
+                                   Title="Dans les délais" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Red"
+                                   Value="@items.Count(x => x.Statut == "Retard paiement").ToString()"
+                                   Title="Retard paiement" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Amber"
+                                   Value="@items.Count(x => x.Statut == "Non encaissé").ToString()"
+                                   Title="Non encaissés" />
+                    </GridCol>
+                    <GridCol Xs="12" Md="6">
+                        <StatCard3 Color="StatColor.Purple"
+                                   Value="@(items.Where(x => x.JoursRetard > 0).Any() ? items.Where(x => x.JoursRetard > 0).Average(x => x.JoursRetard).ToString("N0") + " j" : "—")"
+                                   Title="Retard moyen" />
+                    </GridCol>
+                </GridRow>
+
+                <GridRow>
+                    <GridCol Xs="24" Md="24">
+                        <Card>
+                            <div class="grid-67" style="zoom: @session.zoomLevel;">
+                                <SfGrid Height="100%" DataSource="@filteredItems"
+                                        Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })"
+                                        AllowSorting AllowResizing AllowGrouping>
+                                    <GridPageSettings PageSize="200" />
+                                    <GridGroupSettings Columns="@(new string[] { "CT_Intitule" })" ShowDropArea="false"
+                                                       ShowToggleButton EnableLazyLoading DisablePageWiseAggregates>
+                                        <CaptionTemplate>
+                                            @{ var ag = (context as CaptionTemplateContext); }
+                                            <div style="font-weight:700;">@ag.Key</div>
+                                        </CaptionTemplate>
+                                    </GridGroupSettings>
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(DelaiPaiItem.Montant)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>
+                                                        @{ var s = (context as AggregateTemplateContext); }
+                                                        <div style="text-align:right; font-weight:600;">@s.Sum</div>
+                                                    </FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridColumns>
+                                        <GridColumn Width="130" HeaderText="Statut" Field="@nameof(DelaiPaiItem.Statut)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as DelaiPaiItem); }
+                                                <span class="@StatutClass(dt.Statut)">@dt.Statut</span>
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="95"  HeaderText="Date fact." Field="@nameof(DelaiPaiItem.DateFacture)" Format="dd/MM/yyyy" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="95"  HeaderText="Échéance" Field="@nameof(DelaiPaiItem.DateEcheance)" Format="dd/MM/yyyy" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="85"  HeaderText="Src. éch." Field="@nameof(DelaiPaiItem.EcheanceSource)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="95"  HeaderText="Date paie." Field="@nameof(DelaiPaiItem.DatePaiement)" Format="dd/MM/yyyy" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="110" HeaderText="Encaissement" Field="@nameof(DelaiPaiItem.DateEncaissement)" Format="dd/MM/yyyy" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="85"  HeaderText="Retard (j)" Field="@nameof(DelaiPaiItem.JoursRetard)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                            <Template>
+                                                @{ var dt = (context as DelaiPaiItem); }
+                                                @if (dt.JoursRetard > 0)
+                                                {
+                                                    <span style="color:#e53935; font-weight:600;">+@dt.JoursRetard j</span>
+                                                }
+                                                else if (dt.JoursRetard < 0)
+                                                {
+                                                    <span style="color:#43a047;">@dt.JoursRetard j</span>
+                                                }
+                                            </Template>
+                                        </GridColumn>
+                                        <GridColumn Width="100" HeaderText="Pièce" Field="@nameof(DelaiPaiItem.EC_Piece)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="90"  HeaderText="Journ." Field="@nameof(DelaiPaiItem.JO_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="190" HeaderText="Fournisseur" Field="@nameof(DelaiPaiItem.CT_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="180" HeaderText="Libellé facture" Field="@nameof(DelaiPaiItem.EC_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="130" HeaderText="Montant" Field="@nameof(DelaiPaiItem.Montant)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="90"  HeaderText="Jo. paie." Field="@nameof(DelaiPaiItem.JO_PaiNum)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="180" HeaderText="Libellé paiement" Field="@nameof(DelaiPaiItem.LibellePaiement)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="90"  HeaderText="Lettrage" Field="@nameof(DelaiPaiItem.EC_Lettrage)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    private List<DelaiPaiItem>   items         = new();
+    private List<DelaiPaiItem>   filteredItems = new();
+    private List<StatutStatItem> parStatut     = new();
+    private List<RetardFournItem> topRetard    = new();
+
+    int       annee        = DateTime.Today.Year;
+    DateTime? datePaiDebut = null;
+    DateTime? datePaiFin   = null;
+    string    statutFilter = null;
+    bool IsLoaded = false;
+
+    private List<int> annees = Enumerable.Range(0, 10).Select(i => DateTime.Today.Year - i).ToList();
+
+    // ── DTOs ────────────────────────────────────────────────────────────────
+    private class DelaiPaiItem
+    {
+        public string    EC_Piece         { get; set; }
+        public string    EC_Lettrage      { get; set; }
+        public string    CT_Num           { get; set; }
+        public string    CT_Intitule      { get; set; }
+        public string    CG_Num           { get; set; }
+        public string    CG_Intitule      { get; set; }
+        public string    EC_Intitule      { get; set; }
+        public string    JO_Num           { get; set; }
+        public string    JO_Intitule      { get; set; }
+        public decimal   Montant          { get; set; }
+        public DateTime? DateFacture      { get; set; }
+        public DateTime  DateEcheance     { get; set; }
+        public string    EcheanceSource   { get; set; }
+        // Paiement (from linked treso ecriture)
+        public string    JO_PaiNum        { get; set; }
+        public string    JO_PaiIntitule   { get; set; }
+        public string    LibellePaiement  { get; set; }
+        public DateTime? DatePaiement     { get; set; }
+        public DateTime? DateEncaissement { get; set; }
+        // Computed
+        public int       JoursRetard      { get; set; }   // >0 = late, <0 = early
+        public string    Statut           { get; set; }   // "Dans les délais" | "Retard paiement" | "Non encaissé" | "Non identifié"
+    }
+
+    private class StatutOption    { public string Val { get; set; } public string Label { get; set; } }
+    private class StatutStatItem  { public string Statut { get; set; } public int Nb { get; set; } }
+    private class RetardFournItem { public string Fourn { get; set; } public double JoursRetard { get; set; } }
+
+    private List<StatutOption> statutOptions = new()
+    {
+        new StatutOption { Val = "Dans les délais",  Label = "✅ Dans les délais" },
+        new StatutOption { Val = "Retard paiement",  Label = "🔴 Retard paiement" },
+        new StatutOption { Val = "Non encaissé",     Label = "🟠 Non encaissé" },
+        new StatutOption { Val = "Non identifié",    Label = "⚪ Non identifié" }
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        // 1. Reference sets
+        var fournNums = db.F_COMPTET
+            .Where(c => c.CT_Type == 1)
+            .Select(c => c.CT_Num)
+            .ToHashSet();
+
+        var achatsJO = db.F_JOURNAUX
+            .Where(j => j.JO_Type == 0 || j.JO_Type == 3)
+            .Select(j => j.JO_Num)
+            .ToHashSet();
+
+        var tresoJO = db.F_JOURNAUX
+            .Where(j => j.JO_Type == 2)
+            .Select(j => j.JO_Num)
+            .ToList();   // small list — used in SQL IN clause
+
+        // 2. Payment delay per tiers
+        var delaiParTiers = db.F_REGLEMENTT
+            .Where(r => r.RT_NbJour.HasValue)
+            .ToList()
+            .GroupBy(r => r.CT_Num)
+            .ToDictionary(g => g.Key, g => (int)(g.Max(r => r.RT_NbJour) ?? 30));
+
+        // 3. Load lettrées factures for the year
+        var factures = db.API_V_ECRITUREC
+            .Where(e => e.EC_Lettre == 2
+                     && e.EC_Sens == 1
+                     && e.MV_Date.HasValue
+                     && e.MV_Date.Value.Year == annee
+                     && e.EC_Lettrage != null
+                     && e.EC_Lettrage != "")
+            .ToList()
+            .Where(e => fournNums.Contains(e.CT_Num) && achatsJO.Contains(e.JO_Num))
+            .ToList();
+
+        // 4. Load payment ecritures from treso journals (year ±1 window)
+        //    Filter by lettrage in memory to avoid huge IN clause
+        var lettrageSet = factures.Select(f => f.EC_Lettrage).ToHashSet();
+
+        var paiementDict = db.API_V_ECRITUREC
+            .Where(e => tresoJO.Contains(e.JO_Num)
+                     && e.EC_Lettrage != null
+                     && e.EC_Lettrage != ""
+                     && e.MV_Date.HasValue
+                     && e.MV_Date.Value.Year >= annee - 1
+                     && e.MV_Date.Value.Year <= annee + 1)
+            .ToList()
+            .Where(e => lettrageSet.Contains(e.EC_Lettrage))
+            .GroupBy(e => e.EC_Lettrage)
+            .ToDictionary(g => g.Key, g => g.OrderBy(e => e.MV_Date).First());
+
+        // 5. Project
+        var dateMin1900 = new DateTime(1900, 1, 1);
+        var dateMin1753 = new DateTime(1753, 1, 1);
+        var dateMin1973 = new DateTime(1973, 1, 1);
+
+        items = factures.Select(f =>
+        {
+            // ── Date échéance (same logic as EcheanceFournisseur) ──────────
+            DateTime dateEch;
+            string   source;
+
+            bool echeanceValide = f.EC_Echeance.HasValue
+                               && f.EC_Echeance.Value.Date != dateMin1900
+                               && f.EC_Echeance.Value.Date != dateMin1973;
+
+            if (echeanceValide)
+            {
+                dateEch = f.EC_Echeance.Value.Date;
+                source  = "Échéance";
+            }
+            else if (delaiParTiers.TryGetValue(f.CT_Num, out int nbJour) && nbJour > 0)
+            {
+                dateEch = f.JM_Date.Date.AddDays(nbJour);
+                source  = "Délai tiers";
+            }
+            else
+            {
+                dateEch = (f.MV_Date ?? f.JM_Date).Date.AddDays(60);
+                source  = "+60j";
+            }
+
+            // ── Payment ecriture ───────────────────────────────────────────
+            paiementDict.TryGetValue(f.EC_Lettrage, out var paie);
+
+            DateTime? datePaiement = paie?.MV_Date;
+            DateTime? rawDateEnc   = paie?.EC_DateRappro;
+
+            // Normalize encaissement: sentinel dates → null
+            DateTime? dateEncaissement = (rawDateEnc.HasValue
+                                       && rawDateEnc.Value.Date != dateMin1900
+                                       && rawDateEnc.Value.Date != dateMin1753)
+                                       ? rawDateEnc
+                                       : null;
+
+            // ── Statut ────────────────────────────────────────────────────
+            string statut;
+            int    joursRetard = 0;
+
+            if (paie == null)
+            {
+                statut = "Non identifié";
+            }
+            else if (dateEncaissement == null)
+            {
+                statut = "Non encaissé";
+            }
+            else if (datePaiement.HasValue && datePaiement.Value.Date > dateEch)
+            {
+                joursRetard = (datePaiement.Value.Date - dateEch).Days;
+                statut = "Retard paiement";
+            }
+            else
+            {
+                joursRetard = datePaiement.HasValue
+                    ? (datePaiement.Value.Date - dateEch).Days  // negative = paid early
+                    : 0;
+                statut = "Dans les délais";
+            }
+
+            return new DelaiPaiItem
+            {
+                EC_Piece        = f.EC_Piece,
+                EC_Lettrage     = f.EC_Lettrage,
+                CT_Num          = f.CT_Num,
+                CT_Intitule     = f.CT_Intitule,
+                CG_Num          = f.CG_Num,
+                CG_Intitule     = f.CG_Intitule,
+                EC_Intitule     = f.EC_Intitule,
+                JO_Num          = f.JO_Num,
+                JO_Intitule     = f.JO_Intitule,
+                Montant         = f.EC_Montant ?? 0m,
+                DateFacture     = f.MV_Date,
+                DateEcheance    = dateEch,
+                EcheanceSource  = source,
+                JO_PaiNum       = paie?.JO_Num,
+                JO_PaiIntitule  = paie?.JO_Intitule,
+                LibellePaiement = paie?.EC_Intitule,
+                DatePaiement    = datePaiement,
+                DateEncaissement = dateEncaissement,
+                JoursRetard     = joursRetard,
+                Statut          = statut
+            };
+        })
+        .OrderBy(x => x.DateEcheance)
+        .ToList();
+
+        BuildCharts();
+        datePaiDebut = null;
+        datePaiFin   = null;
+        statutFilter = null;
+        ApplyFilter();
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    private void BuildCharts()
+    {
+        var statutOrder = new[] { "Dans les délais", "Retard paiement", "Non encaissé", "Non identifié" };
+        parStatut = statutOrder
+            .Select(s => new StatutStatItem { Statut = s, Nb = items.Count(x => x.Statut == s) })
+            .Where(x => x.Nb > 0)
+            .ToList();
+
+        topRetard = items
+            .Where(x => x.JoursRetard > 0)
+            .GroupBy(x => x.CT_Intitule)
+            .Select(g => new RetardFournItem
+            {
+                Fourn       = g.Key,
+                JoursRetard = g.Average(x => x.JoursRetard)
+            })
+            .OrderByDescending(x => x.JoursRetard)
+            .Take(8)
+            .ToList();
+    }
+
+    private void ApplyFilter()
+    {
+        filteredItems = items
+            .Where(x => string.IsNullOrEmpty(statutFilter) || x.Statut == statutFilter)
+            .Where(x => datePaiDebut == null || (x.DatePaiement.HasValue && x.DatePaiement.Value >= datePaiDebut))
+            .Where(x => datePaiFin   == null || (x.DatePaiement.HasValue && x.DatePaiement.Value <= datePaiFin))
+            .ToList();
+    }
+
+    private static string StatutClass(string statut) => statut switch
+    {
+        "Dans les délais" => "statustxt e-activecolor",
+        "Retard paiement" => "statustxt e-inactivecolor",
+        "Non encaissé"    => "statustxt e-warningcolor",
+        _                 => "statustxt e-infocolor"
+    };
+
+    public void Dispose()
+    {
+        items?.Clear();
+        filteredItems?.Clear();
+        parStatut?.Clear();
+        topRetard?.Clear();
+        items = null;
+        filteredItems = null;
+        parStatut = null;
+        topRetard = null;
+    }
+}
