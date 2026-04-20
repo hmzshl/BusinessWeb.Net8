@@ -1,0 +1,180 @@
+@page "/et-gasoil-affaire"
+@attribute [Authorize]
+@implements IDisposable
+@if (IsLoaded)
+{
+    <Card_1 Title="CONSOMMATION GASOIL PAR AFFAIRE">
+
+        <RadzenContent>
+            <div class="grid-container no-border">
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined"><div style="text-transform: uppercase;">EXERCICE EN COURS: @DateTime.Today.Year.ToString()</div></SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDatePicker Width="140px" TValue="DateTime ?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
+                                    <DatePickerEvents TValue="DateTime ?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
+                                </SfDatePicker>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDatePicker Width="140px" TValue="DateTime ?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
+                                    <DatePickerEvents TValue="DateTime ?" ValueChange="@(args => LoadData())"> </DatePickerEvents>
+                                </SfDatePicker>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <GridRow>
+
+                    <GridCol Xs="24" Md="16">
+                        <Card>
+                            <div class="grid-80" style="zoom: @session.zoomLevel;">
+                                <SfGrid EnableVirtualization Height="100%" DataSource="@(items)" Toolbar="@(new List<object>() { "Print", "ExcelExport", "Search" })" AllowSorting>
+                                    <GridPageSettings PageSize="100" />
+                                    <GridAggregates>
+                                        <GridAggregate>
+                                            <GridAggregateColumns>
+                                                <GridAggregateColumn Field="@nameof(API_V_MATERIELENTRETIEN.Qte)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var SumValue = (context as AggregateTemplateContext);
+                                                            <div>@SumValue.Sum</div>
+                                                        }
+                                                    </FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var SumValue = (context as AggregateTemplateContext);
+                                                            <div>@SumValue.Sum</div>
+                                                        }
+                                                    </FooterTemplate>
+                                                </GridAggregateColumn>
+                                                <GridAggregateColumn Field="@nameof(API_V_MATERIELENTRETIEN.Kilometrage)" Type="AggregateType.Sum" Format="N2">
+                                                    <FooterTemplate>
+                                                        @{
+                                                            var SumValue = (context as AggregateTemplateContext);
+                                                            <div>@SumValue.Sum</div>
+                                                        }
+                                                    </FooterTemplate>
+                                                </GridAggregateColumn>
+                                            </GridAggregateColumns>
+                                        </GridAggregate>
+                                    </GridAggregates>
+                                    <GridColumns>
+                                        <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.CA_Num)" HeaderText="N° Affaire" />
+                                        <GridColumn Width="400" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Intitule)" HeaderText="Affaire" />
+                                        <GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Qte)" HeaderText="Qté (L)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                        <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.KilometrageSuivant)" HeaderText="PU Moyen" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                                        <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Montant)" HeaderText="Montant" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+
+                    <GridCol Xs="24" Md="8">
+                        <Card>
+                            <div class="grid-80" style="zoom: @session.zoomLevel;">
+                                <SfChart Title="Conso Gasoil top 30 Affaires" Width="90%" Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <ChartArea><ChartAreaBorder Width="0"></ChartAreaBorder></ChartArea>
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
+                                        <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+                                        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                                    </ChartPrimaryXAxis>
+                                    <ChartPrimaryYAxis LabelFormat="N2" EdgeLabelPlacement="EdgeLabelPlacement.Shift" Visible="false">
+                                        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+                                        <ChartAxisLineStyle Width="0"></ChartAxisLineStyle>
+                                    </ChartPrimaryYAxis>
+                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+                                    <ChartLegendSettings Visible="true" EnableHighlight="true"></ChartLegendSettings>
+                                    <ChartSeriesCollection>
+                                        <ChartSeries DataSource="@chart_items" XName="CA_Num" YName="Montant" Name="Montant" Width="2" ColumnSpacing="0.1" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Bar">
+                                            <ChartMarker>
+                                                <ChartDataLabel Visible="true" Position="Syncfusion.Blazor.Charts.LabelPosition.Outer" Alignment="Syncfusion.Blazor.Charts.Alignment.Near">
+                                                    <ChartDataLabelFont FontWeight="700" Size="11"></ChartDataLabelFont>
+                                                </ChartDataLabel>
+                                            </ChartMarker>
+                                        </ChartSeries>
+                                    </ChartSeriesCollection>
+                                </SfChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+
+                </GridRow>
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
+
+@code
+{
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    private List<API_V_MATERIELENTRETIEN> items = new List<API_V_MATERIELENTRETIEN>();
+    private List<API_V_MATERIELENTRETIEN> chart_items = new List<API_V_MATERIELENTRETIEN>();
+    DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
+    DateTime? date2 = new DateTime(DateTime.Today.Year, 12, 31);
+    bool IsLoaded = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+        items = db.API_V_MATERIELENTRETIEN
+            .Where(a => a.Type == 0
+                && ((date1 != null && a.Date >= date1) || date1 == null)
+                && ((date2 != null && a.Date <= date2) || date2 == null))
+            .GroupBy(a => a.CA_Num)
+            .Select(a => new API_V_MATERIELENTRETIEN
+            {
+                CA_Num = a.Key,
+                Qte = a.Sum(x => x.Qte),
+                Montant = a.Sum(x => x.Montant),
+                Kilometrage = a.Sum(x => x.Kilometrage)
+            })
+            .OrderByDescending(a => a.Montant)
+            .ToList();
+        items.ForEach(a =>
+        {
+            a.Intitule = db.F_COMPTEA.Where(c => c.CA_Num == a.CA_Num).Select(c => c.CA_Intitule).FirstOrDefault();
+            a.KilometrageSuivant = (a.Qte != null && a.Qte > 0) ? a.Montant / a.Qte.Value : 0;
+        });
+        chart_items = items.Take(30).OrderBy(a => a.Montant).ToList();
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    public void Dispose()
+    {
+        items?.Clear();
+        chart_items?.Clear();
+        items = null;
+        chart_items = null;
+    }
+}
