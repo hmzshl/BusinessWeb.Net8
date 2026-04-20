@@ -35,25 +35,34 @@
 
 
              </ToolbarItem>
-             <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-                 <Template>
-                     <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
-                        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+
+
+            <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                <Template>
+                    <SfTextBox Width="180px" Placeholder="RECHERCHE" ValueChanged="@(args => DefaultGrid.SearchAsync(args))"></SfTextBox>
+                </Template>
+            </ToolbarItem>
+
+            <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                <Template>
+                    <SfDatePicker Width="140px" TValue="DateTime ?" @bind-Value="date1" Placeholder="Date Début" ShowClearButton ShowTodayButton>
+                        <DatePickerEvents TValue="DateTime ?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
                     </SfDatePicker>
                 </Template>
             </ToolbarItem>
             <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
                 <Template>
-                    <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
-                        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
+                    <SfDatePicker Width="140px" TValue="DateTime ?" @bind-Value="date2" Placeholder="Date Fin" ShowClearButton ShowTodayButton>
+                        <DatePickerEvents TValue="DateTime ?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
                     </SfDatePicker>
                 </Template>
             </ToolbarItem>
-
+            <ToolbarItem OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-print"></ToolbarItem>
+            <ToolbarItem OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.ExportToExcelAsync()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
         </ToolbarItems>
     </SfToolbar>
     <div class="no-border grid-84" style="zoom: @session.zoomLevel;">
-        <SfGrid  Height="100%" AllowSelection EnableHover DataSource="@(items)" Toolbar="@(new List<object>() { "Print","ExcelExport","Search"})" AllowPaging>
+        <SfGrid @ref="DefaultGrid" Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowPaging AllowExcelExport>
             <GridPageSettings PageSize="100"/>
              <GridAggregates>
                  <GridAggregate>
@@ -213,6 +222,7 @@
     List<string> statut = new List<string>();
     List<string> journaux = new List<string>();
     private List<API_V_CREGLEMENT> items = new List<API_V_CREGLEMENT>();
+    private SfGrid<API_V_CREGLEMENT> DefaultGrid;
 
     private Func<double, string> _fortmat1 = (p) => $"{(p / 100).ToString("### ### ##0 %")}";
     protected override async Task OnInitializedAsync()
