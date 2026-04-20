@@ -26,7 +26,7 @@
              <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
                  <Template>
                      <div style="padding-left: 15px;">
-                         <SfMultiSelect Width="230px" @bind-Value=@journaux ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161")) && a.RG_Type == 0).OrderBy(a => a.JO_Intitule).Select(a => a.JO_Intitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                         <SfMultiSelect Width="300px" @bind-Value=@journaux ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161")) && a.RG_Type == 0).OrderBy(a => a.JO_Intitule).Select(a => a.JO_Intitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
                              <MultiSelectFieldSettings Text="JO_Intitule" Value="JO_Intitule"></MultiSelectFieldSettings>
                              <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
                          </SfMultiSelect>
@@ -62,14 +62,24 @@
         </ToolbarItems>
     </SfToolbar>
     <div class="no-border grid-84" style="zoom: @session.zoomLevel;">
-        <SfGrid @ref="DefaultGrid" Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowPaging AllowExcelExport>
+        <SfGrid AllowTextWrap @ref="DefaultGrid" Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowPaging AllowExcelExport>
             <GridPageSettings PageSize="100"/>
              <GridAggregates>
                  <GridAggregate>
                      <GridAggregateColumns>
-                         <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.RG_Montant)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                         <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.Debit)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
                              <FooterTemplate>
                                  @{
+                                    var value = (context as AggregateTemplateContext);
+                                    <div>
+                                        @value.Sum
+                                    </div>
+                                }
+                            </FooterTemplate>
+                        </GridAggregateColumn>
+                        <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.Credit)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
                                     var value = (context as AggregateTemplateContext);
                                     <div>
                                         @value.Sum
@@ -83,13 +93,14 @@
             <GridColumns>
                 <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Date)" HeaderText="Date" />
                 <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Piece)" HeaderText="Pièce" />
+                <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Reference)" HeaderText="Ref" />
                 <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.R_Intitule)" HeaderText="Type" />
                 <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Num)" HeaderText="Numéro" Visible="@(CT_Num == null)" />
-                <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Intitule)" HeaderText="@(getTiers())" Visible="@(CT_Num == null)" />
+                <GridColumn Width="200" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.CT_Intitule)" HeaderText="Tiers" Visible="@(CT_Num == null)" />
                 <GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.JO_Num)" HeaderText="N° Jo." Visible="@(JO_Num == null)" />
-                <GridColumn Width="150" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.JO_Intitule)" HeaderText="Journal" Visible="@(JO_Num == null)" />
                 <GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Libelle)" HeaderText="Libellé" />
-                <GridColumn Width="105" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Montant)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.Debit)" HeaderText="Debit" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
+                <GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.Credit)" HeaderText="Credit" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
                 <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_DateEcheance)" HeaderText="Ech" />
 
                 <GridColumn Width="105" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut" Visible="@(IsMettreEnBanque)">
@@ -250,7 +261,6 @@
       && ((journaux != null && journaux.Contains(a.JO_Intitule)))
       && (!(a.Impaye??false))
       && (!a.CG_Num.StartsWith("5161"))
-      && a.RG_Type == 0
       ).OrderByDescending(a => a.RG_Date)
       .ToList();
         }

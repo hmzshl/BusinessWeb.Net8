@@ -223,6 +223,7 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Carnet du disque", Url = "entretien/11", TitleIcon = "dataset", SousGroupe = "▶ Entretien", HasSousGroupe = true });
 			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Taxe sur tonnage", Url = "entretien/12", TitleIcon = "dataset", SousGroupe = "▶ Entretien", HasSousGroupe = true });
 			list.Add(new AuthItems { SelectedAPP = 5, Title = "Traitement", Description = "Maintenance des extincteurs", Url = "entretien/13", TitleIcon = "dataset", SousGroupe = "▶ Entretien", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 5, Title = "Etats", Description = "Conso gasoil détail", Url = "et-gasoil-detail", TitleIcon = "bar_chart", SousGroupe = "▶ Etats Gasoil", HasSousGroupe = true });
 			list.Add(new AuthItems { SelectedAPP = 5, Title = "Etats", Description = "Conso gasoil par immatricule", Url = "et-gasoil-immatricule", TitleIcon = "bar_chart", SousGroupe = "▶ Etats Gasoil", HasSousGroupe = true });
 			list.Add(new AuthItems { SelectedAPP = 5, Title = "Etats", Description = "Conso gasoil par responsable", Url = "et-gasoil-responsable", TitleIcon = "bar_chart", SousGroupe = "▶ Etats Gasoil", HasSousGroupe = true });
 			list.Add(new AuthItems { SelectedAPP = 5, Title = "Etats", Description = "Conso gasoil par affaire", Url = "et-gasoil-affaire", TitleIcon = "bar_chart", SousGroupe = "▶ Etats Gasoil", HasSousGroupe = true });
