@@ -166,10 +166,10 @@ else
 		<DropDownListFieldSettings Text="C_Nom" Value="id"> </DropDownListFieldSettings>
 		<DropDownListEvents TValue="int" TItem="API_T_Caisse" ValueChange="@(args => (UpdateGrid()))"></DropDownListEvents>
 	</SfDropDownList>;
-	private RenderFragment Date1 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date1" Width="120px" Placeholder="Date Début" TValue="DateTime?">
+	private RenderFragment Date1 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date1" Width="130px" Placeholder="Date Début" TValue="DateTime?">
 		<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
 	</SfDatePicker>;
-	private RenderFragment Date2 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date2" Width="120px" Placeholder="Date Fin" TValue="DateTime?">
+	private RenderFragment Date2 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date2" Width="130px" Placeholder="Date Fin" TValue="DateTime?">
 		<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
 	</SfDatePicker>
 	;

@@ -6,7 +6,7 @@
 
 				<ToolbarItem Visible=@(sc.IsInRole("Admin") && caisses.Any()) OnClick=@(args => (DefaultGrid.PrintAsync())) TooltipText="Imprimer" Text="Imprimer" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-print"></ToolbarItem>
 				<ToolbarItem Visible=@(sc.IsInRole("Admin") && caisses.Any()) OnClick=@(args => (DefaultGrid.ExportToExcelAsync(fn.ExportToExcelAsync()))) TooltipText="Export Excel" Text="Export Excel" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-export-excel"></ToolbarItem>
-				<ToolbarItem Visible="@(caisses.Any())" TooltipText="Incorporer des pièces" Text="Incorporer des pièces" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-upload-1"></ToolbarItem>
+				<ToolbarItem Visible="@(caisses.Any())" TooltipText="Incorporer des pièces" OnClick="Incorporer" Text="Incorporer des pièces" ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-upload-1"></ToolbarItem>
 				<ToolbarItem Visible="@(caisses.Any())" TooltipText="Supprimer" Text="Supprimer" OnClick=@(args => (DefaultGrid.DeleteRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-trash"></ToolbarItem>
 				<ToolbarItem Visible="@(caisses.Any())" TooltipText="Ajouter" Text="Ajouter" OnClick=@(args => (DefaultGrid.AddRecordAsync())) ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Left" PrefixIcon="e-icons e-circle-add"></ToolbarItem>
 				<ToolbarItem Align="ItemAlign.Left" Type="ItemType.Separator" />
@@ -139,10 +139,10 @@
 		<DropDownListEvents TValue="int" TItem="API_T_Caisse" ValueChange="@(args => (UpdateGrid()))"> </DropDownListEvents>
 	</SfDropDownList>
 		;
-	private RenderFragment Date1 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date1" Width="120px" Placeholder="Date Début" TValue="DateTime?">
+	private RenderFragment Date1 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date1" Width="130px" Placeholder="Date Début" TValue="DateTime?">
 		<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
 	</SfDatePicker>;
-	private RenderFragment Date2 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date2" Width="120px" Placeholder="Date Fin" TValue="DateTime?">
+	private RenderFragment Date2 => @<SfDatePicker ShowClearButton ShowTodayButton TValue="DateTime?" @bind-Value="@date2" Width="130px" Placeholder="Date Fin" TValue="DateTime?">
 		<DatePickerEvents TValue="DateTime?" ValueChange="@(args => (UpdateGrid()))"> </DatePickerEvents>
 	</SfDatePicker>
 	;
@@ -186,10 +186,7 @@
 		}
 		if (args.Item.Id == "incorporer")
 		{
-			await DialogService.OpenAsync<IncorporerElements>("Incorporer des pièces",
-	new Dictionary<string, object>() { { "type", type }, { "caisse", caisse } },
-	new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
-			await UpdateGrid();
+
 		}
 
 	}
@@ -235,6 +232,13 @@
 		await DialogService.OpenAsync<CaisseFiche>(Title,
 	new Dictionary<string, object>() { { "caisse", caisse }, { "id", 0 }, { "type", type } },
 	new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "600px", Height = "700px" });
+		await UpdateGrid();
+	}
+	protected async Task Incorporer()
+	{
+		await DialogService.OpenAsync<IncorporerElements>("Incorporer des pièces",
+new Dictionary<string, object>() { { "type", type }, { "caisse", caisse } },
+new Radzen.DialogOptions() { CloseDialogOnEsc = true, Width = "1000px", Height = "95%" });
 		await UpdateGrid();
 	}
 

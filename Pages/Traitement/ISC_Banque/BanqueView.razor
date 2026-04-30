@@ -5,36 +5,36 @@
                 <Template>
                     <div style="padding-left: 15px;">
                         <SfMultiSelect Width="230px" @bind-Value=@types ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161")) && a.RG_Type == 0).OrderBy(a => a.R_Intitule).Select(a => a.R_Intitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
-                             <MultiSelectFieldSettings Text="R_Intitule" Value="R_Intitule"></MultiSelectFieldSettings>
-                             <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
-                         </SfMultiSelect>
-                     </div>
-                 </Template>
-             </ToolbarItem>
-             <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
-                 <Template>
-                     <div style="padding-left: 15px;">
-                         <SfMultiSelect Width="150px" @bind-Value=@statut ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161")) && a.RG_Type == 0).OrderBy(a => a.Echeance).Select(a => a.Echeance).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
-                             <MultiSelectFieldSettings Text="Echeance" Value="Echeance"></MultiSelectFieldSettings>
-                             <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
-                         </SfMultiSelect>
-                     </div>
-                 </Template>
+                            <MultiSelectFieldSettings Text="R_Intitule" Value="R_Intitule"></MultiSelectFieldSettings>
+                            <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                        </SfMultiSelect>
+                    </div>
+                </Template>
+            </ToolbarItem>
+            <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                <Template>
+                    <div style="padding-left: 15px;">
+                        <SfMultiSelect Width="150px" @bind-Value=@statut ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161")) && a.RG_Type == 0).OrderBy(a => a.Echeance).Select(a => a.Echeance).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                            <MultiSelectFieldSettings Text="Echeance" Value="Echeance"></MultiSelectFieldSettings>
+                            <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                        </SfMultiSelect>
+                    </div>
+                </Template>
 
 
-             </ToolbarItem>
-             <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
-                 <Template>
-                     <div style="padding-left: 15px;">
-                         <SfMultiSelect Width="300px" @bind-Value=@journaux ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161")) && a.RG_Type == 0).OrderBy(a => a.JO_Intitule).Select(a => a.JO_Intitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
-                             <MultiSelectFieldSettings Text="JO_Intitule" Value="JO_Intitule"></MultiSelectFieldSettings>
-                             <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
-                         </SfMultiSelect>
-                     </div>
-                 </Template>
+            </ToolbarItem>
+            <ToolbarItem Align="ItemAlign.Left" Type="ItemType.Input">
+                <Template>
+                    <div style="padding-left: 15px;">
+                        <SfMultiSelect Width="300px" @bind-Value=@journaux ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161")) && a.RG_Type == 0).OrderBy(a => a.JO_Intitule).Select(a => a.JO_Intitule).Distinct().ToList())" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+                            <MultiSelectFieldSettings Text="JO_Intitule" Value="JO_Intitule"></MultiSelectFieldSettings>
+                            <MultiSelectEvents TItem="string" TValue="List<string>" ValueChange="@(args => UpdateGrid())"></MultiSelectEvents>
+                        </SfMultiSelect>
+                    </div>
+                </Template>
 
 
-             </ToolbarItem>
+            </ToolbarItem>
 
 
             <ToolbarItem TooltipText="CHERCHE" Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
@@ -63,13 +63,13 @@
     </SfToolbar>
     <div class="no-border grid-84" style="zoom: @session.zoomLevel;">
         <SfGrid AllowTextWrap @ref="DefaultGrid" Height="100%" AllowSelection EnableHover DataSource="@(items)" AllowPaging AllowExcelExport>
-            <GridPageSettings PageSize="100"/>
-             <GridAggregates>
-                 <GridAggregate>
-                     <GridAggregateColumns>
-                         <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.Debit)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
-                             <FooterTemplate>
-                                 @{
+            <GridPageSettings PageSize="100" />
+            <GridAggregates>
+                <GridAggregate>
+                    <GridAggregateColumns>
+                        <GridAggregateColumn Field="@nameof(API_V_CREGLEMENT.Debit)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                            <FooterTemplate>
+                                @{
                                     var value = (context as AggregateTemplateContext);
                                     <div>
                                         @value.Sum
@@ -100,13 +100,13 @@
                 <GridColumn Width="300" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_Libelle)" HeaderText="Libellé" />
                 <GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.Debit)" HeaderText="Debit" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
                 <GridColumn Width="95" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.Credit)" HeaderText="Credit" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-                <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.RG_DateEcheance)" HeaderText="Ech" />
+                <GridColumn Format="dd/MM/yy" Width="70" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_CREGLEMENT.DateEcheance)" HeaderText="Ech" />
 
-                <GridColumn Width="105" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut" Visible="@(IsMettreEnBanque)">
+                <GridColumn Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Statut" Visible="@(IsMettreEnBanque)">
                     <Template>
                         @{
                             var dt = (context as API_V_CREGLEMENT);
-                            if(dt.Depose??false)
+                            if (dt.Depose ?? false)
                             {
                                 <div>
                                     <span class="statustxt e-activecolor">En Banque</span>
@@ -125,10 +125,10 @@
                         @{
                             var dt = (context as API_V_CREGLEMENT);
                             <div style="padding-left: 2px;padding-right: 2px;padding-top: 1px;padding-bottom: 1px;">
-                                <DatePicker ValueChanged=@(args => DateDepot(dt,args.Value)) Disabled=@(!(dt.Depose??false)) TValue="DateTime?" Size="@DatePickerSize.Small" Value="@dt.DateDepot" AllowClear="false" />
-                            </div> 
+                                <DatePicker ValueChanged=@(args => DateDepot(dt, args.Value)) Disabled=@(!(dt.Depose ?? false)) TValue="DateTime ?" Size="@DatePickerSize.Small" Value="@dt.DateDepot" AllowClear="false" />
+                            </div>
                         }
-                        
+
                     </Template>
                 </GridColumn>
 
@@ -156,7 +156,7 @@
                             var dt = (context as API_V_CREGLEMENT);
                             if (dt.Rappro ?? false)
                             {
-                                
+
                             }
                             else
                             {
@@ -171,7 +171,7 @@
                         @{
                             var dt = (context as API_V_CREGLEMENT);
                             <div style="padding-left: 2px;padding-right: 2px;padding-top: 1px;padding-bottom: 1px;">
-                                <DatePicker ValueChanged=@(args => DatePaiement(dt,args.Value)) Disabled=@(!(dt.Rappro??false)) TValue="DateTime?" Size="@DatePickerSize.Small" Value="@dt.DatePaie" AllowClear="false" />
+                                <DatePicker ValueChanged=@(args => DatePaiement(dt, args.Value)) Disabled=@(!(dt.Rappro ?? false)) TValue="DateTime ?" Size="@DatePickerSize.Small" Value="@dt.DatePaie" AllowClear="false" />
                             </div>
                         }
 
@@ -188,7 +188,7 @@
                             else
                             {
 
-                                
+
                             }
                         }
                     </Template>
@@ -198,7 +198,7 @@
             </GridColumns>
 
         </SfGrid>
-</div>
+    </div>
 </RadzenContent>
 @code
 {
@@ -238,7 +238,7 @@
     protected override async Task OnInitializedAsync()
     {
 
-                db = session.db;
+        db = session.db;
         GC.Collect();
         types = db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161"))).OrderBy(a => a.R_Intitule).Select(a => a.R_Intitule).Distinct().ToList();
         statut = db.API_V_CREGLEMENT.Where(a => (!a.CG_Num.StartsWith("5161"))).OrderBy(a => a.Echeance).Select(a => a.Echeance).Distinct().ToList();
@@ -248,7 +248,7 @@
     }
     private async Task UpdateGrid()
     {
-        if(IsMettreEnBanque)
+        if (IsMettreEnBanque)
         {
             items = db.API_V_CREGLEMENT.Where(a =>
       ((a.JO_Num == JO_Num && JO_Num != null) || (JO_Num == null))
@@ -258,7 +258,10 @@
       && ((types != null && types.Contains(a.R_Intitule)))
       && ((statut != null && statut.Contains(a.Echeance)))
       && ((journaux != null && journaux.Contains(a.JO_Intitule)))
-      && (!(a.Impaye??false))
+      && (!(a.Impaye ?? false))
+      && (!(a.Encaiss ?? false))
+      && (!(a.Depose ?? false))
+      && (!(a.Rappro ?? false))
       && (!a.CG_Num.StartsWith("5161"))
       ).OrderByDescending(a => a.RG_Date)
       .ToList();
@@ -340,7 +343,7 @@
             await UpdateGrid();
         }
     }
-    private async Task DateDepot(API_V_CREGLEMENT args,DateTime? value)
+    private async Task DateDepot(API_V_CREGLEMENT args, DateTime? value)
     {
         var ln = db.F_CREGLEMENT.Where(a => a.cbMarq == args.cbMarq).SingleOrDefault();
         ln.DateDepot = value;
