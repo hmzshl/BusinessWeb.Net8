@@ -455,7 +455,7 @@ namespace BusinessWeb.Services
 			{
 				if (ligne.AR_Ref != null && ligne.DE_No != null && ligne.DL_MvtStock != 0)
 				{
-					UpdateStock(ligne.AR_Ref, ligne.DE_No ?? 0);
+					await UpdateStock(ligne.AR_Ref, ligne.DE_No ?? 0);
 				}
 			}
 			return fDocLignes;
@@ -494,12 +494,12 @@ namespace BusinessWeb.Services
 			if (AR_Ref != null)
 			{
 				// Calculate stock: Entree (1) adds to stock, Sortie (3) subtracts from stock
-				var stock = _context.F_DOCLIGNE
+				var stock = await _context.F_DOCLIGNE
 					.Where(a => a.AR_Ref == AR_Ref && a.DE_No == DE_No)
-					.Sum(a => a.DL_MvtStock == 1 ? a.DL_Qte :
+					.SumAsync(a => a.DL_MvtStock == 1 ? a.DL_Qte :
 							  a.DL_MvtStock == 3 ? -a.DL_Qte : 0);
 				// Calculate total value and total quantity for entries only
-				var entries = _context.F_DOCLIGNE
+				var entries = await _context.F_DOCLIGNE
 					.Where(a => a.AR_Ref == AR_Ref && a.DE_No == DE_No && a.DL_MvtStock == 1)
 					.GroupBy(a => 1)
 					.Select(g => new
@@ -507,14 +507,14 @@ namespace BusinessWeb.Services
 						TotalQte = g.Sum(x => x.DL_Qte),
 						TotalMontant = g.Sum(x => x.DL_MontantHT)
 					})
-					.FirstOrDefault();
+					.FirstOrDefaultAsync();
 
 				decimal? cmup = 0;
 				if (entries != null && entries.TotalQte > 0)
 				{
 					cmup = entries.TotalMontant / entries.TotalQte;
 				}
-				var articleDepot = _context.F_ARTSTOCK.Where(a => a.AR_Ref == AR_Ref && a.DE_No == DE_No).FirstOrDefault();
+				var articleDepot = await _context.F_ARTSTOCK.Where(a => a.AR_Ref == AR_Ref && a.DE_No == DE_No).FirstOrDefaultAsync();
 				if (articleDepot != null)
 				{
 					articleDepot.AS_QteSto = stock ?? 0;

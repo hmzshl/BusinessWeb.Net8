@@ -127,6 +127,14 @@
                         }
                         @if (type == "0")
                         {
+                            <GridColumn AllowFiltering="false" AllowSorting="false" Width="120" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Num OF">
+                                <Template>
+                                    @{
+                                        var dt = context as API_V_MATERIELENTRETIEN;
+                                        <span>@GetNumOF(dt?.id ?? 0)</span>
+                                    }
+                                </Template>
+                            </GridColumn>
                             <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_MATERIELENTRETIEN.Kilometrage)" HeaderText="Kilométrage" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
                             <GridColumn AllowFiltering="false" AllowSorting="false" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Qté" Field="@nameof(API_V_MATERIELENTRETIEN.Qte)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
 
@@ -307,6 +315,7 @@ else
     
     [Parameter] public string type { get; set; } = "0";
     private IEnumerable<API_V_MATERIELENTRETIEN> items;
+    private bool HasNumOFColumn { get; set; }
     bool loading = false;
     bool IsLoaded = false;
     private SfDropDownList<int, API_T_Site> SiteDrop;
@@ -325,6 +334,7 @@ else
             grid_class = "grid-70";
         }
                 db = session.db;
+        EnsureNumOFColumn();
         GC.Collect();
         await LoadData();
         		IsLoaded = true;
@@ -348,6 +358,82 @@ else
             items = session.db.API_V_MATERIELENTRETIEN.Where(a => a.Type == Int32.Parse(type)).ToList();
         }
 
+    }
+    private void EnsureNumOFColumn()
+    {
+        HasNumOFColumn = ColumnExists("API_T_MaterielEntretien", "NumOF");
+    }
+    private bool ColumnExists(string table, string column)
+    {
+        var connection = session.db.Database.GetDbConnection();
+        var closeConnection = connection.State == ConnectionState.Closed;
+        if (closeConnection)
+        {
+            connection.Open();
+        }
+
+        try
+        {
+            using var command = connection.CreateCommand();
+            command.CommandText = @"SELECT COUNT(1)
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA = 'dbo'
+AND TABLE_NAME = @table
+AND COLUMN_NAME = @column";
+
+            var tableParameter = command.CreateParameter();
+            tableParameter.ParameterName = "@table";
+            tableParameter.Value = table;
+            command.Parameters.Add(tableParameter);
+
+            var columnParameter = command.CreateParameter();
+            columnParameter.ParameterName = "@column";
+            columnParameter.Value = column;
+            command.Parameters.Add(columnParameter);
+
+            return Convert.ToInt32(command.ExecuteScalar()) > 0;
+        }
+        finally
+        {
+            if (closeConnection)
+            {
+                connection.Close();
+            }
+        }
+    }
+    private string GetNumOF(int entretienId)
+    {
+        if (!HasNumOFColumn || entretienId == 0)
+        {
+            return null;
+        }
+
+        var connection = session.db.Database.GetDbConnection();
+        var closeConnection = connection.State == ConnectionState.Closed;
+        if (closeConnection)
+        {
+            connection.Open();
+        }
+
+        try
+        {
+            using var command = connection.CreateCommand();
+            command.CommandText = "SELECT NumOF FROM dbo.API_T_MaterielEntretien WHERE id = @id";
+
+            var idParameter = command.CreateParameter();
+            idParameter.ParameterName = "@id";
+            idParameter.Value = entretienId;
+            command.Parameters.Add(idParameter);
+
+            return command.ExecuteScalar() as string;
+        }
+        finally
+        {
+            if (closeConnection)
+            {
+                connection.Close();
+            }
+        }
     }
     protected async Task Edit(RecordDoubleClickEventArgs<API_V_MATERIELENTRETIEN> args)
     {

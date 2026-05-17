@@ -46,11 +46,11 @@
             <GridCol Xs="24" Md="24">
                 <Card>
                     <div style="height: 60vh;">
-                        <SfGrid Height="100%" @ref=@MainGrid Toolbar="@(new List<string>() { "Add", "Delete" })" AllowResizing AllowSorting AllowReordering AllowSelection 
+                        <SfGrid Height="100%" @ref=@MainGrid Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })" AllowResizing AllowSorting AllowReordering AllowSelection 
                             AllowMultiSorting ShowColumnChooser="true" AllowPdfExport="true" AllowExcelExport="true" DataSource="@lignes">
                             <GridEvents OnActionBegin="OnActionBegin" TValue="F_NOMENCLAT"></GridEvents>
                             <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Row"></GridSelectionSettings>
-                            <GridEditSettings AllowAdding="@(row_dup == null)" AllowDeleting="@(row_dup == null)" ShowDeleteConfirmDialog>
+                            <GridEditSettings AllowAdding="@(row_dup == null)" AllowDeleting="@(row_dup == null)" AllowEditing="true" Mode="Syncfusion.Blazor.Grids.EditMode.Normal" ShowDeleteConfirmDialog>
                                 <HeaderTemplate>
 
                                 </HeaderTemplate>
@@ -111,7 +111,7 @@ else
     string CT_Num;
     private async Task UpdateLignes()
     {
-        lignes = db.F_NOMENCLAT.Where(a => a.AR_Ref == row.AR_Ref).Include(a => a.NO_RefDetNavigation).OrderBy(a => a.cbMarq).ToList();
+        lignes = db.F_NOMENCLAT.AsNoTracking().Where(a => a.AR_Ref == row.AR_Ref).Include(a => a.NO_RefDetNavigation).OrderBy(a => a.cbMarq).ToList();
     }
     protected override async Task OnInitializedAsync()
     {
@@ -124,7 +124,7 @@ else
             row.cbMarq = 0;
             row.AR_Ref = null;
             row.AR_Design = null;
-            lignes = db.F_NOMENCLAT.Where(a => a.AR_Ref == row_dup.AR_Ref).Include(a => a.NO_RefDetNavigation).OrderBy(a => a.cbMarq).ToList();
+            lignes = db.F_NOMENCLAT.AsNoTracking().Where(a => a.AR_Ref == row_dup.AR_Ref).Include(a => a.NO_RefDetNavigation).OrderBy(a => a.cbMarq).ToList();
         }
         else
         {
@@ -182,6 +182,7 @@ else
                         }
                         using var _db = db.CreateLinqToDBConnection();
                         await db.BulkCopyAsync(f_s);
+                        await db.Database.ExecuteSqlRawAsync("UPDATE F_ARTICLE SET AR_Nomencl = 1 WHERE AR_Ref = {0}", row.AR_Ref);
                     }
                 }
                 else
@@ -213,6 +214,17 @@ else
     }
     private async Task OnActionBegin(ActionEventArgs<F_NOMENCLAT> args)
     {
+        if (args.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+        {
+            args.Data.NO_Qte = args.Data.NO_Qte > 0 ? args.Data.NO_Qte : 1;
+
+            if (row_dup == null && args.Data.cbMarq != 0)
+            {
+                await db.Database.ExecuteSqlRawAsync("UPDATE F_NOMENCLAT SET NO_Qte = {0} WHERE cbMarq = {1}", args.Data.NO_Qte, args.Data.cbMarq);
+                await UpdateLignes();
+            }
+        }
+
         if (args.RequestType == Syncfusion.Blazor.Grids.Action.Add)
         {
             args.Cancel = true;
@@ -224,8 +236,8 @@ else
         }
         if (args.RequestType == Syncfusion.Blazor.Grids.Action.Delete)
         {
-            db.F_NOMENCLAT.Remove(args.Data);
-            await db.SaveChangesAsync();
+            await db.Database.ExecuteSqlRawAsync("DELETE FROM F_NOMENCLAT WHERE cbMarq = {0}", args.Data.cbMarq);
+            await UpdateLignes();
         }
 
     }

@@ -73,6 +73,15 @@ else
 								</FormItem>
 								@if (type == 0 || type == 7)
 								{
+									@if (type == 0)
+									{
+										<FormItem LabelAlign="AntLabelAlignType.Left" Label="Num OF" LabelColSpan="8">
+											<SfDropDownList AllowFiltering TValue="string" TItem="API_T_OrdreFabrication" DataSource="@db.API_T_OrdreFabrication.OrderByDescending(a => a.Date)" @bind-Value="@NumOF">
+												<DropDownListEvents TValue="string" TItem="API_T_OrdreFabrication" />
+												<DropDownListFieldSettings Text="Numero" Value="Numero" />
+											</SfDropDownList>
+										</FormItem>
+									}
 									<FormItem LabelAlign="AntLabelAlignType.Left" Label="Kilométrage" LabelColSpan="8">
 										<SfNumericTextBox @bind-Value="@(row.Kilometrage)" ShowSpinButton="false" Decimals="0" Format="N2" />
 									</FormItem>
@@ -281,9 +290,12 @@ else
 	NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
 	private API_T_MaterielEntretien row { get; set; }
 	private List<API_T_MaterielEntretienDetail> lignes = new List<API_T_MaterielEntretienDetail>();
+	private string NumOF { get; set; }
+	private bool HasNumOFColumn { get; set; }
 	protected override void OnInitialized()
 	{
 		db = session.db;
+		EnsureNumOFColumn();
 		GC.Collect();
 		if (type == 0 || type == 4 || type == 7 || type == 8)
 		{
@@ -292,6 +304,7 @@ else
 		if (id != 0)
 		{
 			row = db.API_T_MaterielEntretien.Where(a => a.id == id).SingleOrDefault();
+			NumOF = GetNumOF(id);
 			lignes = db.API_T_MaterielEntretienDetail.Where(a => a.Entretien == this.id).ToList();
 		}
 		else
@@ -329,6 +342,7 @@ else
 			}
 			db.SaveChanges();
 			id = row.id;
+			SaveNumOF();
 			if (close)
 			{
 				DialogService.Close();
@@ -339,6 +353,105 @@ else
 		{
 			Message.Error(ex.Message);
 		}
+	}
+	private void EnsureNumOFColumn()
+	{
+		HasNumOFColumn = ColumnExists("API_T_MaterielEntretien", "NumOF");
+		if (HasNumOFColumn)
+		{
+			return;
+		}
+
+		try
+		{
+			db.Database.ExecuteSqlRaw(fn.AddVarchar("API_T_MaterielEntretien", "NumOF", "100"));
+			HasNumOFColumn = ColumnExists("API_T_MaterielEntretien", "NumOF");
+		}
+		catch
+		{
+			HasNumOFColumn = false;
+		}
+	}
+	private bool ColumnExists(string table, string column)
+	{
+		var connection = db.Database.GetDbConnection();
+		var closeConnection = connection.State == ConnectionState.Closed;
+		if (closeConnection)
+		{
+			connection.Open();
+		}
+
+		try
+		{
+			using var command = connection.CreateCommand();
+			command.CommandText = @"SELECT COUNT(1)
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA = 'dbo'
+AND TABLE_NAME = @table
+AND COLUMN_NAME = @column";
+
+			var tableParameter = command.CreateParameter();
+			tableParameter.ParameterName = "@table";
+			tableParameter.Value = table;
+			command.Parameters.Add(tableParameter);
+
+			var columnParameter = command.CreateParameter();
+			columnParameter.ParameterName = "@column";
+			columnParameter.Value = column;
+			command.Parameters.Add(columnParameter);
+
+			return Convert.ToInt32(command.ExecuteScalar()) > 0;
+		}
+		finally
+		{
+			if (closeConnection)
+			{
+				connection.Close();
+			}
+		}
+	}
+	private string GetNumOF(int entretienId)
+	{
+		if (!HasNumOFColumn || entretienId == 0)
+		{
+			return null;
+		}
+
+		var connection = db.Database.GetDbConnection();
+		var closeConnection = connection.State == ConnectionState.Closed;
+		if (closeConnection)
+		{
+			connection.Open();
+		}
+
+		try
+		{
+			using var command = connection.CreateCommand();
+			command.CommandText = "SELECT NumOF FROM dbo.API_T_MaterielEntretien WHERE id = @id";
+
+			var idParameter = command.CreateParameter();
+			idParameter.ParameterName = "@id";
+			idParameter.Value = entretienId;
+			command.Parameters.Add(idParameter);
+
+			return command.ExecuteScalar() as string;
+		}
+		finally
+		{
+			if (closeConnection)
+			{
+				connection.Close();
+			}
+		}
+	}
+	private void SaveNumOF()
+	{
+		if (!HasNumOFColumn || id == 0)
+		{
+			return;
+		}
+
+		db.Database.ExecuteSqlRaw("UPDATE dbo.API_T_MaterielEntretien SET NumOF = {0} WHERE id = {1}", NumOF, id);
 	}
 	private async Task Print()
 	{
