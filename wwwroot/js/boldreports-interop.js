@@ -1,7 +1,12 @@
 ﻿// Interop file to render the Bold Reports component with properties.
 window.BoldReports = {
     RenderViewer: function (elementID, reportViewerOptions) {
-        $("#" + elementID).boldReportViewer({
+        var element = $("#" + elementID);
+        var existingViewer = element.data("boldReportViewer");
+        if (existingViewer && existingViewer.destroy) {
+            existingViewer.destroy();
+        }
+        element.boldReportViewer({
             reportPath: reportViewerOptions.reportName,
             reportServiceUrl: reportViewerOptions.serviceURL,
             parameters: reportViewerOptions.parameters,

@@ -1,0 +1,215 @@
+@page "/et-consommations-date"
+@attribute [Authorize(Roles = "Super Admin,Admin,Direction, Responsable RH,Responsable Materiel, Assistant Chantier")]
+
+<Card_1 Title="CONSOMMATIONS PAR DATE">
+	<RadzenContent Container="main">
+		@if (!isLoaded)
+		{
+			<div class="center-screen">
+				<Loading_1 />
+			</div>
+		}
+		else
+		{
+			<div class="report-page">
+				<div class="report-main">
+					@if (isReportLoading)
+					{
+						<div class="report-loading">
+							<SfSpinner Visible="true" />
+						</div>
+					}
+					else if (showReport)
+					{
+						<ReportViewer @key="reportKey" ReportName="reports\personnels\ConsommationParDate" parameters="@reportParameters" />
+					}
+				</div>
+
+				<div class="report-filters">
+					<div class="filter-title">Filtres</div>
+
+					<SfDatePicker TValue="DateTime" @bind-Value="dateDebut" Format="dd/MM/yyyy" Placeholder="Date début" FloatLabelType="FloatLabelType.Always" />
+					<SfDatePicker TValue="DateTime" @bind-Value="dateFin" Format="dd/MM/yyyy" Placeholder="Date fin" FloatLabelType="FloatLabelType.Always" />
+
+					<SfDropDownList TValue="string" TItem="F_COMPTET"
+									AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+									DataSource="@clients" @bind-Value="ctNum" Placeholder="Client"
+									FloatLabelType="FloatLabelType.Always" ShowClearButton="true">
+						<DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+					</SfDropDownList>
+
+					<SfDropDownList TValue="string" TItem="F_COMPTEA"
+									AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+									DataSource="@affaires" @bind-Value="caNum" Placeholder="Affaire"
+									FloatLabelType="FloatLabelType.Always" ShowClearButton="true">
+						<DropDownListFieldSettings Text="CA_Intitule" Value="CA_Num" />
+					</SfDropDownList>
+
+					<SfDropDownList TValue="string" TItem="API_T_OrdreFabrication"
+									AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+									DataSource="@ordres" @bind-Value="ofNum" Placeholder="O.F"
+									FloatLabelType="FloatLabelType.Always" ShowClearButton="true">
+						<DropDownListFieldSettings Text="Numero" Value="Numero" />
+					</SfDropDownList>
+
+					<div class="filter-actions">
+						<SfButton IsPrimary IconCss="e-icons e-refresh" OnClick="LoadReport" Disabled="@isReportLoading">Actualiser</SfButton>
+						<SfButton IconCss="e-icons e-undo" OnClick="ResetFilters" Disabled="@isReportLoading">Réinitialiser</SfButton>
+					</div>
+				</div>
+			</div>
+		}
+	</RadzenContent>
+</Card_1>
+
+<style>
+	.report-page {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 300px;
+		gap: 12px;
+		height: calc(100vh - 155px);
+		min-height: 560px;
+	}
+
+	.report-main {
+		position: relative;
+		min-width: 0;
+		height: 100%;
+		border: 1px solid #e5e7eb;
+		background: #fff;
+	}
+
+	.report-filters {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		height: 100%;
+		padding: 12px;
+		border-left: 1px solid #e5e7eb;
+		background: #fff;
+	}
+
+	.filter-title {
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	.filter-actions {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 8px;
+		margin-top: auto;
+	}
+
+	.report-loading {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(255, 255, 255, .72);
+		z-index: 2;
+	}
+
+	@@media (max-width: 900px) {
+		.report-page {
+			grid-template-columns: 1fr;
+			height: auto;
+		}
+
+		.report-main {
+			height: 70vh;
+		}
+
+		.report-filters {
+			border-left: 0;
+			border-top: 1px solid #e5e7eb;
+		}
+	}
+</style>
+
+@code {
+	[CascadingParameter]
+	public SessionDT session { get; set; } = new SessionDT();
+
+	DB db = new DB();
+	DateTime dateDebut = new DateTime(DateTime.Today.Year, 1, 1);
+	DateTime dateFin = DateTime.Today;
+	string ctNum;
+	string caNum;
+	string ofNum;
+	IEnumerable<F_COMPTET> clients = new List<F_COMPTET>();
+	IEnumerable<F_COMPTEA> affaires = new List<F_COMPTEA>();
+	IEnumerable<API_T_OrdreFabrication> ordres = new List<API_T_OrdreFabrication>();
+	List<JSReportParameter> reportParameters = new List<JSReportParameter>();
+	bool isLoaded = false;
+	bool isReportLoading = false;
+	bool showReport = false;
+	int reportKey = 0;
+
+	protected override async Task OnInitializedAsync()
+	{
+		db = session.db;
+
+		await Task.Delay(100);
+
+		try
+		{
+			clients = db.F_COMPTET
+				.Where(a => a.CT_Type == 0)
+				.OrderBy(a => a.CT_Intitule)
+				.ToList();
+
+			affaires = db.F_COMPTEA
+				.FromSqlRaw(@"SELECT
+					a.*
+					FROM F_COMPTEA a
+					INNER JOIN P_ANALYTIQUE b ON a.N_Analytique = b.cbMarq
+					WHERE b.A_Intitule = 'Affaires'")
+				.OrderBy(a => a.CA_Intitule)
+				.ToList();
+
+			ordres = db.API_T_OrdreFabrication
+				.OrderByDescending(a => a.Date)
+				.ToList();
+
+			isLoaded = true;
+			await LoadReport();
+		}
+		catch (Exception ex)
+		{
+			await DialogService.Alert(ex.ToString());
+		}
+	}
+
+	private async Task LoadReport()
+	{
+		isReportLoading = true;
+		showReport = false;
+		StateHasChanged();
+		await Task.Delay(100);
+
+		reportParameters = new List<JSReportParameter>
+		{
+			new JSReportParameter { Name = "date1", Values = new List<string>() { dateDebut.ToString("yyyy-MM-dd") } },
+			new JSReportParameter { Name = "date2", Values = new List<string>() { dateFin.ToString("yyyy-MM-dd") } },
+			new JSReportParameter { Name = "ct_num", Values = new List<string>() { ctNum ?? "" } },
+			new JSReportParameter { Name = "ca_num", Values = new List<string>() { caNum ?? "" } },
+			new JSReportParameter { Name = "of_num", Values = new List<string>() { ofNum ?? "" } }
+		};
+
+		reportKey++;
+		showReport = true;
+		isReportLoading = false;
+	}
+
+	private async Task ResetFilters()
+	{
+		dateDebut = new DateTime(DateTime.Today.Year, 1, 1);
+		dateFin = DateTime.Today;
+		ctNum = null;
+		caNum = null;
+		ofNum = null;
+		await LoadReport();
+	}
+}

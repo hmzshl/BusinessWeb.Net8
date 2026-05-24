@@ -40,7 +40,7 @@
                                             <FormItem LabelAlign="AntLabelAlignType.Left" Label="O.F" LabelColSpan="7">
                                                 @if (this.cbMarq == 0)
                                                 {
-                                                    <Syncfusion.Blazor.MultiColumnComboBox.SfMultiColumnComboBox FloatLabelType="FloatLabelType.Never" OnValueSelect="@(args => OFUpdated(args.ItemData.Numero))" TValue="string" TItem="API_T_OrdreFabrication"
+                                                    <Syncfusion.Blazor.MultiColumnComboBox.SfMultiColumnComboBox Query="fn.LocalDataQuery" FloatLabelType="FloatLabelType.Never" OnValueSelect="@(args => OFUpdated(args.ItemData.Numero))" TValue="string" TItem="API_T_OrdreFabrication"
                                                                                                                  @bind-Value="@row.DO_Ref"
                                                                                                                  DataSource="@(db.API_T_OrdreFabrication)"
                                                                                                                  PopupWidth="850px" ValueField="Numero" TextField="Numero">
@@ -271,7 +271,7 @@ else
                                      new DocumentEntete
                                      {
                                          Tiers = "1",
-                                         Date = DateTime.Today,
+                                         Date = row.DO_Date ?? DateTime.Today,
                                          TypeDO = DocumentTypeDO.MouvementSortie,
                                          Souche = 0,
                                          DateLivraison = DateTime.Today,

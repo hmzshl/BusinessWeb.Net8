@@ -239,6 +239,8 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Pointage par personnel", Url = "depots", TitleIcon = "analytics", SousGroupe = "▶ Rapports Pointage", HasSousGroupe = true });
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Pointage par projet", Url = "", TitleIcon = "analytics", SousGroupe = "▶ Rapports Pointage", HasSousGroupe = true });
 			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Recap pointange par personnel", Url = "", TitleIcon = "analytics", SousGroupe = "▶ Rapports Pointage", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Préparation achats par date", Url = "et-preparation-achats-date", TitleIcon = "analytics", SousGroupe = "▶ Rapports Fabrication", HasSousGroupe = true });
+			list.Add(new AuthItems { SelectedAPP = 6, Title = "Etats", Description = "Consommations par date", Url = "et-consommations-date", TitleIcon = "analytics", SousGroupe = "▶ Rapports Fabrication", HasSousGroupe = true });
 
 			// CAISSE
 			list.Add(new AuthItems { SelectedAPP = 7, Title = "Structure", Description = "Caisse", Url = "caisses", TitleIcon = "account_balance", SousGroupe = "", HasSousGroupe = false });
