@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BusinessWeb.Models.DB;
 
@@ -56,6 +57,18 @@ public partial class API_V_RELEVE
     public int cbMarq { get; set; }
 
     public int? RG_No { get; set; }
+
+    [NotMapped]
+    public string ReglePar { get; set; }
+
+    [NotMapped]
+    public string DateReglement { get; set; }
+
+    [NotMapped]
+    public string JoursReglement { get; set; }
+
+    [NotMapped]
+    public string JournalReglement { get; set; }
 
     public decimal? Solde { get; set; }
 

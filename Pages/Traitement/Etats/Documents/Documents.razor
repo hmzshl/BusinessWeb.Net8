@@ -137,6 +137,10 @@
 								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.MontantTTC)" HeaderText="Montant" Format="### ### ##0.00;-### ### ##0.00;#"></GridColumn>
 								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.MontantRegle)" HeaderText="Reglé" Format="### ### ##0.00;-### ### ##0.00;#"></GridColumn>
 								<GridColumn Width="80" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.Reste)" HeaderText="Reste" Format="### ### ##0.00;-### ### ##0.00;#"></GridColumn>
+								<GridColumn Width="130" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.ReglePar)" HeaderText="Réglé par"></GridColumn>
+								<GridColumn Width="120" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.DateReglement)" HeaderText="Date règlement"></GridColumn>
+								<GridColumn Width="90" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.JoursReglement)" HeaderText="Jrs rg"></GridColumn>
+								<GridColumn Width="140" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_RELEVE.JournalReglement)" HeaderText="Journal règl."></GridColumn>
 								<GridColumn Width="90" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Etat">
 									<Template>
 										@{
@@ -225,6 +229,17 @@ else
 	DateTime date = new DateTime(DateTime.Today.Year,1,1);
 	string tiers;
 	List<F_COMPTET> list_tiers = new List<F_COMPTET>();
+
+	private sealed class ReleveReglementInfo
+	{
+		public short? DO_Type { get; set; }
+		public string DO_Piece { get; set; }
+		public string ReglePar { get; set; }
+		public string DateReglement { get; set; }
+		public string JoursReglement { get; set; }
+		public string JournalReglement { get; set; }
+	}
+
 	protected override async Task OnInitializedAsync()
 	{
 		await Task.Delay(1);
@@ -263,6 +278,8 @@ else
 				.OrderByDescending(a => a.DO_Date)
 				.ToList();
 
+		PopulateReglementDetails();
+
 		if (selected_types != null)
 			items = items.Where(a => selected_types.Contains(a.TypeIntitule)).ToList();
 
@@ -270,6 +287,63 @@ else
 			items = items.Where(a => selected_statuts.Contains(a.EtatReglement)).ToList();
 		loading = false;
 		await Task.Delay(100);
+	}
+
+	private void PopulateReglementDetails()
+	{
+		if (!items.Any(a => a.Groupe == "Document" && a.DO_Type != null && !string.IsNullOrWhiteSpace(a.DO_Piece)))
+			return;
+
+		var details = db.Database.SqlQueryRaw<ReleveReglementInfo>(@"
+SELECT
+	src.DO_Type,
+	src.DO_Piece,
+	STUFF((
+		SELECT DISTINCT ', ' + ISNULL(pr.R_Intitule,'Autre')
+		FROM F_REGLECH fr
+		INNER JOIN F_CREGLEMENT cr ON fr.RG_No = cr.RG_No
+		LEFT JOIN P_REGLEMENT pr ON cr.N_Reglement = pr.cbIndice
+		WHERE fr.DO_Type = src.DO_Type AND fr.DO_Piece = src.DO_Piece
+		FOR XML PATH(''), TYPE).value('.', 'nvarchar(max)'), 1, 2, '') ReglePar,
+	STUFF((
+		SELECT DISTINCT ', ' + CONVERT(varchar(10), cr.RG_Date, 103)
+		FROM F_REGLECH fr
+		INNER JOIN F_CREGLEMENT cr ON fr.RG_No = cr.RG_No
+		WHERE fr.DO_Type = src.DO_Type AND fr.DO_Piece = src.DO_Piece
+		FOR XML PATH(''), TYPE).value('.', 'nvarchar(max)'), 1, 2, '') DateReglement,
+	STUFF((
+		SELECT DISTINCT ', ' + CONVERT(varchar(10), DATEDIFF(DAY, de2.DO_Date, cr.RG_Date))
+		FROM F_REGLECH fr
+		INNER JOIN F_CREGLEMENT cr ON fr.RG_No = cr.RG_No
+		LEFT JOIN F_DOCENTETE de2 ON fr.DO_Piece = de2.DO_Piece AND fr.DO_Type = de2.DO_Type
+		WHERE fr.DO_Type = src.DO_Type AND fr.DO_Piece = src.DO_Piece
+		FOR XML PATH(''), TYPE).value('.', 'nvarchar(max)'), 1, 2, '') JoursReglement,
+	STUFF((
+		SELECT DISTINCT ', ' + ISNULL(jr.JO_Intitule, cr.JO_Num)
+		FROM F_REGLECH fr
+		INNER JOIN F_CREGLEMENT cr ON fr.RG_No = cr.RG_No
+		LEFT JOIN F_JOURNAUX jr ON cr.JO_Num = jr.JO_Num
+		WHERE fr.DO_Type = src.DO_Type AND fr.DO_Piece = src.DO_Piece
+		FOR XML PATH(''), TYPE).value('.', 'nvarchar(max)'), 1, 2, '') JournalReglement
+FROM F_REGLECH src
+INNER JOIN F_DOCENTETE de ON src.DO_Type = de.DO_Type AND src.DO_Piece = de.DO_Piece
+WHERE de.DO_Domaine = {0}
+	AND ({1} IS NULL OR de.DO_Date >= {1})
+	AND ({2} IS NULL OR de.DO_Date <= {2})
+GROUP BY src.DO_Type, src.DO_Piece", domaine, date1, date2).ToList();
+
+		var detailsByDocument = details.ToDictionary(a => $"{a.DO_Type}|{a.DO_Piece}", a => a);
+
+		foreach (var item in items.Where(a => a.Groupe == "Document" && a.DO_Type != null && !string.IsNullOrWhiteSpace(a.DO_Piece)))
+		{
+			if (!detailsByDocument.TryGetValue($"{item.DO_Type}|{item.DO_Piece}", out var detail))
+				continue;
+
+			item.ReglePar = detail.ReglePar;
+			item.DateReglement = detail.DateReglement;
+			item.JoursReglement = detail.JoursReglement;
+			item.JournalReglement = detail.JournalReglement;
+		}
 	}
 
 	private async Task ShowNotification(NotificationMessage message)
