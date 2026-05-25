@@ -1,0 +1,73 @@
+@inherits LayoutComponentBase
+
+<RadzenDialog />
+<RadzenNotification />
+<RadzenTooltip />
+
+<RadzenLayout class="select-societe-layout">
+    <RadzenBody>
+        <div class="select-societe-shell">
+            @Body
+        </div>
+    </RadzenBody>
+</RadzenLayout>
+
+<style>
+    .select-societe-layout {
+        min-height: 100vh;
+        background: #f3f6fb;
+    }
+
+    .select-societe-shell {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    @@media (max-width: 768px) {
+        .select-societe-shell {
+            padding: 1rem;
+            align-items: stretch;
+        }
+    }
+
+    .app-card:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transform: translateY(-2px);
+        transition: all 0.3s ease;
+        border-color: #1890ff;
+    }
+
+    .center-screen {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 70vh;
+        padding: 2rem;
+    }
+
+    .main-content {
+        height: 100%;
+        min-height: calc(100vh - 60px);
+    }
+
+    /* Responsive design */
+    @@media (max-width: 768px) {
+        .main-content {
+            padding: 0.5rem;
+        }
+
+        .center-screen {
+            padding: 1rem;
+        }
+    }
+
+
+    .grid-67 {
+        height: 60vh;
+    }
+
+
+</style>

@@ -651,7 +651,7 @@ namespace BusinessWeb
 		public DB getDbCheck(TSociete ste)
 		{
 			var optionBuilder = new DbContextOptionsBuilder<DB>();
-			optionBuilder.UseSqlServer(getConnectionString(ste), o =>
+			optionBuilder.UseSqlServer(getConnectionStringCheck(ste), o =>
 			{
 				o.UseCompatibilityLevel(100);
 				o.CommandTimeout(10); // Timeout in seconds (default is 30)
@@ -663,6 +663,46 @@ namespace BusinessWeb
 			optionBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
 			DB db = new DB(optionBuilder.Options);
 			return db;
+		}
+		public bool PrepareSocieteDb(TSociete ste, out string error)
+		{
+			error = string.Empty;
+			var connStr = getConnectionString(ste);
+
+			try
+			{
+				var optionBuilder = new DbContextOptionsBuilder<DB>();
+				optionBuilder.UseSqlServer(connStr, o =>
+				{
+					o.UseCompatibilityLevel(100);
+					o.CommandTimeout(3600);
+					o.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)
+					 .UseRelationalNulls();
+				});
+
+				optionBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+
+				using (var db = new DB(optionBuilder.Options))
+				{
+					if (!db.Database.CanConnect())
+					{
+						error = "Connexion à la base de données impossible.";
+						return false;
+					}
+
+					db.Database.Migrate();
+					db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "ChefChantier", "VARCHAR(100)"));
+					db.Database.ExecuteSqlRaw(this.AddCol("F_DOCENTETE", "Demandeur", "VARCHAR(100)"));
+				}
+
+				_initializedDbs[connStr] = true;
+				return true;
+			}
+			catch (Exception ex)
+			{
+				error = ex.Message;
+				return false;
+			}
 		}
 		public string getDevise(DB db)
 		{

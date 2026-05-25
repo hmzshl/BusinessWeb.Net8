@@ -1,0 +1,425 @@
+@page "/select-societe"
+@layout SelectSocieteLayout
+@attribute [Authorize]
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthStateProvider
+
+<PageTitle>Sélection société - BusinessWeb</PageTitle>
+
+<RadzenCard class="select-societe-card">
+    <div class="select-societe-header">
+        <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.75rem">
+            <RadzenIcon Icon="business" class="select-societe-logo" />
+            <div>
+                <div class="select-societe-brand">BusinessWeb</div>
+                <div class="select-societe-welcome">Bienvenue, @_displayName</div>
+            </div>
+        </RadzenStack>
+        <div class="select-societe-caption">Sélectionnez une société pour accéder à vos données.</div>
+    </div>
+
+    <div class="select-societe-body">
+        @if (_loading)
+        {
+            <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" Style="height: 4px; margin-bottom: 1rem;" />
+            <Loading_1 />
+        }
+        else if (!string.IsNullOrWhiteSpace(_error))
+        {
+            <RadzenAlert AlertStyle="AlertStyle.Danger" Shade="Shade.Lighter" Style="margin-bottom: 1rem;">
+                @_error
+            </RadzenAlert>
+
+            <div class="select-societe-actions">
+                <RadzenButton Text="Retour a la selection" Icon="arrow_back" ButtonStyle="ButtonStyle.Secondary" Size="Radzen.ButtonSize.Small" Click="@ReturnToSelection" />
+            </div>
+
+            @if (_isAdmin)
+            {
+                <div class="select-societe-actions">
+                    <RadzenButton Text="Gérer les sociétés" Icon="horizontal_split" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.Small" Click="@OpenSocietes" />
+                    <RadzenButton Text="Gérer utilisateurs" Icon="person" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.Small" Click="@OpenUsers" />
+                </div>
+            }
+        }
+        else if (!_societes.Any())
+        {
+            <RadzenAlert AlertStyle="AlertStyle.Warning" Shade="Shade.Lighter" Style="margin-bottom: 1rem;">
+                Aucune société n'est affectée à votre utilisateur.
+            </RadzenAlert>
+
+            @if (_isAdmin)
+            {
+                <div class="select-societe-actions">
+                    <RadzenButton Text="Gérer les sociétés" Icon="horizontal_split" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.Small" Click="@OpenSocietes" />
+                    <RadzenButton Text="Gérer utilisateurs" Icon="person" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.Small" Click="@OpenUsers" />
+                </div>
+            }
+        }
+        else
+        {
+            @if (_selecting)
+            {
+                <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" Style="height: 4px; margin-bottom: 1rem;" />
+                <div class="select-societe-loading">@_loadingMessage</div>
+            }
+
+            <div class="select-societe-list-title">Sociétés disponibles</div>
+            <div class="select-societe-list">
+                @foreach (var ste in _societes)
+                {
+                    <button type="button"
+                            class="select-societe-item"
+                            disabled="@_selecting"
+                            @onclick="@(async () => await SelectCurrentSociete(ste))">
+                        <span class="select-societe-avatar">@GetInitial(ste)</span>
+                        <span class="select-societe-text">
+                            <span class="select-societe-name">@ste.Intitule</span>
+                            <span class="select-societe-db">@GetDatabaseLabel(ste)</span>
+                        </span>
+                        <RadzenIcon Icon="chevron_right" class="select-societe-chevron" />
+                    </button>
+                }
+            </div>
+
+            @if (_isAdmin)
+            {
+                <div class="select-societe-actions">
+                    <RadzenButton Text="Gérer les sociétés" Icon="horizontal_split" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.Small" Click="@OpenSocietes" />
+                    <RadzenButton Text="Gérer utilisateurs" Icon="person" ButtonStyle="ButtonStyle.Light" Size="Radzen.ButtonSize.Small" Click="@OpenUsers" />
+                </div>
+            }
+        }
+    </div>
+</RadzenCard>
+
+@code {
+    [SupplyParameterFromQuery(Name = "id")]
+    [Parameter] public int SocieteId { get; set; }
+
+    private bool _loading = true;
+    private bool _selecting = false;
+    private string _displayName = string.Empty;
+    private string _loadingMessage = "Préparation de la base de données...";
+    private string _error = string.Empty;
+    private string _userId = string.Empty;
+    private bool _isAdmin = false;
+    private List<TSociete> _societes = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var auth = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = auth.User;
+
+        _userId = user.FindFirstValue(ClaimTypes.NameIdentifier) ?? sc.User?.Id ?? string.Empty;
+        _displayName = sc.User?.Name ?? user.Identity?.Name ?? string.Empty;
+        _isAdmin = user.IsInRole("Admin") || string.Equals(user.Identity?.Name, "admin", StringComparison.OrdinalIgnoreCase) || sc.IsInRole("Admin");
+
+        _societes = await LoadSocietes();
+
+        if (SocieteId > 0)
+        {
+            var ste = _societes.FirstOrDefault(a => a.id == SocieteId);
+            if (ste != null)
+            {
+                await SelectCurrentSociete(ste);
+                return;
+            }
+        }
+
+        _loading = false;
+    }
+
+    private Task<List<TSociete>> LoadSocietes()
+    {
+        if (!string.IsNullOrWhiteSpace(_userId))
+        {
+            return Task.FromResult(sdb.TSocietes
+                .FromSqlRaw("SELECT a.* FROM T_Societe a WHERE a.id IN (SELECT Societe FROM T_SocieteUser WHERE UserID = {0})", _userId)
+                .OrderBy(a => a.Intitule)
+                .ToList());
+        }
+
+        if (_isAdmin)
+        {
+            return Task.FromResult(sdb.TSocietes.OrderBy(a => a.Intitule).ToList());
+        }
+
+        return Task.FromResult(new List<TSociete>());
+    }
+
+    private async Task SelectCurrentSociete(TSociete ste)
+    {
+        if (_selecting)
+        {
+            return;
+        }
+
+        _selecting = true;
+        _error = string.Empty;
+        _loadingMessage = "Vérification et migration de la base...";
+        StateHasChanged();
+        await Task.Yield();
+
+        var result = await Task.Run(() =>
+        {
+            var ok = fn.PrepareSocieteDb(ste, out var error);
+            return new { ok, error };
+        });
+
+        if (!result.ok)
+        {
+            _selecting = false;
+            _loading = false;
+            _error = string.IsNullOrWhiteSpace(result.error) ? "La base de données sélectionnée n'est pas accessible." : result.error;
+            NotificationService.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Base de données indisponible",
+                Detail = _error,
+                Duration = 5000
+            });
+            return;
+        }
+
+        await SaveSelection(ste);
+        NavigationManager.NavigateTo("/", forceLoad: true);
+    }
+
+    private Task SaveSelection(TSociete ste)
+    {
+        if (string.IsNullOrWhiteSpace(_userId))
+        {
+            return Task.CompletedTask;
+        }
+
+        var user = sdb.AspNetUsers.FirstOrDefault(a => a.Id == _userId);
+        if (user == null)
+        {
+            return Task.CompletedTask;
+        }
+
+        user.SelectedSociete = ste.id;
+        user.SelectedAPP = 0;
+        sdb.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    private async Task OpenUsers()
+    {
+        await DialogService.OpenAsync<BusinessWeb.Pages.Default.Users.UsersListe>("Utilisateurs",
+            new Dictionary<string, object>(),
+            new Radzen.DialogOptions() { Width = "800px", Height = "90%", CloseDialogOnEsc = true });
+
+        _error = string.Empty;
+        StateHasChanged();
+    }
+
+    private async Task OpenSocietes()
+    {
+        await DialogService.OpenAsync<BusinessWeb.Pages.Structure.Societes.SocietesListe>("Sociétés",
+            new Dictionary<string, object>(),
+            new Radzen.DialogOptions() { Width = "900px", Height = "90%", CloseDialogOnEsc = true });
+
+        _societes = await LoadSocietes();
+        _error = string.Empty;
+        StateHasChanged();
+    }
+
+    private void ReturnToSelection()
+    {
+        _selecting = false;
+        _loading = false;
+        _error = string.Empty;
+        StateHasChanged();
+    }
+
+    private static string GetInitial(TSociete ste)
+    {
+        var text = ste?.Intitule?.Trim();
+        return string.IsNullOrWhiteSpace(text) ? "?" : text[..1].ToUpperInvariant();
+    }
+
+    private static string GetDatabaseLabel(TSociete ste)
+    {
+        if (string.IsNullOrWhiteSpace(ste?.Base1))
+        {
+            return "Base de données non renseignée";
+        }
+
+        return string.IsNullOrWhiteSpace(ste.Serveur) ? ste.Base1 : $"{ste.Serveur} / {ste.Base1}";
+    }
+}
+
+<style>
+    .select-societe-card {
+        width: 100%;
+        max-width: 540px;
+        padding: 0;
+        overflow: hidden;
+        border-radius: 8px;
+        border: 1px solid #dbe3ef;
+        box-shadow: 0 18px 55px rgba(15, 23, 42, 0.14);
+        font-family: "Ubuntu", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+    }
+
+    .select-societe-card *,
+    .select-societe-card .rz-button,
+    .select-societe-card .rz-button-text,
+    .select-societe-card .rz-alert,
+    .select-societe-card .rz-alert * {
+        font-family: "Ubuntu", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+    }
+
+    .select-societe-card .rzi,
+    .select-societe-card .rz-button-icon,
+    .select-societe-card .rz-icon,
+    .select-societe-card .material-icons {
+        font-family: "Material Icons" !important;
+    }
+
+    .select-societe-header {
+        background: #203154;
+        padding: 1.75rem 2rem 1.5rem;
+        color: #fff;
+    }
+
+    .select-societe-logo {
+        font-size: 1.75rem;
+        color: #fff;
+    }
+
+    .select-societe-brand {
+        font-size: 1.05rem;
+        font-weight: 700;
+    }
+
+    .select-societe-welcome {
+        margin-top: 0.15rem;
+        color: rgba(255, 255, 255, 0.74);
+        font-size: 0.85rem;
+    }
+
+    .select-societe-caption {
+        margin-top: 0.9rem;
+        color: rgba(255, 255, 255, 0.68);
+        font-size: 0.8rem;
+    }
+
+    .select-societe-body {
+        padding: 1.5rem 2rem 1.75rem;
+        background: #fff;
+    }
+
+    .select-societe-loading {
+        color: #475569;
+        font-size: 0.85rem;
+        margin-bottom: 0.9rem;
+    }
+
+    .select-societe-list-title {
+        margin-bottom: 0.5rem;
+        color: #64748b;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-transform: uppercase;
+    }
+
+    .select-societe-list {
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .select-societe-item {
+        width: 100%;
+        min-height: 68px;
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        padding: 0.85rem 1rem;
+        border: 0;
+        border-bottom: 1px solid #e2e8f0;
+        background: #fff;
+        text-align: left;
+        cursor: pointer;
+        transition: background 0.15s ease;
+    }
+
+    .select-societe-item:last-child {
+        border-bottom: 0;
+    }
+
+    .select-societe-item:hover:not(:disabled) {
+        background: #f8fafc;
+    }
+
+    .select-societe-item:disabled {
+        cursor: wait;
+        opacity: 0.72;
+    }
+
+    .select-societe-avatar {
+        width: 38px;
+        height: 38px;
+        flex: 0 0 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #203154;
+        color: #fff;
+        font-weight: 700;
+    }
+
+    .select-societe-text {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .select-societe-name {
+        color: #0f172a;
+        font-size: 0.95rem;
+        font-weight: 700;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .select-societe-db {
+        color: #64748b;
+        font-size: 0.78rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .select-societe-chevron {
+        color: #94a3b8;
+        flex: 0 0 auto;
+    }
+
+    .select-societe-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-top: 1rem;
+    }
+
+    @@media (max-width: 768px) {
+        .select-societe-card {
+            max-width: none;
+        }
+
+        .select-societe-header,
+        .select-societe-body {
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
+        }
+    }
+</style>

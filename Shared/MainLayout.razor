@@ -7,6 +7,7 @@
 @using Syncfusion.Blazor.SplitButtons
 @using Syncfusion.Licensing
 @using System.Net.NetworkInformation;
+@using System.Security.Claims
 @attribute [Authorize]
 
 <Syncfusion.Blazor.Popups.SfDialogProvider />
@@ -29,20 +30,13 @@
                 @if (sc.IsAuthenticated())
                 {
                     <RadzenLayout>
-                        <RadzenHeader>
+                        <RadzenHeader Class="business-shell-header">
                             <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0" Style="width: 100%;">
                                 <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
                                 <RadzenMenu Class="ls-parent" Style="flex: 1;">
                                     <RadzenMenuItem Text="Applications" Icon="dashboard" Click="@(args => SelectAPP(0))" />
                                     <RadzenMenuItem Visible=@(session.SelectedAPP != 0) Text="@APP()" Icon="@Icon()" Path="/" />
-                                    <!-- Societe Selection -->
-                                    <RadzenMenuItem Class="ls-child-right" Text="@(session?.Societe?.Intitule ?? "Société")" Icon="home_filled">
-                                        @foreach (TSociete item in societes)
-                                        {
-                                            <RadzenMenuItem Text="@item.Intitule" Click="@(args => SocieteSelected(item))" />
-                                        }
-                                    </RadzenMenuItem>
-
+                                    <RadzenMenuItem Class="ls-child-right" Text="@(session?.Societe?.Intitule ?? "Société")" Icon="home_filled" Click="@(() => NavigationManager.NavigateTo("/select-societe"))" />
                                     <!-- User Menu -->
                                     <RadzenMenuItem Style="min-width: 130px;" Text="@sc.User?.Name" Icon="account_circle">
                                         <RadzenMenuItem Icon="settings" Click="Profile" Text="Profile" />
@@ -70,7 +64,7 @@
                         </RadzenSidebar>
 
                         <RadzenBody>
-                            <div class="main-content">
+                            <div class="main-content" @key="_refreshKey">
                                 @if (IsLicenseValid())
                                 {
                                     @if (session.SelectedAPP == 0)
@@ -144,12 +138,19 @@
         </ErrorContent>
     </ErrorBoundary>
 }
+else
+{
+    <div class="center-screen">
+        <Loading_1 />
+    </div>
+}
 
 @code {
     bool sidebarExpanded = true;
     [Parameter] public SessionDT session { get; set; } = new SessionDT();
     private List<TSociete> societes = new List<TSociete>();
     bool IsLoaded = false;
+    private int _refreshKey = 0;
     ErrorBoundary errorBoundary;
     private CryptoLicense license = new CryptoLicense();
     private string macAddr;
@@ -196,15 +197,38 @@
         {
             try
             {
-                societes = sdb.TSocietes
-                    .FromSqlRaw("SELECT a.* FROM T_Societe a WHERE a.id IN (SELECT Societe FROM T_SocieteUser WHERE UserID = {0})", sc.User.Id)
-                    .ToList();
+                var userId = sc.Principal?.FindFirstValue(ClaimTypes.NameIdentifier) ?? sc.User?.Id;
+                var isAdmin = sc.Principal?.IsInRole("Admin") == true
+                    || string.Equals(sc.Principal?.Identity?.Name, "admin", StringComparison.OrdinalIgnoreCase)
+                    || sc.IsInRole("Admin");
 
-                var user = sdb.AspNetUsers.FirstOrDefault(a => a.Id == sc.User.Id);
-                session.Societe = societes.FirstOrDefault(a => a.id == user?.SelectedSociete) ?? societes.FirstOrDefault();
+                societes = !string.IsNullOrWhiteSpace(userId)
+                    ? sdb.TSocietes
+                        .FromSqlRaw("SELECT a.* FROM T_Societe a WHERE a.id IN (SELECT Societe FROM T_SocieteUser WHERE UserID = {0})", userId)
+                        .ToList()
+                    : isAdmin
+                        ? sdb.TSocietes.ToList()
+                        : new List<TSociete>();
+
+                session.Societes = societes;
+
+                var user = string.IsNullOrWhiteSpace(userId) ? null : sdb.AspNetUsers.FirstOrDefault(a => a.Id == userId);
+                session.Societe = societes.FirstOrDefault(a => a.id == user?.SelectedSociete) ?? new TSociete();
+
+                if (session.Societe.id == 0)
+                {
+                    NavigationManager.NavigateTo("/select-societe");
+                    return;
+                }
 
                 // Set selected APP from user preferences
                 session.SelectedAPP = user?.SelectedAPP ?? 0;
+
+                if (!await PrepareSelectedSocieteDatabase(session.Societe))
+                {
+                    NavigationManager.NavigateTo("/select-societe");
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -426,23 +450,15 @@ private async Task SelectAPP(int app)
     NavigationManager.NavigateTo("/");
 }
 
-private async Task SocieteSelected(TSociete ste)
+private async Task<bool> PrepareSelectedSocieteDatabase(TSociete ste)
 {
-    session.Societe = ste;
-    session.SelectedAPP = 0;
-
-    if (sc.User != null)
+    var result = await Task.Run(() =>
     {
-        var user = sdb.AspNetUsers.FirstOrDefault(a => a.Id == sc.User.Id);
-        if (user != null)
-        {
-            user.SelectedSociete = ste.id;
-            sdb.SaveChanges();
-        }
-    }
+        var ok = fn.PrepareSocieteDb(ste, out var error);
+        return new { ok, error };
+    });
 
-    await UpdateAuthorization();
-    NavigationManager.NavigateTo("/");
+    return result.ok;
 }
 
 private async Task UpdateAuthorization()
@@ -505,6 +521,78 @@ private async Task SocieteListe()
 }
 
 <style>
+    .business-shell-header {
+        background: #203154 !important;
+        color: #fff !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.14);
+    }
+
+    .business-shell-header .rz-sidebar-toggle,
+    .business-shell-header .rz-sidebar-toggle .rzi,
+    .business-shell-header .rz-menu,
+    .business-shell-header .rz-navigation-menu {
+        background: transparent !important;
+        color: #fff !important;
+    }
+
+            .business-shell-header .rz-open {
+            background: #203154 !important;       
+            color: #fff !important;
+            margin-top: 0.15rem !important;
+            }
+
+    .business-shell-header .rz-navigation-item-link,
+    .business-shell-header .rz-menuitem-link,
+    .business-shell-header .rz-menuitem-text,
+    .business-shell-header .rz-menuitem-icon,
+    .business-shell-header .rzi {
+        color: rgba(255, 255, 255, 0.86) !important;
+    }
+
+    .business-shell-header .rz-navigation-item-link:hover,
+    .business-shell-header .rz-navigation-item-link:focus,
+    .business-shell-header .rz-menuitem-link:hover,
+    .business-shell-header .rz-menuitem-link:focus,
+    .business-shell-header .rz-sidebar-toggle:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: #fff !important;
+    }
+
+    .business-shell-header .rz-navigation-item-link:hover .rz-menuitem-text,
+    .business-shell-header .rz-navigation-item-link:hover .rz-menuitem-icon,
+    .business-shell-header .rz-navigation-item-link:hover .rzi,
+    .business-shell-header .rz-menuitem-link:hover .rz-menuitem-text,
+    .business-shell-header .rz-menuitem-link:hover .rz-menuitem-icon,
+    .business-shell-header .rz-menuitem-link:hover .rzi {
+        color: #fff !important;
+    }
+
+    .business-shell-header .rz-menu-popup,
+    .business-shell-header .rz-navigation-menu ul,
+    .business-shell-header .rz-navigation-menu .rz-navigation-menu,
+    .business-shell-header .rz-menu-list {
+        background: #203154 !important;
+        border-color: rgba(255, 255, 255, 0.12) !important;
+        box-shadow: 0 16px 36px rgba(15, 23, 42, 0.24);
+    }
+
+    .business-shell-header .rz-menu-popup .rz-navigation-item-link,
+    .business-shell-header .rz-menu-popup .rz-menuitem-link,
+    .business-shell-header .rz-navigation-menu ul .rz-navigation-item-link,
+    .business-shell-header .rz-navigation-menu ul .rz-menuitem-link {
+        background: #203154 !important;
+        color: rgba(255, 255, 255, 0.86) !important;
+    }
+
+    .business-shell-header .rz-menu-popup .rz-navigation-item-link:hover,
+    .business-shell-header .rz-menu-popup .rz-menuitem-link:hover,
+    .business-shell-header .rz-navigation-menu ul .rz-navigation-item-link:hover,
+    .business-shell-header .rz-navigation-menu ul .rz-menuitem-link:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: #fff !important;
+    }
+
     .app-card:hover {
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         transform: translateY(-2px);

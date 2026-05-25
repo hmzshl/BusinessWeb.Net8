@@ -99,6 +99,10 @@
         info = query.Get("info");
 
         redirectUrl = query.Get("redirectUrl");
+        if (string.IsNullOrWhiteSpace(redirectUrl))
+        {
+            redirectUrl = "select-societe";
+        }
 
         errorVisible = !string.IsNullOrEmpty(error);
 
