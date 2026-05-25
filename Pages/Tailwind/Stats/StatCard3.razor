@@ -1,40 +1,180 @@
-﻿<div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border-l-4 @GetBorderColor()" style="margin: 5px;" >
-    <div class="flex justify-between items-start">
-        <div>
-            <p class="text-gray-500 text-sm font-medium" style="font-size: 0.75rem;" >@Title</p>
-            <h3 class="text-2xl font-bold mt-1 text-gray-800" style="font-size: 1.3rem;" >@Value</h3>
+<div class="business-stat-card" style="@GetAccentStyle()">
+    <div class="business-stat-accent"></div>
+    <div class="business-stat-content">
+        <div class="business-stat-copy">
+            <p class="business-stat-title">@Title</p>
+            <h3 class="business-stat-value">@Value</h3>
         </div>
-        <div class="@GetIconBgColor() p-2 rounded-lg">
-            @IconContent
+        <div class="business-stat-icon">
+            @if (IconContent is not null)
+            {
+                @IconContent
+            }
+            else
+            {
+                <span class="business-stat-dot"></span>
+            }
         </div>
     </div>
     @if (ShowTrendText)
     {
-        <div class="mt-4 flex items-center">
-            <span class="@GetTrendColor() text-sm font-medium flex items-center">
+        <div class="business-stat-trend">
+            <span class="@GetTrendColor() business-stat-trend-value">
                 @if (IsPositiveTrend)
                 {
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="business-stat-trend-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
                     </svg>
                 }
                 else
                 {
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="business-stat-trend-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                     </svg>
                 }
                 @TrendValue
             </span>
-            <span class="text-gray-500 text-sm ml-2">@TrendText</span>
+            <span class="business-stat-trend-text">@TrendText</span>
         </div>
     }
-
 </div>
+
+<style>
+    .business-stat-card {
+        position: relative;
+        width: 100%;
+        min-height: 92px;
+        margin: 5px;
+        padding: 10px 12px;
+        border: 1px solid #dbe3ef;
+        border-radius: 8px;
+        background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.10);
+        color: #203154;
+        overflow: hidden;
+        transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+        font-family: "Ubuntu", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    .business-stat-card :not(svg):not(path) {
+        font-family: "Ubuntu", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    .business-stat-card:hover {
+        border-color: var(--business-stat-accent);
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.14);
+        transform: translateY(-1px);
+    }
+
+    .business-stat-accent {
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 4px;
+        background: var(--business-stat-accent);
+    }
+
+    .business-stat-card::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 86px;
+        height: 86px;
+        background: var(--business-stat-soft);
+        border-bottom-left-radius: 80px;
+        pointer-events: none;
+    }
+
+    .business-stat-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .business-stat-copy {
+        min-width: 0;
+    }
+
+    .business-stat-title {
+        margin: 0;
+        color: #64748b;
+        font-size: 0.58rem;
+        font-weight: 700;
+        line-height: 1.15;
+        text-transform: uppercase;
+    }
+
+    .business-stat-value {
+        margin: 4px 0 0;
+        color: #203154;
+        font-size: 1.02rem;
+        font-weight: 800;
+        line-height: 1.15;
+        overflow-wrap: anywhere;
+    }
+
+    .business-stat-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        flex: 0 0 28px;
+        border: 1px solid var(--business-stat-border);
+        border-radius: 8px;
+        background: var(--business-stat-soft);
+        color: var(--business-stat-accent);
+    }
+
+    .business-stat-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .business-stat-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        background: var(--business-stat-accent);
+        box-shadow: 0 0 0 4px var(--business-stat-ring);
+    }
+
+    .business-stat-trend {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin-top: 10px;
+        font-size: 0.66rem;
+        line-height: 1.25;
+    }
+
+    .business-stat-trend-value {
+        display: inline-flex;
+        align-items: center;
+        font-weight: 800;
+    }
+
+    .business-stat-trend-icon {
+        width: 12px;
+        height: 12px;
+        margin-right: 3px;
+    }
+
+    .business-stat-trend-text {
+        color: #64748b;
+        font-weight: 600;
+    }
+</style>
 
 @code {
     [Parameter]
     public bool ShowTrendText { get; set; }
+
     [Parameter]
     public string Title { get; set; } = string.Empty;
 
@@ -56,29 +196,16 @@
     [Parameter]
     public RenderFragment? IconContent { get; set; }
 
-    private string GetBorderColor()
+    private string GetAccentStyle()
     {
         return Color switch
         {
-            StatColor.Blue => "border-blue-500",
-            StatColor.Green => "border-green-500",
-            StatColor.Purple => "border-purple-500",
-            StatColor.Amber => "border-amber-500",
-            StatColor.Red => "border-red-500",
-            _ => "border-blue-500"
-        };
-    }
-
-    private string GetIconBgColor()
-    {
-        return Color switch
-        {
-            StatColor.Blue => "bg-blue-100",
-            StatColor.Green => "bg-green-100",
-            StatColor.Purple => "bg-purple-100",
-            StatColor.Amber => "bg-amber-100",
-            StatColor.Red => "bg-red-100",
-            _ => "bg-blue-100"
+            StatColor.Blue => "--business-stat-accent:#2563eb;--business-stat-soft:#eff6ff;--business-stat-border:#bfdbfe;--business-stat-ring:rgba(37,99,235,0.14);",
+            StatColor.Green => "--business-stat-accent:#16a34a;--business-stat-soft:#f0fdf4;--business-stat-border:#bbf7d0;--business-stat-ring:rgba(22,163,74,0.14);",
+            StatColor.Purple => "--business-stat-accent:#7c3aed;--business-stat-soft:#f5f3ff;--business-stat-border:#ddd6fe;--business-stat-ring:rgba(124,58,237,0.14);",
+            StatColor.Amber => "--business-stat-accent:#d97706;--business-stat-soft:#fffbeb;--business-stat-border:#fde68a;--business-stat-ring:rgba(217,119,6,0.16);",
+            StatColor.Red => "--business-stat-accent:#dc2626;--business-stat-soft:#fef2f2;--business-stat-border:#fecaca;--business-stat-ring:rgba(220,38,38,0.14);",
+            _ => "--business-stat-accent:#2563eb;--business-stat-soft:#eff6ff;--business-stat-border:#bfdbfe;--business-stat-ring:rgba(37,99,235,0.14);"
         };
     }
 
@@ -86,6 +213,4 @@
     {
         return IsPositiveTrend ? "text-green-500" : "text-red-500";
     }
-
 }
-

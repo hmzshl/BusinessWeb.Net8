@@ -21,7 +21,6 @@
     <div class="select-societe-body">
         @if (_loading)
         {
-            <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" Style="height: 4px; margin-bottom: 1rem;" />
             <div class="select-societe-loader">
                 <Loading_1 />
             </div>
@@ -62,7 +61,6 @@
         {
             @if (_selecting)
             {
-                <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" Style="height: 4px; margin-bottom: 1rem;" />
                 <div class="select-societe-loading">@_loadingMessage</div>
             }
 
@@ -174,13 +172,6 @@
             _selecting = false;
             _loading = false;
             _error = string.IsNullOrWhiteSpace(result.error) ? "La base de données sélectionnée n'est pas accessible." : result.error;
-            NotificationService.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Base de données indisponible",
-                Detail = _error,
-                Duration = 5000
-            });
             return;
         }
 

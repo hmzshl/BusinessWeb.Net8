@@ -5,8 +5,9 @@
                 <div class="business-login-page">
                     <RadzenCard class="business-login-card">
                         <div class="business-login-header">
+                            <div class="business-login-header-pattern"></div>
                             <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.75rem">
-                                <RadzenIcon Icon="business" class="business-login-logo" />
+                                <span class="business-login-logo-mark">B</span>
                                 <div>
                                     <div class="business-login-brand">BusinessWeb</div>
                                     <div class="business-login-welcome">Bienvenue</div>
@@ -16,12 +17,22 @@
                         </div>
 
                         <div class="business-login-body">
-                            <div class="business-login-title">Connexion</div>
-                            <RadzenTemplateForm Action="@($" account/login?redirectUrl={redirectUrl}")" Data="@("login")" Method="post">
-                                <RadzenAlert Shade="Radzen.Shade.Lighter" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Danger" Visible="@errorVisible">@error</RadzenAlert>
-                                <RadzenAlert Shade="Radzen.Shade.Lighter" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Info" Visible="@infoVisible">@info</RadzenAlert>
-                                <RadzenLogin LoginText="SE CONNECTER" PasswordText="Mot de passe" UserText="Nom d'utilisateur" AllowResetPassword="false" AllowRegister="false" />
-                            </RadzenTemplateForm>
+                            <div class="business-login-title-row">
+                                <div>
+                                    <div class="business-login-title">Connexion</div>
+                                    <div class="business-login-subtitle">Espace sécurisé</div>
+                                </div>
+                                <span class="business-login-lock">
+                                    <RadzenIcon Icon="lock" />
+                                </span>
+                            </div>
+                            <div class="business-login-form-panel">
+                                <RadzenTemplateForm Action="@($" account/login?redirectUrl={redirectUrl}")" Data="@("login")" Method="post">
+                                    <RadzenAlert Shade="Radzen.Shade.Lighter" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Danger" Visible="@errorVisible">@error</RadzenAlert>
+                                    <RadzenAlert Shade="Radzen.Shade.Lighter" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Info" Visible="@infoVisible">@info</RadzenAlert>
+                                    <RadzenLogin LoginText="SE CONNECTER" PasswordText="Mot de passe" UserText="Nom d'utilisateur" AllowResetPassword="false" AllowRegister="false" />
+                                </RadzenTemplateForm>
+                            </div>
                         </div>
                     </RadzenCard>
 
@@ -74,13 +85,38 @@
 
 <style>
     .business-login-shell {
+        position: relative;
         min-height: 80vh;
         background:
-            linear-gradient(135deg, rgba(32, 49, 84, 0.94), rgba(32, 49, 84, 0.76)),
+            linear-gradient(135deg, rgba(18, 31, 57, 0.96), rgba(32, 49, 84, 0.82)),
             url('images/login.jpg') center / cover no-repeat;
+        overflow: hidden;
+    }
+
+    .business-login-shell::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+            linear-gradient(180deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+        background-size: 58px 58px;
+        mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.65), transparent 72%);
+        pointer-events: none;
+    }
+
+    .business-login-shell::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0;
+        height: 38%;
+        background: linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.32));
+        pointer-events: none;
     }
 
     .business-login-page {
+        position: relative;
+        z-index: 1;
         min-height: 90vh;
         display: flex;
         flex-direction: column;
@@ -90,15 +126,26 @@
     }
 
     .business-login-card {
+        position: relative;
         width: 100%;
-        max-width: 460px;
+        max-width: 430px;
         padding: 0;
         overflow: hidden;
         border-radius: 8px;
-        border: 1px solid #dbe3ef;
+        border: 1px solid rgba(219, 227, 239, 0.92);
         background: #ffffff;
-        box-shadow: 0 18px 55px rgba(15, 23, 42, 0.22);
+        box-shadow: 0 24px 70px rgba(7, 14, 31, 0.38);
         font-family: "Ubuntu", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+    }
+
+    .business-login-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.94);
+        z-index: 2;
     }
 
     .business-login-card *,
@@ -117,9 +164,52 @@
     }
 
     .business-login-header {
-        background: #203154;
+        position: relative;
+        background: linear-gradient(180deg, #263a62 0%, #203154 100%);
         color: #ffffff;
-        padding: 1.75rem 2rem 1.5rem;
+        padding: 1.45rem 1.6rem 1.35rem;
+        overflow: hidden;
+    }
+
+    .business-login-header::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0;
+        height: 3px;
+        background: linear-gradient(90deg, #8fb2f2, #ffffff, #5a7bb8);
+        opacity: 0.7;
+    }
+
+    .business-login-header > *:not(.business-login-header-pattern) {
+        position: relative;
+        z-index: 1;
+    }
+
+    .business-login-header-pattern {
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(135deg, transparent 0 58%, rgba(255, 255, 255, 0.07) 58% 60%, transparent 60%),
+            linear-gradient(45deg, transparent 0 72%, rgba(255, 255, 255, 0.045) 72% 74%, transparent 74%);
+        background-size: 74px 74px;
+        opacity: 0.8;
+    }
+
+    .business-login-logo-mark {
+        width: 44px;
+        height: 44px;
+        flex: 0 0 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+        font-size: 1.25rem;
+        font-weight: 800;
+        line-height: 1;
+        box-shadow: 0 12px 26px rgba(7, 14, 31, 0.24);
     }
 
     .business-login-logo {
@@ -128,33 +218,79 @@
     }
 
     .business-login-brand {
-        font-size: 1.05rem;
-        font-weight: 700;
+        font-size: 1.08rem;
+        font-weight: 800;
+        line-height: 1.1;
     }
 
     .business-login-welcome {
-        margin-top: 0.15rem;
-        color: rgba(255, 255, 255, 0.74);
-        font-size: 0.85rem;
+        margin-top: 0.22rem;
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 0.78rem;
+        font-weight: 600;
     }
 
     .business-login-caption {
-        margin-top: 0.9rem;
-        color: rgba(255, 255, 255, 0.68);
-        font-size: 0.8rem;
+        margin-top: 1.05rem;
+        color: rgba(255, 255, 255, 0.74);
+        font-size: 0.76rem;
+        font-weight: 500;
         line-height: 1.45;
+        max-width: 310px;
     }
 
     .business-login-body {
-        padding: 1.5rem 2rem 1.75rem;
-        background: #ffffff;
+        padding: 1.2rem 1.45rem 1.45rem;
+        background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+    }
+
+    .business-login-title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1rem;
     }
 
     .business-login-title {
-        margin-bottom: 1rem;
         color: #0f172a;
-        font-size: 1.05rem;
+        font-size: 1rem;
+        font-weight: 800;
+        line-height: 1.15;
+    }
+
+    .business-login-subtitle {
+        margin-top: 0.2rem;
+        color: #64748b;
+        font-size: 0.68rem;
         font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .business-login-lock {
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #dbe3ef;
+        border-radius: 8px;
+        background: #eef4ff;
+        color: #203154;
+    }
+
+    .business-login-lock .rzi {
+        color: #203154 !important;
+        font-size: 1.05rem !important;
+    }
+
+    .business-login-form-panel {
+        border: 1px solid #e7edf6;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.78);
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+        padding: 0.9rem;
     }
 
     .business-login-card .rz-login,
@@ -179,6 +315,8 @@
         color: #1f2a3d !important;
         box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
         transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+        min-height: 36px !important;
+        font-size: 0.82rem !important;
     }
 
     .business-login-card .rz-textbox:hover,
@@ -199,24 +337,41 @@
     .business-login-card .rz-login-button {
         width: 100%;
         border-radius: 8px !important;
-        background: #203154 !important;
+        background: linear-gradient(180deg, #2a4070 0%, #203154 100%) !important;
         border-color: #203154 !important;
         color: #ffffff !important;
         font-weight: 700 !important;
-        box-shadow: 0 12px 24px rgba(32, 49, 84, 0.22);
+        min-height: 38px !important;
+        box-shadow: 0 12px 24px rgba(32, 49, 84, 0.24);
+        transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
     }
 
     .business-login-card .rz-button:hover,
     .business-login-card .rz-login-button:hover {
         background: #2b416f !important;
         border-color: #2b416f !important;
+        box-shadow: 0 16px 30px rgba(32, 49, 84, 0.30);
+        transform: translateY(-1px);
+    }
+
+    .business-login-card .rz-login .rz-button {
+        margin-top: 0.25rem;
+    }
+
+    .business-login-card .rz-alert {
+        border-radius: 8px !important;
+        border: 1px solid #dbe3ef;
+        margin-bottom: 0.8rem;
+        font-size: 0.76rem;
     }
 
     .business-login-footer {
         width: 100%;
-        margin-top: 1rem;
+        margin-top: 0.9rem;
         color: rgba(255, 255, 255, 0.74);
+        font-size: 0.7rem !important;
         font-family: "Ubuntu", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+        text-shadow: 0 1px 2px rgba(15, 23, 42, 0.36);
     }
 
     @@media (max-width: 576px) {
@@ -228,6 +383,10 @@
         .business-login-body {
             padding-left: 1.25rem;
             padding-right: 1.25rem;
+        }
+
+        .business-login-form-panel {
+            padding: 0.75rem;
         }
     }
 </style>
