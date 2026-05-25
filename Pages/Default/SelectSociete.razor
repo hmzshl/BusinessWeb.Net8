@@ -22,7 +22,9 @@
         @if (_loading)
         {
             <RadzenProgressBar Mode="ProgressBarMode.Indeterminate" Style="height: 4px; margin-bottom: 1rem;" />
-            <Loading_1 />
+            <div class="select-societe-loader">
+                <Loading_1 />
+            </div>
         }
         else if (!string.IsNullOrWhiteSpace(_error))
         {
@@ -315,6 +317,13 @@
         color: #475569;
         font-size: 0.85rem;
         margin-bottom: 0.9rem;
+    }
+
+    .select-societe-loader {
+        min-height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .select-societe-list-title {

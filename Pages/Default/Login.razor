@@ -1,38 +1,31 @@
 ﻿<ErrorBoundary @ref="errorBoundary">
     <ChildContent>
-        <RadzenLayout style="background: url('images/login.jpg'); background-size: cover;">
+        <RadzenLayout class="business-login-shell">
             <RadzenBody>
-                <div class="container" style="height: 100%; max-width: 900px;">
-                    <div class="row align-items-center " style="height: 100%">
-                        <div class="col-12 py-3">
-                            <RadzenCard class="rz-shadow-5" style="padding: 0; overflow: hidden">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-12 col-md-6 rz-background-color-primary p-5 position-relative" style="background: linear-gradient(to right, #203154, #3F9DBF ) !important;">
-                                            <RadzenText Text="Bienvenue!" TextStyle="Radzen.Blazor.TextStyle.H2" class="mt-3 mt-md-5 pt-0 pt-md-5 mb-4 rz-color-white d-none d-sm-block" />
-                                            <RadzenText TextStyle="Radzen.Blazor.TextStyle.Body1" class="mb-5 pb-0 pb-md-5 rz-color-white d-none d-sm-block">
-                                                Remplissez vos identifiants de connexion pour continuer.
-                                            </RadzenText>
-                                        </div>
-                                        <div class="col-12 col-md-6 p-5">
-                                            <RadzenText Text="Login" TextStyle="Radzen.Blazor.TextStyle.H5" class="mb-4" TagName="Radzen.Blazor.TagName.H2" />
-                                            <RadzenRow>
-                                                <RadzenColumn SizeMD="12">
-                                                    <RadzenTemplateForm Action="@($" account/login?redirectUrl={redirectUrl}")" Data="@("login")"
-                                                                        Method="post">
-                                                        <RadzenAlert Shade="Radzen.Shade.Lighter" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Danger" Visible="@errorVisible">@error</RadzenAlert>
-                                                        <RadzenAlert Shade="Radzen.Shade.Lighter" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Info" Visible="@infoVisible">@info</RadzenAlert>
-                                                        <RadzenLogin LoginText="SE CONNECTER" PasswordText="Mot de passe" UserText="Nom d'utilisateur" AllowResetPassword="false" AllowRegister="false" />
-                                                    </RadzenTemplateForm>
-                                                </RadzenColumn>
-                                            </RadzenRow>
-                                        </div>
-                                    </div>
+                <div class="business-login-page">
+                    <RadzenCard class="business-login-card">
+                        <div class="business-login-header">
+                            <RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.75rem">
+                                <RadzenIcon Icon="business" class="business-login-logo" />
+                                <div>
+                                    <div class="business-login-brand">BusinessWeb</div>
+                                    <div class="business-login-welcome">Bienvenue</div>
                                 </div>
-                            </RadzenCard>
-                            <RadzenText Text="BusinessWeb, Copyright to NOVELDATA SARLAU Ⓒ 2025" TextStyle="Radzen.Blazor.TextStyle.Caption" TextAlign="Radzen.TextAlign.Center" Style="width: 100%; margin-top: 20px" TagName="Radzen.Blazor.TagName.P" />
+                            </RadzenStack>
+                            <div class="business-login-caption">Connectez-vous pour accéder à vos sociétés et à vos données.</div>
                         </div>
-                    </div>
+
+                        <div class="business-login-body">
+                            <div class="business-login-title">Connexion</div>
+                            <RadzenTemplateForm Action="@($" account/login?redirectUrl={redirectUrl}")" Data="@("login")" Method="post">
+                                <RadzenAlert Shade="Radzen.Shade.Lighter" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Danger" Visible="@errorVisible">@error</RadzenAlert>
+                                <RadzenAlert Shade="Radzen.Shade.Lighter" Size="Radzen.AlertSize.Small" AlertStyle="Radzen.AlertStyle.Info" Visible="@infoVisible">@info</RadzenAlert>
+                                <RadzenLogin LoginText="SE CONNECTER" PasswordText="Mot de passe" UserText="Nom d'utilisateur" AllowResetPassword="false" AllowRegister="false" />
+                            </RadzenTemplateForm>
+                        </div>
+                    </RadzenCard>
+
+                    <RadzenText Text="BusinessWeb, Copyright to NOVELDATA SARLAU Ⓒ 2026" TextStyle="Radzen.Blazor.TextStyle.Caption" TextAlign="Radzen.TextAlign.Center" class="business-login-footer" TagName="Radzen.Blazor.TagName.P" />
                 </div>
             </RadzenBody>
         </RadzenLayout>
@@ -78,6 +71,166 @@
 
 
 
+
+<style>
+    .business-login-shell {
+        min-height: 80vh;
+        background:
+            linear-gradient(135deg, rgba(32, 49, 84, 0.94), rgba(32, 49, 84, 0.76)),
+            url('images/login.jpg') center / cover no-repeat;
+    }
+
+    .business-login-page {
+        min-height: 90vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1.25rem;
+    }
+
+    .business-login-card {
+        width: 100%;
+        max-width: 460px;
+        padding: 0;
+        overflow: hidden;
+        border-radius: 8px;
+        border: 1px solid #dbe3ef;
+        background: #ffffff;
+        box-shadow: 0 18px 55px rgba(15, 23, 42, 0.22);
+        font-family: "Ubuntu", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+    }
+
+    .business-login-card *,
+    .business-login-card .rz-button,
+    .business-login-card .rz-button-text,
+    .business-login-card .rz-alert,
+    .business-login-card .rz-alert * {
+        font-family: "Ubuntu", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+    }
+
+    .business-login-card .rzi,
+    .business-login-card .rz-button-icon,
+    .business-login-card .rz-icon,
+    .business-login-card .material-icons {
+        font-family: "Material Icons" !important;
+    }
+
+    .business-login-header {
+        background: #203154;
+        color: #ffffff;
+        padding: 1.75rem 2rem 1.5rem;
+    }
+
+    .business-login-logo {
+        color: #ffffff;
+        font-size: 1.75rem;
+    }
+
+    .business-login-brand {
+        font-size: 1.05rem;
+        font-weight: 700;
+    }
+
+    .business-login-welcome {
+        margin-top: 0.15rem;
+        color: rgba(255, 255, 255, 0.74);
+        font-size: 0.85rem;
+    }
+
+    .business-login-caption {
+        margin-top: 0.9rem;
+        color: rgba(255, 255, 255, 0.68);
+        font-size: 0.8rem;
+        line-height: 1.45;
+    }
+
+    .business-login-body {
+        padding: 1.5rem 2rem 1.75rem;
+        background: #ffffff;
+    }
+
+    .business-login-title {
+        margin-bottom: 1rem;
+        color: #0f172a;
+        font-size: 1.05rem;
+        font-weight: 700;
+    }
+
+    .business-login-card .rz-login,
+    .business-login-card .rz-login > div {
+        width: 100%;
+    }
+
+    .business-login-card .rz-form-field,
+    .business-login-card .rz-textbox,
+    .business-login-card .rz-password,
+    .business-login-card .rz-inputtext,
+    .business-login-card input {
+        width: 100% !important;
+    }
+
+    .business-login-card .rz-textbox,
+    .business-login-card .rz-password,
+    .business-login-card .rz-inputtext {
+        border-color: #cfd9e8 !important;
+        border-radius: 8px !important;
+        background: #ffffff !important;
+        color: #1f2a3d !important;
+        box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04);
+        transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+    }
+
+    .business-login-card .rz-textbox:hover,
+    .business-login-card .rz-password:hover,
+    .business-login-card .rz-inputtext:hover {
+        border-color: #9fb2cd !important;
+        background: #fbfdff !important;
+    }
+
+    .business-login-card .rz-textbox:focus,
+    .business-login-card .rz-password:focus,
+    .business-login-card .rz-inputtext:focus {
+        border-color: #203154 !important;
+        box-shadow: 0 0 0 3px rgba(32, 49, 84, 0.14) !important;
+    }
+
+    .business-login-card .rz-button,
+    .business-login-card .rz-login-button {
+        width: 100%;
+        border-radius: 8px !important;
+        background: #203154 !important;
+        border-color: #203154 !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        box-shadow: 0 12px 24px rgba(32, 49, 84, 0.22);
+    }
+
+    .business-login-card .rz-button:hover,
+    .business-login-card .rz-login-button:hover {
+        background: #2b416f !important;
+        border-color: #2b416f !important;
+    }
+
+    .business-login-footer {
+        width: 100%;
+        margin-top: 1rem;
+        color: rgba(255, 255, 255, 0.74);
+        font-family: "Ubuntu", system-ui, -apple-system, "Segoe UI", sans-serif !important;
+    }
+
+    @@media (max-width: 576px) {
+        .business-login-page {
+            padding: 0.85rem;
+        }
+
+        .business-login-header,
+        .business-login-body {
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
+        }
+    }
+</style>
 
 @code {
     protected string redirectUrl;

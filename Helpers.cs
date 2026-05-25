@@ -474,8 +474,238 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 8, Title = "OCR", Description = "Relevés bancaires", Url = "ocr-bq", TitleIcon = "barcode_scanner", SousGroupe = "", HasSousGroupe = false });
 
 
+			PolishAuthMenu(list);
 			return list;
 		}
+
+		private static void PolishAuthMenu(List<AuthItems> list)
+		{
+			var originalOrder = list.Select((item, index) => new { item, index }).ToDictionary(x => x.item, x => x.index);
+
+			var sectionMap = new Dictionary<(int App, string Title), (string Title, string Icon)>
+			{
+				[(1, "Structure")] = ("Référentiel", "account_tree"),
+				[(1, "Traitement")] = ("Cycle achats", "shopping_cart"),
+				[(2, "Structure")] = ("Référentiel", "account_tree"),
+				[(2, "Traitement")] = ("Cycle ventes", "receipt_long"),
+				[(3, "Structure")] = ("Référentiel", "account_tree"),
+				[(3, "Traitement")] = ("Mouvements", "swap_horiz"),
+				[(4, "Structure")] = ("Référentiel", "account_tree"),
+				[(4, "Traitement")] = ("Cycle projet", "work"),
+				[(5, "Traitement")] = ("Parc matériel", "engineering"),
+				[(5, "Etats")] = ("Rapports", "bar_chart"),
+				[(6, "Traitement")] = ("Production", "precision_manufacturing"),
+				[(6, "Etats")] = ("Rapports", "analytics"),
+				[(7, "Structure")] = ("Référentiel", "account_tree"),
+				[(7, "Traitement")] = ("Trésorerie", "payments"),
+				[(8, "Gestion TVA")] = ("TVA", "request_quote"),
+				[(8, "OCR")] = ("Numérisation", "document_scanner"),
+				[(9, "Outils")] = ("Documents & écritures", "construction"),
+				[(10, "Structure")] = ("Référentiel", "account_tree"),
+				[(10, "Traitement")] = ("Contrats & réservations", "flight_takeoff"),
+				[(10, "Etats")] = ("Pilotage", "analytics"),
+				[(12, "Structure")] = ("Référentiel", "account_tree"),
+				[(12, "Traitement")] = ("Caisse ISC", "point_of_sale"),
+				[(13, "Traitement")] = ("Banque ISC", "account_balance"),
+				[(14, "Réglements")] = ("Règlements", "payments"),
+				[(15, "Structure")] = ("Référentiel", "account_tree"),
+				[(15, "Traitement")] = ("Dossiers & missions", "fact_check"),
+				[(16, "Traitement")] = ("Import données", "sync_alt"),
+				[(18, "Utilisateurs")] = ("Administration", "admin_panel_settings"),
+				[(19, "Traçabilité")] = ("Audit", "manage_search"),
+				[(20, "Traitement")] = ("Analyse coûts", "restaurant_menu"),
+				[(21, "Traitement")] = ("Notes de frais", "payments")
+			};
+
+			var itemMap = new Dictionary<(int App, string Url), (string Title, string Description, string Icon, string SousGroupe)>
+			{
+				[(5, "entretien/0")] = ("Maintenance", "Consommation gasoil", "build", "Entretien"),
+				[(5, "entretien/1")] = ("Maintenance", "Assurance", "build", "Entretien"),
+				[(5, "entretien/2")] = ("Maintenance", "Vignette", "build", "Entretien"),
+				[(5, "entretien/3")] = ("Maintenance", "Visite technique", "build", "Entretien"),
+				[(5, "entretien/6")] = ("Maintenance", "Vidange", "build", "Entretien"),
+				[(5, "entretien/7")] = ("Maintenance", "Entretien & réparation", "build", "Entretien"),
+				[(5, "entretien/10")] = ("Maintenance", "Carnet de circulation", "build", "Documents véhicule"),
+				[(5, "entretien/11")] = ("Maintenance", "Carnet du disque", "build", "Documents véhicule"),
+				[(5, "entretien/12")] = ("Maintenance", "Taxe sur tonnage", "build", "Documents véhicule"),
+				[(5, "entretien/13")] = ("Maintenance", "Extincteurs", "build", "Documents véhicule"),
+
+				[(6, "personnels")] = ("Ressources humaines", "Personnels", "groups", null),
+				[(6, "pointage-personnel")] = ("Ressources humaines", "Pointage personnels", "groups", null),
+				[(6, "ordres-fabrication")] = ("Production", "Ordres de fabrication", "precision_manufacturing", null),
+				[(6, "fabrication-demandes-achats")] = ("Production", "Préparation achats", "precision_manufacturing", null),
+				[(6, "fabrication-sorties")] = ("Production", "Documents de sortie", "precision_manufacturing", null),
+				[(6, "fabrication-nomenclatures")] = ("Production", "Nomenclatures", "precision_manufacturing", null),
+				[(6, "depots")] = ("Rapports", "Pointage par personnel", "analytics", "Pointage"),
+				[(6, "")] = ("Rapports", null, "analytics", "Pointage"),
+				[(6, "et-preparation-achats-date")] = ("Rapports", "Préparation achats par date", "analytics", "Fabrication"),
+				[(6, "et-consommations-date")] = ("Rapports", "Consommations par date", "analytics", "Fabrication"),
+
+				[(10, "av-factures")] = ("Contrats & réservations", "Facturation", "flight_takeoff", null),
+				[(10, "av-tableau-bord")] = ("Pilotage", "Tableau de bord", "analytics", null),
+
+				[(15, "cr-bl")] = ("Documents commerciaux", "Bons de livraison", "receipt_long", null),
+				[(15, "cr-fa")] = ("Documents commerciaux", "Factures", "receipt_long", null),
+
+				[(16, "imp-ventes")] = ("Import données", "Ventes", "sync_alt", null),
+				[(16, "imp-achats")] = ("Import données", "Achats", "sync_alt", null),
+				[(16, "imp-regl")] = ("Import données", "Règlements", "sync_alt", null),
+				[(16, "imp-comptabilite")] = ("Import données", "Écritures comptables", "sync_alt", null),
+				[(16, "seq-fa")] = ("Contrôles", "Séquentialité factures", "rule", null),
+				[(16, "solde-clients")] = ("Contrôles", "Solde clients", "rule", null),
+				[(16, "et-stock-global-article")] = ("Contrôles", "Stock par date", "rule", null),
+				[(16, "imp-art-hist")] = ("Contrôles", "Articles modifiés", "rule", null),
+
+				[(20, "fc-affaires")] = ("Analyse coûts", "Projets", "restaurant_menu", null),
+				[(20, "fc-charges")] = ("Analyse coûts", "Charges", "restaurant_menu", null),
+
+				[(21, "nf-per")] = ("Référentiel", "Personnels", "account_tree", null),
+				[(21, "nf-mat")] = ("Référentiel", "Matériels", "account_tree", null),
+				[(21, "nf-cls")] = ("Référentiel", "Clients", "account_tree", null),
+				[(21, "nf-frs")] = ("Référentiel", "Fournisseurs", "account_tree", null)
+			};
+
+			var labelMap = new Dictionary<string, string>
+			{
+				["Dépots"] = "Dépôts",
+				["Liste des materiels"] = "Matériels",
+				["Materiels"] = "Matériels",
+				["Pointage Personnels"] = "Pointage personnels",
+				["Ordres de fabrications"] = "Ordres de fabrication",
+				["Documents de sorties"] = "Documents de sortie",
+				["Recap pointange par personnel"] = "Récapitulatif pointage personnel",
+				["Movements de caisse"] = "Mouvements de caisse",
+				["Maitres Ouvrage"] = "Maîtres d'ouvrage",
+				["Contrats Fournisseurs"] = "Contrats fournisseurs",
+				["Contrats Clients"] = "Contrats clients",
+				["Bookings"] = "Réservations",
+				["A mettre en banque"] = "À mettre en banque",
+				["Echéances"] = "Échéances",
+				["Réglements Clients"] = "Règlements clients",
+				["Réglements Fournisseurs"] = "Règlements fournisseurs",
+				["Réglements clients"] = "Règlements clients",
+				["Réglements fournisseurs"] = "Règlements fournisseurs",
+				["Réglements"] = "Règlements",
+				["Entetes documents"] = "Entêtes documents",
+				["Ecritures comptables"] = "Écritures comptables",
+				["Bons de livraisons"] = "Bons de livraison",
+				["Tableau de bord etalonnage"] = "Tableau de bord étalonnage",
+				["Factures Achat"] = "Factures achat",
+				["Séquentialité Factures"] = "Séquentialité factures",
+				["CA Prévisionnel"] = "CA prévisionnel"
+			};
+
+			var subgroupMap = new Dictionary<string, string>
+			{
+				["Entretien"] = "Entretien",
+				["Etats Gasoil"] = "Gasoil",
+				["Rapports Pointage"] = "Pointage",
+				["Rapports Fabrication"] = "Fabrication",
+				["Tableaux de Bord"] = "Tableaux de bord",
+				["Chiffre d'Affaire"] = "Chiffre d'affaires",
+				["Portefeuille Clients"] = "Portefeuille clients",
+				["Articles"] = "Articles",
+				["Collaborateurs"] = "Collaborateurs",
+				["Tableaux de Bord Achats"] = "Tableaux de bord",
+				["Analyse Achats"] = "Analyse achats"
+			};
+
+			foreach (var item in list)
+			{
+				var app = item.SelectedAPP ?? 0;
+				var url = item.Url ?? "";
+
+				if (sectionMap.TryGetValue((app, item.Title ?? ""), out var section))
+				{
+					item.Title = section.Title;
+					item.TitleIcon = section.Icon;
+				}
+
+				item.Description = NormalizeLabel(item.Description, labelMap);
+				item.SousGroupe = NormalizeSubgroup(item.SousGroupe, subgroupMap);
+				item.HasSousGroupe = !string.IsNullOrWhiteSpace(item.SousGroupe);
+
+				if (itemMap.TryGetValue((app, url), out var itemStyle))
+				{
+					if (!string.IsNullOrWhiteSpace(itemStyle.Title)) item.Title = itemStyle.Title;
+					if (!string.IsNullOrWhiteSpace(itemStyle.Description)) item.Description = itemStyle.Description;
+					if (!string.IsNullOrWhiteSpace(itemStyle.Icon)) item.TitleIcon = itemStyle.Icon;
+					if (itemStyle.SousGroupe != null) item.SousGroupe = itemStyle.SousGroupe;
+					item.HasSousGroupe = !string.IsNullOrWhiteSpace(item.SousGroupe);
+				}
+			}
+
+			var appRank = new Dictionary<int, int>
+			{
+				[1] = 1, [2] = 2, [3] = 3, [4] = 4, [5] = 5, [6] = 6, [7] = 7, [8] = 8, [9] = 9, [10] = 10,
+				[12] = 12, [13] = 13, [14] = 14, [15] = 15, [16] = 16, [18] = 18, [19] = 19, [20] = 20, [21] = 21
+			};
+
+			var sectionRank = new Dictionary<string, int>
+			{
+				["Référentiel"] = 10,
+				["Ressources humaines"] = 15,
+				["Parc matériel"] = 15,
+				["Cycle achats"] = 20,
+				["Cycle ventes"] = 20,
+				["Mouvements"] = 20,
+				["Cycle projet"] = 20,
+				["Trésorerie"] = 20,
+				["Contrats & réservations"] = 20,
+				["Caisse ISC"] = 20,
+				["Banque ISC"] = 20,
+				["Production"] = 25,
+				["Maintenance"] = 25,
+				["Documents commerciaux"] = 25,
+				["Dossiers & missions"] = 30,
+				["Import données"] = 30,
+				["Contrôles"] = 35,
+				["Ventes"] = 40,
+				["Achats"] = 45,
+				["Règlements"] = 50,
+				["Comptabilité"] = 55,
+				["Projets"] = 60,
+				["Documents & écritures"] = 65,
+				["Administration"] = 70,
+				["Audit"] = 75,
+				["Analyse coûts"] = 80,
+				["Notes de frais"] = 85,
+				["TVA"] = 90,
+				["Numérisation"] = 95,
+				["Pilotage"] = 100,
+				["Rapports"] = 110
+			};
+
+			list.Sort((left, right) =>
+			{
+				var result = GetRank(appRank, left.SelectedAPP ?? 0).CompareTo(GetRank(appRank, right.SelectedAPP ?? 0));
+				if (result != 0) return result;
+
+				result = GetRank(sectionRank, left.Title ?? "").CompareTo(GetRank(sectionRank, right.Title ?? ""));
+				if (result != 0) return result;
+
+				result = string.Compare(left.SousGroupe ?? "", right.SousGroupe ?? "", StringComparison.CurrentCultureIgnoreCase);
+				if (result != 0) return result;
+
+				return originalOrder[left].CompareTo(originalOrder[right]);
+			});
+		}
+
+		private static string NormalizeLabel(string value, Dictionary<string, string> replacements)
+			=> value != null && replacements.TryGetValue(value, out var replacement) ? replacement : value;
+
+		private static string NormalizeSubgroup(string value, Dictionary<string, string> replacements)
+		{
+			if (string.IsNullOrWhiteSpace(value)) return "";
+
+			var clean = value.Replace("▶", "").Trim();
+			return replacements.TryGetValue(clean, out var replacement) ? replacement : clean;
+		}
+
+		private static int GetRank<TKey>(Dictionary<TKey, int> ranks, TKey key)
+			where TKey : notnull
+			=> ranks.TryGetValue(key, out var rank) ? rank : int.MaxValue;
+
 		public string getTiers(int type)
 		{
 			if (type == 0 || type == 4)
@@ -1919,7 +2149,7 @@ namespace BusinessWeb
 			list.Add(new Items { Id = 3, Name = "Stock", Icon = "inventory", Description = "Gestion des stocks, inventaire et mouvements d'articles" });
 			list.Add(new Items { Id = 4, Name = "Projets", Icon = "home_repair_service", Description = "Suivi des projets, chantiers et gestion des marchés" });
 			list.Add(new Items { Id = 5, Name = "Matériels", Icon = "local_shipping", Description = "Gestion du parc matériel, entretien et maintenance" });
-			list.Add(new Items { Id = 6, Name = "Personnels", Icon = "group", Description = "Gestion des ressources humaines et pointage du personnel" });
+			list.Add(new Items { Id = 6, Name = "RH & Production", Icon = "group", Description = "Gestion des ressources humaines et pointage du personnel" });
 			list.Add(new Items { Id = 7, Name = "Caisse", Icon = "local_atm", Description = "Gestion de caisse et opérations de trésorerie" });
 			list.Add(new Items { Id = 8, Name = "Comptabilité", Icon = "analytics", Description = "Comptabilité générale, analytique et états financiers" });
 			list.Add(new Items { Id = 9, Name = "Outils", Icon = "construction", Description = "Outils et utilitaires pour la gestion d'entreprise" });

@@ -2367,8 +2367,11 @@ html, body * {
     transition: none !important;
     border-radius: 5px !important;
     padding-left: 0px;
-}
 
+}
+.e-date-container {
+    min-width: 150px;
+}
 .e-popup.e-multi-select-list-wrapper.e-checkbox .e-list-item.e-active {
     color: #ffffff;
 }
@@ -2539,4 +2542,7 @@ input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-
 }
 .ant-card-bordered {
     border: 1px solid #fff;
+}
+.e-calendar .e-content td.e-focused-date.e-today {
+    box-shadow: unset;
 }
