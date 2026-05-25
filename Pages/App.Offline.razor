@@ -44,10 +44,10 @@
     <!-- Offline Helper Script -->
     <script src="offline-resources/js/offline-helpers.js?v=1.0.90"></script>
 
-    <HeadOutlet @rendermode="@RenderMode.InteractiveServer" />
+    <HeadOutlet @rendermode="new InteractiveServerRenderMode(prerender: false)" />
 </head>
 <body>
-    <Routes @rendermode="@RenderMode.InteractiveServer" />
+    <Routes @rendermode="new InteractiveServerRenderMode(prerender: false)" />
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.

@@ -7,7 +7,6 @@
     --business-grid-soft: #f7f9fc;
     --business-grid-hover: #eef4ff;
     --business-grid-selected: #dce9ff;
-    border-color: var(--business-grid-border) !important;
     border-radius: 8px;
     background: #ffffff;
     box-shadow: 0 14px 34px rgba(15, 23, 42, 0.10);
@@ -122,12 +121,6 @@
 .e-grid .e-filterbarcell input,
 .e-grid .e-filterbarcell .e-input-group {
     background: #f8fafc !important;
-}
-
-.e-grid .e-focused:not(.e-menu-item),
-.e-grid .e-rowcell:focus,
-.e-grid .e-headercell:focus {
-    box-shadow: inset 0 0 0 2px rgba(32, 49, 84, 0.28) !important;
 }
 
 .e-tab {
@@ -303,4 +296,29 @@
 .e-dropdownbase .e-list-item.e-active.e-hover {
     background: #dce9ff !important;
     color: #12213c !important;
+}
+
+.e-chart,
+.e-chart.e-control,
+.e-accumulationchart,
+.e-accumulationchart.e-control,
+.e-stockchart,
+.e-stockchart.e-control,
+.e-smithchart,
+.e-smithchart.e-control,
+.e-sparkline,
+.e-sparkline.e-control {
+    --business-grid-navy: #203154;
+    --business-grid-border: #dbe3ef;
+    --business-grid-line: #e7edf6;
+    --business-grid-text: #233047;
+    --business-grid-muted: #64748b;
+    --business-grid-soft: #f7f9fc;
+    --business-grid-hover: #eef4ff;
+    --business-grid-selected: #dce9ff;
+    border-color: var(--business-grid-border) !important;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.10);
+    overflow: hidden;
 }

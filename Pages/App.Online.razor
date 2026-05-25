@@ -29,10 +29,10 @@
     <!-- Blazor interop file -->
     <script src="js/boldreports-interop.js?v=1.0.90"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <HeadOutlet @rendermode="@RenderMode.InteractiveServer" />
+    <HeadOutlet @rendermode="new InteractiveServerRenderMode(prerender: false)" />
 </head>
 <body>
-    <Routes @rendermode="@RenderMode.InteractiveServer" />
+    <Routes @rendermode="new InteractiveServerRenderMode(prerender: false)" />
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.

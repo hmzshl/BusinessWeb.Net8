@@ -835,6 +835,7 @@ td {
 .e-grid .e-rowcell {
     font-size: 11px;
     line-height: 18px;
+    font-family: 'Arial' !important;
 }
 
 .e-grid .e-headercell, .e-grid .e-detailheadercell {
@@ -2366,10 +2367,6 @@ html, body * {
     transition: none !important;
     border-radius: 5px !important;
     padding-left: 0px;
-}
-
-.e-tab.e-fill .e-tab-header .e-toolbar-item.e-active.e-ileft .e-text-wrap, .e-tab.e-fill .e-tab-header .e-toolbar-item.e-active.e-iright .e-text-wrap {
-    height: 32px !important;
 }
 
 .e-popup.e-multi-select-list-wrapper.e-checkbox .e-list-item.e-active {
