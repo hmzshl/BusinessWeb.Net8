@@ -1266,7 +1266,7 @@ input.e-input, .e-input-group input.e-input, .e-input-group.e-control-wrapper in
 
 input.e-input, .e-input-group input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input.e-input, .e-input-group.e-control-wrapper input, .e-float-input input, .e-float-input.e-input-group input, .e-float-input.e-control-wrapper input, .e-float-input.e-control-wrapper.e-input-group input, .e-input-group, .e-input-group.e-control-wrapper, .e-float-input, .e-float-input.e-control-wrapper {
     border-radius: 5px !important;
-    padding-left: 5px;
+    padding-left: 0px;
 }
 
 .e-dropdown-popup {
@@ -2365,7 +2365,7 @@ html, body * {
     box-shadow: 0 0 0 1px rgba(0,123,255,.25) !important;
     transition: none !important;
     border-radius: 5px !important;
-    padding-left: 5px;
+    padding-left: 0px;
 }
 
 .e-tab.e-fill .e-tab-header .e-toolbar-item.e-active.e-ileft .e-text-wrap, .e-tab.e-fill .e-tab-header .e-toolbar-item.e-active.e-iright .e-text-wrap {
@@ -2479,7 +2479,7 @@ td .rz-badge {
         background: inherit;
     }
 .e-input-group:not(.e-success):not(.e-warning):not(.e-error) input.e-input:focus, .e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error) input.e-input:focus, .e-input-group:not(.e-success):not(.e-warning):not(.e-error).e-input-focus input.e-input, .e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error).e-input-focus input.e-input, .e-input-group:not(.e-success):not(.e-warning):not(.e-error) textarea.e-input:focus, .e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error) textarea.e-input:focus {
-    border-radius: 20px !important; 
+    border-radius: 5px !important; 
     padding-left: 5px;
 }
 .e-popup.e-multi-select-list-wrapper.e-checkbox .e-dropdownbase .e-list-item.e-active, .e-popup.e-multi-select-list-wrapper.e-checkbox .e-dropdownbase .e-list-item.e-active.e-hover {
@@ -2503,7 +2503,7 @@ audio, canvas, embed, iframe, img, object, svg, video {
     color: #ffffff;
 }
 .rz-form-field-content, .rz-timespanpicker > .rz-inputtext, .rz-colorpicker, .rz-lookup-search input, .rz-numeric, .rz-datepicker > .rz-inputtext, .rz-multiselect, .rz-dropdown, .mask, .rz-textarea, .rz-textbox {
-    border-radius: 20px;
+    border-radius: 5px;
 }
 .e-grid.sf-grid :is(.e-groupdroparea,.e-groupdroparea .e-groupsort,.e-groupdroparea .e-ungroupbutton,.e-headercontent th.e-headercell:not(.e-menu-item):not(.e-editedbatchcell),.e-headercontent td.e-rowcell:not(.e-menu-item):not(.e-editedbatchcell),.e-content td.e-rowcell:not(.e-menu-item):not(.e-editedbatchcell),.e-content td.e-groupcaption:not(.e-menu-item):not(.e-editedbatchcell),.e-content td.e-recordplusexpand:not(.e-menu-item):not(.e-editedbatchcell),.e-content td.e-recordpluscollapse:not(.e-menu-item):not(.e-editedbatchcell),.e-content td.e-detailrowcollapse:not(.e-menu-item):not(.e-editedbatchcell),.e-content td.e-detailrowexpand:not(.e-menu-item):not(.e-editedbatchcell),.e-content th.e-detailcell:not(.e-menu-item):not(.e-editedbatchcell)):is(:focus,:focus-visible) {
     box-shadow: unset;
