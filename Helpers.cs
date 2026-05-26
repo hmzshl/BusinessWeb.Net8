@@ -451,6 +451,9 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 8, Title = "OCR", Description = "Factures Achat", Url = "ocr-fa", TitleIcon = "barcode_scanner", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 8, Title = "OCR", Description = "Relevés bancaires", Url = "ocr-bq", TitleIcon = "barcode_scanner", SousGroupe = "", HasSousGroupe = false });
 
+			// Liasse Fiscale IS - Modèle Normal (single merged page)
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "Liasse Fiscale IS", Description = "Modèle Normal IS", Url = "cpt-liasse", TitleIcon = "description", SousGroupe = "", HasSousGroupe = false });
+
 
 			PolishAuthMenu(list);
 			return list;
@@ -478,6 +481,7 @@ namespace BusinessWeb
 				[(7, "Traitement")] = ("Trésorerie", "payments"),
 				[(8, "Gestion TVA")] = ("TVA", "request_quote"),
 				[(8, "OCR")] = ("Numérisation", "document_scanner"),
+				[(8, "Liasse Fiscale IS")] = ("Liasse Fiscale IS", "description"),
 				[(9, "Outils")] = ("Documents & écritures", "construction"),
 				[(10, "Structure")] = ("Référentiel", "account_tree"),
 				[(10, "Traitement")] = ("Contrats & réservations", "flight_takeoff"),

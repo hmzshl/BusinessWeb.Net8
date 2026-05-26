@@ -1,0 +1,1988 @@
+@page "/cpt-liasse"
+@attribute [Authorize]
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="LIASSE FISCALE IS">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        Modèle Normal IS
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDropDownList TValue="int" TItem="ExoItem" Width="200px"
+                                                @bind-Value="selectedExoIndex" DataSource="@exoItems"
+                                                Placeholder="Exercice">
+                                    <DropDownListFieldSettings Text="Label" Value="Idx" />
+                                    <DropDownListEvents TValue="int" TItem="ExoItem"
+                                                        ValueChange="@(args => LoadData())" />
+                                </SfDropDownList>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <SfTab CssClass="e-fill lf-tabs" HeaderPlacement="HeaderPosition.Left">
+                    <TabItems>
+
+                        @* ══ BILAN ACTIF ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T01 — Bilan Actif"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section">
+                                    <div class="lf-title">BILAN — ACTIF</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-cat"></th>
+                                                    <th class="col-label">Éléments</th>
+                                                    <th class="col-num">Brut</th>
+                                                    <th class="col-num">Amort. &amp; Prov.</th>
+                                                    <th class="col-num">Net</th>
+                                                    <th class="col-num">Exercice Précédent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in actifLines)
+                                                {
+                                                    <tr class="@BilanRowClass(line.IsHeader, line.IsTotal, line.Cat) @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label.Length > 0 ? line.Label : line.Cat, line.Pfx))">
+                                                        <td class="col-cat">@(line.IsHeader || line.IsTotal ? line.Cat : "")</td>
+                                                        <td class="col-label @(line.IsHeader ? "fw-bold upcase" : "")">@line.Label</td>
+                                                        <td class="col-num">@Fmt(line.Brut)</td>
+                                                        <td class="col-num">@Fmt(line.Amort)</td>
+                                                        <td class="col-num">@Fmt(line.Net)</td>
+                                                        <td class="col-num">@Fmt(line.PrevNet)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ BILAN PASSIF ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T01 — Bilan Passif"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section">
+                                    <div class="lf-title">BILAN — PASSIF</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-cat"></th>
+                                                    <th class="col-label">Éléments</th>
+                                                    <th class="col-num">Exercice</th>
+                                                    <th class="col-num">Exercice Précédent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in passifLines)
+                                                {
+                                                    <tr class="@BilanRowClass(line.IsHeader, line.IsTotal, line.Cat) @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label.Length > 0 ? line.Label : line.Cat, line.Pfx))">
+                                                        <td class="col-cat">@(line.IsHeader || line.IsTotal ? line.Cat : "")</td>
+                                                        <td class="col-label @(line.IsHeader ? "fw-bold upcase" : "")">@line.Label</td>
+                                                        <td class="col-num">@Fmt(line.Val)</td>
+                                                        <td class="col-num">@Fmt(line.PrevVal)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ CPC ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T02 — C.P.C."></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section">
+                                    <div class="lf-title">COMPTE DE PRODUITS ET CHARGES (C.P.C.)</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-sign"></th>
+                                                    <th class="col-label">Nature</th>
+                                                    <th class="col-num">Exercice</th>
+                                                    <th class="col-num">Exercice Précédent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in cpcLines)
+                                                {
+                                                    <tr class="@CpcRowClass(line) @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label.Length > 0 ? line.Label : line.Cat, line.Pfx))">
+                                                        <td class="col-sign">@(line.IsTotal || line.IsResult ? line.Cat : "")</td>
+                                                        <td class="col-label @(line.IsHeader || line.IsTotal || line.IsResult ? "fw-bold" : "")">@line.Label</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.Val))</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.PrevVal))</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T03 — RÉSULTAT FISCAL ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T03 — Résultat Fiscal"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section">
+                                    <div class="lf-title">PASSAGE DU RÉSULTAT NET COMPTABLE AU RÉSULTAT NET FISCAL</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Intitulés</th>
+                                                    <th class="col-num" style="width:160px">Réintégrations</th>
+                                                    <th class="col-num" style="width:160px">Déductions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in t03Lines)
+                                                {
+                                                    <tr class="@T03RowClass(line) @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-label @(line.IsSection || line.IsTotal ? "fw-bold" : "")">@line.Label</td>
+                                                        <td class="col-num">@(line.Col == 1 ? Fmt(line.Val) : "")</td>
+                                                        <td class="col-num">@(line.Col == 2 ? Fmt(line.Val) : (line.Col == 3 ? Fmt(line.Val) : ""))</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T04 — IMMOBILISATIONS ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T04 — Immobilisations"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1100px;">
+                                    <div class="lf-title">TABLEAU DES IMMOBILISATIONS AUTRES QUE FINANCIÈRES</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Nature</th>
+                                                    <th class="col-num">Montant Brut<br/>Début Exercice</th>
+                                                    <th class="col-num">Augmentations<br/>(Acquisitions)</th>
+                                                    <th class="col-num">Diminutions<br/>(Cessions/Retraits)</th>
+                                                    <th class="col-num">Montant Brut<br/>Fin Exercice</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in t04Lines)
+                                                {
+                                                    <tr class="@(line.IsHeader ? "lf-header" : line.IsTotal ? "lf-total" : "") @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-label @(line.IsHeader || line.IsTotal ? "fw-bold" : "")">@line.Label</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.BrutDebut))</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.Acq))</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.Cess))</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.BrutFin))</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ ESG — TFR ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T05 — T.F.R."></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section">
+                                    <div class="lf-title">TABLEAU DE FORMATION DES RÉSULTATS (T.F.R.)</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-sign"></th>
+                                                    <th class="col-label">Nature</th>
+                                                    <th class="col-num">Exercice</th>
+                                                    <th class="col-num">Exercice Précédent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in tfrLines)
+                                                {
+                                                    <tr class="@EsgRowClass(line) @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-sign">@line.Sign</td>
+                                                        <td class="col-label">@line.Label</td>
+                                                        <td class="col-num">@Fmt(line.Val)</td>
+                                                        <td class="col-num">@Fmt(line.PrevVal)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ ESG — CAF ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T05 — C.A.F."></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section">
+                                    <div class="lf-title">CAPACITÉ D'AUTOFINANCEMENT (C.A.F.) — AUTOFINANCEMENT</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-sign"></th>
+                                                    <th class="col-label">Nature</th>
+                                                    <th class="col-num">Exercice</th>
+                                                    <th class="col-num">Exercice Précédent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in cafLines)
+                                                {
+                                                    <tr class="@EsgRowClass(line) @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-sign">@line.Sign</td>
+                                                        <td class="col-label">@line.Label</td>
+                                                        <td class="col-num">@Fmt(line.Val)</td>
+                                                        <td class="col-num">@Fmt(line.PrevVal)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T06 — DÉTAIL CPC ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T06 — Détail C.P.C."></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section">
+                                    <div class="lf-title">DÉTAIL DES POSTES DU C.P.C.</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-sign">Poste</th>
+                                                    <th class="col-label">Intitulé</th>
+                                                    <th class="col-num">Exercice</th>
+                                                    <th class="col-num">Exercice Précédent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in t06Lines)
+                                                {
+                                                    <tr class="@T06RowClass(line) @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-sign" style="font-size:.72rem">@line.Poste</td>
+                                                        <td class="col-label @(line.IsSection || line.IsPoste || line.IsTotal ? "fw-bold" : "  pl-indent")">@line.Label</td>
+                                                        <td class="col-num">@(line.IsSection ? "" : Fmt(line.Val))</td>
+                                                        <td class="col-num">@(line.IsSection ? "" : Fmt(line.Prev))</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T07 — CRÉDIT-BAIL ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T07 — Crédit-Bail"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section">
+                                    <div class="lf-title">TABLEAU DES BIENS EN CRÉDIT-BAIL</div>
+                                    <div class="lf-note">
+                                        ℹ️ Ce tableau nécessite une saisie manuelle des détails de chaque contrat (fournisseur, durée, montant du bien).
+                                        Seul le total des redevances comptabilisées (compte 6132) est extrait automatiquement.
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Nature des biens</th>
+                                                    <th class="col-num">Redevances payées<br/>Exercice N</th>
+                                                    <th class="col-num">Redevances payées<br/>Exercice N-1</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="lf-total">
+                                                    <td class="col-label fw-bold">Total Redevances de Crédit-Bail (6132)</td>
+                                                    <td class="col-num">@Fmt(C("6132"))</td>
+                                                    <td class="col-num">@Fmt(P("6132"))</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T08 — AMORTISSEMENTS ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T08 — Amortissements"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1100px;">
+                                    <div class="lf-title">TABLEAU DES AMORTISSEMENTS</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Nature</th>
+                                                    <th class="col-num">Cumul<br/>Début Exercice</th>
+                                                    <th class="col-num">Dotation<br/>Exercice</th>
+                                                    <th class="col-num">Amort. sur Immo<br/>Sorties</th>
+                                                    <th class="col-num">Cumul<br/>Fin Exercice</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in t08Lines)
+                                                {
+                                                    <tr class="@(line.IsHeader ? "lf-header" : line.IsTotal ? "lf-total" : "") @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-label @(line.IsHeader || line.IsTotal ? "fw-bold" : "")">@line.Label</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.CumulDebut))</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.Dotation))</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.Sorties))</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.CumulFin))</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T09 — PROVISIONS ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T09 — Provisions"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1100px;">
+                                    <div class="lf-title">TABLEAU DES PROVISIONS</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Nature</th>
+                                                    <th class="col-num">Début<br/>Exercice</th>
+                                                    <th class="col-num">Dotations<br/>Exercice</th>
+                                                    <th class="col-num">Reprises<br/>Exercice</th>
+                                                    <th class="col-num">Fin<br/>Exercice</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in t09Lines)
+                                                {
+                                                    <tr class="@(line.IsHeader ? "lf-header" : line.IsTotal ? "lf-total" : "") @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-label @(line.IsTotal ? "fw-bold" : "")">@line.Label</td>
+                                                        <td class="col-num">@Fmt(line.Debut)</td>
+                                                        <td class="col-num">@Fmt(line.TotDot)</td>
+                                                        <td class="col-num">@Fmt(line.TotRep)</td>
+                                                        <td class="col-num">@Fmt(line.Fin)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T10 — PLUS/MOINS VALUES ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T10 — Plus/Moins Values"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1000px;">
+                                    <div class="lf-title">TABLEAU DES PLUS ET MOINS VALUES SUR CESSIONS D'IMMOBILISATIONS</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Nature des immobilisations</th>
+                                                    <th class="col-num">Produit de<br/>Cession (751)</th>
+                                                    <th class="col-num">V.N.A.<br/>(651)</th>
+                                                    <th class="col-num">Plus-Value</th>
+                                                    <th class="col-num">Moins-Value</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in t10Lines)
+                                                {
+                                                    <tr class="@(line.IsHeader ? "lf-header" : line.IsTotal ? "lf-total" : "") @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-label @(line.IsTotal ? "fw-bold" : "")">@line.Label</td>
+                                                        <td class="col-num">@Fmt(line.ProdCession)</td>
+                                                        <td class="col-num">@Fmt(line.VNA)</td>
+                                                        <td class="col-num" style="@(line.PlusValue > 0 ? "color:#16a34a;font-weight:700;" : "")">@Fmt(line.PlusValue)</td>
+                                                        <td class="col-num" style="@(line.MoinsValue > 0 ? "color:#c0392b;font-weight:700;" : "")">@Fmt(line.MoinsValue)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T11 — TITRES DE PARTICIPATION ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T11 — Titres Part."></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section">
+                                    <div class="lf-title">TABLEAU DES TITRES DE PARTICIPATION ET AUTRES TITRES IMMOBILISÉS</div>
+                                    <div class="lf-note">
+                                        ℹ️ Les détails par société (raison sociale, capital, quote-part, dividendes) nécessitent une saisie manuelle.
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Désignation</th>
+                                                    <th class="col-num">Exercice N</th>
+                                                    <th class="col-num">Exercice N-1</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in t11Lines)
+                                                {
+                                                    <tr class="@(line.IsTotal ? "lf-total" : "") @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-label @(line.IsTotal ? "fw-bold" : "")">@line.Label</td>
+                                                        <td class="col-num">@Fmt(line.ValN)</td>
+                                                        <td class="col-num">@Fmt(line.ValN1)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T12 — TVA ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T12 — Détail TVA"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section">
+                                    <div class="lf-title">ÉTAT DE LA TAXE SUR LA VALEUR AJOUTÉE (T.V.A.)</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Désignation</th>
+                                                    <th class="col-num">Solde Début<br/>Exercice</th>
+                                                    <th class="col-num">Solde Fin<br/>Exercice</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in t12Lines)
+                                                {
+                                                    <tr class="@(line.IsSub ? "lf-subheader" : line.IsTotal ? "lf-total" : "lf-header") @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-label fw-bold">@line.Label</td>
+                                                        <td class="col-num">@Fmt(line.Debut)</td>
+                                                        <td class="col-num">@Fmt(line.Fin)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T13 — CAPITAL SOCIAL ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T13 — Capital Social"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section">
+                                    <div class="lf-title">RÉPARTITION DU CAPITAL SOCIAL</div>
+                                    <div class="lf-note">
+                                        ℹ️ Les détails de la répartition (actionnaires, adresses, nombre et nature des actions/parts) nécessitent une saisie manuelle.
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Désignation</th>
+                                                    <th class="col-num">Exercice N</th>
+                                                    <th class="col-num">Exercice N-1</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="lf-total">
+                                                    <td class="col-label fw-bold">Capital social (compte 111)</td>
+                                                    <td class="col-num">@Fmt(-BN("111"))</td>
+                                                    <td class="col-num">@Fmt(-BN1("111"))</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T14 — AFFECTATION RÉSULTATS ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T14 — Affectation Rés."></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1100px;">
+                                    <div class="lf-title">AFFECTATION DES RÉSULTATS INTERVENUE AU COURS DE L'EXERCICE</div>
+                                    <div class="lf-note">
+                                        ℹ️ Les montants de dividendes distribués et prélèvements sur réserves nécessitent une saisie manuelle.
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">A — ORIGINE DES RÉSULTATS À AFFECTER</th>
+                                                    <th class="col-num">Montant</th>
+                                                    <th class="col-label">B — AFFECTATION DES RÉSULTATS</th>
+                                                    <th class="col-num">Montant</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in t14Lines)
+                                                {
+                                                    <tr class="@(line.IsHeader ? "lf-header" : line.IsTotal ? "lf-total" : "")">
+                                                        <td class="col-label @(line.IsHeader || line.IsTotal ? "fw-bold" : "")">@line.LabelA</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.ValA))</td>
+                                                        <td class="col-label @(line.IsHeader || line.IsTotal ? "fw-bold" : "")">@line.LabelB</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.ValB))</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T20 — ÉTAT DÉTAILLÉ DES STOCKS ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T20 — Détail Stocks"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1200px;">
+                                    <div class="lf-title">ÉTAT DÉTAILLÉ DES STOCKS — VARIATION DE L'EXERCICE</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">STOCKS</th>
+                                                    <th class="col-num">Fin Brut</th>
+                                                    <th class="col-num">Fin Prov.</th>
+                                                    <th class="col-num">Fin Net</th>
+                                                    <th class="col-num">Ini Net</th>
+                                                    <th class="col-num">Variation</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in t20Lines)
+                                                {
+                                                    <tr class="@(line.IsHeader ? "lf-header" : line.IsTotal ? "lf-total" : "") @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-label @(line.IsHeader || line.IsTotal ? "fw-bold" : line.IsSubItem ? "pl-indent" : "")">@line.Label</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.FinBrut))</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.FinProv))</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.FinNet))</td>
+                                                        <td class="col-num">@(line.IsHeader ? "" : Fmt(line.IniNet))</td>
+                                                        <td class="col-num @(line.IsHeader ? "" : line.Variation > 0 ? "tf-emploi" : line.Variation < 0 ? "tf-ressource" : "")">
+                                                            @(line.IsHeader ? "" : Fmt(line.Variation))
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ TF — SYNTHÈSE ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T22 — T.F. Synthèse"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1000px;">
+                                    <div class="lf-title">TABLEAU DE FINANCEMENT — SYNTHÈSE DES MASSES DU BILAN</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Masses</th>
+                                                    <th class="col-num">Exercice N</th>
+                                                    <th class="col-num">Exercice N-1</th>
+                                                    <th class="col-num">Variation<br/>(Emplois)</th>
+                                                    <th class="col-num">Variation<br/>(Ressources)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in syntheseLines)
+                                                {
+                                                    <tr class="@(line.IsTotal ? "lf-total" : "") @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-label @(line.IsTotal ? "fw-bold" : "")">@line.Label</td>
+                                                        <td class="col-num">@Fmt(line.ValN)</td>
+                                                        <td class="col-num">@Fmt(line.ValN1)</td>
+                                                        <td class="col-num @(line.Emploi > 0 ? "tf-emploi" : "")">@FmtPos(line.Emploi)</td>
+                                                        <td class="col-num @(line.Ressource > 0 ? "tf-ressource" : "")">@FmtPos(line.Ressource)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ TF — EMPLOIS / RESSOURCES ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T22 — Emplois/Res."></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1100px;">
+                                    <div class="lf-title">TABLEAU DE FINANCEMENT — EMPLOIS ET RESSOURCES</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Emplois</th>
+                                                    <th class="col-num">Exercice</th>
+                                                    <th class="col-num">Ex. Précédent</th>
+                                                    <th class="col-label">Ressources</th>
+                                                    <th class="col-num">Exercice</th>
+                                                    <th class="col-num">Ex. Précédent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (int i = 0; i < Math.Max(emploisLines.Count, ressourcesLines.Count); i++)
+                                                {
+                                                    var e = i < emploisLines.Count    ? emploisLines[i]    : null;
+                                                    var r = i < ressourcesLines.Count ? ressourcesLines[i] : null;
+                                                    <tr class="@(e?.IsTotal == true || r?.IsTotal == true ? "lf-total" : "") @(e?.IsHeader == true || r?.IsHeader == true ? "lf-section-hdr" : "")">
+                                                        <td class="col-label @(e?.IsHeader == true || e?.IsTotal == true ? "fw-bold" : "")">@(e?.Label ?? "")</td>
+                                                        <td class="col-num">@(e != null && !e.IsHeader ? Fmt(e.Val)     : "")</td>
+                                                        <td class="col-num">@(e != null && !e.IsHeader ? Fmt(e.PrevVal) : "")</td>
+                                                        <td class="col-label @(r?.IsHeader == true || r?.IsTotal == true ? "fw-bold" : "")">@(r?.Label ?? "")</td>
+                                                        <td class="col-num">@(r != null && !r.IsHeader ? Fmt(r.Val)     : "")</td>
+                                                        <td class="col-num">@(r != null && !r.IsHeader ? Fmt(r.PrevVal) : "")</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                    </TabItems>
+                </SfTab>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+
+    <SfDialog @bind-Visible="showDetail" Width="520px" ShowCloseIcon="true" IsModal="true">
+        <DialogTemplates>
+            <Header>@detailTitle</Header>
+            <Content>
+                <div style="font-size:.76rem;color:#6b7280;margin-bottom:.7rem;font-family:monospace;background:#f4f6fb;padding:.3rem .5rem;border-radius:4px;border:1px solid #dbe3ef;">
+                    Plage : @string.Join("  |  ", detailPfx ?? Array.Empty<string>())
+                </div>
+                @if (detailItems.Count == 0)
+                {
+                    <p style="color:#888;font-size:.85rem;margin:0;">Aucun mouvement pour cette plage sur cet exercice.</p>
+                }
+                else
+                {
+                    <table class="detail-table">
+                        <thead><tr><th>Compte</th><th style="text-align:right">Solde</th></tr></thead>
+                        <tbody>
+                            @foreach (var item in detailItems)
+                            {
+                                <tr>
+                                    <td>@item.CG_Num</td>
+                                    <td style="text-align:right;@(item.Solde < 0 ? "color:#c0392b;" : "")">@item.Solde.ToString("N2")</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr style="font-weight:700;background:#eef1f6;">
+                                <td>Total</td>
+                                <td style="text-align:right">@detailItems.Sum(x => x.Solde).ToString("N2")</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                }
+            </Content>
+        </DialogTemplates>
+    </SfDialog>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+    bool IsLoaded = false;
+
+    // ── Exercices ────────────────────────────────────────────────────
+    private class ExoItem { public int Idx { get; set; } public string Label { get; set; } public DateTime Debut { get; set; } public DateTime Fin { get; set; } }
+    private List<ExoItem> exoItems = new();
+    private int selectedExoIndex = 0;
+    private ExoItem CurrentExo => exoItems.Count > 0 ? exoItems[selectedExoIndex] : null;
+    private ExoItem PrevExo    => selectedExoIndex + 1 < exoItems.Count ? exoItems[selectedExoIndex + 1] : null;
+
+    // ── Records ──────────────────────────────────────────────────────
+    private record ActifLine (string Cat, string Label, bool IsHeader, bool IsTotal, decimal Brut, decimal Amort, decimal PrevNet, string[] Pfx = null) { public decimal Net => Brut - Amort; }
+    private record PassifLine(string Cat, string Label, bool IsHeader, bool IsTotal, decimal Val,  decimal PrevVal,  string[] Pfx = null);
+    private record CpcLine   (string Cat, string Label, bool IsHeader, bool IsTotal, bool IsResult, decimal Val, decimal PrevVal, string[] Pfx = null);
+    private record EsgLine   (string Sign, string Label, bool IsResult, bool IsGrand, decimal Val, decimal PrevVal, string[] Pfx = null);
+    private record SyntheseLine(string Label, bool IsTotal, decimal ValN, decimal ValN1, string[] Pfx = null)
+    {
+        public decimal Var      => ValN - ValN1;
+        public decimal Emploi   => Var > 0 ?  Var : 0;
+        public decimal Ressource => Var < 0 ? -Var : 0;
+    }
+    private record TfLine(string Label, bool IsHeader, bool IsTotal, decimal Val, decimal PrevVal, string[] Pfx = null);
+    // Col: 1=réintégration, 2=déduction, 3=both (total row showing résultat)
+    private record T03Line(string Label, bool IsSection, bool IsTotal, bool IsGrand, int Col, decimal Val, string[] Pfx = null);
+    private record ImmobLine(string Label, bool IsHeader, bool IsTotal, decimal BrutDebut, decimal Acq, decimal Cess, decimal BrutFin, string[] Pfx = null);
+    private record T06Line(string Poste, string Label, bool IsSection, bool IsPoste, bool IsTotal, decimal Val, decimal Prev, string[] Pfx = null);
+    private record AmortLine(string Label, bool IsHeader, bool IsTotal, decimal CumulDebut, decimal Dotation, decimal Sorties, string[] Pfx = null)
+    {
+        public decimal CumulFin => CumulDebut + Dotation - Sorties;
+    }
+    private record ProvLine(string Label, bool IsHeader, bool IsTotal, decimal Debut, decimal TotDot, decimal TotRep, decimal Fin, string[] Pfx = null);
+    private record CessionLine(string Label, bool IsHeader, bool IsTotal, decimal ProdCession, decimal VNA, string[] Pfx = null)
+    {
+        public decimal PlusValue  => ProdCession > VNA ? ProdCession - VNA : 0m;
+        public decimal MoinsValue => VNA > ProdCession ? VNA - ProdCession : 0m;
+    }
+    private record TvaLine(string Label, bool IsSub, bool IsTotal, decimal Debut, decimal Fin, string[] Pfx = null);
+    private record AffLine(string LabelA, decimal ValA, string LabelB, decimal ValB, bool IsTotal, bool IsHeader);
+    private record StockLine(string Label, bool IsHeader, bool IsSubItem, bool IsTotal, decimal FinBrut, decimal FinProv, decimal IniBrut, decimal IniProv, string[] Pfx = null)
+    {
+        public decimal FinNet    => FinBrut - FinProv;
+        public decimal IniNet    => IniBrut - IniProv;
+        public decimal Variation => FinNet - IniNet;
+    }
+
+    // ── Data lists ───────────────────────────────────────────────────
+    private List<ActifLine>    actifLines      = new();
+    private List<PassifLine>   passifLines     = new();
+    private List<CpcLine>      cpcLines        = new();
+    private List<EsgLine>      tfrLines        = new();
+    private List<EsgLine>      cafLines        = new();
+    private List<SyntheseLine> syntheseLines   = new();
+    private List<TfLine>       emploisLines    = new();
+    private List<TfLine>       ressourcesLines = new();
+    private List<T03Line>      t03Lines        = new();
+    private List<ImmobLine>    t04Lines        = new();
+    private List<T06Line>      t06Lines        = new();
+    private List<AmortLine>    t08Lines        = new();
+    private List<ProvLine>     t09Lines        = new();
+    private List<CessionLine>  t10Lines        = new();
+    private List<SyntheseLine> t11Lines        = new();
+    private List<TvaLine>      t12Lines        = new();
+    private List<AffLine>      t14Lines        = new();
+    private List<StockLine>    t20Lines        = new();
+
+    // ── Detail popup ─────────────────────────────────────────────────
+    private bool     showDetail  = false;
+    private string   detailTitle = "";
+    private string[] detailPfx   = null;
+    private class DetailItem { public string CG_Num { get; set; } public decimal Solde { get; set; } }
+    private List<DetailItem> detailItems = new();
+
+    // Shared TFR → CAF values
+    private decimal _rnet, _rnetp, _de, _dep, _t5fin, _t5finp, _t9nc, _t9ncp;
+    private decimal _rpe, _rpep, _rpf, _rpfp, _rpnc, _rpncp, _pci, _pcip, _vna, _vnap;
+
+    // ── Lifecycle ────────────────────────────────────────────────────
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        LoadExercices();
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private void LoadExercices()
+    {
+        var d = db.P_DOSSIER.FirstOrDefault();
+        if (d == null) return;
+        var raw = new (DateTime? Debut, DateTime? Fin)[]
+        {
+            (d.D_DebutExo01, d.D_FinExo01), (d.D_DebutExo02, d.D_FinExo02),
+            (d.D_DebutExo03, d.D_FinExo03), (d.D_DebutExo04, d.D_FinExo04),
+            (d.D_DebutExo05, d.D_FinExo05),
+        };
+        exoItems = raw
+            .Where(x => x.Debut.HasValue && x.Fin.HasValue && x.Debut.Value.Year > 1900)
+            .OrderByDescending(x => x.Debut)
+            .Select((x, i) => new ExoItem { Idx = i, Debut = x.Debut!.Value, Fin = x.Fin!.Value, Label = ExoLabel(x.Debut!.Value, x.Fin!.Value) })
+            .ToList();
+        selectedExoIndex = 0;
+    }
+
+    private static string ExoLabel(DateTime d, DateTime f)
+    {
+        bool cal = d.Day == 1 && d.Month == 1 && f.Day == 31 && f.Month == 12 && d.Year == f.Year;
+        return cal ? d.Year.ToString() : $"{d:dd/MM/yy} — {f:dd/MM/yy}";
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+        if (CurrentExo != null)
+        {
+            BuildActif();
+            BuildPassif();
+            BuildCPC();
+            BuildTFR();   // sets shared _* fields
+            BuildCAF();   // reads shared _* fields
+            BuildSynthese();
+            BuildEmploisRessources();
+            BuildT03();
+            BuildT04();
+            BuildT06();
+            BuildT08();
+            BuildT09();
+            BuildT10();
+            BuildT11();
+            BuildT12();
+            BuildT14();
+            BuildT20();
+        }
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    // ── Query helpers ─────────────────────────────────────────────────
+    private decimal S(string pfx, DateTime debut, DateTime fin) =>
+        db.F_ECRITUREC
+          .Where(e => e.EC_Date.HasValue && e.EC_Date.Value >= debut && e.EC_Date.Value <= fin
+                   && e.CG_Num != null && e.CG_Num.StartsWith(pfx))
+          .Sum(e => e.EC_Sens == 0 ? (e.EC_Montant ?? 0m) : -(e.EC_Montant ?? 0m));
+
+    private decimal C(string pfx) => CurrentExo != null ? S(pfx, CurrentExo.Debut, CurrentExo.Fin) : 0m;
+    private decimal P(string pfx) => PrevExo    != null ? S(pfx, PrevExo.Debut,    PrevExo.Fin)    : 0m;
+
+    private decimal Balance(string pfx, DateTime asOf) =>
+        db.F_ECRITUREC
+          .Where(e => e.EC_Date.HasValue && e.EC_Date.Value <= asOf
+                   && e.CG_Num != null && e.CG_Num.StartsWith(pfx))
+          .Sum(e => e.EC_Sens == 0 ? (e.EC_Montant ?? 0m) : -(e.EC_Montant ?? 0m));
+
+    private decimal BN (string pfx) => CurrentExo != null ? Balance(pfx, CurrentExo.Fin) : 0m;
+    private decimal BN1(string pfx) => PrevExo    != null ? Balance(pfx, PrevExo.Fin)    : 0m;
+
+    // Debit-only / Credit-only movements within current or prev exercice
+    private decimal SD(string pfx) => CurrentExo == null ? 0m :
+        db.F_ECRITUREC.Where(e => e.EC_Date.HasValue && e.EC_Date.Value >= CurrentExo.Debut && e.EC_Date.Value <= CurrentExo.Fin
+                              && e.CG_Num != null && e.CG_Num.StartsWith(pfx) && e.EC_Sens == 0)
+          .Sum(e => e.EC_Montant ?? 0m);
+    private decimal SC(string pfx) => CurrentExo == null ? 0m :
+        db.F_ECRITUREC.Where(e => e.EC_Date.HasValue && e.EC_Date.Value >= CurrentExo.Debut && e.EC_Date.Value <= CurrentExo.Fin
+                              && e.CG_Num != null && e.CG_Num.StartsWith(pfx) && e.EC_Sens == 1)
+          .Sum(e => e.EC_Montant ?? 0m);
+    private decimal SD1(string pfx) => PrevExo == null ? 0m :
+        db.F_ECRITUREC.Where(e => e.EC_Date.HasValue && e.EC_Date.Value >= PrevExo.Debut && e.EC_Date.Value <= PrevExo.Fin
+                              && e.CG_Num != null && e.CG_Num.StartsWith(pfx) && e.EC_Sens == 0)
+          .Sum(e => e.EC_Montant ?? 0m);
+    private decimal SC1(string pfx) => PrevExo == null ? 0m :
+        db.F_ECRITUREC.Where(e => e.EC_Date.HasValue && e.EC_Date.Value >= PrevExo.Debut && e.EC_Date.Value <= PrevExo.Fin
+                              && e.CG_Num != null && e.CG_Num.StartsWith(pfx) && e.EC_Sens == 1)
+          .Sum(e => e.EC_Montant ?? 0m);
+
+    // ── Detail click ─────────────────────────────────────────────────
+    private void OnCellClick(string label, string[] pfx)
+    {
+        if (pfx == null || pfx.Length == 0 || CurrentExo == null) return;
+        var debut = CurrentExo.Debut; var fin = CurrentExo.Fin;
+        detailTitle = label; detailPfx = pfx;
+        detailItems = pfx
+            .SelectMany(p => db.F_ECRITUREC
+                .Where(e => e.EC_Date.HasValue && e.EC_Date.Value >= debut && e.EC_Date.Value <= fin
+                         && e.CG_Num != null && e.CG_Num.StartsWith(p))
+                .GroupBy(e => e.CG_Num)
+                .Select(g => new DetailItem { CG_Num = g.Key, Solde = g.Sum(e => e.EC_Sens == 0 ? (e.EC_Montant ?? 0m) : -(e.EC_Montant ?? 0m)) })
+                .ToList())
+            .GroupBy(x => x.CG_Num)
+            .Select(g => new DetailItem { CG_Num = g.Key, Solde = g.Sum(x => x.Solde) })
+            .OrderBy(x => x.CG_Num).ToList();
+        showDetail = true;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // BILAN — ACTIF
+    // ════════════════════════════════════════════════════════════════
+    private void BuildActif()
+    {
+        var L = new List<ActifLine>();
+
+        decimal fPrB=C("211"),fPrA=-C("2811"),fPrP=P("211")+P("2811");
+        decimal chB=C("212"),chA=-C("2812"),chP=P("212")+P("2812");
+        decimal pmB=C("213"),pmA=-C("2813"),pmP=P("213")+P("2813");
+        decimal nvB=fPrB+chB+pmB,nvA=fPrA+chA+pmA,nvP=fPrP+chP+pmP;
+        L.Add(new("ACTIF IMMOBILISÉ","IMMOBILISATION EN NON VALEUR ( a )",true,false,nvB,nvA,nvP,new[]{"211","2811","212","2812","213","2813"}));
+        L.Add(new("","Frais préliminaires",false,false,fPrB,fPrA,fPrP,new[]{"211","2811"}));
+        L.Add(new("","Charges à repartir sur plusieurs exercices",false,false,chB,chA,chP,new[]{"212","2812"}));
+        L.Add(new("","Primes de remboursement des obligations",false,false,pmB,pmA,pmP,new[]{"213","2813"}));
+
+        decimal rdB=C("221"),rdA=-C("2821")-C("2921"),rdP=P("221")+P("2821")+P("2921");
+        decimal brB=C("222"),brA=-C("2822")-C("2922"),brP=P("222")+P("2822")+P("2922");
+        decimal fcB=C("223"),fcA=-C("2823")-C("2923"),fcP=P("223")+P("2823")+P("2923");
+        decimal aiB=C("228"),aiA=-C("2828")-C("2928"),aiP=P("228")+P("2828")+P("2928");
+        decimal inB=rdB+brB+fcB+aiB,inA=rdA+brA+fcA+aiA,inP=rdP+brP+fcP+aiP;
+        L.Add(new("","IMMOBILISATIONS INCORPORELLES ( b )",true,false,inB,inA,inP,new[]{"221","2821","2921","222","2822","2922","223","2823","2923","228","2828","2928"}));
+        L.Add(new("","Immobilisations en recherche et développement",false,false,rdB,rdA,rdP,new[]{"221","2821","2921"}));
+        L.Add(new("","Brevets, marques, droits et valeurs similaires",false,false,brB,brA,brP,new[]{"222","2822","2922"}));
+        L.Add(new("","Fonds commercial",false,false,fcB,fcA,fcP,new[]{"223","2823","2923"}));
+        L.Add(new("","Autres immobilisations incorporelles",false,false,aiB,aiA,aiP,new[]{"228","2828","2928"}));
+
+        decimal teB=C("231"),teA=-C("2831")-C("2931"),teP=P("231")+P("2831")+P("2931");
+        decimal coB=C("232"),coA=-C("2832")-C("2932"),coP=P("232")+P("2832")+P("2932");
+        decimal itB=C("233"),itA=-C("2833")-C("2933"),itP=P("233")+P("2833")+P("2933");
+        decimal mtB=C("234"),mtA=-C("2834")-C("2934"),mtP=P("234")+P("2834")+P("2934");
+        decimal mbB=C("235"),mbA=-C("2835")-C("2935"),mbP=P("235")+P("2835")+P("2935");
+        decimal acB=C("238"),acA=-C("2838")-C("2938"),acP=P("238")+P("2838")+P("2938");
+        decimal ecB=C("239"),ecA=-C("2839")-C("2939"),ecP=P("239")+P("2839")+P("2939");
+        decimal cpB=teB+coB+itB+mtB+mbB+acB+ecB,cpA=teA+coA+itA+mtA+mbA+acA+ecA,cpP=teP+coP+itP+mtP+mbP+acP+ecP;
+        L.Add(new("","IMMOBILISATIONS CORPORELLES ( c )",true,false,cpB,cpA,cpP,new[]{"231","2831","2931","232","2832","2932","233","2833","2933","234","2834","2934","235","2835","2935","238","2838","2938","239","2839","2939"}));
+        L.Add(new("","Terrains",false,false,teB,teA,teP,new[]{"231","2831","2931"}));
+        L.Add(new("","Constructions",false,false,coB,coA,coP,new[]{"232","2832","2932"}));
+        L.Add(new("","Installations techniques, matériel et outillage",false,false,itB,itA,itP,new[]{"233","2833","2933"}));
+        L.Add(new("","Matériel de transport",false,false,mtB,mtA,mtP,new[]{"234","2834","2934"}));
+        L.Add(new("","Mobiliers, matériel de bureau et aménagements divers",false,false,mbB,mbA,mbP,new[]{"235","2835","2935"}));
+        L.Add(new("","Autres immobilisations corporelles",false,false,acB,acA,acP,new[]{"238","2838","2938"}));
+        L.Add(new("","Immobilisations corporelles en cours",false,false,ecB,ecA,ecP,new[]{"239","2839","2939"}));
+
+        decimal p1B=C("241"),p1A=-C("2941"),p1P=P("241")+P("2941");
+        decimal p2B=C("248"),p2A=-C("2948"),p2P=P("248")+P("2948");
+        decimal p3B=C("251"),p3A=-C("2951"),p3P=P("251")+P("2951");
+        decimal p4B=C("258"),p4A=-C("2958"),p4P=P("258")+P("2958");
+        decimal fiB=p1B+p2B+p3B+p4B,fiA=p1A+p2A+p3A+p4A,fiP=p1P+p2P+p3P+p4P;
+        L.Add(new("","IMMOBILISATIONS FINANCIÈRES ( d )",true,false,fiB,fiA,fiP,new[]{"241","2941","248","2948","251","2951","258","2958"}));
+        L.Add(new("","Prêts immobilisés",false,false,p1B,p1A,p1P,new[]{"241","2941"}));
+        L.Add(new("","Autres créances financières",false,false,p2B,p2A,p2P,new[]{"248","2948"}));
+        L.Add(new("","Titres de participation",false,false,p3B,p3A,p3P,new[]{"251","2951"}));
+        L.Add(new("","Autres titres immobilisés",false,false,p4B,p4A,p4P,new[]{"258","2958"}));
+
+        decimal e1B=C("271"),e1P=P("271"); decimal e2B=C("272"),e2P=P("272");
+        decimal ecIB=e1B+e2B,ecIP=e1P+e2P;
+        L.Add(new("","ECARTS DE CONVERSION - ACTIF ( e )",true,false,ecIB,0,ecIP,new[]{"271","272"}));
+        L.Add(new("","Diminution des créances immobilisées",false,false,e1B,0,e1P,new[]{"271"}));
+        L.Add(new("","Augmentation des dettes de financement",false,false,e2B,0,e2P,new[]{"272"}));
+
+        decimal t1B=nvB+inB+cpB+fiB+ecIB,t1A=nvA+inA+cpA+fiA,t1P=nvP+inP+cpP+fiP+ecIP;
+        L.Add(new("","TOTAL  I   ( a + b + c + d + e )",false,true,t1B,t1A,t1P));
+
+        decimal s1B=C("311"),s1A=-C("3911"),s1P=P("311")+P("3911");
+        decimal s2B=C("312"),s2A=-C("3912"),s2P=P("312")+P("3912");
+        decimal s3B=C("313"),s3A=-C("3913"),s3P=P("313")+P("3913");
+        decimal s4B=C("314"),s4A=-C("3914"),s4P=P("314")+P("3914");
+        decimal s5B=C("315"),s5A=-C("3915"),s5P=P("315")+P("3915");
+        decimal stB=s1B+s2B+s3B+s4B+s5B,stA=s1A+s2A+s3A+s4A+s5A,stP=s1P+s2P+s3P+s4P+s5P;
+        L.Add(new("ACTIF CIRCULANT","STOCKS ( f )",true,false,stB,stA,stP,new[]{"311","3911","312","3912","313","3913","314","3914","315","3915"}));
+        L.Add(new("","Marchandises",false,false,s1B,s1A,s1P,new[]{"311","3911"}));
+        L.Add(new("","Matières et fournitures consommables",false,false,s2B,s2A,s2P,new[]{"312","3912"}));
+        L.Add(new("","Produits en cours",false,false,s3B,s3A,s3P,new[]{"313","3913"}));
+        L.Add(new("","Produits intermédiaires et produits residuels",false,false,s4B,s4A,s4P,new[]{"314","3914"}));
+        L.Add(new("","Produits finis",false,false,s5B,s5A,s5P,new[]{"315","3915"}));
+
+        decimal c1B=C("341"),c1A=-C("3941"),c1P=P("341")+P("3941");
+        decimal c2B=C("342"),c2A=-C("3942"),c2P=P("342")+P("3942");
+        decimal c3B=C("343"),c3A=-C("3943"),c3P=P("343")+P("3943");
+        decimal c4B=C("345"),c4A=-C("3945"),c4P=P("345")+P("3945");
+        decimal c5B=C("346"),c5A=-C("3946"),c5P=P("346")+P("3946");
+        decimal c6B=C("348"),c6A=-C("3948"),c6P=P("348")+P("3948");
+        decimal c7B=C("349"),c7A=-C("3949"),c7P=P("349")+P("3949");
+        decimal crB=c1B+c2B+c3B+c4B+c5B+c6B+c7B,crA=c1A+c2A+c3A+c4A+c5A+c6A+c7A,crP=c1P+c2P+c3P+c4P+c5P+c6P+c7P;
+        L.Add(new("","CRÉANCES DE L'ACTIF CIRCULANT ( g )",true,false,crB,crA,crP,new[]{"341","3941","342","3942","343","3943","345","3945","346","3946","348","3948","349","3949"}));
+        L.Add(new("","Fournisseurs débiteurs, avances et acomptes",false,false,c1B,c1A,c1P,new[]{"341","3941"}));
+        L.Add(new("","Clients et comptes rattachés",false,false,c2B,c2A,c2P,new[]{"342","3942"}));
+        L.Add(new("","Personnel",false,false,c3B,c3A,c3P,new[]{"343","3943"}));
+        L.Add(new("","Etat",false,false,c4B,c4A,c4P,new[]{"345","3945"}));
+        L.Add(new("","Comptes d'associés",false,false,c5B,c5A,c5P,new[]{"346","3946"}));
+        L.Add(new("","Autres débiteurs",false,false,c6B,c6A,c6P,new[]{"348","3948"}));
+        L.Add(new("","Comptes de régularisation actif",false,false,c7B,c7A,c7P,new[]{"349","3949"}));
+
+        decimal tvB=C("35"),tvA=-C("395"),tvP=P("35")+P("395");
+        decimal ecCB=C("37"),ecCP=P("37");
+        L.Add(new("","TITRES ET VALEURS DE PLACEMENT ( h )",true,false,tvB,tvA,tvP,new[]{"35","395"}));
+        L.Add(new("","ECART DE CONVERSION - ACTIF ( i ) (Élém. Circul.)",true,false,ecCB,0,ecCP,new[]{"37"}));
+
+        decimal t2B=stB+crB+tvB+ecCB,t2A=stA+crA+tvA,t2P=stP+crP+tvP+ecCP;
+        L.Add(new("","TOTAL  II   ( f + g + h + i )",false,true,t2B,t2A,t2P));
+
+        decimal r1B=C("511"),r1A=-C("5911"),r1P=P("511")+P("5911");
+        decimal r2B=C("514"),r2A=-C("5914"),r2P=P("514")+P("5914");
+        decimal r3B=C("516"),r3A=-C("5916"),r3P=P("516")+P("5916");
+        decimal trB=r1B+r2B+r3B,trA=r1A+r2A+r3A,trP=r1P+r2P+r3P;
+        L.Add(new("TRÉSORERIE","TRÉSORERIE - ACTIF",true,false,trB,trA,trP,new[]{"511","5911","514","5914","516","5916"}));
+        L.Add(new("","Chèques et valeurs à encaisser",false,false,r1B,r1A,r1P,new[]{"511","5911"}));
+        L.Add(new("","Banques, T.G & CP",false,false,r2B,r2A,r2P,new[]{"514","5914"}));
+        L.Add(new("","Caisses, régies d'avances et accréditifs",false,false,r3B,r3A,r3P,new[]{"516","5916"}));
+        L.Add(new("","TOTAL  III",false,true,trB,trA,trP));
+        L.Add(new("TOTAL GÉNÉRAL  I+II+III","",false,true,t1B+t2B+trB,t1A+t2A+trA,t1P+t2P+trP));
+        actifLines = L;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // BILAN — PASSIF
+    // ════════════════════════════════════════════════════════════════
+    private void BuildPassif()
+    {
+        var L = new List<PassifLine>();
+        decimal kV=-C("111"),kVp=-P("111"); decimal peV=-C("112"),peVp=-P("112");
+        decimal erV=-C("113"),erVp=-P("113"); decimal rlV=-C("114"),rlVp=-P("114");
+        decimal arV=-C("115"),arVp=-P("115"); decimal rnV=-C("116"),rnVp=-P("116");
+        decimal riV=-C("118"),riVp=-P("118"); decimal resV=-C("7")-C("6"),resVp=-P("7")-P("6");
+        decimal cpT=kV+peV+erV+rlV+arV+rnV+riV+resV,cpTp=kVp+peVp+erVp+rlVp+arVp+rnVp+riVp+resVp;
+        L.Add(new("FINANCEMENTS PERMANENTS","CAPITAUX PROPRES",true,false,cpT,cpTp,new[]{"111","112","113","114","115","116","118","6","7"}));
+        L.Add(new("","Capital social ou personnel (1)",false,false,kV,kVp,new[]{"111"}));
+        L.Add(new("","moins : Actionnaires, capital souscrit non appelé",false,false,0,0));
+        L.Add(new("","Prime d'émission, de fusion, d'apport",false,false,peV,peVp,new[]{"112"}));
+        L.Add(new("","Ecarts de réévaluation",false,false,erV,erVp,new[]{"113"}));
+        L.Add(new("","Réserve légale",false,false,rlV,rlVp,new[]{"114"}));
+        L.Add(new("","Autres réserves",false,false,arV,arVp,new[]{"115"}));
+        L.Add(new("","Report à nouveau (2)",false,false,rnV,rnVp,new[]{"116"}));
+        L.Add(new("","Résultats nets en instance d'affectation (2)",false,false,riV,riVp,new[]{"118"}));
+        L.Add(new("","Résultat net de l'exercice (2)",false,false,resV,resVp,new[]{"6","7"}));
+        L.Add(new("","TOTAL DES CAPITAUX PROPRES ( a )",false,true,cpT,cpTp));
+
+        decimal sv1=-C("131"),sv1p=-P("131"); decimal sv2=-C("135"),sv2p=-P("135");
+        decimal cpaT=sv1+sv2,cpaTp=sv1p+sv2p;
+        L.Add(new("","CAPITAUX PROPRES ASSIMILÉS ( b )",true,false,cpaT,cpaTp,new[]{"131","135"}));
+        L.Add(new("","Subventions d'investissement",false,false,sv1,sv1p,new[]{"131"}));
+        L.Add(new("","Provisions réglementées",false,false,sv2,sv2p,new[]{"135"}));
+
+        decimal df1=-C("141"),df1p=-P("141"); decimal df2=-C("148"),df2p=-P("148");
+        decimal dfT=df1+df2,dfTp=df1p+df2p;
+        L.Add(new("","DETTES DE FINANCEMENT ( c )",true,false,dfT,dfTp,new[]{"141","148"}));
+        L.Add(new("","Emprunts obligataires",false,false,df1,df1p,new[]{"141"}));
+        L.Add(new("","Autres dettes de financement",false,false,df2,df2p,new[]{"148"}));
+
+        decimal pr1=-C("151"),pr1p=-P("151"); decimal pr2=-C("155"),pr2p=-P("155");
+        decimal prT=pr1+pr2,prTp=pr1p+pr2p;
+        L.Add(new("","PROVISIONS DURABLES POUR RISQUES ET CHARGES ( d )",true,false,prT,prTp,new[]{"151","155"}));
+        L.Add(new("","Provisions pour risques",false,false,pr1,pr1p,new[]{"151"}));
+        L.Add(new("","Provisions pour charges",false,false,pr2,pr2p,new[]{"155"}));
+
+        decimal ec1=-C("171"),ec1p=-P("171"); decimal ec2=-C("172"),ec2p=-P("172");
+        decimal ecT=ec1+ec2,ecTp=ec1p+ec2p;
+        L.Add(new("","ECARTS DE CONVERSION - PASSIF ( e )",true,false,ecT,ecTp,new[]{"171","172"}));
+        L.Add(new("","Augmentation des créances immobilisées",false,false,ec1,ec1p,new[]{"171"}));
+        L.Add(new("","Diminution des dettes de financement",false,false,ec2,ec2p,new[]{"172"}));
+
+        decimal t1=cpT+cpaT+dfT+prT+ecT,t1p=cpTp+cpaTp+dfTp+prTp+ecTp;
+        L.Add(new("","TOTAL  I  ( a + b + c + d + e )",false,true,t1,t1p));
+
+        decimal d1=-C("441"),d1p=-P("441"); decimal d2=-C("442"),d2p=-P("442");
+        decimal d3=-C("443"),d3p=-P("443"); decimal d4=-C("444"),d4p=-P("444");
+        decimal d5=-C("445"),d5p=-P("445"); decimal d6=-C("446"),d6p=-P("446");
+        decimal d7=-C("448"),d7p=-P("448"); decimal d8=-C("449"),d8p=-P("449");
+        decimal dT=d1+d2+d3+d4+d5+d6+d7+d8,dTp=d1p+d2p+d3p+d4p+d5p+d6p+d7p+d8p;
+        L.Add(new("PASSIF CIRCULANT","DETTES DU PASSIF CIRCULANT ( f )",true,false,dT,dTp,new[]{"441","442","443","444","445","446","448","449"}));
+        L.Add(new("","Fournisseurs et comptes rattachés",false,false,d1,d1p,new[]{"441"}));
+        L.Add(new("","Clients créditeurs, avances et acomptes",false,false,d2,d2p,new[]{"442"}));
+        L.Add(new("","Personnel",false,false,d3,d3p,new[]{"443"}));
+        L.Add(new("","Organismes sociaux",false,false,d4,d4p,new[]{"444"}));
+        L.Add(new("","Etat",false,false,d5,d5p,new[]{"445"}));
+        L.Add(new("","Comptes d'associés",false,false,d6,d6p,new[]{"446"}));
+        L.Add(new("","Autres créanciers",false,false,d7,d7p,new[]{"448"}));
+        L.Add(new("","Comptes de régularisation - passif",false,false,d8,d8p,new[]{"449"}));
+
+        decimal ap=-C("45"),app=-P("45"); decimal ec=-C("47"),ecp=-P("47");
+        L.Add(new("","AUTRES PROVISIONS POUR RISQUES ET CHARGES ( g )",false,false,ap,app,new[]{"45"}));
+        L.Add(new("","ECARTS DE CONVERSION - PASSIF ( h ) (Elem. Circul.)",false,false,ec,ecp,new[]{"47"}));
+
+        decimal t2=dT+ap+ec,t2p=dTp+app+ecp;
+        L.Add(new("","TOTAL  II  ( f + g + h )",false,true,t2,t2p));
+
+        decimal tp1=-C("552"),tp1p=-P("552"); decimal tp2=-C("553"),tp2p=-P("553"); decimal tp3=-C("554"),tp3p=-P("554");
+        decimal tpT=tp1+tp2+tp3,tpTp=tp1p+tp2p+tp3p;
+        L.Add(new("TRÉSORERIE","TRÉSORERIE PASSIF",true,false,tpT,tpTp,new[]{"552","553","554"}));
+        L.Add(new("","Crédits d'escompte",false,false,tp1,tp1p,new[]{"552"}));
+        L.Add(new("","Crédit de trésorerie",false,false,tp2,tp2p,new[]{"553"}));
+        L.Add(new("","Banques ( soldes créditeurs )",false,false,tp3,tp3p,new[]{"554"}));
+        L.Add(new("","TOTAL  III",false,true,tpT,tpTp));
+        L.Add(new("TOTAL   I+II+III","",false,true,t1+t2+tpT,t1p+t2p+tpTp));
+        passifLines = L;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // C.P.C.
+    // ════════════════════════════════════════════════════════════════
+    private void BuildCPC()
+    {
+        var L = new List<CpcLine>();
+        decimal vm=-C("711"),vmp=-P("711"); decimal vbs=-C("712"),vbsp=-P("712");
+        decimal ca=vm+vbs,cap=vmp+vbsp; decimal vs=-C("713"),vsp=-P("713");
+        decimal ip=-C("714"),ipp=-P("714"); decimal se=-C("716"),sep=-P("716");
+        decimal ape=-C("718"),apep=-P("718"); decimal rpe=-C("719"),rpep=-P("719");
+        decimal t1=vm+vbs+vs+ip+se+ape+rpe,t1p=vmp+vbsp+vsp+ipp+sep+apep+rpep;
+        L.Add(new("","PRODUITS D'EXPLOITATION",true,false,false,0,0));
+        L.Add(new("","Ventes de marchandises en l'état (1)",false,false,false,vm,vmp,new[]{"711"}));
+        L.Add(new("","Ventes de biens et services produits (2)",false,false,false,vbs,vbsp,new[]{"712"}));
+        L.Add(new("","Chiffre d'affaires (1 + 2)",false,true,false,ca,cap));
+        L.Add(new("","Variation de stocks de produits (3)",false,false,false,vs,vsp,new[]{"713"}));
+        L.Add(new("","Immobilisations produites par l'entreprise pour elle-même (4)",false,false,false,ip,ipp,new[]{"714"}));
+        L.Add(new("","Subventions d'exploitation (5)",false,false,false,se,sep,new[]{"716"}));
+        L.Add(new("","Autres produits d'exploitation (6)",false,false,false,ape,apep,new[]{"718"}));
+        L.Add(new("","Reprises d'exploitation; transferts de charges (7)",false,false,false,rpe,rpep,new[]{"719"}));
+        L.Add(new("I","TOTAL  I  —  PRODUITS D'EXPLOITATION",false,true,false,t1,t1p));
+
+        decimal arm=C("611"),armp=P("611"); decimal acm=C("612"),acmp=P("612");
+        decimal ce1=C("613"),ce1p=P("613"); decimal ce2=C("614"),ce2p=P("614");
+        decimal it=C("616"),itp=P("616"); decimal cp=C("617"),cpp=P("617");
+        decimal ace=C("618"),acep=P("618"); decimal de=C("619"),dep=P("619");
+        decimal t2=arm+acm+ce1+ce2+it+cp+ace+de,t2p=armp+acmp+ce1p+ce2p+itp+cpp+acep+dep;
+        L.Add(new("","CHARGES D'EXPLOITATION",true,false,false,0,0));
+        L.Add(new("","Achats revendus de marchandises (1)",false,false,false,arm,armp,new[]{"611"}));
+        L.Add(new("","Achats consommés de matières et fournitures (2)",false,false,false,acm,acmp,new[]{"612"}));
+        L.Add(new("","Autres charges externes (1) (3)",false,false,false,ce1,ce1p,new[]{"613"}));
+        L.Add(new("","Autres charges externes (2) (4)",false,false,false,ce2,ce2p,new[]{"614"}));
+        L.Add(new("","Impôts et taxes (5)",false,false,false,it,itp,new[]{"616"}));
+        L.Add(new("","Charges de personnel (6)",false,false,false,cp,cpp,new[]{"617"}));
+        L.Add(new("","Autres charges d'exploitation (7)",false,false,false,ace,acep,new[]{"618"}));
+        L.Add(new("","Dotations d'exploitation (8)",false,false,false,de,dep,new[]{"619"}));
+        L.Add(new("II","TOTAL  II  —  CHARGES D'EXPLOITATION",false,true,false,t2,t2p));
+        L.Add(new("III","RÉSULTAT D'EXPLOITATION  ( I - II )",false,false,true,t1-t2,t1p-t2p));
+
+        decimal ptp=-C("731"),ptpp=-P("731"); decimal gc=-C("732"),gcp=-P("732");
+        decimal ipf=-C("738"),ipfp=-P("738"); decimal rpf=-C("739"),rpfp=-P("739");
+        decimal t4=ptp+gc+ipf+rpf,t4p=ptpp+gcp+ipfp+rpfp;
+        L.Add(new("","PRODUITS FINANCIERS",true,false,false,0,0));
+        L.Add(new("","Produits des titres de participation et autres titres immobilisés (1)",false,false,false,ptp,ptpp,new[]{"731"}));
+        L.Add(new("","Gains de change (2)",false,false,false,gc,gcp,new[]{"732"}));
+        L.Add(new("","Intérêts et autres produits financiers (3)",false,false,false,ipf,ipfp,new[]{"738"}));
+        L.Add(new("","Reprises financières; transferts de charges (4)",false,false,false,rpf,rpfp,new[]{"739"}));
+        L.Add(new("IV","TOTAL  IV  —  PRODUITS FINANCIERS",false,true,false,t4,t4p));
+
+        decimal ci=C("631"),cip=P("631"); decimal pc=C("632"),pcp=P("632");
+        decimal acf=C("638"),acfp=P("638"); decimal df=C("639"),dfp=P("639");
+        decimal t5=ci+pc+acf+df,t5p=cip+pcp+acfp+dfp;
+        L.Add(new("","CHARGES FINANCIÈRES",true,false,false,0,0));
+        L.Add(new("","Charges d'intérêts (1)",false,false,false,ci,cip,new[]{"631"}));
+        L.Add(new("","Pertes de change (2)",false,false,false,pc,pcp,new[]{"632"}));
+        L.Add(new("","Autres charges financières (3)",false,false,false,acf,acfp,new[]{"638"}));
+        L.Add(new("","Dotations financières aux amortissements et provisions (4)",false,false,false,df,dfp,new[]{"639"}));
+        L.Add(new("V","TOTAL  V  —  CHARGES FINANCIÈRES",false,true,false,t5,t5p));
+
+        decimal re=t1-t2,rep=t1p-t2p; decimal rf=t4-t5,rfp=t4p-t5p; decimal rc=re+rf,rcp=rep+rfp;
+        L.Add(new("VI","RÉSULTAT FINANCIER  ( IV - V )",false,false,true,rf,rfp));
+        L.Add(new("VII","RÉSULTAT COURANT  ( III + VI )",false,false,true,rc,rcp));
+
+        decimal pci=-C("751"),pcip=-P("751"); decimal seq=-C("756"),seqp=-P("756");
+        decimal rsi=-C("757"),rsip=-P("757"); decimal apnc=-C("758"),apncp=-P("758");
+        decimal rpnc=-C("759"),rpncp=-P("759"); decimal t8=pci+seq+rsi+apnc+rpnc,t8p=pcip+seqp+rsip+apncp+rpncp;
+        L.Add(new("","PRODUITS NON COURANTS",true,false,false,0,0));
+        L.Add(new("","Produits des cessions d'immobilisations (1)",false,false,false,pci,pcip,new[]{"751"}));
+        L.Add(new("","Subventions d'équilibre (2)",false,false,false,seq,seqp,new[]{"756"}));
+        L.Add(new("","Reprises sur subventions d'investissement (3)",false,false,false,rsi,rsip,new[]{"757"}));
+        L.Add(new("","Autres produits non courants (4)",false,false,false,apnc,apncp,new[]{"758"}));
+        L.Add(new("","Reprises non courantes; transferts de charges (5)",false,false,false,rpnc,rpncp,new[]{"759"}));
+        L.Add(new("VIII","TOTAL  VIII  —  PRODUITS NON COURANTS",false,true,false,t8,t8p));
+
+        decimal vna=C("651"),vnap=P("651"); decimal sa=C("656"),sap=P("656");
+        decimal acnc=C("658"),acncp=P("658"); decimal dnc=C("659"),dncp=P("659");
+        decimal t9=vna+sa+acnc+dnc,t9p=vnap+sap+acncp+dncp;
+        L.Add(new("","CHARGES NON COURANTES",true,false,false,0,0));
+        L.Add(new("","Valeurs nettes d'amortissement des immobilisations cédées (1)",false,false,false,vna,vnap,new[]{"651"}));
+        L.Add(new("","Subventions accordées (2)",false,false,false,sa,sap,new[]{"656"}));
+        L.Add(new("","Autres charges non courantes (3)",false,false,false,acnc,acncp,new[]{"658"}));
+        L.Add(new("","Dotations non courantes aux amortissements et provisions (4)",false,false,false,dnc,dncp,new[]{"659"}));
+        L.Add(new("IX","TOTAL  IX  —  CHARGES NON COURANTES",false,true,false,t9,t9p));
+
+        decimal rnc=t8-t9,rncp=t8p-t9p; decimal ravi=rc+rnc,ravip=rcp+rncp;
+        decimal imp=C("670"),impp=P("670"); decimal rnet=ravi-imp,rnetp=ravip-impp;
+        L.Add(new("X","RÉSULTAT NON COURANT  ( VIII - IX )",false,false,true,rnc,rncp));
+        L.Add(new("XI","RÉSULTAT AVANT IMPÔTS  ( VII + X )",false,false,true,ravi,ravip));
+        L.Add(new("XII","IMPÔTS SUR LES RÉSULTATS",false,false,false,imp,impp,new[]{"670"}));
+        L.Add(new("XIII","RÉSULTAT NET  ( XI - XII )",false,false,true,rnet,rnetp));
+        cpcLines = L;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // E.S.G. — T.F.R.
+    // ════════════════════════════════════════════════════════════════
+    private void BuildTFR()
+    {
+        var L = new List<EsgLine>();
+        decimal vm=-C("711"),vmp=-P("711"); decimal arm=C("611"),armp=P("611"); decimal mb=vm-arm,mbp=vmp-armp;
+        L.Add(new("","Ventes de marchandises en l'état",false,false,vm,vmp,new[]{"711"}));
+        L.Add(new("-","Achats revendus de marchandises",false,false,arm,armp,new[]{"611"}));
+        L.Add(new("=","MARGE BRUTE SUR VENTES EN L'ÉTAT",true,false,mb,mbp));
+
+        decimal vbs=-C("712"),vbsp=-P("712"); decimal vs=-C("713"),vsp=-P("713"); decimal ip=-C("714"),ipp=-P("714");
+        decimal prod=vbs+vs+ip,prodp=vbsp+vsp+ipp;
+        L.Add(new("+","Ventes de biens et services produits",false,false,vbs,vbsp,new[]{"712"}));
+        L.Add(new("+","Variation de stocks de produits",false,false,vs,vsp,new[]{"713"}));
+        L.Add(new("+","Immobilisations produites par l'entreprise",false,false,ip,ipp,new[]{"714"}));
+        L.Add(new("=","PRODUCTION DE L'EXERCICE",true,false,prod,prodp));
+
+        decimal acm=C("612"),acmp=P("612"); decimal ce=C("613")+C("614"),cep=P("613")+P("614");
+        decimal cons=acm+ce,consp=acmp+cep;
+        L.Add(new("-","Achats consommés de matières et fournitures",false,false,acm,acmp,new[]{"612"}));
+        L.Add(new("-","Autres charges externes",false,false,ce,cep,new[]{"613","614"}));
+        L.Add(new("=","CONSOMMATION DE L'EXERCICE",true,false,cons,consp));
+
+        decimal va=mb+prod-cons,vap=mbp+prodp-consp;
+        L.Add(new("=","VALEUR AJOUTÉE  ( MB + P - C )",true,true,va,vap));
+
+        decimal se=-C("716"),sep=-P("716"); decimal it=C("616"),itp=P("616"); decimal cp=C("617"),cpp=P("617");
+        decimal ebe=va+se-it-cp,ebep=vap+sep-itp-cpp;
+        L.Add(new("+","Subventions d'exploitation",false,false,se,sep,new[]{"716"}));
+        L.Add(new("-","Impôts et taxes",false,false,it,itp,new[]{"616"}));
+        L.Add(new("-","Charges de personnel",false,false,cp,cpp,new[]{"617"}));
+        L.Add(new("=","EXCÉDENT BRUT D'EXPLOITATION (E.B.E.) ou INSUFFISANCE BRUTE (I.B.E.)",true,true,ebe,ebep));
+
+        decimal ape=-C("718"),apep=-P("718"); decimal ace=C("618"),acep=P("618");
+        decimal rpe=-C("719"),rpep=-P("719"); decimal de=C("619"),dep=P("619");
+        decimal re=ebe+ape-ace+rpe-de,rep=ebep+apep-acep+rpep-dep;
+        L.Add(new("+","Autres produits d'exploitation",false,false,ape,apep,new[]{"718"}));
+        L.Add(new("-","Autres charges d'exploitation",false,false,ace,acep,new[]{"618"}));
+        L.Add(new("+","Reprises d'exploitation; transferts",false,false,rpe,rpep,new[]{"719"}));
+        L.Add(new("-","Dotations d'exploitation",false,false,de,dep,new[]{"619"}));
+        L.Add(new("=","RÉSULTAT D'EXPLOITATION  ( + ou - )",true,true,re,rep));
+
+        decimal t4=-C("731")-C("732")-C("738")-C("739"),t4p=-P("731")-P("732")-P("738")-P("739");
+        decimal t5=C("631")+C("632")+C("638")+C("639"),t5p=P("631")+P("632")+P("638")+P("639");
+        decimal rc=re+(t4-t5),rcp=rep+(t4p-t5p);
+        L.Add(new("+","Produits financiers",false,false,t4,t4p,new[]{"731","732","738","739"}));
+        L.Add(new("-","Charges financières",false,false,t5,t5p,new[]{"631","632","638","639"}));
+        L.Add(new("=","RÉSULTAT COURANT  ( + ou - )",true,true,rc,rcp));
+
+        decimal t8=-C("751")-C("756")-C("757")-C("758")-C("759"),t8p=-P("751")-P("756")-P("757")-P("758")-P("759");
+        decimal t9=C("651")+C("656")+C("658")+C("659"),t9p=P("651")+P("656")+P("658")+P("659");
+        decimal rnc=t8-t9,rncp=t8p-t9p;
+        L.Add(new("+","Produits non courants",false,false,t8,t8p,new[]{"751","756","757","758","759"}));
+        L.Add(new("-","Charges non courantes",false,false,t9,t9p,new[]{"651","656","658","659"}));
+        L.Add(new("=","RÉSULTAT AVANT IMPÔTS",true,false,rc+rnc,rcp+rncp));
+
+        decimal imp=C("670"),impp=P("670");
+        decimal rnet=rc+rnc-imp,rnetp=rcp+rncp-impp;
+        L.Add(new("-","Impôts sur les résultats",false,false,imp,impp,new[]{"670"}));
+        L.Add(new("=","RÉSULTAT NET  ( + ou - )",true,true,rnet,rnetp));
+        tfrLines = L;
+
+        // share to CAF
+        _rnet=rnet; _rnetp=rnetp; _de=de; _dep=dep;
+        _t5fin=C("639"); _t5finp=P("639"); _t9nc=C("659"); _t9ncp=P("659");
+        _rpe=rpe; _rpep=rpep; _rpf=-C("739"); _rpfp=-P("739");
+        _rpnc=-C("759"); _rpncp=-P("759"); _pci=-C("751"); _pcip=-P("751");
+        _vna=C("651"); _vnap=P("651");
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // E.S.G. — C.A.F.
+    // ════════════════════════════════════════════════════════════════
+    private void BuildCAF()
+    {
+        var L = new List<EsgLine>();
+        decimal caf=_rnet+_de+_t5fin+_t9nc-_rpe-_rpf-_rpnc-_pci+_vna;
+        decimal cafp=_rnetp+_dep+_t5finp+_t9ncp-_rpep-_rpfp-_rpncp-_pcip+_vnap;
+        L.Add(new("","Résultat net de l'exercice  (bénéfice +, perte -)",false,false,_rnet,_rnetp));
+        L.Add(new("+","Dotations d'exploitation (1)",false,false,_de,_dep,new[]{"619"}));
+        L.Add(new("+","Dotations financières (1)",false,false,_t5fin,_t5finp,new[]{"639"}));
+        L.Add(new("+","Dotations non courantes aux amortissements et provisions (1)",false,false,_t9nc,_t9ncp,new[]{"659"}));
+        L.Add(new("-","Reprises d'exploitation (2)",false,false,_rpe,_rpep,new[]{"719"}));
+        L.Add(new("-","Reprises financières (2)",false,false,_rpf,_rpfp,new[]{"739"}));
+        L.Add(new("-","Reprises non courantes; transferts de charges (2)",false,false,_rpnc,_rpncp,new[]{"759"}));
+        L.Add(new("-","Produits des cessions d'immobilisations",false,false,_pci,_pcip,new[]{"751"}));
+        L.Add(new("+","Valeurs nettes d'amortissement des immobilisations cédées",false,false,_vna,_vnap,new[]{"651"}));
+        L.Add(new("=","CAPACITÉ D'AUTOFINANCEMENT  ( C.A.F. )",true,true,caf,cafp));
+        L.Add(new("-","Distributions de bénéfices",false,false,0,0));
+        L.Add(new("=","AUTOFINANCEMENT",true,true,caf,cafp));
+        cafLines = L;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // T.F. — SYNTHÈSE
+    // ════════════════════════════════════════════════════════════════
+    private void BuildSynthese()
+    {
+        var L = new List<SyntheseLine>();
+        decimal aiN=BN("2")-(-BN("28"))-(-BN("29")), aiN1=BN1("2")-(-BN1("28"))-(-BN1("29"));
+        decimal acN=BN("3")-(-BN("39"))+BN("35")-(-BN("395")), acN1=BN1("3")-(-BN1("39"))+BN1("35")-(-BN1("395"));
+        decimal taN=BN("511")+BN("514")+BN("516")-(-BN("5911"))-(-BN("5914"))-(-BN("5916")),
+                taN1=BN1("511")+BN1("514")+BN1("516")-(-BN1("5911"))-(-BN1("5914"))-(-BN1("5916"));
+        decimal fpN=-BN("1"), fpN1=-BN1("1");
+        decimal pcN=-BN("4")-(-BN("34"))-(-BN("39")), pcN1=-BN1("4")-(-BN1("34"))-(-BN1("39"));
+        decimal tpN=-BN("552")-BN("553")-BN("554"), tpN1=-BN1("552")-BN1("553")-BN1("554");
+        L.Add(new("Financement permanent",           false, fpN,  fpN1,  new[]{"1"}));
+        L.Add(new("Actif immobilisé",                false, aiN,  aiN1,  new[]{"2","28","29"}));
+        L.Add(new("FONDS DE ROULEMENT NET GLOBAL",   true,  fpN-aiN,  fpN1-aiN1));
+        L.Add(new("Actif circulant (hors trésorerie)",false, acN, acN1,  new[]{"3","35","39","395"}));
+        L.Add(new("Passif circulant (hors trésorerie)",false,pcN, pcN1,  new[]{"4","34","39"}));
+        L.Add(new("BESOIN DE FINANCEMENT GLOBAL",    true,  acN-pcN,  acN1-pcN1));
+        L.Add(new("Trésorerie - Actif",              false, taN,  taN1,  new[]{"511","514","516","5911","5914","5916"}));
+        L.Add(new("Trésorerie - Passif",             false, tpN,  tpN1,  new[]{"552","553","554"}));
+        L.Add(new("TRÉSORERIE NETTE",                true,  taN-tpN, taN1-tpN1));
+        syntheseLines = L;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // T.F. — EMPLOIS / RESSOURCES
+    // ════════════════════════════════════════════════════════════════
+    private void BuildEmploisRessources()
+    {
+        var emp = new List<TfLine>(); var res = new List<TfLine>();
+        decimal de=C("619"),dep=P("619"); decimal dfin=C("639"),dfinp=P("639"); decimal dnc=C("659"),dncp=P("659");
+        decimal rpe=-C("719"),rpep=-P("719"); decimal rpf=-C("739"),rpfp=-P("739"); decimal rpnc=-C("759"),rpncp=-P("759");
+        decimal pci=-C("751"),pcip=-P("751"); decimal vna=C("651"),vnap=P("651");
+        decimal rnet=-C("7")-C("6"),rnetp=-P("7")-P("6");
+        decimal caf=rnet+de+dfin+dnc-rpe-rpf-rpnc-pci+vna, cafp=rnetp+dep+dfinp+dncp-rpep-rpfp-rpncp-pcip+vnap;
+        decimal acqB=C("2"),acqBp=P("2"); decimal rdfC=C("141")+C("148"),rdfCp=P("141")+P("148");
+        decimal nv=C("211")+C("212")+C("213"),nvp=P("211")+P("212")+P("213");
+        emp.Add(new("RESSOURCES STABLES",true,false,0,0));
+        emp.Add(new("Acquisition et augmentation des immobilisations",false,false,acqB,acqBp,new[]{"2"}));
+        emp.Add(new("Remboursements des dettes de financement",false,false,rdfC,rdfCp,new[]{"141","148"}));
+        emp.Add(new("Emplois en non valeurs",false,false,nv,nvp,new[]{"211","212","213"}));
+        emp.Add(new("TOTAL DES EMPLOIS  ( I )",false,true,acqB+rdfC+nv,acqBp+rdfCp+nvp));
+        emp.Add(new("VARIATION DU BESOIN EN FINANCEMENT GLOBAL",true,false,0,0));
+        emp.Add(new("(+) Actif circulant",false,false,C("3")+C("35"),P("3")+P("35"),new[]{"3","35"}));
+        emp.Add(new("(-) Passif circulant",false,false,-C("4"),-P("4"),new[]{"4"}));
+        emp.Add(new("TOTAL  ( II )",false,true,C("3")+C("35")-C("4"),P("3")+P("35")-P("4")));
+        decimal taC=C("511")+C("514")+C("516"),taCp=P("511")+P("514")+P("516");
+        decimal tpC=C("552")+C("553")+C("554"),tpCp=P("552")+P("553")+P("554");
+        emp.Add(new("VARIATION DE LA TRÉSORERIE",true,false,0,0));
+        emp.Add(new("(+) Trésorerie actif",false,false,taC,taCp,new[]{"511","514","516"}));
+        emp.Add(new("(-) Trésorerie passif",false,false,-tpC,-tpCp,new[]{"552","553","554"}));
+        emp.Add(new("TOTAL  ( III )",false,true,taC-tpC,taCp-tpCp));
+
+        decimal augCap=-C("111"),augCapp=-P("111");
+        decimal subInv=-C("131")-C("135"),subInvp=-P("131")-P("135");
+        decimal cred=-C("141")-C("148"),credp=-P("141")-P("148");
+        res.Add(new("RESSOURCES STABLES",true,false,0,0));
+        res.Add(new("CAF de l'exercice",false,false,caf,cafp));
+        res.Add(new("Cessions et réductions d'immobilisations",false,false,pci,pcip,new[]{"751"}));
+        res.Add(new("Augmentation des capitaux propres",false,false,augCap,augCapp,new[]{"111"}));
+        res.Add(new("Augmentation des dettes de financement",false,false,cred,credp,new[]{"141","148"}));
+        res.Add(new("Subventions d'investissement reçues",false,false,subInv,subInvp,new[]{"131","135"}));
+        res.Add(new("TOTAL DES RESSOURCES  ( I )",false,true,caf+pci+augCap+cred+subInv,cafp+pcip+augCapp+credp+subInvp));
+        // pad to align rows
+        while (res.Count < emp.Count) res.Add(new("",false,false,0,0));
+        emploisLines    = emp;
+        ressourcesLines = res;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // T03 — PASSAGE RÉSULTAT COMPTABLE → FISCAL
+    // ════════════════════════════════════════════════════════════════
+    private void BuildT03()
+    {
+        var L = new List<T03Line>();
+        decimal rnet = _rnet; // computed by BuildTFR
+        decimal bénéfice = rnet > 0 ? rnet : 0m;
+        decimal perte    = rnet < 0 ? -rnet : 0m;
+
+        L.Add(new("I. RÉSULTAT NET COMPTABLE", true, false, false, 0, 0));
+        L.Add(new("Bénéfice net",  false, false, false, 2, bénéfice));
+        L.Add(new("Perte nette",   false, false, false, 2, perte));
+
+        // Réintégrations — only IS/CM is auto-computable; rest = 0 (manual)
+        decimal is670 = C("670");
+        L.Add(new("II. RÉINTÉGRATIONS FISCALES", true, false, false, 0, 0));
+        L.Add(new("1. Courantes", true, false, false, 0, 0));
+        L.Add(new("Impôts sur les bénéfices / C.M.",  false, false, false, 1, is670, new[]{"670"}));
+        L.Add(new("Amendes et pénalités",              false, false, false, 1, 0));
+        L.Add(new("Autres réintégrations courantes",   false, false, false, 1, 0));
+        L.Add(new("2. Non courantes",  true, false, false, 0, 0));
+        L.Add(new("Pénalités et amendes fiscales/pénales", false, false, false, 1, 0));
+        L.Add(new("Autres réintégrations non courantes",   false, false, false, 1, 0));
+
+        decimal totRéintég = is670; // sum of all réintégrations (only auto ones for now)
+
+        // Déductions — all manual = 0
+        L.Add(new("III. DÉDUCTIONS FISCALES", true, false, false, 0, 0));
+        L.Add(new("1. Courantes",    true, false, false, 0, 0));
+        L.Add(new("Autres déductions courantes",     false, false, false, 2, 0));
+        L.Add(new("2. Non courantes", true, false, false, 0, 0));
+        L.Add(new("Autres déductions non courantes", false, false, false, 2, 0));
+
+        decimal totDéduct = 0m;
+
+        L.Add(new("TOTAL RÉINTÉGRATIONS / TOTAL DÉDUCTIONS", false, true, false, 0, 0));
+        L.Add(new("— Réintégrations",  false, false, false, 1, totRéintég));
+        L.Add(new("— Résultat comptable (bénéfice / perte)", false, false, false, 2, rnet >= 0 ? bénéfice : perte));
+
+        decimal résultBrut = rnet + totRéintég - totDéduct;
+        L.Add(new("IV. RÉSULTAT BRUT FISCAL", true, false, false, 0, 0));
+        L.Add(new("Bénéfice brut fiscal (A)", false, false, false, 2, résultBrut > 0 ? résultBrut : 0m));
+        L.Add(new("Déficit brut fiscal (B)",  false, false, false, 2, résultBrut < 0 ? -résultBrut : 0m));
+
+        L.Add(new("V. REPORTS DÉFICITAIRES IMPUTÉS (C)",  true, false, false, 0, 0));
+        L.Add(new("— Exercice n-4", false, false, false, 1, 0));
+        L.Add(new("— Exercice n-3", false, false, false, 1, 0));
+        L.Add(new("— Exercice n-2", false, false, false, 1, 0));
+        L.Add(new("— Exercice n-1", false, false, false, 1, 0));
+
+        decimal résultNet = résultBrut; // Reports = 0 (manual)
+        L.Add(new("VI. RÉSULTAT NET FISCAL", true, false, true, 0, 0));
+        L.Add(new("Bénéfice net fiscal (A-C)", false, false, true, 2, résultNet > 0 ? résultNet : 0m));
+        L.Add(new("Déficit net fiscal (B)",    false, false, true, 2, résultNet < 0 ? -résultNet : 0m));
+
+        L.Add(new("VII. CUMUL AMORTISSEMENTS FISCALEMENT DIFFÉRÉS", true, false, false, 0, 0));
+        L.Add(new("— Montant", false, false, false, 1, 0));
+        L.Add(new("VIII. CUMUL DÉFICITS FISCAUX RESTANT À REPORTER", true, false, false, 0, 0));
+        L.Add(new("— Montant", false, false, false, 1, 0));
+
+        t03Lines = L;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // T04 — TABLEAU DES IMMOBILISATIONS
+    // ════════════════════════════════════════════════════════════════
+    private void BuildT04()
+    {
+        var L = new List<ImmobLine>();
+
+        (decimal deb, decimal acq, decimal cess, decimal fin) Immo(string pfx)
+        {
+            decimal debut = BN1(pfx);
+            decimal acquisition = SD(pfx);
+            decimal cession     = SC(pfx);
+            decimal finEx       = BN(pfx);
+            return (debut, acquisition, cession, finEx);
+        }
+
+        // NON-VALEURS
+        var (nvDeb, nvAcq, nvCess, nvFin) = (BN1("211")+BN1("212")+BN1("213"), SD("211")+SD("212")+SD("213"), SC("211")+SC("212")+SC("213"), BN("211")+BN("212")+BN("213"));
+        L.Add(new("IMMOBILISATION EN NON-VALEURS", true, false, nvDeb, nvAcq, nvCess, nvFin, new[]{"211","212","213"}));
+        var (fp211d,fp211a,fp211c,fp211f)=Immo("211"); L.Add(new("— Frais préliminaires", false, false, fp211d, fp211a, fp211c, fp211f, new[]{"211"}));
+        var (ch212d,ch212a,ch212c,ch212f)=Immo("212"); L.Add(new("— Charges à répartir", false, false, ch212d, ch212a, ch212c, ch212f, new[]{"212"}));
+        var (pr213d,pr213a,pr213c,pr213f)=Immo("213"); L.Add(new("— Primes de remboursement obligations", false, false, pr213d, pr213a, pr213c, pr213f, new[]{"213"}));
+
+        // INCORPORELLES
+        var inDeb=BN1("221")+BN1("222")+BN1("223")+BN1("228"); var inAcq=SD("221")+SD("222")+SD("223")+SD("228"); var inCess=SC("221")+SC("222")+SC("223")+SC("228"); var inFin=BN("221")+BN("222")+BN("223")+BN("228");
+        L.Add(new("IMMOBILISATIONS INCORPORELLES", true, false, inDeb, inAcq, inCess, inFin, new[]{"221","222","223","228"}));
+        var (rd221d,rd221a,rd221c,rd221f)=Immo("221"); L.Add(new("— Recherche et développement", false, false, rd221d, rd221a, rd221c, rd221f, new[]{"221"}));
+        var (br222d,br222a,br222c,br222f)=Immo("222"); L.Add(new("— Brevets, marques, droits et valeurs similaires", false, false, br222d, br222a, br222c, br222f, new[]{"222"}));
+        var (fc223d,fc223a,fc223c,fc223f)=Immo("223"); L.Add(new("— Fonds commercial", false, false, fc223d, fc223a, fc223c, fc223f, new[]{"223"}));
+        var (ai228d,ai228a,ai228c,ai228f)=Immo("228"); L.Add(new("— Autres immobilisations incorporelles", false, false, ai228d, ai228a, ai228c, ai228f, new[]{"228"}));
+
+        // CORPORELLES
+        var cpDeb=BN1("231")+BN1("232")+BN1("233")+BN1("234")+BN1("235")+BN1("238")+BN1("239");
+        var cpAcq=SD("231")+SD("232")+SD("233")+SD("234")+SD("235")+SD("238")+SD("239");
+        var cpCess=SC("231")+SC("232")+SC("233")+SC("234")+SC("235")+SC("238")+SC("239");
+        var cpFin=BN("231")+BN("232")+BN("233")+BN("234")+BN("235")+BN("238")+BN("239");
+        L.Add(new("IMMOBILISATIONS CORPORELLES", true, false, cpDeb, cpAcq, cpCess, cpFin, new[]{"231","232","233","234","235","238","239"}));
+        var (te231d,te231a,te231c,te231f)=Immo("231"); L.Add(new("— Terrains", false, false, te231d, te231a, te231c, te231f, new[]{"231"}));
+        var (co232d,co232a,co232c,co232f)=Immo("232"); L.Add(new("— Constructions", false, false, co232d, co232a, co232c, co232f, new[]{"232"}));
+        var (it233d,it233a,it233c,it233f)=Immo("233"); L.Add(new("— Installations techniques, matériel et outillage", false, false, it233d, it233a, it233c, it233f, new[]{"233"}));
+        var (mt234d,mt234a,mt234c,mt234f)=Immo("234"); L.Add(new("— Matériel de transport", false, false, mt234d, mt234a, mt234c, mt234f, new[]{"234"}));
+        var (mb235d,mb235a,mb235c,mb235f)=Immo("235"); L.Add(new("— Mobilier, matériel de bureau et aménagement", false, false, mb235d, mb235a, mb235c, mb235f, new[]{"235"}));
+        var (ac238d,ac238a,ac238c,ac238f)=Immo("238"); L.Add(new("— Autres immobilisations corporelles", false, false, ac238d, ac238a, ac238c, ac238f, new[]{"238"}));
+        var (ec239d,ec239a,ec239c,ec239f)=Immo("239"); L.Add(new("— Immobilisations corporelles en cours", false, false, ec239d, ec239a, ec239c, ec239f, new[]{"239"}));
+
+        decimal totDeb=nvDeb+inDeb+cpDeb, totAcq=nvAcq+inAcq+cpAcq, totCess=nvCess+inCess+cpCess, totFin=nvFin+inFin+cpFin;
+        L.Add(new("TOTAL", false, true, totDeb, totAcq, totCess, totFin));
+        t04Lines = L;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // T06 — DÉTAIL DES POSTES DU C.P.C.
+    // ════════════════════════════════════════════════════════════════
+    private void BuildT06()
+    {
+        var L = new List<T06Line>();
+
+        void Section(string title) => L.Add(new("", title, true, false, false, 0, 0));
+        void Poste(string code, string label, decimal v, decimal p, string[] pfx = null) => L.Add(new(code, label, false, true, false, v, p, pfx));
+        void Sub(string label, decimal v, decimal p, string[] pfx = null) => L.Add(new("", $"  {label}", false, false, false, v, p, pfx));
+        void Total(string label, decimal v, decimal p) => L.Add(new("", label, false, false, true, v, p));
+
+        Section("CHARGES D'EXPLOITATION");
+        decimal v611=C("611"), p611=P("611");
+        Poste("611","Achats revendus de marchandises",v611,p611,new[]{"611"});
+        Sub("— Achats de marchandises",C("6111"),P("6111"),new[]{"6111"});
+        Sub("— Variation des stocks de marchandises",C("6118"),P("6118"),new[]{"6118"});
+        Total("Total 611",v611,p611);
+
+        decimal v612=C("612"), p612=P("612");
+        Poste("612","Achats consommés de matières et fournitures",v612,p612,new[]{"612"});
+        Sub("— Achats de matières premières",C("6121"),P("6121"),new[]{"6121"});
+        Sub("— Achats de fournitures consommables",C("6122"),P("6122"),new[]{"6122"});
+        Sub("— Achats non stockés",C("6123"),P("6123"),new[]{"6123"});
+        Sub("— Achats de travaux, études et prestations",C("6125"),P("6125"),new[]{"6125"});
+        Sub("— Variation des stocks matières et fournitures",C("6128"),P("6128"),new[]{"6128"});
+        Total("Total 612",v612,p612);
+
+        decimal v613=C("613")+C("614"), p613=P("613")+P("614");
+        Poste("613/614","Autres charges externes",v613,p613,new[]{"613","614"});
+        Sub("— Locations et charges locatives",C("6131"),P("6131"),new[]{"6131"});
+        Sub("— Redevances de crédit-bail",C("6132"),P("6132"),new[]{"6132"});
+        Sub("— Entretien et réparations",C("6133"),P("6133"),new[]{"6133"});
+        Sub("— Primes d'assurances",C("6134"),P("6134"),new[]{"6134"});
+        Sub("— Personnel extérieur à l'entreprise",C("6135"),P("6135"),new[]{"6135"});
+        Sub("— Rémunérations d'intermédiaires et honoraires",C("6136"),P("6136"),new[]{"6136"});
+        Sub("— Transports",C("6141"),P("6141"),new[]{"6141"});
+        Sub("— Déplacements, missions et réceptions",C("6142"),P("6142"),new[]{"6142"});
+        Sub("— Reste des autres charges externes",C("6148")+C("6149")+C("6138")+C("6139"),P("6148")+P("6149")+P("6138")+P("6139"),new[]{"6138","6139","6148","6149"});
+        Total("Total 613/614",v613,p613);
+
+        decimal v616=C("616"), p616=P("616");
+        Poste("616","Impôts et taxes",v616,p616,new[]{"616"});
+        Total("Total 616",v616,p616);
+
+        decimal v617=C("617"), p617=P("617");
+        Poste("617","Charges de personnel",v617,p617,new[]{"617"});
+        Sub("— Rémunérations du personnel",C("6171"),P("6171"),new[]{"6171"});
+        Sub("— Charges sociales",C("6174"),P("6174"),new[]{"6174"});
+        Sub("— Reste charges de personnel",C("6178"),P("6178"),new[]{"6178"});
+        Total("Total 617",v617,p617);
+
+        decimal v618=C("618"), p618=P("618");
+        Poste("618","Autres charges d'exploitation",v618,p618,new[]{"618"});
+        Sub("— Pertes sur créances irrécouvrables",C("6182"),P("6182"),new[]{"6182"});
+        Sub("— Reste des autres charges d'exploitation",C("6188"),P("6188"),new[]{"6188"});
+        Total("Total 618",v618,p618);
+
+        Section("CHARGES FINANCIÈRES");
+        decimal v638=C("638"), p638=P("638");
+        Poste("638","Autres charges financières",v638,p638,new[]{"638"});
+        Total("Total 638",v638,p638);
+
+        Section("CHARGES NON COURANTES");
+        decimal v658=C("658"), p658=P("658");
+        Poste("658","Autres charges non courantes",v658,p658,new[]{"658"});
+        Sub("— Pénalités sur marchés et débits",C("6581"),P("6581"),new[]{"6581"});
+        Sub("— Pénalités et amendes fiscales",C("6582"),P("6582"),new[]{"6582"});
+        Sub("— Créances devenues irrécouvrables",C("6585"),P("6585"),new[]{"6585"});
+        Sub("— Reste charges non courantes",C("6588"),P("6588"),new[]{"6588"});
+        Total("Total 658",v658,p658);
+
+        Section("PRODUITS D'EXPLOITATION");
+        decimal v711=C("711"), p711=P("711"); // negated sign in ESG but here raw
+        // For T06 detail, use raw balance (same sign as CPC)
+        Poste("711","Ventes de marchandises en l'état",-C("711"),-P("711"),new[]{"711"});
+        Poste("712","Ventes de biens et services produits",-C("712"),-P("712"),new[]{"712"});
+        Poste("713","Variation de stocks de produits",-C("713"),-P("713"),new[]{"713"});
+        Poste("714","Immobilisations produites par l'entreprise",-C("714"),-P("714"),new[]{"714"});
+        Poste("716","Subventions d'exploitation",-C("716"),-P("716"),new[]{"716"});
+        Poste("718","Autres produits d'exploitation",-C("718"),-P("718"),new[]{"718"});
+        Poste("719","Reprises d'exploitation; transferts de charges",-C("719"),-P("719"),new[]{"719"});
+
+        Section("PRODUITS FINANCIERS");
+        Poste("731","Produits des titres de participation et autres titres immo.",-C("731"),-P("731"),new[]{"731"});
+        Poste("732","Gains de change",-C("732"),-P("732"),new[]{"732"});
+        Poste("738","Intérêts et autres produits financiers",-C("738"),-P("738"),new[]{"738"});
+        Poste("739","Reprises financières; transferts de charges",-C("739"),-P("739"),new[]{"739"});
+
+        Section("PRODUITS NON COURANTS");
+        Poste("751","Produits des cessions d'immobilisations",-C("751"),-P("751"),new[]{"751"});
+        Poste("756","Subventions d'équilibre",-C("756"),-P("756"),new[]{"756"});
+        Poste("757","Reprises sur subventions d'investissement",-C("757"),-P("757"),new[]{"757"});
+        Poste("758","Autres produits non courants",-C("758"),-P("758"),new[]{"758"});
+        Poste("759","Reprises non courantes; transferts de charges",-C("759"),-P("759"),new[]{"759"});
+
+        t06Lines = L;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // T08 — TABLEAU DES AMORTISSEMENTS
+    // ════════════════════════════════════════════════════════════════
+    private void BuildT08()
+    {
+        var L = new List<AmortLine>();
+
+        // For amort accounts (28xx): they are credit-balance → BN returns negative, we negate
+        // Cumul début = -BN1(pfx_amort)
+        // Dotation N   = credit movements on amort during N = SC(pfx_amort)
+        // Sorties N     = debit movements on amort during N = SD(pfx_amort) (reversal on cession)
+        // Cumul fin    = CumulDebut + Dotation - Sorties (also = -BN(pfx_amort))
+
+        (decimal d, decimal dot, decimal s) Amort(string pfx)
+            => (-BN1(pfx), SC(pfx), SD(pfx));
+
+        // NON-VALEURS
+        var (nv2811d,nv2811dot,nv2811s)=Amort("2811");
+        var (nv2812d,nv2812dot,nv2812s)=Amort("2812");
+        var (nv2813d,nv2813dot,nv2813s)=Amort("2813");
+        decimal nvD=-BN1("2811")-BN1("2812")-BN1("2813"), nvDot=SC("2811")+SC("2812")+SC("2813"), nvS=SD("2811")+SD("2812")+SD("2813");
+        L.Add(new("IMMOBILISATION EN NON-VALEURS", true, false, nvD, nvDot, nvS, new[]{"2811","2812","2813"}));
+        L.Add(new("— Frais préliminaires",                       false, false, nv2811d, nv2811dot, nv2811s, new[]{"2811"}));
+        L.Add(new("— Charges à répartir sur plusieurs exercices",false, false, nv2812d, nv2812dot, nv2812s, new[]{"2812"}));
+        L.Add(new("— Primes de remboursement obligations",       false, false, nv2813d, nv2813dot, nv2813s, new[]{"2813"}));
+
+        // INCORPORELLES
+        var (in2821d,in2821dot,in2821s)=Amort("2821"); var (in2822d,in2822dot,in2822s)=Amort("2822");
+        var (in2823d,in2823dot,in2823s)=Amort("2823"); var (in2828d,in2828dot,in2828s)=Amort("2828");
+        decimal inD=in2821d+in2822d+in2823d+in2828d, inDot=in2821dot+in2822dot+in2823dot+in2828dot, inS=in2821s+in2822s+in2823s+in2828s;
+        L.Add(new("IMMOBILISATIONS INCORPORELLES", true, false, inD, inDot, inS, new[]{"2821","2822","2823","2828"}));
+        L.Add(new("— Recherche et développement",                false, false, in2821d, in2821dot, in2821s, new[]{"2821"}));
+        L.Add(new("— Brevets, marques, droits et valeurs similaires", false, false, in2822d, in2822dot, in2822s, new[]{"2822"}));
+        L.Add(new("— Fonds commercial",                          false, false, in2823d, in2823dot, in2823s, new[]{"2823"}));
+        L.Add(new("— Autres immobilisations incorporelles",      false, false, in2828d, in2828dot, in2828s, new[]{"2828"}));
+
+        // CORPORELLES
+        var (cp2831d,cp2831dot,cp2831s)=Amort("2831"); var (cp2832d,cp2832dot,cp2832s)=Amort("2832");
+        var (cp2833d,cp2833dot,cp2833s)=Amort("2833"); var (cp2834d,cp2834dot,cp2834s)=Amort("2834");
+        var (cp2835d,cp2835dot,cp2835s)=Amort("2835"); var (cp2838d,cp2838dot,cp2838s)=Amort("2838");
+        var (cp2839d,cp2839dot,cp2839s)=Amort("2839");
+        decimal cpD=cp2831d+cp2832d+cp2833d+cp2834d+cp2835d+cp2838d+cp2839d;
+        decimal cpDot=cp2831dot+cp2832dot+cp2833dot+cp2834dot+cp2835dot+cp2838dot+cp2839dot;
+        decimal cpS=cp2831s+cp2832s+cp2833s+cp2834s+cp2835s+cp2838s+cp2839s;
+        L.Add(new("IMMOBILISATIONS CORPORELLES", true, false, cpD, cpDot, cpS, new[]{"2831","2832","2833","2834","2835","2838","2839"}));
+        L.Add(new("— Terrains",                                  false, false, cp2831d, cp2831dot, cp2831s, new[]{"2831"}));
+        L.Add(new("— Constructions",                             false, false, cp2832d, cp2832dot, cp2832s, new[]{"2832"}));
+        L.Add(new("— Installations techniques, matériel et outillage", false, false, cp2833d, cp2833dot, cp2833s, new[]{"2833"}));
+        L.Add(new("— Matériel de transport",                     false, false, cp2834d, cp2834dot, cp2834s, new[]{"2834"}));
+        L.Add(new("— Mobilier, matériel de bureau et aménagement",false, false, cp2835d, cp2835dot, cp2835s, new[]{"2835"}));
+        L.Add(new("— Autres immobilisations corporelles",        false, false, cp2838d, cp2838dot, cp2838s, new[]{"2838"}));
+        L.Add(new("— Immobilisations corporelles en cours",      false, false, cp2839d, cp2839dot, cp2839s, new[]{"2839"}));
+
+        decimal totD=nvD+inD+cpD, totDot=nvDot+inDot+cpDot, totS=nvS+inS+cpS;
+        L.Add(new("TOTAL", false, true, totD, totDot, totS));
+        t08Lines = L;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // T09 — TABLEAU DES PROVISIONS
+    // ════════════════════════════════════════════════════════════════
+    private void BuildT09()
+    {
+        var L = new List<ProvLine>();
+
+        // Provision accounts are credit-balance:
+        //   Debut = -BN1(pfx), Dotation = SC(pfx), Reprise = SD(pfx), Fin = -BN(pfx)
+        (decimal deb, decimal dot, decimal rep, decimal fin) Prov(string pfx)
+            => (-BN1(pfx), SC(pfx), SD(pfx), -BN(pfx));
+
+        var (d29,  dot29,  rep29,  f29)  = Prov("29");
+        var (d135, dot135, rep135, f135) = Prov("135");
+        var (d151, dot151, rep151, f151) = Prov("151");
+        var (d155, dot155, rep155, f155) = Prov("155");
+        decimal d15 = d151 + d155, dot15 = dot151 + dot155, rep15 = rep151 + rep155, f15 = f151 + f155;
+        var (d39,  dot39,  rep39,  f39)  = Prov("39");
+        var (d45,  dot45,  rep45,  f45)  = Prov("45");
+        var (d59,  dot59,  rep59,  f59)  = Prov("59");
+
+        L.Add(new("Provisions pour dépréciation des immobilisations (29)", false, false, d29,  dot29,  rep29,  f29,  new[]{"29"}));
+        L.Add(new("Provisions réglementées (135)",                         false, false, d135, dot135, rep135, f135, new[]{"135"}));
+        L.Add(new("Provisions durables pour risques et charges",           false, false, d15,  dot15,  rep15,  f15,  new[]{"151","155"}));
+        L.Add(new("— Provisions pour risques (151)",                       false, false, d151, dot151, rep151, f151, new[]{"151"}));
+        L.Add(new("— Provisions pour charges (155)",                       false, false, d155, dot155, rep155, f155, new[]{"155"}));
+        L.Add(new("Provisions pour dépréciation des stocks (39)",          false, false, d39,  dot39,  rep39,  f39,  new[]{"39"}));
+        L.Add(new("Autres provisions pour risques et charges (45)",        false, false, d45,  dot45,  rep45,  f45,  new[]{"45"}));
+        L.Add(new("Provisions pour dépréciation de trésorerie (59)",       false, false, d59,  dot59,  rep59,  f59,  new[]{"59"}));
+
+        decimal totD   = d29 + d135 + d15 + d39 + d45 + d59;
+        decimal totDot = dot29 + dot135 + dot15 + dot39 + dot45 + dot59;
+        decimal totRep = rep29 + rep135 + rep15 + rep39 + rep45 + rep59;
+        decimal totF   = f29 + f135 + f15 + f39 + f45 + f59;
+        L.Add(new("TOTAL", false, true, totD, totDot, totRep, totF));
+        t09Lines = L;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // T10 — PLUS ET MOINS VALUES SUR CESSIONS
+    // ════════════════════════════════════════════════════════════════
+    private void BuildT10()
+    {
+        var L = new List<CessionLine>();
+        // Produit de cession = account 751 (credit → negate C)
+        // VNA = account 651 (debit)
+        decimal prod = -C("751");
+        decimal vna  =  C("651");
+        L.Add(new("Cessions d'immobilisations (exercice N)", false, true, prod, vna, new[]{"751","651"}));
+        t10Lines = L;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // T11 — TITRES DE PARTICIPATION ET AUTRES TITRES IMMOBILISÉS
+    // ════════════════════════════════════════════════════════════════
+    private void BuildT11()
+    {
+        var L = new List<SyntheseLine>();
+        decimal p241n = BN("241"),  p241n1 = BN1("241");
+        decimal p248n = BN("248"),  p248n1 = BN1("248");
+        decimal p251n = BN("251"),  p251n1 = BN1("251");
+        decimal p258n = BN("258"),  p258n1 = BN1("258");
+        L.Add(new("Prêts immobilisés (241)",              false, p241n, p241n1, new[]{"241"}));
+        L.Add(new("Autres créances financières (248)",    false, p248n, p248n1, new[]{"248"}));
+        L.Add(new("Titres de participation (251)",        false, p251n, p251n1, new[]{"251"}));
+        L.Add(new("Autres titres immobilisés (258)",      false, p258n, p258n1, new[]{"258"}));
+        L.Add(new("TOTAL IMMOBILISATIONS FINANCIÈRES",    true,
+            p241n + p248n + p251n + p258n,
+            p241n1 + p248n1 + p251n1 + p258n1));
+        t11Lines = L;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // T12 — ÉTAT DE LA T.V.A.
+    // ════════════════════════════════════════════════════════════════
+    private void BuildT12()
+    {
+        var L = new List<TvaLine>();
+        // TVA facturée (4455) — credit-balance → negate BN
+        decimal tvaf_debut = -BN1("4455");
+        decimal tvaf_fin   = -BN("4455");
+        // TVA récupérable sur immobilisations (3451) — debit-balance
+        decimal tvai_debut = BN1("3451");
+        decimal tvai_fin   = BN("3451");
+        // TVA récupérable sur charges (3455) — debit-balance
+        decimal tvac_debut = BN1("3455");
+        decimal tvac_fin   = BN("3455");
+        decimal tvar_debut = tvai_debut + tvac_debut;
+        decimal tvar_fin   = tvai_fin   + tvac_fin;
+
+        L.Add(new("A — TVA Facturée (4455)",                 false, false, tvaf_debut,             tvaf_fin,             new[]{"4455"}));
+        L.Add(new("B — TVA Récupérable",                     false, false, tvar_debut,             tvar_fin,             new[]{"3451","3455"}));
+        L.Add(new("— Sur immobilisations (3451)",            true,  false, tvai_debut,             tvai_fin,             new[]{"3451"}));
+        L.Add(new("— Sur charges (3455)",                    true,  false, tvac_debut,             tvac_fin,             new[]{"3455"}));
+        L.Add(new("C — TVA Due / (Crédit) = A - B",          false, true,  tvaf_debut - tvar_debut, tvaf_fin - tvar_fin));
+        t12Lines = L;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // T14 — AFFECTATION DES RÉSULTATS
+    // ════════════════════════════════════════════════════════════════
+    private void BuildT14()
+    {
+        var L = new List<AffLine>();
+        decimal rn_debut = -BN1("116"); // Report à nouveau début exercice
+        decimal rn_fin   = -BN("116");  // Report à nouveau fin exercice
+        decimal rl_fin   = -BN("114");  // Réserve légale fin exercice
+        decimal rnet     = _rnet;       // Résultat net exercice (from BuildTFR)
+
+        L.Add(new("Report à nouveau (début exercice)",  rn_debut, "Réserve légale (114)",        rl_fin,             false, false));
+        L.Add(new("Résultat net de l'exercice",         rnet,     "Autres réserves (115)",        0m,                 false, false));
+        L.Add(new("Prélèvements sur réserves",          0m,       "Dividendes distribués",        0m,                 false, false));
+        L.Add(new("",                                   0m,       "Report à nouveau (fin)",       rn_fin,             false, false));
+        L.Add(new("TOTAL A",          rn_debut + rnet,            "TOTAL B",        rl_fin + rn_fin, false,           true));
+        t14Lines = L;
+    }
+
+    // ════════════════════════════════════════════════════════════════
+    // T20 — ÉTAT DÉTAILLÉ DES STOCKS
+    // ════════════════════════════════════════════════════════════════
+    private void BuildT20()
+    {
+        var L = new List<StockLine>();
+
+        // Stock accounts: debit-balance (positive BN)
+        // Provision accounts: credit-balance (negate BN)
+        (decimal fb, decimal fp, decimal ib, decimal ip) Stock(string pfxS, string pfxP)
+            => (BN(pfxS), -BN(pfxP), BN1(pfxS), -BN1(pfxP));
+
+        var (fb311, fp311, ib311, ip311) = Stock("311", "3911");
+        var (fb312, fp312, ib312, ip312) = Stock("312", "3912");
+        var (fb313, fp313, ib313, ip313) = Stock("313", "3913");
+        var (fb314, fp314, ib314, ip314) = Stock("314", "3914");
+        var (fb315, fp315, ib315, ip315) = Stock("315", "3915");
+
+        decimal totFb = fb311 + fb312 + fb313 + fb314 + fb315;
+        decimal totFp = fp311 + fp312 + fp313 + fp314 + fp315;
+        decimal totIb = ib311 + ib312 + ib313 + ib314 + ib315;
+        decimal totIp = ip311 + ip312 + ip313 + ip314 + ip315;
+
+        L.Add(new("Marchandises",                              false, false, false, fb311, fp311, ib311, ip311, new[]{"311","3911"}));
+        L.Add(new("Matières et fournitures consommables",      false, false, false, fb312, fp312, ib312, ip312, new[]{"312","3912"}));
+        L.Add(new("Produits en cours",                         false, false, false, fb313, fp313, ib313, ip313, new[]{"313","3913"}));
+        L.Add(new("Produits intermédiaires et résiduels",      false, false, false, fb314, fp314, ib314, ip314, new[]{"314","3914"}));
+        L.Add(new("Produits finis",                            false, false, false, fb315, fp315, ib315, ip315, new[]{"315","3915"}));
+        L.Add(new("TOTAL",                                     false, false, true,  totFb, totFp, totIb, totIp));
+        t20Lines = L;
+    }
+
+    // ── Formatting & row classes ──────────────────────────────────────
+    private static string Fmt(decimal v)    => v == 0 ? "-" : v.ToString("N2");
+    private static string FmtPos(decimal v) => v <= 0 ? ""  : v.ToString("N2");
+
+    private static string BilanRowClass(bool isHeader, bool isTotal, string cat)
+    {
+        if (isTotal && string.IsNullOrEmpty(cat)) return "lf-grand-total";
+        if (isTotal)                               return "lf-total";
+        if (isHeader && string.IsNullOrEmpty(cat)) return "lf-subheader";
+        if (isHeader)                              return "lf-header";
+        return "";
+    }
+
+    private static string CpcRowClass(CpcLine l)
+    {
+        if (l.Cat == "XIII")             return "lf-grand-total";
+        if (l.Cat is "VII" or "XI")      return "lf-result lf-result-key";
+        if (l.IsResult)                  return "lf-result";
+        if (l.IsTotal && l.Cat != "")    return "lf-total";
+        if (l.IsTotal)                   return "lf-subtotal";
+        if (l.IsHeader)                  return "lf-header";
+        return "";
+    }
+
+    private static string EsgRowClass(EsgLine l)
+    {
+        if (l.IsGrand)  return "lf-grand-total";
+        if (l.IsResult) return "lf-total";
+        return "";
+    }
+
+    private static string T03RowClass(T03Line l)
+    {
+        if (l.IsGrand)  return "lf-grand-total";
+        if (l.IsTotal)  return "lf-total";
+        if (l.IsSection)return "lf-subheader";
+        return "";
+    }
+
+    private static string T06RowClass(T06Line l)
+    {
+        if (l.IsSection) return "lf-section-hdr";
+        if (l.IsTotal)   return "lf-subtotal";
+        if (l.IsPoste)   return "lf-header";
+        return "";
+    }
+
+    public void Dispose()
+    {
+        actifLines?.Clear();      actifLines      = null;
+        passifLines?.Clear();     passifLines     = null;
+        cpcLines?.Clear();        cpcLines        = null;
+        tfrLines?.Clear();        tfrLines        = null;
+        cafLines?.Clear();        cafLines        = null;
+        syntheseLines?.Clear();   syntheseLines   = null;
+        emploisLines?.Clear();    emploisLines    = null;
+        ressourcesLines?.Clear(); ressourcesLines = null;
+        detailItems?.Clear();     detailItems     = null;
+        t03Lines?.Clear();        t03Lines        = null;
+        t04Lines?.Clear();        t04Lines        = null;
+        t06Lines?.Clear();        t06Lines        = null;
+        t08Lines?.Clear();        t08Lines        = null;
+        t09Lines?.Clear();        t09Lines        = null;
+        t10Lines?.Clear();        t10Lines        = null;
+        t11Lines?.Clear();        t11Lines        = null;
+        t12Lines?.Clear();        t12Lines        = null;
+        t14Lines?.Clear();        t14Lines        = null;
+        t20Lines?.Clear();        t20Lines        = null;
+        detailPfx = null;
+    }
+}
+
+<style>
+    .lf-tabs .e-content    { padding: 1rem 0 0; }
+    .lf-tabs .e-tab-header { min-width: 170px; }
+
+    .lf-section {
+        max-width: 1024px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 6px;
+        border: 1px solid #dbe3ef;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(15,23,42,.06);
+    }
+
+    .lf-title {
+        background: #203154;
+        color: #fff;
+        font-weight: 700;
+        font-size: .95rem;
+        letter-spacing: .04em;
+        padding: .6rem 1rem;
+        text-transform: uppercase;
+    }
+
+    .lf-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: .82rem;
+        font-family: "Arial", sans-serif;
+    }
+
+    .lf-table thead tr { background: #2d3f5f; color: #fff; }
+
+    .lf-table thead th {
+        padding: .45rem .6rem;
+        text-align: center;
+        font-weight: 600;
+        border: 1px solid #4a5e7a;
+        white-space: nowrap;
+    }
+
+    .lf-table tbody td {
+        padding: .3rem .6rem;
+        border: 1px solid #dbe3ef;
+        vertical-align: middle;
+    }
+
+    .col-cat   { width: 120px; font-weight: 700; font-size: .75rem; text-transform: uppercase; color: #203154; }
+    .col-sign  { width: 28px; text-align: center; font-weight: 700; font-size: .9rem; color: #203154; }
+    .col-label { min-width: 240px; }
+    .col-num   { width: 115px; text-align: right; white-space: nowrap; }
+
+    .fw-bold { font-weight: 700; }
+    .upcase  { text-transform: uppercase; }
+
+    /* Bilan row styles */
+    .lf-header td      { background: #eef1f6; font-weight: 600; }
+    .lf-subheader td   { background: #f4f6fb; font-weight: 600; font-style: italic; color: #203154; }
+    .lf-total td       { background: #d4dff0; font-weight: 700; }
+    .lf-grand-total td { background: #203154; color: #fff; font-weight: 700; font-size: .85rem; }
+
+    /* CPC-specific */
+    .lf-section-hdr td { background: #2d3f5f; color: #fff; font-weight: 700; text-transform: uppercase; font-size: .78rem; }
+    .lf-subtotal td    { background: #eef1f6; font-weight: 600; font-style: italic; }
+    .lf-result td      { background: #fef3c7; font-weight: 700; color: #92400e; }
+    .lf-result-key td  { background: #fde68a; }
+
+    /* TF colors */
+    .tf-emploi   { color: #7c3aed; font-weight: 700; }
+    .tf-ressource{ color: #16a34a; font-weight: 700; }
+
+    /* T06 sub-item indent */
+    .pl-indent { padding-left: 1.6rem !important; color: #4b5563; }
+
+    /* Clickable rows */
+    .cell-link { cursor: pointer; }
+    .cell-link:hover td { filter: brightness(0.93); }
+
+    /* Info note */
+    .lf-note {
+        background: #eff6ff;
+        border-left: 4px solid #3b82f6;
+        padding: .5rem 1rem;
+        font-size: .8rem;
+        color: #1e40af;
+    }
+
+    /* Detail dialog table */
+    .detail-table { width: 100%; border-collapse: collapse; font-size: .85rem; font-family: "Arial", sans-serif; }
+    .detail-table th, .detail-table td { padding: .35rem .7rem; border: 1px solid #dbe3ef; }
+    .detail-table thead tr { background: #2d3f5f; color: #fff; }
+    .detail-table tfoot tr td { border-top: 2px solid #203154; }
+</style>

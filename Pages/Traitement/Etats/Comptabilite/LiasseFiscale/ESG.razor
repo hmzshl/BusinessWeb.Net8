@@ -1,0 +1,492 @@
+@page "/cpt-liasse-esg"
+@attribute [Authorize]
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="E.S.G.">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        Liasse Fiscale IS — Modèle Normal
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDropDownList TValue="int" TItem="ExoItem" Width="200px"
+                                                @bind-Value="selectedExoIndex" DataSource="@exoItems"
+                                                Placeholder="Exercice">
+                                    <DropDownListFieldSettings Text="Label" Value="Idx" />
+                                    <DropDownListEvents TValue="int" TItem="ExoItem"
+                                                        ValueChange="@(args => LoadData())" />
+                                </SfDropDownList>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <SfTab CssClass="e-fill bilan-tabs" HeaderPlacement="HeaderPosition.Left">
+                    <TabItems>
+
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T.F.R."></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="esg-section">
+                                    <div class="esg-title">TABLEAU DE FORMATION DES RÉSULTATS (T.F.R.)</div>
+                                    <div class="table-responsive">
+                                        <table class="esg-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-sign"></th>
+                                                    <th class="col-label">Nature</th>
+                                                    <th class="col-num">Exercice</th>
+                                                    <th class="col-num">Exercice Précédent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in tfrLines)
+                                                {
+                                                    <tr class="@GetRowClass(line) @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-sign">@line.Sign</td>
+                                                        <td class="col-label">@line.Label</td>
+                                                        <td class="col-num">@Fmt(line.Val)</td>
+                                                        <td class="col-num">@Fmt(line.PrevVal)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        <TabItem>
+                            <ChildContent><TabHeader Text="C.A.F."></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="esg-section">
+                                    <div class="esg-title">CAPACITÉ D'AUTOFINANCEMENT (C.A.F.) — AUTOFINANCEMENT</div>
+                                    <div class="table-responsive">
+                                        <table class="esg-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-sign"></th>
+                                                    <th class="col-label">Nature</th>
+                                                    <th class="col-num">Exercice</th>
+                                                    <th class="col-num">Exercice Précédent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in cafLines)
+                                                {
+                                                    <tr class="@GetRowClass(line) @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-sign">@line.Sign</td>
+                                                        <td class="col-label">@line.Label</td>
+                                                        <td class="col-num">@Fmt(line.Val)</td>
+                                                        <td class="col-num">@Fmt(line.PrevVal)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                    </TabItems>
+                </SfTab>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+
+    <SfDialog @bind-Visible="showDetail" Width="520px" ShowCloseIcon="true" IsModal="true">
+        <DialogTemplates>
+            <Header>@detailTitle</Header>
+            <Content>
+                <div style="font-size:.76rem; color:#6b7280; margin-bottom:.7rem; font-family:monospace; background:#f4f6fb; padding:.3rem .5rem; border-radius:4px; border:1px solid #dbe3ef;">
+                    Plage : @string.Join("  |  ", detailPfx ?? Array.Empty<string>())
+                </div>
+                @if (detailItems.Count == 0)
+                {
+                    <p style="color:#888; font-size:.85rem; margin:0;">Aucun mouvement pour cette plage sur cet exercice.</p>
+                }
+                else
+                {
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th>Compte</th>
+                                <th style="text-align:right">Solde</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in detailItems)
+                            {
+                                <tr>
+                                    <td>@item.CG_Num</td>
+                                    <td style="text-align:right; @(item.Solde < 0 ? "color:#c0392b;" : "")">@item.Solde.ToString("N2")</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr style="font-weight:700; background:#eef1f6;">
+                                <td>Total</td>
+                                <td style="text-align:right">@detailItems.Sum(x => x.Solde).ToString("N2")</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                }
+            </Content>
+        </DialogTemplates>
+    </SfDialog>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    bool IsLoaded = false;
+
+    // ── Exercices ────────────────────────────────────────────────────
+    private class ExoItem
+    {
+        public int      Idx   { get; set; }
+        public string   Label { get; set; }
+        public DateTime Debut { get; set; }
+        public DateTime Fin   { get; set; }
+    }
+
+    private List<ExoItem> exoItems       = new();
+    private int           selectedExoIndex = 0;
+
+    private ExoItem CurrentExo => exoItems.Count > 0 ? exoItems[selectedExoIndex] : null;
+    private ExoItem PrevExo    => selectedExoIndex + 1 < exoItems.Count ? exoItems[selectedExoIndex + 1] : null;
+
+    // ── ESG lines ────────────────────────────────────────────────────
+    // Sign: "+", "-", "=" or ""   IsResult: computed row   IsGrand: key result
+    private record EsgLine(string Sign, string Label, bool IsResult, bool IsGrand, decimal Val, decimal PrevVal, string[] Pfx = null);
+
+    private List<EsgLine> tfrLines = new();
+    private List<EsgLine> cafLines = new();
+
+    // ── Detail popup ─────────────────────────────────────────────────
+    private bool     showDetail  = false;
+    private string   detailTitle = "";
+    private string[] detailPfx   = null;
+    private class DetailItem { public string CG_Num { get; set; } public decimal Solde { get; set; } }
+    private List<DetailItem> detailItems = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        LoadExercices();
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private void LoadExercices()
+    {
+        var d = db.P_DOSSIER.FirstOrDefault();
+        if (d == null) return;
+
+        var raw = new (DateTime? Debut, DateTime? Fin)[]
+        {
+            (d.D_DebutExo01, d.D_FinExo01),
+            (d.D_DebutExo02, d.D_FinExo02),
+            (d.D_DebutExo03, d.D_FinExo03),
+            (d.D_DebutExo04, d.D_FinExo04),
+            (d.D_DebutExo05, d.D_FinExo05),
+        };
+
+        exoItems = raw
+            .Where(x => x.Debut.HasValue && x.Fin.HasValue && x.Debut.Value.Year > 1900)
+            .OrderByDescending(x => x.Debut)
+            .Select((x, i) => new ExoItem
+            {
+                Idx   = i,
+                Debut = x.Debut!.Value,
+                Fin   = x.Fin!.Value,
+                Label = BuildExoLabel(x.Debut!.Value, x.Fin!.Value)
+            })
+            .ToList();
+
+        selectedExoIndex = 0;
+    }
+
+    private static string BuildExoLabel(DateTime debut, DateTime fin)
+    {
+        bool isCalYear = debut.Day == 1 && debut.Month == 1
+                      && fin.Day == 31 && fin.Month == 12
+                      && debut.Year == fin.Year;
+        return isCalYear ? debut.Year.ToString() : $"{debut:dd/MM/yy} — {fin:dd/MM/yy}";
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+        if (CurrentExo != null) { BuildTFR(); BuildCAF(); }
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    // ── Query helpers ─────────────────────────────────────────────────
+    private decimal S(string prefix, DateTime debut, DateTime fin) =>
+        db.F_ECRITUREC
+            .Where(e => e.EC_Date.HasValue
+                     && e.EC_Date.Value >= debut
+                     && e.EC_Date.Value <= fin
+                     && e.CG_Num != null && e.CG_Num.StartsWith(prefix))
+            .Sum(e => e.EC_Sens == 0 ? (e.EC_Montant ?? 0m) : -(e.EC_Montant ?? 0m));
+
+    private decimal C(string prefix) => CurrentExo != null ? S(prefix, CurrentExo.Debut, CurrentExo.Fin) : 0m;
+    private decimal P(string prefix) => PrevExo    != null ? S(prefix, PrevExo.Debut,    PrevExo.Fin)    : 0m;
+
+    // ── Detail click ─────────────────────────────────────────────────
+    private void OnCellClick(string label, string[] pfx)
+    {
+        if (pfx == null || pfx.Length == 0 || CurrentExo == null) return;
+        var debut = CurrentExo.Debut;
+        var fin   = CurrentExo.Fin;
+        detailTitle = label;
+        detailPfx   = pfx;
+        detailItems = pfx
+            .SelectMany(prefix =>
+                db.F_ECRITUREC
+                    .Where(e => e.EC_Date.HasValue
+                             && e.EC_Date.Value >= debut
+                             && e.EC_Date.Value <= fin
+                             && e.CG_Num != null && e.CG_Num.StartsWith(prefix))
+                    .GroupBy(e => e.CG_Num)
+                    .Select(g => new DetailItem
+                    {
+                        CG_Num = g.Key,
+                        Solde  = g.Sum(e => e.EC_Sens == 0 ? (e.EC_Montant ?? 0m) : -(e.EC_Montant ?? 0m))
+                    })
+                    .ToList())
+            .GroupBy(x => x.CG_Num)
+            .Select(g => new DetailItem { CG_Num = g.Key, Solde = g.Sum(x => x.Solde) })
+            .OrderBy(x => x.CG_Num)
+            .ToList();
+        showDetail = true;
+    }
+
+    // ── TFR builder ──────────────────────────────────────────────────
+    private void BuildTFR()
+    {
+        var lines = new List<EsgLine>();
+
+        decimal vm   = -C("711"), vmp  = -P("711");
+        decimal arm  = C("611"),  armp = P("611");
+        decimal mb   = vm - arm,  mbp  = vmp - armp;
+
+        lines.Add(new("",  "Ventes de marchandises en l'état",          false, false, vm,  vmp,  new[] { "711" }));
+        lines.Add(new("-", "Achats revendus de marchandises",            false, false, arm, armp, new[] { "611" }));
+        lines.Add(new("=", "MARGE BRUTE SUR VENTES EN L'ÉTAT",          true,  false, mb,  mbp));
+
+        decimal vbs  = -C("712"), vbsp = -P("712");
+        decimal vs   = -C("713"), vsp  = -P("713");
+        decimal ip   = -C("714"), ipp  = -P("714");
+        decimal prod = vbs+vs+ip, prodp = vbsp+vsp+ipp;
+
+        lines.Add(new("+", "Ventes de biens et services produits",       false, false, vbs, vbsp, new[] { "712" }));
+        lines.Add(new("+", "Variation de stocks de produits",            false, false, vs,  vsp,  new[] { "713" }));
+        lines.Add(new("+", "Immobilisations produites par l'entreprise", false, false, ip,  ipp,  new[] { "714" }));
+        lines.Add(new("=", "PRODUCTION DE L'EXERCICE",                   true,  false, prod, prodp));
+
+        decimal acm  = C("612"),         acmp  = P("612");
+        decimal ce   = C("613")+C("614"), cep  = P("613")+P("614");
+        decimal cons = acm+ce,            consp = acmp+cep;
+
+        lines.Add(new("-", "Achats consommés de matières et fournitures", false, false, acm, acmp, new[] { "612" }));
+        lines.Add(new("-", "Autres charges externes",                      false, false, ce,  cep,  new[] { "613","614" }));
+        lines.Add(new("=", "CONSOMMATION DE L'EXERCICE",                   true,  false, cons, consp));
+
+        decimal va = mb + prod - cons, vap = mbp + prodp - consp;
+        lines.Add(new("=", "VALEUR AJOUTÉE  ( MB + P - C )", true, true, va, vap));
+
+        decimal se  = -C("716"), sep = -P("716");
+        decimal it  =  C("616"), itp =  P("616");
+        decimal cp  =  C("617"), cpp =  P("617");
+        decimal ebe = va + se - it - cp, ebep = vap + sep - itp - cpp;
+
+        lines.Add(new("+", "Subventions d'exploitation",  false, false, se,  sep,  new[] { "716" }));
+        lines.Add(new("-", "Impôts et taxes",             false, false, it,  itp,  new[] { "616" }));
+        lines.Add(new("-", "Charges de personnel",        false, false, cp,  cpp,  new[] { "617" }));
+        lines.Add(new("=", "EXCÉDENT BRUT D'EXPLOITATION (E.B.E.) ou INSUFFISANCE BRUTE (I.B.E.)", true, true, ebe, ebep));
+
+        decimal ape  = -C("718"), apep = -P("718");
+        decimal ace  =  C("618"), acep =  P("618");
+        decimal rpe  = -C("719"), rpep = -P("719");
+        decimal de   =  C("619"), dep  =  P("619");
+        decimal re   = ebe + ape - ace + rpe - de, rep = ebep + apep - acep + rpep - dep;
+
+        lines.Add(new("+", "Autres produits d'exploitation",              false, false, ape, apep, new[] { "718" }));
+        lines.Add(new("-", "Autres charges d'exploitation",               false, false, ace, acep, new[] { "618" }));
+        lines.Add(new("+", "Reprises d'exploitation; transferts",         false, false, rpe, rpep, new[] { "719" }));
+        lines.Add(new("-", "Dotations d'exploitation",                    false, false, de,  dep,  new[] { "619" }));
+        lines.Add(new("=", "RÉSULTAT D'EXPLOITATION  ( + ou - )",         true,  true,  re,  rep));
+
+        decimal t4  = -C("731")-C("732")-C("738")-C("739"), t4p = -P("731")-P("732")-P("738")-P("739");
+        decimal t5  =  C("631")+C("632")+C("638")+C("639"), t5p =  P("631")+P("632")+P("638")+P("639");
+        decimal rf  = t4 - t5,   rfp = t4p - t5p;
+        decimal rc  = re + rf,   rcp = rep + rfp;
+
+        lines.Add(new("+", "Produits financiers",  false, false, t4, t4p, new[] { "731","732","738","739" }));
+        lines.Add(new("-", "Charges financières",  false, false, t5, t5p, new[] { "631","632","638","639" }));
+        lines.Add(new("=", "RÉSULTAT COURANT  ( + ou - )", true, true, rc, rcp));
+
+        decimal t8  = -C("751")-C("756")-C("757")-C("758")-C("759"), t8p = -P("751")-P("756")-P("757")-P("758")-P("759");
+        decimal t9  =  C("651")+C("656")+C("658")+C("659"),          t9p =  P("651")+P("656")+P("658")+P("659");
+        decimal rnc = t8 - t9,  rncp = t8p - t9p;
+
+        lines.Add(new("+", "Produits non courants",  false, false, t8, t8p, new[] { "751","756","757","758","759" }));
+        lines.Add(new("-", "Charges non courantes",  false, false, t9, t9p, new[] { "651","656","658","659" }));
+        lines.Add(new("=", "RÉSULTAT AVANT IMPÔTS", true, false, rc+rnc, rcp+rncp));
+
+        decimal imp  = C("670"),           impp  = P("670");
+        decimal rnet = rc + rnc - imp,     rnetp = rcp + rncp - impp;
+
+        lines.Add(new("-", "Impôts sur les résultats", false, false, imp, impp, new[] { "670" }));
+        lines.Add(new("=", "RÉSULTAT NET  ( + ou - )", true, true, rnet, rnetp));
+
+        tfrLines = lines;
+
+        _rnet  = rnet;  _rnetp  = rnetp;
+        _de    = de;    _dep    = dep;
+        _t5fin = C("639"); _t5finp = P("639");
+        _t9nc  = C("659"); _t9ncp  = P("659");
+        _rpe   = rpe;   _rpep   = rpep;
+        _rpf   = -C("739"); _rpfp = -P("739");
+        _rpnc  = -C("759"); _rpncp = -P("759");
+        _pci   = -C("751"); _pcip  = -P("751");
+        _vna   =  C("651"); _vnap  =  P("651");
+    }
+
+    // shared values from TFR for CAF
+    decimal _rnet, _rnetp, _de, _dep, _t5fin, _t5finp, _t9nc, _t9ncp;
+    decimal _rpe, _rpep, _rpf, _rpfp, _rpnc, _rpncp, _pci, _pcip, _vna, _vnap;
+
+    // ── CAF builder ──────────────────────────────────────────────────
+    private void BuildCAF()
+    {
+        var lines = new List<EsgLine>();
+
+        decimal caf  = _rnet + _de + _t5fin + _t9nc - _rpe - _rpf - _rpnc - _pci + _vna;
+        decimal cafp = _rnetp + _dep + _t5finp + _t9ncp - _rpep - _rpfp - _rpncp - _pcip + _vnap;
+
+        lines.Add(new("",  "Résultat net de l'exercice  (bénéfice +, perte -)",          false, false, _rnet,  _rnetp));
+        lines.Add(new("+", "Dotations d'exploitation (1)",                                false, false, _de,    _dep,   new[] { "619" }));
+        lines.Add(new("+", "Dotations financières (1)",                                   false, false, _t5fin, _t5finp, new[] { "639" }));
+        lines.Add(new("+", "Dotations non courantes aux amortissements et provisions (1)",false, false, _t9nc,  _t9ncp,  new[] { "659" }));
+        lines.Add(new("-", "Reprises d'exploitation (2)",                                 false, false, _rpe,   _rpep,   new[] { "719" }));
+        lines.Add(new("-", "Reprises financières (2)",                                    false, false, _rpf,   _rpfp,   new[] { "739" }));
+        lines.Add(new("-", "Reprises non courantes; transferts de charges (2)",           false, false, _rpnc,  _rpncp,  new[] { "759" }));
+        lines.Add(new("-", "Produits des cessions d'immobilisations",                     false, false, _pci,   _pcip,   new[] { "751" }));
+        lines.Add(new("+", "Valeurs nettes d'amortissement des immobilisations cédées",  false, false, _vna,   _vnap,   new[] { "651" }));
+        lines.Add(new("=", "CAPACITÉ D'AUTOFINANCEMENT  ( C.A.F. )",                     true,  true,  caf,    cafp));
+        lines.Add(new("-", "Distributions de bénéfices",                                  false, false, 0,      0));
+        lines.Add(new("=", "AUTOFINANCEMENT",                                              true,  true,  caf,    cafp));
+
+        cafLines = lines;
+    }
+
+    private static string Fmt(decimal v) => v == 0 ? "-" : v.ToString("N2");
+
+    private static string GetRowClass(EsgLine line)
+    {
+        if (line.IsGrand)  return "esg-grand-result";
+        if (line.IsResult) return "esg-result";
+        return "";
+    }
+
+    public void Dispose()
+    {
+        tfrLines?.Clear();
+        cafLines?.Clear();
+        detailItems?.Clear();
+        tfrLines    = null;
+        cafLines    = null;
+        detailItems = null;
+        detailPfx   = null;
+    }
+}
+
+<style>
+    .bilan-tabs .e-content { padding: 1rem 0 0; }
+    .bilan-tabs .e-tab-header { min-width: 90px; }
+
+    .esg-section {
+        max-width: 860px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 6px;
+        border: 1px solid #dbe3ef;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(15,23,42,.06);
+    }
+
+    .esg-title {
+        background: #203154;
+        color: #fff;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: .04em;
+        padding: .6rem 1rem;
+        text-transform: uppercase;
+    }
+
+    .esg-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: .82rem;
+        font-family: "Arial", sans-serif;
+    }
+
+    .esg-table thead tr { background: #2d3f5f; color: #fff; }
+
+    .esg-table thead th {
+        padding: .45rem .6rem;
+        text-align: center;
+        font-weight: 600;
+        border: 1px solid #4a5e7a;
+        white-space: nowrap;
+    }
+
+    .esg-table tbody td {
+        padding: .3rem .6rem;
+        border: 1px solid #dbe3ef;
+        vertical-align: middle;
+    }
+
+    .col-sign { width: 28px; text-align: center; font-weight: 700; font-size: .9rem; color: #203154; }
+    .col-label { min-width: 340px; }
+    .col-num   { width: 120px; text-align: right; white-space: nowrap; }
+
+    .esg-result td      { background: #d4dff0; font-weight: 700; }
+    .esg-grand-result td{ background: #203154; color: #fff; font-weight: 700; font-size: .88rem; }
+
+    .cell-link { cursor: pointer; }
+    .cell-link:hover td { filter: brightness(0.93); }
+
+    .detail-table { width: 100%; border-collapse: collapse; font-size: .85rem; font-family: "Arial", sans-serif; }
+    .detail-table th, .detail-table td { padding: .35rem .7rem; border: 1px solid #dbe3ef; }
+    .detail-table thead tr { background: #2d3f5f; color: #fff; }
+    .detail-table tfoot tr td { border-top: 2px solid #203154; }
+</style>

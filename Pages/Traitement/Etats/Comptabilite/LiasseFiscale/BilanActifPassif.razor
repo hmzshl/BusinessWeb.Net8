@@ -1,0 +1,655 @@
+@page "/cpt-liasse-bilan"
+@attribute [Authorize]
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="BILAN">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        Liasse Fiscale IS — Modèle Normal &nbsp;|&nbsp;
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDropDownList TValue="int" TItem="ExoItem" Width="200px"
+                                                @bind-Value="selectedExoIndex" DataSource="@exoItems"
+                                                Placeholder="Exercice">
+                                    <DropDownListFieldSettings Text="Label" Value="Idx" />
+                                    <DropDownListEvents TValue="int" TItem="ExoItem"
+                                                        ValueChange="@(args => LoadData())" />
+                                </SfDropDownList>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <SfTab CssClass="e-fill bilan-tabs" HeaderPlacement="HeaderPosition.Left">
+                    <TabItems>
+
+                        <TabItem>
+                            <ChildContent><TabHeader Text="Actif"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="bilan-section">
+                                    <div class="bilan-title">BILAN - ACTIF</div>
+                                    <div class="table-responsive">
+                                        <table class="bilan-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-cat"></th>
+                                                    <th class="col-label">Éléments</th>
+                                                    <th class="col-num">Exercice — Brut</th>
+                                                    <th class="col-num">Amort. &amp; Prov.</th>
+                                                    <th class="col-num">Net</th>
+                                                    <th class="col-num">Exercice Précédent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in actifLines)
+                                                {
+                                                    <tr class="@GetRowClass(line.IsHeader, line.IsTotal, line.Cat) @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label.Length > 0 ? line.Label : line.Cat, line.Pfx))">
+                                                        <td class="col-cat">@(line.IsHeader || line.IsTotal ? line.Cat : "")</td>
+                                                        <td class="col-label @(line.IsHeader ? "cat-label" : "")">@line.Label</td>
+                                                        <td class="col-num">@Fmt(line.Brut)</td>
+                                                        <td class="col-num">@Fmt(line.Amort)</td>
+                                                        <td class="col-num">@Fmt(line.Net)</td>
+                                                        <td class="col-num">@Fmt(line.PrevNet)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        <TabItem>
+                            <ChildContent><TabHeader Text="Passif"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="bilan-section">
+                                    <div class="bilan-title">BILAN - PASSIF</div>
+                                    <div class="table-responsive">
+                                        <table class="bilan-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-cat"></th>
+                                                    <th class="col-label">Éléments</th>
+                                                    <th class="col-num">Exercice</th>
+                                                    <th class="col-num">Exercice Précédent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in passifLines)
+                                                {
+                                                    <tr class="@GetRowClass(line.IsHeader, line.IsTotal, line.Cat) @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label.Length > 0 ? line.Label : line.Cat, line.Pfx))">
+                                                        <td class="col-cat">@(line.IsHeader || line.IsTotal ? line.Cat : "")</td>
+                                                        <td class="col-label @(line.IsHeader ? "cat-label" : "")">@line.Label</td>
+                                                        <td class="col-num">@Fmt(line.Val)</td>
+                                                        <td class="col-num">@Fmt(line.PrevVal)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                    </TabItems>
+                </SfTab>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+
+    <SfDialog @bind-Visible="showDetail" Width="520px" ShowCloseIcon="true" IsModal="true">
+        <DialogTemplates>
+            <Header>@detailTitle</Header>
+            <Content>
+                <div style="font-size:.76rem; color:#6b7280; margin-bottom:.7rem; font-family:monospace; background:#f4f6fb; padding:.3rem .5rem; border-radius:4px; border:1px solid #dbe3ef;">
+                    Plage : @string.Join("  |  ", detailPfx ?? Array.Empty<string>())
+                </div>
+                @if (detailItems.Count == 0)
+                {
+                    <p style="color:#888; font-size:.85rem; margin:0;">Aucun mouvement pour cette plage sur cet exercice.</p>
+                }
+                else
+                {
+                    <table class="detail-table">
+                        <thead>
+                            <tr>
+                                <th>Compte</th>
+                                <th style="text-align:right">Solde</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in detailItems)
+                            {
+                                <tr>
+                                    <td>@item.CG_Num</td>
+                                    <td style="text-align:right; @(item.Solde < 0 ? "color:#c0392b;" : "")">@item.Solde.ToString("N2")</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr style="font-weight:700; background:#eef1f6;">
+                                <td>Total</td>
+                                <td style="text-align:right">@detailItems.Sum(x => x.Solde).ToString("N2")</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                }
+            </Content>
+        </DialogTemplates>
+    </SfDialog>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    bool IsLoaded = false;
+
+    // ── Exercices ────────────────────────────────────────────────────
+    private class ExoItem
+    {
+        public int      Idx   { get; set; }
+        public string   Label { get; set; }
+        public DateTime Debut { get; set; }
+        public DateTime Fin   { get; set; }
+    }
+
+    private List<ExoItem> exoItems      = new();
+    private int           selectedExoIndex = 0;
+
+    private ExoItem CurrentExo => exoItems.Count > 0 ? exoItems[selectedExoIndex] : null;
+    private ExoItem PrevExo    => selectedExoIndex + 1 < exoItems.Count ? exoItems[selectedExoIndex + 1] : null;
+
+    // ── Bilan lines ──────────────────────────────────────────────────
+    private record ActifLine(string Cat, string Label, bool IsHeader, bool IsTotal, decimal Brut, decimal Amort, decimal PrevNet, string[] Pfx = null)
+    {
+        public decimal Net => Brut - Amort;
+    }
+    private record PassifLine(string Cat, string Label, bool IsHeader, bool IsTotal, decimal Val, decimal PrevVal, string[] Pfx = null);
+
+    private List<ActifLine>  actifLines  = new();
+    private List<PassifLine> passifLines = new();
+
+    // ── Detail popup ─────────────────────────────────────────────────
+    private bool     showDetail  = false;
+    private string   detailTitle = "";
+    private string[] detailPfx   = null;
+    private class DetailItem { public string CG_Num { get; set; } public decimal Solde { get; set; } }
+    private List<DetailItem> detailItems = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        LoadExercices();
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private void LoadExercices()
+    {
+        var d = db.P_DOSSIER.FirstOrDefault();
+        if (d == null) return;
+
+        var raw = new (DateTime? Debut, DateTime? Fin)[]
+        {
+            (d.D_DebutExo01, d.D_FinExo01),
+            (d.D_DebutExo02, d.D_FinExo02),
+            (d.D_DebutExo03, d.D_FinExo03),
+            (d.D_DebutExo04, d.D_FinExo04),
+            (d.D_DebutExo05, d.D_FinExo05),
+        };
+
+        exoItems = raw
+            .Where(x => x.Debut.HasValue && x.Fin.HasValue && x.Debut.Value.Year > 1900)
+            .OrderByDescending(x => x.Debut)
+            .Select((x, i) => new ExoItem
+            {
+                Idx   = i,
+                Debut = x.Debut!.Value,
+                Fin   = x.Fin!.Value,
+                Label = BuildExoLabel(x.Debut!.Value, x.Fin!.Value)
+            })
+            .ToList();
+
+        selectedExoIndex = 0;
+    }
+
+    private static string BuildExoLabel(DateTime debut, DateTime fin)
+    {
+        bool isCalYear = debut.Day == 1 && debut.Month == 1
+                      && fin.Day == 31 && fin.Month == 12
+                      && debut.Year == fin.Year;
+        return isCalYear
+            ? debut.Year.ToString()
+            : $"{debut:dd/MM/yy} — {fin:dd/MM/yy}";
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+
+        if (CurrentExo != null)
+        {
+            BuildActif();
+            BuildPassif();
+        }
+
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    // ── Query helper ─────────────────────────────────────────────────
+    private decimal S(string prefix, DateTime debut, DateTime fin) =>
+        db.F_ECRITUREC
+            .Where(e => e.EC_Date.HasValue
+                     && e.EC_Date.Value >= debut
+                     && e.EC_Date.Value <= fin
+                     && e.CG_Num != null && e.CG_Num.StartsWith(prefix))
+            .Sum(e => e.EC_Sens == 0 ? (e.EC_Montant ?? 0m) : -(e.EC_Montant ?? 0m));
+
+    private decimal C(string prefix) => CurrentExo != null ? S(prefix, CurrentExo.Debut, CurrentExo.Fin) : 0m;
+    private decimal P(string prefix) => PrevExo    != null ? S(prefix, PrevExo.Debut,    PrevExo.Fin)    : 0m;
+
+    // ── Detail click ─────────────────────────────────────────────────
+    private void OnCellClick(string label, string[] pfx)
+    {
+        if (pfx == null || pfx.Length == 0 || CurrentExo == null) return;
+        var debut = CurrentExo.Debut;
+        var fin   = CurrentExo.Fin;
+        detailTitle = label;
+        detailPfx   = pfx;
+        detailItems = pfx
+            .SelectMany(prefix =>
+                db.F_ECRITUREC
+                    .Where(e => e.EC_Date.HasValue
+                             && e.EC_Date.Value >= debut
+                             && e.EC_Date.Value <= fin
+                             && e.CG_Num != null && e.CG_Num.StartsWith(prefix))
+                    .GroupBy(e => e.CG_Num)
+                    .Select(g => new DetailItem
+                    {
+                        CG_Num = g.Key,
+                        Solde  = g.Sum(e => e.EC_Sens == 0 ? (e.EC_Montant ?? 0m) : -(e.EC_Montant ?? 0m))
+                    })
+                    .ToList())
+            .GroupBy(x => x.CG_Num)
+            .Select(g => new DetailItem { CG_Num = g.Key, Solde = g.Sum(x => x.Solde) })
+            .OrderBy(x => x.CG_Num)
+            .ToList();
+        showDetail = true;
+    }
+
+    // ── ACTIF builder ────────────────────────────────────────────────
+    private void BuildActif()
+    {
+        var lines = new List<ActifLine>();
+
+        // ─── ACTIF IMMOBILISE ──────────────────────────────────────
+        decimal fPrB = C("211"), fPrA = -C("2811"), fPrP = P("211") + P("2811");
+        decimal chB  = C("212"), chA  = -C("2812"), chP  = P("212") + P("2812");
+        decimal pmB  = C("213"), pmA  = -C("2813"), pmP  = P("213") + P("2813");
+        decimal nvB = fPrB + chB + pmB, nvA = fPrA + chA + pmA, nvP = fPrP + chP + pmP;
+
+        lines.Add(new("ACTIF IMMOBILISÉ", "IMMOBILISATION EN NON VALEUR ( a )", true,  false, nvB,  nvA,  nvP,  new[] { "211","2811","212","2812","213","2813" }));
+        lines.Add(new("", "Frais préliminaires",                                false, false, fPrB, fPrA, fPrP, new[] { "211","2811" }));
+        lines.Add(new("", "Charges à repartir sur plusieurs exercices",         false, false, chB,  chA,  chP,  new[] { "212","2812" }));
+        lines.Add(new("", "Primes de remboursement des obligations",            false, false, pmB,  pmA,  pmP,  new[] { "213","2813" }));
+
+        decimal rdB = C("221"), rdA = -C("2821") - C("2921"), rdP = P("221") + P("2821") + P("2921");
+        decimal brB = C("222"), brA = -C("2822") - C("2922"), brP = P("222") + P("2822") + P("2922");
+        decimal fcB = C("223"), fcA = -C("2823") - C("2923"), fcP = P("223") + P("2823") + P("2923");
+        decimal aiB = C("228"), aiA = -C("2828") - C("2928"), aiP = P("228") + P("2828") + P("2928");
+        decimal inB = rdB+brB+fcB+aiB, inA = rdA+brA+fcA+aiA, inP = rdP+brP+fcP+aiP;
+
+        lines.Add(new("", "IMMOBILISATIONS INCORPORELLES ( b )", true,  false, inB, inA, inP, new[] { "221","2821","2921","222","2822","2922","223","2823","2923","228","2828","2928" }));
+        lines.Add(new("", "Immobilisations en recherche et développement",  false, false, rdB, rdA, rdP, new[] { "221","2821","2921" }));
+        lines.Add(new("", "Brevets, marques, droits et valeurs similaires", false, false, brB, brA, brP, new[] { "222","2822","2922" }));
+        lines.Add(new("", "Fonds commercial",                               false, false, fcB, fcA, fcP, new[] { "223","2823","2923" }));
+        lines.Add(new("", "Autres immobilisations incorporelles",           false, false, aiB, aiA, aiP, new[] { "228","2828","2928" }));
+
+        decimal teB = C("231"), teA = -C("2831")-C("2931"), teP = P("231")+P("2831")+P("2931");
+        decimal coB = C("232"), coA = -C("2832")-C("2932"), coP = P("232")+P("2832")+P("2932");
+        decimal itB = C("233"), itA = -C("2833")-C("2933"), itP = P("233")+P("2833")+P("2933");
+        decimal mtB = C("234"), mtA = -C("2834")-C("2934"), mtP = P("234")+P("2834")+P("2934");
+        decimal mbB = C("235"), mbA = -C("2835")-C("2935"), mbP = P("235")+P("2835")+P("2935");
+        decimal acB = C("238"), acA = -C("2838")-C("2938"), acP = P("238")+P("2838")+P("2938");
+        decimal ecB = C("239"), ecA = -C("2839")-C("2939"), ecP = P("239")+P("2839")+P("2939");
+        decimal cpB = teB+coB+itB+mtB+mbB+acB+ecB, cpA = teA+coA+itA+mtA+mbA+acA+ecA, cpP = teP+coP+itP+mtP+mbP+acP+ecP;
+
+        lines.Add(new("", "IMMOBILISATIONS CORPORELLES ( c )", true,  false, cpB, cpA, cpP, new[] { "231","2831","2931","232","2832","2932","233","2833","2933","234","2834","2934","235","2835","2935","238","2838","2938","239","2839","2939" }));
+        lines.Add(new("", "Terrains",                                             false, false, teB, teA, teP, new[] { "231","2831","2931" }));
+        lines.Add(new("", "Constructions",                                        false, false, coB, coA, coP, new[] { "232","2832","2932" }));
+        lines.Add(new("", "Installations techniques, matériel et outillage",      false, false, itB, itA, itP, new[] { "233","2833","2933" }));
+        lines.Add(new("", "Matériel de transport",                                false, false, mtB, mtA, mtP, new[] { "234","2834","2934" }));
+        lines.Add(new("", "Mobiliers, matériel de bureau et aménagements divers", false, false, mbB, mbA, mbP, new[] { "235","2835","2935" }));
+        lines.Add(new("", "Autres immobilisations corporelles",                   false, false, acB, acA, acP, new[] { "238","2838","2938" }));
+        lines.Add(new("", "Immobilisations corporelles en cours",                 false, false, ecB, ecA, ecP, new[] { "239","2839","2939" }));
+
+        decimal p1B = C("241"), p1A = -C("2941"), p1P = P("241")+P("2941");
+        decimal p2B = C("248"), p2A = -C("2948"), p2P = P("248")+P("2948");
+        decimal p3B = C("251"), p3A = -C("2951"), p3P = P("251")+P("2951");
+        decimal p4B = C("258"), p4A = -C("2958"), p4P = P("258")+P("2958");
+        decimal fiB = p1B+p2B+p3B+p4B, fiA = p1A+p2A+p3A+p4A, fiP = p1P+p2P+p3P+p4P;
+
+        lines.Add(new("", "IMMOBILISATIONS FINANCIÈRES ( d )", true,  false, fiB, fiA, fiP, new[] { "241","2941","248","2948","251","2951","258","2958" }));
+        lines.Add(new("", "Prêts immobilisés",           false, false, p1B, p1A, p1P, new[] { "241","2941" }));
+        lines.Add(new("", "Autres créances financières", false, false, p2B, p2A, p2P, new[] { "248","2948" }));
+        lines.Add(new("", "Titres de participation",     false, false, p3B, p3A, p3P, new[] { "251","2951" }));
+        lines.Add(new("", "Autres titres immobilisés",   false, false, p4B, p4A, p4P, new[] { "258","2958" }));
+
+        decimal e1B = C("271"), e1P = P("271");
+        decimal e2B = C("272"), e2P = P("272");
+        decimal ecIB = e1B+e2B, ecIP = e1P+e2P;
+
+        lines.Add(new("", "ECARTS DE CONVERSION - ACTIF ( e )", true,  false, ecIB, 0, ecIP, new[] { "271","272" }));
+        lines.Add(new("", "Diminution des créances immobilisées",   false, false, e1B, 0, e1P, new[] { "271" }));
+        lines.Add(new("", "Augmentation des dettes de financement", false, false, e2B, 0, e2P, new[] { "272" }));
+
+        decimal t1B = nvB+inB+cpB+fiB+ecIB, t1A = nvA+inA+cpA+fiA, t1P = nvP+inP+cpP+fiP+ecIP;
+        lines.Add(new("", "TOTAL  I   ( a + b + c + d + e )", false, true, t1B, t1A, t1P));
+
+        // ─── ACTIF CIRCULANT ────────────────────────────────────────
+        decimal s1B = C("311"), s1A = -C("3911"), s1P = P("311")+P("3911");
+        decimal s2B = C("312"), s2A = -C("3912"), s2P = P("312")+P("3912");
+        decimal s3B = C("313"), s3A = -C("3913"), s3P = P("313")+P("3913");
+        decimal s4B = C("314"), s4A = -C("3914"), s4P = P("314")+P("3914");
+        decimal s5B = C("315"), s5A = -C("3915"), s5P = P("315")+P("3915");
+        decimal stB = s1B+s2B+s3B+s4B+s5B, stA = s1A+s2A+s3A+s4A+s5A, stP = s1P+s2P+s3P+s4P+s5P;
+
+        lines.Add(new("ACTIF CIRCULANT", "STOCKS ( f )", true, false, stB, stA, stP, new[] { "311","3911","312","3912","313","3913","314","3914","315","3915" }));
+        lines.Add(new("", "Marchandises",                                  false, false, s1B, s1A, s1P, new[] { "311","3911" }));
+        lines.Add(new("", "Matières et fournitures consommables",          false, false, s2B, s2A, s2P, new[] { "312","3912" }));
+        lines.Add(new("", "Produits en cours",                             false, false, s3B, s3A, s3P, new[] { "313","3913" }));
+        lines.Add(new("", "Produits intermédiaires et produits residuels", false, false, s4B, s4A, s4P, new[] { "314","3914" }));
+        lines.Add(new("", "Produits finis",                                false, false, s5B, s5A, s5P, new[] { "315","3915" }));
+
+        decimal c1B = C("341"), c1A = -C("3941"), c1P = P("341")+P("3941");
+        decimal c2B = C("342"), c2A = -C("3942"), c2P = P("342")+P("3942");
+        decimal c3B = C("343"), c3A = -C("3943"), c3P = P("343")+P("3943");
+        decimal c4B = C("345"), c4A = -C("3945"), c4P = P("345")+P("3945");
+        decimal c5B = C("346"), c5A = -C("3946"), c5P = P("346")+P("3946");
+        decimal c6B = C("348"), c6A = -C("3948"), c6P = P("348")+P("3948");
+        decimal c7B = C("349"), c7A = -C("3949"), c7P = P("349")+P("3949");
+        decimal crB = c1B+c2B+c3B+c4B+c5B+c6B+c7B, crA = c1A+c2A+c3A+c4A+c5A+c6A+c7A, crP = c1P+c2P+c3P+c4P+c5P+c6P+c7P;
+
+        lines.Add(new("", "CRÉANCES DE L'ACTIF CIRCULANT ( g )", true, false, crB, crA, crP, new[] { "341","3941","342","3942","343","3943","345","3945","346","3946","348","3948","349","3949" }));
+        lines.Add(new("", "Fournisseurs débiteurs, avances et acomptes", false, false, c1B, c1A, c1P, new[] { "341","3941" }));
+        lines.Add(new("", "Clients et comptes rattachés",                false, false, c2B, c2A, c2P, new[] { "342","3942" }));
+        lines.Add(new("", "Personnel",                                   false, false, c3B, c3A, c3P, new[] { "343","3943" }));
+        lines.Add(new("", "Etat",                                        false, false, c4B, c4A, c4P, new[] { "345","3945" }));
+        lines.Add(new("", "Comptes d'associés",                          false, false, c5B, c5A, c5P, new[] { "346","3946" }));
+        lines.Add(new("", "Autres débiteurs",                            false, false, c6B, c6A, c6P, new[] { "348","3948" }));
+        lines.Add(new("", "Comptes de régularisation actif",             false, false, c7B, c7A, c7P, new[] { "349","3949" }));
+
+        decimal tvB = C("35"), tvA = -C("395"), tvP = P("35")+P("395");
+        decimal ecCB = C("37"), ecCP = P("37");
+
+        lines.Add(new("", "TITRES ET VALEURS DE PLACEMENT ( h )",               true, false, tvB,  tvA, tvP,  new[] { "35","395" }));
+        lines.Add(new("", "ECART DE CONVERSION - ACTIF ( i ) (Élém. Circul.)",  true, false, ecCB, 0,   ecCP, new[] { "37" }));
+
+        decimal t2B = stB+crB+tvB+ecCB, t2A = stA+crA+tvA, t2P = stP+crP+tvP+ecCP;
+        lines.Add(new("", "TOTAL  II   ( f + g + h + i )", false, true, t2B, t2A, t2P));
+
+        // ─── TRESORERIE ACTIF ────────────────────────────────────────
+        decimal r1B = C("511"), r1A = -C("5911"), r1P = P("511")+P("5911");
+        decimal r2B = C("514"), r2A = -C("5914"), r2P = P("514")+P("5914");
+        decimal r3B = C("516"), r3A = -C("5916"), r3P = P("516")+P("5916");
+        decimal trB = r1B+r2B+r3B, trA = r1A+r2A+r3A, trP = r1P+r2P+r3P;
+
+        lines.Add(new("TRÉSORERIE", "TRÉSORERIE - ACTIF", true, false, trB, trA, trP, new[] { "511","5911","514","5914","516","5916" }));
+        lines.Add(new("", "Chèques et valeurs à encaisser",           false, false, r1B, r1A, r1P, new[] { "511","5911" }));
+        lines.Add(new("", "Banques, T.G & CP",                        false, false, r2B, r2A, r2P, new[] { "514","5914" }));
+        lines.Add(new("", "Caisses, régies d'avances et accréditifs", false, false, r3B, r3A, r3P, new[] { "516","5916" }));
+
+        lines.Add(new("", "TOTAL  III", false, true, trB, trA, trP));
+        lines.Add(new("TOTAL GÉNÉRAL  I+II+III", "", false, true, t1B+t2B+trB, t1A+t2A+trA, t1P+t2P+trP));
+
+        actifLines = lines;
+    }
+
+    // ── PASSIF builder ───────────────────────────────────────────────
+    private void BuildPassif()
+    {
+        var lines = new List<PassifLine>();
+
+        // ─── FINANCEMENTS PERMANENTS ────────────────────────────────
+        decimal kV   = -C("111"), kVp   = -P("111");
+        decimal peV  = -C("112"), peVp  = -P("112");
+        decimal erV  = -C("113"), erVp  = -P("113");
+        decimal rlV  = -C("114"), rlVp  = -P("114");
+        decimal arV  = -C("115"), arVp  = -P("115");
+        decimal rnV  = -C("116"), rnVp  = -P("116");
+        decimal riV  = -C("118"), riVp  = -P("118");
+        decimal resV = -C("7") - C("6"), resVp = -P("7") - P("6");
+        decimal cpT = kV+peV+erV+rlV+arV+rnV+riV+resV, cpTp = kVp+peVp+erVp+rlVp+arVp+rnVp+riVp+resVp;
+
+        lines.Add(new("FINANCEMENTS PERMANENTS", "CAPITAUX PROPRES", true, false, cpT, cpTp, new[] { "111","112","113","114","115","116","118","6","7" }));
+        lines.Add(new("", "Capital social ou personnel (1)",                   false, false, kV,   kVp,  new[] { "111" }));
+        lines.Add(new("", "moins : Actionnaires, capital souscrit non appelé", false, false, 0,    0));
+        lines.Add(new("", "Prime d'émission, de fusion, d'apport",            false, false, peV,  peVp, new[] { "112" }));
+        lines.Add(new("", "Ecarts de réévaluation",                           false, false, erV,  erVp, new[] { "113" }));
+        lines.Add(new("", "Réserve légale",                                   false, false, rlV,  rlVp, new[] { "114" }));
+        lines.Add(new("", "Autres réserves",                                  false, false, arV,  arVp, new[] { "115" }));
+        lines.Add(new("", "Report à nouveau (2)",                             false, false, rnV,  rnVp, new[] { "116" }));
+        lines.Add(new("", "Résultats nets en instance d'affectation (2)",     false, false, riV,  riVp, new[] { "118" }));
+        lines.Add(new("", "Résultat net de l'exercice (2)",                   false, false, resV, resVp, new[] { "6","7" }));
+        lines.Add(new("", "TOTAL DES CAPITAUX PROPRES ( a )", false, true, cpT, cpTp));
+
+        decimal sv1 = -C("131"), sv1p = -P("131");
+        decimal sv2 = -C("135"), sv2p = -P("135");
+        decimal cpaT = sv1+sv2, cpaTp = sv1p+sv2p;
+
+        lines.Add(new("", "CAPITAUX PROPRES ASSIMILÉS ( b )", true, false, cpaT, cpaTp, new[] { "131","135" }));
+        lines.Add(new("", "Subventions d'investissement", false, false, sv1, sv1p, new[] { "131" }));
+        lines.Add(new("", "Provisions réglementées",      false, false, sv2, sv2p, new[] { "135" }));
+
+        decimal df1 = -C("141"), df1p = -P("141");
+        decimal df2 = -C("148"), df2p = -P("148");
+        decimal dfT = df1+df2, dfTp = df1p+df2p;
+
+        lines.Add(new("", "DETTES DE FINANCEMENT ( c )", true, false, dfT, dfTp, new[] { "141","148" }));
+        lines.Add(new("", "Emprunts obligataires",        false, false, df1, df1p, new[] { "141" }));
+        lines.Add(new("", "Autres dettes de financement", false, false, df2, df2p, new[] { "148" }));
+
+        decimal pr1 = -C("151"), pr1p = -P("151");
+        decimal pr2 = -C("155"), pr2p = -P("155");
+        decimal prT = pr1+pr2, prTp = pr1p+pr2p;
+
+        lines.Add(new("", "PROVISIONS DURABLES POUR RISQUES ET CHARGES ( d )", true, false, prT, prTp, new[] { "151","155" }));
+        lines.Add(new("", "Provisions pour risques", false, false, pr1, pr1p, new[] { "151" }));
+        lines.Add(new("", "Provisions pour charges", false, false, pr2, pr2p, new[] { "155" }));
+
+        decimal ec1 = -C("171"), ec1p = -P("171");
+        decimal ec2 = -C("172"), ec2p = -P("172");
+        decimal ecT = ec1+ec2, ecTp = ec1p+ec2p;
+
+        lines.Add(new("", "ECARTS DE CONVERSION - PASSIF ( e )", true, false, ecT, ecTp, new[] { "171","172" }));
+        lines.Add(new("", "Augmentation des créances immobilisées",  false, false, ec1, ec1p, new[] { "171" }));
+        lines.Add(new("", "Diminution des dettes de financement",    false, false, ec2, ec2p, new[] { "172" }));
+
+        decimal t1 = cpT+cpaT+dfT+prT+ecT, t1p = cpTp+cpaTp+dfTp+prTp+ecTp;
+        lines.Add(new("", "TOTAL  I  ( a + b + c + d + e )", false, true, t1, t1p));
+
+        // ─── PASSIF CIRCULANT ────────────────────────────────────────
+        decimal d1 = -C("441"), d1p = -P("441");
+        decimal d2 = -C("442"), d2p = -P("442");
+        decimal d3 = -C("443"), d3p = -P("443");
+        decimal d4 = -C("444"), d4p = -P("444");
+        decimal d5 = -C("445"), d5p = -P("445");
+        decimal d6 = -C("446"), d6p = -P("446");
+        decimal d7 = -C("448"), d7p = -P("448");
+        decimal d8 = -C("449"), d8p = -P("449");
+        decimal dT = d1+d2+d3+d4+d5+d6+d7+d8, dTp = d1p+d2p+d3p+d4p+d5p+d6p+d7p+d8p;
+
+        lines.Add(new("PASSIF CIRCULANT", "DETTES DU PASSIF CIRCULANT ( f )", true, false, dT, dTp, new[] { "441","442","443","444","445","446","448","449" }));
+        lines.Add(new("", "Fournisseurs et comptes rattachés",        false, false, d1, d1p, new[] { "441" }));
+        lines.Add(new("", "Clients créditeurs, avances et acomptes", false, false, d2, d2p, new[] { "442" }));
+        lines.Add(new("", "Personnel",                                false, false, d3, d3p, new[] { "443" }));
+        lines.Add(new("", "Organismes sociaux",                       false, false, d4, d4p, new[] { "444" }));
+        lines.Add(new("", "Etat",                                     false, false, d5, d5p, new[] { "445" }));
+        lines.Add(new("", "Comptes d'associés",                       false, false, d6, d6p, new[] { "446" }));
+        lines.Add(new("", "Autres créanciers",                        false, false, d7, d7p, new[] { "448" }));
+        lines.Add(new("", "Comptes de régularisation - passif",       false, false, d8, d8p, new[] { "449" }));
+
+        decimal ap = -C("45"), app = -P("45");
+        decimal ec = -C("47"), ecp = -P("47");
+
+        lines.Add(new("", "AUTRES PROVISIONS POUR RISQUES ET CHARGES ( g )",      false, false, ap,  app,  new[] { "45" }));
+        lines.Add(new("", "ECARTS DE CONVERSION - PASSIF ( h ) (Elem. Circul.)", false, false, ec,  ecp,  new[] { "47" }));
+
+        decimal t2 = dT+ap+ec, t2p = dTp+app+ecp;
+        lines.Add(new("", "TOTAL  II  ( f + g + h )", false, true, t2, t2p));
+
+        // ─── TRESORERIE PASSIF ───────────────────────────────────────
+        decimal tp1 = -C("552"), tp1p = -P("552");
+        decimal tp2 = -C("553"), tp2p = -P("553");
+        decimal tp3 = -C("554"), tp3p = -P("554");
+        decimal tpT = tp1+tp2+tp3, tpTp = tp1p+tp2p+tp3p;
+
+        lines.Add(new("TRÉSORERIE", "TRÉSORERIE PASSIF", true, false, tpT, tpTp, new[] { "552","553","554" }));
+        lines.Add(new("", "Crédits d'escompte",           false, false, tp1, tp1p, new[] { "552" }));
+        lines.Add(new("", "Crédit de trésorerie",         false, false, tp2, tp2p, new[] { "553" }));
+        lines.Add(new("", "Banques ( soldes créditeurs )", false, false, tp3, tp3p, new[] { "554" }));
+        lines.Add(new("", "TOTAL  III", false, true, tpT, tpTp));
+
+        lines.Add(new("TOTAL   I+II+III", "", false, true, t1+t2+tpT, t1p+t2p+tpTp));
+
+        passifLines = lines;
+    }
+
+    private static string Fmt(decimal v) => v == 0 ? "-" : v.ToString("N2");
+
+    private static string GetRowClass(bool isHeader, bool isTotal, string cat)
+    {
+        if (isTotal && string.IsNullOrEmpty(cat)) return "bilan-grand-total";
+        if (isTotal)                               return "bilan-total";
+        if (isHeader && string.IsNullOrEmpty(cat)) return "bilan-subheader";
+        if (isHeader)                              return "bilan-header";
+        return "";
+    }
+
+    public void Dispose()
+    {
+        actifLines?.Clear();
+        passifLines?.Clear();
+        detailItems?.Clear();
+        actifLines  = null;
+        passifLines = null;
+        detailItems = null;
+        detailPfx   = null;
+    }
+}
+
+<style>
+    .bilan-tabs .e-content {
+        padding: 1rem 0 0;
+    }
+
+    .bilan-tabs .e-tab-header {
+        min-width: 90px;
+    }
+
+    .bilan-section {
+        max-width: 1024px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 6px;
+        border: 1px solid #dbe3ef;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(15,23,42,.06);
+    }
+
+    .bilan-title {
+        background: #203154;
+        color: #fff;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: .04em;
+        padding: .6rem 1rem;
+        text-transform: uppercase;
+    }
+
+    .bilan-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: .82rem;
+        font-family: "Arial", sans-serif;
+    }
+
+    .bilan-table thead tr {
+        background: #2d3f5f;
+        color: #fff;
+    }
+
+    .bilan-table thead th {
+        padding: .45rem .6rem;
+        text-align: center;
+        font-weight: 600;
+        border: 1px solid #4a5e7a;
+        white-space: nowrap;
+    }
+
+    .bilan-table tbody td {
+        padding: .3rem .6rem;
+        border: 1px solid #dbe3ef;
+        vertical-align: middle;
+    }
+
+    .col-cat   { width: 120px; font-weight: 700; font-size: .75rem; text-transform: uppercase; color: #203154; }
+    .col-label { min-width: 240px; }
+    .col-num   { width: 110px; text-align: right; white-space: nowrap; }
+
+    .cat-label { font-weight: 700; text-transform: uppercase; }
+
+    .bilan-header td      { background: #eef1f6; font-weight: 600; }
+    .bilan-subheader td   { background: #f4f6fb; font-weight: 600; font-style: italic; color: #203154; }
+    .bilan-total td       { background: #d4dff0; font-weight: 700; }
+    .bilan-grand-total td { background: #203154; color: #fff; font-weight: 700; font-size: .85rem; }
+
+    .cell-link { cursor: pointer; }
+    .cell-link:hover td { filter: brightness(0.94); }
+
+    .detail-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: .85rem;
+        font-family: "Arial", sans-serif;
+    }
+
+    .detail-table th, .detail-table td {
+        padding: .35rem .7rem;
+        border: 1px solid #dbe3ef;
+    }
+
+    .detail-table thead tr {
+        background: #2d3f5f;
+        color: #fff;
+    }
+
+    .detail-table tfoot tr td {
+        border-top: 2px solid #203154;
+    }
+</style>

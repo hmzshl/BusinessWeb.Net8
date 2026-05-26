@@ -1,0 +1,527 @@
+@page "/cpt-liasse-tf"
+@attribute [Authorize]
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="T.F.">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        Liasse Fiscale IS — Modèle Normal
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDropDownList TValue="int" TItem="ExoItem" Width="200px"
+                                                @bind-Value="selectedExoIndex" DataSource="@exoItems"
+                                                Placeholder="Exercice">
+                                    <DropDownListFieldSettings Text="Label" Value="Idx" />
+                                    <DropDownListEvents TValue="int" TItem="ExoItem"
+                                                        ValueChange="@(args => LoadData())" />
+                                </SfDropDownList>
+                            </Template>
+                        </ToolbarItem>
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <SfTab CssClass="e-fill bilan-tabs" HeaderPlacement="HeaderPosition.Left">
+                    <TabItems>
+
+                        <TabItem>
+                            <ChildContent><TabHeader Text="Synthèse"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="tf-section">
+                                    <div class="tf-title">TABLEAU DE FINANCEMENT — SYNTHÈSE DES MASSES DU BILAN</div>
+                                    <div class="table-responsive">
+                                        <table class="tf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Masses</th>
+                                                    <th class="col-num">Exercice N</th>
+                                                    <th class="col-num">Exercice N-1</th>
+                                                    <th class="col-num">Variation N / N-1<br/>(Emplois)</th>
+                                                    <th class="col-num">Variation N / N-1<br/>(Ressources)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var line in syntheseLines)
+                                                {
+                                                    <tr class="@GetSynthRowClass(line) @(line.Pfx != null ? "cell-link" : "")"
+                                                        @onclick="@(() => OnCellClick(line.Label, line.Pfx))">
+                                                        <td class="col-label">@line.Label</td>
+                                                        <td class="col-num">@Fmt(line.ValN)</td>
+                                                        <td class="col-num">@Fmt(line.ValN1)</td>
+                                                        <td class="col-num @(line.Emploi > 0 ? "tf-emploi" : "")">@FmtPos(line.Emploi)</td>
+                                                        <td class="col-num @(line.Ressource > 0 ? "tf-ressource" : "")">@FmtPos(line.Ressource)</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        <TabItem>
+                            <ChildContent><TabHeader Text="Emplois / Ressources"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="tf-section">
+                                    <div class="tf-title">TABLEAU DE FINANCEMENT — EMPLOIS ET RESSOURCES</div>
+                                    <div class="table-responsive">
+                                        <table class="tf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Emplois</th>
+                                                    <th class="col-num">Exercice</th>
+                                                    <th class="col-num">Exercice Précédent</th>
+                                                    <th class="col-label">Ressources</th>
+                                                    <th class="col-num">Exercice</th>
+                                                    <th class="col-num">Exercice Précédent</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @for (int i = 0; i < Math.Max(emploisLines.Count, ressourcesLines.Count); i++)
+                                                {
+                                                    var e = i < emploisLines.Count  ? emploisLines[i]   : null;
+                                                    var r = i < ressourcesLines.Count ? ressourcesLines[i] : null;
+                                                    <tr class="@(e?.IsTotal == true || r?.IsTotal == true ? "tf-total" : "") @(e?.IsHeader == true || r?.IsHeader == true ? "tf-header" : "")">
+                                                        <td class="col-label @(e?.IsHeader == true || e?.IsTotal == true ? "fw-bold" : "")">@(e?.Label ?? "")</td>
+                                                        <td class="col-num">@(e != null && !e.IsHeader ? Fmt(e.Val)  : "")</td>
+                                                        <td class="col-num">@(e != null && !e.IsHeader ? Fmt(e.PrevVal) : "")</td>
+                                                        <td class="col-label @(r?.IsHeader == true || r?.IsTotal == true ? "fw-bold" : "")">@(r?.Label ?? "")</td>
+                                                        <td class="col-num">@(r != null && !r.IsHeader ? Fmt(r.Val)  : "")</td>
+                                                        <td class="col-num">@(r != null && !r.IsHeader ? Fmt(r.PrevVal) : "")</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                    </TabItems>
+                </SfTab>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+
+    <SfDialog @bind-Visible="showDetail" Width="520px" ShowCloseIcon="true" IsModal="true">
+        <DialogTemplates>
+            <Header>@detailTitle</Header>
+            <Content>
+                <div style="font-size:.76rem; color:#6b7280; margin-bottom:.7rem; font-family:monospace; background:#f4f6fb; padding:.3rem .5rem; border-radius:4px; border:1px solid #dbe3ef;">
+                    Plage : @string.Join("  |  ", detailPfx ?? Array.Empty<string>())
+                </div>
+                @if (detailItems.Count == 0)
+                {
+                    <p style="color:#888; font-size:.85rem; margin:0;">Aucun mouvement pour cette plage sur cet exercice.</p>
+                }
+                else
+                {
+                    <table class="detail-table">
+                        <thead><tr><th>Compte</th><th style="text-align:right">Solde</th></tr></thead>
+                        <tbody>
+                            @foreach (var item in detailItems)
+                            {
+                                <tr>
+                                    <td>@item.CG_Num</td>
+                                    <td style="text-align:right; @(item.Solde < 0 ? "color:#c0392b;" : "")">@item.Solde.ToString("N2")</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr style="font-weight:700; background:#eef1f6;">
+                                <td>Total</td>
+                                <td style="text-align:right">@detailItems.Sum(x => x.Solde).ToString("N2")</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                }
+            </Content>
+        </DialogTemplates>
+    </SfDialog>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    bool IsLoaded = false;
+
+    // ── Exercices ────────────────────────────────────────────────────
+    private class ExoItem
+    {
+        public int      Idx   { get; set; }
+        public string   Label { get; set; }
+        public DateTime Debut { get; set; }
+        public DateTime Fin   { get; set; }
+    }
+
+    private List<ExoItem> exoItems      = new();
+    private int           selectedExoIndex = 0;
+
+    private ExoItem CurrentExo => exoItems.Count > 0 ? exoItems[selectedExoIndex]     : null;
+    private ExoItem PrevExo    => selectedExoIndex + 1 < exoItems.Count ? exoItems[selectedExoIndex + 1] : null;
+
+    // ── Line records ─────────────────────────────────────────────────
+    private record SyntheseLine(string Label, bool IsTotal, decimal ValN, decimal ValN1, string[] Pfx = null)
+    {
+        public decimal Var      => ValN - ValN1;
+        public decimal Emploi   => Var > 0 ? Var : 0;
+        public decimal Ressource => Var < 0 ? -Var : 0;
+    }
+
+    private record TfLine(string Label, bool IsHeader, bool IsTotal, decimal Val, decimal PrevVal, string[] Pfx = null);
+
+    private List<SyntheseLine> syntheseLines  = new();
+    private List<TfLine>       emploisLines   = new();
+    private List<TfLine>       ressourcesLines = new();
+
+    // ── Detail popup ─────────────────────────────────────────────────
+    private bool     showDetail  = false;
+    private string   detailTitle = "";
+    private string[] detailPfx   = null;
+    private class DetailItem { public string CG_Num { get; set; } public decimal Solde { get; set; } }
+    private List<DetailItem> detailItems = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        GC.Collect();
+        await Task.Delay(1);
+        LoadExercices();
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private void LoadExercices()
+    {
+        var d = db.P_DOSSIER.FirstOrDefault();
+        if (d == null) return;
+
+        var raw = new (DateTime? Debut, DateTime? Fin)[]
+        {
+            (d.D_DebutExo01, d.D_FinExo01),
+            (d.D_DebutExo02, d.D_FinExo02),
+            (d.D_DebutExo03, d.D_FinExo03),
+            (d.D_DebutExo04, d.D_FinExo04),
+            (d.D_DebutExo05, d.D_FinExo05),
+        };
+
+        exoItems = raw
+            .Where(x => x.Debut.HasValue && x.Fin.HasValue && x.Debut.Value.Year > 1900)
+            .OrderByDescending(x => x.Debut)
+            .Select((x, i) => new ExoItem
+            {
+                Idx   = i,
+                Debut = x.Debut!.Value,
+                Fin   = x.Fin!.Value,
+                Label = BuildExoLabel(x.Debut!.Value, x.Fin!.Value)
+            })
+            .ToList();
+
+        selectedExoIndex = 0;
+    }
+
+    private static string BuildExoLabel(DateTime debut, DateTime fin)
+    {
+        bool isCalYear = debut.Day == 1 && debut.Month == 1
+                      && fin.Day == 31 && fin.Month == 12
+                      && debut.Year == fin.Year;
+        return isCalYear ? debut.Year.ToString() : $"{debut:dd/MM/yy} — {fin:dd/MM/yy}";
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(300);
+        if (CurrentExo != null) { BuildSynthese(); BuildEmploisRessources(); }
+        IsLoaded = true;
+        await Task.Delay(300);
+    }
+
+    // ── Query helpers ─────────────────────────────────────────────────
+    private decimal S(string prefix, DateTime debut, DateTime fin) =>
+        db.F_ECRITUREC
+            .Where(e => e.EC_Date.HasValue
+                     && e.EC_Date.Value >= debut
+                     && e.EC_Date.Value <= fin
+                     && e.CG_Num != null && e.CG_Num.StartsWith(prefix))
+            .Sum(e => e.EC_Sens == 0 ? (e.EC_Montant ?? 0m) : -(e.EC_Montant ?? 0m));
+
+    private decimal C(string prefix) => CurrentExo != null ? S(prefix, CurrentExo.Debut, CurrentExo.Fin) : 0m;
+    private decimal P(string prefix) => PrevExo    != null ? S(prefix, PrevExo.Debut,    PrevExo.Fin)    : 0m;
+
+    // Cumulative balance at end of exercice (opening = sum of all prior exercices)
+    private decimal Balance(string prefix, DateTime asOf)
+    {
+        return db.F_ECRITUREC
+            .Where(e => e.EC_Date.HasValue && e.EC_Date.Value <= asOf
+                     && e.CG_Num != null && e.CG_Num.StartsWith(prefix))
+            .Sum(e => e.EC_Sens == 0 ? (e.EC_Montant ?? 0m) : -(e.EC_Montant ?? 0m));
+    }
+
+    private decimal BN(string prefix)  => CurrentExo != null ? Balance(prefix, CurrentExo.Fin) : 0m;
+    private decimal BN1(string prefix) => PrevExo    != null ? Balance(prefix, PrevExo.Fin)    : 0m;
+
+    // ── Synthèse des masses builder ───────────────────────────────────
+    private void BuildSynthese()
+    {
+        var lines = new List<SyntheseLine>();
+
+        // Actif immobilisé net = Brut - Amort
+        decimal aiN  = BN("2")  - (-BN("28")) - (-BN("29"));
+        decimal aiN1 = BN1("2") - (-BN1("28")) - (-BN1("29"));
+
+        // Actif circulant net
+        decimal acN  = BN("3")  - (-BN("39"))  + BN("35")  - (-BN("395"));
+        decimal acN1 = BN1("3") - (-BN1("39")) + BN1("35") - (-BN1("395"));
+
+        // Trésorerie actif
+        decimal taN  = BN("511")  + BN("514")  + BN("516")  - (-BN("5911"))  - (-BN("5914"))  - (-BN("5916"));
+        decimal taN1 = BN1("511") + BN1("514") + BN1("516") - (-BN1("5911")) - (-BN1("5914")) - (-BN1("5916"));
+
+        // Financements permanents
+        decimal fpN  = -BN("1");
+        decimal fpN1 = -BN1("1");
+
+        // Passif circulant
+        decimal pcN  = -BN("4")  - (-BN("34")) - (-BN("39"));
+        decimal pcN1 = -BN1("4") - (-BN1("34")) - (-BN1("39"));
+
+        // Trésorerie passif
+        decimal tpN  = -BN("552")  - BN("553")  - BN("554");
+        decimal tpN1 = -BN1("552") - BN1("553") - BN1("554");
+
+        // FRNG = FP - AI
+        decimal frngN  = fpN  - aiN;
+        decimal frngN1 = fpN1 - aiN1;
+
+        // BFR = AC - PC
+        decimal bfrN  = acN  - pcN;
+        decimal bfrN1 = acN1 - pcN1;
+
+        // TN = TA - TP
+        decimal tnN  = taN  - tpN;
+        decimal tnN1 = taN1 - tpN1;
+
+        lines.Add(new("Financement permanent",           false, fpN,   fpN1,  new[] { "1" }));
+        lines.Add(new("Actif immobilisé",                false, aiN,   aiN1,  new[] { "2","28","29" }));
+        lines.Add(new("FONDS DE ROULEMENT NET GLOBAL",   true,  frngN, frngN1));
+        lines.Add(new("Actif circulant (hors trésorerie)",false, acN,  acN1,  new[] { "3","35","39","395" }));
+        lines.Add(new("Passif circulant (hors trésorerie)",false,pcN,  pcN1,  new[] { "4","34","39" }));
+        lines.Add(new("BESOIN DE FINANCEMENT GLOBAL",    true,  bfrN,  bfrN1));
+        lines.Add(new("Trésorerie - Actif",              false, taN,   taN1,  new[] { "511","514","516","5911","5914","5916" }));
+        lines.Add(new("Trésorerie - Passif",             false, tpN,   tpN1,  new[] { "552","553","554" }));
+        lines.Add(new("TRÉSORERIE NETTE",                true,  tnN,   tnN1));
+
+        syntheseLines = lines;
+    }
+
+    // ── Emplois / Ressources builder ─────────────────────────────────
+    private void BuildEmploisRessources()
+    {
+        var emp = new List<TfLine>();
+        var res = new List<TfLine>();
+
+        // ── EMPLOIS (left side) ──────────────────────────────────────
+        // CAF = Résultat net + Dotations - Reprises - Plus-values cessions + VNA
+        decimal rnet  = (-C("7") - C("6"));
+        decimal rnetp = (-P("7") - P("6"));
+        decimal de    =  C("619"),  dep   = P("619");
+        decimal dfin  =  C("639"),  dfinp = P("639");
+        decimal dnc   =  C("659"),  dncp  = P("659");
+        decimal rpe   = -C("719"),  rpep  = -P("719");
+        decimal rpf   = -C("739"),  rpfp  = -P("739");
+        decimal rpnc  = -C("759"),  rpncp = -P("759");
+        decimal pci   = -C("751"),  pcip  = -P("751");
+        decimal vna   =  C("651"),  vnap  = P("651");
+        decimal caf   = rnet + de + dfin + dnc - rpe - rpf - rpnc - pci + vna;
+        decimal cafp  = rnetp + dep + dfinp + dncp - rpep - rpfp - rpncp - pcip + vnap;
+
+        // Acquisitions immobilisations (estimated as increase in gross fixed assets)
+        decimal acqB  = C("2"),   acqBp = P("2");
+        // Remboursement dettes de financement
+        decimal rdfC  = C("141")+C("148"), rdfCp = P("141")+P("148");
+        // Dividendes distribués - approximated from 116 (report à nouveau decrease)
+        decimal divC  = 0m, divCp = 0m;
+
+        emp.Add(new("RESSOURCES STABLES", true, false, 0, 0));
+        emp.Add(new("Acquisition et augmentation des immobilisations", false, false, acqB, acqBp, new[] { "2" }));
+        emp.Add(new("Remboursements des dettes de financement",        false, false, rdfC, rdfCp, new[] { "141","148" }));
+        emp.Add(new("Emplois en non valeurs",                          false, false, C("211")+C("212")+C("213"), P("211")+P("212")+P("213"), new[] { "211","212","213" }));
+        emp.Add(new("TOTAL DES EMPLOIS  ( I )",                        false, true,  acqB+rdfC+C("211")+C("212")+C("213"), acqBp+rdfCp+P("211")+P("212")+P("213")));
+
+        emp.Add(new("VARIATION DU BESOIN EN FINANCEMENT GLOBAL", true, false, 0, 0));
+        emp.Add(new("(+) Actif circulant",  false, false, C("3")+C("35"), P("3")+P("35"), new[] { "3","35" }));
+        emp.Add(new("(-) Passif circulant", false, false, -C("4"), -P("4"), new[] { "4" }));
+        emp.Add(new("TOTAL  ( II )",        false, true,  C("3")+C("35")-C("4"), P("3")+P("35")-P("4")));
+
+        decimal taC = C("511")+C("514")+C("516"), taCp = P("511")+P("514")+P("516");
+        emp.Add(new("VARIATION DE LA TRÉSORERIE", true, false, 0, 0));
+        emp.Add(new("(+) Trésorerie actif",  false, false, taC, taCp, new[] { "511","514","516" }));
+        emp.Add(new("(-) Trésorerie passif", false, false, -(C("552")+C("553")+C("554")), -(P("552")+P("553")+P("554")), new[] { "552","553","554" }));
+        emp.Add(new("TOTAL  ( III )",        false, true, taC-(C("552")+C("553")+C("554")), taCp-(P("552")+P("553")+P("554"))));
+
+        // ── RESSOURCES (right side) ──────────────────────────────────
+        decimal augCap = -C("111"), augCapp = -P("111");
+        decimal subInv = -C("131")-C("135"), subInvp = -P("131")-P("135");
+        decimal cred   = -C("141")-C("148"), credp   = -P("141")-P("148");
+        decimal cessions = -C("751"), cessionsp = -P("751");
+
+        res.Add(new("RESSOURCES STABLES", true, false, 0, 0));
+        res.Add(new("CAF de l'exercice",                        false, false, caf,     cafp));
+        res.Add(new("Cessions et réductions d'immobilisations", false, false, cessions, cessionsp, new[] { "751" }));
+        res.Add(new("Augmentation des capitaux propres",        false, false, augCap,  augCapp,  new[] { "111" }));
+        res.Add(new("Augmentation des dettes de financement",   false, false, cred,    credp,    new[] { "141","148" }));
+        res.Add(new("Subventions d'investissement reçues",      false, false, subInv,  subInvp,  new[] { "131","135" }));
+        res.Add(new("TOTAL DES RESSOURCES  ( I )",              false, true,  caf+cessions+augCap+cred+subInv, cafp+cessionsp+augCapp+credp+subInvp));
+
+        res.Add(new("", false, false, 0, 0)); // spacer rows to align with emplois
+        res.Add(new("", false, false, 0, 0));
+        res.Add(new("", false, false, 0, 0));
+        res.Add(new("", false, false, 0, 0));
+
+        res.Add(new("", false, false, 0, 0));
+        res.Add(new("", false, false, 0, 0));
+        res.Add(new("", false, false, 0, 0));
+        res.Add(new("", false, false, 0, 0));
+
+        res.Add(new("", false, false, 0, 0));
+        res.Add(new("", false, false, 0, 0));
+        res.Add(new("", false, false, 0, 0));
+        res.Add(new("", false, false, 0, 0));
+
+        emploisLines    = emp;
+        ressourcesLines = res;
+    }
+
+    // ── Detail click ─────────────────────────────────────────────────
+    private void OnCellClick(string label, string[] pfx)
+    {
+        if (pfx == null || pfx.Length == 0 || CurrentExo == null) return;
+        var debut = CurrentExo.Debut;
+        var fin   = CurrentExo.Fin;
+        detailTitle = label;
+        detailPfx   = pfx;
+        detailItems = pfx
+            .SelectMany(prefix =>
+                db.F_ECRITUREC
+                    .Where(e => e.EC_Date.HasValue
+                             && e.EC_Date.Value >= debut
+                             && e.EC_Date.Value <= fin
+                             && e.CG_Num != null && e.CG_Num.StartsWith(prefix))
+                    .GroupBy(e => e.CG_Num)
+                    .Select(g => new DetailItem
+                    {
+                        CG_Num = g.Key,
+                        Solde  = g.Sum(e => e.EC_Sens == 0 ? (e.EC_Montant ?? 0m) : -(e.EC_Montant ?? 0m))
+                    })
+                    .ToList())
+            .GroupBy(x => x.CG_Num)
+            .Select(g => new DetailItem { CG_Num = g.Key, Solde = g.Sum(x => x.Solde) })
+            .OrderBy(x => x.CG_Num)
+            .ToList();
+        showDetail = true;
+    }
+
+    private static string Fmt(decimal v)    => v == 0 ? "-" : v.ToString("N2");
+    private static string FmtPos(decimal v) => v <= 0 ? ""  : v.ToString("N2");
+
+    private static string GetSynthRowClass(SyntheseLine line) =>
+        line.IsTotal ? "tf-total" : "";
+
+    public void Dispose()
+    {
+        syntheseLines?.Clear();
+        emploisLines?.Clear();
+        ressourcesLines?.Clear();
+        detailItems?.Clear();
+        syntheseLines   = null;
+        emploisLines    = null;
+        ressourcesLines = null;
+        detailItems     = null;
+        detailPfx       = null;
+    }
+}
+
+<style>
+    .bilan-tabs .e-content   { padding: 1rem 0 0; }
+    .bilan-tabs .e-tab-header{ min-width: 90px; }
+
+    .tf-section {
+        max-width: 1100px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 6px;
+        border: 1px solid #dbe3ef;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(15,23,42,.06);
+    }
+
+    .tf-title {
+        background: #203154;
+        color: #fff;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: .04em;
+        padding: .6rem 1rem;
+        text-transform: uppercase;
+    }
+
+    .tf-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: .82rem;
+        font-family: "Arial", sans-serif;
+    }
+
+    .tf-table thead tr { background: #2d3f5f; color: #fff; }
+
+    .tf-table thead th {
+        padding: .45rem .6rem;
+        text-align: center;
+        font-weight: 600;
+        border: 1px solid #4a5e7a;
+        white-space: nowrap;
+    }
+
+    .tf-table tbody td {
+        padding: .3rem .6rem;
+        border: 1px solid #dbe3ef;
+        vertical-align: middle;
+    }
+
+    .col-label { min-width: 220px; }
+    .col-num   { width: 120px; text-align: right; white-space: nowrap; }
+
+    .fw-bold { font-weight: 700; }
+
+    .tf-header td { background: #2d3f5f; color: #fff; font-weight: 700; font-size: .78rem; text-transform: uppercase; }
+    .tf-total  td { background: #203154; color: #fff; font-weight: 700; }
+    .tf-emploi   { color: #7c3aed; font-weight: 700; }
+    .tf-ressource{ color: #16a34a; font-weight: 700; }
+
+    .cell-link { cursor: pointer; }
+    .cell-link:hover td { filter: brightness(0.93); }
+
+    .detail-table { width: 100%; border-collapse: collapse; font-size: .85rem; font-family: "Arial", sans-serif; }
+    .detail-table th, .detail-table td { padding: .35rem .7rem; border: 1px solid #dbe3ef; }
+    .detail-table thead tr { background: #2d3f5f; color: #fff; }
+    .detail-table tfoot tr td { border-top: 2px solid #203154; }
+</style>
