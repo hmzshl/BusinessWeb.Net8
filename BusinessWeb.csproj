@@ -54,7 +54,6 @@
     <PackageReference Include="iTextSharp" Version="5.5.13.5" />
     <PackageReference Include="linq2db.EntityFrameworkCore" Version="10.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.0.8" />
-    <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.3.10" />
     <PackageReference Include="Microsoft.Build" Version="18.6.3" />
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="5.3.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.3.0" />
@@ -84,22 +83,15 @@
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="9.4.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-    <PackageReference Include="Syncfusion.Blazor.BarcodeGenerator" Version="33.2.8" />
-    <PackageReference Include="Syncfusion.Blazor.BulletChart" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.Buttons" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.Calendars" Version="33.2.8" />
-    <PackageReference Include="Syncfusion.Blazor.Cards" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.Charts" Version="33.2.8" />
-    <PackageReference Include="Syncfusion.Blazor.CircularGauge" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.Core" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.Data" Version="33.2.8" />
-    <PackageReference Include="Syncfusion.Blazor.Diagram" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.DropDowns" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.FileManager" Version="33.2.8" />
-    <PackageReference Include="Syncfusion.Blazor.Gantt" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.Grid" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.Inputs" Version="33.2.8" />
-    <PackageReference Include="Syncfusion.Blazor.Kanban" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.Layouts" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.Lists" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.MultiColumnComboBox" Version="33.2.8" />
@@ -112,7 +104,6 @@
     <PackageReference Include="Syncfusion.Blazor.SfPdfViewer" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.Spinner" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.SplitButtons" Version="33.2.8" />
-    <PackageReference Include="Syncfusion.Blazor.StockChart" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Blazor.WordProcessor" Version="33.2.8" />
     <PackageReference Include="Syncfusion.Compression.Net.Core" Version="33.2.8" />
@@ -134,8 +125,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.7" />
         <PackageReference Include="RestSharp" Version="114.0.0" />
-        <PackageReference Include="System.Net.Http" Version="4.3.4" />
-        <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     
   </ItemGroup>
   <ItemGroup>
