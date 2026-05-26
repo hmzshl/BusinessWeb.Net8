@@ -37,66 +37,72 @@
                                             </Card>
                                         </GridCol>
                                         <GridCol Xs="24" Md="7">
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="O.F" LabelColSpan="7">
-                                                @if (this.cbMarq == 0)
-                                                {
-                                                    <Syncfusion.Blazor.MultiColumnComboBox.SfMultiColumnComboBox Query="fn.LocalDataQuery" FloatLabelType="FloatLabelType.Never" OnValueSelect="@(args => OFUpdated(args.ItemData.Numero))" TValue="string" TItem="API_T_OrdreFabrication"
-                                                                                                                 @bind-Value="@row.DO_Ref"
-                                                                                                                 DataSource="@(db.API_T_OrdreFabrication)"
-                                                                                                                 PopupWidth="850px" ValueField="Numero" TextField="Numero">
-                                                        <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumns>
-                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.Date)" Header="Date" Width="50px" Format="dd/MM/yy" />
-                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.Numero)" Header="Numero" Width="80px" />
-                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.Reference)" Header="Reference" Width="70px" />
-                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.CA_Num)" Header="N° Affaire" Width="70px" />
-                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.CA_Num)" Header="Affaire" Width="100px">
-                                                                <Template>
-                                                                    @{
-                                                                        var dt = (context as API_T_OrdreFabrication);
-                                                                        <div>@affaires.Where(a => a.CA_Num == dt.CA_Num).SingleOrDefault()?.CA_Intitule</div>
-                                                                    }
-                                                                </Template>
-                                                            </Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn>
-                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.CT_Num)" Header="N° Client" Width="60px" />
-                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.CT_Num)" Header="Client" Width="120px">
-                                                                <Template>
-                                                                    @{
-                                                                        var dt = (context as API_T_OrdreFabrication);
-                                                                        <div>@clients.Where(a => a.CT_Num == dt.CT_Num).SingleOrDefault()?.CT_Intitule</div>
-                                                                    }
-                                                                </Template>
-                                                            </Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn>
-                                                        </Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumns>
-                                                    </Syncfusion.Blazor.MultiColumnComboBox.SfMultiColumnComboBox>
-                                                }
-                                                else
-                                                {
-                                                    <SfTextBox FloatLabelType="FloatLabelType.Never" @bind-Value="@(row.DO_Ref)" Readonly />
-                                                }
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Affaire" LabelColSpan="7">
-                                                <SfTextBox @bind-Value="@row.CA_Num" Readonly />
-                                            </FormItem>
+                                            <Card>
+                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="O.F" LabelColSpan="7">
+                                                    @if (this.cbMarq == 0)
+                                                    {
+                                                        <Syncfusion.Blazor.MultiColumnComboBox.SfMultiColumnComboBox Query="fn.LocalDataQuery" FloatLabelType="FloatLabelType.Never" OnValueSelect="@(args => OFUpdated(args.ItemData.Numero))" TValue="string" TItem="API_T_OrdreFabrication"
+                                                                                                                     @bind-Value="@row.DO_Ref"
+                                                                                                                     DataSource="@(db.API_T_OrdreFabrication)"
+                                                                                                                     PopupWidth="850px" ValueField="Numero" TextField="Numero">
+                                                            <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumns>
+                                                                <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.Date)" Header="Date" Width="50px" Format="dd/MM/yy" />
+                                                                <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.Numero)" Header="Numero" Width="80px" />
+                                                                <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.Reference)" Header="Reference" Width="70px" />
+                                                                <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.CA_Num)" Header="N° Affaire" Width="70px" />
+                                                                <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.CA_Num)" Header="Affaire" Width="100px">
+                                                                    <Template>
+                                                                        @{
+                                                                            var dt = (context as API_T_OrdreFabrication);
+                                                                            <div>@affaires.Where(a => a.CA_Num == dt.CA_Num).SingleOrDefault()?.CA_Intitule</div>
+                                                                        }
+                                                                    </Template>
+                                                                </Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn>
+                                                                <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.CT_Num)" Header="N° Client" Width="60px" />
+                                                                <Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn Field="@nameof(API_T_OrdreFabrication.CT_Num)" Header="Client" Width="120px">
+                                                                    <Template>
+                                                                        @{
+                                                                            var dt = (context as API_T_OrdreFabrication);
+                                                                            <div>@clients.Where(a => a.CT_Num == dt.CT_Num).SingleOrDefault()?.CT_Intitule</div>
+                                                                        }
+                                                                    </Template>
+                                                                </Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumn>
+                                                            </Syncfusion.Blazor.MultiColumnComboBox.MultiColumnComboboxColumns>
+                                                        </Syncfusion.Blazor.MultiColumnComboBox.SfMultiColumnComboBox>
+                                                    }
+                                                    else
+                                                    {
+                                                        <SfTextBox FloatLabelType="FloatLabelType.Never" @bind-Value="@(row.DO_Ref)" Readonly />
+                                                    }
+                                                </FormItem>
+                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="N° Affaire" LabelColSpan="7">
+                                                    <SfTextBox @bind-Value="@row.CA_Num" Readonly />
+                                                </FormItem>
+                                            </Card>
+
                                         </GridCol>
                                         <GridCol Xs="24" Md="10">
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Affaire" LabelColSpan="5">
-                                                <SfDropDownList FloatLabelType="FloatLabelType.Never" Readonly
-                                                                AllowFiltering TValue="string" TItem="F_COMPTEA" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
-                                                                DataSource="@(affaires)"
-                                                                @bind-Value="@row.CA_Num">
-                                                    <DropDownListEvents TValue="string" TItem="F_COMPTEA" />
-                                                    <DropDownListFieldSettings Text="CA_Intitule" Value="CA_Num" />
-                                                </SfDropDownList>
-                                            </FormItem>
-                                            <FormItem LabelAlign="AntLabelAlignType.Left" Label="Client" LabelColSpan="5">
-                                                <SfDropDownList FloatLabelType="FloatLabelType.Never" Readonly
-                                                                AllowFiltering TValue="string" TItem="F_COMPTET" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
-                                                                DataSource="@(clients)"
-                                                                @bind-Value="CT_Num">
-                                                    <DropDownListEvents TValue="string" TItem="F_COMPTET" />
-                                                    <DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
-                                                </SfDropDownList>
-                                            </FormItem>
+                                            <Card>
+                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Affaire" LabelColSpan="5">
+                                                    <SfDropDownList FloatLabelType="FloatLabelType.Never" Readonly
+                                                                    AllowFiltering TValue="string" TItem="F_COMPTEA" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+                                                                    DataSource="@(affaires)"
+                                                                    @bind-Value="@row.CA_Num">
+                                                        <DropDownListEvents TValue="string" TItem="F_COMPTEA" />
+                                                        <DropDownListFieldSettings Text="CA_Intitule" Value="CA_Num" />
+                                                    </SfDropDownList>
+                                                </FormItem>
+                                                <FormItem LabelAlign="AntLabelAlignType.Left" Label="Client" LabelColSpan="5">
+                                                    <SfDropDownList FloatLabelType="FloatLabelType.Never" Readonly
+                                                                    AllowFiltering TValue="string" TItem="F_COMPTET" FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+                                                                    DataSource="@(clients)"
+                                                                    @bind-Value="CT_Num">
+                                                        <DropDownListEvents TValue="string" TItem="F_COMPTET" />
+                                                        <DropDownListFieldSettings Text="CT_Intitule" Value="CT_Num" />
+                                                    </SfDropDownList>
+                                                </FormItem>
+                                            </Card>
+
                                         </GridCol>
 
                                     </GridRow>
@@ -163,10 +169,10 @@ else
 
 
 @code {
-        [CascadingParameter]
-        public SessionDT session { get; set; } = new SessionDT();
-        [Parameter] public int cbMarq { get; set; }
-        DB db = new DB();
+    [CascadingParameter]
+    public SessionDT session { get; set; } = new SessionDT();
+    [Parameter] public int cbMarq { get; set; }
+    DB db = new DB();
     public F_DOCENTETE row = new F_DOCENTETE();
     NumericEditCellParams parameters = new NumericEditCellParams() { Params = new NumericTextBoxModel<object>() { Decimals = 2, Format = "N2" } };
     SfGrid<F_DOCLIGNE> MainGrid;

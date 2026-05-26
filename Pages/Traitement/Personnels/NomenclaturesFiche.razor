@@ -22,18 +22,21 @@
                                     <TabHeader Text="Entéte"></TabHeader>
                                 </ChildContent>
                                 <ContentTemplate>
-                                    <GridRow>
-                                        <GridCol Xs="24" Md="7">
-                                            <FormItem Required LabelAlign="AntLabelAlignType.Left" Label="Réference" LabelColSpan="9">
-                                                <SfTextBox @bind-Value="@row.AR_Ref" />
-                                            </FormItem>
-                                        </GridCol>
-                                        <GridCol Xs="24" Md="17">
-                                            <FormItem Required LabelAlign="AntLabelAlignType.Left" Label="Désignation" LabelColSpan="3">
-                                                <SfTextBox @bind-Value="@row.AR_Design"/>
-                                            </FormItem>
-                                        </GridCol>
-                                    </GridRow>
+                                    <Card>
+                                        <GridRow>
+                                            <GridCol Xs="24" Md="7">
+                                                <FormItem Required LabelAlign="AntLabelAlignType.Left" Label="Réference" LabelColSpan="9">
+                                                    <SfTextBox @bind-Value="@row.AR_Ref" />
+                                                </FormItem>
+                                            </GridCol>
+                                            <GridCol Xs="24" Md="17">
+                                                <FormItem Required LabelAlign="AntLabelAlignType.Left" Label="Désignation" LabelColSpan="3">
+                                                    <SfTextBox @bind-Value="@row.AR_Design" />
+                                                </FormItem>
+                                            </GridCol>
+                                        </GridRow>
+                                    </Card>
+
                                 </ContentTemplate>
                             </TabItem>
                         </TabItems>
