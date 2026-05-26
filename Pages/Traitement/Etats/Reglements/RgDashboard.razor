@@ -1,10 +1,13 @@
 @page "/et-rg-dashboard"
+@page "/et-rg-dashboard-clients"
+@page "/et-rg-dashboard-fournisseurs"
 @attribute [Authorize]
 @implements IDisposable
+@inject NavigationManager Navigation
 
 @if (IsLoaded)
 {
-    <Card_1 Title="@("TABLEAU DE BORD RÉGLEMENTS — " + annee)">
+    <Card_1 Title="@($"TABLEAU DE BORD REGLEMENTS {TiersLabelPlural.ToUpper()}")">
         <RadzenContent>
             <div class="grid-container no-border">
 
@@ -14,9 +17,7 @@
                             <Template>
                                 <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
                                     <div style="text-transform: uppercase;">
-                                        @allItems.Count règlement(s) &nbsp;|&nbsp;
-                                        Clients : @clientItems.Count &nbsp;|&nbsp;
-                                        Fournisseurs : @fournItems.Count
+                                        @items.Count règlement(s) | Total : @TotalMontant.ToString("N0")
                                     </div>
                                 </SfMessage>
                             </Template>
@@ -24,15 +25,12 @@
                         <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
                             <Template>
                                 <div style="display:flex; gap:8px; align-items:center;">
-                                    <SfDropDownList TValue="int" TItem="int" Width="130px" @bind-Value="annee"
-                                                    DataSource="@annees" Placeholder="Année">
-                                        <DropDownListEvents TValue="int" TItem="int" ValueChange="@(args => LoadData())" />
-                                    </SfDropDownList>
-                                    <SfDropDownList TValue="int" TItem="RgTypeOption" Width="160px" @bind-Value="typeFilter"
-                                                    DataSource="@typeOptions">
-                                        <DropDownListFieldSettings Value="Val" Text="Label" />
-                                        <DropDownListEvents TValue="int" TItem="RgTypeOption" ValueChange="@(args => ApplyFilter())" />
-                                    </SfDropDownList>
+                                    <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date1" Placeholder="Date début" ShowClearButton ShowTodayButton>
+                                        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"></DatePickerEvents>
+                                    </SfDatePicker>
+                                    <SfDatePicker Width="140px" TValue="DateTime?" @bind-Value="date2" Placeholder="Date fin" ShowClearButton ShowTodayButton>
+                                        <DatePickerEvents TValue="DateTime?" ValueChange="@(args => LoadData())"></DatePickerEvents>
+                                    </SfDatePicker>
                                 </div>
                             </Template>
                         </ToolbarItem>
@@ -41,120 +39,109 @@
 
                 <GridRow Style="margin-bottom:12px;">
                     <GridCol Xs="12" Md="6">
-                        <StatCard3 Color="StatColor.Blue"
-                                   Value="@(clientItems.Sum(x => x.RG_Montant ?? 0).ToString("N0"))"
-                                   Title="Total Clients" />
+                        <StatCard3 Color="StatColor.Blue" Value="@TotalMontant.ToString("N0")" Title="@($"Total {TiersLabelPlural}")" />
                     </GridCol>
                     <GridCol Xs="12" Md="6">
-                        <StatCard3 Color="StatColor.Amber"
-                                   Value="@(fournItems.Sum(x => x.RG_Montant ?? 0).ToString("N0"))"
-                                   Title="Total Fournisseurs" />
+                        <StatCard3 Color="StatColor.Green" Value="@items.Count.ToString("N0")" Title="Nombre règlements" />
                     </GridCol>
                     <GridCol Xs="12" Md="6">
-                        <StatCard3 Color="StatColor.Red"
-                                   Value="@(allItems.Count(x => x.Impaye == true).ToString())"
-                                   Title="Impayés" />
+                        <StatCard3 Color="StatColor.Red" Value="@items.Count(x => x.Impaye == true).ToString("N0")" Title="Impayés" />
                     </GridCol>
                     <GridCol Xs="12" Md="6">
-                        <StatCard3 Color="StatColor.Green"
-                                   Value="@(allItems.Count(x => x.Rappro == true).ToString())"
-                                   Title="Rapprochés" />
+                        <StatCard3 Color="StatColor.Amber" Value="@items.Count(x => x.Rappro == true).ToString("N0")" Title="Rapprochés" />
                     </GridCol>
                 </GridRow>
 
                 <GridRow>
-                    <GridCol Xs="24" Md="12">
+                    <GridCol Xs="24" Md="16">
                         <Card>
-                            <div style="zoom: @session.zoomLevel; height: 20vh;">
-                                <SfAccumulationChart Title="Répartition par mode de paiement" Width="100%"
-                                                     Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
-                                    <AccumulationChartTooltipSettings Enable="true" />
-                                    <AccumulationChartLegendSettings Visible="true" />
-                                    <AccumulationChartSeriesCollection>
-                                        <AccumulationChartSeries DataSource="@parMode" XName="Mode" YName="Montant"
-                                                                 Name="Montant" InnerRadius="35%">
-                                            <AccumulationDataLabelSettings Visible="true" Name="Mode"
-                                                                           Position="Syncfusion.Blazor.Charts.AccumulationLabelPosition.Outside">
-                                                <AccumulationChartDataLabelFont FontWeight="600" Size="11" />
-                                            </AccumulationDataLabelSettings>
-                                        </AccumulationChartSeries>
-                                    </AccumulationChartSeriesCollection>
-                                </SfAccumulationChart>
-                            </div>
-                        </Card>
-                    </GridCol>
-                    <GridCol Xs="24" Md="12">
-                        <Card>
-                            <div style="zoom: @session.zoomLevel; height: 20vh;">
-                                <SfAccumulationChart Title="Répartition Clients / Fournisseurs" Width="100%"
-                                                     Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
-                                    <AccumulationChartTooltipSettings Enable="true" />
-                                    <AccumulationChartLegendSettings Visible="true" />
-                                    <AccumulationChartSeriesCollection>
-                                        <AccumulationChartSeries DataSource="@parType" XName="TypeLabel" YName="Montant"
-                                                                 Name="Montant" InnerRadius="35%">
-                                            <AccumulationDataLabelSettings Visible="true" Name="TypeLabel"
-                                                                           Position="Syncfusion.Blazor.Charts.AccumulationLabelPosition.Outside">
-                                                <AccumulationChartDataLabelFont FontWeight="600" Size="11" />
-                                            </AccumulationDataLabelSettings>
-                                        </AccumulationChartSeries>
-                                    </AccumulationChartSeriesCollection>
-                                </SfAccumulationChart>
-                            </div>
-                        </Card>
-                    </GridCol>
-                </GridRow>
-
-                <GridRow>
-                    <GridCol Xs="24" Md="12">
-                        <Card>
-                            <div style="zoom: @session.zoomLevel; height: 40vh">
-                                <SfGrid EnableVirtualization Height="100%" DataSource="@topTiers"
-                                        Toolbar="@(new List<object>() { "ExcelExport", "Search" })"
-                                        AllowSorting AllowResizing>
-                                    <GridPageSettings PageSize="20" />
-                                    <GridColumns>
-                                        <GridColumn HeaderText="Tiers" Field="@nameof(RgTiersItem.CT_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
-                                        <GridColumn Width="80" HeaderText="Type" Field="@nameof(RgTiersItem.TypeLabel)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
-                                        <GridColumn Width="80" HeaderText="Nb" Field="@nameof(RgTiersItem.Nb)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
-                                        <GridColumn Width="140" HeaderText="Montant" Field="@nameof(RgTiersItem.TotalMontant)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
-                                        <GridColumn Width="110" HeaderText="Impayés" Field="@nameof(RgTiersItem.NbImpayes)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
-                                            <Template>
-                                                @{
-                                                    var dt = (context as RgTiersItem);
-                                                }
-                                                <span class="@(dt.NbImpayes > 0 ? "statustxt e-inactivecolor" : "")">
-                                                    @dt.NbImpayes
-                                                </span>
-                                            </Template>
-                                        </GridColumn>
-                                    </GridColumns>
-                                </SfGrid>
-                            </div>
-                        </Card>
-                    </GridCol>
-                    <GridCol Xs="24" Md="12">
-                        <Card>
-                            <div style="zoom: @session.zoomLevel; height: 40vh;">
-                                <SfChart Title="Évolution mensuelle des réglements" Width="100%"
+                            <div style="zoom: @session.zoomLevel; height: 24vh;">
+                                <SfChart Title="@($"Evolution mensuelle des règlements {TiersLabelPlural}")" Width="100%"
                                          Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" />
                                     <ChartPrimaryYAxis LabelFormat="N0" />
                                     <ChartTooltipSettings Enable="true" />
                                     <ChartLegendSettings Visible="true" />
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@mensuelClient" XName="Mois" YName="Montant"
-                                                     Name="Clients" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@monthlyData" XName="Period" YName="Montant"
+                                                     Name="Montant" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
+                                            <ChartMarker>
+                                                <ChartDataLabel Visible="true" Position="Syncfusion.Blazor.Charts.LabelPosition.Top">
+                                                    <ChartDataLabelFont FontWeight="600" Size="10px" />
+                                                </ChartDataLabel>
+                                            </ChartMarker>
                                         </ChartSeries>
-                                        <ChartSeries DataSource="@mensuelFourn" XName="Mois" YName="Montant"
-                                                     Name="Fournisseurs" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@monthlyData" XName="Period" YName="Montant"
+                                                     Name="Tendance" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line" Width="2">
                                         </ChartSeries>
                                     </ChartSeriesCollection>
                                 </SfChart>
                             </div>
                         </Card>
                     </GridCol>
+                    <GridCol Xs="24" Md="8">
+                        <Card>
+                            <div style="zoom: @session.zoomLevel; height: 24vh;">
+                                <SfAccumulationChart Title="Modes de paiement" Width="100%"
+                                                     Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <AccumulationChartTooltipSettings Enable="true" />
+                                    <AccumulationChartLegendSettings Visible="true" />
+                                    <AccumulationChartSeriesCollection>
+                                        <AccumulationChartSeries DataSource="@modeData" XName="Label" YName="Montant"
+                                                                 Name="Montant" InnerRadius="35%">
+                                            <AccumulationDataLabelSettings Visible="true" Name="Label"
+                                                                           Position="Syncfusion.Blazor.Charts.AccumulationLabelPosition.Outside">
+                                                <AccumulationChartDataLabelFont FontWeight="600" Size="11" />
+                                            </AccumulationDataLabelSettings>
+                                        </AccumulationChartSeries>
+                                    </AccumulationChartSeriesCollection>
+                                </SfAccumulationChart>
+                            </div>
+                        </Card>
+                    </GridCol>
+                </GridRow>
 
+                <GridRow>
+                    <GridCol Xs="24" Md="16">
+                        <Card>
+                            <div style="zoom: @session.zoomLevel; height: 38vh;">
+                                <SfGrid EnableVirtualization Height="100%" DataSource="@tiersData"
+                                        Toolbar="@(new List<object>() { "ExcelExport", "Search" })"
+                                        AllowSorting AllowResizing>
+                                    <GridPageSettings PageSize="30" />
+                                    <GridColumns>
+                                        <GridColumn HeaderText="@TiersLabel" Field="@nameof(RgTiersItem.Tiers)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="120" HeaderText="Ville" Field="@nameof(RgTiersItem.Ville)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="80" HeaderText="Nb" Field="@nameof(RgTiersItem.Nb)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="140" HeaderText="Montant" Field="@nameof(RgTiersItem.Montant)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="90" HeaderText="% Total" Field="@nameof(RgTiersItem.PctLabel)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="90" HeaderText="Impayés" Field="@nameof(RgTiersItem.NbImpayes)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                        <GridColumn Width="110" HeaderText="Rapprochés" Field="@nameof(RgTiersItem.NbRapproches)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    </GridColumns>
+                                </SfGrid>
+                            </div>
+                        </Card>
+                    </GridCol>
+                    <GridCol Xs="24" Md="8">
+                        <Card>
+                            <div style="zoom: @session.zoomLevel; height: 38vh;">
+                                <SfAccumulationChart Title="Etat des échéances" Width="100%"
+                                                     Theme="Syncfusion.Blazor.Theme.Tailwind3" Height="100%">
+                                    <AccumulationChartTooltipSettings Enable="true" />
+                                    <AccumulationChartLegendSettings Visible="true" />
+                                    <AccumulationChartSeriesCollection>
+                                        <AccumulationChartSeries DataSource="@echeanceData" XName="Label" YName="Montant"
+                                                                 Name="Montant" InnerRadius="35%">
+                                            <AccumulationDataLabelSettings Visible="true" Name="Label"
+                                                                           Position="Syncfusion.Blazor.Charts.AccumulationLabelPosition.Outside">
+                                                <AccumulationChartDataLabelFont FontWeight="600" Size="11" />
+                                            </AccumulationDataLabelSettings>
+                                        </AccumulationChartSeries>
+                                    </AccumulationChartSeriesCollection>
+                                </SfAccumulationChart>
+                            </div>
+                        </Card>
+                    </GridCol>
                 </GridRow>
 
             </div>
@@ -170,38 +157,45 @@ else
     [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
     DB db = new DB();
 
-    private List<API_V_CREGLEMENT> allItems = new();
-    private List<API_V_CREGLEMENT> clientItems = new();
-    private List<API_V_CREGLEMENT> fournItems = new();
+    private List<API_V_CREGLEMENT> items = new();
+    private List<RgPeriodItem> monthlyData = new();
+    private List<RgAmountItem> modeData = new();
+    private List<RgAmountItem> echeanceData = new();
+    private List<RgTiersItem> tiersData = new();
 
-    private List<RgModeItem>    parMode     = new();
-    private List<RgTypeItem>    parType     = new();
-    private List<RgMensuelItem> mensuelClient = new();
-    private List<RgMensuelItem> mensuelFourn  = new();
-    private List<RgTiersItem>   topTiers    = new();
-
-    int annee = DateTime.Today.Year;
-    int typeFilter = 0;
+    DateTime? date1 = new DateTime(DateTime.Today.Year, 1, 1);
+    DateTime? date2 = new DateTime(DateTime.Today.Year, 12, 31);
     bool IsLoaded = false;
-    private List<int> annees = Enumerable.Range(0, 10).Select(i => DateTime.Today.Year - i).ToList();
+    short? loadedRgType = null;
 
-    private class RgTypeOption  { public int Val { get; set; } public string Label { get; set; } }
-    private List<RgTypeOption> typeOptions = new()
+    private bool IsFournisseurs => Navigation.Uri.Contains("fournisseurs", StringComparison.OrdinalIgnoreCase);
+    private short RgType => IsFournisseurs ? (short)1 : (short)0;
+    private string TiersLabel => IsFournisseurs ? "Fournisseur" : "Client";
+    private string TiersLabelPlural => IsFournisseurs ? "Fournisseurs" : "Clients";
+    private decimal TotalMontant => items.Sum(x => x.RG_Montant ?? 0);
+
+    private class RgPeriodItem
     {
-        new RgTypeOption { Val = 0,  Label = "Clients" },
-        new RgTypeOption { Val = 1,  Label = "Fournisseurs" }
-    };
+        public string Period { get; set; }
+        public int Nb { get; set; }
+        public decimal Montant { get; set; }
+    }
 
-    private class RgModeItem   { public string Mode { get; set; } public decimal Montant { get; set; } }
-    private class RgTypeItem   { public string TypeLabel { get; set; } public decimal Montant { get; set; } }
-    private class RgMensuelItem { public string Mois { get; set; } public decimal Montant { get; set; } }
+    private class RgAmountItem
+    {
+        public string Label { get; set; }
+        public decimal Montant { get; set; }
+    }
+
     private class RgTiersItem
     {
-        public string CT_Intitule  { get; set; }
-        public string TypeLabel    { get; set; }
-        public int    Nb           { get; set; }
-        public decimal TotalMontant { get; set; }
-        public int    NbImpayes    { get; set; }
+        public string Tiers { get; set; }
+        public string Ville { get; set; }
+        public int Nb { get; set; }
+        public decimal Montant { get; set; }
+        public string PctLabel { get; set; }
+        public int NbImpayes { get; set; }
+        public int NbRapproches { get; set; }
     }
 
     protected override async Task OnInitializedAsync()
@@ -209,8 +203,15 @@ else
         db = session.db;
         GC.Collect();
         await Task.Delay(1);
-        await LoadData();
-        IsLoaded = true;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (loadedRgType != RgType)
+        {
+            loadedRgType = RgType;
+            await LoadData();
+        }
     }
 
     private async Task LoadData()
@@ -218,88 +219,78 @@ else
         IsLoaded = false;
         await Task.Delay(300);
 
-        allItems = db.API_V_CREGLEMENT
-            .Where(r => r.RG_Date.HasValue && r.RG_Date.Value.Year == annee)
+        items = db.API_V_CREGLEMENT
+            .Where(r => r.RG_Type == RgType
+                     && r.RG_Date.HasValue
+                     && ((date1 != null && r.RG_Date >= date1) || date1 == null)
+                     && ((date2 != null && r.RG_Date <= date2) || date2 == null))
+            .OrderByDescending(r => r.RG_Date)
             .ToList();
 
-        clientItems = allItems.Where(r => r.RG_Type == 0).ToList();
-        fournItems  = allItems.Where(r => r.RG_Type == 1).ToList();
-
-        ApplyFilter();
+        BuildDashboardData();
 
         IsLoaded = true;
         await Task.Delay(300);
     }
 
-    private void ApplyFilter()
+    private void BuildDashboardData()
     {
-        var src = typeFilter switch
-        {
-            0  => clientItems,
-            1  => fournItems,
-            _  => allItems
-        };
+        var total = TotalMontant;
 
-        parMode = src
-            .Where(r => !string.IsNullOrEmpty(r.R_Intitule))
-            .GroupBy(r => r.R_Intitule)
-            .Select(g => new RgModeItem { Mode = g.Key, Montant = g.Sum(x => x.RG_Montant ?? 0) })
+        monthlyData = items
+            .Where(r => r.RG_Date.HasValue)
+            .GroupBy(r => new { r.RG_Date.Value.Year, r.RG_Date.Value.Month })
+            .OrderBy(g => g.Key.Year)
+            .ThenBy(g => g.Key.Month)
+            .Select(g => new RgPeriodItem
+            {
+                Period = $"{g.Key.Month:00}/{g.Key.Year}",
+                Nb = g.Count(),
+                Montant = g.Sum(x => x.RG_Montant ?? 0)
+            })
+            .ToList();
+
+        modeData = items
+            .GroupBy(r => string.IsNullOrWhiteSpace(r.R_Intitule) ? "Non renseigné" : r.R_Intitule)
+            .Select(g => new RgAmountItem { Label = g.Key, Montant = g.Sum(x => x.RG_Montant ?? 0) })
+            .OrderByDescending(x => x.Montant)
+            .Take(10)
+            .ToList();
+
+        echeanceData = items
+            .GroupBy(r => string.IsNullOrWhiteSpace(r.Echeance) ? "Non renseigné" : r.Echeance)
+            .Select(g => new RgAmountItem { Label = g.Key, Montant = g.Sum(x => x.RG_Montant ?? 0) })
             .OrderByDescending(x => x.Montant)
             .ToList();
 
-        parType = new List<RgTypeItem>
-        {
-            new RgTypeItem { TypeLabel = "Clients",      Montant = (typeFilter == 1 ? 0 : clientItems.Sum(x => x.RG_Montant ?? 0)) },
-            new RgTypeItem { TypeLabel = "Fournisseurs", Montant = (typeFilter == 0 ? 0 : fournItems.Sum(x => x.RG_Montant ?? 0)) }
-        };
-
-        var moisLabels = new[] { "Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc" };
-
-        mensuelClient = Enumerable.Range(1, 12)
-            .Select(m => new RgMensuelItem
+        tiersData = items
+            .GroupBy(r => new { r.CT_Intitule, r.CT_Ville })
+            .Select(g =>
             {
-                Mois    = moisLabels[m - 1],
-                Montant = typeFilter == 1 ? 0 :
-                          clientItems.Where(r => r.RG_Date.HasValue && r.RG_Date.Value.Month == m)
-                                     .Sum(x => x.RG_Montant ?? 0)
+                var montant = g.Sum(x => x.RG_Montant ?? 0);
+                return new RgTiersItem
+                {
+                    Tiers = string.IsNullOrWhiteSpace(g.Key.CT_Intitule) ? "Non renseigné" : g.Key.CT_Intitule,
+                    Ville = g.Key.CT_Ville,
+                    Nb = g.Count(),
+                    Montant = montant,
+                    PctLabel = total > 0 ? ((montant / total) * 100).ToString("N1") + "%" : "0%",
+                    NbImpayes = g.Count(x => x.Impaye == true),
+                    NbRapproches = g.Count(x => x.Rappro == true)
+                };
             })
+            .OrderByDescending(x => x.Montant)
+            .Take(50)
             .ToList();
 
-        mensuelFourn = Enumerable.Range(1, 12)
-            .Select(m => new RgMensuelItem
-            {
-                Mois    = moisLabels[m - 1],
-                Montant = typeFilter == 0 ? 0 :
-                          fournItems.Where(r => r.RG_Date.HasValue && r.RG_Date.Value.Month == m)
-                                    .Sum(x => x.RG_Montant ?? 0)
-            })
-            .ToList();
-
-        topTiers = src
-            .GroupBy(r => new { r.CT_Intitule, r.RG_Type })
-            .Select(g => new RgTiersItem
-            {
-                CT_Intitule  = g.Key.CT_Intitule,
-                TypeLabel    = g.Key.RG_Type == 0 ? "Client" : "Fourn.",
-                Nb           = g.Count(),
-                TotalMontant = g.Sum(x => x.RG_Montant ?? 0),
-                NbImpayes    = g.Count(x => x.Impaye == true)
-            })
-            .OrderByDescending(x => x.TotalMontant)
-            .Take(30)
-            .ToList();
     }
 
     public void Dispose()
     {
-        allItems?.Clear();
-        clientItems?.Clear();
-        fournItems?.Clear();
-        parMode?.Clear();
-        parType?.Clear();
-        mensuelClient?.Clear();
-        mensuelFourn?.Clear();
-        topTiers?.Clear();
-        allItems = null;
+        items?.Clear();
+        monthlyData?.Clear();
+        modeData?.Clear();
+        echeanceData?.Clear();
+        tiersData?.Clear();
     }
 }

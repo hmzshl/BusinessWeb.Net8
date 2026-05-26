@@ -280,7 +280,7 @@ else
     }
 </RadzenPanelMenu>;
 
-private RenderFragment BuildAppSidebarMenu() => @<RadzenPanelMenu Multiple="false" Style="width: 100%;" DisplayStyle="@(sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)" ShowArrow="false">
+private RenderFragment BuildAppSidebarMenu() => @<RadzenPanelMenu Multiple="false" Class="business-sidebar-menu" Style="width: 100%;" DisplayStyle="@(sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)" ShowArrow="false">
 @{
     var authItems = fn.AuthItems()
     .Where(a => a.SelectedAPP == session.SelectedAPP && !string.IsNullOrEmpty(a.Url));
@@ -303,7 +303,7 @@ private RenderFragment BuildAppSidebarMenu() => @<RadzenPanelMenu Multiple="fals
     {
         var titleIcon = titleGroup.First().TitleIcon;
 
-            <RadzenPanelMenuItem Text="@titleGroup.Key" Icon="@titleIcon" Expanded="false">
+            <RadzenPanelMenuItem Text="@UpperMenuLabel(titleGroup.Key)" Icon="@titleIcon" Expanded="false" Class="business-menu-parent">
                 @{
                     // Group items by SousGroupe if HasSousGroupe is true
                     var sousGroupes = titleGroup
@@ -321,10 +321,10 @@ private RenderFragment BuildAppSidebarMenu() => @<RadzenPanelMenu Multiple="fals
                             .Where(x => x.SousGroupe == sousGroupe)
                             .ToList();
 
-                            <RadzenPanelMenuItem Text="@sousGroupe" Expanded="false">
+                            <RadzenPanelMenuItem Text="@sousGroupe" Icon="subdirectory_arrow_right" Expanded="false" Class="business-menu-subgroup">
                                 @foreach (var item in sousGroupItems)
                                 {
-                                    <RadzenPanelMenuItem Text="@item.Description" Path="@item.Url" />
+                                    <RadzenPanelMenuItem Text="@item.Description" Path="@item.Url" Class="business-menu-child" />
                                 }
                             </RadzenPanelMenuItem>
                         }
@@ -336,7 +336,7 @@ private RenderFragment BuildAppSidebarMenu() => @<RadzenPanelMenu Multiple="fals
 
                         foreach (var item in noSousGroupItems)
                         {
-                            <RadzenPanelMenuItem Text="@item.Description" Path="@item.Url" />
+                            <RadzenPanelMenuItem Text="@item.Description" Path="@item.Url" Class="business-menu-child" />
                         }
                     }
                     else
@@ -344,7 +344,7 @@ private RenderFragment BuildAppSidebarMenu() => @<RadzenPanelMenu Multiple="fals
                         // No SousGroupe grouping needed
                         foreach (var item in titleGroup)
                         {
-                            <RadzenPanelMenuItem Text="@item.Description" Path="@item.Url" />
+                            <RadzenPanelMenuItem Text="@item.Description" Path="@item.Url" Class="business-menu-child" />
                         }
                     }
                 }
@@ -485,6 +485,11 @@ private string APP()
 {
     var app = fn.getApps().FirstOrDefault(a => a.Id == session.SelectedAPP);
     return app?.Name ?? "Applications";
+}
+
+private static string UpperMenuLabel(string value)
+{
+    return string.IsNullOrWhiteSpace(value) ? value : value.ToUpper();
 }
 
 private async Task SelectAPP(int app)
@@ -678,7 +683,7 @@ private async Task SocieteListe()
     .business-apps-panel {
         width: 100%;
         max-width: 980px;
-        min-height: 90vh;
+        min-height: 60vh;
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -796,6 +801,22 @@ private async Task SocieteListe()
     .business-app-card:hover .business-app-chevron,
     .business-app-card:focus .business-app-chevron {
         color: #203154;
+    }
+
+    .business-sidebar-menu,
+    .business-sidebar-menu * {
+        text-transform: none !important;
+    }
+
+    .business-menu-subgroup > .rz-navigation-item-link {
+        border-left: 3px solid #9fb0c8;
+        background: rgba(32, 49, 84, 0.06) !important;
+        font-weight: 600;
+    }
+
+    .business-menu-subgroup > .rz-navigation-item-link .rzi {
+        color: #64748b !important;
+        font-size: 1rem !important;
     }
 
     .app-card:hover {
