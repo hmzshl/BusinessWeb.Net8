@@ -36,6 +36,39 @@
                 <SfTab CssClass="e-fill lf-tabs" HeaderPlacement="HeaderPosition.Left">
                     <TabItems>
 
+                        @* ══ T00 — IDENTIFICATION ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T00 — Identification"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section">
+                                    <div class="lf-title">IDENTIFICATION DE L'ENTREPRISE — DÉCLARATION FISCALE IS</div>
+                                    <div class="lf-note">ℹ️ Modèle 100/IS/N — Modèle Comptable Normal. Les informations d'identification sont à compléter manuellement.</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr><th class="col-label">Rubrique</th><th class="col-label">Valeur</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="lf-total"><td class="fw-bold">Exercice comptable</td><td>@(CurrentExo?.Label ?? "—")</td></tr>
+                                                <tr class="lf-total"><td class="fw-bold">Du</td><td>@(CurrentExo?.Debut.ToString("dd/MM/yyyy") ?? "—")</td></tr>
+                                                <tr class="lf-total"><td class="fw-bold">Au</td><td>@(CurrentExo?.Fin.ToString("dd/MM/yyyy") ?? "—")</td></tr>
+                                                <tr class="lf-subheader"><td colspan="2" class="fw-bold">INFORMATIONS SOCIÉTÉ (à saisir)</td></tr>
+                                                <tr><td>Raison sociale</td><td>—</td></tr>
+                                                <tr><td>Identifiant fiscal (IF)</td><td>—</td></tr>
+                                                <tr><td>I.C.E.</td><td>—</td></tr>
+                                                <tr><td>Numéro RC</td><td>—</td></tr>
+                                                <tr><td>CNSS</td><td>—</td></tr>
+                                                <tr><td>Activité principale</td><td>—</td></tr>
+                                                <tr><td>Adresse</td><td>—</td></tr>
+                                                <tr><td>Ville</td><td>—</td></tr>
+                                                <tr><td>Téléphone</td><td>—</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
                         @* ══ BILAN ACTIF ══ *@
                         <TabItem>
                             <ChildContent><TabHeader Text="T01 — Bilan Actif"></TabHeader></ChildContent>
@@ -586,6 +619,189 @@
                             </ContentTemplate>
                         </TabItem>
 
+                        @* ══ T15 — CALCUL IMPÔT / VENTILATION PRODUITS ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T15 — Calcul Impôt"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1000px;">
+                                    <div class="lf-title">ÉTAT POUR LE CALCUL DE L'IMPÔT — VENTILATION DES PRODUITS</div>
+                                    <div class="lf-note">ℹ️ La ventilation par zone géographique (colonnes 3 et 4) nécessite une saisie manuelle.</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-sign">N°</th>
+                                                    <th class="col-label">Rubriques</th>
+                                                    <th class="col-num">Ensemble<br/>des produits</th>
+                                                    <th class="col-num">Zone géo. 1<br/>(à saisir)</th>
+                                                    <th class="col-num">Zone géo. 2<br/>(à saisir)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="lf-section-hdr"><td colspan="5">VENTES</td></tr>
+                                                <tr><td class="col-sign">1</td><td>Ventes imposables (711+712)</td><td class="col-num">@Fmt(-C("711")-C("712"))</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td class="col-sign">2</td><td>Ventes exonérées à 100 %</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td class="col-sign">3</td><td>Ventes à l'export</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr class="lf-section-hdr"><td colspan="5">PRESTATIONS DE SERVICES</td></tr>
+                                                <tr><td class="col-sign">7</td><td>Imposables</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td class="col-sign">8</td><td>Exonérées à 100 %</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr class="lf-section-hdr"><td colspan="5">PRODUITS ET SUBVENTIONS</td></tr>
+                                                <tr><td class="col-sign">10</td><td>Produits accessoires et financiers (718+731+738)</td><td class="col-num">@Fmt(-C("718")-C("731")-C("738"))</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td class="col-sign">11</td><td>Subventions d'équipement (131)</td><td class="col-num">@Fmt(-C("131"))</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td class="col-sign">12</td><td>Subventions d'équilibre (756)</td><td class="col-num">@Fmt(-C("756"))</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr class="lf-total">
+                                                    <td></td><td class="fw-bold">TOTAL GÉNÉRAL</td>
+                                                    <td class="col-num fw-bold">@Fmt(-C("711")-C("712")-C("718")-C("731")-C("738")-C("131")-C("756"))</td>
+                                                    <td class="col-num">-</td><td class="col-num">-</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T16 — AMORTISSEMENTS DÉTAIL PAR BIEN ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T16 — Amort. Détail"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1200px;">
+                                    <div class="lf-title">ÉTAT DE DOTATIONS AUX AMORTISSEMENTS — DÉTAIL PAR BIEN IMMOBILISÉ</div>
+                                    <div class="lf-note">ℹ️ Ce tableau détaille les amortissements par bien (date d'entrée, taux, durée). Le détail est à saisir manuellement ; les totaux sont calculés depuis la comptabilité (comptes 28xx).</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Nature du bien</th>
+                                                    <th class="col-num">Date<br/>d'entrée</th>
+                                                    <th class="col-num">Valeur<br/>d'origine</th>
+                                                    <th class="col-num">Amort.<br/>antérieurs</th>
+                                                    <th class="col-num">Taux<br/>(%)</th>
+                                                    <th class="col-num">Dotation<br/>exercice</th>
+                                                    <th class="col-num">Cumul<br/>fin exercice</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="lf-total">
+                                                    <td class="fw-bold">TOTAL (comptes 28xx — extrait comptabilité)</td>
+                                                    <td class="col-num">-</td>
+                                                    <td class="col-num">@Fmt(BN("21")+BN("22")+BN("23")+BN("24")+BN("25"))</td>
+                                                    <td class="col-num">@Fmt(-BN1("28"))</td>
+                                                    <td class="col-num">-</td>
+                                                    <td class="col-num">@Fmt(SC("28"))</td>
+                                                    <td class="col-num">@Fmt(-BN("28"))</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T17 — PLUS-VALUES CONSTATÉES (FUSION) ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T17 — PV Constatées"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1300px;">
+                                    <div class="lf-title">ÉTAT DES PLUS-VALUES CONSTATÉES EN CAS DE CESSION OU APPORT EN SOCIÉTÉ</div>
+                                    <div class="lf-note">ℹ️ Tableau relatif aux plus-values fiscalement différées (fusions, apports). À saisir manuellement.</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-sign">N°</th>
+                                                    <th class="col-label">Éléments</th>
+                                                    <th class="col-num">Valeur<br/>d'apport</th>
+                                                    <th class="col-num">V.N.C.</th>
+                                                    <th class="col-num">Plus-value<br/>différée</th>
+                                                    <th class="col-num">Fraction<br/>exos préc.</th>
+                                                    <th class="col-num">Fraction<br/>exercice</th>
+                                                    <th class="col-num">Cumul</th>
+                                                    <th class="col-num">Solde<br/>non imputé</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td class="col-sign">1</td><td>Terrain</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td class="col-sign">2</td><td>Constructions</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td class="col-sign">3</td><td>Matériel et outillage</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td class="col-sign">4</td><td>Matériel de transport</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td class="col-sign">5</td><td>Agencements et installations</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr class="lf-total"><td></td><td class="fw-bold">TOTAL</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T18 — INTÉRÊTS DES EMPRUNTS ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T18 — Intérêts Emprunts"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1300px;">
+                                    <div class="lf-title">ÉTAT DES INTÉRÊTS DES EMPRUNTS CONTRACTÉS AUPRÈS DES ASSOCIÉS</div>
+                                    <div class="lf-note">ℹ️ Le détail par prêteur (nom, adresse, taux) est à saisir manuellement. Total charges financières extrait de la comptabilité (compte 631).</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Nom / Raison sociale</th>
+                                                    <th class="col-label">Adresse</th>
+                                                    <th class="col-num">Montant<br/>du prêt</th>
+                                                    <th class="col-num">Date<br/>du prêt</th>
+                                                    <th class="col-num">Durée<br/>(mois)</th>
+                                                    <th class="col-num">Taux<br/>annuel</th>
+                                                    <th class="col-num">Charge<br/>financière</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="lf-subheader"><td colspan="7" class="fw-bold">A. Associés</td></tr>
+                                                <tr><td>—</td><td>—</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr class="lf-subheader"><td colspan="7" class="fw-bold">B. Établissements de crédit</td></tr>
+                                                <tr><td>—</td><td>—</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr class="lf-total">
+                                                    <td colspan="6" class="fw-bold">TOTAL charges financières (compte 631 — comptabilité)</td>
+                                                    <td class="col-num fw-bold">@Fmt(C("631"))</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T19 — LOCATIONS ET BAUX ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T19 — Locations/Baux"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1300px;">
+                                    <div class="lf-title">TABLEAU DES LOCATIONS ET BAUX AUTRES QUE LE CRÉDIT-BAIL</div>
+                                    <div class="lf-note">ℹ️ Le détail par bien loué est à saisir manuellement. Total extrait de la comptabilité (compte 6131).</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Nature du bien loué</th>
+                                                    <th class="col-label">Lieu de situation</th>
+                                                    <th class="col-label">Propriétaire<br/>(Nom / RS)</th>
+                                                    <th class="col-num">N° IF<br/>propriétaire</th>
+                                                    <th class="col-num">Date de<br/>conclusion</th>
+                                                    <th class="col-num">Montant annuel<br/>de location</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td>—</td><td>—</td><td>—</td><td class="col-num">-</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr class="lf-total">
+                                                    <td colspan="5" class="fw-bold">TOTAL locations et charges locatives (compte 6131 — comptabilité)</td>
+                                                    <td class="col-num fw-bold">@Fmt(C("6131"))</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
                         @* ══ T20 — ÉTAT DÉTAILLÉ DES STOCKS ══ *@
                         <TabItem>
                             <ChildContent><TabHeader Text="T20 — Détail Stocks"></TabHeader></ChildContent>
@@ -619,6 +835,43 @@
                                                         </td>
                                                     </tr>
                                                 }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T21 — OPÉRATIONS EN DEVISES ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T21 — Opér. Devises"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section">
+                                    <div class="lf-title">TABLEAU DES OPÉRATIONS EN DEVISES (Contre-valeur en DH)</div>
+                                    <div class="lf-note">ℹ️ Les montants en devises (contre-valeur DH) sont à saisir manuellement selon le détail des opérations en monnaie étrangère.</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Nature des opérations</th>
+                                                    <th class="col-num">Entrées<br/>(Contre-valeur DH)</th>
+                                                    <th class="col-num">Sorties<br/>(Contre-valeur DH)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td>Financement permanent</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td>Immobilisations brutes</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td>Rentrées sur immobilisations</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td>Remboursement des dettes de financement</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td>Produits d'exploitation</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td>Charges d'exploitation</td><td class="col-num">-</td><td class="col-num">-</td></tr>
+                                                <tr><td>Produits financiers (gains de change 732)</td><td class="col-num">@Fmt(-C("732"))</td><td class="col-num">-</td></tr>
+                                                <tr><td>Charges financières (pertes de change 632)</td><td class="col-num">-</td><td class="col-num">@Fmt(C("632"))</td></tr>
+                                                <tr class="lf-total">
+                                                    <td class="fw-bold">BALANCE DEVISES</td>
+                                                    <td class="col-num fw-bold">-</td>
+                                                    <td class="col-num fw-bold">-</td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -694,6 +947,140 @@
                                                         <td class="col-num">@(r != null && !r.IsHeader ? Fmt(r.PrevVal) : "")</td>
                                                     </tr>
                                                 }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T23 — MÉTHODES D'ÉVALUATION ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T23 — Méthodes Eval."></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1000px;">
+                                    <div class="lf-title">PRINCIPALES MÉTHODES D'ÉVALUATION SPÉCIFIQUES À L'ENTREPRISE</div>
+                                    <div class="lf-note">ℹ️ Ce tableau de description des méthodes comptables est à rédiger manuellement.</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr><th class="col-label">Rubriques</th><th class="col-label">Description de la méthode utilisée</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="lf-section-hdr"><td colspan="2">I. ACTIF IMMOBILISÉ</td></tr>
+                                                <tr class="lf-subheader"><td colspan="2">A. ÉVALUATION À L'ENTRÉE</td></tr>
+                                                <tr><td>1. Immobilisations en non-valeurs</td><td>—</td></tr>
+                                                <tr><td>2. Immobilisations incorporelles</td><td>—</td></tr>
+                                                <tr><td>3. Immobilisations corporelles</td><td>—</td></tr>
+                                                <tr><td>4. Immobilisations financières</td><td>—</td></tr>
+                                                <tr class="lf-subheader"><td colspan="2">B. CORRECTIONS DE VALEUR — AMORTISSEMENTS</td></tr>
+                                                <tr><td>Mode d'amortissement utilisé</td><td>—</td></tr>
+                                                <tr><td>Durées d'amortissement par catégorie</td><td>—</td></tr>
+                                                <tr class="lf-section-hdr"><td colspan="2">II. ACTIF CIRCULANT</td></tr>
+                                                <tr><td>Méthode d'évaluation des stocks</td><td>—</td></tr>
+                                                <tr><td>Méthode d'évaluation des créances</td><td>—</td></tr>
+                                                <tr class="lf-section-hdr"><td colspan="2">III. FINANCEMENT PERMANENT</td></tr>
+                                                <tr><td>Méthode de comptabilisation des subventions</td><td>—</td></tr>
+                                                <tr class="lf-section-hdr"><td colspan="2">IV. PROVISIONS POUR RISQUES ET CHARGES</td></tr>
+                                                <tr><td>Critères de constitution des provisions</td><td>—</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T24 — ÉTAT DES DÉROGATIONS ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T24 — Dérogations"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1100px;">
+                                    <div class="lf-title">ÉTAT DES DÉROGATIONS AUX PRINCIPES ET MÉTHODES COMPTABLES</div>
+                                    <div class="lf-note">ℹ️ À compléter manuellement lorsqu'il y a dérogation aux règles comptables fondamentales.</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Indication des dérogations</th>
+                                                    <th class="col-label">Justification des dérogations</th>
+                                                    <th class="col-label">Influence sur le patrimoine, la situation financière et les résultats</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="lf-subheader"><td colspan="3" class="fw-bold">I. Dérogations aux principes comptables fondamentaux</td></tr>
+                                                <tr><td>—</td><td>—</td><td>—</td></tr>
+                                                <tr class="lf-subheader"><td colspan="3" class="fw-bold">II. Dérogations aux méthodes d'évaluation</td></tr>
+                                                <tr><td>—</td><td>—</td><td>—</td></tr>
+                                                <tr class="lf-subheader"><td colspan="3" class="fw-bold">III. Dérogations aux règles d'établissement et de présentation</td></tr>
+                                                <tr><td>—</td><td>—</td><td>—</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T25 — ÉTAT DES CHANGEMENTS DE MÉTHODES ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T25 — Chgt. Méthodes"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:1100px;">
+                                    <div class="lf-title">ÉTAT DES CHANGEMENTS DE MÉTHODES COMPTABLES</div>
+                                    <div class="lf-note">ℹ️ À compléter manuellement en cas de changement de méthode d'évaluation ou de présentation.</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-label">Nature des changements</th>
+                                                    <th class="col-label">Justification des changements</th>
+                                                    <th class="col-label">Influence sur le patrimoine, la situation financière et les résultats</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="lf-subheader"><td colspan="3" class="fw-bold">I. Changements affectant les méthodes d'évaluation</td></tr>
+                                                <tr><td>—</td><td>—</td><td>—</td></tr>
+                                                <tr class="lf-subheader"><td colspan="3" class="fw-bold">II. Changements affectant les règles de présentation</td></tr>
+                                                <tr><td>—</td><td>—</td><td>—</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        @* ══ T26 — CALCUL IS / CM ══ *@
+                        <TabItem>
+                            <ChildContent><TabHeader Text="T26 — Calcul IS"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="lf-section" style="max-width:900px;">
+                                    <div class="lf-title">ÉTAT POUR LE CALCUL DE L'IMPÔT SUR LES SOCIÉTÉS (I.S.)</div>
+                                    <div class="lf-note">ℹ️ Les taux et la ventilation détaillée sont à vérifier/compléter manuellement selon le régime fiscal applicable.</div>
+                                    <div class="table-responsive">
+                                        <table class="lf-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-sign">N°</th>
+                                                    <th class="col-label">Nature des produits / Base de calcul</th>
+                                                    <th class="col-num">Taux (%)</th>
+                                                    <th class="col-num">Montant</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="lf-section-hdr"><td colspan="4">BASE IS — PRODUITS TAXABLES</td></tr>
+                                                <tr><td class="col-sign">1</td><td>CA taxable (711 + 712)</td><td class="col-num">—</td><td class="col-num">@Fmt(-C("711")-C("712"))</td></tr>
+                                                <tr><td class="col-sign">2</td><td>CA exonéré à 100 %</td><td class="col-num">—</td><td class="col-num">-</td></tr>
+                                                <tr><td class="col-sign">3</td><td>CA soumis au taux réduit</td><td class="col-num">—</td><td class="col-num">-</td></tr>
+                                                <tr><td class="col-sign">4</td><td>Autres produits taxables (718 + 738)</td><td class="col-num">—</td><td class="col-num">@Fmt(-C("718")-C("738"))</td></tr>
+                                                <tr class="lf-section-hdr"><td colspan="4">CALCUL IS / CM</td></tr>
+                                                <tr><td class="col-sign">A</td><td>Résultat net fiscal (voir T03)</td><td class="col-num">—</td><td class="col-num">@Fmt(@_rnet + C("670"))</td></tr>
+                                                <tr><td class="col-sign">B</td><td>IS calculé = Résultat fiscal × taux IS</td><td class="col-num">À saisir</td><td class="col-num">-</td></tr>
+                                                <tr><td class="col-sign">C</td><td>Cotisation Minimale (CM) = CA × 0,50 %</td><td class="col-num">0,50 %</td><td class="col-num">@Fmt((-C("711")-C("712")-C("718")-C("738")) * 0.005m)</td></tr>
+                                                <tr class="lf-total">
+                                                    <td class="col-sign">D</td>
+                                                    <td class="fw-bold">IS / CM effectivement payé (compte 670)</td>
+                                                    <td class="col-num">—</td>
+                                                    <td class="col-num fw-bold">@Fmt(C("670"))</td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -1895,7 +2282,16 @@ else
 
 <style>
     .lf-tabs .e-content    { padding: 1rem 0 0; }
-    .lf-tabs .e-tab-header { min-width: 170px; }
+
+    /* ── Left tab panel: fixed width + compact items ── */
+    .lf-tabs .e-tab-header          { width: 195px !important; min-width: 195px !important; max-width: 195px !important; }
+    .lf-tabs .e-tab-header .e-toolbar-item                { min-height: unset !important; height: auto !important; }
+    .lf-tabs .e-tab-header .e-tab-wrap                    { padding: 0px 10px !important; min-height: unset !important; height: auto !important; align-items: center; }
+    .lf-tabs .e-tab-header .e-tab-text                    { font-size: .73rem !important; line-height: 1.25 !important; white-space: normal !important; word-break: break-word; }
+    .lf-tabs .e-tab-header .e-indicator                   { display: none; }
+    .lf-tabs .e-tab-header .e-toolbar-item.e-active .e-tab-wrap { background: #203154 !important; border-radius: 3px; }
+    .lf-tabs .e-tab-header .e-toolbar-item.e-active .e-tab-text { color: #fff !important; font-weight: 600 !important; }
+    .lf-tabs .e-tab-header .e-toolbar-item:not(.e-active):hover .e-tab-wrap { background: #eef1f6 !important; border-radius: 3px; }
 
     .lf-section {
         max-width: 1024px;
@@ -1985,4 +2381,19 @@ else
     .detail-table th, .detail-table td { padding: .35rem .7rem; border: 1px solid #dbe3ef; }
     .detail-table thead tr { background: #2d3f5f; color: #fff; }
     .detail-table tfoot tr td { border-top: 2px solid #203154; }
+
+    .e-tab.e-fill .e-tab-header .e-toolbar-item:not(.e-separator) {
+        height: 20px !important;
+        min-height: 20px;
+    }
+
+    .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap {
+        height: 20px !important;
+    }
+    .e-tab.e-fill .e-tab-header .e-toolbar-item .e-text-wrap {
+        height: 20px;
+    }
+    .e-tab.e-fill .e-tab-header .e-toolbar-item.e-active.e-ileft .e-text-wrap, .e-tab.e-fill .e-tab-header .e-toolbar-item.e-active.e-iright .e-text-wrap {
+        height: 20px;
+    }
 </style>
