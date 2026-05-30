@@ -2545,3 +2545,9 @@ input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-
 .e-calendar .e-content td.e-focused-date.e-today {
     box-shadow: unset;
 }
+.e-pager .e-pagerdropdown {
+    margin-top: -18px;
+}
+.e-grid .e-groupcaption {
+    overflow: unset;
+}

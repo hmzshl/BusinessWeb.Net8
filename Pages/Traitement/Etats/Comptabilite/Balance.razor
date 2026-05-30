@@ -170,13 +170,16 @@ else
             .GroupBy(e => new { e.CG_Num, e.CG_Intitule })
             .Select(g => new CptBalanceItem
             {
-                CG_Num      = g.Key.CG_Num,
+                CG_Num = g.Key.CG_Num,
                 CG_Intitule = g.Key.CG_Intitule,
-                TotalDebit  = g.Sum(x => x.Debit) ?? 0m,
-                TotalCredit = g.Sum(x => x.Credit) ?? 0m
+                MvDebit = g.Sum(x => x.Debit) ?? 0m,
+                MvCredit = g.Sum(x => x.Credit) ?? 0m
             })
             .OrderBy(x => x.CG_Num)
             .ToList();
+
+        foreach (var item in items)
+            item.ComputeSolde();
 
         classeParDebit = items
             .GroupBy(x => x.ClasseLabel)

@@ -1,0 +1,895 @@
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="@CardTitle">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        @ToolbarSummary
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                            <Template>
+                                <SfTextBox Width="200px" Placeholder="Recherche" CssClass="e-small"
+                                           ValueChanged="@(args => SearchActiveGrid(args))" />
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                            <Template>
+                                <SfDropDownList TValue="int" TItem="ExoItem" Width="200px"
+                                                @bind-Value="selectedExoIndex" DataSource="@exoItems"
+                                                Placeholder="Exercice">
+                                    <DropDownListFieldSettings Text="Label" Value="Idx" />
+                                    <DropDownListEvents TValue="int" TItem="ExoItem"
+                                                        ValueChange="@(args => OnExerciceChanged())" />
+                                </SfDropDownList>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem OnClick="@(_ => showFiltersDialog = true)" TooltipText="Filtres"
+                                     ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right"
+                                     PrefixIcon="e-icons e-filter" />
+                        <ToolbarItem OnClick="@(_ => PrintActiveGrid())" TooltipText="Imprimer"
+                                     ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right"
+                                     PrefixIcon="e-icons e-print" />
+                        <ToolbarItem OnClick="@(_ => ExportActiveGrid())" TooltipText="Export Excel"
+                                     ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right"
+                                     PrefixIcon="e-icons e-export-excel" />
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <SfDialog @bind-Visible="showFiltersDialog" Width="520px" ShowCloseIcon="true" IsModal="true">
+                    <DialogTemplates>
+                        <Header>Filtres</Header>
+                        <Content>
+                            <div class="cpt-filters-dialog">
+                                @if (IsGeneral)
+                                {
+                                    <SfDropDownList TValue="BalanceDisplayType" TItem="BalanceFormatOption" Width="100%"
+                                                    @bind-Value="balanceDisplayType" DataSource="@balanceFormatOptions"
+                                                    Placeholder="Type balance">
+                                        <DropDownListFieldSettings Text="Label" Value="Value" />
+                                    </SfDropDownList>
+                                }
+                                <SfMultiSelect TValue="List<string>" TItem="FilterOption" Width="100%"
+                                               @bind-Value="selectedJournals" DataSource="@journalOptions"
+                                               Placeholder="Journal" Mode="VisualMode.CheckBox" AllowFiltering
+                                               ShowSelectAll ShowDropDownIcon ShowClearButton PopupHeight="280px">
+                                    <MultiSelectFieldSettings Text="Label" Value="Code" />
+                                </SfMultiSelect>
+                                <SfMultiSelect TValue="List<string>" TItem="FilterOption" Width="100%"
+                                               @bind-Value="selectedComptes" DataSource="@compteOptions"
+                                               Placeholder="Compte" Mode="VisualMode.CheckBox" AllowFiltering
+                                               ShowSelectAll ShowDropDownIcon ShowClearButton PopupHeight="280px">
+                                    <MultiSelectFieldSettings Text="Label" Value="Code" />
+                                </SfMultiSelect>
+                                <SfMultiSelect TValue="List<string>" TItem="FilterOption" Width="100%"
+                                               @bind-Value="selectedTiers" DataSource="@tierOptions"
+                                               Placeholder="Tiers" Mode="VisualMode.CheckBox" AllowFiltering
+                                               ShowSelectAll ShowDropDownIcon ShowClearButton PopupHeight="280px">
+                                    <MultiSelectFieldSettings Text="Label" Value="Code" />
+                                </SfMultiSelect>
+                                <div class="cpt-filters-dates">
+                                    <SfDatePicker TValue="DateTime" Width="100%" @bind-Value="dateDebut"
+                                                  Format="dd/MM/yyyy" Placeholder="Date début"
+                                                  Min="@dateMin" Max="@dateMax" />
+                                    <SfDatePicker TValue="DateTime" Width="100%" @bind-Value="dateFin"
+                                                  Format="dd/MM/yyyy" Placeholder="Date fin"
+                                                  Min="@dateMin" Max="@dateMax" />
+                                </div>
+                            </div>
+                        </Content>
+                    </DialogTemplates>
+                    <DialogButtons>
+                        <DialogButton Content="Effacer" OnClick="@ClearFiltersFromDialog" />
+                        <DialogButton Content="Appliquer" IsPrimary="true" OnClick="@ApplyFiltersFromDialog" />
+                    </DialogButtons>
+                </SfDialog>
+
+                <SfTab @bind-SelectedItem="activeTabIndex" CssClass="e-fill lf-tabs" HeaderPlacement="HeaderPosition.Left">
+                    <TabItems>
+
+                        <TabItem>
+                            <ChildContent><TabHeader Text="Balance générale"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="cpt-tab-body">
+                                    @if (IsGeneral)
+                                    {
+                                        <Card>
+                                            <div class="grid-84 cpt-balance-grid" style="zoom: @session.zoomLevel;">
+                                                <SfGrid @ref="balanceGeneralGrid" @key="balanceDisplayType" Height="100%" RowHeight="26" DataSource="@balanceItems"
+                                                        AllowSorting AllowResizing AllowGrouping AllowExcelExport>
+                                                    <GridEvents TValue="CptBalanceItem" DataBound="OnBalanceDataBound" />
+                                                    <GridPageSettings PageSize="200" />
+                                                    <GridGroupSettings Columns="@(new string[] { nameof(CptBalanceItem.ClasseLabel) })" ShowDropArea="false" ShowToggleButton>
+                                                        <CaptionTemplate>
+                                                            @{ var ag = (context as CaptionTemplateContext); }
+                                                            <div style="font-weight:700;">@ag.Key</div>
+                                                        </CaptionTemplate>
+                                                    </GridGroupSettings>
+                                                    <GridAggregates>
+                                                        <GridAggregate>
+                                                            <GridAggregateColumns>
+                                                                @if (IsSixColonnesBalance)
+                                                                {
+                                                                    <GridAggregateColumn Field="@nameof(CptBalanceItem.AnDebit)" Type="AggregateType.Sum" Format="@AmountFormat" />
+                                                                    <GridAggregateColumn Field="@nameof(CptBalanceItem.AnCredit)" Type="AggregateType.Sum" Format="@AmountFormat" />
+                                                                }
+                                                                <GridAggregateColumn Field="@nameof(CptBalanceItem.MvDebit)" Type="AggregateType.Sum" Format="@AmountFormat" />
+                                                                <GridAggregateColumn Field="@nameof(CptBalanceItem.MvCredit)" Type="AggregateType.Sum" Format="@AmountFormat" />
+                                                                <GridAggregateColumn Field="@nameof(CptBalanceItem.SoldeDebit)" Type="AggregateType.Sum" Format="@AmountFormat" />
+                                                                <GridAggregateColumn Field="@nameof(CptBalanceItem.SoldeCredit)" Type="AggregateType.Sum" Format="@AmountFormat" />
+                                                            </GridAggregateColumns>
+                                                        </GridAggregate>
+                                                    </GridAggregates>
+                                                    <GridColumns>
+                                                        <GridColumn Field="@nameof(CptBalanceItem.ClasseLabel)" Visible="false" />
+                                                        <GridColumn Width="100" HeaderText="Compte" Field="@nameof(CptBalanceItem.CG_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="200" HeaderText="Intitulé" Field="@nameof(CptBalanceItem.CG_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        @if (IsSixColonnesBalance)
+                                                        {
+                                                            <GridColumn Width="90" HeaderText="An. Débit" Field="@nameof(CptBalanceItem.AnDebit)" Format="@AmountFormat" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                            <GridColumn Width="90" HeaderText="An. Crédit" Field="@nameof(CptBalanceItem.AnCredit)" Format="@AmountFormat" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        }
+                                                        <GridColumn Width="90" HeaderText="Mv. Débit" Field="@nameof(CptBalanceItem.MvDebit)" Format="@AmountFormat" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="90" HeaderText="Mv. Crédit" Field="@nameof(CptBalanceItem.MvCredit)" Format="@AmountFormat" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="90" HeaderText="Sol. Débit" Field="@nameof(CptBalanceItem.SoldeDebit)" Format="@AmountFormat" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="90" HeaderText="Sol. Crédit" Field="@nameof(CptBalanceItem.SoldeCredit)" Format="@AmountFormat" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    </GridColumns>
+                                                </SfGrid>
+                                            </div>
+                                        </Card>
+                                    }
+                                    else
+                                    {
+                                        <Card>
+                                            <div class="grid-84 cpt-balance-grid" style="zoom: @session.zoomLevel;">
+                                                <SfGrid @ref="balanceTierGrid" Height="100%" RowHeight="26" DataSource="@tierBalanceItems"
+                                                        AllowSorting AllowResizing AllowExcelExport>
+                                                    <GridPageSettings PageSize="200" />
+                                                    <GridColumns>
+                                                        <GridColumn Width="120" HeaderText="Tiers" Field="@nameof(CptTierBalanceItem.CT_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="220" HeaderText="Intitulé" Field="@nameof(CptTierBalanceItem.CT_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="120" HeaderText="Compte coll." Field="@nameof(CptTierBalanceItem.CG_NumPrinc)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="140" HeaderText="Total Débit" Field="@nameof(CptTierBalanceItem.TotalDebit)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="140" HeaderText="Total Crédit" Field="@nameof(CptTierBalanceItem.TotalCredit)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="140" HeaderText="Solde" Field="@nameof(CptTierBalanceItem.Solde)" Format="N2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="100" HeaderText="Sens" Field="@nameof(CptTierBalanceItem.SoldeSens)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    </GridColumns>
+                                                </SfGrid>
+                                            </div>
+                                        </Card>
+                                    }
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        <TabItem>
+                            <ChildContent><TabHeader Text="Grand livre"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="cpt-tab-body">
+                                    <Card>
+                                        <div class="grid-84 cpt-grand-livre-grid" style="zoom: @session.zoomLevel;">
+                                            <SfGrid @ref="grandLivreGrid" Height="100%" DataSource="@ecritureItems"
+                                                    CssClass="cpt-gl-grid"
+                                                    AllowSorting AllowResizing AllowGrouping AllowPaging AllowTextWrap AllowExcelExport>
+                                                <GridEvents TValue="CptEcritureItem" DataBound="OnGrandLivreDataBound" />
+                                                <GridPageSettings PageSize="50" PageSizes="@(new string[] { "50", "100", "200" })" />
+                                                <GridGroupSettings Columns="@(new string[] { GroupField })" ShowDropArea="false" ShowToggleButton>
+                                                    <CaptionTemplate>
+                                                        @{ var ag = (context as CaptionTemplateContext); }
+                                                        <div style="font-weight:700;">@ag.Key</div>
+                                                    </CaptionTemplate>
+                                                </GridGroupSettings>
+                                                <GridAggregates>
+                                                    <GridAggregate>
+                                                        <GridAggregateColumns>
+                                                            <GridAggregateColumn Field="@nameof(CptEcritureItem.Debit)" Type="AggregateType.Sum" Format="@AmountFormat">
+                                                                <GroupCaptionTemplate>
+                                                                    @{ var s = (context as AggregateTemplateContext); }
+                                                                    <div style="text-align:right;font-weight:600;">@s.Sum</div>
+                                                                </GroupCaptionTemplate>
+                                                            </GridAggregateColumn>
+                                                            <GridAggregateColumn Field="@nameof(CptEcritureItem.Credit)" Type="AggregateType.Sum" Format="@AmountFormat">
+                                                                <GroupCaptionTemplate>
+                                                                    @{ var s = (context as AggregateTemplateContext); }
+                                                                    <div style="text-align:right;font-weight:600;">@s.Sum</div>
+                                                                </GroupCaptionTemplate>
+                                                            </GridAggregateColumn>
+                                                        </GridAggregateColumns>
+                                                    </GridAggregate>
+                                                </GridAggregates>
+                                                <GridColumns>
+                                                    <GridColumn Field="@GroupField" Visible="false" />
+                                                    <GridColumn Width="68" HeaderText="Date" Field="@nameof(CptEcritureItem.MV_Date)" Format="dd/MM/yy" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    <GridColumn Width="48" HeaderText="Code jnl" Field="@nameof(CptEcritureItem.JO_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    <GridColumn Width="80" HeaderText="Int. jnl" Field="@nameof(CptEcritureItem.JO_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    <GridColumn Width="60" HeaderText="Pièce" Field="@nameof(CptEcritureItem.EC_Piece)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    <GridColumn Width="72" HeaderText="Réf." Field="@nameof(CptEcritureItem.EC_Reference)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    <GridColumn Width="100" HeaderText="Libellé" Field="@nameof(CptEcritureItem.EC_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    <GridColumn Width="68" HeaderText="N° tiers" Field="@nameof(CptEcritureItem.CT_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    <GridColumn Width="160" HeaderText="Int. tiers" Field="@nameof(CptEcritureItem.CT_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    <GridColumn Width="160" HeaderText="Intitulé compte" Field="@nameof(CptEcritureItem.CG_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    <GridColumn Width="52" HeaderText="Let." Field="@nameof(CptEcritureItem.EC_Lettrage)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    <GridColumn Width="68" HeaderText="Éch." Field="@nameof(CptEcritureItem.EC_Echeance)" Format="dd/MM/yy" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    <GridColumn Width="68" HeaderText="Rapp." Field="@nameof(CptEcritureItem.Rapprochement)" Format="dd/MM/yy" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    <GridColumn Width="76" HeaderText="Débit" Field="@nameof(CptEcritureItem.Debit)" Format="@AmountFormat" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    <GridColumn Width="76" HeaderText="Crédit" Field="@nameof(CptEcritureItem.Credit)" Format="@AmountFormat" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                </GridColumns>
+                                            </SfGrid>
+                                        </div>
+                                    </Card>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        <TabItem>
+                            <ChildContent><TabHeader Text="Gestion compte"></TabHeader></ChildContent>
+                            <ContentTemplate>
+                                <div class="cpt-tab-body">
+                                    <Card>
+                                        <div class="grid-84" style="zoom: @session.zoomLevel;">
+                                            @if (IsGeneral)
+                                            {
+                                                <SfGrid @ref="comptesGenerauxGrid" Height="100%" DataSource="@comptesGeneraux"
+                                                        AllowSorting AllowResizing AllowExcelExport>
+                                                    <GridPageSettings PageSize="200" />
+                                                    <GridColumns>
+                                                        <GridColumn Width="120" HeaderText="Compte" Field="@nameof(F_COMPTEG.CG_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="260" HeaderText="Intitulé" Field="@nameof(F_COMPTEG.CG_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="100" HeaderText="Type" Field="@nameof(F_COMPTEG.CG_Type)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="100" HeaderText="Lettrage" Field="@nameof(F_COMPTEG.CG_Lettrage)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="100" HeaderText="Sommeil" Field="@nameof(F_COMPTEG.CG_Sommeil)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    </GridColumns>
+                                                </SfGrid>
+                                            }
+                                            else
+                                            {
+                                                <SfGrid @ref="comptesTiersGrid" Height="100%" DataSource="@comptesTiers"
+                                                        AllowSorting AllowResizing AllowExcelExport>
+                                                    <GridPageSettings PageSize="200" />
+                                                    <GridColumns>
+                                                        <GridColumn Width="120" HeaderText="Tiers" Field="@nameof(F_COMPTET.CT_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="240" HeaderText="Intitulé" Field="@nameof(F_COMPTET.CT_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="120" HeaderText="Compte coll." Field="@nameof(F_COMPTET.CG_NumPrinc)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                        <GridColumn Width="100" HeaderText="Type" Field="@nameof(F_COMPTET.CT_Type)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                                            <Template>
+                                                                @{ var t = (context as F_COMPTET); }
+                                                                @(t?.CT_Type == 0 ? "Client" : t?.CT_Type == 1 ? "Fournisseur" : "—")
+                                                            </Template>
+                                                        </GridColumn>
+                                                        <GridColumn Width="100" HeaderText="Sommeil" Field="@nameof(F_COMPTET.CT_Sommeil)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                    </GridColumns>
+                                                </SfGrid>
+                                            }
+                                        </div>
+                                    </Card>
+                                </div>
+                            </ContentTemplate>
+                        </TabItem>
+
+                    </TabItems>
+                </SfTab>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [Parameter] public string CardTitle { get; set; } = "";
+    [Parameter] public bool IsGeneral { get; set; } = true;
+
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    private class ExoItem
+    {
+        public int Idx { get; set; }
+        public string Label { get; set; }
+        public DateTime Debut { get; set; }
+        public DateTime Fin { get; set; }
+    }
+
+    private class FilterOption
+    {
+        public string Code { get; set; }
+        public string Label { get; set; }
+    }
+
+    private enum BalanceDisplayType { Base, SixColonnes }
+
+    private class BalanceFormatOption
+    {
+        public BalanceDisplayType Value { get; set; }
+        public string Label { get; set; }
+    }
+
+    private static readonly List<BalanceFormatOption> balanceFormatOptions = new()
+    {
+        new() { Value = BalanceDisplayType.Base, Label = "Base" },
+        new() { Value = BalanceDisplayType.SixColonnes, Label = "6 colonnes" }
+    };
+
+    private BalanceDisplayType balanceDisplayType = BalanceDisplayType.Base;
+    private bool IsSixColonnesBalance => balanceDisplayType == BalanceDisplayType.SixColonnes;
+
+    private List<ExoItem> exoItems = new();
+    private int selectedExoIndex;
+    private ExoItem CurrentExo => exoItems.Count > 0 && selectedExoIndex >= 0 && selectedExoIndex < exoItems.Count
+        ? exoItems[selectedExoIndex] : null;
+
+    private DateTime dateDebut;
+    private DateTime dateFin;
+    private DateTime dateMin => CurrentExo?.Debut ?? new DateTime(1900, 1, 1);
+    private DateTime dateMax => CurrentExo?.Fin ?? new DateTime(2099, 12, 31);
+
+    private List<CptBalanceItem> balanceItems = new();
+    private List<CptTierBalanceItem> tierBalanceItems = new();
+    private List<CptEcritureItem> ecritureItems = new();
+    private List<F_COMPTEG> comptesGeneraux = new();
+    private List<F_COMPTET> comptesTiers = new();
+    private HashSet<string> generalAccountNumbers = new(StringComparer.OrdinalIgnoreCase);
+
+    private List<FilterOption> journalOptions = new();
+    private List<FilterOption> compteOptions = new();
+    private List<FilterOption> tierOptions = new();
+    private List<string> selectedJournals = new();
+    private List<string> selectedComptes = new();
+    private List<string> selectedTiers = new();
+
+    private int ecritureComptesCount;
+    private int activeTabIndex;
+    private bool showFiltersDialog;
+
+    private SfGrid<CptBalanceItem> balanceGeneralGrid;
+    private SfGrid<CptTierBalanceItem> balanceTierGrid;
+    private SfGrid<CptEcritureItem> grandLivreGrid;
+    private SfGrid<F_COMPTEG> comptesGenerauxGrid;
+    private SfGrid<F_COMPTET> comptesTiersGrid;
+    private const string AmountFormat = "# ##0.00;-# ##0.00;#";
+    private string GroupField => IsGeneral ? nameof(CptEcritureItem.CompteLabel) : nameof(CptEcritureItem.TierLabel);
+    private string ToolbarSummary => IsGeneral
+        ? $"{balanceItems.Count} compte(s) | {ecritureItems.Count} écriture(s) | {PeriodLabel}"
+        : $"{tierBalanceItems.Count} tiers | {ecritureItems.Count} écriture(s) | {PeriodLabel}";
+
+    private string PeriodLabel => CurrentExo == null
+        ? "—"
+        : $"{dateDebut:dd/MM/yyyy} — {dateFin:dd/MM/yyyy}";
+
+    bool IsLoaded;
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        LoadExercices();
+        SyncDatesToExercice();
+        await LoadData();
+        IsLoaded = true;
+    }
+
+    private void LoadExercices()
+    {
+        var d = db.P_DOSSIER.FirstOrDefault();
+        if (d == null) return;
+
+        var raw = new (DateTime? Debut, DateTime? Fin)[]
+        {
+            (d.D_DebutExo01, d.D_FinExo01), (d.D_DebutExo02, d.D_FinExo02),
+            (d.D_DebutExo03, d.D_FinExo03), (d.D_DebutExo04, d.D_FinExo04),
+            (d.D_DebutExo05, d.D_FinExo05),
+        };
+
+        exoItems = raw
+            .Where(x => x.Debut.HasValue && x.Fin.HasValue && x.Debut.Value.Year > 1900)
+            .OrderByDescending(x => x.Debut)
+            .Select((x, i) => new ExoItem
+            {
+                Idx = i,
+                Debut = x.Debut!.Value.Date,
+                Fin = x.Fin!.Value.Date,
+                Label = ExoLabel(x.Debut!.Value, x.Fin!.Value)
+            })
+            .ToList();
+
+        selectedExoIndex = 0;
+    }
+
+    private static string ExoLabel(DateTime d, DateTime f)
+    {
+        bool cal = d.Day == 1 && d.Month == 1 && f.Day == 31 && f.Month == 12 && d.Year == f.Year;
+        return cal ? d.Year.ToString() : $"{d:dd/MM/yy} — {f:dd/MM/yy}";
+    }
+
+    private void SyncDatesToExercice()
+    {
+        if (CurrentExo == null) return;
+        dateDebut = CurrentExo.Debut;
+        dateFin = CurrentExo.Fin;
+    }
+
+    private void ClampDates()
+    {
+        if (CurrentExo == null) return;
+        if (dateDebut < CurrentExo.Debut) dateDebut = CurrentExo.Debut;
+        if (dateFin > CurrentExo.Fin) dateFin = CurrentExo.Fin;
+        if (dateDebut > dateFin) dateDebut = dateFin;
+    }
+
+    private async Task OnExerciceChanged()
+    {
+        SyncDatesToExercice();
+        ClearFilters();
+        await LoadData();
+    }
+
+    private async Task ApplyFiltersFromDialog()
+    {
+        ClampDates();
+        showFiltersDialog = false;
+        await LoadData();
+    }
+
+    private async Task ClearFiltersFromDialog()
+    {
+        ClearFilters();
+        ClampDates();
+        showFiltersDialog = false;
+        await LoadData();
+    }
+
+    private async Task PrintActiveGrid()
+    {
+        switch (activeTabIndex)
+        {
+            case 0 when IsGeneral && balanceGeneralGrid != null:
+                await balanceGeneralGrid.PrintAsync();
+                break;
+            case 0 when !IsGeneral && balanceTierGrid != null:
+                await balanceTierGrid.PrintAsync();
+                break;
+            case 1 when grandLivreGrid != null:
+                await grandLivreGrid.PrintAsync();
+                break;
+            case 2 when IsGeneral && comptesGenerauxGrid != null:
+                await comptesGenerauxGrid.PrintAsync();
+                break;
+            case 2 when !IsGeneral && comptesTiersGrid != null:
+                await comptesTiersGrid.PrintAsync();
+                break;
+        }
+    }
+
+    private async Task ExportActiveGrid()
+    {
+        switch (activeTabIndex)
+        {
+            case 0 when IsGeneral && balanceGeneralGrid != null:
+                await balanceGeneralGrid.ExportToExcelAsync(fn.ExportToExcelAsync());
+                break;
+            case 0 when !IsGeneral && balanceTierGrid != null:
+                await balanceTierGrid.ExportToExcelAsync(fn.ExportToExcelAsync());
+                break;
+            case 1 when grandLivreGrid != null:
+                await grandLivreGrid.ExportToExcelAsync(fn.ExportToExcelAsync());
+                break;
+            case 2 when IsGeneral && comptesGenerauxGrid != null:
+                await comptesGenerauxGrid.ExportToExcelAsync(fn.ExportToExcelAsync());
+                break;
+            case 2 when !IsGeneral && comptesTiersGrid != null:
+                await comptesTiersGrid.ExportToExcelAsync(fn.ExportToExcelAsync());
+                break;
+        }
+    }
+
+    private async Task SearchActiveGrid(string searchText)
+    {
+        var text = searchText ?? "";
+        switch (activeTabIndex)
+        {
+            case 0 when IsGeneral && balanceGeneralGrid != null:
+                await balanceGeneralGrid.SearchAsync(text);
+                break;
+            case 0 when !IsGeneral && balanceTierGrid != null:
+                await balanceTierGrid.SearchAsync(text);
+                break;
+            case 1 when grandLivreGrid != null:
+                await grandLivreGrid.SearchAsync(text);
+                break;
+            case 2 when IsGeneral && comptesGenerauxGrid != null:
+                await comptesGenerauxGrid.SearchAsync(text);
+                break;
+            case 2 when !IsGeneral && comptesTiersGrid != null:
+                await comptesTiersGrid.SearchAsync(text);
+                break;
+        }
+    }
+
+    private void ClearFilters()
+    {
+        selectedJournals = new();
+        selectedComptes = new();
+        selectedTiers = new();
+        balanceDisplayType = BalanceDisplayType.Base;
+    }
+
+    private async Task LoadData()
+    {
+        IsLoaded = false;
+        await Task.Delay(200);
+
+        if (CurrentExo == null)
+        {
+            balanceItems.Clear();
+            tierBalanceItems.Clear();
+            ecritureItems.Clear();
+            comptesGeneraux.Clear();
+            comptesTiers.Clear();
+            ecritureComptesCount = 0;
+            journalOptions.Clear();
+            compteOptions.Clear();
+            tierOptions.Clear();
+            IsLoaded = true;
+            return;
+        }
+
+        ClampDates();
+
+        var baseQuery = db.API_V_ECRITUREC
+            .Where(e => e.MV_Date.HasValue
+                     && e.MV_Date.Value >= dateDebut
+                     && e.MV_Date.Value <= dateFin);
+
+        if (IsGeneral)
+        {
+            if (generalAccountNumbers.Count == 0)
+                generalAccountNumbers = db.F_COMPTEG
+                    .Where(g => g.CG_Num != null)
+                    .Select(g => g.CG_Num)
+                    .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        }
+
+        var scopeQuery = IsGeneral
+            ? baseQuery.Where(e => e.CG_Num != null && generalAccountNumbers.Contains(e.CG_Num))
+            : baseQuery.Where(e => e.CT_Num != null && e.CT_Num != "");
+
+        LoadFilterOptions(scopeQuery);
+        var filteredQuery = ApplyEcritureFilters(scopeQuery);
+
+        if (IsGeneral)
+        {
+            var generalQuery = filteredQuery;
+
+            balanceItems = BuildGeneralBalance();
+
+            ecritureItems = generalQuery
+                .OrderBy(e => e.CG_Num)
+                .ThenBy(e => e.MV_Date)
+                .Select(e => MapEcriture(e))
+                .ToList();
+
+            var activeCg = ecritureItems.Select(x => x.CG_Num).Distinct().ToHashSet(StringComparer.OrdinalIgnoreCase);
+            comptesGeneraux = db.F_COMPTEG
+                .Where(g => g.CG_Num != null && activeCg.Contains(g.CG_Num))
+                .OrderBy(g => g.CG_Num)
+                .ToList();
+
+            ecritureComptesCount = activeCg.Count;
+        }
+        else
+        {
+            var tierQuery = filteredQuery;
+
+            tierBalanceItems = tierQuery
+                .GroupBy(e => new { e.CT_Num, e.CT_Intitule, e.CG_Num })
+                .Select(g => new CptTierBalanceItem
+                {
+                    CT_Num = g.Key.CT_Num,
+                    CT_Intitule = g.Key.CT_Intitule,
+                    CG_NumPrinc = g.Key.CG_Num,
+                    TotalDebit = g.Sum(x => x.Debit) ?? 0m,
+                    TotalCredit = g.Sum(x => x.Credit) ?? 0m
+                })
+                .OrderBy(x => x.CT_Num)
+                .ToList();
+
+            ecritureItems = tierQuery
+                .OrderBy(e => e.CT_Num)
+                .ThenBy(e => e.MV_Date)
+                .Select(e => MapEcriture(e))
+                .ToList();
+
+            var activeCt = ecritureItems.Select(x => x.CT_Num).Distinct().ToHashSet(StringComparer.OrdinalIgnoreCase);
+            comptesTiers = db.F_COMPTET
+                .Where(t => t.CT_Num != null && activeCt.Contains(t.CT_Num))
+                .OrderBy(t => t.CT_Num)
+                .ToList();
+
+            ecritureComptesCount = activeCt.Count;
+        }
+
+        IsLoaded = true;
+        await Task.Delay(100);
+    }
+
+    private void LoadFilterOptions(IQueryable<API_V_ECRITUREC> scopeQuery)
+    {
+        journalOptions = scopeQuery
+            .Where(e => e.JO_Num != null && e.JO_Num != "")
+            .GroupBy(e => e.JO_Num)
+            .Select(g => new FilterOption
+            {
+                Code = g.Key,
+                Label = g.Key + " - " + (g.Max(x => x.JO_Intitule) ?? "")
+            })
+            .OrderBy(x => x.Code)
+            .ToList();
+
+        compteOptions = scopeQuery
+            .Where(e => e.CG_Num != null && e.CG_Num != "")
+            .GroupBy(e => e.CG_Num)
+            .Select(g => new FilterOption
+            {
+                Code = g.Key,
+                Label = g.Key + " - " + (g.Max(x => x.CG_Intitule) ?? "")
+            })
+            .OrderBy(x => x.Code)
+            .ToList();
+
+        tierOptions = scopeQuery
+            .Where(e => e.CT_Num != null && e.CT_Num != "")
+            .GroupBy(e => e.CT_Num)
+            .Select(g => new FilterOption
+            {
+                Code = g.Key,
+                Label = g.Key + " - " + (g.Max(x => x.CT_Intitule) ?? "")
+            })
+            .OrderBy(x => x.Code)
+            .ToList();
+
+        var journalCodes = journalOptions.Select(x => x.Code).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var compteCodes = compteOptions.Select(x => x.Code).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var tierCodes = tierOptions.Select(x => x.Code).ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        selectedJournals = selectedJournals?.Where(c => journalCodes.Contains(c)).ToList() ?? new();
+        selectedComptes = selectedComptes?.Where(c => compteCodes.Contains(c)).ToList() ?? new();
+        selectedTiers = selectedTiers?.Where(c => tierCodes.Contains(c)).ToList() ?? new();
+    }
+
+    private IQueryable<API_V_ECRITUREC> ApplyEcritureFilters(IQueryable<API_V_ECRITUREC> query)
+    {
+        if (selectedJournals?.Count > 0)
+            query = query.Where(e => selectedJournals.Contains(e.JO_Num));
+        if (selectedComptes?.Count > 0)
+            query = query.Where(e => selectedComptes.Contains(e.CG_Num));
+        if (selectedTiers?.Count > 0)
+            query = query.Where(e => selectedTiers.Contains(e.CT_Num));
+        return query;
+    }
+
+    private List<CptBalanceItem> BuildGeneralBalance()
+    {
+        var rows = new Dictionary<string, CptBalanceItem>(StringComparer.OrdinalIgnoreCase);
+
+        void MergeAmounts(string cgNum, string cgIntitule, decimal debit, decimal credit, bool isAn)
+        {
+            if (string.IsNullOrWhiteSpace(cgNum))
+                return;
+
+            if (!rows.TryGetValue(cgNum, out var row))
+            {
+                row = new CptBalanceItem { CG_Num = cgNum, CG_Intitule = cgIntitule };
+                rows[cgNum] = row;
+            }
+
+            if (isAn)
+            {
+                row.AnDebit += debit;
+                row.AnCredit += credit;
+            }
+            else
+            {
+                row.MvDebit += debit;
+                row.MvCredit += credit;
+            }
+        }
+
+        var mvQuery = ApplyEcritureFilters(
+            db.API_V_ECRITUREC.Where(e =>
+                e.CG_Num != null
+                && generalAccountNumbers.Contains(e.CG_Num)
+                && (e.EC_ANType ?? 0) != 1
+                && e.MV_Date.HasValue
+                && e.MV_Date.Value >= dateDebut
+                && e.MV_Date.Value <= dateFin));
+
+        foreach (var g in mvQuery
+                     .GroupBy(e => new { e.CG_Num, e.CG_Intitule })
+                     .Select(x => new
+                     {
+                         x.Key.CG_Num,
+                         x.Key.CG_Intitule,
+                         Debit = x.Sum(l => l.Debit) ?? 0m,
+                         Credit = x.Sum(l => l.Credit) ?? 0m
+                     })
+                     .ToList())
+        {
+            MergeAmounts(g.CG_Num, g.CG_Intitule, g.Debit, g.Credit, isAn: false);
+        }
+
+        if (IsSixColonnesBalance && CurrentExo != null)
+        {
+            var exoDeb = CurrentExo.Debut;
+            var exoFin = CurrentExo.Fin;
+
+            var anBase = ApplyEcritureFiltersRaw(
+                db.F_ECRITUREC.Where(e =>
+                    e.CG_Num != null
+                    && generalAccountNumbers.Contains(e.CG_Num)
+                    && e.EC_ANType == 1
+                    && e.JM_Date >= exoDeb
+                    && e.JM_Date <= exoFin));
+
+            var anGroups = (
+                from e in anBase
+                join cg in db.F_COMPTEG on e.CG_Num equals cg.CG_Num into cgJoin
+                from cg in cgJoin.DefaultIfEmpty()
+                group e by new { e.CG_Num, CG_Intitule = cg != null ? cg.CG_Intitule : null } into grp
+                select new
+                {
+                    grp.Key.CG_Num,
+                    grp.Key.CG_Intitule,
+                    Debit = grp.Sum(l => l.EC_Sens == 0 ? l.EC_Montant ?? 0m : 0m),
+                    Credit = grp.Sum(l => l.EC_Sens == 1 ? l.EC_Montant ?? 0m : 0m)
+                }).ToList();
+
+            foreach (var g in anGroups)
+                MergeAmounts(g.CG_Num, g.CG_Intitule ?? "", g.Debit, g.Credit, isAn: true);
+        }
+
+        return rows.Values
+            .Where(x => x.AnDebit != 0m || x.AnCredit != 0m || x.MvDebit != 0m || x.MvCredit != 0m)
+            .OrderBy(x => x.CG_Num)
+            .Select(x =>
+            {
+                x.ComputeSolde();
+                return x;
+            })
+            .ToList();
+    }
+
+    private IQueryable<F_ECRITUREC> ApplyEcritureFiltersRaw(IQueryable<F_ECRITUREC> query)
+    {
+        if (selectedJournals?.Count > 0)
+            query = query.Where(e => selectedJournals.Contains(e.JO_Num));
+        if (selectedComptes?.Count > 0)
+            query = query.Where(e => selectedComptes.Contains(e.CG_Num));
+        if (selectedTiers?.Count > 0)
+            query = query.Where(e => selectedTiers.Contains(e.CT_Num));
+        return query;
+    }
+
+    private async Task OnBalanceDataBound(object _)
+    {
+        if (balanceGeneralGrid == null || balanceItems.Count == 0)
+            return;
+        await balanceGeneralGrid.ExpandAllGroupAsync();
+    }
+
+    private async Task OnGrandLivreDataBound(object _)
+    {
+        if (grandLivreGrid == null || ecritureItems.Count == 0)
+            return;
+        await grandLivreGrid.ExpandAllGroupAsync();
+    }
+
+    private static CptEcritureItem MapEcriture(API_V_ECRITUREC e) => new()
+    {
+        JO_Num = e.JO_Num,
+        JO_Intitule = e.JO_Intitule,
+        MV_Date = e.MV_Date,
+        EC_Piece = e.EC_Piece,
+        EC_Reference = e.EC_Reference,
+        CG_Num = e.CG_Num,
+        CG_Intitule = e.CG_Intitule,
+        CT_Num = e.CT_Num,
+        CT_Intitule = e.CT_Intitule,
+        EC_Intitule = e.EC_Intitule,
+        Debit = e.Debit ?? 0m,
+        Credit = e.Credit ?? 0m,
+        EC_Lettre = e.EC_Lettre,
+        EC_Lettrage = e.EC_Lettrage,
+        EC_Echeance = e.EC_Echeance,
+        EC_DateRappro = e.EC_DateRappro,
+        Rapprochement = e.EC_DateRappro.HasValue && e.EC_DateRappro.Value.Year > 1900 ? e.EC_DateRappro : null
+    };
+
+    public void Dispose()
+    {
+        balanceItems?.Clear();
+        tierBalanceItems?.Clear();
+        ecritureItems?.Clear();
+        comptesGeneraux?.Clear();
+        comptesTiers?.Clear();
+        generalAccountNumbers?.Clear();
+        journalOptions?.Clear();
+        compteOptions?.Clear();
+        tierOptions?.Clear();
+        selectedJournals?.Clear();
+        selectedComptes?.Clear();
+        selectedTiers?.Clear();
+    }
+}
+
+<style>
+    /* ── Left tab panel: fixed width + compact items ── */
+    .lf-tabs .e-tab-header          { width: 195px !important; min-width: 195px !important; max-width: 195px !important; }
+    .lf-tabs .e-tab-header .e-toolbar-item                { min-height: unset !important; height: auto !important; }
+    .lf-tabs .e-tab-header .e-tab-wrap                    { padding: 0px 10px !important; min-height: unset !important; height: auto !important; align-items: center; }
+    .lf-tabs .e-tab-header .e-tab-text                    { font-size: .73rem !important; line-height: 1.25 !important; white-space: normal !important; word-break: break-word; }
+    .lf-tabs .e-tab-header .e-indicator                   { display: none; }
+    .lf-tabs .e-tab-header .e-toolbar-item.e-active .e-tab-wrap { background: #203154 !important; border-radius: 3px; }
+    .lf-tabs .e-tab-header .e-toolbar-item.e-active .e-tab-text { color: #fff !important; font-weight: 600 !important; }
+    .lf-tabs .e-tab-header .e-toolbar-item:not(.e-active):hover .e-tab-wrap { background: #eef1f6 !important; border-radius: 3px; }
+
+    .cpt-tab-body { padding-top: .5rem; }
+
+    .cpt-filters-dialog {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 8px 4px 4px;
+    }
+    .cpt-filters-dates {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .cpt-balance-grid .e-grid .e-rowcell,
+    .cpt-balance-grid .e-grid .e-groupcaption,
+    .cpt-balance-grid .e-grid .e-summarycell {
+        line-height: 18px;
+        padding: 2px 5px !important;
+        white-space: nowrap;
+    }
+
+    .cpt-grand-livre-grid .e-grid .e-rowcell,
+    .cpt-grand-livre-grid .e-grid .e-headercelldiv {
+        white-space: normal !important;
+        word-break: break-word;
+        line-height: 1.2;
+        font-size: .72rem;
+        padding: 2px 4px !important;
+    }
+    .cpt-grand-livre-grid .e-grid .e-headercell {
+        padding: 2px 4px !important;
+    }
+
+    .e-tab.e-fill .e-tab-header .e-toolbar-item:not(.e-separator) {
+        height: 20px !important;
+        min-height: 20px;
+    }
+
+    .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap {
+        height: 20px !important;
+    }
+    .e-tab.e-fill .e-tab-header .e-toolbar-item .e-text-wrap {
+        height: 20px;
+    }
+    .e-tab.e-fill .e-tab-header .e-toolbar-item.e-active.e-ileft .e-text-wrap, .e-tab.e-fill .e-tab-header .e-toolbar-item.e-active.e-iright .e-text-wrap {
+        height: 20px;
+    }
+</style>
