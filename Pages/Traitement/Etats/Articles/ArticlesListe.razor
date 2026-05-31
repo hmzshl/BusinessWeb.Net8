@@ -13,6 +13,7 @@
 								<RadzenStack Orientation="Radzen.Orientation.Horizontal" AlignItems="AlignItems.Center" Wrap="Radzen.FlexWrap.Wrap">
 									<RadzenLabel Text="AFFICHAGE" />
 									<SfMultiSelect Width="150px" @bind-Value=@selected_affichages ShowClearButton="false" TValue="List<string>" Mode="@VisualMode.CheckBox" TItem="string" AllowFiltering="true" DataSource="@(affichages)" ShowSelectAll EnableSelectionOrder ShowDropDownIcon PopupHeight="350px">
+										<MultiSelectEvents TValue="List<string>" TItem="string" ValueChange="OnAffichageChanged" />
 									</SfMultiSelect>
 								</RadzenStack>
 
@@ -82,152 +83,111 @@
 							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AR_PrixVen" HeaderText="PU.Vente" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
 							<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="SommeilIntitule" HeaderText="Sommeil"></GridColumn>
 
-							<!--Stock-->
-							<GridColumn  HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="STOCK">
+							<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="STOCK">
 								<GridColumns>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Stock"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="EtatStock" HeaderText="Etat">
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="EtatStock" HeaderText="Etat">
 										<Template>
 											@{
 												var dt = (context as API_V_ARTICLE);
-												if (dt.AR_SuiviStock != 0)
+												if (dt?.AR_SuiviStock != 0)
 												{
-													if (dt?.EtatStock == "En stock")
-													{
-														<div>
-															<span class="statustxt e-activecolor">@dt?.EtatStock</span>
-														</div>
-													}
-													else
-													{
-														<div>
-															<span class="statustxt e-inactivecolor">@dt?.EtatStock</span>
-														</div>
-													}
+													<span class="statustxt @(dt.EtatStock == "En stock" ? "e-activecolor" : "e-inactivecolor")">@dt.EtatStock</span>
 												}
-
 											}
 										</Template>
 									</GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Stock"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AS_QteSto" HeaderText="Qte.Sto" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Stock"))" Width="30" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="#">
-										<Template>
-											@{
-												var dt = (context as API_V_ARTICLE);
-												<div style="text-align: center;">
-													@if (dt.AS_QteSto > dt.AS_QteMaxi)
-													{
-														<RadzenIcon Icon="circle" Style="color: #53fb8a" />
-													}
-													else if (dt.AS_QteSto <= dt.AS_QteMini)
-													{
-														<RadzenIcon Icon="circle" Style="color: #ff1129" />
-													}
-													else
-													{
-														<RadzenIcon Icon="circle" Style="color: #e0a02b" />
-													}
-												</div>
-
-											}
-										</Template>
-									</GridColumn>
-
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Stock"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="QteCD" HeaderText="Qte.Con" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Stock"))" Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="EC_Enumere" HeaderText="Con"></GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Stock"))" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AS_MontSto" HeaderText="Mnt.Sto" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Stock"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QteCom)" HeaderText="Qte.Com" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Stock"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QtePrepa)" HeaderText="Qte.Prepa" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Stock"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QteRes)" HeaderText="Qte.Res" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Stock"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QteMini)" HeaderText="Qte.Mini" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Stock"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QteMaxi)" HeaderText="Qte.Maxi" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-
-
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AS_QteSto" HeaderText="Qte.Sto" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									@if (showStockDetail)
+									{
+										<GridColumn Width="30" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="#">
+											<Template>
+												@{
+													var dt = (context as API_V_ARTICLE);
+													<div style="text-align: center;">
+														@if (dt.AS_QteSto > dt.AS_QteMaxi)
+														{
+															<RadzenIcon Icon="circle" Style="color: #53fb8a" />
+														}
+														else if (dt.AS_QteSto <= dt.AS_QteMini)
+														{
+															<RadzenIcon Icon="circle" Style="color: #ff1129" />
+														}
+														else
+														{
+															<RadzenIcon Icon="circle" Style="color: #e0a02b" />
+														}
+													</div>
+												}
+											</Template>
+										</GridColumn>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="QteCD" HeaderText="Qte.Con" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+										<GridColumn Width="110" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="EC_Enumere" HeaderText="Con"></GridColumn>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QteCom)" HeaderText="Qte.Com" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QtePrepa)" HeaderText="Qte.Prepa" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QteRes)" HeaderText="Qte.Res" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QteMini)" HeaderText="Qte.Mini" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+										<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="@nameof(API_V_ARTICLE.AS_QteMaxi)" HeaderText="Qte.Maxi" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									}
+									<GridColumn Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AS_MontSto" HeaderText="Mnt.Sto" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
 								</GridColumns>
 							</GridColumn>
 
-							<GridColumn  HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="STOCK">
-								<GridColumns>
-									<GridColumn Visible="@(!(selected_affichages != null && selected_affichages.Contains("Stock")))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="EtatStock" HeaderText="Etat">
-										<Template>
-											@{
-												var dt = (context as API_V_ARTICLE);
-												if (dt.AR_SuiviStock != 0)
-												{
-													if (dt?.EtatStock == "En stock")
-													{
-														<div>
-															<span class="statustxt e-activecolor">@dt?.EtatStock</span>
-														</div>
-													}
-													else
-													{
-														<div>
-															<span class="statustxt e-inactivecolor">@dt?.EtatStock</span>
-														</div>
-													}
-												}
-
-											}
-										</Template>
-									</GridColumn>
-									<GridColumn Visible="@(!(selected_affichages != null && selected_affichages.Contains("Stock")))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AS_QteSto" HeaderText="Qte.Sto" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@(!(selected_affichages != null && selected_affichages.Contains("Stock")))" Width="100" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="AS_MontSto" HeaderText="Mnt.Sto" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" />
-								</GridColumns>
-							</GridColumn>
-
-							<!--Achats-->
+							@if (showAchats)
+							{
 							<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="ACHATS">
 								<GridColumns>
-									<GridColumn Visible="@((selected_affichages != null && selected_affichages.Contains("Achats")))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Qte_Achat" HeaderText="Qte.Ach" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@((selected_affichages != null && selected_affichages.Contains("Achats")))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT_Achat" HeaderText="Ach.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-
-									</GridColumn>
-									<GridColumn Visible="@((selected_affichages != null && selected_affichages.Contains("Achats")))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC_Achat" HeaderText="Ach.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-									</GridColumn>
-									<GridColumn Visible="@((selected_affichages != null && selected_affichages.Contains("Achats")))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL_Achat" HeaderText="Date.Ach" Format="dd/MM/yy"></GridColumn>
-									<GridColumn Visible="@((selected_affichages != null && selected_affichages.Contains("Achats")))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_Qte_Achat" HeaderText="Der.Qte" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@((selected_affichages != null && selected_affichages.Contains("Achats")))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PUA_chat" HeaderText="Der.PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@((selected_affichages != null && selected_affichages.Contains("Achats")))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantHT_Achat" HeaderText="Der.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@((selected_affichages != null && selected_affichages.Contains("Achats")))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantTTC_Achat" HeaderText="Der.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@((selected_affichages != null && selected_affichages.Contains("Achats")))" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="FR_Intitule" HeaderText="Der.Fournisseur" Width="200"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Qte_Achat" HeaderText="Qte.Ach" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT_Achat" HeaderText="Ach.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC_Achat" HeaderText="Ach.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL_Achat" HeaderText="Date.Ach" Format="dd/MM/yy"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_Qte_Achat" HeaderText="Der.Qte" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PUA_chat" HeaderText="Der.PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantHT_Achat" HeaderText="Der.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantTTC_Achat" HeaderText="Der.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="FR_Intitule" HeaderText="Der.Fournisseur" Width="200"></GridColumn>
 								</GridColumns>
 							</GridColumn>
+							}
 
-
-							<!--Ventes-->
+							@if (showVentes)
+							{
 							<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="VENTES">
 								<GridColumns>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Ventes"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Qte_Vente" HeaderText="Qte.Ven" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Ventes"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT_Vente" HeaderText="CA.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-									</GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Ventes"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC_Vente" HeaderText="CA.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right">
-
-									</GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Ventes"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL_Vente" HeaderText="Der.Date" Format="dd/MM/yy"></GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Ventes"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_Qte_Vente" HeaderText="Der.Qte" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Ventes"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PU_Vente" HeaderText="Der.PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Ventes"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantHTVente" HeaderText="Der.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Ventes"))" Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantTTC_Vente" HeaderText="Der.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
-									<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Ventes"))" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CL_Intitule" HeaderText="Der.Client" Width="200"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Qte_Vente" HeaderText="Qte.Ven" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantHT_Vente" HeaderText="CA.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_MontantTTC_Vente" HeaderText="CA.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_DateBL_Vente" HeaderText="Der.Date" Format="dd/MM/yy"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_Qte_Vente" HeaderText="Der.Qte" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_PU_Vente" HeaderText="Der.PU" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantHTVente" HeaderText="Der.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									<GridColumn Width="80" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="DL_Dernier_MontantTTC_Vente" HeaderText="Der.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"></GridColumn>
+									<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Field="CL_Intitule" HeaderText="Der.Client" Width="200"></GridColumn>
 								</GridColumns>
 							</GridColumn>
-							<GridColumn Visible="@(selected_affichages != null && selected_affichages.Contains("Lots"))" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Lots">
+							}
+
+							@if (showLots)
+							{
+							<GridColumn HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" HeaderText="Lots">
 								<Template>
 									@{
 										var row = (context as API_V_ARTICLE);
-										var dt = lots.Where(a => a.AR_Ref == row.AR_Ref);
-										foreach (F_LOTSERIE itm in dt)
+										if (row != null && lotsByRef.TryGetValue(row.AR_Ref, out var rowLots))
 										{
-											<div>
-												@itm.LS_NoSerie
-												<RadzenBadge Style="padding: 0px;" Shade="Shade.Lighter" BadgeStyle="BadgeStyle.Success" Text="@itm.LS_QteRestant?.ToString("N2")" />
-												<RadzenBadge Style="padding: 0px;" Visible=@((itm?.LS_Peremption?.Year > 2000 && itm?.LS_Peremption >= DateTime.Today)) Shade="Shade.Lighter" BadgeStyle="BadgeStyle.Info" Text="@itm.LS_Peremption?.ToShortDateString()" />
-												<RadzenBadge Style="padding: 0px;" Visible=@((itm?.LS_Peremption?.Year > 2000 && itm?.LS_Peremption < DateTime.Today)) Shade="Shade.Lighter" BadgeStyle="BadgeStyle.Danger" Text="@itm.LS_Peremption?.ToShortDateString()" />
-											</div>
+											foreach (var itm in rowLots)
+											{
+												<div>
+													@itm.LS_NoSerie
+													<RadzenBadge Style="padding: 0px;" Shade="Shade.Lighter" BadgeStyle="BadgeStyle.Success" Text="@itm.LS_QteRestant?.ToString("N2")" />
+													<RadzenBadge Style="padding: 0px;" Visible=@((itm?.LS_Peremption?.Year > 2000 && itm?.LS_Peremption >= DateTime.Today)) Shade="Shade.Lighter" BadgeStyle="BadgeStyle.Info" Text="@itm.LS_Peremption?.ToShortDateString()" />
+													<RadzenBadge Style="padding: 0px;" Visible=@((itm?.LS_Peremption?.Year > 2000 && itm?.LS_Peremption < DateTime.Today)) Shade="Shade.Lighter" BadgeStyle="BadgeStyle.Danger" Text="@itm.LS_Peremption?.ToShortDateString()" />
+												</div>
+											}
 										}
 									}
 								</Template>
 							</GridColumn>
+							}
 						</GridColumns>
 					</SfGrid>
 				</div>
@@ -296,6 +256,11 @@ else
 	List<string> familles = new List<string>();
 	List<string> affichages = new List<string>();
 	List<F_LOTSERIE> lots = new List<F_LOTSERIE>();
+	private Dictionary<string, List<F_LOTSERIE>> lotsByRef = new(StringComparer.OrdinalIgnoreCase);
+	private bool showStockDetail;
+	private bool showAchats;
+	private bool showVentes;
+	private bool showLots;
 	List<string> selected_etats = new List<string>();
 	List<string> selected_stockmin = new List<string>();
 	List<string> selected_sommeils = new List<string>();
@@ -319,7 +284,6 @@ else
 		stockmin = db.API_V_ARTICLE.Select(a => a.EtatStockMin).Distinct().ToList();
 		sommeils = db.API_V_ARTICLE.Select(a => a.SommeilIntitule).Distinct().ToList();
 		familles = db.API_V_ARTICLE.Select(a => a.FA_Intitule).Distinct().ToList();
-		lots = db.F_LOTSERIE.Where(a => a.LS_QteRestant != 0).ToList();
 		affichages.Add("Stock");
 		affichages.Add("Achats");
 		affichages.Add("Ventes");
@@ -328,18 +292,54 @@ else
 		selected_stockmin = stockmin;
 		selected_familles = familles;
 		selected_sommeils = db.API_V_ARTICLE.Where(a => a.SommeilIntitule == "Actif").Select(a => a.SommeilIntitule).Distinct().ToList();
+		SyncAffichageFlags();
 		await UpdateGrid();
 		IsLoaded = true;
+	}
+
+	private void SyncAffichageFlags()
+	{
+		var aff = selected_affichages;
+		showStockDetail = aff != null && aff.Contains("Stock");
+		showAchats = aff != null && aff.Contains("Achats");
+		showVentes = aff != null && aff.Contains("Ventes");
+		showLots = aff != null && aff.Contains("Lots");
+	}
+
+	private async Task OnAffichageChanged(MultiSelectChangeEventArgs<List<string>> args)
+	{
+		selected_affichages = args.Value ?? new();
+		SyncAffichageFlags();
+		RebuildLotsLookup();
+		if (DefaultGrid != null)
+			await DefaultGrid.RefreshColumnsAsync();
+	}
+
+	private void RebuildLotsLookup()
+	{
+		if (!showLots)
+		{
+			lotsByRef.Clear();
+			return;
+		}
+
+		if (lots.Count == 0)
+			lots = db.F_LOTSERIE.Where(a => a.LS_QteRestant != 0).ToList();
+
+		lotsByRef = lots
+			.Where(l => !string.IsNullOrEmpty(l.AR_Ref))
+			.GroupBy(l => l.AR_Ref, StringComparer.OrdinalIgnoreCase)
+			.ToDictionary(g => g.Key, g => g.ToList(), StringComparer.OrdinalIgnoreCase);
 	}
 
 	private async Task UpdateGrid()
 	{
 		items = db.API_V_ARTICLE
-	.Where(a => (selected_sommeils != null && selected_sommeils.Contains(a.SommeilIntitule))
-	&& (selected_etats != null && selected_etats.Contains(a.EtatStock))
+		.Where(a => (selected_sommeils != null && selected_sommeils.Contains(a.SommeilIntitule))
+		&& (selected_etats != null && selected_etats.Contains(a.EtatStock))
 		&& (selected_stockmin != null && selected_stockmin.Contains(a.EtatStockMin))
-	&& (selected_familles != null && selected_familles.Contains(a.FA_Intitule))
-	).ToList();
+		&& (selected_familles != null && selected_familles.Contains(a.FA_Intitule))
+		).ToList();
 	}
 	private async Task OnActionBegin(ActionEventArgs<API_V_ARTICLE> args)
 	{

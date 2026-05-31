@@ -2,8 +2,8 @@
         <GridRow>
             <GridCol Xs="24" Md="24">
                 <Form Model="@row" Size="@AntSizeLDSType.Small" Layout="@FormLayout.Horizontal" LabelColSpan="6" Context="FormContext">
-                    <SfTab CssClass="e-fill">
-                        <TabEvents Selecting="@(args => fn.DisableTabSelect(args))"/><TabItems>
+                    <SfTab CssClass="e-fill" @bind-SelectedItem="selectedTabIndex">
+                        <TabEvents Selecting="@OnTabSelecting" /><TabItems>
                             <TabItem>
                                 <ChildContent>
                                     <TabHeader Text="Identification"></TabHeader>
@@ -355,31 +355,157 @@
                                         </GridRow>
                                        </ContentTemplate>
                             </TabItem>
-                            <TabItem Disabled>
+                            <TabItem>
                                 <ChildContent>
-                                    <TabHeader Text="Statistiques"/>
+                                    <TabHeader Text="Mouvement stock" />
                                 </ChildContent>
                                 <ContentTemplate>
-
+                                    <GridRow>
+                                        <GridCol Xs="24" Md="24">
+                                            <Card>
+                                                <SfToolbar CssClass="btns">
+                                                    <ToolbarItems>
+                                                        <ToolbarItem Align="ItemAlign.Left">
+                                                            <Template>
+                                                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                                                    <div style="text-transform: uppercase;">
+                                                                        @MvtMovementCount mouvement(s) | Solde initial @mvtQteInitial.ToString("### ### ##0.00;-### ### ##0.00;#") | @MvtSummaryLabel
+                                                                    </div>
+                                                                </SfMessage>
+                                                            </Template>
+                                                        </ToolbarItem>
+                                                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                                            <Template>
+                                                                <SfDatePicker Width="130px" TValue="DateTime?" @bind-Value="mvtDateDebut" Format="dd/MM/yyyy" Placeholder="Date début" ShowClearButton>
+                                                                    <DatePickerEvents TValue="DateTime?" ValueChange="@(_ => LoadMouvementsStock())" />
+                                                                </SfDatePicker>
+                                                            </Template>
+                                                        </ToolbarItem>
+                                                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                                            <Template>
+                                                                <SfDatePicker Width="130px" TValue="DateTime?" @bind-Value="mvtDateFin" Format="dd/MM/yyyy" Placeholder="Date fin" ShowClearButton>
+                                                                    <DatePickerEvents TValue="DateTime?" ValueChange="@(_ => LoadMouvementsStock())" />
+                                                                </SfDatePicker>
+                                                            </Template>
+                                                        </ToolbarItem>
+                                                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
+                                                            <Template>
+                                                                <SfDropDownList ShowClearButton Width="200px" AllowFiltering FilterType="Syncfusion.Blazor.DropDowns.FilterType.Contains"
+                                                                                DataSource="@depots" TValue="int?" TItem="F_DEPOT" @bind-Value="mvtDepot" Placeholder="Dépôt">
+                                                                    <DropDownListEvents TValue="int?" TItem="F_DEPOT" ValueChange="@(_ => LoadMouvementsStock())" />
+                                                                    <DropDownListFieldSettings Text="DE_Intitule" Value="DE_No" />
+                                                                </SfDropDownList>
+                                                            </Template>
+                                                        </ToolbarItem>
+                                                        <ToolbarItem Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                                                            <Template>
+                                                                <SfTextBox Width="180px" Placeholder="Recherche" CssClass="e-small"
+                                                                           ValueChanged="@(args => mvtGrid?.SearchAsync(args ?? ""))" />
+                                                            </Template>
+                                                        </ToolbarItem>
+                                                        <ToolbarItem OnClick="@(_ => LoadMouvementsStock())" TooltipText="Actualiser"
+                                                                     ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-refresh" />
+                                                        <ToolbarItem OnClick="@(_ => mvtGrid?.ExportToExcelAsync(fn.ExportToExcelAsync()))" TooltipText="Export Excel"
+                                                                     ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right" PrefixIcon="e-icons e-export-excel" />
+                                                    </ToolbarItems>
+                                                </SfToolbar>
+                                                <div style="zoom: @session.zoomLevel;" class="no-border small-grid grid-78">
+                                                    @if (mvtLoading)
+                                                    {
+                                                        <div class="center-screen" style="min-height: 200px;"><Loading_1 /></div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <SfGrid @ref="mvtGrid" Height="100%" DataSource="@mvtLignes" EnableVirtualization
+                                                                AllowFiltering AllowSorting="false" AllowGrouping AllowResizing AllowExcelExport AllowTextWrap>
+                                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Excel" />
+                                                            <GridPageSettings PageSize="100" PageSizes="@(new string[] { "50", "100", "200", "500" })" />
+                                                            <GridGroupSettings Columns="@(new string[] { nameof(ArticleMvtLigne.DE_Intitule) })" ShowDropArea="false" ShowToggleButton DisablePageWiseAggregates ExpandAllGroups="true">
+                                                                <CaptionTemplate>
+                                                                    @{
+                                                                        var ag = (context as CaptionTemplateContext);
+                                                                        var depotKey = ag?.Key?.ToString() ?? "";
+                                                                        mvtDepotGroupTotals.TryGetValue(depotKey, out var totals);
+                                                                    }
+                                                                    <span class="fw-bold">@depotKey</span>
+                                                                    @if (totals != null)
+                                                                    {
+                                                                        <span style="margin-left:12px;">Σ mvt @totals.SumMvt.ToString("### ### ##0.00;-### ### ##0.00;#")</span>
+                                                                        <span style="margin-left:12px;">Qté @totals.FinalQte.ToString("### ### ##0.00;-### ### ##0.00;#")</span>
+                                                                    }
+                                                                </CaptionTemplate>
+                                                            </GridGroupSettings>
+                                                            <GridEvents TValue="ArticleMvtLigne" OnRecordDoubleClick="OnMvtDoubleClick" RowDataBound="OnMvtRowDataBound" DataBound="OnMvtGridDataBound" />
+                                                            <GridAggregates>
+                                                                <GridAggregate>
+                                                                    <GridAggregateColumns>
+                                                                        <GridAggregateColumn Field="@nameof(ArticleMvtLigne.Mvt)" Type="AggregateType.Sum" Format="### ### ##0.00;-### ### ##0.00;#">
+                                                                            <FooterTemplate>
+                                                                                @{ var s = (context as AggregateTemplateContext); }
+                                                                                <div style="text-align:right;font-weight:600;">@s.Sum</div>
+                                                                            </FooterTemplate>
+                                                                        </GridAggregateColumn>
+                                                                        <GridAggregateColumn Field="@nameof(ArticleMvtLigne.DL_MontantHT)" Type="AggregateType.Sum" Format="N2">
+                                                                            <FooterTemplate>
+                                                                                @{ var s = (context as AggregateTemplateContext); }
+                                                                                <div style="text-align:right;font-weight:600;">@s.Sum</div>
+                                                                            </FooterTemplate>
+                                                                        </GridAggregateColumn>
+                                                                    </GridAggregateColumns>
+                                                                </GridAggregate>
+                                                            </GridAggregates>
+                                                            <GridColumns>
+                                                                <GridColumn AllowSorting="false" Width="72" Field="@nameof(ArticleMvtLigne.DO_Date)" HeaderText="Date" Format="dd/MM/yy" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                                                    <Template>
+                                                                        @{ var m = (context as ArticleMvtLigne); }
+                                                                        @if (!m.IsSoldeInitial)
+                                                                        {
+                                                                            @(m.DO_Date?.ToString("dd/MM/yy"))
+                                                                        }
+                                                                    </Template>
+                                                                </GridColumn>
+                                                                <GridColumn AllowSorting="false" Width="72" Field="@nameof(ArticleMvtLigne.DL_DateBL)" HeaderText="Date BL" Format="dd/MM/yy" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                                <GridColumn AllowSorting="false" Width="100" Field="@nameof(ArticleMvtLigne.DO_Piece)" HeaderText="Pièce" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                                                    <Template>
+                                                                        @{ var m = (context as ArticleMvtLigne); }
+                                                                        <span class="@(m.IsSoldeInitial ? "fw-bold" : null)">@m.DO_Piece</span>
+                                                                    </Template>
+                                                                </GridColumn>
+                                                                <GridColumn AllowSorting="false" Width="90" Field="@nameof(ArticleMvtLigne.DL_PieceBL)" HeaderText="Pièce BL" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                                <GridColumn AllowSorting="false" Width="72" Field="@nameof(ArticleMvtLigne.TypeIntitule)" HeaderText="Type doc." HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                                <GridColumn AllowSorting="false" Width="56" Field="@nameof(ArticleMvtLigne.Sense)" HeaderText="Sens" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                                                    <Template>
+                                                                        @{ var m = (context as ArticleMvtLigne); }
+                                                                        @if (!m.IsSoldeInitial && !string.IsNullOrEmpty(m.Sense))
+                                                                        {
+                                                                            <span class="statustxt @(m.Mvt >= 0 ? "e-activecolor" : "e-inactivecolor")">@m.Sense</span>
+                                                                        }
+                                                                    </Template>
+                                                                </GridColumn>
+                                                                <GridColumn AllowSorting="false" Width="140" Field="@nameof(ArticleMvtLigne.DE_Intitule)" HeaderText="Dépôt" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                                <GridColumn AllowSorting="false" Width="72" Field="@nameof(ArticleMvtLigne.CT_Num)" HeaderText="N° tiers" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                                <GridColumn AllowSorting="false" Width="180" Field="@nameof(ArticleMvtLigne.TiersIntitule)" HeaderText="Tiers" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                                <GridColumn AllowSorting="false" Width="80" Field="@nameof(ArticleMvtLigne.Mvt)" HeaderText="Qté mvt" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                                <GridColumn AllowSorting="false" Width="80" Field="@nameof(ArticleMvtLigne.Qte)" HeaderText="Qté" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                                                    <Template>
+                                                                        @{ var m = (context as ArticleMvtLigne); }
+                                                                        <span class="@(m.IsSoldeInitial ? "fw-bold" : null)" style="@(m.Qte < 0 ? "color:#c0392b;" : null)">@m.Qte.ToString("### ### ##0.00;-### ### ##0.00;#")</span>
+                                                                    </Template>
+                                                                </GridColumn>
+                                                                <GridColumn AllowSorting="false" Width="72" Field="@nameof(ArticleMvtLigne.DL_Qte)" HeaderText="Qté lig." Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                                <GridColumn AllowSorting="false" Width="56" Field="@nameof(ArticleMvtLigne.U_Intitule)" HeaderText="Unité" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                                <GridColumn AllowSorting="false" Width="80" Field="@nameof(ArticleMvtLigne.DL_MontantHT)" HeaderText="Montant HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                                <GridColumn AllowSorting="false" Width="80" Field="@nameof(ArticleMvtLigne.DL_MontantTTC)" HeaderText="Montant TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                                <GridColumn AllowSorting="false" Width="72" Field="@nameof(ArticleMvtLigne.PuHt)" HeaderText="PU.HT" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                                <GridColumn AllowSorting="false" Width="72" Field="@nameof(ArticleMvtLigne.PuTtc)" HeaderText="PU.TTC" Format="### ### ##0.00;-### ### ##0.00;#" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                                            </GridColumns>
+                                                        </SfGrid>
+                                                    }
+                                                </div>
+                                            </Card>
+                                        </GridCol>
+                                    </GridRow>
                                 </ContentTemplate>
-                            </TabItem>
-                            <TabItem Disabled>
-                                <ChildContent>
-                                    <TabHeader Text="Stock"></TabHeader>
-                                </ChildContent>
-                            <ContentTemplate>
-
-                            </ContentTemplate>
-                            </TabItem>
-                            <TabItem Disabled>
-                                <ChildContent>
-                                    <TabHeader Text="Achats"></TabHeader>
-                                </ChildContent>
-                            </TabItem>
-                            <TabItem Disabled>
-                                <ChildContent>
-                                    <TabHeader Text="Ventes"></TabHeader>
-                                </ChildContent>
                             </TabItem>
                         </TabItems>
                     </SfTab>
@@ -415,6 +541,26 @@
     DateTime? date1;
     DateTime? date2;
     bool IsLoaded = false;
+
+    private const int MouvementStockTabIndex = 1;
+    private int selectedTabIndex;
+    private SfGrid<ArticleMvtLigne> mvtGrid;
+    private List<ArticleMvtLigne> mvtLignes = new();
+    private Dictionary<string, MvtDepotGroupTotal> mvtDepotGroupTotals = new(StringComparer.OrdinalIgnoreCase);
+    private decimal mvtQteInitial;
+    private List<F_DEPOT> depots = new();
+    private DateTime? mvtDateDebut;
+    private DateTime? mvtDateFin;
+    private int? mvtDepot;
+    private bool mvtLoading;
+    private bool mvtLoaded;
+
+    private int MvtMovementCount => mvtLignes.Count(x => !x.IsSoldeInitial);
+
+    private string MvtSummaryLabel => mvtDateDebut.HasValue || mvtDateFin.HasValue || mvtDepot.HasValue
+        ? $"{(mvtDateDebut.HasValue ? mvtDateDebut.Value.ToString("dd/MM/yyyy") : "…")} — {(mvtDateFin.HasValue ? mvtDateFin.Value.ToString("dd/MM/yyyy") : "…")}"
+          + (mvtDepot.HasValue ? $" | {depots.FirstOrDefault(d => d.DE_No == mvtDepot)?.DE_Intitule ?? "Dépôt"}" : "")
+        : "Toutes dates";
     private List<API_V_MARGE> items = new List<API_V_MARGE>();
     private List<API_V_MARGE> dt_mois = new List<API_V_MARGE>();
     private List<API_V_MARGE> dt_article = new List<API_V_MARGE>();
@@ -483,14 +629,157 @@
     }
 
 
+    private void OnTabSelecting(SelectingEventArgs args)
+    {
+        fn.DisableTabSelect(args);
+        if (args.Cancel) return;
+        if (args.SelectingIndex == MouvementStockTabIndex && !mvtLoaded)
+            _ = LoadMouvementsStock();
+    }
+
+    private static DateTime MvtEffectiveDate(API_V_ARTICLEMVT a) =>
+        a.DL_DateBL ?? a.DO_Date ?? DateTime.MinValue;
+
+    private string MvtDepotLabel =>
+        mvtDepot.HasValue
+            ? depots.FirstOrDefault(d => d.DE_No == mvtDepot.Value)?.DE_Intitule ?? "Dépôt"
+            : "Tous dépôts";
+
+    private sealed class MvtDepotGroupTotal
+    {
+        public decimal SumMvt { get; set; }
+        public decimal FinalQte { get; set; }
+    }
+
+    private async Task LoadMouvementsStock()
+    {
+        if (string.IsNullOrWhiteSpace(row?.AR_Ref))
+        {
+            mvtLignes = new();
+            mvtDepotGroupTotals = new(StringComparer.OrdinalIgnoreCase);
+            mvtQteInitial = 0m;
+            mvtLoaded = true;
+            return;
+        }
+
+        mvtLoading = true;
+        await InvokeAsync(StateHasChanged);
+
+        try
+        {
+            var depotLabel = MvtDepotLabel;
+            await Task.Run(() =>
+            {
+                var arRef = row.AR_Ref;
+                IQueryable<API_V_ARTICLEMVT> BaseQuery()
+                {
+                    var q = db.API_V_ARTICLEMVT.AsNoTracking().Where(a => a.AR_Ref == arRef);
+                    if (mvtDepot.HasValue)
+                        q = q.Where(a => a.DE_No == mvtDepot.Value);
+                    return q;
+                }
+
+                var runningByDepot = new Dictionary<string, decimal>(StringComparer.OrdinalIgnoreCase);
+                mvtQteInitial = 0m;
+                if (mvtDateDebut.HasValue)
+                {
+                    var debut = mvtDateDebut.Value.Date;
+                    foreach (var g in BaseQuery().AsEnumerable().Where(a => MvtEffectiveDate(a) < debut).GroupBy(a => a.DE_Intitule ?? ""))
+                    {
+                        runningByDepot[g.Key] = g.Sum(a => a.Mvt ?? 0m);
+                        mvtQteInitial += runningByDepot[g.Key];
+                    }
+                }
+
+                var periodQuery = BaseQuery().AsEnumerable();
+                if (mvtDateDebut.HasValue)
+                    periodQuery = periodQuery.Where(a => MvtEffectiveDate(a) >= mvtDateDebut.Value.Date);
+                if (mvtDateFin.HasValue)
+                {
+                    var fin = mvtDateFin.Value.Date.AddDays(1).AddTicks(-1);
+                    periodQuery = periodQuery.Where(a => MvtEffectiveDate(a) <= fin);
+                }
+
+                var chronologique = periodQuery
+                    .OrderBy(MvtEffectiveDate)
+                    .ThenBy(a => a.DO_Piece)
+                    .ToList();
+
+                var lignes = new List<ArticleMvtLigne>
+                {
+                    new()
+                    {
+                        IsSoldeInitial = true,
+                        Qte = mvtQteInitial,
+                        DE_Intitule = depotLabel,
+                        DO_Piece = $"Solde initial — {depotLabel}"
+                    }
+                };
+
+                var sumMvtByDepot = new Dictionary<string, decimal>(StringComparer.OrdinalIgnoreCase);
+                foreach (var m in chronologique)
+                {
+                    var depot = m.DE_Intitule ?? "";
+                    if (!runningByDepot.ContainsKey(depot))
+                        runningByDepot[depot] = 0m;
+                    var mvt = m.Mvt ?? 0m;
+                    runningByDepot[depot] += mvt;
+                    sumMvtByDepot[depot] = sumMvtByDepot.GetValueOrDefault(depot) + mvt;
+                    lignes.Add(ArticleMvtLigne.From(m, runningByDepot[depot]));
+                }
+
+                mvtDepotGroupTotals = runningByDepot
+                    .ToDictionary(
+                        kv => kv.Key,
+                        kv => new MvtDepotGroupTotal
+                        {
+                            SumMvt = sumMvtByDepot.GetValueOrDefault(kv.Key),
+                            FinalQte = kv.Value
+                        },
+                        StringComparer.OrdinalIgnoreCase);
+
+                mvtLignes = lignes;
+            });
+            mvtLoaded = true;
+        }
+        finally
+        {
+            mvtLoading = false;
+            await InvokeAsync(StateHasChanged);
+            if (mvtGrid != null && mvtLignes.Count > 0)
+                await mvtGrid.ExpandAllGroupAsync();
+        }
+    }
+
+    private async Task OnMvtGridDataBound(object _)
+    {
+        if (mvtGrid == null || mvtLignes.Count == 0)
+            return;
+        await mvtGrid.ExpandAllGroupAsync();
+    }
+
+    private void OnMvtRowDataBound(RowDataBoundEventArgs<ArticleMvtLigne> args)
+    {
+        if (args.Data?.IsSoldeInitial == true)
+            args.Row.AddClass(new[] { "cpt-solde-initial-row" });
+    }
+
+    private async Task OnMvtDoubleClick(RecordDoubleClickEventArgs<ArticleMvtLigne> args)
+    {
+        if (args?.RowData == null || args.RowData.IsSoldeInitial || string.IsNullOrWhiteSpace(args.RowData.DO_Piece))
+            return;
+        await ShowPiece(args.RowData.DO_Piece, args.RowData.DO_Type);
+    }
+
     protected override async Task OnInitializedAsync()
     {
-                db = session.db;
+        db = session.db;
         GC.Collect();
         row = db.API_V_ARTICLE.Where(a => a.cbMarq == cbMarq).SingleOrDefault();
+        mvtDateDebut = new DateTime(DateTime.Today.Year, 1, 1);
+        mvtDateFin = DateTime.Today;
+        depots = db.F_DEPOT.OrderBy(d => d.DE_Intitule).ToList();
         await LoadData();
-        
-
     }
     protected async Task ShowPiece(string DO_Piece, short? DO_Type)
     {
@@ -515,3 +804,10 @@
 
     }
 }
+
+<style>
+    .e-grid .e-row.cpt-solde-initial-row .e-rowcell {
+        font-weight: 600;
+        background: #f4f6fa;
+    }
+</style>
