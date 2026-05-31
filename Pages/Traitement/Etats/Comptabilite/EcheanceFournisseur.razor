@@ -247,12 +247,14 @@ else
             .GroupBy(r => r.CT_Num)
             .ToDictionary(g => g.Key, g => (int)(g.Max(r => r.RT_NbJour) ?? 30));
 
+        var labels = CptEcritureQuery.LoadLabels(db);
+
         // 3. Load raw entries
-        var raw = db.API_V_ECRITUREC
+        var raw = db.F_ECRITUREC
             .Where(e => e.EC_Lettre == 0
                      && e.EC_Sens == 1
-                     && e.MV_Date.HasValue
-                     && e.MV_Date.Value.Year == annee)
+                     && e.EC_Date.HasValue
+                     && e.EC_Date.Value.Year == annee)
             .ToList()
             .Where(e => fournNums.Contains(e.CT_Num) && journalNums.Contains(e.JO_Num))
             .ToList();
@@ -284,7 +286,7 @@ else
             }
             else
             {
-                dateEch = (e.MV_Date ?? e.JM_Date).Date.AddDays(60);
+                dateEch = (e.EC_Date ?? e.JM_Date).Date.AddDays(60);
                 source  = "+60j";
             }
 
@@ -304,16 +306,20 @@ else
                 ? (montant * 0.03m) + (0.005m * montant * moisRetard)
                 : 0m;
 
+            labels.Journal.TryGetValue(e.JO_Num ?? "", out var joLib);
+            labels.Tier.TryGetValue(e.CT_Num ?? "", out var ctLib);
+            labels.Compte.TryGetValue(e.CG_Num ?? "", out var cgLib);
+
             return new EchFournItem
             {
                 JO_Num         = e.JO_Num,
-                JO_Intitule    = e.JO_Intitule,
-                MV_Date        = e.MV_Date,
+                JO_Intitule    = joLib,
+                MV_Date        = e.EC_Date,
                 EC_Piece       = e.EC_Piece,
                 CT_Num         = e.CT_Num,
-                CT_Intitule    = e.CT_Intitule,
+                CT_Intitule    = ctLib,
                 CG_Num         = e.CG_Num,
-                CG_Intitule    = e.CG_Intitule,
+                CG_Intitule    = cgLib,
                 EC_Intitule    = e.EC_Intitule,
                 Montant        = montant,
                 DateEcheance   = dateEch,

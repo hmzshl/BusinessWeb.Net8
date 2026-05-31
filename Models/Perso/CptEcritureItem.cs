@@ -14,8 +14,10 @@ public class CptEcritureItem
     public string CT_Intitule { get; set; }
     public string TierLabel => string.IsNullOrWhiteSpace(CT_Num) ? "—" : $"{CT_Num} - {CT_Intitule}";
     public string EC_Intitule { get; set; }
+    public bool IsSoldeInitial { get; set; }
     public decimal Debit { get; set; }
     public decimal Credit { get; set; }
+    public decimal Solde { get; set; }
     public short? EC_Lettre { get; set; }
     public string EC_Lettrage { get; set; }
     public DateTime? EC_Echeance { get; set; }

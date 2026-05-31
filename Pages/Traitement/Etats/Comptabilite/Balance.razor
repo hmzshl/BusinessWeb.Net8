@@ -165,15 +165,18 @@ else
         IsLoaded = false;
         await Task.Delay(300);
 
-        items = db.API_V_ECRITUREC
-            .Where(e => e.MV_Date.HasValue && e.MV_Date.Value.Year == annee)
-            .GroupBy(e => new { e.CG_Num, e.CG_Intitule })
-            .Select(g => new CptBalanceItem
+        items = (
+            from e in CptEcritureQuery.ExcludeAN(CptEcritureQuery.ByEcYear(db, annee))
+            where e.CG_Num != null
+            join cg in db.F_COMPTEG on e.CG_Num equals cg.CG_Num into cgJoin
+            from cg in cgJoin.DefaultIfEmpty()
+            group e by new { e.CG_Num, CG_Intitule = cg != null ? cg.CG_Intitule : null } into g
+            select new CptBalanceItem
             {
                 CG_Num = g.Key.CG_Num,
                 CG_Intitule = g.Key.CG_Intitule,
-                MvDebit = g.Sum(x => x.Debit) ?? 0m,
-                MvCredit = g.Sum(x => x.Credit) ?? 0m
+                MvDebit = g.Sum(x => CptEcritureQuery.DebitAmount(x)),
+                MvCredit = g.Sum(x => CptEcritureQuery.CreditAmount(x))
             })
             .OrderBy(x => x.CG_Num)
             .ToList();

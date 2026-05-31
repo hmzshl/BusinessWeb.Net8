@@ -14,25 +14,43 @@
                             <Template>
                                 <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
                                     <div style="text-transform: uppercase;">
-                                        Liasse Fiscale IS — Modèle Normal
+                                        Liasse fiscale prov &nbsp;|&nbsp; @PeriodToolbarLabel
                                     </div>
                                 </SfMessage>
                             </Template>
                         </ToolbarItem>
-                        <ToolbarItem Align="ItemAlign.Right" Type="ItemType.Input">
-                            <Template>
-                                <SfDropDownList TValue="int" TItem="ExoItem" Width="200px"
-                                                @bind-Value="selectedExoIndex" DataSource="@exoItems"
-                                                Placeholder="Exercice">
-                                    <DropDownListFieldSettings Text="Label" Value="Idx" />
-                                    <DropDownListEvents TValue="int" TItem="ExoItem"
-                                                        ValueChange="@(args => LoadData())" />
-                                </SfDropDownList>
-                            </Template>
-                        </ToolbarItem>
+                        <ToolbarItem OnClick="@(_ => showFiltersDialog = true)" TooltipText="Filtres"
+                                     ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right"
+                                     PrefixIcon="e-icons e-filter" />
                     </ToolbarItems>
                 </SfToolbar>
 
+                <SfDialog @bind-Visible="showFiltersDialog" Width="420px" ShowCloseIcon="true" IsModal="true">
+                    <DialogTemplates>
+                        <Header>Filtres</Header>
+                        <Content>
+                            <div class="lf-filters-dialog">
+                                <SfDropDownList TValue="int" TItem="ExoItem" Width="100%"
+                                                @bind-Value="selectedExoIndex" DataSource="@exoItems"
+                                                Placeholder="Exercice">
+                                    <DropDownListFieldSettings Text="Label" Value="Idx" />
+                                </SfDropDownList>
+                            </div>
+                        </Content>
+                    </DialogTemplates>
+                    <DialogButtons>
+                        <DialogButton Content="Effacer" OnClick="@ClearFiltersFromDialog" />
+                        <DialogButton Content="Appliquer" IsPrimary="true" OnClick="@ApplyFiltersFromDialog" />
+                    </DialogButtons>
+                </SfDialog>
+
+                <div class="lf-content-panel">
+                    @if (isDataLoading)
+                    {
+                        <div class="lf-grid-loading"><Loading_1 /></div>
+                    }
+                    else
+                    {
                 <SfTab CssClass="e-fill bilan-tabs" HeaderPlacement="HeaderPosition.Left">
                     <TabItems>
 
@@ -104,6 +122,8 @@
 
                     </TabItems>
                 </SfTab>
+                    }
+                </div>
 
             </div>
         </RadzenContent>
@@ -160,6 +180,8 @@ else
     DB db = new DB();
 
     bool IsLoaded = false;
+    private bool isDataLoading;
+    private int loadSeq;
 
     // ── Exercices ────────────────────────────────────────────────────
     private class ExoItem
@@ -175,6 +197,11 @@ else
 
     private ExoItem CurrentExo => exoItems.Count > 0 ? exoItems[selectedExoIndex] : null;
     private ExoItem PrevExo    => selectedExoIndex + 1 < exoItems.Count ? exoItems[selectedExoIndex + 1] : null;
+    private string PeriodToolbarLabel => CurrentExo == null
+        ? "Période : —"
+        : LiasseFiscalePeriod.FormatToolbarLabel(
+            CurrentExo.Label, CurrentExo.Debut, CurrentExo.Fin,
+            PrevExo?.Label, PrevExo?.Debut, PrevExo?.Fin);
 
     // ── ESG lines ────────────────────────────────────────────────────
     // Sign: "+", "-", "=" or ""   IsResult: computed row   IsGrand: key result
@@ -184,6 +211,7 @@ else
     private List<EsgLine> cafLines = new();
 
     // ── Detail popup ─────────────────────────────────────────────────
+    private bool showFiltersDialog;
     private bool     showDetail  = false;
     private string   detailTitle = "";
     private string[] detailPfx   = null;
@@ -197,7 +225,6 @@ else
         await Task.Delay(1);
         LoadExercices();
         await LoadData();
-        IsLoaded = true;
     }
 
     private void LoadExercices()
@@ -237,13 +264,57 @@ else
         return isCalYear ? debut.Year.ToString() : $"{debut:dd/MM/yy} — {fin:dd/MM/yy}";
     }
 
+    private async Task ApplyFiltersFromDialog()
+    {
+        showFiltersDialog = false;
+        await LoadData();
+    }
+
+    private async Task ClearFiltersFromDialog()
+    {
+        if (exoItems.Count > 0)
+            selectedExoIndex = 0;
+        showFiltersDialog = false;
+        await LoadData();
+    }
+
     private async Task LoadData()
     {
-        IsLoaded = false;
-        await Task.Delay(300);
+        var seq = Interlocked.Increment(ref loadSeq);
+
+        if (IsLoaded)
+        {
+            isDataLoading = true;
+            await InvokeAsync(StateHasChanged);
+            await Task.Yield();
+        }
+        else
+        {
+            await Task.Delay(200);
+        }
+
+        try
+        {
+            await Task.Run(() =>
+            {
+                if (seq != loadSeq) return;
+                LoadDataCore();
+            });
+        }
+        finally
+        {
+            if (seq == loadSeq)
+            {
+                IsLoaded = true;
+                isDataLoading = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+    }
+
+    private void LoadDataCore()
+    {
         if (CurrentExo != null) { BuildTFR(); BuildCAF(); }
-        IsLoaded = true;
-        await Task.Delay(300);
     }
 
     // ── Query helpers ─────────────────────────────────────────────────
@@ -429,6 +500,26 @@ else
 }
 
 <style>
+    .lf-filters-dialog {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 8px 4px 4px;
+    }
+
+    .lf-content-panel {
+        flex: 1;
+        min-height: 0;
+    }
+
+    .lf-grid-loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        min-height: 320px;
+    }
+
     .bilan-tabs .e-content { padding: 1rem 0 0; }
     .bilan-tabs .e-tab-header { min-width: 90px; }
 

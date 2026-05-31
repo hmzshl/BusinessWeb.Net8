@@ -1,0 +1,557 @@
+@page "/cpt-etat-caisse"
+@attribute [Authorize]
+@implements IDisposable
+
+@if (IsLoaded)
+{
+    <Card_1 Title="ÉTAT CAISSE">
+        <RadzenContent>
+            <div class="grid-container no-border">
+
+                <SfToolbar CssClass="btns">
+                    <ToolbarItems>
+                        <ToolbarItem Align="ItemAlign.Left">
+                            <Template>
+                                <SfMessage Severity="MessageSeverity.Info" Variant="MessageVariant.Outlined">
+                                    <div style="text-transform: uppercase;">
+                                        @SelectedCaisseLabel | @MovementCount mouvement(s) | Solde initial @SoldeInitialLabel | @PeriodLabel
+                                    </div>
+                                </SfMessage>
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem Align="ItemAlign.Right" Overflow="OverflowOption.Show" Type="ItemType.Input">
+                            <Template>
+                                <SfTextBox Width="200px" Placeholder="Recherche" CssClass="e-small"
+                                           ValueChanged="@(args => grid?.SearchAsync(args ?? ""))" />
+                            </Template>
+                        </ToolbarItem>
+                        <ToolbarItem OnClick="@(_ => showFiltersDialog = true)" TooltipText="Filtres"
+                                     ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right"
+                                     PrefixIcon="e-icons e-filter" />
+                        <ToolbarItem OnClick="@PrintGrid" TooltipText="Imprimer"
+                                     ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right"
+                                     PrefixIcon="e-icons e-print" />
+                        <ToolbarItem OnClick="@ExportGrid" TooltipText="Export Excel"
+                                     ShowTextOn="DisplayMode.Overflow" Align="ItemAlign.Right"
+                                     PrefixIcon="e-icons e-export-excel" />
+                    </ToolbarItems>
+                </SfToolbar>
+
+                <SfDialog @bind-Visible="showFiltersDialog" Width="520px" ShowCloseIcon="true" IsModal="true">
+                    <DialogTemplates>
+                        <Header>Filtres</Header>
+                        <Content>
+                            <div class="cpt-filters-dialog">
+                                <SfDropDownList TValue="int" TItem="ExoItem" Width="100%"
+                                                @bind-Value="selectedExoIndex" DataSource="@exoItems"
+                                                Placeholder="Exercice">
+                                    <DropDownListFieldSettings Text="Label" Value="Idx" />
+                                    <DropDownListEvents TValue="int" TItem="ExoItem"
+                                                        ValueChange="@(args => OnExerciceInDialogChanged(args))" />
+                                </SfDropDownList>
+                                <SfDropDownList TValue="string" TItem="FilterOption" Width="100%"
+                                                @bind-Value="selectedCaisse" DataSource="@caisseOptions"
+                                                Placeholder="Caisse" AllowFiltering>
+                                    <DropDownListFieldSettings Text="Label" Value="Code" />
+                                </SfDropDownList>
+                                <SfMultiSelect TValue="List<string>" TItem="FilterOption" Width="100%"
+                                               @bind-Value="selectedTiers" DataSource="@tierOptions"
+                                               Placeholder="Tiers" Mode="VisualMode.CheckBox" AllowFiltering
+                                               ShowSelectAll ShowDropDownIcon ShowClearButton PopupHeight="280px">
+                                    <MultiSelectFieldSettings Text="Label" Value="Code" />
+                                </SfMultiSelect>
+                                <div class="cpt-filters-dates">
+                                    <SfDatePicker TValue="DateTime" Width="100%" @bind-Value="dateDebut"
+                                                  Format="dd/MM/yyyy" Placeholder="Date début"
+                                                  Min="@dateMin" Max="@dateMax" />
+                                    <SfDatePicker TValue="DateTime" Width="100%" @bind-Value="dateFin"
+                                                  Format="dd/MM/yyyy" Placeholder="Date fin"
+                                                  Min="@dateMin" Max="@dateMax" />
+                                </div>
+                            </div>
+                        </Content>
+                    </DialogTemplates>
+                    <DialogButtons>
+                        <DialogButton Content="Effacer" OnClick="@ClearFiltersFromDialog" />
+                        <DialogButton Content="Appliquer" IsPrimary="true" OnClick="@ApplyFiltersFromDialog" />
+                    </DialogButtons>
+                </SfDialog>
+
+                <Card>
+                    <div class="grid-84 cpt-grand-livre-grid" style="zoom: @session.zoomLevel;">
+                        @if (isDataLoading)
+                        {
+                            <div class="cpt-grid-loading"><Loading_1 /></div>
+                        }
+                        else
+                        {
+                            <SfGrid @ref="grid" Height="100%" DataSource="@items"
+                                    CssClass="cpt-gl-grid"
+                                    AllowSorting AllowResizing AllowTextWrap AllowExcelExport>
+                                <GridEvents TValue="CptEcritureItem" DataBound="OnGridDataBound" RowDataBound="OnRowDataBound" />
+                                <GridColumns>
+                                    <GridColumn Width="68" HeaderText="Date" Field="@nameof(CptEcritureItem.MV_Date)" Format="dd/MM/yy" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                        <Template>
+                                            @{ var row = (context as CptEcritureItem); }
+                                            @if (!row.IsSoldeInitial)
+                                            {
+                                                @(row.MV_Date?.ToString("dd/MM/yy"))
+                                            }
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Width="48" HeaderText="Code jnl" Field="@nameof(CptEcritureItem.JO_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    <GridColumn Width="80" HeaderText="Int. jnl" Field="@nameof(CptEcritureItem.JO_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    <GridColumn Width="60" HeaderText="Pièce" Field="@nameof(CptEcritureItem.EC_Piece)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    <GridColumn Width="72" HeaderText="Réf." Field="@nameof(CptEcritureItem.EC_Reference)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    <GridColumn Width="120" HeaderText="Libellé" Field="@nameof(CptEcritureItem.EC_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                        <Template>
+                                            @{ var row = (context as CptEcritureItem); }
+                                            <span class="@(row.IsSoldeInitial ? "cpt-solde-initial" : null)">@row.EC_Intitule</span>
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Width="68" HeaderText="N° tiers" Field="@nameof(CptEcritureItem.CT_Num)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    <GridColumn Width="160" HeaderText="Int. tiers" Field="@nameof(CptEcritureItem.CT_Intitule)" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    <GridColumn Width="76" HeaderText="Débit" Field="@nameof(CptEcritureItem.Debit)" Format="@AmountFormat" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    <GridColumn Width="76" HeaderText="Crédit" Field="@nameof(CptEcritureItem.Credit)" Format="@AmountFormat" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" />
+                                    <GridColumn Width="88" HeaderText="Solde" Field="@nameof(CptEcritureItem.Solde)" Format="@AmountFormat" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" HeaderTextAlign="Syncfusion.Blazor.Grids.TextAlign.Center">
+                                        <Template>
+                                            @{ var row = (context as CptEcritureItem); }
+                                            <span class="@(row.IsSoldeInitial ? "cpt-solde-initial" : null)" style="@(row.Solde < 0 ? "color:#c0392b;" : null)">@row.Solde.ToString("# ##0.00")</span>
+                                        </Template>
+                                    </GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        }
+                    </div>
+                </Card>
+
+            </div>
+        </RadzenContent>
+    </Card_1>
+}
+else
+{
+    <div class="center-screen"><Loading_1 /></div>
+}
+
+@code {
+    [CascadingParameter] public SessionDT session { get; set; } = new SessionDT();
+    DB db = new DB();
+
+    private class ExoItem
+    {
+        public int Idx { get; set; }
+        public string Label { get; set; }
+        public DateTime Debut { get; set; }
+        public DateTime Fin { get; set; }
+    }
+
+    private class FilterOption
+    {
+        public string Code { get; set; }
+        public string Label { get; set; }
+    }
+
+    private List<ExoItem> exoItems = new();
+    private int selectedExoIndex;
+    private ExoItem CurrentExo => exoItems.Count > 0 && selectedExoIndex >= 0 && selectedExoIndex < exoItems.Count
+        ? exoItems[selectedExoIndex] : null;
+
+    private DateTime dateDebut;
+    private DateTime dateFin;
+    private DateTime dateMin => CurrentExo?.Debut ?? new DateTime(1900, 1, 1);
+    private DateTime dateMax => CurrentExo?.Fin ?? new DateTime(2099, 12, 31);
+
+    private List<CptEcritureItem> items = new();
+    private decimal soldeInitialNet;
+    private Dictionary<string, string> journalLabels = new(StringComparer.OrdinalIgnoreCase);
+    private Dictionary<string, string> compteLabels = new(StringComparer.OrdinalIgnoreCase);
+    private Dictionary<string, string> tierLabels = new(StringComparer.OrdinalIgnoreCase);
+
+    private List<FilterOption> tierOptions = new();
+    private List<FilterOption> caisseOptions = new();
+    private List<string> selectedTiers = new();
+    private string selectedCaisse;
+
+    private bool showFiltersDialog;
+    private SfGrid<CptEcritureItem> grid;
+    private const string AmountFormat = "# ##0.00;-# ##0.00;#";
+
+    private IEnumerable<CptEcritureItem> MovementRows => items.Where(x => !x.IsSoldeInitial);
+    private int MovementCount => MovementRows.Count();
+
+    private string SelectedCaisseLabel => caisseOptions.FirstOrDefault(x => x.Code == selectedCaisse)?.Label ?? selectedCaisse ?? "—";
+    private string SoldeInitialLabel => FormatAmount(soldeInitialNet);
+    private string PeriodLabel => CurrentExo == null
+        ? "—"
+        : $"{dateDebut:dd/MM/yyyy} — {dateFin:dd/MM/yyyy}";
+
+    bool IsLoaded;
+    private bool isDataLoading;
+    private int loadSeq;
+
+    protected override async Task OnInitializedAsync()
+    {
+        db = session.db;
+        LoadExercices();
+        SyncDatesToExercice();
+        await LoadData();
+    }
+
+    private void LoadExercices()
+    {
+        var d = db.P_DOSSIER.FirstOrDefault();
+        if (d == null) return;
+
+        var raw = new (DateTime? Debut, DateTime? Fin)[]
+        {
+            (d.D_DebutExo01, d.D_FinExo01), (d.D_DebutExo02, d.D_FinExo02),
+            (d.D_DebutExo03, d.D_FinExo03), (d.D_DebutExo04, d.D_FinExo04),
+            (d.D_DebutExo05, d.D_FinExo05),
+        };
+
+        exoItems = raw
+            .Where(x => x.Debut.HasValue && x.Fin.HasValue && x.Debut.Value.Year > 1900)
+            .OrderByDescending(x => x.Debut)
+            .Select((x, i) => new ExoItem
+            {
+                Idx = i,
+                Debut = x.Debut!.Value.Date,
+                Fin = x.Fin!.Value.Date,
+                Label = ExoLabel(x.Debut!.Value, x.Fin!.Value)
+            })
+            .ToList();
+
+        selectedExoIndex = 0;
+    }
+
+    private static string ExoLabel(DateTime d, DateTime f)
+    {
+        bool cal = d.Day == 1 && d.Month == 1 && f.Day == 31 && f.Month == 12 && d.Year == f.Year;
+        return cal ? d.Year.ToString() : $"{d:dd/MM/yy} — {f:dd/MM/yy}";
+    }
+
+    private void SyncDatesToExercice()
+    {
+        if (CurrentExo == null) return;
+        dateDebut = CurrentExo.Debut;
+        dateFin = CurrentExo.Fin;
+    }
+
+    private void ClampDates()
+    {
+        if (CurrentExo == null) return;
+        if (dateDebut < CurrentExo.Debut) dateDebut = CurrentExo.Debut;
+        if (dateFin > CurrentExo.Fin) dateFin = CurrentExo.Fin;
+        if (dateDebut > dateFin) dateDebut = dateFin;
+    }
+
+    private void OnExerciceInDialogChanged(ChangeEventArgs<int, ExoItem> args)
+    {
+        selectedExoIndex = args.Value;
+        SyncDatesToExercice();
+        ClearFilters(keepCaisse: false);
+    }
+
+    private async Task ApplyFiltersFromDialog()
+    {
+        ClampDates();
+        showFiltersDialog = false;
+        await LoadData();
+    }
+
+    private async Task ClearFiltersFromDialog()
+    {
+        if (exoItems.Count > 0)
+            selectedExoIndex = 0;
+        SyncDatesToExercice();
+        ClearFilters(keepCaisse: false);
+        ClampDates();
+        showFiltersDialog = false;
+        await LoadData();
+    }
+
+    private void ClearFilters(bool keepCaisse = true)
+    {
+        selectedTiers = new();
+        if (!keepCaisse)
+            selectedCaisse = null;
+    }
+
+    private void EnsureDefaultCaisse()
+    {
+        if (caisseOptions.Count == 0)
+        {
+            selectedCaisse = null;
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(selectedCaisse)
+            || !caisseOptions.Any(x => x.Code == selectedCaisse))
+            selectedCaisse = caisseOptions[0].Code;
+    }
+
+    private async Task LoadData()
+    {
+        var seq = Interlocked.Increment(ref loadSeq);
+
+        if (IsLoaded)
+        {
+            isDataLoading = true;
+            await InvokeAsync(StateHasChanged);
+            await Task.Yield();
+        }
+        else
+        {
+            await Task.Delay(200);
+        }
+
+        try
+        {
+            await Task.Run(() =>
+            {
+                if (seq != loadSeq) return;
+                LoadDataCore();
+            });
+        }
+        finally
+        {
+            if (seq == loadSeq)
+            {
+                IsLoaded = true;
+                isDataLoading = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+    }
+
+    private void LoadDataCore()
+    {
+        if (CurrentExo == null)
+        {
+            items.Clear();
+            tierOptions.Clear();
+            caisseOptions.Clear();
+            soldeInitialNet = 0m;
+            return;
+        }
+
+        ClampDates();
+        LoadLabelLookups();
+        LoadCaisseFilterOptions();
+        EnsureDefaultCaisse();
+
+        if (string.IsNullOrWhiteSpace(selectedCaisse))
+        {
+            items.Clear();
+            tierOptions.Clear();
+            soldeInitialNet = 0m;
+            return;
+        }
+
+        var scopeQuery = CptEcritureQuery.ExcludeAN(
+            CptEcritureQuery.ByEcDate(db, dateDebut, dateFin)
+                .Where(e => e.CG_Num == selectedCaisse));
+
+        LoadTierFilterOptions(scopeQuery);
+        items = BuildGridRows(scopeQuery);
+    }
+
+    private void LoadLabelLookups()
+    {
+        var labels = CptEcritureQuery.LoadLabels(db);
+        journalLabels = labels.Journal;
+        compteLabels = labels.Compte;
+        tierLabels = labels.Tier;
+    }
+
+    private CptEcritureQuery.LabelLookups CurrentLabels() => new()
+    {
+        Journal = journalLabels,
+        Compte = compteLabels,
+        Tier = tierLabels
+    };
+
+    private void LoadCaisseFilterOptions()
+    {
+        caisseOptions = db.F_COMPTEG
+            .Where(g => g.CG_Num != null && g.CG_Num.StartsWith(CptEcritureQuery.CaisseAccountPrefix))
+            .OrderBy(g => g.CG_Num)
+            .Select(g => new FilterOption
+            {
+                Code = g.CG_Num,
+                Label = g.CG_Num + " - " + (g.CG_Intitule ?? "")
+            })
+            .ToList();
+    }
+
+    private void LoadTierFilterOptions(IQueryable<F_ECRITUREC> scopeQuery)
+    {
+        tierOptions = scopeQuery
+            .Where(e => e.CT_Num != null && e.CT_Num != "")
+            .Select(e => e.CT_Num)
+            .Distinct()
+            .AsEnumerable()
+            .Select(code => new FilterOption
+            {
+                Code = code,
+                Label = code + " - " + (tierLabels.TryGetValue(code, out var lib) ? lib : "")
+            })
+            .OrderBy(x => x.Code)
+            .ToList();
+
+        var tierCodes = tierOptions.Select(x => x.Code).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        selectedTiers = selectedTiers?.Where(c => tierCodes.Contains(c)).ToList() ?? new();
+    }
+
+    private IQueryable<F_ECRITUREC> ApplyTierFilter(IQueryable<F_ECRITUREC> query)
+    {
+        if (selectedTiers?.Count > 0)
+            query = query.Where(e => selectedTiers.Contains(e.CT_Num));
+        return query;
+    }
+
+    private decimal ComputeSoldeInitial()
+    {
+        if (string.IsNullOrWhiteSpace(selectedCaisse) || CurrentExo == null)
+            return 0m;
+
+        var exoDeb = CurrentExo.Debut;
+        var exoFin = CurrentExo.Fin;
+
+        var anQuery = ApplyTierFilter(db.F_ECRITUREC.Where(e =>
+            e.CG_Num == selectedCaisse
+            && e.EC_ANType == 1
+            && e.JM_Date >= exoDeb
+            && e.JM_Date <= exoFin));
+
+        var anDebit = anQuery.Sum(e => e.EC_Sens == 0 ? e.EC_Montant ?? 0m : 0m);
+        var anCredit = anQuery.Sum(e => e.EC_Sens == 1 ? e.EC_Montant ?? 0m : 0m);
+
+        var mvQuery = ApplyTierFilter(CptEcritureQuery.ExcludeAN(db.F_ECRITUREC.Where(e =>
+            e.CG_Num == selectedCaisse
+            && e.EC_Date.HasValue
+            && e.EC_Date.Value >= exoDeb
+            && e.EC_Date.Value < dateDebut)));
+
+        var mvDebit = mvQuery.Sum(e => e.EC_Sens == 0 ? e.EC_Montant ?? 0m : 0m);
+        var mvCredit = mvQuery.Sum(e => e.EC_Sens == 1 ? e.EC_Montant ?? 0m : 0m);
+
+        return (anDebit + mvDebit) - (anCredit + mvCredit);
+    }
+
+    private List<CptEcritureItem> BuildGridRows(IQueryable<F_ECRITUREC> scopeQuery)
+    {
+        var labels = CurrentLabels();
+        labels.Compte.TryGetValue(selectedCaisse, out var cgLib);
+
+        soldeInitialNet = ComputeSoldeInitial();
+
+        var movements = CptEcritureQuery.ToItemList(
+            ApplyTierFilter(scopeQuery)
+                .OrderBy(e => e.EC_Date)
+                .ThenBy(e => e.EC_No)
+                .ToList(),
+            labels);
+
+        var rows = new List<CptEcritureItem>
+        {
+            new()
+            {
+                IsSoldeInitial = true,
+                CG_Num = selectedCaisse,
+                CG_Intitule = cgLib ?? "",
+                EC_Intitule = "Solde initial",
+                Debit = soldeInitialNet > 0m ? soldeInitialNet : 0m,
+                Credit = soldeInitialNet < 0m ? -soldeInitialNet : 0m,
+                Solde = soldeInitialNet
+            }
+        };
+
+        var running = soldeInitialNet;
+        foreach (var mv in movements)
+        {
+            running += mv.Debit - mv.Credit;
+            mv.Solde = running;
+            rows.Add(mv);
+        }
+
+        return rows;
+    }
+
+    private static string FormatAmount(decimal value) => value.ToString("# ##0.00");
+
+    private async Task PrintGrid()
+    {
+        if (grid != null)
+            await grid.PrintAsync();
+    }
+
+    private async Task ExportGrid()
+    {
+        if (grid != null)
+            await grid.ExportToExcelAsync(fn.ExportToExcelAsync());
+    }
+
+    private void OnRowDataBound(RowDataBoundEventArgs<CptEcritureItem> args)
+    {
+        if (args.Data?.IsSoldeInitial == true)
+            args.Row.AddClass(new[] { "cpt-solde-initial-row" });
+    }
+
+    private Task OnGridDataBound(object _) => Task.CompletedTask;
+
+    public void Dispose()
+    {
+        items?.Clear();
+        journalLabels?.Clear();
+        compteLabels?.Clear();
+        tierLabels?.Clear();
+        tierOptions?.Clear();
+        caisseOptions?.Clear();
+        selectedTiers?.Clear();
+    }
+}
+
+<style>
+    .cpt-grid-loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        min-height: 320px;
+    }
+
+    .cpt-filters-dialog {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 8px 4px 4px;
+    }
+    .cpt-filters-dates {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .cpt-solde-initial {
+        font-weight: 700;
+    }
+
+    .cpt-grand-livre-grid .e-grid .e-row.cpt-solde-initial-row .e-rowcell {
+        font-weight: 600;
+        background: #f4f6fa;
+    }
+
+    .cpt-grand-livre-grid .e-grid .e-rowcell,
+    .cpt-grand-livre-grid .e-grid .e-headercelldiv {
+        white-space: normal !important;
+        word-break: break-word;
+        line-height: 1.2;
+        font-size: .72rem;
+        padding: 2px 4px !important;
+    }
+    .cpt-grand-livre-grid .e-grid .e-headercell {
+        padding: 2px 4px !important;
+    }
+</style>

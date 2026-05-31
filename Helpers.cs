@@ -452,8 +452,9 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 8, Title = "OCR", Description = "Relevés bancaires", Url = "ocr-bq", TitleIcon = "barcode_scanner", SousGroupe = "", HasSousGroupe = false });
 
 			// ETATS Comptables
-			list.Add(new AuthItems { SelectedAPP = 8, Title = "ETATS Comptables", Description = "Modèle Normal IS", Url = "cpt-liasse", TitleIcon = "description", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "ETATS Comptables", Description = "Liasse fiscale prov", Url = "cpt-liasse", TitleIcon = "description", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 8, Title = "ETATS Comptables", Description = "Comptes généraux", Url = "cpt-comptes-generaux", TitleIcon = "description", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "ETATS Comptables", Description = "État caisse", Url = "cpt-etat-caisse", TitleIcon = "description", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 8, Title = "ETATS Comptables", Description = "Comptes Tiers", Url = "cpt-comptes-tiers", TitleIcon = "description", SousGroupe = "", HasSousGroupe = false });
 
 

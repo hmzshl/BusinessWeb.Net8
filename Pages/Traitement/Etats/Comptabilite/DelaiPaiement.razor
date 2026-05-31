@@ -239,12 +239,14 @@ else
             .GroupBy(r => r.CT_Num)
             .ToDictionary(g => g.Key, g => (int)(g.Max(r => r.RT_NbJour) ?? 30));
 
+        var labels = CptEcritureQuery.LoadLabels(db);
+
         // 3. Load lettrées factures for the year
-        var factures = db.API_V_ECRITUREC
+        var factures = db.F_ECRITUREC
             .Where(e => e.EC_Lettre == 2
                      && e.EC_Sens == 1
-                     && e.MV_Date.HasValue
-                     && e.MV_Date.Value.Year == annee
+                     && e.EC_Date.HasValue
+                     && e.EC_Date.Value.Year == annee
                      && e.EC_Lettrage != null
                      && e.EC_Lettrage != "")
             .ToList()
@@ -255,17 +257,17 @@ else
         //    Filter by lettrage in memory to avoid huge IN clause
         var lettrageSet = factures.Select(f => f.EC_Lettrage).ToHashSet();
 
-        var paiementDict = db.API_V_ECRITUREC
+        var paiementDict = db.F_ECRITUREC
             .Where(e => tresoJO.Contains(e.JO_Num)
                      && e.EC_Lettrage != null
                      && e.EC_Lettrage != ""
-                     && e.MV_Date.HasValue
-                     && e.MV_Date.Value.Year >= annee - 1
-                     && e.MV_Date.Value.Year <= annee + 1)
+                     && e.EC_Date.HasValue
+                     && e.EC_Date.Value.Year >= annee - 1
+                     && e.EC_Date.Value.Year <= annee + 1)
             .ToList()
             .Where(e => lettrageSet.Contains(e.EC_Lettrage))
             .GroupBy(e => e.EC_Lettrage)
-            .ToDictionary(g => g.Key, g => g.OrderBy(e => e.MV_Date).First());
+            .ToDictionary(g => g.Key, g => g.OrderBy(e => e.EC_Date).First());
 
         // 5. Project
         var dateMin1900 = new DateTime(1900, 1, 1);
@@ -294,14 +296,14 @@ else
             }
             else
             {
-                dateEch = (f.MV_Date ?? f.JM_Date).Date.AddDays(60);
+                dateEch = (f.EC_Date ?? f.JM_Date).Date.AddDays(60);
                 source  = "+60j";
             }
 
             // ── Payment ecriture ───────────────────────────────────────────
             paiementDict.TryGetValue(f.EC_Lettrage, out var paie);
 
-            DateTime? datePaiement = paie?.MV_Date;
+            DateTime? datePaiement = paie?.EC_Date;
             DateTime? rawDateEnc   = paie?.EC_DateRappro;
 
             // Normalize encaissement: sentinel dates → null
@@ -336,23 +338,28 @@ else
                 statut = "Dans les délais";
             }
 
+            labels.Journal.TryGetValue(f.JO_Num ?? "", out var joLib);
+            labels.Tier.TryGetValue(f.CT_Num ?? "", out var ctLib);
+            labels.Compte.TryGetValue(f.CG_Num ?? "", out var cgLib);
+            labels.Journal.TryGetValue(paie?.JO_Num ?? "", out var joPaiLib);
+
             return new DelaiPaiItem
             {
                 EC_Piece        = f.EC_Piece,
                 EC_Lettrage     = f.EC_Lettrage,
                 CT_Num          = f.CT_Num,
-                CT_Intitule     = f.CT_Intitule,
+                CT_Intitule     = ctLib,
                 CG_Num          = f.CG_Num,
-                CG_Intitule     = f.CG_Intitule,
+                CG_Intitule     = cgLib,
                 EC_Intitule     = f.EC_Intitule,
                 JO_Num          = f.JO_Num,
-                JO_Intitule     = f.JO_Intitule,
+                JO_Intitule     = joLib,
                 Montant         = f.EC_Montant ?? 0m,
-                DateFacture     = f.MV_Date,
+                DateFacture     = f.EC_Date,
                 DateEcheance    = dateEch,
                 EcheanceSource  = source,
                 JO_PaiNum       = paie?.JO_Num,
-                JO_PaiIntitule  = paie?.JO_Intitule,
+                JO_PaiIntitule  = joPaiLib,
                 LibellePaiement = paie?.EC_Intitule,
                 DatePaiement    = datePaiement,
                 DateEncaissement = dateEncaissement,

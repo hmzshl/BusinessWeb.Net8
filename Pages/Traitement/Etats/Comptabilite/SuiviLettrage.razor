@@ -182,29 +182,16 @@ else
         IsLoaded = false;
         await Task.Delay(300);
 
-        items = db.API_V_ECRITUREC
-            .Where(e => e.MV_Date.HasValue && e.MV_Date.Value.Year == annee
-                     && e.EC_Lettre != null)
-            .OrderBy(e => e.EC_Lettre)
-            .ThenBy(e => e.CG_Num)
-            .ThenBy(e => e.MV_Date)
-            .Select(e => new CptEcritureItem
-            {
-                JO_Num      = e.JO_Num,
-                JO_Intitule = e.JO_Intitule,
-                MV_Date     = e.MV_Date,
-                EC_Piece    = e.EC_Piece,
-                CG_Num      = e.CG_Num,
-                CG_Intitule = e.CG_Intitule,
-                CT_Num      = e.CT_Num,
-                CT_Intitule = e.CT_Intitule,
-                EC_Intitule = e.EC_Intitule,
-                Debit       = e.Debit ?? 0m,
-                Credit      = e.Credit ?? 0m,
-                EC_Lettre   = e.EC_Lettre,
-                EC_Lettrage = e.EC_Lettrage
-            })
-            .ToList();
+        var labels = CptEcritureQuery.LoadLabels(db);
+
+        items = CptEcritureQuery.ToItemList(
+            CptEcritureQuery.ByEcYear(db, annee)
+                .Where(e => e.EC_Lettre != null)
+                .OrderBy(e => e.EC_Lettre)
+                .ThenBy(e => e.CG_Num)
+                .ThenBy(e => e.EC_Date)
+                .ToList(),
+            labels);
 
         lettreStats = items
             .GroupBy(x => x.LettreLabel)
