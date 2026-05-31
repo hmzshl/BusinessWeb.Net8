@@ -1,5 +1,7 @@
 @inherits LayoutComponentBase
 @inject SecurityService security
+@inject PageFavoritesService pageFavorites
+@implements IDisposable
 
 @using Syncfusion.Blazor.Navigations
 @using Syncfusion.Blazor.DropDowns;
@@ -53,6 +55,13 @@
                         </RadzenHeader>
 
                         <RadzenSidebar @bind-Expanded="@sidebarExpanded" Style="position: relative;">
+                            @if (sc.IsAuthenticated())
+                            {
+                                <div class="business-sidebar-favorites-toggle">
+                                    <RadzenCheckBox TValue="bool" Value="@pageFavorites.ShowOnlyFavoritesMenu" ValueChanged="@OnShowOnlyFavoritesMenuChanged" Name="menuFavOnly" />
+                                    <RadzenLabel Text="Favoris uniquement" Component="menuFavOnly" Style="margin-left: 8px; cursor: pointer; font-size: 0.85rem;" />
+                                </div>
+                            }
                             @if (session.SelectedAPP == 0)
                             {
                                 @BuildApplicationsDashboard()
@@ -157,10 +166,37 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        pageFavorites.Changed += HandleFavoritesChanged;
         await Task.Delay(500);
         await InitializeLicense();
         await InitializeSession();
         IsLoaded = true;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender || !sc.IsAuthenticated())
+            return;
+
+        await ReloadFavoritesAsync();
+    }
+
+    private async Task ReloadFavoritesAsync()
+    {
+        var userId = sc.Principal?.FindFirstValue(ClaimTypes.NameIdentifier) ?? sc.User?.Id;
+        if (string.IsNullOrWhiteSpace(userId))
+            return;
+
+        pageFavorites.InvalidateCache();
+        await pageFavorites.EnsureLoadedAsync(userId);
+        StateHasChanged();
+    }
+
+    private void HandleFavoritesChanged() => _ = InvokeAsync(StateHasChanged);
+
+    public void Dispose()
+    {
+        pageFavorites.Changed -= HandleFavoritesChanged;
     }
 
     private async Task InitializeLicense()
@@ -237,6 +273,8 @@ else
         }
 
         await UpdateAuthorization();
+        var favUserId = sc.Principal?.FindFirstValue(ClaimTypes.NameIdentifier) ?? sc.User?.Id;
+        await pageFavorites.EnsureLoadedAsync(favUserId ?? "");
     }
 
     private RenderFragment BuildAppMenuContent() => builder =>
@@ -271,17 +309,33 @@ else
 
     private RenderFragment BuildApplicationsDashboard() => @<RadzenPanelMenu Style="width: 100%;" DisplayStyle="@(sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)" ShowArrow="false">
 @{
-    var availableApps = GetAvailableApplications();
-
-    foreach (var app in availableApps)
+    if (pageFavorites.ShowOnlyFavoritesMenu)
     {
-    <RadzenPanelMenuItem Text="@app.Name" Icon="@app.Icon" Click="@(() => SelectAPP(app.Id??0))" />
+        @BuildFavoritesOnlyMenuItems()
     }
+    else
+    {
+        @BuildFavoritesMenuGroup()
+
+        var availableApps = GetAvailableApplications();
+        foreach (var app in availableApps)
+        {
+            <RadzenPanelMenuItem Text="@app.Name" Icon="@app.Icon" Click="@(() => SelectAPP(app.Id??0))" />
+        }
     }
+}
 </RadzenPanelMenu>;
 
 private RenderFragment BuildAppSidebarMenu() => @<RadzenPanelMenu Multiple="false" Class="business-sidebar-menu" Style="width: 100%;" DisplayStyle="@(sidebarExpanded ? MenuItemDisplayStyle.IconAndText : MenuItemDisplayStyle.Icon)" ShowArrow="false">
 @{
+    if (pageFavorites.ShowOnlyFavoritesMenu)
+    {
+        @BuildFavoritesOnlyMenuItems()
+    }
+    else
+    {
+        @BuildFavoritesMenuGroup()
+
     var authItems = fn.AuthItems()
     .Where(a => a.SelectedAPP == session.SelectedAPP && !string.IsNullOrEmpty(a.Url));
 
@@ -350,8 +404,47 @@ private RenderFragment BuildAppSidebarMenu() => @<RadzenPanelMenu Multiple="fals
                 }
             </RadzenPanelMenuItem>
     }
+    }
 }
 </RadzenPanelMenu>;
+
+private RenderFragment BuildFavoritesMenuGroup() => @<text>
+@{
+    var favoriteItems = GetVisibleFavorites();
+    if (favoriteItems.Any())
+    {
+        <RadzenPanelMenuItem Text="FAVORIS" Icon="star" Expanded="true" Class="business-menu-parent business-menu-favorites">
+            @foreach (var fav in favoriteItems)
+            {
+                <RadzenPanelMenuItem Text="@fav.Title" Click="@(() => OpenFavorite(fav))" Class="business-menu-child" />
+            }
+        </RadzenPanelMenuItem>
+    }
+}
+</text>;
+
+private RenderFragment BuildFavoritesOnlyMenuItems() => @<text>
+@{
+    var favoriteItems = GetVisibleFavorites();
+    if (!favoriteItems.Any())
+    {
+        <div class="business-menu-favorites-empty">Aucun favori. Utilisez l'étoile sur une page ou désactivez « Favoris uniquement ».</div>
+    }
+    else
+    {
+        @foreach (var fav in favoriteItems)
+        {
+            <RadzenPanelMenuItem Text="@fav.Title" Click="@(() => OpenFavorite(fav))" Class="business-menu-child" />
+        }
+    }
+}
+</text>;
+
+private async Task OnShowOnlyFavoritesMenuChanged(bool value)
+{
+    var userId = sc.Principal?.FindFirstValue(ClaimTypes.NameIdentifier) ?? sc.User?.Id ?? "";
+    await pageFavorites.SetShowOnlyFavoritesMenuAsync(userId, value);
+}
 
 private RenderFragment BuildApplicationsGrid() => @<div class="business-apps-view">
     <div class="business-apps-panel">
@@ -456,6 +549,58 @@ private bool IsVisible(string url)
     }
 
     return session?.Authorizes?.Any(a => a.Url == url && a.Visible) ?? false;
+}
+
+private List<PageFavorite> GetVisibleFavorites()
+{
+    return pageFavorites.GetAll()
+        .Where(f => CanOpenFavorite(f.Url))
+        .ToList();
+}
+
+private async Task OpenFavorite(PageFavorite fav)
+{
+    if (fav == null || string.IsNullOrWhiteSpace(fav.Url))
+        return;
+
+    var appId = GetAppIdForUrl(fav.Url) ?? fav.AppHint ?? 0;
+    if (appId > 0 && session.SelectedAPP != appId)
+        await SelectAPP(appId);
+
+    NavigationManager.NavigateTo(fav.Url);
+}
+
+private int? GetAppIdForUrl(string url)
+{
+    var normalized = PageFavoritesService.NormalizeUrl(url);
+    var item = fn.AuthItems()
+        .Where(a => !string.IsNullOrEmpty(a.Url))
+        .OrderByDescending(a => a.Url.Length)
+        .FirstOrDefault(a =>
+        {
+            var authUrl = PageFavoritesService.NormalizeUrl(a.Url);
+            return string.Equals(authUrl, normalized, StringComparison.OrdinalIgnoreCase)
+                || normalized.StartsWith(authUrl + "/", StringComparison.OrdinalIgnoreCase);
+        });
+    return item?.SelectedAPP;
+}
+
+private bool CanOpenFavorite(string url)
+{
+    if (IsCurrentUserAdmin())
+        return true;
+
+    var normalized = PageFavoritesService.NormalizeUrl(url);
+    var authorizes = session?.Authorizes?
+        .Where(a => a.Visible && !string.IsNullOrEmpty(a.Url))
+        .ToList() ?? new List<TAuthorize>();
+
+    return authorizes.Any(a =>
+    {
+        var authUrl = PageFavoritesService.NormalizeUrl(a.Url);
+        return string.Equals(authUrl, normalized, StringComparison.OrdinalIgnoreCase)
+            || normalized.StartsWith(authUrl + "/", StringComparison.OrdinalIgnoreCase);
+    });
 }
 
 private bool IsCurrentUserAdmin()

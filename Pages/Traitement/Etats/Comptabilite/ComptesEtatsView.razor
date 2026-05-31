@@ -108,7 +108,7 @@
                                                 }
                                                 else
                                                 {
-                                                <SfGrid @ref="balanceGeneralGrid" @key="balanceDisplayType" Height="100%" RowHeight="26" DataSource="@balanceItems"
+                                                <SfGrid @ref="balanceGeneralGrid" @key="balanceDisplayType" Height="100%"  DataSource="@balanceItems"
                                                         AllowSorting AllowResizing AllowGrouping AllowExcelExport>
                                                     <GridEvents TValue="CptBalanceItem" DataBound="OnBalanceDataBound" />
                                                     <GridPageSettings PageSize="200" />
@@ -118,6 +118,11 @@
                                                             <div style="font-weight:700;">@ag.Key</div>
                                                         </CaptionTemplate>
                                                     </GridGroupSettings>
+                                                            <GridTemplates>
+                                                                <EmptyRecordTemplate>
+                                                                    <Empty></Empty>
+                                                                </EmptyRecordTemplate>
+                                                            </GridTemplates>
                                                     <GridAggregates>
                                                         <GridAggregate>
                                                             <GridAggregateColumns>
@@ -174,7 +179,7 @@
                                                 }
                                                 else
                                                 {
-                                                <SfGrid @ref="balanceTierGrid" Height="100%" RowHeight="26" DataSource="@tierBalanceItems"
+                                                <SfGrid @ref="balanceTierGrid" Height="100%"  DataSource="@tierBalanceItems"
                                                         AllowSorting AllowResizing AllowExcelExport>
                                                     <GridPageSettings PageSize="200" />
                                                     <GridColumns>

@@ -2551,3 +2551,17 @@ input.e-input, .e-input-group input, .e-input-group.e-control-wrapper input, .e-
 .e-grid .e-groupcaption {
     overflow: unset;
 }
+
+.business-sidebar-favorites-toggle {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.business-menu-favorites-empty {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.4;
+}

@@ -1,17 +1,21 @@
-﻿<div class="bg-white p-6 shadow-sm hover:shadow-md transition-shadow" style="padding: 1rem;" >
+﻿@inject PageFavoritesService pageFavorites
+@implements IDisposable
+
+<div class="bg-white p-6 shadow-sm hover:shadow-md transition-shadow" style="padding: 1rem;" >
     <div class="flex justify-between items-start mb-4">
         <div class="card-title font-semibold text-lg text-gray-800" style="font-family: Ubuntu;" >
             @Title
         </div>
-        @if (!IsDetail)
+        @if (ShowFavoriteButton)
         {
             <div>
-                <RadzenButton Click=@(args => NavigationManager.NavigateTo("/"))
-                              Icon="close"
+                <RadzenButton Click="@ToggleFavorite"
+                              Icon="@(isFavorite ? "star" : "star_border")"
                               Size="Radzen.ButtonSize.Small"
-                              ButtonStyle="ButtonStyle.Light"
+                              ButtonStyle="@(isFavorite ? ButtonStyle.Warning : ButtonStyle.Light)"
                               Variant="Variant.Text"
-                              Style="border-radius: 100px !important; height: 30px !important; width: 30px !important; padding: 0px !important; min-width: 20px !important; min-height: 20px !important; color: #000000" />
+                              title="@(isFavorite ? "Retirer des favoris" : "Ajouter aux favoris")"
+                              Style="@FavoriteButtonStyle" />
             </div>
         }
     </div>
@@ -23,6 +27,9 @@
 
 @code
 {
+    [CascadingParameter]
+    public SessionDT session { get; set; }
+
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
@@ -35,16 +42,72 @@
     [Parameter]
     public StatColor Color { get; set; } = StatColor.Purple;
 
-    private string GetBorderColor()
+    private bool isFavorite;
+    private string currentUrl = "";
+    private string userId = "";
+
+    private bool ShowFavoriteButton => !string.IsNullOrWhiteSpace(userId);
+
+    private string FavoriteButtonStyle =>
+        "border-radius: 100px !important; height: 30px !important; width: 30px !important; padding: 0px !important; min-width: 20px !important; min-height: 20px !important; color: "
+        + (isFavorite ? "#f59e0b" : "#000000");
+
+    protected override async Task OnInitializedAsync()
     {
-        return Color switch
+        userId = sc.Principal?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+            ?? sc.User?.Id ?? "";
+        NavigationManager.LocationChanged += OnLocationChanged;
+        await RefreshFavoriteStateAsync();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await RefreshFavoriteStateAsync();
+    }
+
+    private void OnLocationChanged(object sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+    {
+        _ = InvokeAsync(RefreshFavoriteStateAsync);
+    }
+
+    private async Task RefreshFavoriteStateAsync()
+    {
+        if (string.IsNullOrWhiteSpace(userId))
         {
-            StatColor.Blue => "border-blue-500",
-            StatColor.Green => "border-green-500",
-            StatColor.Purple => "border-purple-500",
-            StatColor.Amber => "border-amber-500",
-            StatColor.Red => "border-red-500",
-            _ => "border-blue-500"
-        };
+            isFavorite = false;
+            return;
+        }
+
+        currentUrl = PageFavoritesService.NormalizeUrl(
+            NavigationManager.Uri.Replace(NavigationManager.BaseUri, "", StringComparison.OrdinalIgnoreCase));
+        await pageFavorites.EnsureLoadedAsync(userId);
+        isFavorite = pageFavorites.IsFavorite(currentUrl);
+        StateHasChanged();
+    }
+
+    private async Task ToggleFavorite()
+    {
+        if (!ShowFavoriteButton)
+            return;
+
+        var title = ResolveFavoriteTitle();
+        var appHint = session?.SelectedAPP ?? 0;
+        isFavorite = await pageFavorites.ToggleAsync(userId, currentUrl, title, appHint);
+        StateHasChanged();
+    }
+
+    private string ResolveFavoriteTitle()
+    {
+        if (!string.IsNullOrWhiteSpace(Title))
+            return Title.Trim();
+
+        var menuItem = fn.AuthItems()
+            .FirstOrDefault(a => PageFavoritesService.NormalizeUrl(a.Url) == currentUrl);
+        return menuItem?.Description ?? currentUrl;
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }

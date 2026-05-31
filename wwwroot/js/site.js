@@ -13,3 +13,11 @@ window.getScaleLevel = function () {
 window.getScreenHeight = function () {
     return window.screen.height;
 };
+window.bwFavorites = {
+    get: function (key) {
+        try { return localStorage.getItem(key); } catch (e) { return null; }
+    },
+    set: function (key, value) {
+        try { localStorage.setItem(key, value); } catch (e) { }
+    }
+};

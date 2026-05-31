@@ -64,6 +64,7 @@ builder.Services.AddScoped<ReportService>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<BusinessWeb.BusinessWebDBService>();
 builder.Services.AddScoped<BusinessWeb.Helpers>();
+builder.Services.AddScoped<BusinessWeb.Services.PageFavoritesService>();
 
 builder.Services.AddDbContext<BusinessWeb.Data.BusinessWebDBContext>(options =>
 {

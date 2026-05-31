@@ -365,12 +365,12 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Réglements", Description = "Impayés", Url = "et-rg-impayes", TitleIcon = "payments", SousGroupe = "", HasSousGroupe = false });
 
 			// Comptabilité group
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Comptabilité", Description = "Grand Livre", Url = "cpt-grand-livre", TitleIcon = "menu_book", SousGroupe = "", HasSousGroupe = false });
+			/*list.Add(new AuthItems { SelectedAPP = 14, Title = "Comptabilité", Description = "Grand Livre", Url = "cpt-grand-livre", TitleIcon = "menu_book", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Comptabilité", Description = "Balance", Url = "cpt-balance", TitleIcon = "balance", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Comptabilité", Description = "Journal", Url = "cpt-journal", TitleIcon = "book", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Comptabilité", Description = "Lettrage", Url = "cpt-lettrage", TitleIcon = "link", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Comptabilité", Description = "Échéances à payer", Url = "cpt-echeances-fourn", TitleIcon = "schedule_send", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 14, Title = "Comptabilité", Description = "Délai de paiement", Url = "cpt-delai-paiement", TitleIcon = "hourglass_top", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 14, Title = "Comptabilité", Description = "Délai de paiement", Url = "cpt-delai-paiement", TitleIcon = "hourglass_top", SousGroupe = "", HasSousGroupe = false });*/
 
 			// Projets
 			list.Add(new AuthItems { SelectedAPP = 14, Title = "Projets", Description = "Projets", Url = "et-affaires", TitleIcon = "work", SousGroupe = "", HasSousGroupe = false });
@@ -444,18 +444,18 @@ namespace BusinessWeb
 			list.Add(new AuthItems { SelectedAPP = 21, Title = "Traitement", Description = "Fournisseurs", Url = "nf-frs", TitleIcon = "dataset", SousGroupe = "", HasSousGroupe = false });
 
 			// COMPTABILITE
-			list.Add(new AuthItems { SelectedAPP = 8, Title = "Gestion TVA", Description = "Périodes", Url = "tva-periodes", TitleIcon = "finance", SousGroupe = "", HasSousGroupe = false });
+			/*list.Add(new AuthItems { SelectedAPP = 8, Title = "Gestion TVA", Description = "Périodes", Url = "tva-periodes", TitleIcon = "finance", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 8, Title = "Gestion TVA", Description = "Tiers", Url = "tiers", TitleIcon = "finance", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 8, Title = "Gestion TVA", Description = "Taxes", Url = "taxes", TitleIcon = "finance", SousGroupe = "", HasSousGroupe = false });
 
 			list.Add(new AuthItems { SelectedAPP = 8, Title = "OCR", Description = "Factures Achat", Url = "ocr-fa", TitleIcon = "barcode_scanner", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 8, Title = "OCR", Description = "Relevés bancaires", Url = "ocr-bq", TitleIcon = "barcode_scanner", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "OCR", Description = "Relevés bancaires", Url = "ocr-bq", TitleIcon = "barcode_scanner", SousGroupe = "", HasSousGroupe = false });*/
 
 			// ETATS Comptables
 			list.Add(new AuthItems { SelectedAPP = 8, Title = "ETATS Comptables", Description = "Liasse fiscale prov", Url = "cpt-liasse", TitleIcon = "description", SousGroupe = "", HasSousGroupe = false });
 			list.Add(new AuthItems { SelectedAPP = 8, Title = "ETATS Comptables", Description = "Comptes généraux", Url = "cpt-comptes-generaux", TitleIcon = "description", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 8, Title = "ETATS Comptables", Description = "État caisse", Url = "cpt-etat-caisse", TitleIcon = "description", SousGroupe = "", HasSousGroupe = false });
-			list.Add(new AuthItems { SelectedAPP = 8, Title = "ETATS Comptables", Description = "Comptes Tiers", Url = "cpt-comptes-tiers", TitleIcon = "description", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "ETATS Comptables", Description = "Comptes tiers", Url = "cpt-comptes-tiers", TitleIcon = "description", SousGroupe = "", HasSousGroupe = false });
+			list.Add(new AuthItems { SelectedAPP = 8, Title = "ETATS Comptables", Description = "Gestion de caisse", Url = "cpt-etat-caisse", TitleIcon = "description", SousGroupe = "", HasSousGroupe = false });
 
 
 			PolishAuthMenu(list);
